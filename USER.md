@@ -24,7 +24,8 @@ Preferred feedback style:
 - executive summary first, evidence after
 - medium-length default
 - include a 1-10 score for business impact
-- use a clean one-page PDF as the standard presentation format for polished Skechers email reviews
+- use a clean one-page PDF as the standard presentation format for Skechers email reviews
+- generate that PDF automatically whenever a new Skechers email is detected in the inbox
 - for polished reviews, preserve the original email context: saved HTML version, web-view link, and visual image reference when available
 - for visuals, prefer what the user actually saw: inbox/client render first, hosted web-view second, raw HTML only as fallback
 

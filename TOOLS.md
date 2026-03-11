@@ -47,7 +47,7 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
   - evidence
   - recommendations
 - Default polished artifact:
-  - a clean one-page PDF in `workspace/reports/`
+  - a clean one-page PDF in `workspace/reports/`, generated automatically for each new Skechers email review
 - Save supporting artifacts for polished reviews in `workspace/reports/email-artifacts/<slug>/`:
   - raw HTML
   - plain text
