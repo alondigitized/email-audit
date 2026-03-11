@@ -38,8 +38,10 @@ Primary lenses:
 Email:
 - review every Skechers email
 - react quickly when a new Skechers email arrives
-- medium-length default response
+- medium-length default response in chat
 - include executive summary, evidence, recommendations, and business-impact score
+- when an email review is strong, useful, or likely to be shared upward, create a clean one-page PDF version as the standard presentation artifact
+- default one-page PDF structure: title, executive summary, business impact score, what's working, what's weak, recommendations, bottom line
 
 Site:
 - review on demand or on a cadence when asked

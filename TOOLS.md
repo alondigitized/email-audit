@@ -37,4 +37,25 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 ---
 
+## Walker Reporting SOP
+
+### Skechers email reviews
+
+- Default live review format in chat:
+  - executive summary
+  - business impact score (1-10)
+  - evidence
+  - recommendations
+- Default polished artifact:
+  - a clean one-page PDF in `workspace/reports/`
+- One-page PDF structure:
+  - title
+  - executive summary
+  - business impact score
+  - what’s working
+  - what’s weak
+  - recommendations
+  - bottom line
+- Use the one-page PDF when the review is especially useful, presentation-ready, or likely to be shared.
+
 Add whatever helps you do your job. This is your cheat sheet.

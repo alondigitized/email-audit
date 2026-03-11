@@ -24,6 +24,7 @@ Preferred feedback style:
 - executive summary first, evidence after
 - medium-length default
 - include a 1-10 score for business impact
+- use a clean one-page PDF as the standard presentation format for polished Skechers email reviews
 
 Operating preferences:
 - review every Skechers email
