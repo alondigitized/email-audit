@@ -16,7 +16,7 @@ const API_KEY = process.env.AGENTMAIL_API_KEY;
 const INBOX_ID = process.env.INBOX_ID || 'walker@agentmail.to';
 const TELEGRAM_TARGET = process.env.TELEGRAM_TARGET;
 const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || 'main';
-const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS || 60000);
+const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS || 15000);
 const STARTUP_LOOKBACK = Number(process.env.STARTUP_LOOKBACK || 10);
 const STATE_PATH = path.join(__dirname, 'state.json');
 const LOG_DIR = path.join(__dirname, 'logs');
@@ -181,73 +181,33 @@ async function pollOnce(client, state, reason = 'poll') {
 async function main() {
   const client = new AgentMailClient({ apiKey: API_KEY });
   const state = loadState();
-  let socket = null;
-  let reconnectTimer = null;
   let pollTimer = null;
-  let isConnecting = false;
+  let pollInFlight = false;
 
-  const scheduleReconnect = () => {
-    if (reconnectTimer) return;
-    reconnectTimer = setTimeout(async () => {
-      reconnectTimer = null;
-      await connect();
-    }, 5000);
-  };
-
-  const connect = async () => {
-    if (isConnecting) return;
-    isConnecting = true;
+  const safePoll = async (reason) => {
+    if (pollInFlight) {
+      log('poll skipped; already running', { reason });
+      return;
+    }
+    pollInFlight = true;
     try {
-      log('connecting', { inbox: INBOX_ID });
-      socket = await client.websockets.connect();
-
-      socket.on('open', () => {
-        log('socket open');
-        socket.sendSubscribe({ type: 'subscribe', inboxIds: [INBOX_ID], eventTypes: ['message.received'] });
-      });
-
-      socket.on('message', async (event) => {
-        try {
-          if (event.type === 'subscribed') {
-            log('subscribed', event);
-            return;
-          }
-          if (event.type !== 'message_received') return;
-          await processMessage(client, state, event.message || {}, 'websocket');
-        } catch (err) {
-          log('processing error', { error: String(err), stack: err?.stack });
-        }
-      });
-
-      socket.on('close', (event) => {
-        log('socket close', { code: event?.code, reason: event?.reason });
-        scheduleReconnect();
-      });
-
-      socket.on('error', (error) => {
-        log('socket error', { error: String(error) });
-      });
+      await pollOnce(client, state, reason);
     } catch (err) {
-      log('connect failed', { error: String(err) });
-      scheduleReconnect();
+      log('poll error', { error: String(err), stack: err?.stack, reason });
     } finally {
-      isConnecting = false;
+      pollInFlight = false;
     }
   };
 
-  await pollOnce(client, state, 'startup');
-  await connect();
+  log('monitor mode', { mode: 'polling', intervalMs: POLL_INTERVAL_MS, inbox: INBOX_ID });
+  await safePoll('startup');
 
   pollTimer = setInterval(() => {
-    pollOnce(client, state, 'interval').catch((err) => {
-      log('poll error', { error: String(err), stack: err?.stack });
-    });
+    safePoll('interval');
   }, POLL_INTERVAL_MS);
 
   const shutdown = () => {
     if (pollTimer) clearInterval(pollTimer);
-    if (reconnectTimer) clearTimeout(reconnectTimer);
-    try { socket?.close?.(); } catch {}
     process.exit(0);
   };
 
