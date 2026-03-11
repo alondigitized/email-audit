@@ -15,7 +15,9 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 const API_KEY = process.env.AGENTMAIL_API_KEY;
 const INBOX_ID = process.env.INBOX_ID || 'walker@agentmail.to';
 const TELEGRAM_TARGET = process.env.TELEGRAM_TARGET;
-const OPENCLAW_SESSION_ID = process.env.OPENCLAW_SESSION_ID || 'agent:main:main';
+const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || 'main';
+const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS || 60000);
+const STARTUP_LOOKBACK = Number(process.env.STARTUP_LOOKBACK || 10);
 const STATE_PATH = path.join(__dirname, 'state.json');
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_PATH = path.join(LOG_DIR, 'monitor.log');
@@ -33,15 +35,20 @@ function log(message, extra) {
 
 function loadState() {
   try {
-    return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const parsed = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    return {
+      processedMessageIds: Array.isArray(parsed.processedMessageIds) ? parsed.processedMessageIds : [],
+      lastPollAt: parsed.lastPollAt || null,
+    };
   } catch {
-    return { processedMessageIds: [] };
+    return { processedMessageIds: [], lastPollAt: null };
   }
 }
 
 function saveState(state) {
   const trimmed = {
-    processedMessageIds: Array.from(new Set(state.processedMessageIds)).slice(-500),
+    processedMessageIds: Array.from(new Set(state.processedMessageIds)).slice(-1000),
+    lastPollAt: state.lastPollAt || null,
   };
   fs.writeFileSync(STATE_PATH, JSON.stringify(trimmed, null, 2));
 }
@@ -51,8 +58,10 @@ function seen(state, id) {
 }
 
 function markSeen(state, id) {
-  state.processedMessageIds.push(id);
-  saveState(state);
+  if (!seen(state, id)) {
+    state.processedMessageIds.push(id);
+    saveState(state);
+  }
 }
 
 function shorten(text, max = 2400) {
@@ -61,24 +70,40 @@ function shorten(text, max = 2400) {
   return clean.length > max ? clean.slice(0, max - 1) + '…' : clean;
 }
 
+async function sendTelegramFallback(text) {
+  const args = [
+    'message', 'send',
+    '--channel', 'telegram',
+    '--target', TELEGRAM_TARGET,
+    '--message', text,
+  ];
+  const { stdout, stderr } = await execFileAsync('openclaw', args, { maxBuffer: 1024 * 1024 * 5 });
+  if (stdout?.trim()) log('telegram fallback stdout', { stdout: stdout.trim().slice(0, 1000) });
+  if (stderr?.trim()) log('telegram fallback stderr', { stderr: stderr.trim().slice(0, 1000) });
+}
+
 async function sendToWalker(message) {
   const args = [
     'agent',
-    '--session-id', OPENCLAW_SESSION_ID,
-    '--message',
-    message,
+    '--agent', OPENCLAW_AGENT_ID,
+    '--message', message,
     '--deliver',
     '--reply-channel', 'telegram',
     '--reply-to', TELEGRAM_TARGET,
-    '--timeout', '600'
+    '--timeout', '600',
   ];
-  const { stdout, stderr } = await execFileAsync('openclaw', args, { maxBuffer: 1024 * 1024 * 10 });
-  if (stdout?.trim()) log('openclaw agent stdout', { stdout: stdout.trim().slice(0, 1000) });
-  if (stderr?.trim()) log('openclaw agent stderr', { stderr: stderr.trim().slice(0, 1000) });
+  try {
+    const { stdout, stderr } = await execFileAsync('openclaw', args, { maxBuffer: 1024 * 1024 * 10 });
+    if (stdout?.trim()) log('openclaw agent stdout', { stdout: stdout.trim().slice(0, 1000) });
+    if (stderr?.trim()) log('openclaw agent stderr', { stderr: stderr.trim().slice(0, 1000) });
+  } catch (err) {
+    log('openclaw agent failed', { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
+    await sendTelegramFallback(`Walker email monitor caught a new message but the agent handoff failed.\n\nFrom: ${message.match(/From: (.*)/)?.[1] || ''}\nSubject: ${message.match(/Subject: (.*)/)?.[1] || ''}\n\nI need to inspect the handoff path.`);
+    throw err;
+  }
 }
 
-function buildPrompt(event) {
-  const msg = event.message || {};
+function buildPromptFromMessage(msg) {
   const from = msg.from_ || msg.from || '';
   const subject = msg.subject || '(no subject)';
   const preview = msg.preview || '';
@@ -90,6 +115,7 @@ function buildPrompt(event) {
     'Review it as Walker using the established format and preferences in this session.',
     'Medium length. Executive summary first, evidence after. Include a 1-10 business impact score.',
     'Focus on discoverability, UX, email-to-site continuity, bugs/friction, ease of use, and what should change.',
+    'If this is clearly not a Skechers marketing/experience email, say so directly and briefly.',
     '',
     `Inbox: ${INBOX_ID}`,
     `From: ${from}`,
@@ -101,55 +127,132 @@ function buildPrompt(event) {
   ].filter(Boolean).join('\n');
 }
 
+async function fetchMessages(client, limit = STARTUP_LOOKBACK) {
+  const response = await client.inboxes.messages.list(INBOX_ID, { limit });
+  return response.messages || [];
+}
+
+async function fetchMessage(client, messageId) {
+  return client.inboxes.messages.get(INBOX_ID, messageId);
+}
+
+async function processMessage(client, state, message, source = 'unknown') {
+  const id = message.messageId || message.message_id;
+  if (!id) {
+    log('skipping message without id', { source });
+    return;
+  }
+  if (seen(state, id)) {
+    log('duplicate skipped', { id, source });
+    return;
+  }
+
+  markSeen(state, id);
+
+  let fullMessage = message;
+  try {
+    fullMessage = await fetchMessage(client, id);
+  } catch (err) {
+    log('failed to hydrate full message; using event/list payload', { id, source, error: String(err) });
+  }
+
+  log('processing message', {
+    id,
+    source,
+    from: fullMessage.from_ || fullMessage.from,
+    subject: fullMessage.subject,
+    created_at: fullMessage.created_at,
+  });
+
+  await sendToWalker(buildPromptFromMessage(fullMessage));
+}
+
+async function pollOnce(client, state, reason = 'poll') {
+  const messages = await fetchMessages(client, STARTUP_LOOKBACK);
+  const ordered = [...messages].sort((a, b) => new Date(a.created_at || a.timestamp || 0) - new Date(b.created_at || b.timestamp || 0));
+  for (const msg of ordered) {
+    await processMessage(client, state, msg, reason);
+  }
+  state.lastPollAt = new Date().toISOString();
+  saveState(state);
+  log('poll complete', { reason, scanned: ordered.length, lastPollAt: state.lastPollAt });
+}
+
 async function main() {
   const client = new AgentMailClient({ apiKey: API_KEY });
   const state = loadState();
-  let socket;
+  let socket = null;
+  let reconnectTimer = null;
+  let pollTimer = null;
+  let isConnecting = false;
 
-  const connect = async () => {
-    log('connecting', { inbox: INBOX_ID });
-    socket = await client.websockets.connect();
-
-    socket.on('open', () => {
-      log('socket open');
-      socket.sendSubscribe({ type: 'subscribe', inboxIds: [INBOX_ID], eventTypes: ['message.received'] });
-    });
-
-    socket.on('message', async (event) => {
-      try {
-        if (event.type === 'subscribed') {
-          log('subscribed', event);
-          return;
-        }
-        if (event.type !== 'message_received') return;
-        const id = event.message?.messageId || event.message?.message_id;
-        if (!id) {
-          log('message_received without id');
-          return;
-        }
-        if (seen(state, id)) {
-          log('duplicate skipped', { id });
-          return;
-        }
-        markSeen(state, id);
-        log('new message', { id, from: event.message?.from_ || event.message?.from, subject: event.message?.subject });
-        await sendToWalker(buildPrompt(event));
-      } catch (err) {
-        log('processing error', { error: String(err), stack: err?.stack });
-      }
-    });
-
-    socket.on('close', (event) => {
-      log('socket close', { code: event?.code, reason: event?.reason });
-      setTimeout(connect, 5000);
-    });
-
-    socket.on('error', (error) => {
-      log('socket error', { error: String(error) });
-    });
+  const scheduleReconnect = () => {
+    if (reconnectTimer) return;
+    reconnectTimer = setTimeout(async () => {
+      reconnectTimer = null;
+      await connect();
+    }, 5000);
   };
 
+  const connect = async () => {
+    if (isConnecting) return;
+    isConnecting = true;
+    try {
+      log('connecting', { inbox: INBOX_ID });
+      socket = await client.websockets.connect();
+
+      socket.on('open', () => {
+        log('socket open');
+        socket.sendSubscribe({ type: 'subscribe', inboxIds: [INBOX_ID], eventTypes: ['message.received'] });
+      });
+
+      socket.on('message', async (event) => {
+        try {
+          if (event.type === 'subscribed') {
+            log('subscribed', event);
+            return;
+          }
+          if (event.type !== 'message_received') return;
+          await processMessage(client, state, event.message || {}, 'websocket');
+        } catch (err) {
+          log('processing error', { error: String(err), stack: err?.stack });
+        }
+      });
+
+      socket.on('close', (event) => {
+        log('socket close', { code: event?.code, reason: event?.reason });
+        scheduleReconnect();
+      });
+
+      socket.on('error', (error) => {
+        log('socket error', { error: String(error) });
+      });
+    } catch (err) {
+      log('connect failed', { error: String(err) });
+      scheduleReconnect();
+    } finally {
+      isConnecting = false;
+    }
+  };
+
+  await pollOnce(client, state, 'startup');
   await connect();
+
+  pollTimer = setInterval(() => {
+    pollOnce(client, state, 'interval').catch((err) => {
+      log('poll error', { error: String(err), stack: err?.stack });
+    });
+  }, POLL_INTERVAL_MS);
+
+  const shutdown = () => {
+    if (pollTimer) clearInterval(pollTimer);
+    if (reconnectTimer) clearTimeout(reconnectTimer);
+    try { socket?.close?.(); } catch {}
+    process.exit(0);
+  };
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
 }
 
 main().catch((err) => {
