@@ -48,6 +48,13 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
   - recommendations
 - Default polished artifact:
   - a clean one-page PDF in `workspace/reports/`
+- Save supporting artifacts for polished reviews in `workspace/reports/email-artifacts/<slug>/`:
+  - raw HTML
+  - plain text
+  - message JSON
+  - URL list
+  - web-view URL when available
+  - rendered image snapshot when feasible
 - One-page PDF structure:
   - title
   - executive summary
@@ -55,6 +62,8 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
   - what’s working
   - what’s weak
   - recommendations
+  - visual reference
+  - reference artifacts
   - bottom line
 - Use the one-page PDF when the review is especially useful, presentation-ready, or likely to be shared.
 

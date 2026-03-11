@@ -41,7 +41,9 @@ Email:
 - medium-length default response in chat
 - include executive summary, evidence, recommendations, and business-impact score
 - when an email review is strong, useful, or likely to be shared upward, create a clean one-page PDF version as the standard presentation artifact
-- default one-page PDF structure: title, executive summary, business impact score, what's working, what's weak, recommendations, bottom line
+- for presentation-ready reviews, save the full email artifacts alongside the review: raw HTML, text, message JSON, extracted URLs, and web-view URL when available
+- include a visual reference image of the email when feasible so the feedback can be understood in context
+- default one-page PDF structure: title, executive summary, business impact score, what's working, what's weak, recommendations, visual reference, reference artifacts, bottom line
 
 Site:
 - review on demand or on a cadence when asked
