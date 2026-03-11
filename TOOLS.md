@@ -55,6 +55,10 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
   - URL list
   - web-view URL when available
   - rendered image snapshot when feasible
+- Visual priority for PDFs:
+  - inbox/client screenshot (best)
+  - hosted web-view screenshot
+  - raw HTML render (fallback only)
 - One-page PDF structure:
   - title
   - executive summary

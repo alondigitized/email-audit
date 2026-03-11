@@ -7,10 +7,12 @@ from reportlab.lib.utils import ImageReader
 
 out = '/Users/alontsang/.openclaw-walker/workspace/reports/skechers-welcome-email-review.pdf'
 artifacts_dir = '/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/skechers-welcome-2026-03-11'
-image_path = f'{artifacts_dir}/email-render.png'
+webview_image_path = f'{artifacts_dir}/email-webview-render.png'
+html_image_path = f'{artifacts_dir}/email-render.png'
 html_path = f'{artifacts_dir}/message.html'
 json_path = f'{artifacts_dir}/message.json'
 webview_url = open(f'{artifacts_dir}/webview-url.txt', 'r', encoding='utf-8').read().strip()
+image_path = webview_image_path
 
 doc = SimpleDocTemplate(out, pagesize=letter, rightMargin=42, leftMargin=42, topMargin=40, bottomMargin=32)
 styles = getSampleStyleSheet()
@@ -57,8 +59,9 @@ recs = [
 story.append(ListFlowable([ListItem(Paragraph(x, styles['BodyClean'])) for x in recs], bulletType='bullet', leftIndent=14))
 story.append(Spacer(1, 4))
 story.append(Paragraph('Visual Reference', styles['Section']))
-img = Image(image_path, width=240, height=480)
+img = Image(image_path, width=255, height=700)
 story.append(img)
+story.append(Paragraph('Visual source: hosted web-view render (preferred over raw HTML render).', styles['Ref']))
 story.append(Spacer(1, 4))
 story.append(Paragraph('Reference Artifacts', styles['Section']))
 story.append(Paragraph(f'Web view: <link href="{webview_url}">{webview_url}</link>', styles['Ref']))
