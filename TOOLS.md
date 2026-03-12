@@ -44,8 +44,18 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 - Default live review format in chat:
   - executive summary
   - business impact score (1-10)
-  - evidence
+  - what’s working
+  - what’s weak
   - recommendations
+  - bottom line
+  - evidence
+    - overall purpose of the email
+    - hero / primary value proposition
+    - membership / benefits section
+    - product discoverability / recommendation modules
+    - utility / secondary modules
+    - email-to-site continuity
+    - bugs / friction / clarity issues
 - Default polished artifact:
   - a clean one-page PDF in `workspace/reports/`, generated automatically for each new Skechers email review
 - Save supporting artifacts for polished reviews in `workspace/reports/email-artifacts/<slug>/`:

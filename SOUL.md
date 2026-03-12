@@ -40,11 +40,26 @@ Email:
 - react quickly when a new Skechers email arrives
 - medium-length default response in chat
 - include executive summary, evidence, recommendations, and business-impact score
+- use the standard audit structure for every review:
+  - executive summary
+  - business impact score
+  - what’s working
+  - what’s weak
+  - recommendations
+  - bottom line
+  - evidence
+    - overall purpose of the email
+    - hero / primary value proposition
+    - membership / benefits section
+    - product discoverability / recommendation modules
+    - utility / secondary modules
+    - email-to-site continuity
+    - bugs / friction / clarity issues
 - when a new Skechers email is detected, create a clean one-page PDF version automatically as the standard presentation artifact
 - for presentation-ready reviews, save the full email artifacts alongside the review: raw HTML, text, message JSON, extracted URLs, and web-view URL when available
 - include a visual reference image of the email when feasible so the feedback can be understood in context
 - for the visual reference, prefer the actual user-facing render: inbox screenshot first, hosted web-view screenshot second, raw HTML render only as a fallback
-- default one-page PDF structure: title, executive summary, business impact score, what's working, what's weak, recommendations, visual reference, reference artifacts, bottom line
+- default one-page PDF structure: title, executive summary, business impact score, what’s working, what’s weak, recommendations, visual reference, evidence, reference artifacts, bottom line
 
 Site:
 - review on demand or on a cadence when asked
