@@ -6,40 +6,87 @@ from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT
 
 
+def clean_inline(text):
+    text = text.replace('**', '')
+    text = text.replace('__', '')
+    text = text.replace('### ', '')
+    text = text.replace('## ', '')
+    text = text.replace('# ', '')
+    text = re.sub(r'`([^`]*)`', r'\1', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+
 def parse_review(text):
     sections = {
         'executive_summary': [],
+        'evidence': [],
         'what_working': [],
         'what_weak': [],
         'recommendations': [],
         'bottom_line': [],
         'score': None,
+        'leftovers': [],
     }
     current = 'executive_summary'
+    pending_label = None
+
     for raw in text.splitlines():
         line = raw.strip()
         if not line:
             continue
-        m = re.search(r'(business impact score|business impact|impact)\s*:?\s*(\d{1,2})\s*/\s*10', line, re.I)
+
+        m = re.search(r'(business impact score|business impact|impact)\s*:?[ ]*(\d{1,2})\s*/\s*10', line, re.I)
         if m and not sections['score']:
             sections['score'] = f"{m.group(2)}/10"
             continue
-        low = line.lower().strip('*# -')
-        if 'what’s working' in low or "what's working" in low or low == 'what works':
-            current = 'what_working'; continue
-        if 'what’s weak' in low or "what's weak" in low or low.startswith('what’s weak') or low.startswith("what's weak"):
-            current = 'what_weak'; continue
-        if 'recommendation' in low:
-            current = 'recommendations'; continue
-        if 'bottom line' in low:
-            current = 'bottom_line'; continue
-        if 'executive summary' in low:
-            current = 'executive_summary'; continue
-        line = re.sub(r'^[-•]\s*', '', line)
-        sections[current].append(line)
+
+        low = clean_inline(line).lower().strip(':- ')
+        if low == 'executive summary':
+            current = 'executive_summary'; pending_label = None; continue
+        if low == 'evidence' or low == 'evidence & analysis':
+            current = 'evidence'; pending_label = None; continue
+        if low == "what’s working" or low == "what's working" or low == 'what works':
+            current = 'what_working'; pending_label = None; continue
+        if low == "what’s weak" or low == "what's weak" or low == 'what is weak':
+            current = 'what_weak'; pending_label = None; continue
+        if low.startswith('recommendation'):
+            current = 'recommendations'; pending_label = None; continue
+        if low == 'bottom line':
+            current = 'bottom_line'; pending_label = None; continue
+
+        bulletish = bool(re.match(r'^[-•*]\s+', line))
+        numbered = bool(re.match(r'^\d+[\.)]\s+', line))
+        line = re.sub(r'^[-•*]\s*', '', line)
+        line = re.sub(r'^\d+[\.)]\s*', '', line)
+        line = clean_inline(line)
+        if not line:
+            continue
+
+        # Turn label-like bullets into grouped bullets, e.g. "The trigger is meaningful:" then next line.
+        if line.endswith(':') and current in ('what_working', 'what_weak', 'recommendations', 'evidence'):
+            pending_label = line[:-1]
+            continue
+
+        if pending_label:
+            line = f"{pending_label}: {line}"
+            pending_label = None
+
+        if current in sections:
+            sections[current].append(line)
+        else:
+            sections['leftovers'].append(line)
+
     if not sections['score']:
         sections['score'] = 'n/a'
+
+    # Backfill if the model used Evidence instead of split working/weak buckets.
+    if not sections['what_working'] and not sections['what_weak'] and sections['evidence']:
+        sections['what_working'] = sections['evidence'][:4]
+        sections['what_weak'] = sections['evidence'][4:8]
+
     return sections
+
 
 review_path, artifacts_dir, output_pdf = sys.argv[1:4]
 review_text = open(review_path, 'r', encoding='utf-8').read().strip()
@@ -67,14 +114,14 @@ styles.add(ParagraphStyle(name='Ref', parent=styles['Code'], fontName='Helvetica
 styles.add(ParagraphStyle(name='AuditMono', parent=styles['Code'], fontName='Courier', fontSize=7.2, leading=8.8, textColor=colors.HexColor('#1F2937'), spaceAfter=4))
 
 story = []
-story.append(Paragraph(f'Skechers Email Review: “{subject}”', styles['TitleClean']))
+story.append(Paragraph(f'Skechers Email Review: “{clean_inline(subject)}”', styles['TitleClean']))
 story.append(Paragraph('Walker · US market · Executive summary first, evidence after', styles['Subtle']))
 story.append(Paragraph('Executive Summary', styles['Section']))
 for p in sections['executive_summary'][:2]:
-    story.append(Paragraph(p, styles['BodyClean']))
+    story.append(Paragraph(clean_inline(p), styles['BodyClean']))
 story.append(Paragraph(f'Business Impact Score: {sections["score"]}', styles['Score']))
 for title, key, cap in [('What’s Working', 'what_working', 4), ('What’s Weak', 'what_weak', 4), ('Recommendations', 'recommendations', 4)]:
-    vals = sections[key]
+    vals = [clean_inline(v) for v in sections[key] if clean_inline(v)]
     if vals:
         story.append(Paragraph(title, styles['Section']))
         story.append(ListFlowable([ListItem(Paragraph(v, styles['BodyClean'])) for v in vals[:cap]], bulletType='bullet', leftIndent=14))
@@ -92,12 +139,13 @@ story.append(Paragraph(f'Saved message JSON: {json_path}', styles['Ref']))
 story.append(Spacer(1,4))
 story.append(Paragraph('Bottom Line', styles['Section']))
 for p in (sections['bottom_line'] or sections['executive_summary'][:1]):
-    story.append(Paragraph(p, styles['BodyClean']))
+    story.append(Paragraph(clean_inline(p), styles['BodyClean']))
 
 story.append(PageBreak())
 story.append(Paragraph('Full Audit Appendix', styles['Section']))
 story.append(Paragraph('Verbatim review text preserved below so no audit content is lost in PDF formatting.', styles['Subtle']))
-story.append(Preformatted(review_text, styles['AuditMono']))
+verbatim = review_text.replace('**', '').replace('__', '').replace('### ', '').replace('## ', '').replace('# ', '')
+story.append(Preformatted(verbatim, styles['AuditMono']))
 
 doc.build(story)
 print(output_pdf)
