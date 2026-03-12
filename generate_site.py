@@ -3,10 +3,9 @@ from pathlib import Path
 import json, html, re, shutil
 
 ROOT = Path('/Users/alontsang/.openclaw-walker/workspace/email-audit')
-ARTIFACTS = Path('/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts')
-REPORTS = Path('/Users/alontsang/.openclaw-walker/workspace/reports')
 AUDITS = ROOT / 'audits'
 ASSETS = ROOT / 'assets'
+MANIFEST = ROOT / 'published-audits.json'
 
 ROOT.mkdir(parents=True, exist_ok=True)
 AUDITS.mkdir(parents=True, exist_ok=True)
@@ -58,44 +57,45 @@ def parse_review(text):
         sec[cur].append(line)
     return sec
 
+for p in AUDITS.glob('*.html'):
+    p.unlink()
+for p in ASSETS.iterdir():
+    if p.is_file():
+        p.unlink()
+
+manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else []
 rows=[]
-for d in sorted(ARTIFACTS.iterdir(), reverse=True):
-    if not d.is_dir(): continue
+for item in manifest:
+    d = Path(item['artifactDir'])
     mp=d/'message.json'; rv=d/'review.txt'
     if not (mp.exists() and rv.exists()):
         continue
     data=json.loads(mp.read_text())
     sender=(data.get('from_') or data.get('from') or '')
-    if 'skechers' not in sender.lower() and 'skechers' not in (data.get('subject') or '').lower():
-        continue
-    if d.name not in {
-        '2026-03-12-welcome-to-skechers-fresh',
-        '2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh'
-    }:
-        continue
-    subject=data.get('subject') or 'Untitled'
-    slug=re.sub(r'[^a-z0-9]+','-', d.name.lower()).strip('-')
+    subject=data.get('subject') or item.get('subject') or 'Untitled'
+    slug=item['slug']
     created=(data.get('created_at') or '')
-    date=created[:10] if created else d.name[:10]
+    date=created[:10] if created else slug[:10]
     time=created[11:16] if len(created)>=16 else ''
     review=clean(rv.read_text())
     parsed=parse_review(review)
     webview=(d/'webview-url.txt').read_text().strip() if (d/'webview-url.txt').exists() else ''
     img=None
-    for p in ['email-webview-render.png','email-render.png']:
-        if (d/p).exists():
-            target=ASSETS/f'{slug}-{p}'
-            shutil.copy2(d/p, target)
+    for pth in ['email-webview-render.png','email-render.png']:
+        if (d/pth).exists():
+            target=ASSETS/f'{slug}-{pth}'
+            shutil.copy2(d/pth, target)
             img=target.name
             break
-    slug_tail = slug[len(date)+1:] if slug.startswith(date + '-') else slug
-    pdf_candidates=sorted(REPORTS.glob(f'*{date}*{slug_tail[:24]}*review.pdf'))
     pdf_link=''
-    if pdf_candidates:
-        target=ASSETS/pdf_candidates[-1].name
-        shutil.copy2(pdf_candidates[-1], target)
+    pdf_source = Path(item['pdfPath'])
+    if pdf_source.exists():
+        target=ASSETS/pdf_source.name
+        shutil.copy2(pdf_source, target)
         pdf_link=target.name
     rows.append({'slug':slug,'subject':subject,'date':date,'time':time,'sender':sender,'score':parsed['score'],'parsed':parsed,'webview':webview,'img':img,'pdf':pdf_link,'dir':d.name})
+
+rows.sort(key=lambda r: (r['date'], r['time']), reverse=True)
 
 for row in rows:
     p=row['parsed']
@@ -106,7 +106,8 @@ for row in rows:
     pdf_html = f'<a href="../assets/{row["pdf"]}">Download PDF</a>' if row['pdf'] else '—'
     summary_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['summary'])
     bottom_html = ''.join(f'<p>{html.escape(x)}</p>' for x in (p['bottom'] or p['summary'][:1]))
-    body=f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} · {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What’s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What’s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">← Back to index</a></p></div></div></div></main></body></html>'''
+    evidence_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p.get('summary', [])[1:])
+    body=f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} · {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What’s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What’s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div><div class="section"><h2>Evidence</h2>{evidence_html if evidence_html else '<p class="muted">—</p>'}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">← Back to index</a></p></div></div></div></main></body></html>'''
     (AUDITS/f"{row['slug']}.html").write_text(body)
 
 rows_html=''.join(f"<tr><td>{html.escape(r['date'])}</td><td>{html.escape(r['time'])}</td><td>{html.escape(r['subject'])}</td><td>{html.escape(r['score'])}</td><td><a href='audits/{r['slug']}.html'>View audit</a></td></tr>" for r in rows)
