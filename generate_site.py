@@ -68,6 +68,8 @@ for d in sorted(ARTIFACTS.iterdir(), reverse=True):
     sender=(data.get('from_') or data.get('from') or '')
     if 'skechers' not in sender.lower() and 'skechers' not in (data.get('subject') or '').lower():
         continue
+    if (data.get('subject') or '').strip() != 'Welcome to Skechers!':
+        continue
     subject=data.get('subject') or 'Untitled'
     slug=re.sub(r'[^a-z0-9]+','-', d.name.lower()).strip('-')
     created=(data.get('created_at') or '')
