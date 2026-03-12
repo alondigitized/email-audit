@@ -32,28 +32,41 @@ def clean(text):
     return text.strip()
 
 def parse_review(text):
-    sec={'summary':[], 'working':[], 'weak':[], 'recs':[], 'bottom':[], 'score':'n/a'}
+    sec={'summary':[], 'working':[], 'weak':[], 'recs':[], 'bottom':[], 'evidence':[], 'score':'n/a'}
     cur='summary'
     pending=None
     for raw in text.splitlines():
         line=raw.strip()
-        if not line: continue
+        if not line:
+            continue
         m=re.search(r'(business impact score|business impact|impact)\s*:?\s*(\d{1,2})\s*/\s*10', line, re.I)
         if m:
-            sec['score']=f"{m.group(2)}/10"; continue
+            sec['score']=f"{m.group(2)}/10"
+            continue
         low=clean(line).lower().strip(':- ')
-        if low=='executive summary': cur='summary'; pending=None; continue
-        if "what's working" in low or 'what’s working' in low: cur='working'; pending=None; continue
-        if "what's weak" in low or 'what’s weak' in low: cur='weak'; pending=None; continue
-        if low.startswith('recommendation'): cur='recs'; pending=None; continue
-        if low=='bottom line': cur='bottom'; pending=None; continue
+        if low=='executive summary':
+            cur='summary'; pending=None; continue
+        if low=='evidence' or low=='evidence & analysis':
+            cur='evidence'; pending=None; continue
+        if "what's working" in low or 'what’s working' in low:
+            cur='working'; pending=None; continue
+        if "what's weak" in low or 'what’s weak' in low:
+            cur='weak'; pending=None; continue
+        if low.startswith('recommendation'):
+            cur='recs'; pending=None; continue
+        if low=='bottom line':
+            cur='bottom'; pending=None; continue
         line=re.sub(r'^[-•*]\s*','',line)
         line=re.sub(r'^\d+[\.)]\s*','',line)
         line=clean(line)
-        if line.endswith(':') and cur in ('working','weak','recs'):
-            pending=line[:-1]; continue
+        if not line:
+            continue
+        if line.endswith(':') and cur in ('working','weak','recs','evidence'):
+            pending=line[:-1]
+            continue
         if pending:
-            line=f'{pending}: {line}'; pending=None
+            line=f'{pending}: {line}'
+            pending=None
         sec[cur].append(line)
     return sec
 
@@ -106,8 +119,8 @@ for row in rows:
     pdf_html = f'<a href="../assets/{row["pdf"]}">Download PDF</a>' if row['pdf'] else '—'
     summary_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['summary'])
     bottom_html = ''.join(f'<p>{html.escape(x)}</p>' for x in (p['bottom'] or p['summary'][:1]))
-    evidence_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p.get('summary', [])[1:])
-    body=f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} · {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What’s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What’s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div><div class="section"><h2>Evidence</h2>{evidence_html if evidence_html else '<p class="muted">—</p>'}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">← Back to index</a></p></div></div></div></main></body></html>'''
+    evidence_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['evidence']) if p['evidence'] else '<p class="muted">—</p>'
+    body=f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} · {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What’s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What’s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section"><h2>Evidence</h2>{evidence_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">← Back to index</a></p></div></div></div></main></body></html>'''
     (AUDITS/f"{row['slug']}.html").write_text(body)
 
 rows_html=''.join(f"<tr><td>{html.escape(r['date'])}</td><td>{html.escape(r['time'])}</td><td>{html.escape(r['subject'])}</td><td>{html.escape(r['score'])}</td><td><a href='audits/{r['slug']}.html'>View audit</a></td></tr>" for r in rows)
