@@ -70,18 +70,18 @@ story = []
 story.append(Paragraph(f'Skechers Email Review: “{subject}”', styles['TitleClean']))
 story.append(Paragraph('Walker · US market · Executive summary first, evidence after', styles['Subtle']))
 story.append(Paragraph('Executive Summary', styles['Section']))
-for p in sections['executive_summary'][:5]:
+for p in sections['executive_summary'][:2]:
     story.append(Paragraph(p, styles['BodyClean']))
 story.append(Paragraph(f'Business Impact Score: {sections["score"]}', styles['Score']))
-for title, key in [('What’s Working', 'what_working'), ('What’s Weak', 'what_weak'), ('Recommendations', 'recommendations')]:
+for title, key, cap in [('What’s Working', 'what_working', 4), ('What’s Weak', 'what_weak', 4), ('Recommendations', 'recommendations', 4)]:
     vals = sections[key]
     if vals:
         story.append(Paragraph(title, styles['Section']))
-        story.append(ListFlowable([ListItem(Paragraph(v, styles['BodyClean'])) for v in vals], bulletType='bullet', leftIndent=14))
+        story.append(ListFlowable([ListItem(Paragraph(v, styles['BodyClean'])) for v in vals[:cap]], bulletType='bullet', leftIndent=14))
         story.append(Spacer(1,4))
 if os.path.exists(image_path):
     story.append(Paragraph('Visual Reference', styles['Section']))
-    story.append(Image(image_path, width=255, height=700))
+    story.append(Image(image_path, width=180, height=495))
     story.append(Paragraph('Visual source: hosted web-view render when available.', styles['Ref']))
     story.append(Spacer(1,4))
 story.append(Paragraph('Reference Artifacts', styles['Section']))
@@ -95,7 +95,7 @@ for p in (sections['bottom_line'] or sections['executive_summary'][:1]):
     story.append(Paragraph(p, styles['BodyClean']))
 
 story.append(PageBreak())
-story.append(Paragraph('Full Audit', styles['Section']))
+story.append(Paragraph('Full Audit Appendix', styles['Section']))
 story.append(Paragraph('Verbatim review text preserved below so no audit content is lost in PDF formatting.', styles['Subtle']))
 story.append(Preformatted(review_text, styles['AuditMono']))
 
