@@ -25,9 +25,14 @@ const STATE_PATH = path.join(__dirname, 'state.json');
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_PATH = path.join(LOG_DIR, 'monitor.log');
 const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
+const SITE_DIR = path.join(path.dirname(__dirname), 'email-audit');
+const SITE_MANIFEST = path.join(SITE_DIR, 'published-audits.json');
+const SITE_GENERATOR = path.join(SITE_DIR, 'generate_site.py');
 const ARTIFACTS_DIR = path.join(REPORTS_DIR, 'email-artifacts');
 const RENDER_SWIFT = path.join(REPORTS_DIR, 'email-artifacts', 'render_web_url.swift');
 const PDF_SCRIPT = path.join(__dirname, 'generate_review_pdf.py');
+const CODEX_MODEL = process.env.CODEX_MODEL || 'gpt-5-codex';
+const CODEX_REASONING = process.env.CODEX_REASONING || 'high';
 
 if (!API_KEY) throw new Error('Missing AGENTMAIL_API_KEY');
 if (!TELEGRAM_TARGET) throw new Error('Missing TELEGRAM_TARGET');
@@ -126,8 +131,7 @@ async function sendPdf(pathToPdf, filename, caption) {
     '--channel', 'telegram',
     '--target', TELEGRAM_TARGET,
     '--message', caption,
-    '--filePath', pathToPdf,
-    '--filename', filename,
+    '--media', pathToPdf,
   ];
   const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 10);
   if (stdout?.trim()) log('pdf send stdout', { stdout: stdout.trim().slice(0, 1000) });
@@ -158,21 +162,29 @@ async function sendTelegramText(text) {
   if (stderr?.trim()) log('telegram send stderr', { stderr: stderr.trim().slice(0, 1000) });
 }
 
-async function sendToWalker(message) {
+async function generateReview(message) {
+  const outputPath = path.join(__dirname, 'tmp-review.txt');
   const args = [
-    'agent',
-    '--agent', OPENCLAW_AGENT_ID,
-    '--message', message,
-    '--timeout', '600',
+    'exec',
+    '-m', CODEX_MODEL,
+    '-c', `model_reasoning_effort=\"${CODEX_REASONING}\"`,
+    '--skip-git-repo-check',
+    '--output-last-message', outputPath,
+    message,
   ];
   try {
-    const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 10);
-    if (stdout?.trim()) log('openclaw agent stdout', { stdout: stdout.trim().slice(0, 1000) });
-    if (stderr?.trim()) log('openclaw agent stderr', { stderr: stderr.trim().slice(0, 1000) });
-    return stdout?.trim() || '';
+    const { stdout, stderr } = await execFileAsync('codex', args, {
+      cwd: path.dirname(__dirname),
+      maxBuffer: 1024 * 1024 * 20,
+      env: { ...process.env },
+    });
+    if (stdout?.trim()) log('codex stdout', { stdout: stdout.trim().slice(0, 1000) });
+    if (stderr?.trim()) log('codex stderr', { stderr: stderr.trim().slice(0, 1000) });
+    const review = fs.readFileSync(outputPath, 'utf8').trim();
+    return review;
   } catch (err) {
-    log('openclaw agent failed', { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
-    await sendTelegramText(`Walker email monitor caught a new message but the agent handoff failed.\n\nFrom: ${message.match(/From: (.*)/)?.[1] || ''}\nSubject: ${message.match(/Subject: (.*)/)?.[1] || ''}\n\nI need to inspect the handoff path.`);
+    log('codex review failed', { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
+    await sendTelegramText(`Walker email monitor caught a new message but review generation failed.\n\nFrom: ${message.match(/From: (.*)/)?.[1] || ''}\nSubject: ${message.match(/Subject: (.*)/)?.[1] || ''}`);
     throw err;
   }
 }
@@ -236,6 +248,30 @@ async function generatePdf(artifacts, reviewText) {
   return outPdf;
 }
 
+function updatePublishedManifest(entry) {
+  const existing = fs.existsSync(SITE_MANIFEST) ? JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8')) : [];
+  const filtered = existing.filter((x) => x.messageId !== entry.messageId);
+  filtered.push(entry);
+  fs.writeFileSync(SITE_MANIFEST, JSON.stringify(filtered, null, 2));
+}
+
+async function publishSite() {
+  await execFileAsync('python3', [SITE_GENERATOR], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+  const ghToken = process.env.GH_TOKEN || '';
+  if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
+  const tmpRepo = '/tmp/email-audit';
+  const cmd = `set -e
+cd ${tmpRepo}
+git pull --ff-only
+find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+cp -R ${SITE_DIR}/* ${tmpRepo}/
+git add .
+if git diff --cached --quiet; then echo NO_CHANGES; exit 0; fi
+git commit -m "Publish latest Skechers email audit"
+git push origin HEAD:main`;
+  await execFileAsync('/bin/zsh', ['-lc', cmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
+}
+
 async function fetchMessages(client, limit = STARTUP_LOOKBACK) {
   const response = await client.inboxes.messages.list(INBOX_ID, { limit });
   return response.messages || [];
@@ -282,14 +318,22 @@ async function processMessage(client, state, message, source = 'unknown') {
       created_at: fullMessage.created_at,
     });
 
-    const reviewText = await sendToWalker(buildPromptFromMessage(fullMessage));
+    const reviewText = await generateReview(buildPromptFromMessage(fullMessage));
     await sendTelegramText(reviewText);
     const artifacts = await saveArtifacts(fullMessage);
     const rendered = await renderWebview(artifacts);
     const pdfPath = await generatePdf(artifacts, reviewText || buildPromptFromMessage(fullMessage));
+    updatePublishedManifest({
+      messageId: id,
+      subject: fullMessage.subject,
+      artifactDir: artifacts.dir,
+      pdfPath,
+      slug: artifacts.slug,
+    });
+    await publishSite();
     await sendPdf(pdfPath, path.basename(pdfPath), `Automated one-pager PDF for: ${fullMessage.subject}`);
     markSeen(state, id);
-    log('message completed', { id, source, pdfPath, rendered: !!rendered });
+    log('message completed', { id, source, pdfPath, rendered: !!rendered, published: true });
   } catch (err) {
     markFailed(state, id);
     log('message failed; marked failed and will not auto-retry', { id, source, error: String(err) });
