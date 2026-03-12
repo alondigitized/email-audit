@@ -38,16 +38,18 @@ function loadState() {
     const parsed = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
     return {
       processedMessageIds: Array.isArray(parsed.processedMessageIds) ? parsed.processedMessageIds : [],
+      inFlightMessageIds: Array.isArray(parsed.inFlightMessageIds) ? parsed.inFlightMessageIds : [],
       lastPollAt: parsed.lastPollAt || null,
     };
   } catch {
-    return { processedMessageIds: [], lastPollAt: null };
+    return { processedMessageIds: [], inFlightMessageIds: [], lastPollAt: null };
   }
 }
 
 function saveState(state) {
   const trimmed = {
     processedMessageIds: Array.from(new Set(state.processedMessageIds)).slice(-1000),
+    inFlightMessageIds: Array.from(new Set(state.inFlightMessageIds || [])).slice(-1000),
     lastPollAt: state.lastPollAt || null,
   };
   fs.writeFileSync(STATE_PATH, JSON.stringify(trimmed, null, 2));
@@ -60,8 +62,25 @@ function seen(state, id) {
 function markSeen(state, id) {
   if (!seen(state, id)) {
     state.processedMessageIds.push(id);
+    state.inFlightMessageIds = (state.inFlightMessageIds || []).filter((x) => x !== id);
     saveState(state);
   }
+}
+
+function inFlight(state, id) {
+  return (state.inFlightMessageIds || []).includes(id);
+}
+
+function markInFlight(state, id) {
+  if (!inFlight(state, id)) {
+    state.inFlightMessageIds = [...(state.inFlightMessageIds || []), id];
+    saveState(state);
+  }
+}
+
+function clearInFlight(state, id) {
+  state.inFlightMessageIds = (state.inFlightMessageIds || []).filter((x) => x !== id);
+  saveState(state);
 }
 
 function shorten(text, max = 2400) {
@@ -146,25 +165,37 @@ async function processMessage(client, state, message, source = 'unknown') {
     log('duplicate skipped', { id, source });
     return;
   }
-
-  markSeen(state, id);
-
-  let fullMessage = message;
-  try {
-    fullMessage = await fetchMessage(client, id);
-  } catch (err) {
-    log('failed to hydrate full message; using event/list payload', { id, source, error: String(err) });
+  if (inFlight(state, id)) {
+    log('already in flight; skipping duplicate work', { id, source });
+    return;
   }
 
-  log('processing message', {
-    id,
-    source,
-    from: fullMessage.from_ || fullMessage.from,
-    subject: fullMessage.subject,
-    created_at: fullMessage.created_at,
-  });
+  markInFlight(state, id);
 
-  await sendToWalker(buildPromptFromMessage(fullMessage));
+  try {
+    let fullMessage = message;
+    try {
+      fullMessage = await fetchMessage(client, id);
+    } catch (err) {
+      log('failed to hydrate full message; using event/list payload', { id, source, error: String(err) });
+    }
+
+    log('processing message', {
+      id,
+      source,
+      from: fullMessage.from_ || fullMessage.from,
+      subject: fullMessage.subject,
+      created_at: fullMessage.created_at,
+    });
+
+    await sendToWalker(buildPromptFromMessage(fullMessage));
+    markSeen(state, id);
+    log('message completed', { id, source });
+  } catch (err) {
+    clearInFlight(state, id);
+    log('message failed; will retry on next poll', { id, source, error: String(err) });
+    throw err;
+  }
 }
 
 async function pollOnce(client, state, reason = 'poll') {
