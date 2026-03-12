@@ -16,6 +16,9 @@ const API_KEY = process.env.AGENTMAIL_API_KEY;
 const INBOX_ID = process.env.INBOX_ID || 'walker@agentmail.to';
 const TELEGRAM_TARGET = process.env.TELEGRAM_TARGET;
 const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || 'main';
+const OPENCLAW_PROFILE = process.env.OPENCLAW_PROFILE || 'walker';
+const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG_PATH || '/Users/alontsang/.openclaw-walker/openclaw.json';
+const OPENCLAW_STATE_DIR = process.env.OPENCLAW_STATE_DIR || '/Users/alontsang/.openclaw-walker';
 const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS || 15000);
 const STARTUP_LOOKBACK = Number(process.env.STARTUP_LOOKBACK || 10);
 const STATE_PATH = path.join(__dirname, 'state.json');
@@ -89,6 +92,18 @@ function shorten(text, max = 2400) {
   return clean.length > max ? clean.slice(0, max - 1) + '…' : clean;
 }
 
+function openclawExec(commandArgs, maxBuffer = 1024 * 1024 * 10) {
+  return execFileAsync('openclaw', ['--profile', OPENCLAW_PROFILE, ...commandArgs], {
+    maxBuffer,
+    env: {
+      ...process.env,
+      OPENCLAW_PROFILE,
+      OPENCLAW_CONFIG_PATH,
+      OPENCLAW_STATE_DIR,
+    },
+  });
+}
+
 async function sendTelegramFallback(text) {
   const args = [
     'message', 'send',
@@ -96,7 +111,7 @@ async function sendTelegramFallback(text) {
     '--target', TELEGRAM_TARGET,
     '--message', text,
   ];
-  const { stdout, stderr } = await execFileAsync('openclaw', args, { maxBuffer: 1024 * 1024 * 5 });
+  const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 5);
   if (stdout?.trim()) log('telegram fallback stdout', { stdout: stdout.trim().slice(0, 1000) });
   if (stderr?.trim()) log('telegram fallback stderr', { stderr: stderr.trim().slice(0, 1000) });
 }
@@ -112,7 +127,7 @@ async function sendToWalker(message) {
     '--timeout', '600',
   ];
   try {
-    const { stdout, stderr } = await execFileAsync('openclaw', args, { maxBuffer: 1024 * 1024 * 10 });
+    const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 10);
     if (stdout?.trim()) log('openclaw agent stdout', { stdout: stdout.trim().slice(0, 1000) });
     if (stderr?.trim()) log('openclaw agent stderr', { stderr: stderr.trim().slice(0, 1000) });
   } catch (err) {
