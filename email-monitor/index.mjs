@@ -24,6 +24,10 @@ const STARTUP_LOOKBACK = Number(process.env.STARTUP_LOOKBACK || 10);
 const STATE_PATH = path.join(__dirname, 'state.json');
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_PATH = path.join(LOG_DIR, 'monitor.log');
+const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
+const ARTIFACTS_DIR = path.join(REPORTS_DIR, 'email-artifacts');
+const RENDER_SWIFT = path.join(REPORTS_DIR, 'email-artifacts', 'render_web_url.swift');
+const PDF_SCRIPT = path.join(__dirname, 'generate_review_pdf.py');
 
 if (!API_KEY) throw new Error('Missing AGENTMAIL_API_KEY');
 if (!TELEGRAM_TARGET) throw new Error('Missing TELEGRAM_TARGET');
@@ -42,10 +46,11 @@ function loadState() {
     return {
       processedMessageIds: Array.isArray(parsed.processedMessageIds) ? parsed.processedMessageIds : [],
       inFlightMessageIds: Array.isArray(parsed.inFlightMessageIds) ? parsed.inFlightMessageIds : [],
+      failedMessageIds: Array.isArray(parsed.failedMessageIds) ? parsed.failedMessageIds : [],
       lastPollAt: parsed.lastPollAt || null,
     };
   } catch {
-    return { processedMessageIds: [], inFlightMessageIds: [], lastPollAt: null };
+    return { processedMessageIds: [], inFlightMessageIds: [], failedMessageIds: [], lastPollAt: null };
   }
 }
 
@@ -53,6 +58,7 @@ function saveState(state) {
   const trimmed = {
     processedMessageIds: Array.from(new Set(state.processedMessageIds)).slice(-1000),
     inFlightMessageIds: Array.from(new Set(state.inFlightMessageIds || [])).slice(-1000),
+    failedMessageIds: Array.from(new Set(state.failedMessageIds || [])).slice(-1000),
     lastPollAt: state.lastPollAt || null,
   };
   fs.writeFileSync(STATE_PATH, JSON.stringify(trimmed, null, 2));
@@ -60,6 +66,16 @@ function saveState(state) {
 
 function seen(state, id) {
   return state.processedMessageIds.includes(id);
+}
+
+function failed(state, id) {
+  return (state.failedMessageIds || []).includes(id);
+}
+
+function markFailed(state, id) {
+  state.failedMessageIds = [...(state.failedMessageIds || []), id];
+  state.inFlightMessageIds = (state.inFlightMessageIds || []).filter((x) => x !== id);
+  saveState(state);
 }
 
 function markSeen(state, id) {
@@ -92,6 +108,32 @@ function shorten(text, max = 2400) {
   return clean.length > max ? clean.slice(0, max - 1) + '…' : clean;
 }
 
+function slugify(text) {
+  return String(text || 'email-review')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80) || 'email-review';
+}
+
+function dateSlug(iso) {
+  return String(iso || new Date().toISOString()).slice(0, 10);
+}
+
+async function sendPdf(pathToPdf, filename, caption) {
+  const args = [
+    'message', 'send',
+    '--channel', 'telegram',
+    '--target', TELEGRAM_TARGET,
+    '--message', caption,
+    '--filePath', pathToPdf,
+    '--filename', filename,
+  ];
+  const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 10);
+  if (stdout?.trim()) log('pdf send stdout', { stdout: stdout.trim().slice(0, 1000) });
+  if (stderr?.trim()) log('pdf send stderr', { stderr: stderr.trim().slice(0, 1000) });
+}
+
 function openclawExec(commandArgs, maxBuffer = 1024 * 1024 * 10) {
   return execFileAsync('openclaw', ['--profile', OPENCLAW_PROFILE, ...commandArgs], {
     maxBuffer,
@@ -104,7 +146,7 @@ function openclawExec(commandArgs, maxBuffer = 1024 * 1024 * 10) {
   });
 }
 
-async function sendTelegramFallback(text) {
+async function sendTelegramText(text) {
   const args = [
     'message', 'send',
     '--channel', 'telegram',
@@ -112,8 +154,8 @@ async function sendTelegramFallback(text) {
     '--message', text,
   ];
   const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 5);
-  if (stdout?.trim()) log('telegram fallback stdout', { stdout: stdout.trim().slice(0, 1000) });
-  if (stderr?.trim()) log('telegram fallback stderr', { stderr: stderr.trim().slice(0, 1000) });
+  if (stdout?.trim()) log('telegram send stdout', { stdout: stdout.trim().slice(0, 1000) });
+  if (stderr?.trim()) log('telegram send stderr', { stderr: stderr.trim().slice(0, 1000) });
 }
 
 async function sendToWalker(message) {
@@ -121,18 +163,16 @@ async function sendToWalker(message) {
     'agent',
     '--agent', OPENCLAW_AGENT_ID,
     '--message', message,
-    '--deliver',
-    '--reply-channel', 'telegram',
-    '--reply-to', TELEGRAM_TARGET,
     '--timeout', '600',
   ];
   try {
     const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 10);
     if (stdout?.trim()) log('openclaw agent stdout', { stdout: stdout.trim().slice(0, 1000) });
     if (stderr?.trim()) log('openclaw agent stderr', { stderr: stderr.trim().slice(0, 1000) });
+    return stdout?.trim() || '';
   } catch (err) {
     log('openclaw agent failed', { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
-    await sendTelegramFallback(`Walker email monitor caught a new message but the agent handoff failed.\n\nFrom: ${message.match(/From: (.*)/)?.[1] || ''}\nSubject: ${message.match(/Subject: (.*)/)?.[1] || ''}\n\nI need to inspect the handoff path.`);
+    await sendTelegramText(`Walker email monitor caught a new message but the agent handoff failed.\n\nFrom: ${message.match(/From: (.*)/)?.[1] || ''}\nSubject: ${message.match(/Subject: (.*)/)?.[1] || ''}\n\nI need to inspect the handoff path.`);
     throw err;
   }
 }
@@ -161,6 +201,41 @@ function buildPromptFromMessage(msg) {
   ].filter(Boolean).join('\n');
 }
 
+async function saveArtifacts(msg) {
+  fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
+  const slug = `${dateSlug(msg.created_at)}-${slugify(msg.subject)}`;
+  let dir = path.join(ARTIFACTS_DIR, slug);
+  if (fs.existsSync(dir)) {
+    const idSlug = slugify((msg.messageId || msg.message_id || '').replace(/[@<>]/g, '-')).slice(0, 24);
+    dir = path.join(ARTIFACTS_DIR, `${slug}-${idSlug}`);
+  }
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'message.json'), JSON.stringify(msg, null, 2));
+  fs.writeFileSync(path.join(dir, 'message.html'), msg.html || msg.extracted_html || '', 'utf8');
+  fs.writeFileSync(path.join(dir, 'message.txt'), msg.text || msg.extracted_text || '', 'utf8');
+  const combined = `${msg.html || msg.extracted_html || ''}\n${msg.text || msg.extracted_text || ''}`;
+  const urls = Array.from(new Set((combined.match(/https?:\/\/[^\s"'<>]+/g) || [])));
+  const webview = urls.find((u) => u.includes('view.emails.skechers.com')) || '';
+  fs.writeFileSync(path.join(dir, 'urls.txt'), urls.join('\n'), 'utf8');
+  fs.writeFileSync(path.join(dir, 'webview-url.txt'), webview, 'utf8');
+  return { dir, slug, webview };
+}
+
+async function renderWebview(artifacts) {
+  if (!artifacts.webview || !fs.existsSync(RENDER_SWIFT)) return null;
+  const out = path.join(artifacts.dir, 'email-webview-render.png');
+  await execFileAsync('swift', [RENDER_SWIFT, artifacts.webview, out], { maxBuffer: 1024 * 1024 * 20 });
+  return out;
+}
+
+async function generatePdf(artifacts, reviewText) {
+  const reviewPath = path.join(artifacts.dir, 'review.txt');
+  fs.writeFileSync(reviewPath, reviewText, 'utf8');
+  const outPdf = path.join(REPORTS_DIR, `${artifacts.slug}-review.pdf`);
+  await execFileAsync('python3', [PDF_SCRIPT, reviewPath, artifacts.dir, outPdf], { maxBuffer: 1024 * 1024 * 20 });
+  return outPdf;
+}
+
 async function fetchMessages(client, limit = STARTUP_LOOKBACK) {
   const response = await client.inboxes.messages.list(INBOX_ID, { limit });
   return response.messages || [];
@@ -178,6 +253,10 @@ async function processMessage(client, state, message, source = 'unknown') {
   }
   if (seen(state, id)) {
     log('duplicate skipped', { id, source });
+    return;
+  }
+  if (failed(state, id)) {
+    log('failed previously; skipping automatic retry', { id, source });
     return;
   }
   if (inFlight(state, id)) {
@@ -203,12 +282,17 @@ async function processMessage(client, state, message, source = 'unknown') {
       created_at: fullMessage.created_at,
     });
 
-    await sendToWalker(buildPromptFromMessage(fullMessage));
+    const reviewText = await sendToWalker(buildPromptFromMessage(fullMessage));
+    await sendTelegramText(reviewText);
+    const artifacts = await saveArtifacts(fullMessage);
+    const rendered = await renderWebview(artifacts);
+    const pdfPath = await generatePdf(artifacts, reviewText || buildPromptFromMessage(fullMessage));
+    await sendPdf(pdfPath, path.basename(pdfPath), `Automated one-pager PDF for: ${fullMessage.subject}`);
     markSeen(state, id);
-    log('message completed', { id, source });
+    log('message completed', { id, source, pdfPath, rendered: !!rendered });
   } catch (err) {
-    clearInFlight(state, id);
-    log('message failed; will retry on next poll', { id, source, error: String(err) });
+    markFailed(state, id);
+    log('message failed; marked failed and will not auto-retry', { id, source, error: String(err) });
     throw err;
   }
 }
