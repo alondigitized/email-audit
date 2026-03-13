@@ -8,3 +8,5 @@ a{color:#0f172a;text-decoration:none} a:hover{text-decoration:underline}
 .section{margin-top:18px} ul{margin:8px 0 0 18px;padding:0} li{margin:6px 0} .score{display:inline-block;padding:8px 12px;border-radius:999px;background:#f3f4f6;font-weight:700}
 .layout{display:grid;grid-template-columns:1.25fr .9fr;gap:20px}.image{width:100%;border:1px solid var(--line);border-radius:16px} .refs a{word-break:break-all}
 @media(max-width:800px){.layout{grid-template-columns:1fr}}
+
+html:not(.ok) main{visibility:hidden}

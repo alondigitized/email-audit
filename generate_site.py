@@ -11,6 +11,36 @@ ROOT.mkdir(parents=True, exist_ok=True)
 AUDITS.mkdir(parents=True, exist_ok=True)
 ASSETS.mkdir(parents=True, exist_ok=True)
 
+GATE_JS = '''<script>
+(function(){
+  var H="50a34207d6767ecb822d4e8e8b1e2e3075cc97fae54419cd063887f505cf697a";
+  if(sessionStorage.getItem("_ga")==="1"){document.documentElement.classList.add("ok");return;}
+  var o=document.getElementById("gate");if(!o)return;o.style.display="flex";
+  document.getElementById("gate-btn").onclick=async function(){
+    var v=document.getElementById("gate-in").value;
+    var e=new TextEncoder().encode(v);
+    var h=await crypto.subtle.digest("SHA-256",e);
+    var a=Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+    if(a===H){sessionStorage.setItem("_ga","1");document.documentElement.classList.add("ok");o.style.display="none";}
+    else{document.getElementById("gate-err").style.display="block";document.getElementById("gate-in").value="";}
+  };
+  document.getElementById("gate-in").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("gate-btn").click();});
+})();
+</script>'''
+
+GATE_HTML = '''<div id="gate" style="display:none;position:fixed;inset:0;z-index:9999;background:#faf8f5;align-items:center;justify-content:center;flex-direction:column;font-family:Inter,Arial,sans-serif">
+<div style="background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:40px;max-width:360px;width:90%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.04)">
+<h2 style="margin:0 0 8px;color:#1f2937">Email Audit</h2>
+<p style="color:#6b7280;margin:0 0 20px;font-size:14px">Enter the shared secret to continue.</p>
+<input id="gate-in" type="password" placeholder="Shared secret" style="width:100%;padding:10px 14px;border:1px solid #e5e7eb;border-radius:10px;font-size:15px;margin-bottom:12px;box-sizing:border-box;outline:none">
+<button id="gate-btn" style="width:100%;padding:10px;background:#111827;color:#fff;border:none;border-radius:10px;font-size:15px;cursor:pointer">Unlock</button>
+<p id="gate-err" style="display:none;color:#dc2626;margin:10px 0 0;font-size:13px">Incorrect. Try again.</p>
+</div></div>'''
+
+GATE_CSS = '''
+html:not(.ok) main{visibility:hidden}
+'''
+
 CSS = '''
 :root { --bg:#faf8f5; --card:#ffffff; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --accent:#111827; }
 *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -22,7 +52,7 @@ a{color:#0f172a;text-decoration:none} a:hover{text-decoration:underline}
 .layout{display:grid;grid-template-columns:1.25fr .9fr;gap:20px}.image{width:100%;border:1px solid var(--line);border-radius:16px} .refs a{word-break:break-all}
 @media(max-width:800px){.layout{grid-template-columns:1fr}}
 '''
-(ROOT/'styles.css').write_text(CSS)
+(ROOT/'styles.css').write_text(CSS + GATE_CSS)
 
 def clean(text):
     text = text or ''
@@ -135,10 +165,10 @@ for row in rows:
     summary_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['summary'])
     bottom_html = ''.join(f'<p>{html.escape(x)}</p>' for x in (p['bottom'] or p['summary'][:1]))
     evidence_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['evidence']) if p['evidence'] else '<p class="muted">\u2014</p>'
-    body = f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} \u00b7 {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What\u2019s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What\u2019s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section"><h2>Evidence</h2>{evidence_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">\u2190 Back to index</a></p></div></div></div></main></body></html>'''
+    body = f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body>{GATE_HTML}<main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} \u00b7 {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What\u2019s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What\u2019s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section"><h2>Evidence</h2>{evidence_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">\u2190 Back to index</a></p></div></div></div></main>{GATE_JS}</body></html>'''
     (AUDITS / f"{row['slug']}.html").write_text(body)
 
 rows_html = ''.join(f"<tr><td>{html.escape(r['date'])}</td><td>{html.escape(r['time'])}</td><td>{html.escape(r['subject'])}</td><td>{html.escape(r['score'])}</td><td><a href='audits/{r['slug']}.html'>View audit</a></td></tr>" for r in rows)
-index = f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Email Audit</title><link rel="stylesheet" href="styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Digital</div><h1>Email Audit</h1><p class="muted">Homepage index of conducted email audits, with links to detailed audit pages.</p></div><div class="card"><table><thead><tr><th>Date</th><th>Time</th><th>Email Name</th><th>Score</th><th>Detail</th></tr></thead><tbody>{rows_html}</tbody></table></div></main></body></html>'''
+index = f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Email Audit</title><link rel="stylesheet" href="styles.css"></head><body>{GATE_HTML}<main><div class="hero"><div class="muted">Skechers Digital</div><h1>Email Audit</h1><p class="muted">Homepage index of conducted email audits, with links to detailed audit pages.</p></div><div class="card"><table><thead><tr><th>Date</th><th>Time</th><th>Email Name</th><th>Score</th><th>Detail</th></tr></thead><tbody>{rows_html}</tbody></table></div></main>{GATE_JS}</body></html>'''
 (ROOT / 'index.html').write_text(index)
 print(f'Generated {len(rows)} audits at {ROOT}')
