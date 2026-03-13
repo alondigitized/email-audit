@@ -32,41 +32,56 @@ def clean(text):
     return text.strip()
 
 def parse_review(text):
-    sec={'summary':[], 'working':[], 'weak':[], 'recs':[], 'bottom':[], 'evidence':[], 'score':'n/a'}
-    cur='summary'
-    pending=None
+    sec = {'summary':[], 'working':[], 'weak':[], 'recs':[], 'bottom':[], 'evidence':[], 'score':'n/a'}
+    cur = 'summary'
+    pending = None
     for raw in text.splitlines():
-        line=raw.strip()
+        line = raw.strip()
         if not line:
             continue
-        m=re.search(r'(business impact score|business impact|impact)\s*:?\s*(\d{1,2})\s*/\s*10', line, re.I)
+        if re.match(r'^-{2,}$', line):
+            continue
+        m = re.search(r'(business impact score|business impact|impact)\s*:?\s*(\d{1,2}(?:\.\d+)?)\s*/\s*10', line, re.I)
         if m:
-            sec['score']=f"{m.group(2)}/10"
+            sec['score'] = f"{m.group(2)}/10"
             continue
-        low=clean(line).lower().strip(':- ')
-        if low=='executive summary':
-            cur='summary'; pending=None; continue
-        if low=='evidence' or low=='evidence & analysis':
-            cur='evidence'; pending=None; continue
-        if "what's working" in low or 'what’s working' in low:
-            cur='working'; pending=None; continue
-        if "what's weak" in low or 'what’s weak' in low:
-            cur='weak'; pending=None; continue
+        low = clean(line).lower().strip(':- ')
+        low = re.sub(r'^\d+[\.)]\s*', '', low).strip()
+        if low == 'executive summary':
+            cur = 'summary'; pending = None; continue
+        if low == 'evidence' or low == 'evidence & analysis':
+            cur = 'evidence'; pending = None; continue
+        if "what's working" in low or "what\u2019s working" in low:
+            cur = 'working'; pending = None; continue
+        if "what's weak" in low or "what\u2019s weak" in low:
+            cur = 'weak'; pending = None; continue
         if low.startswith('recommendation'):
-            cur='recs'; pending=None; continue
-        if low=='bottom line':
-            cur='bottom'; pending=None; continue
-        line=re.sub(r'^[-•*]\s*','',line)
-        line=re.sub(r'^\d+[\.)]\s*','',line)
-        line=clean(line)
+            cur = 'recs'; pending = None; continue
+        if low == 'bottom line':
+            cur = 'bottom'; pending = None; continue
+        if low == 'business impact score' or low == 'business impact':
+            cur = '_score'; pending = None; continue
+        if cur == '_score':
+            sm = re.search(r'(\d{1,2}(?:\.\d+)?)\s*/\s*10', line)
+            if sm:
+                sec['score'] = f"{sm.group(1)}/10"
+                cur = 'summary'
+                continue
+            cline = clean(line)
+            if cline:
+                sec['summary'].append(cline)
+            continue
+        line = re.sub(r'^[-\u2022*]\s*', '', line)
+        line = re.sub(r'^\d+[\.)]\s*', '', line)
+        line = clean(line)
         if not line:
             continue
-        if line.endswith(':') and cur in ('working','weak','recs','evidence'):
-            pending=line[:-1]
+        if line.endswith(':') and cur in ('working', 'weak', 'recs', 'evidence'):
+            pending = line[:-1]
             continue
         if pending:
-            line=f'{pending}: {line}'
-            pending=None
+            line = f'{pending}: {line}'
+            pending = None
         sec[cur].append(line)
     return sec
 
@@ -77,53 +92,53 @@ for p in ASSETS.iterdir():
         p.unlink()
 
 manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else []
-rows=[]
+rows = []
 for item in manifest:
     d = Path(item['artifactDir'])
-    mp=d/'message.json'; rv=d/'review.txt'
+    mp = d / 'message.json'; rv = d / 'review.txt'
     if not (mp.exists() and rv.exists()):
         continue
-    data=json.loads(mp.read_text())
-    sender=(data.get('from_') or data.get('from') or '')
-    subject=data.get('subject') or item.get('subject') or 'Untitled'
-    slug=item['slug']
-    created=(data.get('created_at') or '')
-    date=created[:10] if created else slug[:10]
-    time=created[11:16] if len(created)>=16 else ''
-    review=clean(rv.read_text())
-    parsed=parse_review(review)
-    webview=(d/'webview-url.txt').read_text().strip() if (d/'webview-url.txt').exists() else ''
-    img=None
-    for pth in ['email-webview-render.png','email-render.png']:
-        if (d/pth).exists():
-            target=ASSETS/f'{slug}-{pth}'
-            shutil.copy2(d/pth, target)
-            img=target.name
+    data = json.loads(mp.read_text())
+    sender = (data.get('from_') or data.get('from') or '')
+    subject = data.get('subject') or item.get('subject') or 'Untitled'
+    slug = item['slug']
+    created = (data.get('created_at') or data.get('timestamp') or '')
+    date = created[:10] if created else slug[:10]
+    time = created[11:16] if len(created) >= 16 else ''
+    review = clean(rv.read_text())
+    parsed = parse_review(review)
+    webview = (d / 'webview-url.txt').read_text().strip() if (d / 'webview-url.txt').exists() else ''
+    img = None
+    for pth in ['email-webview-render.png', 'email-render.png']:
+        if (d / pth).exists():
+            target = ASSETS / f'{slug}-{pth}'
+            shutil.copy2(d / pth, target)
+            img = target.name
             break
-    pdf_link=''
+    pdf_link = ''
     pdf_source = Path(item['pdfPath'])
     if pdf_source.exists():
-        target=ASSETS/pdf_source.name
+        target = ASSETS / pdf_source.name
         shutil.copy2(pdf_source, target)
-        pdf_link=target.name
-    rows.append({'slug':slug,'subject':subject,'date':date,'time':time,'sender':sender,'score':parsed['score'],'parsed':parsed,'webview':webview,'img':img,'pdf':pdf_link,'dir':d.name})
+        pdf_link = target.name
+    rows.append({'slug':slug, 'subject':subject, 'date':date, 'time':time, 'sender':sender, 'score':parsed['score'], 'parsed':parsed, 'webview':webview, 'img':img, 'pdf':pdf_link, 'dir':d.name})
 
 rows.sort(key=lambda r: (r['date'], r['time']), reverse=True)
 
 for row in rows:
-    p=row['parsed']
+    p = row['parsed']
     def bullets(items):
-        return '<ul>' + ''.join(f'<li>{html.escape(i)}</li>' for i in items) + '</ul>' if items else '<p class="muted">—</p>'
+        return '<ul>' + ''.join(f'<li>{html.escape(i)}</li>' for i in items) + '</ul>' if items else '<p class="muted">\u2014</p>'
     image_html = f'<img class="image" src="../assets/{row["img"]}" alt="Email render">' if row['img'] else '<p class="muted">No image available.</p>'
-    webview_html = f'<a href="{html.escape(row["webview"])}">{html.escape(row["webview"])}</a>' if row['webview'] else '—'
-    pdf_html = f'<a href="../assets/{row["pdf"]}">Download PDF</a>' if row['pdf'] else '—'
+    webview_html = f'<a href="{html.escape(row["webview"])}">{html.escape(row["webview"])}</a>' if row['webview'] else '\u2014'
+    pdf_html = f'<a href="../assets/{row["pdf"]}">Download PDF</a>' if row['pdf'] else '\u2014'
     summary_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['summary'])
     bottom_html = ''.join(f'<p>{html.escape(x)}</p>' for x in (p['bottom'] or p['summary'][:1]))
-    evidence_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['evidence']) if p['evidence'] else '<p class="muted">—</p>'
-    body=f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} · {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What’s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What’s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section"><h2>Evidence</h2>{evidence_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">← Back to index</a></p></div></div></div></main></body></html>'''
-    (AUDITS/f"{row['slug']}.html").write_text(body)
+    evidence_html = ''.join(f'<p>{html.escape(x)}</p>' for x in p['evidence']) if p['evidence'] else '<p class="muted">\u2014</p>'
+    body = f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(row['subject'])}</title><link rel="stylesheet" href="../styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Email Audit</div><h1>{html.escape(row['subject'])}</h1><div class="muted">{html.escape(row['date'])} {html.escape(row['time'])} \u00b7 {html.escape(row['sender'])}</div></div><div class="layout"><div class="card"><div class="score">Business Impact Score: {html.escape(row['score'])}</div><div class="section"><h2>Executive Summary</h2>{summary_html}</div><div class="section"><h2>What\u2019s Working</h2>{bullets(p['working'])}</div><div class="section"><h2>What\u2019s Weak</h2>{bullets(p['weak'])}</div><div class="section"><h2>Recommendations</h2>{bullets(p['recs'])}</div><div class="section"><h2>Bottom Line</h2>{bottom_html}</div></div><div class="card"><div class="section"><h2>Visual Reference</h2>{image_html}</div><div class="section"><h2>Evidence</h2>{evidence_html}</div><div class="section refs"><h2>References</h2><p><strong>Web view:</strong> {webview_html}</p><p><strong>PDF:</strong> {pdf_html}</p><p><strong>Artifacts:</strong> {html.escape(row['dir'])}</p><p><a href="../index.html">\u2190 Back to index</a></p></div></div></div></main></body></html>'''
+    (AUDITS / f"{row['slug']}.html").write_text(body)
 
-rows_html=''.join(f"<tr><td>{html.escape(r['date'])}</td><td>{html.escape(r['time'])}</td><td>{html.escape(r['subject'])}</td><td>{html.escape(r['score'])}</td><td><a href='audits/{r['slug']}.html'>View audit</a></td></tr>" for r in rows)
-index=f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Email Audit</title><link rel="stylesheet" href="styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Digital</div><h1>Email Audit</h1><p class="muted">Homepage index of conducted email audits, with links to detailed audit pages.</p></div><div class="card"><table><thead><tr><th>Date</th><th>Time</th><th>Email Name</th><th>Score</th><th>Detail</th></tr></thead><tbody>{rows_html}</tbody></table></div></main></body></html>'''
-(ROOT/'index.html').write_text(index)
+rows_html = ''.join(f"<tr><td>{html.escape(r['date'])}</td><td>{html.escape(r['time'])}</td><td>{html.escape(r['subject'])}</td><td>{html.escape(r['score'])}</td><td><a href='audits/{r['slug']}.html'>View audit</a></td></tr>" for r in rows)
+index = f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Email Audit</title><link rel="stylesheet" href="styles.css"></head><body><main><div class="hero"><div class="muted">Skechers Digital</div><h1>Email Audit</h1><p class="muted">Homepage index of conducted email audits, with links to detailed audit pages.</p></div><div class="card"><table><thead><tr><th>Date</th><th>Time</th><th>Email Name</th><th>Score</th><th>Detail</th></tr></thead><tbody>{rows_html}</tbody></table></div></main></body></html>'''
+(ROOT / 'index.html').write_text(index)
 print(f'Generated {len(rows)} audits at {ROOT}')
