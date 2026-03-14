@@ -64,7 +64,7 @@ def clean(text):
 
 def parse_review(text):
     sec = {'summary':[], 'working':[], 'weak':[], 'recs':[], 'bottom':[], 'evidence':[], 'score':'n/a'}
-    cur = 'summary'
+    cur = '_preamble'
     pending = None
     for raw in text.splitlines():
         line = raw.strip()
@@ -113,7 +113,8 @@ def parse_review(text):
         if pending:
             line = f'{pending}: {line}'
             pending = None
-        sec[cur].append(line)
+        if cur not in ('_preamble', '_score'):
+            sec[cur].append(line)
     return sec
 
 for p in AUDITS.glob('*.html'):
