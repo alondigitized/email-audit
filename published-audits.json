@@ -1,12 +1,5 @@
 [
   {
-    "messageId": "<2f02a06e-12d2-441e-bae2-6b9e3893c1c1@dfw1s10mta249.xt.local>",
-    "subject": "Welcome to Skechers!",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-12-welcome-to-skechers-fresh",
-    "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-12-welcome-to-skechers-fresh-review.pdf",
-    "slug": "2026-03-12-welcome-to-skechers-fresh"
-  },
-  {
     "messageId": "<b2832375-996c-46c5-b74d-fd5854b082b4@dfw1s10mta492.xt.local>",
     "subject": "Thanks for completing your Skechers Plus account",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh",
