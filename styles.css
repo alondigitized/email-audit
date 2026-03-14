@@ -7,6 +7,7 @@ main{max-width:980px;margin:0 auto;padding:32px 20px 60px}
 a{color:#0f172a;text-decoration:none} a:hover{text-decoration:underline}
 .section{margin-top:18px} ul{margin:8px 0 0 18px;padding:0} li{margin:6px 0} .score{display:inline-block;padding:8px 12px;border-radius:999px;background:#f3f4f6;font-weight:700}
 .layout{display:grid;grid-template-columns:1.25fr .9fr;gap:20px}.image{width:100%;border:1px solid var(--line);border-radius:16px} .refs a{word-break:break-all}
+.meta-table{margin-top:14px;border:none} .meta-table td{border:none;padding:4px 12px 4px 0;font-size:14px} .meta-label{color:var(--muted);font-weight:600;white-space:nowrap;width:80px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}}
 
 html:not(.ok) main{visibility:hidden}
