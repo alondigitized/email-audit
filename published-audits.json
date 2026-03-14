@@ -26,5 +26,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-13-it-s-back-in-stock-at-skechers-com",
     "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-13-it-s-back-in-stock-at-skechers-com-review.pdf",
     "slug": "2026-03-13-it-s-back-in-stock-at-skechers-com"
+  },
+  {
+    "messageId": "<2f02a06e-12d2-441e-bae2-6b9e3893c1c1@dfw1s10mta249.xt.local>",
+    "subject": "Welcome to Skechers!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-12-welcome-to-skechers-fresh",
+    "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-12-welcome-to-skechers-fresh-review.pdf",
+    "slug": "2026-03-12-welcome-to-skechers-fresh"
   }
 ]
