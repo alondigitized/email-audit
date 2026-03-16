@@ -89,6 +89,17 @@ def parse_review(text):
 
 
 review_path, artifacts_dir, output_pdf = sys.argv[1:4]
+qa_report_path = None
+if '--qa-report' in sys.argv:
+    idx = sys.argv.index('--qa-report')
+    if idx + 1 < len(sys.argv):
+        qa_report_path = sys.argv[idx + 1]
+qa_data = None
+if qa_report_path and os.path.exists(qa_report_path):
+    try:
+        qa_data = json.load(open(qa_report_path, 'r', encoding='utf-8'))
+    except (json.JSONDecodeError, OSError):
+        pass
 review_text = open(review_path, 'r', encoding='utf-8').read().strip()
 meta = json.load(open(os.path.join(artifacts_dir, 'message.json'), 'r', encoding='utf-8'))
 sections = parse_review(review_text)
@@ -130,6 +141,34 @@ if sections['evidence']:
     story.append(Paragraph('Evidence', styles['Section']))
     for p in [clean_inline(v) for v in sections['evidence'] if clean_inline(v)]:
         story.append(Paragraph(p, styles['BodyClean']))
+if qa_data:
+    story.append(Paragraph('Automated QA', styles['Section']))
+    s = qa_data.get('summary', {})
+    story.append(Paragraph(
+        f"Pass rate: {s.get('overall_pass_rate', '?')} &bull; "
+        f"Issues: {s.get('total_issues', 0)} &bull; "
+        f"Warnings: {s.get('total_warnings', 0)}",
+        styles['BodyClean']
+    ))
+    cat_labels = {'link_analysis': 'Link Analysis', 'rendering': 'Rendering & Visual',
+                  'personalization': 'Personalization & Merge', 'compliance': 'Compliance & Deliverability'}
+    for cat_key, cat_label in cat_labels.items():
+        cat = qa_data.get('categories', {}).get(cat_key, {})
+        issues = [c for c in cat.get('checks', []) if c.get('status') != 'pass']
+        if not issues:
+            continue
+        items = []
+        for c in issues:
+            icon = '\u2718' if c['status'] == 'fail' else '\u26a0'
+            detail = c.get('detail', '')
+            url_note = f" | {c['url']}" if c.get('url') else ''
+            label = clean_inline(f"{icon} {c['label']}: {detail}{url_note}")
+            items.append(ListItem(Paragraph(label, styles['BodyClean'])))
+        if items:
+            story.append(Paragraph(cat_label, styles['BodyClean']))
+            story.append(ListFlowable(items, bulletType='bullet', leftIndent=14))
+    story.append(Spacer(1, 4))
+
 if os.path.exists(image_path):
     story.append(Paragraph('Visual Reference', styles['Section']))
     story.append(Image(image_path, width=180, height=495))

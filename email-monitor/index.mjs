@@ -31,8 +31,9 @@ const SITE_GENERATOR = path.join(SITE_DIR, 'generate_site.py');
 const ARTIFACTS_DIR = path.join(REPORTS_DIR, 'email-artifacts');
 const RENDER_SWIFT = path.join(REPORTS_DIR, 'email-artifacts', 'render_web_url.swift');
 const PDF_SCRIPT = path.join(__dirname, 'generate_review_pdf.py');
-const CODEX_MODEL = process.env.CODEX_MODEL || 'gpt-5-codex';
-const CODEX_REASONING = process.env.CODEX_REASONING || 'high';
+const QA_SCRIPT = path.join(__dirname, 'qa_checks.py');
+const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'sonnet';
+const CLAUDE_EFFORT = process.env.CLAUDE_EFFORT || 'high';
 
 if (!API_KEY) throw new Error('Missing AGENTMAIL_API_KEY');
 if (!TELEGRAM_TARGET) throw new Error('Missing TELEGRAM_TARGET');
@@ -163,40 +164,39 @@ async function sendTelegramText(text) {
 }
 
 async function generateReview(message) {
-  const outputPath = path.join(__dirname, 'tmp-review.txt');
   const args = [
-    'exec',
-    '-m', CODEX_MODEL,
-    '-c', `model_reasoning_effort=\"${CODEX_REASONING}\"`,
-    '--skip-git-repo-check',
-    '--output-last-message', outputPath,
+    '-p',
+    '--model', CLAUDE_MODEL,
+    '--effort', CLAUDE_EFFORT,
+    '--no-session-persistence',
     message,
   ];
   try {
-    const { stdout, stderr } = await execFileAsync('codex', args, {
+    const claudeBin = process.env.CLAUDE_BIN || '/Users/alontsang/.local/bin/claude';
+    const { stdout, stderr } = await execFileAsync(claudeBin, args, {
       cwd: path.dirname(__dirname),
       maxBuffer: 1024 * 1024 * 20,
       env: { ...process.env },
     });
-    if (stdout?.trim()) log('codex stdout', { stdout: stdout.trim().slice(0, 1000) });
-    if (stderr?.trim()) log('codex stderr', { stderr: stderr.trim().slice(0, 1000) });
-    const review = fs.readFileSync(outputPath, 'utf8').trim();
+    if (stderr?.trim()) log('claude stderr', { stderr: stderr.trim().slice(0, 1000) });
+    const review = stdout.trim();
+    if (!review) throw new Error('claude returned empty review');
     return review;
   } catch (err) {
-    log('codex review failed', { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
+    log('claude review failed', { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
     await sendTelegramText(`Walker email monitor caught a new message but review generation failed.\n\nFrom: ${message.match(/From: (.*)/)?.[1] || ''}\nSubject: ${message.match(/Subject: (.*)/)?.[1] || ''}`);
     throw err;
   }
 }
 
-function buildPromptFromMessage(msg) {
+function buildPromptFromMessage(msg, qaContext = '') {
   const from = msg.from_ || msg.from || '';
   const subject = msg.subject || '(no subject)';
   const preview = msg.preview || '';
   const text = msg.extracted_text || msg.text || '';
   const html = msg.extracted_html || msg.html || '';
   const body = shorten(text || html || preview, 6000);
-  return [
+  const parts = [
     'A new Skechers email arrived for review.',
     'Review it as Walker using the established format and preferences in this session.',
     'Important: this audit must be comprehensive, not overly narrow. Cover the whole email structure, not just one issue.',
@@ -204,8 +204,8 @@ function buildPromptFromMessage(msg) {
     'Use this exact review structure:',
     '1. Executive Summary',
     '2. Business Impact Score (1-10)',
-    '3. What’s Working',
-    '4. What’s Weak',
+    "3. What's Working",
+    "4. What's Weak",
     '5. Recommendations',
     '6. Bottom Line',
     '7. Evidence',
@@ -233,7 +233,11 @@ function buildPromptFromMessage(msg) {
     '',
     'Body:',
     body || '(no body available)',
-  ].filter(Boolean).join('\n');
+  ];
+  if (qaContext) {
+    parts.push('', qaContext);
+  }
+  return parts.filter(Boolean).join('\n');
 }
 
 async function saveArtifacts(msg) {
@@ -263,11 +267,52 @@ async function renderWebview(artifacts) {
   return out;
 }
 
-async function generatePdf(artifacts, reviewText) {
+async function runQaChecks(artifacts) {
+  try {
+    const { stdout, stderr } = await execFileAsync('python3', [QA_SCRIPT, artifacts.dir], {
+      maxBuffer: 1024 * 1024 * 5,
+      timeout: 120000,
+    });
+    if (stderr?.trim()) log('qa stderr', { stderr: stderr.trim().slice(0, 500) });
+    const reportPath = stdout.trim();
+    if (reportPath && fs.existsSync(reportPath)) {
+      return JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+    }
+    return null;
+  } catch (err) {
+    log('qa checks failed (non-fatal)', { error: String(err).slice(0, 500) });
+    return null;
+  }
+}
+
+function buildQaSummaryForPrompt(qaReport) {
+  if (!qaReport) return '';
+  const lines = ['', '---', 'AUTOMATED QA FINDINGS (from programmatic checks):'];
+  for (const [cat, data] of Object.entries(qaReport.categories || {})) {
+    const issues = (data.checks || []).filter((c) => c.status !== 'pass');
+    if (!issues.length) continue;
+    lines.push(`\n${cat.replace(/_/g, ' ').toUpperCase()}:`);
+    for (const c of issues) {
+      const icon = c.status === 'fail' ? 'FAIL' : 'WARN';
+      const urlNote = c.url ? ` | URL: ${c.url}` : '';
+      lines.push(`  [${icon}] ${c.label}: ${c.detail}${urlNote}`);
+    }
+  }
+  const s = qaReport.summary || {};
+  lines.push(`\nSummary: ${s.overall_pass_rate || '?'} pass rate, ${s.total_issues || 0} issue(s), ${s.total_warnings || 0} warning(s)`);
+  lines.push('Incorporate relevant findings into your review, especially in Evidence > Bugs/friction and Recommendations.');
+  return lines.join('\n');
+}
+
+async function generatePdf(artifacts, reviewText, qaReportPath) {
   const reviewPath = path.join(artifacts.dir, 'review.txt');
   fs.writeFileSync(reviewPath, reviewText, 'utf8');
   const outPdf = path.join(REPORTS_DIR, `${artifacts.slug}-review.pdf`);
-  await execFileAsync('python3', [PDF_SCRIPT, reviewPath, artifacts.dir, outPdf], { maxBuffer: 1024 * 1024 * 20 });
+  const args = [PDF_SCRIPT, reviewPath, artifacts.dir, outPdf];
+  if (qaReportPath && fs.existsSync(qaReportPath)) {
+    args.push('--qa-report', qaReportPath);
+  }
+  await execFileAsync('python3', args, { maxBuffer: 1024 * 1024 * 20 });
   return outPdf;
 }
 
@@ -341,11 +386,14 @@ async function processMessage(client, state, message, source = 'unknown') {
       created_at: fullMessage.created_at,
     });
 
-    const reviewText = await generateReview(buildPromptFromMessage(fullMessage));
-    await sendTelegramText(reviewText);
     const artifacts = await saveArtifacts(fullMessage);
+    const qaReport = await runQaChecks(artifacts);
+    const qaContext = buildQaSummaryForPrompt(qaReport);
+    const reviewText = await generateReview(buildPromptFromMessage(fullMessage, qaContext));
+    await sendTelegramText(reviewText);
     const rendered = await renderWebview(artifacts);
-    const pdfPath = await generatePdf(artifacts, reviewText || buildPromptFromMessage(fullMessage));
+    const qaReportPath = path.join(artifacts.dir, 'qa-report.json');
+    const pdfPath = await generatePdf(artifacts, reviewText || buildPromptFromMessage(fullMessage), qaReportPath);
     updatePublishedManifest({
       messageId: id,
       subject: fullMessage.subject,
