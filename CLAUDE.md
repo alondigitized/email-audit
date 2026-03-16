@@ -58,7 +58,7 @@ Python script that reads `published-audits.json`, parses each review, and genera
 
 **Run:** `python3 workspace/email-audit/generate_site.py` (from workspace dir)
 
-### Swift Renderers (`workspace/reports/email-artifacts/`)
+### Swift Renderers (`scripts/`)
 
 - `render_web_url.swift` — screenshots a hosted email web-view URL
 - `render_email.swift` — renders raw HTML email
