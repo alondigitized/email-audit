@@ -152,15 +152,30 @@ function openclawExec(commandArgs, maxBuffer = 1024 * 1024 * 10) {
 }
 
 async function sendTelegramText(text) {
-  const args = [
-    'message', 'send',
-    '--channel', 'telegram',
-    '--target', TELEGRAM_TARGET,
-    '--message', text,
-  ];
-  const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 5);
-  if (stdout?.trim()) log('telegram send stdout', { stdout: stdout.trim().slice(0, 1000) });
-  if (stderr?.trim()) log('telegram send stderr', { stderr: stderr.trim().slice(0, 1000) });
+  const MAX_LEN = 4000;
+  const chunks = [];
+  let remaining = text;
+  while (remaining.length > 0) {
+    if (remaining.length <= MAX_LEN) {
+      chunks.push(remaining);
+      break;
+    }
+    let cut = remaining.lastIndexOf('\n', MAX_LEN);
+    if (cut < MAX_LEN * 0.5) cut = MAX_LEN;
+    chunks.push(remaining.slice(0, cut));
+    remaining = remaining.slice(cut).replace(/^\n+/, '');
+  }
+  for (const chunk of chunks) {
+    const args = [
+      'message', 'send',
+      '--channel', 'telegram',
+      '--target', TELEGRAM_TARGET,
+      '--message', chunk,
+    ];
+    const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 5);
+    if (stdout?.trim()) log('telegram send stdout', { stdout: stdout.trim().slice(0, 1000) });
+    if (stderr?.trim()) log('telegram send stderr', { stderr: stderr.trim().slice(0, 1000) });
+  }
 }
 
 async function generateReview(message) {
@@ -169,14 +184,26 @@ async function generateReview(message) {
     '--model', CLAUDE_MODEL,
     '--effort', CLAUDE_EFFORT,
     '--no-session-persistence',
-    message,
   ];
   try {
     const claudeBin = process.env.CLAUDE_BIN || '/Users/alontsang/.local/bin/claude';
-    const { stdout, stderr } = await execFileAsync(claudeBin, args, {
+    const child = execFile(claudeBin, args, {
       cwd: path.dirname(__dirname),
       maxBuffer: 1024 * 1024 * 20,
+      timeout: 600000,
       env: { ...process.env },
+    });
+    child.stdin.write(message);
+    child.stdin.end();
+    const { stdout, stderr } = await new Promise((resolve, reject) => {
+      let out = '', err = '';
+      child.stdout.on('data', (d) => { out += d; });
+      child.stderr.on('data', (d) => { err += d; });
+      child.on('close', (code) => {
+        if (code !== 0) reject(Object.assign(new Error(`claude exited with code ${code}`), { stdout: out, stderr: err }));
+        else resolve({ stdout: out, stderr: err });
+      });
+      child.on('error', reject);
     });
     if (stderr?.trim()) log('claude stderr', { stderr: stderr.trim().slice(0, 1000) });
     const review = stdout.trim();
@@ -263,7 +290,7 @@ async function saveArtifacts(msg) {
 async function renderWebview(artifacts) {
   if (!artifacts.webview || !fs.existsSync(RENDER_SWIFT)) return null;
   const out = path.join(artifacts.dir, 'email-webview-render.png');
-  await execFileAsync('swift', [RENDER_SWIFT, artifacts.webview, out], { maxBuffer: 1024 * 1024 * 20 });
+  await execFileAsync('swift', [RENDER_SWIFT, artifacts.webview, out], { maxBuffer: 1024 * 1024 * 20, timeout: 120000 });
   return out;
 }
 
@@ -328,15 +355,27 @@ async function publishSite() {
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
   const tmpRepo = '/tmp/email-audit';
+  const repoUrl = `https://x-access-token:${ghToken}@github.com/alondigitized/email-audit.git`;
   const cmd = `set -e
+if [ ! -d ${tmpRepo}/.git ]; then
+  git clone --branch gh-pages ${repoUrl} ${tmpRepo} 2>/dev/null || {
+    git clone ${repoUrl} ${tmpRepo}
+    cd ${tmpRepo}
+    git checkout --orphan gh-pages
+    git rm -rf . 2>/dev/null || true
+    git commit --allow-empty -m "Initialize gh-pages"
+    git push origin gh-pages
+  }
+fi
 cd ${tmpRepo}
-git pull --ff-only
+git checkout gh-pages
+git pull origin gh-pages --ff-only 2>/dev/null || true
 find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 rsync -a --exclude=generate_site.py --exclude=published-audits.json ${SITE_DIR}/ ${tmpRepo}/
 git add .
 if git diff --cached --quiet; then echo NO_CHANGES; exit 0; fi
 git commit -m "Publish latest Skechers email audit"
-git push origin HEAD:main`;
+git push origin gh-pages`;
   await execFileAsync('/bin/zsh', ['-lc', cmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 
@@ -390,7 +429,11 @@ async function processMessage(client, state, message, source = 'unknown') {
     const qaReport = await runQaChecks(artifacts);
     const qaContext = buildQaSummaryForPrompt(qaReport);
     const reviewText = await generateReview(buildPromptFromMessage(fullMessage, qaContext));
-    await sendTelegramText(reviewText);
+    try {
+      await sendTelegramText(reviewText);
+    } catch (err) {
+      log('telegram text send failed (non-fatal)', { id, error: String(err).slice(0, 500) });
+    }
     const rendered = await renderWebview(artifacts);
     const qaReportPath = path.join(artifacts.dir, 'qa-report.json');
     const pdfPath = await generatePdf(artifacts, reviewText || buildPromptFromMessage(fullMessage), qaReportPath);
@@ -401,10 +444,16 @@ async function processMessage(client, state, message, source = 'unknown') {
       pdfPath,
       slug: artifacts.slug,
     });
-    await publishSite();
+    let published = false;
+    try {
+      await publishSite();
+      published = true;
+    } catch (err) {
+      log('site publish failed (non-fatal)', { id, error: String(err).slice(0, 500) });
+    }
     await sendPdf(pdfPath, path.basename(pdfPath), `Automated one-pager PDF for: ${fullMessage.subject}`);
     markSeen(state, id);
-    log('message completed', { id, source, pdfPath, rendered: !!rendered, published: true });
+    log('message completed', { id, source, pdfPath, rendered: !!rendered, published });
   } catch (err) {
     markFailed(state, id);
     log('message failed; marked failed and will not auto-retry', { id, source, error: String(err) });
