@@ -294,26 +294,29 @@ def parse_display_name(from_addr):
 
 
 def build_index(entries_data):
-    """Build the index.html page with the audit table."""
-    rows = []
+    """Build the index.html page with audit cards."""
+    cards = []
     for ed in entries_data:
         dt = ed["dt"]
-        date_str = dt.strftime("%Y-%m-%d") if dt else "—"
-        time_str = dt.strftime("%H:%M") if dt else "—"
+        date_str = dt.strftime("%b %-d, %Y") if dt else "—"
         subject = esc(ed["subject"])
         score = esc(ed["score"])
         badge = ed["qa_badge"]
         slug = ed["slug"]
         from_name = esc(ed.get("from_name", "Unknown"))
 
-        rows.append(
-            f"<tr><td>{date_str}</td><td class='col-time'>{time_str}</td>"
-            f"<td>{from_name}</td>"
-            f"<td><a href='audits/{slug}.html'>{subject}</a></td><td>{score}</td>"
-            f"<td>{badge}</td></tr>"
+        cards.append(
+            f'<a class="audit-card" href="audits/{slug}.html">'
+            f'<span class="audit-card-title">{subject}</span>'
+            f'<span class="audit-card-meta">'
+            f'<span class="muted">{from_name}</span>'
+            f'<span class="muted">{date_str}</span>'
+            f'<span class="score">{score}</span>'
+            f"{badge}"
+            f"</span></a>"
         )
 
-    table = "".join(rows)
+    cards_html = "".join(cards)
 
     page = (
         f'<!doctype html><html><head><meta charset="utf-8">'
@@ -324,11 +327,9 @@ def build_index(entries_data):
         f'<main><div class="hero"><div class="muted">Skechers Digital</div>'
         f"<h1>Email Audit</h1>"
         f'<p class="muted">Homepage index of conducted email audits, with links to detailed audit pages.</p>'
-        f'</div><div class="card"><table><thead><tr>'
-        f"<th>Date</th><th class='col-time'>Time</th><th>From</th><th>Email Name</th><th>Score</th><th>QA</th>"
-        f"</tr></thead><tbody>"
-        f"{table}"
-        f"</tbody></table></div></main>"
+        f'</div><div class="audit-list">'
+        f"{cards_html}"
+        f"</div></main>"
         f"{GATE_SCRIPT}</body></html>"
     )
     return page
