@@ -283,6 +283,16 @@ def build_audit_page(entry, msg, review_text, qa_report, render_img_name):
     return page
 
 
+def parse_display_name(from_addr):
+    """Extract just the display name from 'Name <email>' format."""
+    if not from_addr:
+        return "Unknown"
+    m = re.match(r'^"?([^"<]+)"?\s*<', from_addr)
+    if m:
+        return m.group(1).strip()
+    return from_addr
+
+
 def build_index(entries_data):
     """Build the index.html page with the audit table."""
     rows = []
@@ -294,12 +304,13 @@ def build_index(entries_data):
         score = esc(ed["score"])
         badge = ed["qa_badge"]
         slug = ed["slug"]
+        from_name = esc(ed.get("from_name", "Unknown"))
 
         rows.append(
-            f"<tr><td>{date_str}</td><td>{time_str}</td>"
-            f"<td>{subject}</td><td>{score}</td>"
-            f"<td>{badge}</td>"
-            f"<td><a href='audits/{slug}.html'>View audit</a></td></tr>"
+            f"<tr><td>{date_str}</td><td class='col-time'>{time_str}</td>"
+            f"<td>{from_name}</td>"
+            f"<td><a href='audits/{slug}.html'>{subject}</a></td><td>{score}</td>"
+            f"<td>{badge}</td></tr>"
         )
 
     table = "".join(rows)
@@ -314,7 +325,7 @@ def build_index(entries_data):
         f"<h1>Email Audit</h1>"
         f'<p class="muted">Homepage index of conducted email audits, with links to detailed audit pages.</p>'
         f'</div><div class="card"><table><thead><tr>'
-        f"<th>Date</th><th>Time</th><th>Email Name</th><th>Score</th><th>QA</th><th>Detail</th>"
+        f"<th>Date</th><th class='col-time'>Time</th><th>From</th><th>Email Name</th><th>Score</th><th>QA</th>"
         f"</tr></thead><tbody>"
         f"{table}"
         f"</tbody></table></div></main>"
@@ -368,6 +379,8 @@ def main():
         dt = parse_timestamp(msg)
         score = extract_score(review_text)
         badge = qa_badge(qa_report)
+        from_addr = msg.get("from_") or msg.get("from") or ""
+        from_name = parse_display_name(from_addr)
 
         entries_data.append({
             "dt": dt,
@@ -375,6 +388,7 @@ def main():
             "score": score,
             "qa_badge": badge,
             "slug": slug,
+            "from_name": from_name,
         })
 
     # Sort by date descending for index
