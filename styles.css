@@ -2,8 +2,8 @@
 :root { --bg:#faf8f5; --card:#ffffff; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --accent:#111827; }
 *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
 main{max-width:980px;margin:0 auto;padding:32px 20px 60px}
-.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.04)}
-.hero{margin-bottom:22px}.muted{color:var(--muted)} h1,h2,h3{margin:0 0 10px} table{width:100%;border-collapse:collapse} th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top} th{font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:.05em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.04)}
+.hero{margin-bottom:22px;padding:24px 0;background:none;border:none;box-shadow:none}.muted{color:var(--muted)} h1,h2,h3{margin:0 0 10px} table{width:100%;border-collapse:collapse} th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top} th{font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:.05em}
 a{color:#0f172a;text-decoration:none} a:hover{text-decoration:underline}
 .section{margin-top:18px} ul{margin:8px 0 0 18px;padding:0} li{margin:6px 0} .score{display:inline-block;padding:8px 12px;border-radius:999px;background:#f3f4f6;font-weight:700}
 .layout{display:grid;grid-template-columns:1.25fr .9fr;gap:20px}.image{width:100%;border:1px solid var(--line);border-radius:16px} .refs a{word-break:break-all}
@@ -26,7 +26,9 @@ a{color:#0f172a;text-decoration:none} a:hover{text-decoration:underline}
 .audit-card{display:block;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 24px;box-shadow:0 10px 30px rgba(0,0,0,.04);text-decoration:none;color:var(--ink);transition:border-color .15s,box-shadow .15s}
 .audit-card:hover{border-color:#cbd5e1;box-shadow:0 10px 30px rgba(0,0,0,.08);text-decoration:none}
 .audit-card-title{display:block;font-size:16px;font-weight:700;margin-bottom:8px}
-.audit-card-meta{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px;align-items:center;font-size:14px}
+.audit-card-meta{display:flex;flex-direction:row;flex-wrap:wrap;gap:16px;align-items:center;font-size:14px}
+.audit-card .meta-item{display:inline-flex;align-items:center;gap:6px}
+.audit-card .meta-label{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
 .audit-card .score{padding:4px 10px;font-size:13px}
 
 html:not(.ok) main{visibility:hidden}
