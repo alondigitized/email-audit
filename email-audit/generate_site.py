@@ -307,11 +307,14 @@ def build_index(entries_data):
 
         cards.append(
             f'<a class="audit-card" href="audits/{slug}.html">'
+            f'<span class="audit-card-top">'
             f'<span class="audit-card-title">{subject}</span>'
+            f'<span class="score">{score}</span>'
+            f"</span>"
             f'<span class="audit-card-meta">'
-            f'<span class="meta-item"><span class="meta-label">From</span> {from_name}</span>'
-            f'<span class="meta-item"><span class="meta-label">Date</span> {date_str}</span>'
-            f'<span class="meta-item"><span class="meta-label">Score</span> <span class="score">{score}</span></span>'
+            f'<span class="meta-item">{from_name}</span>'
+            f'<span class="meta-sep">&middot;</span>'
+            f'<span class="meta-item">{date_str}</span>'
             f"{badge}"
             f"</span></a>"
         )
@@ -322,7 +325,7 @@ def build_index(entries_data):
         f'<!doctype html><html><head><meta charset="utf-8">'
         f'<meta name="viewport" content="width=device-width,initial-scale=1">'
         f"<title>Email Audit</title>"
-        f'<link rel="stylesheet" href="styles.css?v=3"></head><body>'
+        f'<link rel="stylesheet" href="styles.css?v=4"></head><body>'
         f"{GATE_HTML}"
         f'<main><div class="hero"><div class="muted">Skechers Digital</div>'
         f"<h1>Email Audit</h1>"
