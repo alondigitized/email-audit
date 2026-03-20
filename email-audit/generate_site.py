@@ -33,7 +33,7 @@ GATE_HTML = """\
 GATE_SCRIPT = """\
 <script>
 (function(){
-  var H="50a34207d6767ecb822d4e8e8b1e2e3075cc97fae54419cd063887f505cf697a";
+  var H="757c546ab810a1d100318289824c5e27cc18579546d60eaa8bf847af530a827f";
   if(sessionStorage.getItem("_ga")==="1"){document.documentElement.classList.add("ok");return;}
   var o=document.getElementById("gate");if(!o)return;o.style.display="flex";
   document.getElementById("gate-btn").onclick=async function(){
