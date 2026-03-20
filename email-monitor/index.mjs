@@ -178,13 +178,23 @@ async function sendTelegramText(text) {
   }
 }
 
-async function generateReview(message) {
+async function generateReview(message, { images = [], label = 'review' } = {}) {
   const args = [
     '-p',
     '--model', CLAUDE_MODEL,
     '--effort', CLAUDE_EFFORT,
     '--no-session-persistence',
+    '--permission-mode', 'bypassPermissions',
   ];
+  // Add directory access for any image files so Claude can read them
+  const addedDirs = new Set();
+  for (const img of images) {
+    const dir = path.dirname(img);
+    if (!addedDirs.has(dir)) {
+      args.push('--add-dir', dir);
+      addedDirs.add(dir);
+    }
+  }
   try {
     const claudeBin = process.env.CLAUDE_BIN || '/Users/alontsang/.local/bin/claude';
     const child = execFile(claudeBin, args, {
@@ -205,28 +215,24 @@ async function generateReview(message) {
       });
       child.on('error', reject);
     });
-    if (stderr?.trim()) log('claude stderr', { stderr: stderr.trim().slice(0, 1000) });
+    if (stderr?.trim()) log(`claude ${label} stderr`, { stderr: stderr.trim().slice(0, 1000) });
     const review = stdout.trim();
-    if (!review) throw new Error('claude returned empty review');
+    if (!review) throw new Error(`claude returned empty ${label}`);
     return review;
   } catch (err) {
-    log('claude review failed', { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
-    await sendTelegramText(`Walker email monitor caught a new message but review generation failed.\n\nFrom: ${message.match(/From: (.*)/)?.[1] || ''}\nSubject: ${message.match(/Subject: (.*)/)?.[1] || ''}`);
+    log(`claude ${label} failed`, { error: String(err), stdout: err.stdout?.slice?.(0, 1000), stderr: err.stderr?.slice?.(0, 1000) });
     throw err;
   }
 }
 
-function buildPromptFromMessage(msg, qaContext = '') {
+function buildContentPrompt(msg, screenshotPath) {
   const from = msg.from_ || msg.from || '';
   const subject = msg.subject || '(no subject)';
   const preview = msg.preview || '';
-  const text = msg.extracted_text || msg.text || '';
-  const html = msg.extracted_html || msg.html || '';
-  const body = shorten(text || html || preview, 6000);
   const parts = [
-    'A new Skechers email arrived for review.',
-    'Review it as Walker using the established format and preferences in this session.',
-    'Important: this audit must be comprehensive, not overly narrow. Cover the whole email structure, not just one issue.',
+    'You are reviewing a marketing email as it appears to the recipient.',
+    'The attached image is a screenshot of the fully rendered email exactly as it would appear in an inbox.',
+    'Base your entire review on what you SEE in the rendered image — not on HTML source code.',
     '',
     'Use this exact review structure:',
     '1. Executive Summary',
@@ -241,8 +247,7 @@ function buildPromptFromMessage(msg, qaContext = '') {
     '   - Membership / benefits section',
     '   - Product discoverability / recommendation modules',
     '   - Utility / secondary modules',
-    '   - Email-to-site continuity',
-    '   - Bugs / friction / clarity issues',
+    '   - Bugs / friction / clarity issues (only what is VISIBLE in the render)',
     '',
     'Style requirements:',
     '- Medium length',
@@ -251,20 +256,67 @@ function buildPromptFromMessage(msg, qaContext = '') {
     '- Opinionated with substance',
     '- Recommendations over root-cause theory',
     '- Cover the visible structure of the email, including what major modules are present and whether they help or dilute the experience',
-    '- If this is clearly not a Skechers marketing/experience email, say so directly and briefly',
+    '- Only flag visual bugs you can actually see in the screenshot (broken images, overlapping text, empty fields, etc.)',
+    '- Do NOT speculate about HTML issues, merge tokens, or code-level problems you cannot see',
     '',
-    `Inbox: ${INBOX_ID}`,
     `From: ${from}`,
     `Subject: ${subject}`,
     preview ? `Preview: ${shorten(preview, 500)}` : '',
     '',
-    'Body:',
+    `IMPORTANT: Before writing your review, use the Read tool to view the screenshot at: ${screenshotPath}`,
+    'Base your review entirely on what you see in that rendered image.',
+  ];
+  return parts.filter(Boolean).join('\n');
+}
+
+function buildTechnicalPrompt(msg, qaContext = '') {
+  const from = msg.from_ || msg.from || '';
+  const subject = msg.subject || '(no subject)';
+  const text = msg.extracted_text || msg.text || '';
+  const html = msg.extracted_html || msg.html || '';
+  const body = shorten(html || text, 6000);
+  const parts = [
+    'You are performing a TECHNICAL audit of a marketing email.',
+    'Focus exclusively on code-level and infrastructure issues found in the HTML source and automated QA checks.',
+    'Do NOT comment on visual design, messaging, branding, or marketing strategy — a separate content review handles that.',
+    '',
+    'Use this exact review structure:',
+    '1. Technical Summary (1-2 sentences)',
+    '2. Link & Tracking Issues',
+    '3. Rendering & Accessibility',
+    '4. Personalization & Merge Tokens',
+    '5. Compliance (CAN-SPAM, unsubscribe, authentication headers)',
+    '6. Email-to-Site Continuity (UTM params, landing page alignment)',
+    '7. Recommendations',
+    '',
+    'Style requirements:',
+    '- Concise, factual, evidence-based',
+    '- Only flag real issues confirmed by HTML source or QA data',
+    '- Include specific URLs, selectors, or header values as evidence',
+    '- If no issues in a category, say "No issues found" — do not fabricate problems',
+    '',
+    `From: ${from}`,
+    `Subject: ${subject}`,
+    '',
+    'HTML Source (truncated):',
     body || '(no body available)',
   ];
   if (qaContext) {
     parts.push('', qaContext);
   }
   return parts.filter(Boolean).join('\n');
+}
+
+function mergeReviews(contentReview, technicalReview) {
+  return [
+    contentReview,
+    '',
+    '---',
+    '',
+    '## Technical Audit',
+    '',
+    technicalReview,
+  ].join('\n');
 }
 
 async function saveArtifacts(msg) {
@@ -493,17 +545,39 @@ async function processMessage(client, state, message, source = 'unknown') {
     });
 
     const artifacts = await saveArtifacts(fullMessage);
-    const qaReport = await runQaChecks(artifacts);
+
+    // Step 1: Render screenshot + run QA checks in parallel (both needed before reviews)
+    const [rendered, qaReport] = await Promise.all([
+      renderWebview(artifacts),
+      runQaChecks(artifacts),
+    ]);
     const qaContext = buildQaSummaryForPrompt(qaReport);
-    const reviewText = await generateReview(buildPromptFromMessage(fullMessage, qaContext));
+
+    // Step 2: Run content + technical reviews in parallel
+    let contentReview, technicalReview;
+    if (rendered) {
+      // Both agents run concurrently: content reviews the screenshot, technical reviews HTML
+      [contentReview, technicalReview] = await Promise.all([
+        generateReview(buildContentPrompt(fullMessage, rendered), { images: [rendered], label: 'content-review' }),
+        generateReview(buildTechnicalPrompt(fullMessage, qaContext), { label: 'technical-review' }),
+      ]);
+    } else {
+      // No screenshot available — technical review only, content gets HTML fallback
+      log('no screenshot available; running technical-only review', { id });
+      technicalReview = await generateReview(buildTechnicalPrompt(fullMessage, qaContext), { label: 'technical-review' });
+      contentReview = '';
+    }
+    const reviewText = contentReview
+      ? mergeReviews(contentReview, technicalReview)
+      : technicalReview;
+
     try {
       await sendTelegramText(reviewText);
     } catch (err) {
       log('telegram text send failed (non-fatal)', { id, error: String(err).slice(0, 500) });
     }
-    const rendered = await renderWebview(artifacts);
     const qaReportPath = path.join(artifacts.dir, 'qa-report.json');
-    const pdfPath = await generatePdf(artifacts, reviewText || buildPromptFromMessage(fullMessage), qaReportPath);
+    const pdfPath = await generatePdf(artifacts, reviewText, qaReportPath);
     updatePublishedManifest({
       messageId: id,
       subject: fullMessage.subject,
