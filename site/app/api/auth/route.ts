@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Incorrect" }, { status: 401 });
   }
 
-  const token = createToken();
+  const token = await createToken();
   const response = NextResponse.json({ ok: true });
   response.cookies.set("_auth", token, {
     httpOnly: true,
