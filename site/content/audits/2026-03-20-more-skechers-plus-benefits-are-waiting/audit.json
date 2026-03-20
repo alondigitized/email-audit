@@ -1,0 +1,425 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-20-more-skechers-plus-benefits-are-waiting",
+  "email": {
+    "subject": "More Skechers Plus Benefits are waiting",
+    "from": "SKECHERS PLUS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS PLUS",
+    "timestamp_iso": "2026-03-20T05:19:03+00:00",
+    "date_formatted": "2026-03-20 05:19 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## Walker's Email Audit — Skechers Plus: \"More Skechers Plus Benefits are waiting\"\n\n---\n\n### 1. Executive Summary\n\nThis is step 4 in Skechers' Plus welcome series — a loyalty engagement email designed to drive reward redemption, tier awareness, and channel adoption. The strategic intent is clear and the core mechanics (personalized points balance, product recs, birthday capture) are all present. But the execution has a critical failure at the top of the funnel: the email preview text is rendering raw JSON-LD schema code instead of copy. That's the first thing anyone sees before opening. Combined with a duplicated hero greeting block and widespread HTTP image sourcing, this email is technically compromised in ways that directly hurt both deliverability perception and in-client rendering. The bones are fine. The execution needs a fix pass.\n\n---\n\n### 2. Business Impact Score\n\n**5 / 10**\n\nPoints deducted for: broken preview text (open-rate damage), duplicate module bug (trust/polish), HTTP images across the entire footer (rendering risk in major clients), and an empty personalization slot flagged by QA. The $5 reward redemption hook is the strongest asset in the email and it's being undercut by preventable technical failures.\n\n---\n\n### 3. What's Working\n\n- **Reward urgency is clear.** \"You have enough points for a $5 Reward\" with a direct REDEEM CTA is well-placed and action-oriented. This is the right hook for a welcome series step 4.\n- **Personalization is present.** Points balance (1000) is surfaced inline with the greeting, making the loyalty value tangible rather than abstract.\n- **\"We Thought You'd Like These\" product recs module.** Six personalized products via iGoDigital gives this email some commercial weight beyond just loyalty content.\n- **Membership tier awareness.** \"Silver & Gold Benefits / View Your Dashboard\" is a smart inclusion — it plants aspiration for members who haven't yet tiered up.\n- **Birthday capture CTA.** Low-effort, high-value data capture. Good to have it here while the member relationship is still warm.\n- **Utility footer is complete.** SMS, app, curbside, BNPL, store locator — all present and appropriately subordinate.\n\n---\n\n### 4. What's Weak\n\n- **Preview text is broken.** The inbox snippet is rendering raw JSON-LD markup (`[{ \"@context\": \"http://schema.org/\", \"@type\": \"Organization\"...`). This is the single most visible failure — it damages open rates and looks like a spam-filter trigger to both algorithms and humans.\n- **Duplicate greeting/reward block.** The \"Hi, Walker / 1000 points / REDEEM\" module appears twice in succession. This is almost certainly a desktop/mobile conditional rendering failure where both versions are rendering simultaneously. It looks broken.\n- **Empty personalization slot.** QA flagged an empty name field in a greeting element (`\"Hi ,\"`). A fallback or suppression condition is missing.\n- **HTTP image sources across the board.** The logo, footer icons (App Store, Google Play, Curbside, AfterPay, social icons), and tracking pixel all use `http://` — these will be blocked or flagged as insecure in most modern clients (Gmail, Outlook, Apple Mail).\n- **Missing alt text on key images.** The in-store barcode image and several footer images have no alt text. If images don't load, these elements become invisible and non-actionable.\n- **Subject line is generic.** \"More Skechers Plus Benefits are waiting\" is functional but flat. Given the email's strongest hook is a ready-to-redeem $5 reward, leading with that in the subject would significantly outperform.\n- **Category nav is low-value at this point in the journey.** Women / Men / Kids / Clothing / New Arrivals / Sale is standard boilerplate. In a loyalty email, this nav bar adds little beyond padding the link count.\n\n---\n\n### 5. Recommendations\n\n1. **Fix the preview text immediately.** Move the JSON-LD schema block out of the preheader position, or ensure it's hidden via CSS/comments in a way that doesn't bleed into the inbox snippet. Replace with a written preheader: *\"Your $5 reward is ready to use — here's what's new.\"*\n2. **Fix the duplicate greeting module.** Diagnose the mobile/desktop conditional rendering logic. One version should render, not both.\n3. **Add a personalization fallback.** The empty name slot suggests a missing `ifEmpty` condition on the first name merge tag. Set fallback to \"there\" or suppress the greeting if no name is available.\n4. **Migrate all image sources to HTTPS.** Every `http://image.emails.skechers.com` and `http://www.ink1000.com` URL needs to be updated. This is a rendering and deliverability hygiene issue, not optional.\n5. **Add alt text to barcode and footer images.** The in-store barcode especially — if that image fails to render, the in-store redemption path is gone.\n6. **Rewrite the subject line.** Test: *\"Walker, your $5 reward is ready\"* vs. *\"You've earned a $5 reward — redeem now\"*. Both are directional improvements.\n7. **Consider moving the birthday module higher.** Profile completion is a second-purchase retention tool. It's currently buried past the product recs grid. Moving it to just below the tier benefits section would increase visibility.\n\n---\n\n### 6. Bottom Line\n\nThe strategic structure of this email is sound — it's doing the right things for step 4 of a welcome series. But it's shipping with at least two visible rendering bugs (broken preview text, duplicate module), a personalization failure, and widespread HTTP image sourcing that will get images blocked in major clients. None of these are difficult fixes. They're all pre-send QA failures that should have been caught in review. Fix the technical issues and the subject line, and this is a mid-tier competent loyalty email. As-is, it's publishing below the standard the reward hook deserves.\n\n---\n\n### 7. Evidence\n\n**Overall purpose of the email**\nStep 4 of the Skechers Plus welcome series (`TRG_US_EN_PLUSWELCOME_4`). Primary goal: drive reward redemption. Secondary goals: tier aspiration, channel adoption (SMS, app), profile completion (birthday), and product discovery via personalized recs.\n\n**Hero / primary value proposition**\nThe hero is the personalized reward block: \"Hi, Walker — you have 1000 points and a $5 reward ready to redeem.\" This is strong. The REDEEM CTA is direct. The issue is this module renders twice, which undercuts the credibility of the message and signals a broken template.\n\n**Membership / benefits section**\n\"Shop More Save More\" and \"Silver & Gold Benefits / View Your Dashboard\" are both present. These are appropriately positioned to reinforce long-term loyalty value without overwhelming the redemption CTA. The tier aspirational messaging is well-suited to welcome series placement. Fine print for the bonus points and 10% in-store discount is included but dense — could be condensed.\n\n**Product discoverability / recommendation modules**\n\"We Thought You'd Like These\" is a 6-product personalized grid sourced via iGoDigital. Product link text shows as \"PRODUCT\" in QA output — unclear if that's a rendering artifact or actual button label in the email. If labels are literally \"PRODUCT,\" that needs to be fixed to product name or \"SHOP NOW.\"\n\n**Utility / secondary modules**\nFooter utility is fully stocked: SMS opt-in (Text SKECHERS to 83828), App Store / Google Play download, Curbside Pickup, AfterPay + Klarna BNPL, Find A Store, social links (Instagram, Facebook, YouTube). All appropriate for a loyalty email. HTTP image sources on all of these icons are flagged as a rendering risk. An in-store barcode is present for the 10% off offer — the missing alt text here is a meaningful accessibility and fallback gap.\n\n**Email-to-site continuity**\nCategory nav (Women, Men, Kids, Clothing, New Arrivals, Sale) links to `skechers.com` with `?src=template` UTM tagging. REDEEM buttons route to `skechers.com/login`, which is correct — redemption requires authentication. The \"View Your Dashboard\" CTA similarly routes through auth. Channel-to-site continuity is intact where tested.\n\n**Bugs / friction / clarity issues**\n- Preview text rendering raw JSON-LD schema (critical)\n- Duplicate \"Hi, Walker / 1000 points / REDEEM\" module (template bug)\n- Empty personalization slot: \"Hi ,\" with no name value and no fallback (QA FAIL)\n- 14+ images sourced over HTTP — will be blocked in security-strict clients\n- Missing alt text on barcode image and tracking pixel (o.gif)\n- Tracking pixel (o.gif) sourced over HTTP from `ink1000.com` — may be flagged as mixed content",
+    "sections": {
+      "executive_summary": [
+        "This is step 4 in Skechers' Plus welcome series — a loyalty engagement email designed to drive reward redemption, tier awareness, and channel adoption. The strategic intent is clear and the core mechanics (personalized points balance, product recs, birthday capture) are all present. But the execution has a critical failure at the top of the funnel: the email preview text is rendering raw JSON-LD schema code instead of copy. That's the first thing anyone sees before opening. Combined with a duplicated hero greeting block and widespread HTTP image sourcing, this email is technically compromised in ways that directly hurt both deliverability perception and in-client rendering. The bones are fine. The execution needs a fix pass."
+      ],
+      "business_impact_score": [
+        "**5 / 10**",
+        "Points deducted for: broken preview text (open-rate damage), duplicate module bug (trust/polish), HTTP images across the entire footer (rendering risk in major clients), and an empty personalization slot flagged by QA. The $5 reward redemption hook is the strongest asset in the email and it's being undercut by preventable technical failures."
+      ],
+      "whats_working": [
+        "- **Reward urgency is clear.** \"You have enough points for a $5 Reward\" with a direct REDEEM CTA is well-placed and action-oriented. This is the right hook for a welcome series step 4.",
+        "- **Personalization is present.** Points balance (1000) is surfaced inline with the greeting, making the loyalty value tangible rather than abstract.",
+        "- **\"We Thought You'd Like These\" product recs module.** Six personalized products via iGoDigital gives this email some commercial weight beyond just loyalty content.",
+        "- **Membership tier awareness.** \"Silver & Gold Benefits / View Your Dashboard\" is a smart inclusion — it plants aspiration for members who haven't yet tiered up.",
+        "- **Birthday capture CTA.** Low-effort, high-value data capture. Good to have it here while the member relationship is still warm.",
+        "- **Utility footer is complete.** SMS, app, curbside, BNPL, store locator — all present and appropriately subordinate."
+      ],
+      "whats_weak": [
+        "- **Preview text is broken.** The inbox snippet is rendering raw JSON-LD markup (`[{ \"@context\": \"http://schema.org/\", \"@type\": \"Organization\"...`). This is the single most visible failure — it damages open rates and looks like a spam-filter trigger to both algorithms and humans.",
+        "- **Duplicate greeting/reward block.** The \"Hi, Walker / 1000 points / REDEEM\" module appears twice in succession. This is almost certainly a desktop/mobile conditional rendering failure where both versions are rendering simultaneously. It looks broken.",
+        "- **Empty personalization slot.** QA flagged an empty name field in a greeting element (`\"Hi ,\"`). A fallback or suppression condition is missing.",
+        "- **HTTP image sources across the board.** The logo, footer icons (App Store, Google Play, Curbside, AfterPay, social icons), and tracking pixel all use `http://` — these will be blocked or flagged as insecure in most modern clients (Gmail, Outlook, Apple Mail).",
+        "- **Missing alt text on key images.** The in-store barcode image and several footer images have no alt text. If images don't load, these elements become invisible and non-actionable.",
+        "- **Subject line is generic.** \"More Skechers Plus Benefits are waiting\" is functional but flat. Given the email's strongest hook is a ready-to-redeem $5 reward, leading with that in the subject would significantly outperform.",
+        "- **Category nav is low-value at this point in the journey.** Women / Men / Kids / Clothing / New Arrivals / Sale is standard boilerplate. In a loyalty email, this nav bar adds little beyond padding the link count."
+      ],
+      "recommendations": [
+        "1. **Fix the preview text immediately.** Move the JSON-LD schema block out of the preheader position, or ensure it's hidden via CSS/comments in a way that doesn't bleed into the inbox snippet. Replace with a written preheader: *\"Your $5 reward is ready to use — here's what's new.\"*",
+        "2. **Fix the duplicate greeting module.** Diagnose the mobile/desktop conditional rendering logic. One version should render, not both.",
+        "3. **Add a personalization fallback.** The empty name slot suggests a missing `ifEmpty` condition on the first name merge tag. Set fallback to \"there\" or suppress the greeting if no name is available.",
+        "4. **Migrate all image sources to HTTPS.** Every `http://image.emails.skechers.com` and `http://www.ink1000.com` URL needs to be updated. This is a rendering and deliverability hygiene issue, not optional.",
+        "5. **Add alt text to barcode and footer images.** The in-store barcode especially — if that image fails to render, the in-store redemption path is gone.",
+        "6. **Rewrite the subject line.** Test: *\"Walker, your $5 reward is ready\"* vs. *\"You've earned a $5 reward — redeem now\"*. Both are directional improvements.",
+        "7. **Consider moving the birthday module higher.** Profile completion is a second-purchase retention tool. It's currently buried past the product recs grid. Moving it to just below the tier benefits section would increase visibility."
+      ],
+      "bottom_line": [
+        "The strategic structure of this email is sound — it's doing the right things for step 4 of a welcome series. But it's shipping with at least two visible rendering bugs (broken preview text, duplicate module), a personalization failure, and widespread HTTP image sourcing that will get images blocked in major clients. None of these are difficult fixes. They're all pre-send QA failures that should have been caught in review. Fix the technical issues and the subject line, and this is a mid-tier competent loyalty email. As-is, it's publishing below the standard the reward hook deserves."
+      ],
+      "evidence": [
+        "**Overall purpose of the email**",
+        "Step 4 of the Skechers Plus welcome series (`TRG_US_EN_PLUSWELCOME_4`). Primary goal: drive reward redemption. Secondary goals: tier aspiration, channel adoption (SMS, app), profile completion (birthday), and product discovery via personalized recs.",
+        "**Hero / primary value proposition**",
+        "The hero is the personalized reward block: \"Hi, Walker — you have 1000 points and a $5 reward ready to redeem.\" This is strong. The REDEEM CTA is direct. The issue is this module renders twice, which undercuts the credibility of the message and signals a broken template.",
+        "**Membership / benefits section**",
+        "\"Shop More Save More\" and \"Silver & Gold Benefits / View Your Dashboard\" are both present. These are appropriately positioned to reinforce long-term loyalty value without overwhelming the redemption CTA. The tier aspirational messaging is well-suited to welcome series placement. Fine print for the bonus points and 10% in-store discount is included but dense — could be condensed.",
+        "**Product discoverability / recommendation modules**",
+        "\"We Thought You'd Like These\" is a 6-product personalized grid sourced via iGoDigital. Product link text shows as \"PRODUCT\" in QA output — unclear if that's a rendering artifact or actual button label in the email. If labels are literally \"PRODUCT,\" that needs to be fixed to product name or \"SHOP NOW.\"",
+        "**Utility / secondary modules**",
+        "Footer utility is fully stocked: SMS opt-in (Text SKECHERS to 83828), App Store / Google Play download, Curbside Pickup, AfterPay + Klarna BNPL, Find A Store, social links (Instagram, Facebook, YouTube). All appropriate for a loyalty email. HTTP image sources on all of these icons are flagged as a rendering risk. An in-store barcode is present for the 10% off offer — the missing alt text here is a meaningful accessibility and fallback gap.",
+        "**Email-to-site continuity**",
+        "Category nav (Women, Men, Kids, Clothing, New Arrivals, Sale) links to `skechers.com` with `?src=template` UTM tagging. REDEEM buttons route to `skechers.com/login`, which is correct — redemption requires authentication. The \"View Your Dashboard\" CTA similarly routes through auth. Channel-to-site continuity is intact where tested.",
+        "**Bugs / friction / clarity issues**",
+        "- Preview text rendering raw JSON-LD schema (critical)",
+        "- Duplicate \"Hi, Walker / 1000 points / REDEEM\" module (template bug)",
+        "- Empty personalization slot: \"Hi ,\" with no name value and no fallback (QA FAIL)",
+        "- 14+ images sourced over HTTP — will be blocked in security-strict clients",
+        "- Missing alt text on barcode image and tracking pixel (o.gif)",
+        "- Tracking pixel (o.gif) sourced over HTTP from `ink1000.com` — may be flagged as mixed content"
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "link_analysis": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Skechers\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImI1ZmEyZTE0LWJlNmItNGZmOS05NGQ2LTZiZDgwZWEyMTlmOSIsImRla1ZlcnNpb24iOjEsIml2IjoiZytHbjIwazFJT2thcDJJTGp3L0NnQT09IiwiY2lwaGVyVGV4dCI6IlZjSUJYMWRMRENNSWlINEJBSTlYcDVpck9ic21XZjRUQ3lRZUoycThVQ3FlU25TQ2d4SUo4SFpaOXN2eStUejVPN05IMStoNkNpVkQxT01NckNBbkVmYmRDNFpjeGtYOVFNa3FKWlZGZytHbjIwazFJT2thcDJJTGp3L0NnQT09IiwiYXV0aFRhZyI6Ikp4SDIzUXVHWE1aRi9VREpLaVdWUlE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"REDEEM\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjE3OGU1NmQxLTYwNmItNGE2Ny04Yzg4LWU1ZTdhMDAxMDY1NiIsImRla1ZlcnNpb24iOjEsIml2IjoiREZJU1Y3QjNKZFlHMnZnNDV4U0kvQT09IiwiY2lwaGVyVGV4dCI6IlNrYUdpTEJ4R2hHQ2diYytBZysxNk1RMkJDQS92OElJZ2JHb3p6ZUlEYkQ3c3U0S1FqQ3Y0dzNnNUJNWWErbmFlZWdESks3bW5DcmxWc29sY1RTVWVxSDdFbHdEY1NLWnlkM1RMakFZREZJU1Y3QjNKZFlHMnZnNDV4U0kvQT09IiwiYXV0aFRhZyI6ImxIcWgreEpjQTNFaW1jbmQweTR3R0E9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"REDEEM\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjY2YmZlOGU0LWMyYWQtNGIwYS1iZjUwLTJmNDdlMDIzNjAzYSIsImRla1ZlcnNpb24iOjEsIml2IjoiTmVUVkVRNmxaL1lkMXgrck5HNVZZZz09IiwiY2lwaGVyVGV4dCI6Ik50ZnB1T3JxUEZIM2h4eHZSRDVyRXRFS3NhNEdpOEh5M0RVeUd1T29OelQyTVVtbE1LSkhVVmwwUFZWZkhwZmYxV1VHNnVicTF0bmJTTHRkVWNaKzNqMkFNSE5NTWwrRGY5VWMwdld1TmVUVkVRNmxaL1lkMXgrck5HNVZZZz09IiwiYXV0aFRhZyI6ImZ0NDlnREJ6VERKZmczL1ZITkwxcmc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"SHOP MORE SAVE MORE\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImFmZjBkNDc5LWM2MTItNDdmZS05ZWE4LTYyM2YyNjEzOTNhYyIsImRla1ZlcnNpb24iOjEsIml2IjoiUDh6UHZ2NWRXdkZSdUUzc1oxR1ZjUT09IiwiY2lwaGVyVGV4dCI6IjF3UFgyZ2pYeDFUYmxmZUVkaUE1ZmxqODVVb0tQZzFFMmgxMldHMFpsaWdCSnBiTnlDOTVVWjl4T2hvU3ZvT0xCRlZXNHpwN3ZFQmw3SVdIdTBHRG1SUS9oaGMvTEIwbmMyL281M1FhUDh6UHZ2NWRXdkZSdUUzc1oxR1ZjUT09IiwiYXV0aFRhZyI6Imc1a1VQNFlYUHl3ZEozTnY2T2QwR2c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"SILVER & GOLD BENEFITS. VIEW YOUR DASHBOARD\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjU5MjRkNDRlLTdkZWMtNDI4ZS05NjdjLTI1Y2I1OGE3YmRjNiIsImRla1ZlcnNpb24iOjEsIml2IjoiTHNJZC8xcTEzTjdYdEQ2RWxLY0lJZz09IiwiY2lwaGVyVGV4dCI6Ik80V0VZQU41SzBoOGZRREhyclAxMTFzcE5OSWgwUE9DSHdKbTg4WUVWZlRrKzBQU044SFoyVHpaZUJHamc1UDArbGlEeWFXZ284cGc0dTdRNjYrYmQvS1p1OXAyV3VZV0dZSzRpOHVmTHNJZC8xcTEzTjdYdEQ2RWxLY0lJZz09IiwiYXV0aFRhZyI6Im0zZnltYnZhZGxybUZobUN1SXZMbnc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"We Thought You'd Like These\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImE5MDU0OGIyLWQ0ZTItNDE3MC1iMzFjLTNkZTNkZWQ3N2ZhMCIsImRla1ZlcnNpb24iOjEsIml2IjoiNG1Rb05iUFVNQlowU1BhbHBMRUhqZz09IiwiY2lwaGVyVGV4dCI6IkRKL2pXcHo4aVJYUW1PS2xqMzF3TUdFMVJZWjBGaHdLbmw3UndVMFp3bU1MTEU4SGt1enQvbTAraWNvZ2ZOcm9RaVFnczNZVHA1bXh1aG5yUGpDQkxLcU9Pd29hcDR0VE5LeWhpeVVKNG1Rb05iUFVNQlowU1BhbHBMRUhqZz09IiwiYXV0aFRhZyI6ImdTeXFqanNLR3FlTFV6U3NvWXNsQ1E9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjI4NDlkNjEyLWNhNmItNGM4My1iZjU5LTlkYjhlMTYwYzQzYiIsImRla1ZlcnNpb24iOjEsIml2Ijoialc1M0xEdlNWbENPRVhFMjMwSUNTUT09IiwiY2lwaGVyVGV4dCI6IkhRemYrQ2F5VVJHNEdSZkE1NzlBVWg5UXVnR2kyNVZTNjJxY3lPVTJZNDlnTS9oODR6V3B6VEJ5ZTFiTG1IY0dQMHVqcDNZZ2pLZEkvMnE1YzlPNTVrMzZKV0JCa3JmNGVMVHJOTFIyalc1M0xEdlNWbENPRVhFMjMwSUNTUT09IiwiYXV0aFRhZyI6InVlWk4raVZnUVpLMytIaTA2elMwZGc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjI1ZjQxMDc1LWY2NjQtNGEzYy05MzMxLWJkOGIyMTYzNWNmNyIsImRla1ZlcnNpb24iOjEsIml2IjoiemlWU1dJMzZiYWVxd1RuY1N2U2U5Zz09IiwiY2lwaGVyVGV4dCI6IjMyTGlrTElYTE9CM3A5ZTJLaUhYSkFmaEgwM0pzK2w0TlZSYldsTGdKMGNOL0JnaVJQTGxhWlpIS3l3cFBWUG93ZEtydGd4MUI0N2YyazRyQkd5RzgvRzVVVzE2SGljNkZlRnNHWm1BemlWU1dJMzZiYWVxd1RuY1N2U2U5Zz09IiwiYXV0aFRhZyI6Imh2UHh1VkZ0ZWg0bk9oWGhiQm1aZ0E9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImY2NWEyMmI4LWQ2NjItNGU3Mi1iODY2LWU3MWQ0N2U0ZjNhYiIsImRla1ZlcnNpb24iOjEsIml2Ijoia2dWU0M5L25Gd0pCVmtxallxcHBwZz09IiwiY2lwaGVyVGV4dCI6IlAySWZsYjFlbTZRMEtVMDJHNUNrWTJNS1hOTkFNZFB0VTd0ZFg1MlU1c1R2VTBXS1hreE9DaUY1UXlTQ1FzZXJNR0FqVUthQXUvTXJrbUp3aHcybzhFQ040MXZLK2xhSXlDSzlhcHVXa2dWU0M5L25Gd0pCVmtxallxcHBwZz09IiwiYXV0aFRhZyI6InFQQkFqZU5ieXZwV2lNZ2l2V3FibGc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImFkNGE1ZmFmLWMxMDYtNDk0Ny04NGViLTNiNTc0NTBiZmFkMyIsImRla1ZlcnNpb24iOjEsIml2IjoiMXpYS293OTE4TXhIeUtpd3E4OCtJQT09IiwiY2lwaGVyVGV4dCI6IlV0QWdvVVY0TXBwVTZSTE5MKzNhenllYVhIS3FhNjRucXJBNGplUVozMFRNQzhYTmVGc0FXcXVEN242ZDM2bXNCak9FRVp6WDRka3FHa3hpdlJLbUk1djNocDZWNHpBc2VibG9oQ0NGMXpYS293OTE4TXhIeUtpd3E4OCtJQT09IiwiYXV0aFRhZyI6InBpT2I5NGFlbGVNd0xIbTVhSVFnaFE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjQzNDljMDU5LTU4YjMtNDNmYy05N2NlLWQ1NDUyOTM3ZTIyNSIsImRla1ZlcnNpb24iOjEsIml2IjoiWE5VWUhOSE5LTWVWWFgvZkFFN2xNZz09IiwiY2lwaGVyVGV4dCI6IkdoQ09GRXFmdjNGclkrUE9neUx2LzlzUE1icVduaElqUE5mZDIrT1VqSkJsSExiR0hoSi9FdXMrRTBJOWhvTUpPUURmQ0ZaUHpha3ZrWFIvM050UCszYUt2THlvbE53UjJsY0VBVGY5WE5VWUhOSE5LTWVWWFgvZkFFN2xNZz09IiwiYXV0aFRhZyI6IlQvdDJpcnk4cUpUY0VkcFhCQUUzL1E9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImI4MzE3OGRjLWZkNjctNDY5MS1iYThjLTI5NmI4ZTY1Mjc5YiIsImRla1ZlcnNpb24iOjEsIml2IjoiekZMTXpySUszNDFkWkliaEdreWRkdz09IiwiY2lwaGVyVGV4dCI6InA5QXp3RU5FSWtPbkZYTWo2NE55UEhkQ25BcXNCUC9SREV3dGN0OGdXeklqZ2lCaTJMQVJGUURBRW9YcmoxWkgyeGVrbW82QnJrQUdiUU5MOFhyV1VLL3pWWjJ1UENhK2Q3UWlqVTlyekZMTXpySUszNDFkWkliaEdreWRkdz09IiwiYXV0aFRhZyI6IjFsQ3Y4MVdkcmp3bXZuZTBJbzFQYXc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"EARN POINTS WHEN YOU SHOP. SHOP NOW\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjczN2Y3YjgxLTg0ZDQtNDg4Ni1iZjg2LTY5MmQxODJlYThiOSIsImRla1ZlcnNpb24iOjEsIml2IjoiUXJLVEF6TG9USlFnaDBnQzVTM3dYUT09IiwiY2lwaGVyVGV4dCI6IjZ2R2pMeGFNV2RvdTc5b1ZUaG1hQ1BDdmJBK2F0ckV5R2xRRVdXYmJiNk4zWXg3a2ZLWjFxSFJvL0FNOGdsV2tVY042ZjZQdkVienJsYzdVRGxvWmhRMWJDdi9IdUZ6QjNYZU93c3RzUXJLVEF6TG9USlFnaDBnQzVTM3dYUT09IiwiYXV0aFRhZyI6IkdZVU5Xd3IveDdoY3dkMTNqc0xMYkE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"CELEBRATE YOUR BIRTHDAY. ADD YOUR BIRTHDAY\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImE5ZGRkZWIxLTUxMjctNGVmOS04MWE3LWQ3OWYwNDY4MzQzMCIsImRla1ZlcnNpb24iOjEsIml2IjoiWVl2ZlN3SC9xRld3M0hxMDIxL3lMdz09IiwiY2lwaGVyVGV4dCI6IkZsMUxXTTVWQnFrRWwyUHNlTjNLclAwVEJNbnB6dFN3dmlCZ1pHWTJMUkVXMXNIdG91b1E1aWo1a20vNi9HQms5UUFqbWw2MDBRVlNTcklTeEtEejRJQnVmME9MdTBtd3VRNHBhK05SWVl2ZlN3SC9xRld3M0hxMDIxL3lMdz09IiwiYXV0aFRhZyI6IjgrQ0FibjlEaTd0SnNMa09LV3ZqVVE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"WOMEN\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjRmZmQ0ZjBjLTgwYmItNDIwYy1iNjI3LTM0ZmZhYjgzYjQ1YSIsImRla1ZlcnNpb24iOjEsIml2IjoiL0lpNGJLQkVxeElmR2phVHBEeXZ6UT09IiwiY2lwaGVyVGV4dCI6Iit6MDFoTU55Njl5cFpLRE9JYitsOEcvekMvUzJpM0pYazgvejB2cEpZWVdJMmhXMVNKdXQvMm1KOE9ZdVRmUDQzLzRRdmxyaVY4ZkRrOXdtMUlSMkdlWVY5NmlUMzdZQU9XNEFYZ3FWL0lpNGJLQkVxeElmR2phVHBEeXZ6UT09IiwiYXV0aFRhZyI6ImRobm1GZmVvazkrMkFEbHVBRjRLbFE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"MEN\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjJkZjYzZTU3LTRlN2YtNDU3Ny05YTYwLWI3MWEwMTdiNTA5NyIsImRla1ZlcnNpb24iOjEsIml2IjoiQmtEQVpXNlBuVzAzSG5LTS8xSzdUdz09IiwiY2lwaGVyVGV4dCI6Ikl2QXM1Ym9VYXFFNXlrTTFsOTZCSVBKNnJaQXhtdStZdjhTM0VlOFFvR1NueFpZSGJaNmowa2RrSFJ3MDFaZ3A3eVJrVVFNRE1LS2ZKV0l2OTlNZ3pMajVwMGZ1Sy8rS01aRmlqVXYrQmtEQVpXNlBuVzAzSG5LTS8xSzdUdz09IiwiYXV0aFRhZyI6IklNeTQrYWRIN2l2L2lqR1JZbzFML2c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"KIDS\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjdmOGZhZDdiLThkZDgtNDUzNS05MjdiLTI0YWJmNTdkN2YwZiIsImRla1ZlcnNpb24iOjEsIml2IjoiZXVDNHZid0tJVDB4c3l2eFFSRmtqZz09IiwiY2lwaGVyVGV4dCI6IitFMFZIczJYemI1d2RjaWpMblU0ellrVHFlK21tN0hGVU1la3BxUHU1Nm50YnRUaFE1SHRLZyt4TzJXcDQ3YStzYTQyMERTSkE3dkNMQWhOZFc5WnFUNS80R3MwNVYwQzlnT0tCc1BkZXVDNHZid0tJVDB4c3l2eFFSRmtqZz09IiwiYXV0aFRhZyI6IldhaytmK0JyTk9WZEF2WURpZ2JEM1E9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"CLOTHING\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjcxNTc1OTE0LThmMDgtNDg1ZS04NDc0LTk0ZTk5Mjk4MDQzNSIsImRla1ZlcnNpb24iOjEsIml2IjoiQm5mSmNlZk1ZSExBeEtvTXJZWUwxQT09IiwiY2lwaGVyVGV4dCI6IjdIdUdnLzVjN052NUcvSlQ4b2c0ZjhocTQ2cnpDRU04L0thV0pGa0IzMVhLLzZoY3FNYVhSL1l1ZXZCcXdiRHBDanc3eS9rUVFORmE1bnpXTUp6SzAwVVFZRU9mSFNPZEc3OE5vQ1YxQm5mSmNlZk1ZSExBeEtvTXJZWUwxQT09IiwiYXV0aFRhZyI6Inl0TkZFR0JEbngwam5SdS9EYUFsZFE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"NEW ARRIVALS\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImFkY2JiY2FiLTQ2MjMtNGZkYi04ZmUzLTc3NjM5NTYwNzE2NSIsImRla1ZlcnNpb24iOjEsIml2IjoiRnJocW93NGdmNFZKVERLWWlLODFyQT09IiwiY2lwaGVyVGV4dCI6IkYvYmV1M0tRTmdWR0RXV2NFZGtsSG82V1BZNUE1SFgzVU9vaVE2dGNLUnUyeXd3bjdKWmNYUVIzQnUwbFNWT3ByRUJIMXRmcGt4azFLU29lVUV4eE1TL3gvYXE0cHZ2bUl3aCs2VkdzRnJocW93NGdmNFZKVERLWWlLODFyQT09IiwiYXV0aFRhZyI6ImNURXY4ZjJxdUtiNzVpTUlmdWxSckE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"SALE\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjQ4NWM1YTRkLWE0MzMtNGEyNS1hOGJjLTgxMDAzZTlkYzY3MiIsImRla1ZlcnNpb24iOjEsIml2IjoiekdPQlNqWWRJeDNKdzIzNG1vMGh1Zz09IiwiY2lwaGVyVGV4dCI6IjdrNkgwamVWR2hDL2ZUUWRWQzc3aDd0ZEsyRUtaMUxCRHo5WVlZcG5UWmp4ZW1tZ0xFbG84NlMyVXdONTczSDJ4bE5KQjQ1QzBJdWNaV01ZQVNPV2VuR255a2QrdlRlWU5ZMk9GVXdvekdPQlNqWWRJeDNKdzIzNG1vMGh1Zz09IiwiYXV0aFRhZyI6ImxucHhwOHBIZnIwM21EV05qaFZNS0E9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"[image: 49468f73-4651-4af3-bea2-61d1ae5db486.png]\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjU4NmI1MjU2LTllZjctNGI3ZS04MzMxLTFiNGQ2ZTM2ZmRiMSIsImRla1ZlcnNpb24iOjEsIml2IjoiZTBXS1E0a29MS1hVb0ZpdEFnVzQ4QT09IiwiY2lwaGVyVGV4dCI6IkEyQlBIZnZ6SUN6b29iQXVsOU9sSWZXOTdlYjlQSE0yR0NtOHNsT2VvVDBYRWQxSEl4U1RLUWVRR0lwY0FDRU5jbzRKOFM5aE81eU9NRjliR0I2UlFEVXFlZGQvb3lDWFdqcyt4Z3FFZTBXS1E0a29MS1hVb0ZpdEFnVzQ4QT09IiwiYXV0aFRhZyI6ImtVQTFLbm5YZjZNZ2wxbzdQc1lLaEE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"LET'S GET TEXTING\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjcyMDgwN2Y2LTMyZGMtNGIxYS05NzMzLTFlNzU2ZDM0MzdkZSIsImRla1ZlcnNpb24iOjEsIml2IjoibzlZeGI4OW1TMHBZRURxYy9mM3l1Zz09IiwiY2lwaGVyVGV4dCI6ImNSSkc4bFp4a1pxQzFqRHVUaTVONVZsbnpVYTR2TStjS1lCa2ppVUxmRzBkbzZLVjBpV2dPSG14MTdHN052a2xSZjVGQllqd2I0a1JDWEpzbjRQTlNKMXR1cm5RS0txVk01RkZ1clFQbzlZeGI4OW1TMHBZRURxYy9mM3l1Zz09IiwiYXV0aFRhZyI6InpVaWRiYnE1MENpcWxUT1JSYnEwRHc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Text SKECHERS to 83828 for exclusive offers!\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjM3N2E4NDUwLWJiOGItNDYwNy1iMjhmLTgwN2FlZmJmMzlhYiIsImRla1ZlcnNpb24iOjEsIml2IjoiUjFINjVmZm1LRlZwMG1GNnJtOXFRQT09IiwiY2lwaGVyVGV4dCI6Ink5K1QwMWRmYXpYbC9HTExWWWtzZ0hGdC9ySVJsWUZEVXdyWnRwOVh1S0RCWFhWaUlVRDhRRkpBMWp5cGE1cG9iT202RU94cWhWS3lndnBmZjZicFBFNE53azBDUUVCTm9HcFNmK3d6UjFINjVmZm1LRlZwMG1GNnJtOXFRQT09IiwiYXV0aFRhZyI6IjZUeE9EY0pOQWtCQVRhQnFVbi9zTXc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Available on the App Store\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImIwODE0ZGI3LWE4NTAtNDIyYi1hMzI2LTBkZWNiMTIzOWVhNyIsImRla1ZlcnNpb24iOjEsIml2IjoiSVV5VW93RVlYRExjeFNtM0tLTlNOQT09IiwiY2lwaGVyVGV4dCI6Ilk1T0w3SFFaY3Biaml0Nm5Md290bnRhYVVRaSszdkg3SnpWZlVzZTZtNTJOcHk4UThKL016REpsQ1FSTnRhVGhXNUVqb0Zvd1FCR3V0UmkzeVhhQWt2b01UWXRPRm5aYVluYmxQQ3NMSVV5VW93RVlYRExjeFNtM0tLTlNOQT09IiwiYXV0aFRhZyI6ImdKTDZERTJMVGhaMldtSjI1VHdyQ3c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Android App on Google Play\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImU3ZDIzNWQzLTBhOTktNDJmNS05NTg5LWE0YWE5YTljMWJkMCIsImRla1ZlcnNpb24iOjEsIml2IjoibktmNG5HNmJ1V3hqU2VDcGp1R0Rndz09IiwiY2lwaGVyVGV4dCI6IjBLeWdkZURTUERRcXdvK2hreXR2Z0VhMkJhRG9qQTVKbTd6Q0ZVSHhVaFprTHF0eUZqK1dtaVJHeXJKdS9FNlhMSUNweXlaV04yRFhOS2FTMEZCa2tydTdQLzA3NlBNZkFNak43SktTbktmNG5HNmJ1V3hqU2VDcGp1R0Rndz09IiwiYXV0aFRhZyI6IlpKSzd1ei85Tytqekh3REl6ZXlTa2c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Curbside Pickup\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImMwNDczYmI5LTdhMmYtNDI1ZS1iMjg2LTEwOTQ4ZDUyZjZlMSIsImRla1ZlcnNpb24iOjEsIml2IjoieEJEeUV4MEZPMndnZ292ejgwL0hjdz09IiwiY2lwaGVyVGV4dCI6IlFzSVMxbkJKSjFKUytsSWVqdVJvRE56UFB5Z3NmeVM2TmxBRDVTcVlWdTRwSm1UQTlHL2x3MXhaZGV2QWxsOFJ2UzhscW1PdEM5cTJ1SElscVJPWVorcWpUUk9SNFhOaGY3a0hTb3FOeEJEeUV4MEZPMndnZ292ejgwL0hjdz09IiwiYXV0aFRhZyI6Im1HZnFvMDBUa2VGellYKzVCMHFLalE9PSJ9"
+          }
+        ],
+        "info": 26
+      },
+      "rendering": {
+        "passed": 0,
+        "warned": 15,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_PLUSWELCOME_4_10312025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_PLUSWELCOME_4_10312025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Curbside Pickup\" (00100b23-0afa-4715-a8cd-23bb46f9d2b2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Find A Store\" (fc08601a-fcce-4c96-8b90-39e5a55d6c05.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: LiveContent.aspx",
+            "detail": "src: http://cl.S10.exct.net/LiveContent.aspx?qs=eyJkZWtJZCI6ImU3YTE5NTQ0LWU5ZmEtNDYyZi1hNTJiLTBlYzNlOTgzNTBkNyIsImRla1ZlcnNpb"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: LiveContent.aspx",
+            "detail": "Non-HTTPS source may be blocked — src: http://cl.S10.exct.net/LiveContent.aspx?qs=eyJkZWtJZCI6ImU3YTE5NTQ0LWU5ZmEtNDYyZi1hNTJiLTBlYzNlOTgzNTBkNyIsImRla1ZlcnNpb"
+          }
+        ]
+      },
+      "personalization": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "merge_empty_greeting",
+            "status": "fail",
+            "label": "Empty greeting slot",
+            "detail": "Greeting has empty name field (e.g. \"Hi ,\")"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTgwODY1IiwiamIiOiI2NzAzNiIsImQ"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "19%",
+      "total_checks": 21,
+      "total_issues": 1,
+      "total_warnings": 16
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-20-more-skechers-plus-benefits-are-waiting-email-webview-render.png",
+    "pdf": "2026-03-20-more-skechers-plus-benefits-are-waiting-review.pdf"
+  }
+}

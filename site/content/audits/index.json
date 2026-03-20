@@ -1,5 +1,33 @@
 [
   {
+    "slug": "2026-03-20-newest-drop-this-is-only-the-start",
+    "subject": "Newest drop: this is only the start",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-20T16:07:08+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "38%",
+      "total_checks": 13,
+      "total_issues": 2,
+      "total_warnings": 6
+    },
+    "has_image": false
+  },
+  {
+    "slug": "2026-03-20-more-skechers-plus-benefits-are-waiting",
+    "subject": "More Skechers Plus Benefits are waiting",
+    "from_display_name": "SKECHERS PLUS",
+    "timestamp_iso": "2026-03-20T05:19:03+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "19%",
+      "total_checks": 21,
+      "total_issues": 1,
+      "total_warnings": 16
+    },
+    "has_image": true
+  },
+  {
     "slug": "2026-03-19-complete-your-profile-to-earn-50-adiclub-points",
     "subject": "Complete your profile to earn 50 adiClub points",
     "from_display_name": "adidas",
