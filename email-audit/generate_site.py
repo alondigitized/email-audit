@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Generate the email-audit static site from published-audits.json manifest.
 
-Reads each audit's artifact directory (review.txt, message.json, qa-report.json),
-produces per-audit HTML pages under audits/, copies assets (PDFs, render PNGs),
-and generates the index.html table.
+Three-phase pipeline:
+  Phase 1 — Extract: parse raw artifacts into audit-data.json per audit
+  Phase 2 — Render:  read audit-data.json, produce HTML pages + index
+  Phase 3 — Copy:    copy asset files (PNGs, PDFs) to output directory
 """
 
 import html
@@ -48,6 +49,10 @@ GATE_SCRIPT = """\
 </script>"""
 
 
+# ---------------------------------------------------------------------------
+# Shared utilities
+# ---------------------------------------------------------------------------
+
 def esc(text):
     """HTML-escape text."""
     return html.escape(str(text), quote=True)
@@ -67,6 +72,10 @@ def read_file(path):
         return f.read()
 
 
+# ===========================================================================
+# Phase 1 — Extract: raw artifacts → audit-data.json
+# ===========================================================================
+
 def extract_score(review_text):
     """Extract the business impact score like '6 / 10' or '6/10' from review text."""
     m = re.search(r"\*\*(\d+(?:\.\d+)?)\s*/\s*10\*\*", review_text)
@@ -75,7 +84,7 @@ def extract_score(review_text):
     m = re.search(r"(\d+(?:\.\d+)?)\s*/\s*10", review_text)
     if m:
         return m.group(1) + "/10"
-    return "—"
+    return "\u2014"
 
 
 def parse_timestamp(msg):
@@ -87,6 +96,158 @@ def parse_timestamp(msg):
         except Exception:
             pass
     return None
+
+
+def parse_display_name(from_addr):
+    """Extract just the display name from 'Name <email>' format."""
+    if not from_addr:
+        return "Unknown"
+    m = re.match(r'^"?([^"<]+)"?\s*<', from_addr)
+    if m:
+        return m.group(1).strip()
+    return from_addr
+
+
+def strip_preamble(review_text):
+    """Strip preamble text before the first --- separator (tool output leaking in)."""
+    stripped = review_text.lstrip()
+    if stripped and not stripped.startswith("**WALKER") and not stripped.startswith("##"):
+        idx = review_text.find("\n---\n")
+        if idx != -1:
+            review_text = review_text[idx + 5:]
+    return review_text
+
+
+def parse_review_sections(review_text):
+    """Parse review.txt into structured sections for downstream consumers (e.g. PDF).
+
+    Returns a dict with section name keys mapping to lists of content lines.
+    """
+    sections = {
+        "executive_summary": [],
+        "business_impact_score": [],
+        "whats_working": [],
+        "whats_weak": [],
+        "recommendations": [],
+        "bottom_line": [],
+        "evidence": [],
+    }
+    current = "executive_summary"
+
+    for raw in review_text.splitlines():
+        line = raw.strip()
+        if not line or line == "---":
+            continue
+        if line.startswith("**WALKER AUDIT") or line.startswith("*Received:"):
+            continue
+
+        # Detect section headers: ## N. Title or ### Title
+        cleaned = re.sub(r"^#{1,3}\s*\d*\.?\s*", "", line).strip().lower().rstrip(":")
+        if cleaned == "executive summary":
+            current = "executive_summary"; continue
+        if cleaned in ("business impact score", "business impact"):
+            current = "business_impact_score"; continue
+        if cleaned in ("what's working", "what\u2019s working", "what works"):
+            current = "whats_working"; continue
+        if cleaned in ("what's weak", "what\u2019s weak", "what is weak"):
+            current = "whats_weak"; continue
+        if cleaned.startswith("recommendation"):
+            current = "recommendations"; continue
+        if cleaned == "bottom line":
+            current = "bottom_line"; continue
+        if cleaned in ("evidence", "evidence & analysis", "evidence and analysis"):
+            current = "evidence"; continue
+
+        # Skip bare section header lines (already handled above)
+        if re.match(r"^#{1,3}\s", line):
+            continue
+
+        sections[current].append(line)
+
+    return sections
+
+
+def build_audit_data(entry, msg, review_text, qa_report, slug):
+    """Assemble the complete audit-data.json structure from raw artifacts."""
+    from_addr = msg.get("from_") or msg.get("from") or "Unknown"
+    dt = parse_timestamp(msg)
+    cleaned_review = strip_preamble(review_text)
+
+    render_exists = os.path.exists(
+        os.path.join(entry.get("artifactDir", ""), "email-webview-render.png")
+    )
+    pdf_path = entry.get("pdfPath", "")
+    pdf_exists = bool(pdf_path) and os.path.exists(pdf_path)
+
+    return {
+        "schema_version": 1,
+        "slug": slug,
+        "email": {
+            "subject": msg.get("subject", "Untitled"),
+            "from": from_addr,
+            "from_display_name": parse_display_name(from_addr),
+            "timestamp_iso": dt.isoformat() if dt else None,
+            "date_formatted": dt.strftime("%Y-%m-%d %H:%M UTC") if dt else "Unknown",
+        },
+        "review": {
+            "score": extract_score(review_text),
+            "raw_markdown": cleaned_review,
+            "sections": parse_review_sections(cleaned_review),
+        },
+        "qa": qa_report,
+        "assets": {
+            "render_image": f"{slug}-email-webview-render.png" if render_exists else None,
+            "pdf": f"{slug}-review.pdf" if pdf_exists else None,
+        },
+    }
+
+
+def is_stale(audit_data_path, artifact_dir):
+    """Check whether audit-data.json needs regeneration."""
+    if not os.path.exists(audit_data_path):
+        return True
+    ad_mtime = os.path.getmtime(audit_data_path)
+    for name in ("message.json", "review.txt", "qa-report.json"):
+        src = os.path.join(artifact_dir, name)
+        if os.path.exists(src) and os.path.getmtime(src) > ad_mtime:
+            return True
+    return False
+
+
+def extract_all(manifest):
+    """Phase 1: For each manifest entry, produce audit-data.json from raw artifacts."""
+    for entry in manifest:
+        slug = entry.get("slug", "")
+        artifact_dir = entry.get("artifactDir", "")
+        if not artifact_dir or not os.path.isdir(artifact_dir):
+            continue
+
+        audit_data_path = os.path.join(artifact_dir, "audit-data.json")
+        if not is_stale(audit_data_path, artifact_dir):
+            continue
+
+        msg = load_json(os.path.join(artifact_dir, "message.json")) or {}
+        review_text = read_file(os.path.join(artifact_dir, "review.txt"))
+        qa_report = load_json(os.path.join(artifact_dir, "qa-report.json"))
+
+        audit_data = build_audit_data(entry, msg, review_text, qa_report, slug)
+
+        with open(audit_data_path, "w") as f:
+            json.dump(audit_data, f, indent=2, ensure_ascii=False)
+
+
+# ===========================================================================
+# Phase 2 — Render: audit-data.json → HTML
+# ===========================================================================
+
+def inline_format(text):
+    """Convert inline markdown (bold, code) to HTML."""
+    text = esc(text)
+    # Bold: **text**
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    # Code: `text`
+    text = re.sub(r"`(.+?)`", r"<code>\1</code>", text)
+    return text
 
 
 def review_to_html(review_text):
@@ -153,23 +314,13 @@ def review_to_html(review_text):
     return result
 
 
-def inline_format(text):
-    """Convert inline markdown (bold, code) to HTML."""
-    text = esc(text)
-    # Bold: **text**
-    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
-    # Code: `text`
-    text = re.sub(r"`(.+?)`", r"<code>\1</code>", text)
-    return text
-
-
-def qa_card_html(qa_report):
-    """Build the QA card HTML from qa-report.json data."""
-    if not qa_report:
+def qa_card_html(qa_data):
+    """Build the QA card HTML from qa data."""
+    if not qa_data:
         return ""
 
-    summary = qa_report.get("summary", {})
-    categories = qa_report.get("categories", {})
+    summary = qa_data.get("summary", {})
+    categories = qa_data.get("categories", {})
 
     pass_rate = summary.get("overall_pass_rate", "?")
     total_issues = summary.get("total_issues", 0)
@@ -197,7 +348,7 @@ def qa_card_html(qa_report):
         for c in non_pass:
             status = c.get("status", "warn")
             icon_class = "qa-fail" if status == "fail" else "qa-warn"
-            icon = "✘" if status == "fail" else "⚠"
+            icon = "\u2718" if status == "fail" else "\u26a0"
             detail = esc(c.get("detail", ""))
             url = c.get("url", "")
             if url:
@@ -214,11 +365,11 @@ def qa_card_html(qa_report):
     return "".join(parts)
 
 
-def qa_badge(qa_report):
-    """Return HTML badge for QA summary (for index table)."""
-    if not qa_report:
+def qa_badge(qa_data):
+    """Return HTML badge for QA summary (for index cards)."""
+    if not qa_data:
         return ""
-    summary = qa_report.get("summary", {})
+    summary = qa_data.get("summary", {})
     issues = summary.get("total_issues", 0)
     warnings = summary.get("total_warnings", 0)
     if issues == 0 and warnings == 0:
@@ -238,44 +389,54 @@ def qa_badge(qa_report):
     return f'<span class="qa-badge {badge_class}">{", ".join(parts)}</span>'
 
 
-def build_audit_page(entry, msg, review_text, qa_report, render_img_name):
-    """Build a full audit detail HTML page."""
-    subject = msg.get("subject", "Untitled")
-    from_addr = msg.get("from_") or msg.get("from") or "Unknown"
-    dt = parse_timestamp(msg)
-    date_str = dt.strftime("%Y-%m-%d %H:%M UTC") if dt else "Unknown"
-    score = extract_score(review_text)
+def build_audit_page(audit_data):
+    """Build a full audit detail HTML page from structured audit data."""
+    email = audit_data["email"]
+    review = audit_data["review"]
+    assets = audit_data["assets"]
 
-    review_html = review_to_html(review_text)
-    qa_html = qa_card_html(qa_report)
+    subject = email["subject"]
+    from_addr = email["from"]
+    date_str = email["date_formatted"]
+    score = review["score"]
 
-    # Build layout: review content on left, optional render image on right
-    layout_right = ""
+    review_html = review_to_html(review["raw_markdown"])
+    qa_html = qa_card_html(audit_data["qa"])
+
+    render_img_name = assets.get("render_image")
+
+    # Build layout: 2-column grid only when image exists
     if render_img_name:
-        layout_right = (
+        content_block = (
+            f'<div class="layout"><div class="card">'
+            f"{review_html}"
+            f"</div>"
             f'<div><img class="image" src="../assets/{esc(render_img_name)}" '
             f'alt="Email webview render"></div>'
+            f"</div>"
+        )
+    else:
+        content_block = (
+            f'<div class="card">'
+            f"{review_html}"
+            f"</div>"
         )
 
     page = (
         f'<!doctype html><html><head><meta charset="utf-8">'
         f'<meta name="viewport" content="width=device-width,initial-scale=1">'
         f"<title>{esc(subject)}</title>"
-        f'<link rel="stylesheet" href="../styles.css"></head><body>'
+        f'<link rel="stylesheet" href="../styles.css?v=4"></head><body>'
         f"{GATE_HTML}"
         f'<main><p><a href="../index.html">\u2190 Back to all audits</a></p>'
-        f'<div class="hero"><div class="muted">Skechers Email Audit</div>'
+        f'<div class="hero hero-detail"><div class="muted">Skechers Email Audit</div>'
         f"<h1>{esc(subject)}</h1>"
         f'<table class="meta-table">'
         f'<tr><td class="meta-label">From</td><td>{esc(from_addr)}</td></tr>'
         f'<tr><td class="meta-label">Received</td><td>{esc(date_str)}</td></tr>'
         f'<tr><td class="meta-label">Score</td><td><span class="score">{esc(score)}</span></td></tr>'
         f"</table></div>"
-        f'<div class="layout"><div class="card">'
-        f"{review_html}"
-        f"</div>"
-        f"{layout_right}"
-        f"</div>"
+        f"{content_block}"
         f"{qa_html}"
         f"</main>"
         f"{GATE_SCRIPT}</body></html>"
@@ -283,27 +444,25 @@ def build_audit_page(entry, msg, review_text, qa_report, render_img_name):
     return page
 
 
-def parse_display_name(from_addr):
-    """Extract just the display name from 'Name <email>' format."""
-    if not from_addr:
-        return "Unknown"
-    m = re.match(r'^"?([^"<]+)"?\s*<', from_addr)
-    if m:
-        return m.group(1).strip()
-    return from_addr
-
-
-def build_index(entries_data):
+def build_index(all_audit_data):
     """Build the index.html page with audit cards."""
     cards = []
-    for ed in entries_data:
-        dt = ed["dt"]
-        date_str = dt.strftime("%b %-d, %Y") if dt else "—"
-        subject = esc(ed["subject"])
-        score = esc(ed["score"])
-        badge = ed["qa_badge"]
-        slug = ed["slug"]
-        from_name = esc(ed.get("from_name", "Unknown"))
+    for ad in all_audit_data:
+        email = ad["email"]
+        ts_iso = email.get("timestamp_iso")
+        if ts_iso:
+            try:
+                dt = datetime.fromisoformat(ts_iso)
+            except Exception:
+                dt = None
+        else:
+            dt = None
+        date_str = dt.strftime("%b %-d, %Y") if dt else "\u2014"
+        subject = esc(email["subject"])
+        score = esc(ad["review"]["score"])
+        badge = qa_badge(ad["qa"])
+        slug = ad["slug"]
+        from_name = esc(email.get("from_display_name", "Unknown"))
 
         cards.append(
             f'<a class="audit-card" href="audits/{slug}.html">'
@@ -338,72 +497,90 @@ def build_index(entries_data):
     return page
 
 
+def render_all(manifest):
+    """Phase 2: Read audit-data.json for each entry, produce HTML pages + index."""
+    os.makedirs(AUDITS_DIR, exist_ok=True)
+
+    all_audit_data = []
+
+    for entry in manifest:
+        slug = entry.get("slug", "")
+        artifact_dir = entry.get("artifactDir", "")
+        if not artifact_dir or not os.path.isdir(artifact_dir):
+            print(f"Skipping {slug}: artifact dir not found at {artifact_dir}", file=sys.stderr)
+            continue
+
+        audit_data = load_json(os.path.join(artifact_dir, "audit-data.json"))
+        if not audit_data:
+            print(f"Skipping {slug}: audit-data.json not found", file=sys.stderr)
+            continue
+
+        # Generate audit page
+        page = build_audit_page(audit_data)
+        with open(os.path.join(AUDITS_DIR, f"{slug}.html"), "w") as f:
+            f.write(page)
+
+        all_audit_data.append(audit_data)
+
+    # Sort by timestamp descending for index
+    def sort_key(ad):
+        ts = ad["email"].get("timestamp_iso")
+        if ts:
+            try:
+                return datetime.fromisoformat(ts)
+            except Exception:
+                pass
+        return datetime.min.replace(tzinfo=timezone.utc)
+
+    all_audit_data.sort(key=sort_key, reverse=True)
+
+    # Generate index
+    index_html = build_index(all_audit_data)
+    with open(os.path.join(SCRIPT_DIR, "index.html"), "w") as f:
+        f.write(index_html)
+
+    return len(all_audit_data)
+
+
+# ===========================================================================
+# Phase 3 — Copy assets
+# ===========================================================================
+
+def copy_assets(manifest):
+    """Phase 3: Copy render PNGs and review PDFs to the assets directory."""
+    os.makedirs(ASSETS_DIR, exist_ok=True)
+
+    for entry in manifest:
+        slug = entry.get("slug", "")
+        artifact_dir = entry.get("artifactDir", "")
+        pdf_path = entry.get("pdfPath", "")
+
+        if not artifact_dir or not os.path.isdir(artifact_dir):
+            continue
+
+        render_src = os.path.join(artifact_dir, "email-webview-render.png")
+        if os.path.exists(render_src):
+            shutil.copy2(render_src, os.path.join(ASSETS_DIR, f"{slug}-email-webview-render.png"))
+
+        if pdf_path and os.path.exists(pdf_path):
+            shutil.copy2(pdf_path, os.path.join(ASSETS_DIR, f"{slug}-review.pdf"))
+
+
+# ===========================================================================
+# Main
+# ===========================================================================
+
 def main():
     manifest = load_json(MANIFEST)
     if not manifest:
         print("No published-audits.json found or empty.", file=sys.stderr)
         sys.exit(1)
 
-    os.makedirs(AUDITS_DIR, exist_ok=True)
-    os.makedirs(ASSETS_DIR, exist_ok=True)
+    extract_all(manifest)
+    count = render_all(manifest)
+    copy_assets(manifest)
 
-    entries_data = []
-
-    for entry in manifest:
-        slug = entry.get("slug", "")
-        artifact_dir = entry.get("artifactDir", "")
-        pdf_path = entry.get("pdfPath", "")
-        subject = entry.get("subject", "Untitled")
-
-        if not artifact_dir or not os.path.isdir(artifact_dir):
-            print(f"Skipping {slug}: artifact dir not found at {artifact_dir}", file=sys.stderr)
-            continue
-
-        msg = load_json(os.path.join(artifact_dir, "message.json")) or {}
-        review_text = read_file(os.path.join(artifact_dir, "review.txt"))
-        qa_report = load_json(os.path.join(artifact_dir, "qa-report.json"))
-
-        # Copy assets: render PNG and PDF
-        render_img_name = None
-        render_src = os.path.join(artifact_dir, "email-webview-render.png")
-        if os.path.exists(render_src):
-            render_img_name = f"{slug}-email-webview-render.png"
-            shutil.copy2(render_src, os.path.join(ASSETS_DIR, render_img_name))
-
-        if pdf_path and os.path.exists(pdf_path):
-            pdf_dest = f"{slug}-review.pdf"
-            shutil.copy2(pdf_path, os.path.join(ASSETS_DIR, pdf_dest))
-
-        # Generate audit page
-        page = build_audit_page(entry, msg, review_text, qa_report, render_img_name)
-        with open(os.path.join(AUDITS_DIR, f"{slug}.html"), "w") as f:
-            f.write(page)
-
-        # Collect data for index
-        dt = parse_timestamp(msg)
-        score = extract_score(review_text)
-        badge = qa_badge(qa_report)
-        from_addr = msg.get("from_") or msg.get("from") or ""
-        from_name = parse_display_name(from_addr)
-
-        entries_data.append({
-            "dt": dt,
-            "subject": subject,
-            "score": score,
-            "qa_badge": badge,
-            "slug": slug,
-            "from_name": from_name,
-        })
-
-    # Sort by date descending for index
-    entries_data.sort(key=lambda e: e["dt"] or datetime.min.replace(tzinfo=timezone.utc), reverse=True)
-
-    # Generate index
-    index_html = build_index(entries_data)
-    with open(os.path.join(SCRIPT_DIR, "index.html"), "w") as f:
-        f.write(index_html)
-
-    print(f"Generated {len(entries_data)} audit pages + index.html")
+    print(f"Generated {count} audit pages + index.html")
 
 
 if __name__ == "__main__":

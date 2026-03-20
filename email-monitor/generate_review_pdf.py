@@ -94,16 +94,47 @@ if '--qa-report' in sys.argv:
     idx = sys.argv.index('--qa-report')
     if idx + 1 < len(sys.argv):
         qa_report_path = sys.argv[idx + 1]
-qa_data = None
-if qa_report_path and os.path.exists(qa_report_path):
-    try:
-        qa_data = json.load(open(qa_report_path, 'r', encoding='utf-8'))
-    except (json.JSONDecodeError, OSError):
-        pass
-review_text = open(review_path, 'r', encoding='utf-8').read().strip()
-meta = json.load(open(os.path.join(artifacts_dir, 'message.json'), 'r', encoding='utf-8'))
-sections = parse_review(review_text)
-subject = meta.get('subject') or 'Skechers Email Review'
+
+# Try loading pre-extracted audit-data.json; fall back to raw artifact parsing.
+audit_data_path = os.path.join(artifacts_dir, 'audit-data.json')
+if os.path.exists(audit_data_path):
+    _ad = json.load(open(audit_data_path, 'r', encoding='utf-8'))
+    _review = _ad.get('review', {})
+    _raw_sections = _review.get('sections', {})
+
+    def _clean_lines(lines):
+        out = []
+        for line in lines:
+            line = re.sub(r'^[-•*]\s*', '', line)
+            line = re.sub(r'^\d+[\.)]\s*', '', line)
+            line = clean_inline(line)
+            if line:
+                out.append(line)
+        return out
+
+    sections = {
+        'executive_summary': _clean_lines(_raw_sections.get('executive_summary', [])),
+        'evidence': _clean_lines(_raw_sections.get('evidence', [])),
+        'what_working': _clean_lines(_raw_sections.get('whats_working', [])),
+        'what_weak': _clean_lines(_raw_sections.get('whats_weak', [])),
+        'recommendations': _clean_lines(_raw_sections.get('recommendations', [])),
+        'bottom_line': _clean_lines(_raw_sections.get('bottom_line', [])),
+        'score': _review.get('score', 'n/a'),
+        'leftovers': [],
+    }
+    subject = _ad.get('email', {}).get('subject') or 'Skechers Email Review'
+    qa_data = _ad.get('qa')
+else:
+    qa_data = None
+    if qa_report_path and os.path.exists(qa_report_path):
+        try:
+            qa_data = json.load(open(qa_report_path, 'r', encoding='utf-8'))
+        except (json.JSONDecodeError, OSError):
+            pass
+    review_text = open(review_path, 'r', encoding='utf-8').read().strip()
+    meta = json.load(open(os.path.join(artifacts_dir, 'message.json'), 'r', encoding='utf-8'))
+    sections = parse_review(review_text)
+    subject = meta.get('subject') or 'Skechers Email Review'
 webview_url = ''
 wv = os.path.join(artifacts_dir, 'webview-url.txt')
 if os.path.exists(wv):
