@@ -2,9 +2,11 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getAuditBySlug, getAllSlugs } from "@/lib/audits";
+import { splitReview } from "@/lib/types";
 import { ReviewContent } from "@/components/ReviewContent";
 import { QaCard } from "@/components/QaCard";
 import { ScoreBadge } from "@/components/ScoreBadge";
+import { TabNav } from "@/components/TabNav";
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -20,6 +22,42 @@ export async function generateMetadata({
   return { title: audit?.email.subject ?? "Audit" };
 }
 
+function TwoColLayout({
+  left,
+  right,
+  hasImage,
+}: {
+  left: React.ReactNode;
+  right: React.ReactNode;
+  hasImage: boolean;
+}) {
+  return (
+    <div
+      className={
+        hasImage
+          ? "grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1"
+          : ""
+      }
+    >
+      {left}
+      {hasImage && right}
+    </div>
+  );
+}
+
+function EmailImage({ slug }: { slug: string }) {
+  return (
+    <div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`/images/audits/${slug}/render.png`}
+        alt="Email webview render"
+        className="w-full border border-gray-200 rounded-2xl"
+      />
+    </div>
+  );
+}
+
 export default async function AuditPage({
   params,
 }: {
@@ -31,6 +69,7 @@ export default async function AuditPage({
 
   const { email, review, qa, assets } = audit;
   const hasImage = !!assets.render_image;
+  const { content, technical } = splitReview(review.raw_markdown);
 
   return (
     <>
@@ -70,30 +109,47 @@ export default async function AuditPage({
         </table>
       </div>
 
-      {/* Content: 2-col when image exists */}
-      <div
-        className={
-          hasImage
-            ? "grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1"
-            : ""
-        }
-      >
-        <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
-          <ReviewContent markdown={review.raw_markdown} />
-        </div>
-        {hasImage && (
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`/images/audits/${slug}/render.png`}
-              alt="Email webview render"
-              className="w-full border border-gray-200 rounded-2xl"
-            />
-          </div>
-        )}
-      </div>
-
-      <QaCard qa={qa} />
+      <TabNav
+        tabs={[
+          {
+            id: "content",
+            label: "Content Review",
+            content: (
+              <TwoColLayout
+                hasImage={hasImage}
+                left={
+                  <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
+                    <ReviewContent markdown={content} />
+                  </div>
+                }
+                right={<EmailImage slug={slug} />}
+              />
+            ),
+          },
+          {
+            id: "technical",
+            label: "Technical",
+            content: (
+              <div className="flex flex-col gap-5">
+                <TwoColLayout
+                  hasImage={hasImage}
+                  left={
+                    technical ? (
+                      <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
+                        <ReviewContent markdown={technical} />
+                      </div>
+                    ) : (
+                      <div />
+                    )
+                  }
+                  right={<EmailImage slug={slug} />}
+                />
+                <QaCard qa={qa} />
+              </div>
+            ),
+          },
+        ]}
+      />
     </>
   );
 }

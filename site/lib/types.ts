@@ -66,3 +66,27 @@ export interface AuditSummary {
   qa_summary: QaSummary | null;
   has_image: boolean;
 }
+
+export type QaBusinessGroup =
+  | "broken_experience"
+  | "compliance"
+  | "deliverability"
+  | "info";
+
+export interface SplitReview {
+  content: string;
+  technical: string | null;
+}
+
+const TECH_MARKER = "## Technical Audit";
+
+export function splitReview(rawMarkdown: string): SplitReview {
+  const idx = rawMarkdown.indexOf(TECH_MARKER);
+  if (idx === -1) {
+    return { content: rawMarkdown, technical: null };
+  }
+  return {
+    content: rawMarkdown.slice(0, idx).trimEnd(),
+    technical: rawMarkdown.slice(idx),
+  };
+}

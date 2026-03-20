@@ -185,15 +185,19 @@ def check_links(artifacts_dir, url_context=None):
 
     # Separate tracking-domain URLs from probeable URLs
     probeable_urls = []
+    tracking_skipped_count = 0
     for u in non_pixel_urls:
         if not re.match(r'^https?://', u):
             continue
         if is_tracking_domain(u):
-            checks.append(make_check('link_tracking_skipped', 'info',
-                                     'Tracking link not probed',
-                                     _detail_with_ctx('Tracking/click-redirect domain — skipped HTTP probe', u), url=u))
+            tracking_skipped_count += 1
         else:
             probeable_urls.append(u)
+
+    if tracking_skipped_count:
+        checks.append(make_check('link_tracking_skipped', 'info',
+                                 f'{tracking_skipped_count} tracking link(s) skipped',
+                                 'Tracking/click-redirect domains — skipped HTTP probe'))
 
     # HTTP checks — single worker with per-domain throttle to avoid 429s
     def probe(url):
@@ -216,7 +220,7 @@ def check_links(artifacts_dir, url_context=None):
                 checks.append(make_check('link_5xx', 'warn' if tracking else 'fail',
                                          f'Server error ({status})', _detail_with_ctx('', url), url=url))
             elif status == 429:
-                checks.append(make_check('link_rate_limited', 'warn',
+                checks.append(make_check('link_inconclusive', 'info',
                                          f'Rate limited ({status})',
                                          _detail_with_ctx('Server returned 429 — link may be valid', url), url=url))
             elif 400 <= status < 500 and tracking:
@@ -490,6 +494,48 @@ def tally(checks):
     return result
 
 
+CATEGORY_MAP = {
+    # Broken Experience
+    'link_4xx': 'broken_experience',
+    'link_5xx': 'broken_experience',
+    'link_error': 'broken_experience',
+    'link_redirect_loop': 'broken_experience',
+    'link_doubled_domain': 'broken_experience',
+    'link_malformed': 'broken_experience',
+    'link_many_redirects': 'broken_experience',
+    'links_none': 'broken_experience',
+    'merge_raw_token': 'broken_experience',
+    'merge_empty_greeting': 'broken_experience',
+    'merge_doubled_domain': 'broken_experience',
+    # Compliance
+    'canspam_address': 'compliance',
+    'canspam_address_missing': 'compliance',
+    'body_unsub_link': 'compliance',
+    'body_unsub_text': 'compliance',
+    'body_unsub_missing': 'compliance',
+    'header_list_unsub': 'compliance',
+    'header_list_unsub_missing': 'compliance',
+    'header_list_unsub_invalid': 'compliance',
+    'header_one_click': 'compliance',
+    'header_one_click_missing': 'compliance',
+    # Deliverability
+    'auth_results': 'deliverability',
+    'auth_results_missing': 'deliverability',
+    'text_fallback_empty': 'deliverability',
+    'text_mostly_urls': 'deliverability',
+    # Info (not counted in summary)
+    'img_http': 'info',
+    'img_missing_alt': 'info',
+    'link_tracking_skipped': 'info',
+    'link_tracking_expired': 'info',
+    'link_inconclusive': 'info',
+    # Pass-through (old pass markers)
+    'links_ok': 'broken_experience',
+    'rendering_ok': 'deliverability',
+    'personalization_ok': 'broken_experience',
+}
+
+
 def run_all(artifacts_dir):
     # Parse HTML once, share results across checks
     html_content = read_file(os.path.join(artifacts_dir, 'message.html'))
@@ -500,16 +546,36 @@ def run_all(artifacts_dir):
         except Exception:
             pass
 
-    categories = {
-        'link_analysis': tally(check_links(artifacts_dir, url_context=parser.url_context)),
-        'rendering': tally(check_rendering(artifacts_dir, parsed_images=parser.images)),
-        'personalization': tally(check_personalization(artifacts_dir)),
-        'compliance': tally(check_compliance(artifacts_dir)),
+    # Gather all checks from all functions
+    all_checks = []
+    all_checks.extend(check_links(artifacts_dir, url_context=parser.url_context))
+    all_checks.extend(check_rendering(artifacts_dir, parsed_images=parser.images))
+    all_checks.extend(check_personalization(artifacts_dir))
+    all_checks.extend(check_compliance(artifacts_dir))
+
+    # Classify into new business-impact categories
+    buckets = {
+        'broken_experience': [],
+        'compliance': [],
+        'deliverability': [],
+        'info': [],
     }
-    total_checks = sum(c['passed'] + c['warned'] + c['failed'] for c in categories.values())
-    total_pass = sum(c['passed'] for c in categories.values())
-    total_warn = sum(c['warned'] for c in categories.values())
-    total_fail = sum(c['failed'] for c in categories.values())
+    for check in all_checks:
+        cat = CATEGORY_MAP.get(check['check_id'], 'info')
+        buckets[cat].append(check)
+
+    categories = {}
+    for cat_name in ['broken_experience', 'compliance', 'deliverability', 'info']:
+        checks = buckets[cat_name]
+        if checks:
+            categories[cat_name] = tally(checks)
+
+    # Summary excludes info category
+    actionable = {k: v for k, v in categories.items() if k != 'info'}
+    total_checks = sum(c['passed'] + c['warned'] + c['failed'] for c in actionable.values())
+    total_pass = sum(c['passed'] for c in actionable.values())
+    total_warn = sum(c['warned'] for c in actionable.values())
+    total_fail = sum(c['failed'] for c in actionable.values())
     pass_rate = f"{round(total_pass / total_checks * 100)}%" if total_checks else "0%"
 
     report = {
