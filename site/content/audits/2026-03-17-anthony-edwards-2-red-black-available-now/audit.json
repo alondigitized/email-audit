@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-17-anthony-edwards-2-red-black-available-now",
+  "email": {
+    "subject": "Anthony Edwards 2: Red & Black available now",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-17T03:07:57+00:00",
+    "date_formatted": "2026-03-17 03:07 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "**WALKER AUDIT**\n**From:** adidas `<adidas@us-news.comms.adidas.com>`\n**Subject:** Anthony Edwards 2: Red & Black available now\n**Date:** March 17, 2026\n\n---\n\n## 1. Executive Summary\n\nThis is not a Skechers email. It is a competitor send from adidas announcing the Anthony Edwards 2 basketball shoe in a new Red & Black colorway. Reviewed here as competitive intelligence.\n\nThe email is a clean, single-purpose product drop announcement. Adidas uses Anthony Edwards' NBA profile effectively as the lead visual asset and keeps the hierarchy simple: athlete hero → product shot → SHOP NOW. The structure is competent but not exceptional. The email leans entirely on the celebrity name and colorway novelty — there is no urgency driver, no loyalty hook, and no cross-sell depth. A few technical issues (HTTP images, empty plain-text fallback, a visible dynamic content placeholder) indicate this went out with QA gaps that a brand of this scale shouldn't be shipping.\n\n---\n\n## 2. Business Impact Score\n\n**6 / 10**\n\nSolid execution of a basic product drop. The athlete branding does the heavy lifting. Structural simplicity keeps the path to purchase clear, but the lack of scarcity signaling, loyalty integration, or secondary product discovery leaves revenue on the table. Technical issues are a minor but real embarrassment at this send volume.\n\n---\n\n## 3. What's Working\n\n- **Athlete-forward hero.** Anthony Edwards portrait leads the email. Name recognition is the primary conversion driver and the layout correctly makes him the first thing you see.\n- **Clear subject line.** \"Anthony Edwards 2: Red & Black available now\" is specific, searchable, and accurately sets expectations. No bait-and-switch.\n- **Focused CTA hierarchy.** \"SHOP NOW\" is the dominant action. No competing offers dilute the path to purchase.\n- **Multiple product entry points.** The email appears to present the AE2 in more than one configuration (separate link destinations), giving the subscriber multiple shots at a click.\n- **Store module.** \"FIND STORE NOW\" is a smart inclusion for a performance basketball shoe — in-store try-on is still relevant in this category.\n\n---\n\n## 4. What's Weak\n\n- **No urgency or scarcity.** \"Available now\" is a statement, not a reason to act today. No limited colorway framing, no \"while supplies last,\" no time-bound element.\n- **No loyalty or membership touchpoint.** An adidas adiClub mention (early access, points, member exclusives) is absent. For a named athlete shoe at likely premium price, leaving the membership hook out is a missed conversion and retention opportunity.\n- **Shallow copy.** The hero headline is \"The latest Anthony Edwards 2 basketball shoe is here.\" That's a description, not a story. No performance claim, no colorway backstory, no connection to Edwards' season or brand narrative.\n- **Store module creates split intent.** Placing a \"FIND STORE NOW\" module in a purchase-intent email without context (e.g., \"Available in-store and online\") forces the reader to make a channel decision without guidance. It can leak clicks from the ecomm path.\n- **Dynamic content placeholder exposed.** The link text \"Display images to show real-time content\" is a rendering fallback that should never be visible to recipients. Someone got lazy with QA.\n- **Empty plain-text fallback.** Zero characters. Subscribers on plain-text clients see nothing. This is a deliverability risk and an accessibility failure.\n\n---\n\n## 5. Recommendations\n\n1. **Add scarcity language.** Even \"Limited colorway\" or \"Get it before it sells out\" in the hero copy would lift urgency materially. This is table stakes for a drop-model product.\n2. **Wire in the loyalty program.** A single line — \"adiClub members earn points on this drop\" — activates a conversion lever and reinforces program value. Adidas is leaving that entirely on the shelf here.\n3. **Strengthen the hero copy.** Tie the Red & Black colorway to something: Edwards' team colors, a specific game moment, a design detail. \"Available now\" copy at this price point undersells the product.\n4. **Fix the HTTP image assets.** Six arrow images are loading over HTTP. Modern email clients and spam filters will block these. Migrate to HTTPS — no exceptions.\n5. **Build a plain-text fallback.** Zero chars is not a fallback, it's a gap. Even a minimal text version with the key headline and a short URL improves deliverability and accessibility.\n6. **Resolve the dynamic content placeholder.** The visible \"Display images to show real-time content\" link text indicates a broken real-time content module. Either fix the module integration or remove it — never ship this to a live list.\n7. **Clarify the omnichannel message.** If the shoe is available both online and in-store, say so explicitly in the hero section. The store module mid-email feels like an afterthought rather than a coordinated omnichannel offer.\n\n---\n\n## 6. Bottom Line\n\nA competent but punching-below-weight product launch email. Adidas has a premium asset in Anthony Edwards and a clearly desirable product, but the email does the minimum to introduce it. No urgency, no loyalty integration, no narrative. Clean template execution gets them a passing grade; the technical issues (HTTP images, empty plain-text, exposed placeholder) are unforced errors for a brand sending at this scale. Skechers should study the clean visual hierarchy and athlete-first framing — and use this as a reminder that even top-tier brands ship sloppy.\n\n---\n\n## 7. Evidence\n\n**Overall purpose of the email**\nSingle-product drop announcement. Anthony Edwards 2 basketball shoe, Red & Black colorway, available now. The entire email is structured around driving clicks to the AE2 product page, with a secondary retail discovery path via the store finder.\n\n**Hero / primary value proposition**\nAnthony Edwards portrait as lead visual; supporting headline introduces the AE2. The value prop is implied (new colorway of a signature basketball shoe by an NBA star) rather than stated. No performance claims, no price anchoring, no emotional hook beyond the athlete's face.\n\n**Membership / benefits section**\nAbsent. No adiClub mention anywhere in the email. For a premium athlete shoe, this is a notable structural gap — the loyalty program could easily justify early access framing or points-on-purchase messaging.\n\n**Product discoverability / recommendation modules**\nThe email appears to contain multiple AE2 product modules (distinct link destinations for what are likely different colorway variants or product configurations), plus an angled product shot module. This gives the email reasonable depth without being cluttered. No cross-category or \"you might also like\" modules.\n\n**Utility / secondary modules**\nStore finder (\"FIND STORE NOW\") is the only secondary module. Footer contains My Account, Privacy Statement, Support, and adidas.com/us — standard utility links, all tracked, all returning 403 on probe (expected behavior for session-bound tracking links).\n\n**Email-to-site continuity**\nCannot confirm directly due to 403s on all tracked links. Campaign parameters in the URL structure (`cm_mmc=AdiEmail_SNL`, `cn-Static_Newsletter`, `pc-Other`) are correctly populated, suggesting UTM tracking is in place. The \"DaVinciPersonalization\" campaign name in the parameters is notable — the email shows no visible personalization, which raises questions about whether the dynamic content module (the one that failed to render) was intended to carry that load.\n\n**Bugs / friction / clarity issues**\n- Exposed dynamic content placeholder: \"Display images to show real-time content\" visible as link text in the hero zone — a broken real-time content module\n- Six arrow UI element images loading over HTTP (not HTTPS); likely to be blocked in strict rendering environments, breaking navigation affordances\n- One tracking pixel loading over HTTP\n- Two images missing alt text (one the open-tracking pixel, one the preheader dynamic block)\n- Plain-text fallback: **0 characters** — complete absence, not a truncation; deliverability and accessibility risk\n- SPF/DKIM authentication not verifiable through the AgentMail relay; sender reputation status unknown",
+    "sections": {
+      "executive_summary": [
+        "**From:** adidas `<adidas@us-news.comms.adidas.com>`",
+        "**Subject:** Anthony Edwards 2: Red & Black available now",
+        "**Date:** March 17, 2026",
+        "This is not a Skechers email. It is a competitor send from adidas announcing the Anthony Edwards 2 basketball shoe in a new Red & Black colorway. Reviewed here as competitive intelligence.",
+        "The email is a clean, single-purpose product drop announcement. Adidas uses Anthony Edwards' NBA profile effectively as the lead visual asset and keeps the hierarchy simple: athlete hero → product shot → SHOP NOW. The structure is competent but not exceptional. The email leans entirely on the celebrity name and colorway novelty — there is no urgency driver, no loyalty hook, and no cross-sell depth. A few technical issues (HTTP images, empty plain-text fallback, a visible dynamic content placeholder) indicate this went out with QA gaps that a brand of this scale shouldn't be shipping."
+      ],
+      "business_impact_score": [
+        "**6 / 10**",
+        "Solid execution of a basic product drop. The athlete branding does the heavy lifting. Structural simplicity keeps the path to purchase clear, but the lack of scarcity signaling, loyalty integration, or secondary product discovery leaves revenue on the table. Technical issues are a minor but real embarrassment at this send volume."
+      ],
+      "whats_working": [
+        "- **Athlete-forward hero.** Anthony Edwards portrait leads the email. Name recognition is the primary conversion driver and the layout correctly makes him the first thing you see.",
+        "- **Clear subject line.** \"Anthony Edwards 2: Red & Black available now\" is specific, searchable, and accurately sets expectations. No bait-and-switch.",
+        "- **Focused CTA hierarchy.** \"SHOP NOW\" is the dominant action. No competing offers dilute the path to purchase.",
+        "- **Multiple product entry points.** The email appears to present the AE2 in more than one configuration (separate link destinations), giving the subscriber multiple shots at a click.",
+        "- **Store module.** \"FIND STORE NOW\" is a smart inclusion for a performance basketball shoe — in-store try-on is still relevant in this category."
+      ],
+      "whats_weak": [
+        "- **No urgency or scarcity.** \"Available now\" is a statement, not a reason to act today. No limited colorway framing, no \"while supplies last,\" no time-bound element.",
+        "- **No loyalty or membership touchpoint.** An adidas adiClub mention (early access, points, member exclusives) is absent. For a named athlete shoe at likely premium price, leaving the membership hook out is a missed conversion and retention opportunity.",
+        "- **Shallow copy.** The hero headline is \"The latest Anthony Edwards 2 basketball shoe is here.\" That's a description, not a story. No performance claim, no colorway backstory, no connection to Edwards' season or brand narrative.",
+        "- **Store module creates split intent.** Placing a \"FIND STORE NOW\" module in a purchase-intent email without context (e.g., \"Available in-store and online\") forces the reader to make a channel decision without guidance. It can leak clicks from the ecomm path.",
+        "- **Dynamic content placeholder exposed.** The link text \"Display images to show real-time content\" is a rendering fallback that should never be visible to recipients. Someone got lazy with QA.",
+        "- **Empty plain-text fallback.** Zero characters. Subscribers on plain-text clients see nothing. This is a deliverability risk and an accessibility failure."
+      ],
+      "recommendations": [
+        "1. **Add scarcity language.** Even \"Limited colorway\" or \"Get it before it sells out\" in the hero copy would lift urgency materially. This is table stakes for a drop-model product.",
+        "2. **Wire in the loyalty program.** A single line — \"adiClub members earn points on this drop\" — activates a conversion lever and reinforces program value. Adidas is leaving that entirely on the shelf here.",
+        "3. **Strengthen the hero copy.** Tie the Red & Black colorway to something: Edwards' team colors, a specific game moment, a design detail. \"Available now\" copy at this price point undersells the product.",
+        "4. **Fix the HTTP image assets.** Six arrow images are loading over HTTP. Modern email clients and spam filters will block these. Migrate to HTTPS — no exceptions.",
+        "5. **Build a plain-text fallback.** Zero chars is not a fallback, it's a gap. Even a minimal text version with the key headline and a short URL improves deliverability and accessibility.",
+        "6. **Resolve the dynamic content placeholder.** The visible \"Display images to show real-time content\" link text indicates a broken real-time content module. Either fix the module integration or remove it — never ship this to a live list.",
+        "7. **Clarify the omnichannel message.** If the shoe is available both online and in-store, say so explicitly in the hero section. The store module mid-email feels like an afterthought rather than a coordinated omnichannel offer."
+      ],
+      "bottom_line": [
+        "A competent but punching-below-weight product launch email. Adidas has a premium asset in Anthony Edwards and a clearly desirable product, but the email does the minimum to introduce it. No urgency, no loyalty integration, no narrative. Clean template execution gets them a passing grade; the technical issues (HTTP images, empty plain-text, exposed placeholder) are unforced errors for a brand sending at this scale. Skechers should study the clean visual hierarchy and athlete-first framing — and use this as a reminder that even top-tier brands ship sloppy."
+      ],
+      "evidence": [
+        "**Overall purpose of the email**",
+        "Single-product drop announcement. Anthony Edwards 2 basketball shoe, Red & Black colorway, available now. The entire email is structured around driving clicks to the AE2 product page, with a secondary retail discovery path via the store finder.",
+        "**Hero / primary value proposition**",
+        "Anthony Edwards portrait as lead visual; supporting headline introduces the AE2. The value prop is implied (new colorway of a signature basketball shoe by an NBA star) rather than stated. No performance claims, no price anchoring, no emotional hook beyond the athlete's face.",
+        "**Membership / benefits section**",
+        "Absent. No adiClub mention anywhere in the email. For a premium athlete shoe, this is a notable structural gap — the loyalty program could easily justify early access framing or points-on-purchase messaging.",
+        "**Product discoverability / recommendation modules**",
+        "The email appears to contain multiple AE2 product modules (distinct link destinations for what are likely different colorway variants or product configurations), plus an angled product shot module. This gives the email reasonable depth without being cluttered. No cross-category or \"you might also like\" modules.",
+        "**Utility / secondary modules**",
+        "Store finder (\"FIND STORE NOW\") is the only secondary module. Footer contains My Account, Privacy Statement, Support, and adidas.com/us — standard utility links, all tracked, all returning 403 on probe (expected behavior for session-bound tracking links).",
+        "**Email-to-site continuity**",
+        "Cannot confirm directly due to 403s on all tracked links. Campaign parameters in the URL structure (`cm_mmc=AdiEmail_SNL`, `cn-Static_Newsletter`, `pc-Other`) are correctly populated, suggesting UTM tracking is in place. The \"DaVinciPersonalization\" campaign name in the parameters is notable — the email shows no visible personalization, which raises questions about whether the dynamic content module (the one that failed to render) was intended to carry that load.",
+        "**Bugs / friction / clarity issues**",
+        "- Exposed dynamic content placeholder: \"Display images to show real-time content\" visible as link text in the hero zone — a broken real-time content module",
+        "- Six arrow UI element images loading over HTTP (not HTTPS); likely to be blocked in strict rendering environments, breaking navigation affordances",
+        "- One tracking pixel loading over HTTP",
+        "- Two images missing alt text (one the open-tracking pixel, one the preheader dynamic block)",
+        "- Plain-text fallback: **0 characters** — complete absence, not a truncation; deliverability and accessibility risk",
+        "- SPF/DKIM authentication not verifiable through the AgentMail relay; sender reputation status unknown"
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "link_analysis": {
+        "passed": 0,
+        "warned": 28,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/79255a56-3c9a-436f-8ff9-f66ba9f8f965?txn=87b4df80-21ae-11f1-8f02-82bcae5431fa'",
+            "url": "https://dv.adidas.com/o/79255a56-3c9a-436f-8ff9-f66ba9f8f965?cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr&amp;cp_cid=d63aafc3fa4b9098&amp;mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"The latest Anthony Edwards 2 basketball shoe is here.\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fe4b577ab-203b-45a8-9056-228e5413a9ce%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/BPg98LOSNgu68H9fLKUdm_9dtCzRmN806gZtumxoVK0=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Adidas\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F6c089f0c-3dfb-4b67-ac88-510d1ce44147%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_-HeaderAdidasLogo0-_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=HeaderAdidasLogo0%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098%26mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/m6eA8tSjD7rtmSKPRMHCkx7tdQAcKuMHGAJ__4w-fNI=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Display images to show real-time content\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fbc0535d9-d4a0-4f6c-8b81-8f584240f81e%3Fmi_u=ILDCWJD70W1BE32X%26mi_ecmp=m1qmmeejqw%26url=https%25253A%25252F%25252Fmi.adidas.com%25252Fp%25252Frp%25252F32225d5ff4dd9c47%25252Furl%26url_sig=8oqP6F8w0eLe1S%26cm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_-KeyMessageBanner-_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=KeyMessageBanner%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098%26mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/jYTSz5_fpmrW_r03Zik48IoJBzm8cZmebsm5duXndy8=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"A close up portait of basketball player, Anthony Edwards, wearing red adidas spo\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F1e89f933-5f35-4f82-be12-f05ff5fd98cc%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/rSst0PTGDtYDY62QJEhvkCSV8bR5VF9SMcqmS1OhFn4=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F5d7f4d85-7112-46f7-bf68-c82c10edfe6e%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/3idCZ4Q-XQ-WqTRfwdxSFU7auSViEdSlVRQM2i8z2Q4=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"SHOP NOW\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F5d7f4d85-7112-46f7-bf68-c82c10edfe6e%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/2/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/D1G50iVpo6wuuo6ugSB8HEQJ2YeFUIGMdn20zRzMr5Y=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F5d7f4d85-7112-46f7-bf68-c82c10edfe6e%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/3/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/mIYYmi4GMbqDRSfo7tkVBFXZWw5W0NpVCKIhmcdOD-M=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F5d7f4d85-7112-46f7-bf68-c82c10edfe6e%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/4/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/xgMgb6apeI2bQIvQSIc7SFzUQ87yXK3ea5-dMyhxhkk=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"SHOP NOW\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F5d7f4d85-7112-46f7-bf68-c82c10edfe6e%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/5/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/_DzoXaM1864L5gqbBdth8A0CaZ6ASlOO8CHDZ0pOl5U=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F5d7f4d85-7112-46f7-bf68-c82c10edfe6e%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/6/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/w-TwShHhXICCoIRPSlDY5vrenOf9n9QnbZzKaHl2Z8M=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fbb1524cc-8ca5-4a92-b822-f02e274ab5b9%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/sVMVsSZD1ig_gXNfVsPr9HNd3onxE7oLPTGIODKjtkQ=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"FIND STORE NOW\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fbb1524cc-8ca5-4a92-b822-f02e274ab5b9%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/2/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/ochZyvCqRGyA6joFGm0Pe3ErATaFtN4JNklxOc8GM78=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fbb1524cc-8ca5-4a92-b822-f02e274ab5b9%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/3/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/hDSil4jpLS1z6J1CA__QdCUsr2bXtUvLEEUh7d_eI54=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fbb1524cc-8ca5-4a92-b822-f02e274ab5b9%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/4/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/JOfxprmYzbTx_fzNrKX0PovsifEN4T1zDTJgJ6IefRI=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"FIND STORE NOW\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fbb1524cc-8ca5-4a92-b822-f02e274ab5b9%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/5/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/yF0AzS2mk3Pdf1_JSskDjliTbawyRlfybgKd2-jhunU=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fbb1524cc-8ca5-4a92-b822-f02e274ab5b9%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/6/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/eLie26FPyKhimBDL8dIf7RsBTuC5T0geu3lIKMn3rbs=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"An black, grey and red adidas Anthony Edwards 2 basketball sneaker shown angled \")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F330f4062-0e9c-4caa-89e1-1a1632723eee%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/5Pja5O94JyDdkrjx8AtxonYqbgtOKS9XxA3zncPQw5Q=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fe74bb5bd-e8d3-4f36-92c8-a51851b54fec%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/1Ick6C1-WNFMrh7UOSmg8BiWp2DBgm6ZDbV85nWwatc=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"SHOP NOW\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fe74bb5bd-e8d3-4f36-92c8-a51851b54fec%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/2/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/oMoUVAnH7YwC4JxdWWFDDs5pEnfN9DbfieQp4XgEmv0=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fe74bb5bd-e8d3-4f36-92c8-a51851b54fec%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/3/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/t2OiTTtHxE9XlUCqn_PUdc3F04oyBHCy8tLmcpq81oE=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fe74bb5bd-e8d3-4f36-92c8-a51851b54fec%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/4/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/0hJ2H_wXid4B03d3KUEXk1BUM_0F_ZAENnv7aHgZz3k=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"SHOP NOW\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fe74bb5bd-e8d3-4f36-92c8-a51851b54fec%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/5/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/DMJkjgAIDiHTSfVSIihESlIVCpylIo2RqkZXkLQ7fGs=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fe74bb5bd-e8d3-4f36-92c8-a51851b54fec%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_--_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098/6/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/q43DxD9DXYJ7b9OCT4vCZmJoEX7Hzie7FkX6DXNijMY=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Stories, styles and sportswear at adidas, since 1949\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F84ee5b0e-d405-4c5c-a352-1907fbea201f%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_-FooterAppLogo0-_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=FooterAppLogo0%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098%26mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/_9Q9mJFnzKBwt37qb_BevBz74K1GPtqr0XWwX39Bxg0=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"My Account\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F95992d38-b8d7-4235-9895-b6baf05d0d39%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_-FooterAccount0-_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=FooterAccount0%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098%26mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/q17pKhqcl5MbMNDmvrrsM5uhF9e5TtwmTvKWB_lj_hc=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Privacy Statement\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fb24e0c17-c5a1-40f9-a8b4-80ebd5ec19bc%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_-FooterPrivacyPolicy0-_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=FooterPrivacyPolicy0%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098%26mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/Jmo1QwmqtgrMHBOsjaM5nWRY1VyISf54dpkmrwDAjV0=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Support\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2F9d269693-4b2a-4469-9bfd-6caea5c8ca65%3Fhaid=how-do-i-contact-adidas%26cm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_-FooterHelp0-_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=FooterHelp0%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098%26mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/6RlfRnSK1W6vBbUXvmrWAWqaeYtG5boNYqSZUivm3gw=448"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"adidas.com/us\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fdv.adidas.com%2Fc%2Fc24091db-5ad0-4752-8f09-a22240ad8a97%3Fcm_mmc=AdiEmail_SNL-_-None-_-20260317_17032026_DaVinciPersonalization_21699_US_March-_-Marketing-_-FooterAdidas0-_-None-_-dv-eCom-_-cn-Static_Newsletter-_-pc-Other%26cm_mmc1=US%26cm_mmc2=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26cm_mmca3=ILDCWJD70W1BE32X%26cm_mmca4=m1qmmeejqw%26af_reengagement_window=30d%26is_retargeting=true%26pid=AWS%26c=adidas-NAM-eCom-Email-SNL-None-None-US-Static_Newsletter-None-2603%26af_adset=20260317_17032026_DaVinciPersonalization_21699_US_March%26af_ad=FooterAdidas0%26af_channel=Static_Newsletter%26campaign_id=m1qmmeejqw%26cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8sECrNxbGh_fJZNCSah1cIE1PT3pagAowSL0ndGIVGOhTIajF4sHIwCjEFgMoIrgUtImOO5lACjBjOyhJA4x0spASY01fEJ8UCJNhkBZizGGHJ8khJgkWBUYNRgcuLi2LmaT-IEn0I_jxcXSIkURDkSO8MFaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWb00UJ8cUayEWjke9jEBmlw2Q-byfEQDErUxr%26cp_cid=d63aafc3fa4b9098%26mi_mid=019cfd62-3e00-7000-b393-5c5a86d0ea27/1/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/-MdmDGxvhu15XWmlpGc6u052zd9SzgcjSAkKYEbSoWY=448"
+          }
+        ]
+      },
+      "rendering": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 79255a56-3c9a-436f-8ff9-f66ba9f8f965",
+            "detail": "src: https://dv.adidas.com/o/79255a56-3c9a-436f-8ff9-f66ba9f8f965?cp_tp=v3.eJzjYuIIFuLguNN85yybALMUL8emV5xC7Byv-AWYJQSUxDmuT8"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: j7_cVl0CmPQLLke02sC-sHrGDvr5OUQiYug8EbnjTiU=448",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/j7_cVl0CmPQLLke02sC-sHrGD"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: j7_cVl0CmPQLLke02sC-sHrGDvr5OUQiYug8EbnjTiU=448",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019cf9c3b175-5a21a0b6-f48e-4a14-8d3b-1edd59220de2-000000/j7_cVl0CmPQLLke02sC-sHrGD"
+          },
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          }
+        ]
+      },
+      "personalization": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=uwcTh+08neA1SrV+ofGLgFmEq8gIOuTfbrkBoyYpMh6LLn9OpzEyS+XQZn8KXuU/gEtoJ4djLJKJMsxf7HXEjw1R6HClj+5iTj+tY4Gr7gFcuvBx+ENY"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "11%",
+      "total_checks": 45,
+      "total_issues": 2,
+      "total_warnings": 38
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-17-anthony-edwards-2-red-black-available-now-email-webview-render.png",
+    "pdf": "2026-03-17-anthony-edwards-2-red-black-available-now-review.pdf"
+  }
+}

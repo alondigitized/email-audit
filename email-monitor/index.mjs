@@ -288,9 +288,12 @@ async function saveArtifacts(msg) {
 }
 
 async function renderWebview(artifacts) {
-  if (!artifacts.webview || !fs.existsSync(RENDER_SWIFT)) return null;
+  if (!fs.existsSync(RENDER_SWIFT)) return null;
   const out = path.join(artifacts.dir, 'email-webview-render.png');
-  await execFileAsync('swift', [RENDER_SWIFT, artifacts.webview, out], { maxBuffer: 1024 * 1024 * 20, timeout: 120000 });
+  // Prefer webview URL; fall back to local message.html for emails without one
+  const source = artifacts.webview || path.join(artifacts.dir, 'message.html');
+  if (!artifacts.webview && !fs.existsSync(source)) return null;
+  await execFileAsync('swift', [RENDER_SWIFT, source, out], { maxBuffer: 1024 * 1024 * 20, timeout: 120000 });
   return out;
 }
 
@@ -351,12 +354,76 @@ function updatePublishedManifest(entry) {
 }
 
 async function publishSite() {
+  // Phase 1: Run legacy generator (produces audit-data.json + gh-pages site)
   await execFileAsync('python3', [SITE_GENERATOR], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+
+  // Phase 2: Sync content to Next.js site directory for Vercel deploy
+  const repoRoot = path.dirname(__dirname);
+  const siteContent = path.join(repoRoot, 'site', 'content', 'audits');
+  const siteImages = path.join(repoRoot, 'site', 'public', 'images', 'audits');
+  const sitePdfs = path.join(repoRoot, 'site', 'public', 'pdfs');
+  const manifest = JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8'));
+
+  for (const entry of manifest) {
+    const slug = entry.slug;
+    const artifactDir = entry.artifactDir;
+    if (!artifactDir || !fs.existsSync(artifactDir)) continue;
+
+    // Copy audit.json
+    const srcAudit = path.join(artifactDir, 'audit-data.json');
+    if (fs.existsSync(srcAudit)) {
+      const destDir = path.join(siteContent, slug);
+      fs.mkdirSync(destDir, { recursive: true });
+      fs.copyFileSync(srcAudit, path.join(destDir, 'audit.json'));
+    }
+
+    // Copy render.png
+    const srcPng = path.join(artifactDir, 'email-webview-render.png');
+    if (fs.existsSync(srcPng)) {
+      const destImgDir = path.join(siteImages, slug);
+      fs.mkdirSync(destImgDir, { recursive: true });
+      fs.copyFileSync(srcPng, path.join(destImgDir, 'render.png'));
+    }
+
+    // Copy PDF
+    if (entry.pdfPath && fs.existsSync(entry.pdfPath)) {
+      fs.mkdirSync(sitePdfs, { recursive: true });
+      fs.copyFileSync(entry.pdfPath, path.join(sitePdfs, `${slug}-review.pdf`));
+    }
+  }
+
+  // Build index.json for the Next.js site
+  const indexEntries = manifest
+    .map((entry) => {
+      const auditPath = path.join(siteContent, entry.slug, 'audit.json');
+      if (!fs.existsSync(auditPath)) return null;
+      const ad = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
+      return {
+        slug: ad.slug,
+        subject: ad.email.subject,
+        from_display_name: ad.email.from_display_name,
+        timestamp_iso: ad.email.timestamp_iso,
+        score: ad.review.score,
+        qa_summary: ad.qa?.summary || null,
+        has_image: fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.timestamp_iso || '').localeCompare(a.timestamp_iso || ''));
+  fs.writeFileSync(path.join(siteContent, 'index.json'), JSON.stringify(indexEntries, null, 2));
+
+  // Phase 3: Git push (triggers both gh-pages legacy + Vercel deploy on main)
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
+
+  // Push site/ content to main (triggers Vercel)
+  const pushMain = `cd "${repoRoot}" && git add site/content site/public/images/audits site/public/pdfs && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
+  await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
+
+  // Legacy gh-pages publish
   const tmpRepo = '/tmp/email-audit';
   const repoUrl = `https://x-access-token:${ghToken}@github.com/alondigitized/email-audit.git`;
-  const cmd = `set -e
+  const pushGhPages = `set -e
 if [ ! -d ${tmpRepo}/.git ]; then
   git clone --branch gh-pages ${repoUrl} ${tmpRepo} 2>/dev/null || {
     git clone ${repoUrl} ${tmpRepo}
@@ -376,7 +443,7 @@ git add .
 if git diff --cached --quiet; then echo NO_CHANGES; exit 0; fi
 git commit -m "Publish latest Skechers email audit"
 git push origin gh-pages`;
-  await execFileAsync('/bin/zsh', ['-lc', cmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
+  await execFileAsync('/bin/zsh', ['-lc', pushGhPages], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 
 async function fetchMessages(client, limit = STARTUP_LOOKBACK) {

@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-19-last-call-to-use-your-20-off-welcome-offer",
+  "email": {
+    "subject": "Last Call to use your 20% Off Welcome Offer!",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-18T21:21:10+00:00",
+    "date_formatted": "2026-03-18 21:21 UTC"
+  },
+  "review": {
+    "score": "4/10",
+    "raw_markdown": "\n## Last Call to use your 20% Off Welcome Offer!\n**SKECHERS** | `TRG_US_EN_NONMEMWELCOME_4` | 2026-03-18 | **Score: 4/10**\n\n---\n\n### 1. Executive Summary\n\nThis is NONMEMWELCOME_4 — the \"Last Call\" close in Skechers' non-member welcome series, targeting subscribers who haven't converted on a 20% first-purchase discount before April 10. The urgency register is correct for a fourth and final touch. Compared to prior sends, there is one meaningful structural improvement: a personalized product recommendation module (iGoDigital) with six product tiles gives the email something to actually shop beyond category links — a real step up from the navigation-only approach in NONMEMWELCOME_3.\n\nEverything else is familiar. The same HTTP image crisis persists across the logo, utility icons, app store badges, social icons, and tracking pixel. The same doubled-domain merge error reappears in legal copy. No first-name personalization. The product recommendation tiles render their anchor text as literal \"PRODUCT\" in the plain-text layer — an integration gap. At send four, these are no longer isolated bugs. They are an unaddressed pattern the QA process is not catching.\n\n---\n\n### 2. Business Impact Score\n\n**4/10** — The urgency mechanic and product recs are the right ideas, but when the same infrastructure failures ship unremediated across every email in the series, the score reflects the pattern, not just this send. The 18% QA pass rate is essentially unchanged from prior sends (21% on NONMEMWELCOME_3).\n\n---\n\n### 3. What's Working\n\n- \"Last Call\" subject line is appropriately urgent without being hyperbolic — correct tone for a fourth and final touch\n- Promo code WEL20-C39C3FPRRN is present, consistent, and recipient-specific — redemption doesn't require a click\n- iGoDigital personalized product recommendation module is now present with six product tiles — a genuine structural improvement over NONMEMWELCOME_3, which had no product content at all\n- SHOP BEST SELLERS and SHOP NEW ARRIVALS CTAs give undecided browsers clear discovery paths beyond the homepage\n- JOIN NOW Skechers Plus CTA creates a fallback conversion path — a non-buyer can still become a loyalty member\n- Full utility footer (SMS, App, AfterPay, Klarna, Curbside, Store Locator) is complete and consistent\n- Category nav (Women / Men / Kids / Clothing / New Arrivals / Sale) is present and UTM-tagged with ?src=template\n\n---\n\n### 4. What's Weak\n\n- **HTTP image crisis — unchanged across four sends.** The logo, hero, SMS module icon, app store badges, utility icons, AfterPay logo, and social icons are all served over HTTP. Many recipients see a broken shell.\n- **No first-name personalization** — four emails into a \"welcome\" series, the subscriber is still addressed generically.\n- **\"PRODUCT\" as anchor text on all six product rec tiles** — the iGoDigital text-layer integration is not receiving product names. Six identical meaningless links. If images also fail (which HTTP sourcing makes likely), the product module contributes nothing.\n- **Doubled-domain merge error in legal copy** — `http://www.skechers.com/www.Skechers.com` is present again, identical to every prior send. It hasn't been touched.\n- **Missing alt text on hero image and four additional images** — images-off experience is silent on the primary offer element\n- **No explicit expiry callout in the body** — \"Last Call\" lands in the subject line, but a recipient who sees broken images has no visible text reinforcing the April 10 deadline\n- **Plain-text body is almost entirely raw URLs** — no readable narrative; fails plain-text clients and accessibility requirements\n\n---\n\n### 5. Recommendations\n\n1. **Fix HTTP → HTTPS at the master template level.** This has shipped four times. One fix in the SFMC template propagates across all future sends. Escalate to whoever owns the image CDN configuration.\n2. **Fix the doubled-domain URL in legal copy.** The `http://www.skechers.com/www.Skechers.com` string is a static content block error. Find it in SFMC, correct it once.\n3. **Fix \"PRODUCT\" anchor text in the iGoDigital integration.** Product names or model numbers need to populate the plain-text link label. Coordinate with the ESP or iGoDigital on the text-layer binding.\n4. **Add first-name personalization to subject or hero headline.** \"Last call, [First Name] — your 20% offer expires April 10\" costs one merge field and meaningfully changes the register.\n5. **Add a visible text expiry callout in the body.** \"Offer expires April 10, 2026\" as a text element, not only in fine print. Image-blocked recipients need to see the deadline.\n6. **Add descriptive alt text to the hero and all product tiles.** The offer should land in text even when images don't render.\n7. **Institute a pre-send QA gate that blocks on HTTP image sources.** Four sends, same failure. The gate doesn't exist or doesn't block — it should.\n\n---\n\n### 6. Bottom Line\n\nThe \"Last Call\" frame is the right call for a final welcome touch. The iGoDigital product recs are a genuine step forward. But delivering urgency inside a broken visual environment — missing images, generic \"PRODUCT\" link text, and a recurring merge error in legal copy — diminishes the push. The issues are inherited, not new. Fix the template master before the next series launches; the strategy will carry itself.\n\n---\n\n### 7. Evidence\n\n**Overall purpose of the email**\nFinal send in the non-member welcome series (TRG_US_EN_NONMEMWELCOME_4_12022025). Goal is to close unconverted subscribers on a 20% first-purchase discount before April 10 expiry. Four-touch escalation logic is appropriate; \"Last Call\" is the correct urgency register.\n\n**Hero / primary value proposition**\n\"LAST CALL! 20% OFF YOUR FIRST PURCHASE*\" with code WEL20-C39C3FPRRN and SHOP NOW CTA. Offer clarity is high. Hero image (bcc16007) has no alt text; if HTTP-blocked, the hero renders silently. The plain-text promo code is present and functional regardless of image state.\n\n**Membership / benefits section**\nSkechers Plus appears in the lower utility block — \"Free Shipping + Returns on All Orders. Plus Extra Perks!\" with a JOIN NOW CTA. Appropriate placement for a non-member audience, but buried below five competing utility modules. One concrete benefit differentiating Plus from the promo code (e.g., free shipping on *every* order, not just this one) would strengthen the pitch.\n\n**Product discoverability / recommendation modules**\niGoDigital recs are present: six product tiles from the rr/v2 endpoint. Structural improvement over prior sends. The critical gap: all six tiles use \"PRODUCT\" as their plain-text anchor text — the text-layer integration is not receiving product names. SHOP BEST SELLERS and SHOP NEW ARRIVALS CTAs provide static fallback paths. If product images break (likely, given HTTP sourcing), the recommendation module contributes nothing visible.\n\n**Utility / secondary modules**\nFive modules: SMS opt-in (Text SKECHERS to 83828), App Download (iOS + Android), Curbside Pickup, BNPL (AfterPay + Klarna), Find a Store. Coverage is complete. All utility module image assets — app store badges, AfterPay logo, module icons, social icons — are served over HTTP and will break in most modern clients.\n\n**Email-to-site continuity**\nPrimary CTA lands on the skechers.com homepage — broad for a last-chance close. Best Sellers and New Arrivals CTAs link to appropriately filtered sections. Category nav includes ?src=template tracking. A landing page scoped to bestsellers or top-rated styles would tighten conversion continuity for a subscriber who has deferred four times.\n\n**Bugs / friction / clarity issues**\n- **Critical:** HTTP image sources on 12+ assets — logo, hero, utility icons, app badges, AfterPay logo, social icons, ink1000 tracking pixel. Fourth send with same failure. QA flagged 11 HTTP image warnings.\n- **Critical:** Doubled-domain merge error in T&C legal copy — `http://www.skechers.com/www.Skechers.com` — static content block error, unaddressed across the full series.\n- **Moderate:** \"PRODUCT\" anchor text on all six product rec tiles — iGoDigital text-layer integration not passing product names. Not useful to any recipient in any render environment.\n- **Moderate:** Missing alt text on hero image and four other images — primary offer vehicle is silent when images don't load.\n- **Moderate:** Plain-text body is almost entirely raw URLs — no readable narrative copy.\n- **Low:** SPF/DKIM authentication unverified via AgentMail relay — deliverability posture for the series is unconfirmed.\n\n---\n\nReady to write this to the audits directory and update the index when you approve the file write.",
+    "sections": {
+      "executive_summary": [
+        "**SKECHERS** | `TRG_US_EN_NONMEMWELCOME_4` | 2026-03-18 | **Score: 4/10**",
+        "This is NONMEMWELCOME_4 — the \"Last Call\" close in Skechers' non-member welcome series, targeting subscribers who haven't converted on a 20% first-purchase discount before April 10. The urgency register is correct for a fourth and final touch. Compared to prior sends, there is one meaningful structural improvement: a personalized product recommendation module (iGoDigital) with six product tiles gives the email something to actually shop beyond category links — a real step up from the navigation-only approach in NONMEMWELCOME_3.",
+        "Everything else is familiar. The same HTTP image crisis persists across the logo, utility icons, app store badges, social icons, and tracking pixel. The same doubled-domain merge error reappears in legal copy. No first-name personalization. The product recommendation tiles render their anchor text as literal \"PRODUCT\" in the plain-text layer — an integration gap. At send four, these are no longer isolated bugs. They are an unaddressed pattern the QA process is not catching."
+      ],
+      "business_impact_score": [
+        "**4/10** — The urgency mechanic and product recs are the right ideas, but when the same infrastructure failures ship unremediated across every email in the series, the score reflects the pattern, not just this send. The 18% QA pass rate is essentially unchanged from prior sends (21% on NONMEMWELCOME_3)."
+      ],
+      "whats_working": [
+        "- \"Last Call\" subject line is appropriately urgent without being hyperbolic — correct tone for a fourth and final touch",
+        "- Promo code WEL20-C39C3FPRRN is present, consistent, and recipient-specific — redemption doesn't require a click",
+        "- iGoDigital personalized product recommendation module is now present with six product tiles — a genuine structural improvement over NONMEMWELCOME_3, which had no product content at all",
+        "- SHOP BEST SELLERS and SHOP NEW ARRIVALS CTAs give undecided browsers clear discovery paths beyond the homepage",
+        "- JOIN NOW Skechers Plus CTA creates a fallback conversion path — a non-buyer can still become a loyalty member",
+        "- Full utility footer (SMS, App, AfterPay, Klarna, Curbside, Store Locator) is complete and consistent",
+        "- Category nav (Women / Men / Kids / Clothing / New Arrivals / Sale) is present and UTM-tagged with ?src=template"
+      ],
+      "whats_weak": [
+        "- **HTTP image crisis — unchanged across four sends.** The logo, hero, SMS module icon, app store badges, utility icons, AfterPay logo, and social icons are all served over HTTP. Many recipients see a broken shell.",
+        "- **No first-name personalization** — four emails into a \"welcome\" series, the subscriber is still addressed generically.",
+        "- **\"PRODUCT\" as anchor text on all six product rec tiles** — the iGoDigital text-layer integration is not receiving product names. Six identical meaningless links. If images also fail (which HTTP sourcing makes likely), the product module contributes nothing.",
+        "- **Doubled-domain merge error in legal copy** — `http://www.skechers.com/www.Skechers.com` is present again, identical to every prior send. It hasn't been touched.",
+        "- **Missing alt text on hero image and four additional images** — images-off experience is silent on the primary offer element",
+        "- **No explicit expiry callout in the body** — \"Last Call\" lands in the subject line, but a recipient who sees broken images has no visible text reinforcing the April 10 deadline",
+        "- **Plain-text body is almost entirely raw URLs** — no readable narrative; fails plain-text clients and accessibility requirements"
+      ],
+      "recommendations": [
+        "1. **Fix HTTP → HTTPS at the master template level.** This has shipped four times. One fix in the SFMC template propagates across all future sends. Escalate to whoever owns the image CDN configuration.",
+        "2. **Fix the doubled-domain URL in legal copy.** The `http://www.skechers.com/www.Skechers.com` string is a static content block error. Find it in SFMC, correct it once.",
+        "3. **Fix \"PRODUCT\" anchor text in the iGoDigital integration.** Product names or model numbers need to populate the plain-text link label. Coordinate with the ESP or iGoDigital on the text-layer binding.",
+        "4. **Add first-name personalization to subject or hero headline.** \"Last call, [First Name] — your 20% offer expires April 10\" costs one merge field and meaningfully changes the register.",
+        "5. **Add a visible text expiry callout in the body.** \"Offer expires April 10, 2026\" as a text element, not only in fine print. Image-blocked recipients need to see the deadline.",
+        "6. **Add descriptive alt text to the hero and all product tiles.** The offer should land in text even when images don't render.",
+        "7. **Institute a pre-send QA gate that blocks on HTTP image sources.** Four sends, same failure. The gate doesn't exist or doesn't block — it should."
+      ],
+      "bottom_line": [
+        "The \"Last Call\" frame is the right call for a final welcome touch. The iGoDigital product recs are a genuine step forward. But delivering urgency inside a broken visual environment — missing images, generic \"PRODUCT\" link text, and a recurring merge error in legal copy — diminishes the push. The issues are inherited, not new. Fix the template master before the next series launches; the strategy will carry itself."
+      ],
+      "evidence": [
+        "**Overall purpose of the email**",
+        "Final send in the non-member welcome series (TRG_US_EN_NONMEMWELCOME_4_12022025). Goal is to close unconverted subscribers on a 20% first-purchase discount before April 10 expiry. Four-touch escalation logic is appropriate; \"Last Call\" is the correct urgency register.",
+        "**Hero / primary value proposition**",
+        "\"LAST CALL! 20% OFF YOUR FIRST PURCHASE*\" with code WEL20-C39C3FPRRN and SHOP NOW CTA. Offer clarity is high. Hero image (bcc16007) has no alt text; if HTTP-blocked, the hero renders silently. The plain-text promo code is present and functional regardless of image state.",
+        "**Membership / benefits section**",
+        "Skechers Plus appears in the lower utility block — \"Free Shipping + Returns on All Orders. Plus Extra Perks!\" with a JOIN NOW CTA. Appropriate placement for a non-member audience, but buried below five competing utility modules. One concrete benefit differentiating Plus from the promo code (e.g., free shipping on *every* order, not just this one) would strengthen the pitch.",
+        "**Product discoverability / recommendation modules**",
+        "iGoDigital recs are present: six product tiles from the rr/v2 endpoint. Structural improvement over prior sends. The critical gap: all six tiles use \"PRODUCT\" as their plain-text anchor text — the text-layer integration is not receiving product names. SHOP BEST SELLERS and SHOP NEW ARRIVALS CTAs provide static fallback paths. If product images break (likely, given HTTP sourcing), the recommendation module contributes nothing visible.",
+        "**Utility / secondary modules**",
+        "Five modules: SMS opt-in (Text SKECHERS to 83828), App Download (iOS + Android), Curbside Pickup, BNPL (AfterPay + Klarna), Find a Store. Coverage is complete. All utility module image assets — app store badges, AfterPay logo, module icons, social icons — are served over HTTP and will break in most modern clients.",
+        "**Email-to-site continuity**",
+        "Primary CTA lands on the skechers.com homepage — broad for a last-chance close. Best Sellers and New Arrivals CTAs link to appropriately filtered sections. Category nav includes ?src=template tracking. A landing page scoped to bestsellers or top-rated styles would tighten conversion continuity for a subscriber who has deferred four times.",
+        "**Bugs / friction / clarity issues**",
+        "- **Critical:** HTTP image sources on 12+ assets — logo, hero, utility icons, app badges, AfterPay logo, social icons, ink1000 tracking pixel. Fourth send with same failure. QA flagged 11 HTTP image warnings.",
+        "- **Critical:** Doubled-domain merge error in T&C legal copy — `http://www.skechers.com/www.Skechers.com` — static content block error, unaddressed across the full series.",
+        "- **Moderate:** \"PRODUCT\" anchor text on all six product rec tiles — iGoDigital text-layer integration not passing product names. Not useful to any recipient in any render environment.",
+        "- **Moderate:** Missing alt text on hero image and four other images — primary offer vehicle is silent when images don't load.",
+        "- **Moderate:** Plain-text body is almost entirely raw URLs — no readable narrative copy.",
+        "- **Low:** SPF/DKIM authentication unverified via AgentMail relay — deliverability posture for the series is unconfirmed.",
+        "Ready to write this to the audits directory and update the index when you approve the file write."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "link_analysis": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Skechers\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjU5OGFkYWJmLWU5MDgtNDdkYS05MTAwLTc4MjNjMjhjOThiNCIsImRla1ZlcnNpb24iOjEsIml2IjoiRW5tUlRiSHcxVDdpUnErRVlNbzBXUT09IiwiY2lwaGVyVGV4dCI6InhoRFE3eENaWjB0Q05oUXRYeWFDKzlTUjNwQTJIZC81YXlnbFlFQ21CZndDVU9xSUtOV3Nib2VhWm91NFQzVHN4SE53Szc4RzJuSlBUUlFrZjRTM1JTRFVGdXBTWVVLVHEyb0xtdkJkRW5tUlRiSHcxVDdpUnErRVlNbzBXUT09IiwiYXV0aFRhZyI6InQwVWcxQmJxVW1GQ2s2dHFDNXJ3WFE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"LAST CALL! 20% OFF YOUR FIRST PURCHASE*\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6Ijc3NjY5ZTRjLTdmYzUtNDBiNC1hZTE4LTQwM2FlZjg1YjE1ZiIsImRla1ZlcnNpb24iOjEsIml2Ijoickt2RExGQ2p0RTV1Uk1uTVJZWTBmUT09IiwiY2lwaGVyVGV4dCI6ImcwTk1PMU81eEpsclZhUzRsRmZNd0hXNXY0Vzk2U25JK20rcys1UWszWXdLWndmQmhpalpuRzRrandxRmxWQ0Ywa3hzL3BUOVI4VzRhNkMxOUpnSU5nMC9RcW1hOEsva3I1aHZKSkdEckt2RExGQ2p0RTV1Uk1uTVJZWTBmUT09IiwiYXV0aFRhZyI6IkNEWU5QMEtwbXZDdjVLK1lieVNSZ3c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"SHOP NOW\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjRhNjIxMzI0LTlhYzItNGI0OC1hZDUzLWJkODQ5NjVjYzliNyIsImRla1ZlcnNpb24iOjEsIml2IjoiQlVHNDV2aU1GZU52cUZRbzBZWHlOQT09IiwiY2lwaGVyVGV4dCI6InNVTUZyNmpUWkxHZm5WVDVva3BXZVpQR2YrREFlS3JjZWJRL0I3SGptUmx4Mkx4TGsrNlF3MG4wR0duL0x4b1RjWnpnTHhYRnlYaVgvMC9pMUxWM3Z4c1lSYVRZQlFwSXpFejdmTnlKQlVHNDV2aU1GZU52cUZRbzBZWHlOQT09IiwiYXV0aFRhZyI6ImQ3OGJHRVdrMkFVS1NNeE0rM3pjaVE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjVmY2ZlM2RmLTQ4OTUtNDdlZC1iMGMxLWRkYjczMWRiNjM4ZiIsImRla1ZlcnNpb24iOjEsIml2IjoiSVA1RXUyWHhEQ0Z3UUJOQm92aWw3QT09IiwiY2lwaGVyVGV4dCI6InBIbWdRRUc4aG1BMlR3dTZVblNpcmVMcFdUQmk1Q0h3NEtaWGVmYTh2VTEwaDBOSFFUN20rZWxlVlhsNTVVQytTaU5KM2pXcElZWFBHN0NFZGVWbVFNc1hvTXhtM1hhYk9aRjFGVk5XSVA1RXUyWHhEQ0Z3UUJOQm92aWw3QT09IiwiYXV0aFRhZyI6IlprRExGNkRNWnQxMm16bVJkUlZUVmc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImJhNDgyNDhiLWFmZmUtNGRmNC1hMTIxLWYyNWU2NTE5ODE2ZCIsImRla1ZlcnNpb24iOjEsIml2IjoiK3ZLb3BxL0xrbkdHenlDdXd0WE9VUT09IiwiY2lwaGVyVGV4dCI6ImlLVXFmUjZTQU5nVDA3clVIRFZuNlo1STlkZTExaWs0RTZiZWxKdW1VQXZJM2RMU2hyaUJHcUEzanpVZ1I5eEN6aVR2TzBYM0tMZGt3Rmh6Vmt5b1hKb3B5aDFxTERta3JSYlQzUU40K3ZLb3BxL0xrbkdHenlDdXd0WE9VUT09IiwiYXV0aFRhZyI6InFGeWFLY29kYWl3NXBLMFcwOTBEZUE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImUzYmJjMGQ2LTQzNjYtNGRhNS1iNDUxLTQwNjA2M2U1M2I0OSIsImRla1ZlcnNpb24iOjEsIml2IjoiTHk5K0pNeFA4VmtoblZjTWxqZkpsQT09IiwiY2lwaGVyVGV4dCI6Ilh5amtIdXRCT21ybUV5cEwvNDRHdUlhN3lBQ3RTbWxnb3gza2Erd1gwSzkwVy84dytVV2ZyWHVJT2I0UmhZRFhjU1hmcG9IY0kvd1h1bXBpUGxYMGhlWGtGZEIwR29sdndscEF5T2dGTHk5K0pNeFA4VmtoblZjTWxqZkpsQT09IiwiYXV0aFRhZyI6IjlJWGw1QlhRZEJxSmI4SmFRTWpvQlE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjdlY2RlMTkwLWMyZDctNDc3NS05NWU2LTc2OTUwMWU2OGY4OCIsImRla1ZlcnNpb24iOjEsIml2IjoiRjBvRHd1MUNhYzRhQ1BWMmxBSU1kZz09IiwiY2lwaGVyVGV4dCI6IlY3b1VCYjJZa3RWU21uVWFSbWhSTHBHa3c1MmdtVFFoN0NlS1VoLzRVT3FHSGRtME9Ld1RxZGxBZFBFTnpoQllsM09VQ2xmQVRnRm5vUnJtUkxZcEdodG5LZzltWkwvWjVvL3hla1hiRjBvRHd1MUNhYzRhQ1BWMmxBSU1kZz09IiwiYXV0aFRhZyI6IktSb2JaeW9QWm1TLzJlYVA4WHBGMnc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjAxYWYxMzY0LTQ2ZGYtNGVlOS05YjgyLTg2Nzk1NDMwZTdhMyIsImRla1ZlcnNpb24iOjEsIml2IjoiWXdMYVA4dDdLaXF2bnZDYlVWdU9Fdz09IiwiY2lwaGVyVGV4dCI6IkdmclBkVjE3YktYMEE1QTVDNTF2VlhvWTlHdjNDQitQeUJmVDlzREFlWDgxZE5YVWVaQWdNbU1GNXA3WWZVOXZlWUN1OHMxVTBhdS8zNFBJcldLYTBMWU9nNU5VL2NnSmkvVm1EK3lxWXdMYVA4dDdLaXF2bnZDYlVWdU9Fdz09IiwiYXV0aFRhZyI6Im10QzJEb09UVlAzSUNZdjFaZy9zcWc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"PRODUCT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImE0ZTg5Yzc3LTc3YzktNGFiZS04YWMxLTNmNjA0NDZkMTFjZCIsImRla1ZlcnNpb24iOjEsIml2IjoiSXl0RzJDd0NrbzlBWWV6Z1Y3U2kzdz09IiwiY2lwaGVyVGV4dCI6ImRreUNWREwyZVU2QmhuTGlYcmpucmRsUnczd3FJZmIvQWtyM2VNcnNSLysrc1hObzU4TVNGU3hIbC8remFrekpheFBROEpQc2Zqb2JQb1YwZHBJSVZBUFJlb0xCTEdDUTFhVS9TWm00SXl0RzJDd0NrbzlBWWV6Z1Y3U2kzdz09IiwiYXV0aFRhZyI6IkNGUUQwWHFDd1N4Z2tOV2xQMG1adUE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"SHOP BEST SELLERS\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjdmNTQzMzU3LWExNGEtNGU4YS04NWNkLWYyOGMxODg4Yzg4ZiIsImRla1ZlcnNpb24iOjEsIml2IjoiSWhpdVA2TTRzYWIreVpDL3M1VHF1QT09IiwiY2lwaGVyVGV4dCI6InA5NllaRGliSnllaHVuakUwZUgxZGpxRUdqeHE3ZW5vU2tQcld3RmlqZUJqemc3ei9ydTUrMjZTdDJUMWJnZktKYjJiMmNMY3FoTFRMeG1GMVhxZTU4TDlWOVJuTlRSNXBSdDNnMXIzSWhpdVA2TTRzYWIreVpDL3M1VHF1QT09IiwiYXV0aFRhZyI6Im51ZkMvVmZVWnpVMGVhVWJkNE5hOXc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"SHOP NEW ARRIVALS\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6Ijg1N2ViNjU3LWIzMDAtNGI1YS04NTA2LWQ2YWU4N2Y1OTJjMyIsImRla1ZlcnNpb24iOjEsIml2IjoiNjV6OHFQNkpraS80V0dGcVZPY0NHUT09IiwiY2lwaGVyVGV4dCI6Im54a3hqb2pLSldSd1p5SVlLQ1FSTUZKL1F1QTdDeVhhcEl0dVlWbWk5LzVMZHRYQ1BqMjJ6a2diRFVCQ1B4ai9zNy9EYVVxMVBjU29QalRycHFIdHNEOWc2QlRaeWFJL0ppYS8rMXpGNjV6OHFQNkpraS80V0dGcVZPY0NHUT09IiwiYXV0aFRhZyI6IjdiQS9ZT2dVMmNtaVB5WW12L3RjeFE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"[image: bcc16007-f391-423b-868f-cb0ad4f03490.jpg]\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImJhMjFjYzlkLWRkYWQtNGU2NS04MTU4LTkzMzkwYTIyZTk5YyIsImRla1ZlcnNpb24iOjEsIml2IjoiWVhmeTFiVWFpaytZeGpGUm9CTnBtdz09IiwiY2lwaGVyVGV4dCI6IkQ3VUpNUHg1ZVhPa2RxQXlwSzdnOC9tV2doN2N4YlN6MWVyMDJLY3NqQmpHb1drSVNHVlpNUkc1dmpOelhWQVl4a0k4Q1FoL1lva2ZXN3NLcWIvdWZLQWVqd3E2cUQ1TFFBdmFNcGQrWVhmeTFiVWFpaytZeGpGUm9CTnBtdz09IiwiYXV0aFRhZyI6IjdueWdIbzhLdXFnK1MwQUwyaktYZmc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"WOMEN\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjM5M2U2MDBkLWQ1YWMtNGJiYS05NGU4LTE4ZDRlOTZlMzlkNiIsImRla1ZlcnNpb24iOjEsIml2IjoiRm1zMVNpNnJtdlgxdjV2K1lCSG5CQT09IiwiY2lwaGVyVGV4dCI6IkNUd1ZFNTFNQmZXT3dNRFRvcDhSYlRKRnJjVHVoN1lDTkV4K0FKb085TDFTWUtGQnp2WVNpblFuSy82MjdGbTZJWGdCOVcvbUJNZks4eUczUWhBWk9yeUcyY1JIdmhUSm5mNUZ1QWVSRm1zMVNpNnJtdlgxdjV2K1lCSG5CQT09IiwiYXV0aFRhZyI6IkdUcThodG5FUjc0VXlaMytSYmdIa1E9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"MEN\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjQ0N2NhNTc3LTQyYzUtNDI0My1hOGMwLTMyMjg0MzE2Mjk5YyIsImRla1ZlcnNpb24iOjEsIml2IjoicWtTeXN4b1VnS3VZTFhQemJCbm91UT09IiwiY2lwaGVyVGV4dCI6IkxUMFNoeFRhWXFJMVVQdXB5dHdvREJZSkk3MG5LdkV0c1dyTFJYVUpwNm1XUzRGdDh3MVdrMFd6SENaKzNEMVgvN1NRVkpBUmtkaUFSTjJ6U0htQzA4TmhWaTlIaURybk1xYndmYy9DcWtTeXN4b1VnS3VZTFhQemJCbm91UT09IiwiYXV0aFRhZyI6Imd0UERZVll2UjRnNjV6S204SDNQd2c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"KIDS\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6Ijk3ZDdjYmYzLTBjMmUtNDM5Yi05NTMzLWRhNTBhYzQ5M2JlYSIsImRla1ZlcnNpb24iOjEsIml2IjoiajNEcnVFUFZvdmJWZkNXNlcxNU5qdz09IiwiY2lwaGVyVGV4dCI6IjhGV01JVU9kYU1GZTVwR3ljZzZrVUtXSHJ1MWo0SjRHaCtLejJvZWtlVHdRd1kwR1REYmN3d3VRYWhoSmJHT3E5Vlp5K0FLWFB1aHNwRjR3T1d5Q0xsaDBZNHlkM0tjbXhmVE03R09DajNEcnVFUFZvdmJWZkNXNlcxNU5qdz09IiwiYXV0aFRhZyI6ImdpNVlkR09NbmR5bkpzWDB6T3hqZ2c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"CLOTHING\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6Ijk4OTg5NzNlLWM3MDctNGVlNy04MzEyLThjYzE4MjM4MzQ0YiIsImRla1ZlcnNpb24iOjEsIml2IjoiZVc3QWY2ZVNLQWpkSjlpYkdLbXdCZz09IiwiY2lwaGVyVGV4dCI6Im5DS09LVzdsVzNMRWVIbXBxY04zcG0vODFVUUg4ZDR1Y3czK21rUnpzc0s0Y1M5S3lQUzR0Z2dVSGVnS0ZFaEkvMHRUZm9mNS9BMWUvV3hIaHRONzdtWEtTVndKL05MSkZHQU1nYkRsZVc3QWY2ZVNLQWpkSjlpYkdLbXdCZz09IiwiYXV0aFRhZyI6ImUrNWx5a2xjQ2Z6U3lSUmdESUd3NVE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"NEW ARRIVALS\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImU0Mjc4Yjk5LTQ1ZmQtNDczMC1iOWVhLWNjOWNlMDAxOTQ5MyIsImRla1ZlcnNpb24iOjEsIml2IjoiTU90RFBaVGYxMjBFZXpRdDFNckRVZz09IiwiY2lwaGVyVGV4dCI6IldoekE4NFRvN0FHdDI2WnZZWFNTWkdPZ1RreWhoRk9vZ3Y1S2p6bUJzejBTaVhQeXd6bFd5ZW5nc1BuK21hdjRRQmU4RnRxTG5OZWlmREFUVWxuTXFod3UveE9PRnl4b2Jla3NOdTdDTU90RFBaVGYxMjBFZXpRdDFNckRVZz09IiwiYXV0aFRhZyI6InpLb2NMdjhUamhjc2FHM3BMRGJ1d2c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"SALE\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjQ3OWM5MjM4LTI5MjUtNDJlZC04N2NmLTkwZDM5OWJhYmYwZSIsImRla1ZlcnNpb24iOjEsIml2IjoiTDd1ZHlyVysvVVNiRythdXEwOU1rdz09IiwiY2lwaGVyVGV4dCI6InNpamxVS3UxaE5aM1RlSExqR0JocTJqQ2VGOVpVcVEvNlkzRjBKWE1IN0R3WFMremFYNjczWStnVDNSQmw3VjlCeDNmc0srKzlPdktzWWdpOC9DcHltU2VYMXgzT1huUDJiQW9UcGZiTDd1ZHlyVysvVVNiRythdXEwOU1rdz09IiwiYXV0aFRhZyI6InFjcGtubDljZHpsNXo5bXdLRTZYMnc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"[image: 49468f73-4651-4af3-bea2-61d1ae5db486.png]\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImNmZjU0N2Y4LTA0MTktNDFlNC1iNDMxLTM2ZWUzNDkzMjBhYSIsImRla1ZlcnNpb24iOjEsIml2Ijoib1hycDBJZzBYall6SFB5RDVFS0Z4QT09IiwiY2lwaGVyVGV4dCI6IkxEUExlVXQ4eklpelJhRHZwTnJnUjAxSjMrSk9kR3lTeGE5dTRMMVROZCs4YWhBODFUcXhweGp0M2Y0Z3FvU1F2eEw0L2FiYVBLajlCV1U5OVdQVW1abEtVUi80dHd4Mm9XVmZuY1VOb1hycDBJZzBYall6SFB5RDVFS0Z4QT09IiwiYXV0aFRhZyI6IjFKbVpTbEVmK0xjTWRxRmxYNTNGRFE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"LET'S GET TEXTING\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjlkMWM2OGZkLWQzZDItNDc5Zi04YWQ2LWYwNzZhZTdmYzZiOSIsImRla1ZlcnNpb24iOjEsIml2IjoiWEVQUk9rUHl6YWpITk5aSGMrcFBUQT09IiwiY2lwaGVyVGV4dCI6IjQrTGVDZ1phVG94c0UxYU1ZNHF1aS9HcjBXZFhFQjdDQ3VWdnZOL1FqR1dBQXhhY2lYNm02dWl5c251NkJhRTY3NmFZYTVCaVhPY2k4ZWxZNXVYWlBVakhtL1JGbzNHU0hKckJ5M3FVWEVQUk9rUHl6YWpITk5aSGMrcFBUQT09IiwiYXV0aFRhZyI6IjJUMUl4NXYwUmFOeGtoeWF3Y3Q2bEE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Text SKECHERS to 83828 for exclusive offers!\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjY3MjZiZDdhLTAyZmItNDQxYy1iMzQ3LTQxMjRjZGFjNDRmNyIsImRla1ZlcnNpb24iOjEsIml2IjoiMmk1TEd3QTlTZ2ZkbXgxQzFXY2x6QT09IiwiY2lwaGVyVGV4dCI6Im9XV0h1aG5rOGoyVmhISExDeEJXYndHcUVRcmxvUlVyODhPUFoyVWtTMVJNS1pZQXAydG9qSTA5N25iaWpUTXdyNTdwOUZ4clhQRFpNdzd5UmExK25Bc2xkNXJOcGZYT2lWbGtOMWJOMmk1TEd3QTlTZ2ZkbXgxQzFXY2x6QT09IiwiYXV0aFRhZyI6ImZwd0xKWGVhemFYMXpvbFpaRGRXelE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Available on the App Store\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjA2NzVjMmFkLWE1NmItNGU0MC04ZTk2LTY2NzIwODRhNzk2YSIsImRla1ZlcnNpb24iOjEsIml2IjoibHNjS0EzYldpV1RTSER3cFNpQTNhZz09IiwiY2lwaGVyVGV4dCI6ImVWT0RQdTJPem9kY2c3bi9YTkxLVld3b0h1aktadlA0REwxczZpNWdnTnpCMW1SZGEwT3VFSWliV3NDZkd4NGJMd0Y2KzFjOG91d0RneU92dUp6QkhIYkNiTFJOVGRpWC96TkRZTTBqbHNjS0EzYldpV1RTSER3cFNpQTNhZz09IiwiYXV0aFRhZyI6IndSeDJ3bXkwVFUzWWwvOHpRMkROSXc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"Android App on Google Play\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjliODJjYWNiLTJlZjYtNDczNC04ZmZlLWNmOWM0MDQ5MDYyOSIsImRla1ZlcnNpb24iOjEsIml2Ijoibnd4aUZoM09oUmJiZ1FjZFFaMklyZz09IiwiY2lwaGVyVGV4dCI6IklNTU1YQjh6c0pEQW03aFdtbXErYk9kSlVycFpvcXdzS3diRXBILzVPOFdjbGNZdHo1QThFcm5zT3hXNW9XWGtvZ1JTSGZRN2dnTHJlMUdSZFQzNkNLSU9iMmdBZ2QyVVlIZ3l1Y1U4bnd4aUZoM09oUmJiZ1FjZFFaMklyZz09IiwiYXV0aFRhZyI6IitnaWlEbTlvQUlIZGxHQjRNcm5GUEE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"[image: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png]\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjcxZDEyYzdkLWJlNGItNGNlNi04YzhmLTAyMzYyMDdmODdkYiIsImRla1ZlcnNpb24iOjEsIml2IjoiQzJwZmg0Zi93UzJ1d0lPUHdJNFlIUT09IiwiY2lwaGVyVGV4dCI6IlVUTGtqczVmMEVtQ1RZV2pWdGliNVU4bVB2MngzdFh0Y1E4WW9aNXUxSm02MHNqbmRSdFFJUmUyMFgrTHdyR0FCb0ZyMGZGZVFoOWdSNUFmaFA0cmtZbW9mYUlFQ3NFMnIxVlN5b1pOQzJwZmg0Zi93UzJ1d0lPUHdJNFlIUT09IiwiYXV0aFRhZyI6Iks1R0pxSDJpQkFyQk5xOVZVc3FHVFE9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "Tracking link not probed",
+            "detail": "Tracking/click-redirect domain — skipped HTTP probe (link text: \"AfterPay\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjgwZThjODAzLTgxZWMtNGZhZS1hM2FjLWZiNGU2MTA0NzQwNCIsImRla1ZlcnNpb24iOjEsIml2IjoidGZJMDNLMExKdnNheXBCbXN5MEtnUT09IiwiY2lwaGVyVGV4dCI6Ijg4QnZFSitlN3F3M0lSbEhRdW8wT0lOOTdFcUxiK0IwZzBDV3FUcHU0R2lNb0FMUmdLY0hOVm1MbU1ldGQyWGJNek5XekZVcUthYzdOOUVXRmQxQWcyZVlBeE4vZjBMZ1U4WU0zbk9ZdGZJMDNLMExKdnNheXBCbXN5MEtnUT09IiwiYXV0aFRhZyI6IlFJTm5tQU1UZjM5QzRGUEdETjV6bUE9PSJ9"
+          }
+        ],
+        "info": 25
+      },
+      "rendering": {
+        "passed": 0,
+        "warned": 16,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_NONMEMWELCOME_4_12022025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_NONMEMWELCOME_4_12022025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: bcc16007-f391-423b-868f-cb0ad4f03490.jpg",
+            "detail": "src: https://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/bcc16007-f391-423b-868f-cb0ad4f03490.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ]
+      },
+      "personalization": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "merge_doubled_domain",
+            "status": "fail",
+            "label": "Doubled-domain merge error in URL",
+            "detail": "URL contains a repeated domain",
+            "url": "http://www.skechers.com/www.Skechers.com"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTgwODU2IiwiamIiOiI4MTM4MCIsImQ"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "18%",
+      "total_checks": 22,
+      "total_issues": 1,
+      "total_warnings": 17
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-19-last-call-to-use-your-20-off-welcome-offer-email-webview-render.png",
+    "pdf": "2026-03-19-last-call-to-use-your-20-off-welcome-offer-review.pdf"
+  }
+}

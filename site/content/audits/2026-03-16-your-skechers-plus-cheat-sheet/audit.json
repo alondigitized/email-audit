@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-16-your-skechers-plus-cheat-sheet",
+  "email": {
+    "subject": "Your Skechers Plus Cheat Sheet",
+    "from": "SKECHERS PLUS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS PLUS",
+    "timestamp_iso": "2026-03-14T05:17:08+00:00",
+    "date_formatted": "2026-03-14 05:17 UTC"
+  },
+  "review": {
+    "score": "5.5/10",
+    "raw_markdown": "## Walker Audit — Skechers Plus Cheat Sheet\n**Campaign:** TRG_US_EN_PLUSWELCOME_2_10312025 | **Inbox:** walker@agentmail.to | **Date:** 2026-03-15\n\n---\n\n### 1. Executive Summary\n\nThis is the second email in the Skechers Plus welcome series, designed to orient new members on program mechanics. The \"cheat sheet\" concept is sound — onboarding emails that teach rather than sell are the right instinct for loyalty programs. But execution has notable gaps: a failed personalization merge leaves an empty name slot, all image assets are served over HTTP instead of HTTPS (meaning they will silently block in many enterprise and security-aware email clients), and there is no plain-text fallback at all. The core program value proposition — earn points, reach Gold, redeem for rewards — is clearly structured and easy to follow. The urgency module around reward expiry is a smart activation mechanic. The lower half of the email is diluted by utility modules that add length without adding loyalty-specific value.\n\n---\n\n### 2. Business Impact Score\n\n**5.5 / 10**\n\nThe strategy and structure are appropriate for a welcome series. The score is held back by a personalization failure that damages trust on first impression, infrastructure issues (HTTP images) that could cause wholesale rendering failures for a meaningful subscriber segment, and a module stack that buries the core CTA under low-priority content.\n\n---\n\n### 3. What's Working\n\n- **Cheat Sheet framing** is the right approach for a loyalty onboarding email. It sets expectations and explains the program without overselling.\n- **Program mechanics are clearly sequenced:** earn points → reach Gold → earn 20pts per $1 → redeem at 1,000 pts for $5. The math is transparent, which builds trust.\n- **60-day reward expiry module** creates legitimate urgency and drives a login/account action — a high-value behavioral goal for early in the welcome series.\n- **Dual REDEEM CTAs** (repeated) reinforce the primary action without being cluttered; they appear to be the main conversion point.\n- **SMS opt-in module** is well-placed for a loyalty email — cross-channel engagement at the moment of highest member attention is smart.\n- **App download links** (App Store + Google Play) are appropriate here; new members discovering the app early improves long-term retention.\n\n---\n\n### 4. What's Weak\n\n- **Personalization failure is the most damaging issue.** The greeting renders as \"Hi ,\" with an empty name slot. For a loyalty program email addressed to a named member, this reads as careless and undermines the relationship the email is trying to establish.\n- **All image assets served over HTTP.** Every branded image — logo, icons, utility module images, social badges — uses `http://image.emails.skechers.com`. These will be blocked or flagged as insecure in Gmail, Outlook (strict mode), Apple Mail (with privacy protections), and many enterprise environments. If images fail to load, the email loses most of its visual hierarchy.\n- **No plain-text fallback.** Zero characters. This is a deliverability risk and a compliance gap for accessibility-focused clients.\n- **Module bloat in the lower half.** After the core program mechanics, the email stacks Curbside Pickup, AfterPay, and Find A Store icons. These are low-relevance for a loyalty onboarding email and dilute focus from the \"log in and redeem\" goal.\n- **Gold tier framing is incomplete.** The email mentions Gold tier (20 pts per $1) without explaining what the base tier earns or how far a new member is from Gold. Without a progress anchor, the tier benefit is abstract.\n\n---\n\n### 5. Recommendations\n\n1. **Fix the personalization merge immediately.** Audit the `{{first_name}}` (or equivalent) variable in the ESP template. Add a fallback value (\"member\" or \"Skechers Plus member\") so the slot never renders empty.\n2. **Migrate all image assets to HTTPS.** The `http://image.emails.skechers.com` CDN path should be a forced redirect to `https://`. Audit the template library for any hardcoded HTTP references — this appears systemic across the whole template, not one-off.\n3. **Add a plain-text alternative.** At minimum, a stripped version of the program mechanics, the REDEEM URL, and footer links. This is both a deliverability best practice and an accessibility requirement.\n4. **Cut or move the utility module block.** Curbside Pickup, AfterPay, and Find A Store belong in a general brand email, not a loyalty onboarding email. Remove them here or collapse them to a single footer line to tighten focus on the loyalty goal.\n5. **Add a base tier context line.** Something like \"You're currently earning X points per $1. Reach Gold at [threshold] for 20x.\" This makes the tier upgrade feel achievable and gives the member a progress anchor.\n6. **Review the 60-day expiry module placement.** Currently it appears mid-email. If this is urgent and member-specific (i.e., they actually have expiring rewards), it should sit higher — ideally directly after the hero. If it is generic, consider whether it creates unnecessary anxiety for members with no points yet.\n\n---\n\n### 6. Bottom Line\n\nA structurally solid loyalty onboarding email that would perform well if the critical failures were resolved. The personalization miss and HTTP image infrastructure are not cosmetic — they actively degrade trust and rendering. Fix those, cut the utility clutter, and this email does its job cleanly. As shipped, it signals operational sloppiness at exactly the moment a new loyalty member is forming their impression of the program.\n\n---\n\n### 7. Evidence\n\n**Overall purpose of the email**\nWelcome series, email 2 of N. Purpose is to educate a new Skechers Plus member on how to earn points, reach Gold status, and redeem rewards. Campaign ID `TRG_US_EN_PLUSWELCOME_2_10312025` confirms this is a triggered onboarding flow, not a broadcast. The intent is correct and the timing is appropriate.\n\n**Hero / primary value proposition**\n\"Your Skechers Plus Cheat Sheet — It Pays to Be a Skechers Plus Member.\" Clear subject-line-to-hero continuity. The hero delivers on the subject line promise by immediately transitioning into program mechanics. Value prop is functional (\"learn the program\") rather than emotional (\"you're special\"). Acceptable for an onboarding email; a short aspirational line could elevate it.\n\n**Membership / benefits section**\nTwo-step benefits ladder: (1) earn points on purchases, with Gold tier highlighted at 20 pts/$1; (2) redeem at 1,000 pts for a $5 reward. The structure is logical. The expiry urgency (\"Rewards expire in 60 days — Log In\") functions as both a benefit reminder and a behavioral nudge. Missing: base tier earn rate, current member point balance, and distance to Gold — data that would make this feel personalized rather than generic.\n\n**Product discoverability / recommendation modules**\nNone present. This email does not include product recommendations or category callouts. Appropriate for a program-mechanics email — adding product modules here would dilute the onboarding focus.\n\n**Utility / secondary modules**\nApp Store and Google Play download links — relevant and well-placed for onboarding. SMS opt-in (\"LET'S GET TEXTING\" / Text SKECHERS to 83828) — high-value cross-channel capture at peak engagement moment. Curbside Pickup, AfterPay, Find A Store — these three are off-strategy for this email type and should be removed.\n\n**Email-to-site continuity**\nAll CTAs route through `click.emails.skechers.com` tracked links. QA probes received 429 rate-limiting responses (expected behavior for tracked link servers probed directly), not broken links. Destination pages are assumed to be the Skechers Plus account/rewards hub. No direct observation of landing page, but the CTA text (\"REDEEM,\" \"LOG IN\") implies account-authenticated destinations — appropriate.\n\n**Bugs / friction / clarity issues**\n- **[FAIL] Empty personalization slot** — Greeting renders \"Hi ,\" with no name. Likely an unresolved merge tag or missing subscriber data at send time.\n- **[FAIL] No plain-text fallback** — 0 characters in plain-text part. Deliverability and accessibility risk.\n- **[WARN] HTTP images (systemic)** — 10+ image assets served over `http://image.emails.skechers.com`. Will be blocked in secure/privacy-aware email environments. Affects logo, all utility icons, social icons, and at least one unnamed content image.\n- **[WARN] Missing alt text** on two images including the primary content image (`49468f73...`) — if images block, these offer no fallback context.\n- **[WARN] One tracking pixel** using `http://www.ink1000.com` — third-party HTTP pixel; potential privacy/rendering flag.\n- **QA pass rate: 14%** — low signal-to-noise on warnings, but the two FAIL-level issues (personalization, plain text) and the HTTP infrastructure problem are genuine production concerns.",
+    "sections": {
+      "executive_summary": [
+        "**Campaign:** TRG_US_EN_PLUSWELCOME_2_10312025 | **Inbox:** walker@agentmail.to | **Date:** 2026-03-15",
+        "This is the second email in the Skechers Plus welcome series, designed to orient new members on program mechanics. The \"cheat sheet\" concept is sound — onboarding emails that teach rather than sell are the right instinct for loyalty programs. But execution has notable gaps: a failed personalization merge leaves an empty name slot, all image assets are served over HTTP instead of HTTPS (meaning they will silently block in many enterprise and security-aware email clients), and there is no plain-text fallback at all. The core program value proposition — earn points, reach Gold, redeem for rewards — is clearly structured and easy to follow. The urgency module around reward expiry is a smart activation mechanic. The lower half of the email is diluted by utility modules that add length without adding loyalty-specific value."
+      ],
+      "business_impact_score": [
+        "**5.5 / 10**",
+        "The strategy and structure are appropriate for a welcome series. The score is held back by a personalization failure that damages trust on first impression, infrastructure issues (HTTP images) that could cause wholesale rendering failures for a meaningful subscriber segment, and a module stack that buries the core CTA under low-priority content."
+      ],
+      "whats_working": [
+        "- **Cheat Sheet framing** is the right approach for a loyalty onboarding email. It sets expectations and explains the program without overselling.",
+        "- **Program mechanics are clearly sequenced:** earn points → reach Gold → earn 20pts per $1 → redeem at 1,000 pts for $5. The math is transparent, which builds trust.",
+        "- **60-day reward expiry module** creates legitimate urgency and drives a login/account action — a high-value behavioral goal for early in the welcome series.",
+        "- **Dual REDEEM CTAs** (repeated) reinforce the primary action without being cluttered; they appear to be the main conversion point.",
+        "- **SMS opt-in module** is well-placed for a loyalty email — cross-channel engagement at the moment of highest member attention is smart.",
+        "- **App download links** (App Store + Google Play) are appropriate here; new members discovering the app early improves long-term retention."
+      ],
+      "whats_weak": [
+        "- **Personalization failure is the most damaging issue.** The greeting renders as \"Hi ,\" with an empty name slot. For a loyalty program email addressed to a named member, this reads as careless and undermines the relationship the email is trying to establish.",
+        "- **All image assets served over HTTP.** Every branded image — logo, icons, utility module images, social badges — uses `http://image.emails.skechers.com`. These will be blocked or flagged as insecure in Gmail, Outlook (strict mode), Apple Mail (with privacy protections), and many enterprise environments. If images fail to load, the email loses most of its visual hierarchy.",
+        "- **No plain-text fallback.** Zero characters. This is a deliverability risk and a compliance gap for accessibility-focused clients.",
+        "- **Module bloat in the lower half.** After the core program mechanics, the email stacks Curbside Pickup, AfterPay, and Find A Store icons. These are low-relevance for a loyalty onboarding email and dilute focus from the \"log in and redeem\" goal.",
+        "- **Gold tier framing is incomplete.** The email mentions Gold tier (20 pts per $1) without explaining what the base tier earns or how far a new member is from Gold. Without a progress anchor, the tier benefit is abstract."
+      ],
+      "recommendations": [
+        "1. **Fix the personalization merge immediately.** Audit the `{{first_name}}` (or equivalent) variable in the ESP template. Add a fallback value (\"member\" or \"Skechers Plus member\") so the slot never renders empty.",
+        "2. **Migrate all image assets to HTTPS.** The `http://image.emails.skechers.com` CDN path should be a forced redirect to `https://`. Audit the template library for any hardcoded HTTP references — this appears systemic across the whole template, not one-off.",
+        "3. **Add a plain-text alternative.** At minimum, a stripped version of the program mechanics, the REDEEM URL, and footer links. This is both a deliverability best practice and an accessibility requirement.",
+        "4. **Cut or move the utility module block.** Curbside Pickup, AfterPay, and Find A Store belong in a general brand email, not a loyalty onboarding email. Remove them here or collapse them to a single footer line to tighten focus on the loyalty goal.",
+        "5. **Add a base tier context line.** Something like \"You're currently earning X points per $1. Reach Gold at [threshold] for 20x.\" This makes the tier upgrade feel achievable and gives the member a progress anchor.",
+        "6. **Review the 60-day expiry module placement.** Currently it appears mid-email. If this is urgent and member-specific (i.e., they actually have expiring rewards), it should sit higher — ideally directly after the hero. If it is generic, consider whether it creates unnecessary anxiety for members with no points yet."
+      ],
+      "bottom_line": [
+        "A structurally solid loyalty onboarding email that would perform well if the critical failures were resolved. The personalization miss and HTTP image infrastructure are not cosmetic — they actively degrade trust and rendering. Fix those, cut the utility clutter, and this email does its job cleanly. As shipped, it signals operational sloppiness at exactly the moment a new loyalty member is forming their impression of the program."
+      ],
+      "evidence": [
+        "**Overall purpose of the email**",
+        "Welcome series, email 2 of N. Purpose is to educate a new Skechers Plus member on how to earn points, reach Gold status, and redeem rewards. Campaign ID `TRG_US_EN_PLUSWELCOME_2_10312025` confirms this is a triggered onboarding flow, not a broadcast. The intent is correct and the timing is appropriate.",
+        "**Hero / primary value proposition**",
+        "\"Your Skechers Plus Cheat Sheet — It Pays to Be a Skechers Plus Member.\" Clear subject-line-to-hero continuity. The hero delivers on the subject line promise by immediately transitioning into program mechanics. Value prop is functional (\"learn the program\") rather than emotional (\"you're special\"). Acceptable for an onboarding email; a short aspirational line could elevate it.",
+        "**Membership / benefits section**",
+        "Two-step benefits ladder: (1) earn points on purchases, with Gold tier highlighted at 20 pts/$1; (2) redeem at 1,000 pts for a $5 reward. The structure is logical. The expiry urgency (\"Rewards expire in 60 days — Log In\") functions as both a benefit reminder and a behavioral nudge. Missing: base tier earn rate, current member point balance, and distance to Gold — data that would make this feel personalized rather than generic.",
+        "**Product discoverability / recommendation modules**",
+        "None present. This email does not include product recommendations or category callouts. Appropriate for a program-mechanics email — adding product modules here would dilute the onboarding focus.",
+        "**Utility / secondary modules**",
+        "App Store and Google Play download links — relevant and well-placed for onboarding. SMS opt-in (\"LET'S GET TEXTING\" / Text SKECHERS to 83828) — high-value cross-channel capture at peak engagement moment. Curbside Pickup, AfterPay, Find A Store — these three are off-strategy for this email type and should be removed.",
+        "**Email-to-site continuity**",
+        "All CTAs route through `click.emails.skechers.com` tracked links. QA probes received 429 rate-limiting responses (expected behavior for tracked link servers probed directly), not broken links. Destination pages are assumed to be the Skechers Plus account/rewards hub. No direct observation of landing page, but the CTA text (\"REDEEM,\" \"LOG IN\") implies account-authenticated destinations — appropriate.",
+        "**Bugs / friction / clarity issues**",
+        "- **[FAIL] Empty personalization slot** — Greeting renders \"Hi ,\" with no name. Likely an unresolved merge tag or missing subscriber data at send time.",
+        "- **[FAIL] No plain-text fallback** — 0 characters in plain-text part. Deliverability and accessibility risk.",
+        "- **[WARN] HTTP images (systemic)** — 10+ image assets served over `http://image.emails.skechers.com`. Will be blocked in secure/privacy-aware email environments. Affects logo, all utility icons, social icons, and at least one unnamed content image.",
+        "- **[WARN] Missing alt text** on two images including the primary content image (`49468f73...`) — if images block, these offer no fallback context.",
+        "- **[WARN] One tracking pixel** using `http://www.ink1000.com` — third-party HTTP pixel; potential privacy/rendering flag.",
+        "- **QA pass rate: 14%** — low signal-to-noise on warnings, but the two FAIL-level issues (personalization, plain text) and the HTTP infrastructure problem are genuine production concerns."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "link_analysis": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_rate_limited",
+            "status": "warn",
+            "label": "Rate limited (429)",
+            "detail": "Server returned 429 — link may be valid (link text: \"REDEEM\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjIyMmI2ZjAyLWU5NjItNDAwZC04OTQ1LWVjMzJhYWIyNDQyZiIsImRla1ZlcnNpb24iOjEsIml2IjoiQ29IbUs5VUxKd3ZpaVBEeUR3cTZ1UT09IiwiY2lwaGVyVGV4dCI6InZjNTRETnlUdVp5MzByTTM3dmxQalNzVVEwTUtzQnZIakF2MGNTUHhHdzZ3dENhQmZHMmduNXdNZ0o5NG84MG5yYmNpZnYwL3RUMDU2aDUxYXR6YmM0aHJ4NHVDWHVUeWtCWUhHcnlsQ29IbUs5VUxKd3ZpaVBEeUR3cTZ1UT09IiwiYXV0aFRhZyI6IjIzT0lhOGVMZ2w3azhwQVdCeHE4cFE9PSJ9"
+          },
+          {
+            "check_id": "link_rate_limited",
+            "status": "warn",
+            "label": "Rate limited (429)",
+            "detail": "Server returned 429 — link may be valid (link text: \"REDEEM\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImYzZDA3N2VmLTZlYjItNGQ3YS04M2M2LTgwYTgyMGRhZjIwNyIsImRla1ZlcnNpb24iOjEsIml2IjoibElLWmtUTEVxcm01blN4TzB4Nld1UT09IiwiY2lwaGVyVGV4dCI6IjE4eG1KQmFSNDRidEhtaUlBS0lzNHBkY3Y2Y0V5OUhaWksxNFYvZE9FWkJ2c0lOYnlxVlpUb2FXRjV6M2FwczFHVkpEMUlQS0poZkVkcWhuZjBjckNSVXRTU1g1QThzSEFldFEyTjlabElLWmtUTEVxcm01blN4TzB4Nld1UT09IiwiYXV0aFRhZyI6Ikt3a1ZMVWtsK1FQTEJ3SHJVTmpmV1E9PSJ9"
+          },
+          {
+            "check_id": "link_rate_limited",
+            "status": "warn",
+            "label": "Rate limited (429)",
+            "detail": "Server returned 429 — link may be valid (link text: \"YOUR SKECHERS PLUS CHEAT SHEET! IT PAYS TO BE A SKECHERS PLUS MEMBER! VIEW MY BE\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImRmYTAxN2IyLWM1YTktNDk2ZS04MTI3LTczNmZiYzkwZWQzOSIsImRla1ZlcnNpb24iOjEsIml2IjoiQ3hvWlhqUmU4MCsvQ1Job0drbEdKUT09IiwiY2lwaGVyVGV4dCI6IjhBSTNWWXVkaVhocnZJZXVtQndYNW1zTjBIUUp5aFZDNDZPTmx2cDBGQXZOYytSUXprb0VMU3B4ZGYzWTczNk1GWkFvaGNkZW5OZTJMV1crdEFuQktKczlOS2Z6ZUl2Z3ZRb2xseXRuQ3hvWlhqUmU4MCsvQ1Job0drbEdKUT09IiwiYXV0aFRhZyI6IndTaWJQVFNuODNpTDRMMEtKWmNyWnc9PSJ9"
+          },
+          {
+            "check_id": "link_rate_limited",
+            "status": "warn",
+            "label": "Rate limited (429)",
+            "detail": "Server returned 429 — link may be valid (link text: \"EARN POINTS ON PURCHASES. REACH GOLD & EARN 20 POINTS FOR EVERY $1 SPENT\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImY4ZWY0MTZkLTllMTAtNDk4MS1iMzc2LTE1Njg5NDE0MWJlZiIsImRla1ZlcnNpb24iOjEsIml2IjoibEplbUlqMVZWZmwrL0V6TXkzSEFmZz09IiwiY2lwaGVyVGV4dCI6ImMrMk9LUnBoNlFGOTNEaHBiSnhmKzdXckRBMVRnYXJiam5hSCtkekZEQm13SzAwUFFBWWpvNUYxcFd5WHBKek43QjVHaU5EajJZaXFBOTZFeWwvWHFUa2pzcld0MGhRZEhtYkJzNFZabEplbUlqMVZWZmwrL0V6TXkzSEFmZz09IiwiYXV0aFRhZyI6IjE2azVJN0sxcmRJVUhSNW13Yk9GV1E9PSJ9"
+          },
+          {
+            "check_id": "link_rate_limited",
+            "status": "warn",
+            "label": "Rate limited (429)",
+            "detail": "Server returned 429 — link may be valid (link text: \"REDEEM POINTS FOR REWARDS. EARN 1000 POINTS AND REDEEM FOR A $5 REWARD\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjE0ZDE5MWM0LTJhZDMtNDAyNS1iMmZmLWI4MWM3ZjgxMzUzYyIsImRla1ZlcnNpb24iOjEsIml2IjoiRHo5Tm9XdnZGOUF4dGtQZjdtVjNidz09IiwiY2lwaGVyVGV4dCI6IlYyWFJKbmlUNmw4NzNaaktVdWdpalRHNStkc0FYSEc0amYxN3FieWwzYW4vWnJCK01uRmNwVkRXMjJETjBXVnJPSEFIdnUzVFlwQkV4VWh4MTdWMWM5RGljVG82b2tMV2g2UlloRHpJRHo5Tm9XdnZGOUF4dGtQZjdtVjNidz09IiwiYXV0aFRhZyI6ImRYUFE0bkU2T3FKQzFvZWtXSVE4eUE9PSJ9"
+          },
+          {
+            "check_id": "link_rate_limited",
+            "status": "warn",
+            "label": "Rate limited (429)",
+            "detail": "Server returned 429 — link may be valid (link text: \"REWARDS EXPIRE IN 60 DAYS! LOG IN\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImY2M2M4M2FkLWY5YmYtNDgxMC1hNzg0LWI4Njk2YTVkN2Q3OCIsImRla1ZlcnNpb24iOjEsIml2IjoiYlFOdkR6UnRCV3NUQjZsbGJkdTh5dz09IiwiY2lwaGVyVGV4dCI6InVOQnJwTTlOOVRXSHdNTmRpZXBrU2ZUVVNxR2xPSzBRYmpHVmlYTlY0UU1yVXNFUHZhNk45bzNtWHBYdm53TG5WdXczOG1FZlBEQjE1TG1OSWlYK3ZZRmxjakYxdzFOTXFVRkhQZ2MzYlFOdkR6UnRCV3NUQjZsbGJkdTh5dz09IiwiYXV0aFRhZyI6Ii9yMkJaWEl4ZGNOVFRLbEJSejRITnc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 400",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"[image: 49468f73-4651-4af3-bea2-61d1ae5db486.png]\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6Ijk1Y2I2MGIwLWIyMTItNGZhZC1iY2Y2LWM5ODc5MTMzYmE4NCIsImRla1ZlcnNpb24iOjEsIml2IjoiTDRlTkU3am53OXArU3hqMzRJVm9jUT09IiwiY2lwaGVyVGV4dCI6IlVza21jS0hSQmdRR20vdm1MQVBTRjZOeHN1QW5NNXJ4QUowbk5jbGYxTHdSZTRzQk13UFAzREN6UWdjMGJuZUN1czBBdjBqTDNWRktWNUxGZ21RWkFuQjFrby93MERZeXFXY2NQN3o2TDRlTkU3am53OXArU3hqMzRJVm9jUT09IiwiYXV0aFRhZyI6IkdRSndkWktQOE5BMk1xbG5IRCs4K2c9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 400",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"LET'S GET TEXTING\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImMyZGE5NGQ4LWI0NmYtNDNhYS05N2E5LTA1OTgwOTU3NTc0OSIsImRla1ZlcnNpb24iOjEsIml2IjoiSzdDdXYxaXBDbGloNEQxYXc5M1NLUT09IiwiY2lwaGVyVGV4dCI6IjE2Y2NqbXNhckpWazE2YzJhVHBFd3pTTk1SVk1PTldhb0ZrTEFNdmJYb2V2UTBUUzJDK2d1a3lxK0tCcFdRSVRsRnNUeCtXMVhRdkp6SURLNXlTV09TOUw5Wjhxdy9xVG1pRWt6RnFySzdDdXYxaXBDbGloNEQxYXc5M1NLUT09IiwiYXV0aFRhZyI6Imxqa3ZTL1dmS3NQNms1b2hKTXhhcXc9PSJ9"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 400",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Text SKECHERS to 83828 for exclusive offers!\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjE2MjE3Nzg4LTQwMTAtNDM4Ni05MmY0LTc0YjRmNGRkMWJjMyIsImRla1ZlcnNpb24iOjEsIml2IjoiUjBVWmVsTjB6ZzIwRkw4Ny9CWlpvZz09IiwiY2lwaGVyVGV4dCI6IkFMNVhLNlBqMkV3bHdEWERadVlkZ3hRVUJ6TU45cVBibnVtSFNGR0hTbFFjVDlwNUErYmthdys2dE96RUc2MGpZL0ttS01URWo2VC9STkhFU2tLdjcxazBwdEE3eDNDYVpaU3JFb0tyUjBVWmVsTjB6ZzIwRkw4Ny9CWlpvZz09IiwiYXV0aFRhZyI6InIrOVpOS2JRTzhkd21tV1VxeEtDcXc9PSJ9"
+          }
+        ]
+      },
+      "rendering": {
+        "passed": 0,
+        "warned": 13,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_PLUSWELCOME_2_10312025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_PLUSWELCOME_2_10312025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Curbside Pickup\" (00100b23-0afa-4715-a8cd-23bb46f9d2b2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Find A Store\" (fc08601a-fcce-4c96-8b90-39e5a55d6c05.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          },
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          }
+        ]
+      },
+      "personalization": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "merge_empty_greeting",
+            "status": "fail",
+            "label": "Empty greeting slot",
+            "detail": "Greeting has empty name field (e.g. \"Hi ,\")"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTgwODYwIiwiamIiOiI2Nzc0NiIsImQ"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "14%",
+      "total_checks": 29,
+      "total_issues": 2,
+      "total_warnings": 23
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-16-your-skechers-plus-cheat-sheet-email-webview-render.png",
+    "pdf": "2026-03-16-your-skechers-plus-cheat-sheet-review.pdf"
+  }
+}

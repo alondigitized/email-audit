@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun",
+  "email": {
+    "subject": "These were a match made in heaven for you!",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-12T04:37:22+00:00",
+    "date_formatted": "2026-03-12 04:37 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "Executive Summary\nThis is a smarter commerce email than a generic promo because it uses a recommendation angle to reopen shopping intent. The framing — “These were a match made in heaven for you!” — is more motivating than a plain sale message, and it clearly tries to make the merch feel personally relevant. But the success of the email depends heavily on whether the recommendation feels genuinely well matched and whether the click path preserves that personalized logic. If the recommendations are only loosely relevant, the message quickly feels templated rather than intelligent.\n\nBusiness Impact Score: 6/10\n\nWhat’s Working\n- The subject line is commercially stronger than a generic promotional line because it suggests relevance and discovery.\n- The recommendation framing is a better reactivation device than a broad discount blast.\n- The email gives Skechers a chance to connect merchandising to customer behavior rather than relying only on promotions.\n- If the matched products are good, this type of email can create curiosity and meaningful click motivation.\n- This is directionally stronger lifecycle thinking than simply sending another mass promo.\n\nWhat’s Weak\n- The entire value of the email rests on whether the recommendations actually feel well matched.\n- If the recommendations are only loosely connected to prior browsing or purchase behavior, the personalization claim weakens fast.\n- These emails can feel like dressed-up merchandising rather than true recommendation logic if the product set is too broad or generic.\n- If the click leads to a generic landing experience, the continuity between email promise and site experience breaks immediately.\n- There is a risk that the email creates a personalized expectation that the site does not fulfill.\n\nRecommendations\n- Make sure the recommendation set is tightly tied to actual user behavior so the “match made in heaven” framing feels earned.\n- Preserve recommendation context after click so the landing page clearly continues the same story.\n- Support the hero recommendations with adjacent fallback discovery paths rather than dumping the user into a generic category page.\n- Use this email type when recommendation confidence is high; do not dilute it with low-quality or overly broad product matching.\n- Keep the email visually focused so the recommendation story stays clear and does not get buried under generic utility clutter.\n\nBottom Line\nThis is a promising email type because it tries to turn merchandising into something more personalized and engaging. But it only works if the recommendations are truly relevant and the site experience reinforces that promise. If not, it reads as a clever line wrapped around ordinary product promotion.\n\nEvidence\n- Overall purpose of the email: This is a recommendation-driven re-engagement email meant to bring the customer back into shopping through perceived relevance rather than through a blunt promotional offer.\n- Hero / primary value proposition: The hero value proposition is product relevance. The email is effectively saying: these picks are for you, and you should click because they are a better match than generic featured products.\n- Membership / benefits section: This email is not primarily about loyalty or benefits. If any membership value appears in the broader email template, it should stay clearly secondary to the recommendation story.\n- Product discoverability / recommendation modules: This is the core of the message. The product modules matter more here than in many other lifecycle emails because they are the proof of whether the recommendation framing is credible. If the products feel aligned, discoverability is strong. If they feel generic, the whole email weakens.\n- Utility / secondary modules: Any standard secondary modules — app, store finder, pay later, utility footer links — should stay visually quiet. In a recommendation email, those are support elements, not the point.\n- Email-to-site continuity: Continuity is critical. The click should preserve the recommendation logic, either by landing on the specific recommended product or on a page that clearly reflects the same matched set. A generic landing path would undercut the premise.\n- Bugs / friction / clarity issues: The main friction risk is strategic rather than technical. If the email claims personalized relevance but the product set or landing page does not feel meaningfully tailored, trust drops and the email becomes less persuasive than a simpler, more honest merchandising send.\n",
+    "sections": {
+      "executive_summary": [
+        "This is a smarter commerce email than a generic promo because it uses a recommendation angle to reopen shopping intent. The framing — “These were a match made in heaven for you!” — is more motivating than a plain sale message, and it clearly tries to make the merch feel personally relevant. But the success of the email depends heavily on whether the recommendation feels genuinely well matched and whether the click path preserves that personalized logic. If the recommendations are only loosely relevant, the message quickly feels templated rather than intelligent.",
+        "Business Impact Score: 6/10"
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- The subject line is commercially stronger than a generic promotional line because it suggests relevance and discovery.",
+        "- The recommendation framing is a better reactivation device than a broad discount blast.",
+        "- The email gives Skechers a chance to connect merchandising to customer behavior rather than relying only on promotions.",
+        "- If the matched products are good, this type of email can create curiosity and meaningful click motivation.",
+        "- This is directionally stronger lifecycle thinking than simply sending another mass promo."
+      ],
+      "whats_weak": [
+        "- The entire value of the email rests on whether the recommendations actually feel well matched.",
+        "- If the recommendations are only loosely connected to prior browsing or purchase behavior, the personalization claim weakens fast.",
+        "- These emails can feel like dressed-up merchandising rather than true recommendation logic if the product set is too broad or generic.",
+        "- If the click leads to a generic landing experience, the continuity between email promise and site experience breaks immediately.",
+        "- There is a risk that the email creates a personalized expectation that the site does not fulfill."
+      ],
+      "recommendations": [
+        "- Make sure the recommendation set is tightly tied to actual user behavior so the “match made in heaven” framing feels earned.",
+        "- Preserve recommendation context after click so the landing page clearly continues the same story.",
+        "- Support the hero recommendations with adjacent fallback discovery paths rather than dumping the user into a generic category page.",
+        "- Use this email type when recommendation confidence is high; do not dilute it with low-quality or overly broad product matching.",
+        "- Keep the email visually focused so the recommendation story stays clear and does not get buried under generic utility clutter."
+      ],
+      "bottom_line": [
+        "This is a promising email type because it tries to turn merchandising into something more personalized and engaging. But it only works if the recommendations are truly relevant and the site experience reinforces that promise. If not, it reads as a clever line wrapped around ordinary product promotion."
+      ],
+      "evidence": [
+        "- Overall purpose of the email: This is a recommendation-driven re-engagement email meant to bring the customer back into shopping through perceived relevance rather than through a blunt promotional offer.",
+        "- Hero / primary value proposition: The hero value proposition is product relevance. The email is effectively saying: these picks are for you, and you should click because they are a better match than generic featured products.",
+        "- Membership / benefits section: This email is not primarily about loyalty or benefits. If any membership value appears in the broader email template, it should stay clearly secondary to the recommendation story.",
+        "- Product discoverability / recommendation modules: This is the core of the message. The product modules matter more here than in many other lifecycle emails because they are the proof of whether the recommendation framing is credible. If the products feel aligned, discoverability is strong. If they feel generic, the whole email weakens.",
+        "- Utility / secondary modules: Any standard secondary modules — app, store finder, pay later, utility footer links — should stay visually quiet. In a recommendation email, those are support elements, not the point.",
+        "- Email-to-site continuity: Continuity is critical. The click should preserve the recommendation logic, either by landing on the specific recommended product or on a page that clearly reflects the same matched set. A generic landing path would undercut the premise.",
+        "- Bugs / friction / clarity issues: The main friction risk is strategic rather than technical. If the email claims personalized relevance but the product set or landing page does not feel meaningfully tailored, trust drops and the email becomes less persuasive than a simpler, more honest merchandising send."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "link_analysis": {
+        "passed": 0,
+        "warned": 3,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 400",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"[image: 49468f73-4651-4af3-bea2-61d1ae5db486.png]\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6ImNlY2M3Zjg2LTRmNWItNDAzOC1hNjI0LTM3MzcxYWQwNjU3ZiIsImRla1ZlcnNpb24iOjEsIml2IjoiaitjN1JLaEpoSXNaanlOa0ZVeUVDUT09IiwiY2lwaGVyVGV4dCI6IklGb1AyOHJQOEovcTJ4dFNlZE5KdEtyUnJjRWh0ZFRhZ0sxMzdOYjRNZGZ4MTBmMkpHcy9lWDVDZ29nN0w3STB2eDBlL3hlbkpoQ2ttMjNtNTNrNjBSTjdCMEh1SjRpZ1oxUFgwSS9uTzBTb1NZU0xHWThqWkJWTWhBaz0iLCJhdXRoVGFnIjoiNTNrNjBSTjdCMEh1SjRpZ1oxUFgwQT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 400",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"LET'S GET TEXTING\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjdiNjk0N2EwLTZmZDUtNGI2NC1iNWMzLTc3Mjk0ODc5OGJiOSIsImRla1ZlcnNpb24iOjEsIml2IjoiVkFEd25TdWd4VzhoM1lFdys0VDZ2UT09IiwiY2lwaGVyVGV4dCI6Ik9HMGRubFc0WkZzcnJROEpVODg4VE5EcnZ6ZVZyd2lHRUtvd0Q4aFFubjdsYWRuOExoclBYbWM4d24yQlpPYVUrNDY5c3o4MXZsYWtDcWNJZkVmcC9KeGIrb2RscEh1VkRIbWNZMVFBOEowcm9NVnZJZDJCTVB1RStyMD0iLCJhdXRoVGFnIjoiZkVmcC9KeGIrb2RscEh1VkRIbWNZdz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 400",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Text SKECHERS to 83828 for exclusive offers!\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjZjMjlmNzdjLWQ1ZDQtNGE1Yy05ZmMxLWE4OWMyMTU0MTllYiIsImRla1ZlcnNpb24iOjEsIml2IjoiYkdjNnBHVXc3SHdDQmJDZmdDVVZadz09IiwiY2lwaGVyVGV4dCI6IiszQitqSEVLZVBCTXN4dVh4c2F2RXFSV2l3Q08xNURiY1JVU2VBT3h1b0FkbEFiYmNISGdYOUZhRDRkM1UxK1pjUXJOYnc4TzFxdFhqcHd5TzBXRHo3OFBHVUVXdXhCQ1VBcWFKR3huT3FSbE1PeDhBZ1d3bjRBbEZXYz0iLCJhdXRoVGFnIjoiTzBXRHo3OFBHVUVXdXhCQ1VBcWFKQT09In0%3D"
+          }
+        ]
+      },
+      "rendering": {
+        "passed": 0,
+        "warned": 18,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=CARTFUL_Quiz_Result_Email_10212025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=CARTFUL_Quiz_Result_Email_10212025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 5369d4b6-eba6-49b7-b7c6-431f393c6a95.jpg",
+            "detail": "src: https://image.emails.skechers.com/lib/fe3115707564047a731c78/m/16/5369d4b6-eba6-49b7-b7c6-431f393c6a95.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Twitter\" (d76a5487-158e-4781-82a4-b65b04c051e4.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/d76a5487-158e-4781-82a4-b65b04c051e4.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          },
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          }
+        ]
+      },
+      "personalization": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTgxMDc2IiwiamIiOiI5NDkiLCJkIjo"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "18%",
+      "total_checks": 28,
+      "total_issues": 1,
+      "total_warnings": 22
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun-email-webview-render.png",
+    "pdf": "2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun-review.pdf"
+  }
+}

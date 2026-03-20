@@ -1,0 +1,226 @@
+[
+  {
+    "slug": "2026-03-19-complete-your-profile-to-earn-50-adiclub-points",
+    "subject": "Complete your profile to earn 50 adiClub points",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-19T16:42:16+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "20%",
+      "total_checks": 25,
+      "total_issues": 9,
+      "total_warnings": 11
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-19-made-for-match-days-and-fans-everywhere-jamaica-home-away-jerseys",
+    "subject": "Made for match days and fans everywhere: Jamaica Home & Away Jerseys",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-19T13:05:16+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "29%",
+      "total_checks": 17,
+      "total_issues": 2,
+      "total_warnings": 10
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-19-last-call-to-use-your-20-off-welcome-offer",
+    "subject": "Last Call to use your 20% Off Welcome Offer!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-18T21:21:10+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "18%",
+      "total_checks": 22,
+      "total_issues": 1,
+      "total_warnings": 17
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-19-we-re-taking-00s-running-style-to-the-streets",
+    "subject": "We're taking '00s running style to the streets",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-18T09:01:04+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "22%",
+      "total_checks": 18,
+      "total_issues": 4,
+      "total_warnings": 10
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-18-most-iconic-jerseys-from-the-past-decades",
+    "subject": "Most iconic jerseys from the past decades",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-18T04:11:18+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "14%",
+      "total_checks": 37,
+      "total_issues": 2,
+      "total_warnings": 30
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-17-unlock-more-rewards-with-the-adidas-app",
+    "subject": "Unlock more rewards with the adidas app",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-17T16:41:17+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "8%",
+      "total_checks": 59,
+      "total_issues": 8,
+      "total_warnings": 46
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-17-anthony-edwards-2-red-black-available-now",
+    "subject": "Anthony Edwards 2: Red & Black available now",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-17T03:07:57+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "11%",
+      "total_checks": 45,
+      "total_issues": 2,
+      "total_warnings": 38
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-16-tell-us-more-about-you",
+    "subject": "Tell us more about you!",
+    "from_display_name": "SKECHERS PLUS",
+    "timestamp_iso": "2026-03-16T05:18:13+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "12%",
+      "total_checks": 34,
+      "total_issues": 5,
+      "total_warnings": 25
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards",
+    "subject": "Earn adiClub points to unlock more rewards",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-14T16:40:20+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "7%",
+      "total_checks": 54,
+      "total_issues": 10,
+      "total_warnings": 40
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-16-your-skechers-plus-cheat-sheet",
+    "subject": "Your Skechers Plus Cheat Sheet",
+    "from_display_name": "SKECHERS PLUS",
+    "timestamp_iso": "2026-03-14T05:17:08+00:00",
+    "score": "5.5/10",
+    "qa_summary": {
+      "overall_pass_rate": "14%",
+      "total_checks": 29,
+      "total_issues": 2,
+      "total_warnings": 23
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-16-your-20-off-welcome-offer-is-waiting",
+    "subject": "Your 20% Off Welcome Offer is waiting!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-13T21:20:15+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "21%",
+      "total_checks": 24,
+      "total_issues": 1,
+      "total_warnings": 18
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-16-it-s-back-in-stock-at-skechers-com",
+    "subject": "It's Back in Stock at SKECHERS.com",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-13T17:20:28+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "23%",
+      "total_checks": 22,
+      "total_issues": 1,
+      "total_warnings": 16
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-16-you-ve-still-got-20-off",
+    "subject": "You've still got 20% off!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-12T21:19:10+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "17%",
+      "total_checks": 24,
+      "total_issues": 1,
+      "total_warnings": 19
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh",
+    "subject": "Thanks for completing your Skechers Plus account",
+    "from_display_name": "SKECHERS PLUS",
+    "timestamp_iso": "2026-03-12T05:17:05+00:00",
+    "score": "7/10",
+    "qa_summary": {
+      "overall_pass_rate": "16%",
+      "total_checks": 32,
+      "total_issues": 1,
+      "total_warnings": 26
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun",
+    "subject": "These were a match made in heaven for you!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-12T04:37:22+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "18%",
+      "total_checks": 28,
+      "total_issues": 1,
+      "total_warnings": 22
+    },
+    "has_image": true
+  },
+  {
+    "slug": "2026-03-12-welcome-to-skechers-fresh",
+    "subject": "Welcome to Skechers!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-11T21:18:57+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "15%",
+      "total_checks": 27,
+      "total_issues": 1,
+      "total_warnings": 22
+    },
+    "has_image": true
+  }
+]

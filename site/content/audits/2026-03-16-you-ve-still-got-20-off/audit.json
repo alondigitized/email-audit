@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-16-you-ve-still-got-20-off",
+  "email": {
+    "subject": "You've still got 20% off!",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-12T21:19:10+00:00",
+    "date_formatted": "2026-03-12 21:19 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "\n## 1. Executive Summary\n\nThis is the second send in Skechers' non-member welcome flow — a reminder that a 20% welcome discount (WEL20-C39C3FPRRN, valid through April 10, 2026) is still on the table. The core mechanic is sound: re-nudge a prospect who didn't convert on the first touch. The problem is execution. A doubled-domain merge error lands in the legal copy, thirteen-plus images are served over HTTP and will silently break in most modern email clients, and critical images are missing alt text — meaning a significant portion of recipients likely sees a broken shell with invisible modules. The offer and structure are directionally correct; the technical quality is not.\n\n---\n\n## 2. Business Impact Score\n\n**5 / 10**\n\nThe offer is competitive and the send logic is valid. But widespread image delivery failures and a visible URL bug in legal copy damage deliverability perception and brand credibility. Conversion is being lost to avoidable infrastructure errors, not strategy.\n\n---\n\n## 3. What's Working\n\n- **Subject line creates urgency without being hyperbolic.** \"You've still got 20% off\" is honest, benefit-forward, and earns the open on a second touch.\n- **Promo code is prominently surfaced.** Code + CTA appear high in the email body — no hunting required.\n- **Comfort technology callouts are present.** Slip-Ins, Cozy Fit, Max Cushioning, Arch Fit — these are Skechers' product differentiation pillars and they're linked correctly over HTTPS.\n- **Utility footer is comprehensive.** BNPL (Afterpay, Klarna), Curbside Pickup, Find a Store, App download, SMS opt-in — the right friction-reducers are all present.\n- **Skechers Plus upsell is placed appropriately.** Free shipping + returns is a meaningful conversion driver for a first-time buyer sitting on an unused promo code.\n\n---\n\n## 4. What's Weak\n\n- **HTTP image sources are endemic.** 13+ images — including the logo, app store badges, social icons, and utility module assets — are served via `http://image.emails.skechers.com`. Gmail, Outlook, and Apple Mail all block or proxy non-HTTPS images. Many recipients see blank modules where images should render.\n- **Alt text is missing on key images.** The hero image, comfort tech banner, and utility icons have no alt text fallback. When images don't load (see above), there's nothing left — not even descriptive text.\n- **Doubled-domain merge error in legal copy.** The T&C reads `http://www.skechers.com/www.Skechers.com` — a classic template variable that resolved incorrectly. It's in the fine print, but it signals sloppy QA and raises deliverability flags with spam filters that parse URLs.\n- **\"SHOP OUR TOP COLLECTIONS\" CTA is broken.** The link resolves to an unknown URL type — this is a dead click on what should be a primary engagement point.\n- **No meaningful urgency framing in body copy.** The subject line does the lifting, but if the hero is broken for image-blocked recipients, there's no reinforcing text in the visible body to drive action.\n- **iGoDigital product recs appear without context.** The recommendation module fires but without a headline or framing copy visible in the text layer — if images fail, the product carousel is invisible and the logic block is orphaned.\n\n---\n\n## 5. Recommendations\n\n1. **Migrate all image sources to HTTPS immediately.** `http://image.emails.skechers.com` across 13+ assets is a systemic issue — this should be a platform-level fix, not email-by-email patching.\n2. **Add descriptive alt text to every image.** Hero, product recs, comfort tech tiles, utility icons — all of them. Alt text is the last line of defense when images block.\n3. **Fix the \"SHOP OUR TOP COLLECTIONS\" link** before next send. Audit the template variable binding for this CTA.\n4. **Fix the doubled-domain T&C URL.** The `www.Skechers.com/www.Skechers.com` merge error needs a template correction at the source. Low effort, real downside if left.\n5. **Add a visible text fallback for the hero module.** Even a simple headline like \"Your 20% welcome discount expires April 10\" as a text element ensures image-blocked recipients get the message.\n6. **Add a framing label above the recommendation module.** Something like \"Picked for you\" or \"Top styles to try\" gives context if the product images render and makes the module feel intentional rather than dropped in.\n\n---\n\n## 6. Bottom Line\n\nThis email has a legitimate reason to exist and a competitive offer to deliver. The welcome flow strategy is correct. But it's being undermined by a pervasive HTTP image problem that likely breaks the visual experience for a large share of recipients, compounded by a merge error that shouldn't make it out of QA. Fix the infrastructure first; the strategy will carry itself.\n\n---\n\n## 7. Evidence\n\n**Overall purpose of the email**\nSecond touch in the non-member welcome series (campaign ID: `NONMEMWELCOME_2`). Goal is to recover unconverted first-touch recipients with the same 20% discount before it expires. Legitimate re-engagement mechanic.\n\n**Hero / primary value proposition**\nCode `WEL20-C39C3FPRRN` with a direct link to skechers.com. Offer clarity is high. The hero image (`bcc16007`) has no alt text and the CTA text around it isn't recoverable if the image breaks.\n\n**Membership / benefits section**\nSkechers Plus appears in the utility section with free shipping + returns framing and a \"JOIN NOW\" CTA linking correctly to the registration page. Well-positioned for a non-member audience, though it's below the fold and competes with a lot of other modules.\n\n**Product discoverability / recommendation modules**\niGoDigital recs are present (rr/v2 pixel fires). No visible header text or fallback in the plain-text layer. If images don't render, this module contributes nothing. Comfort technology links (Slip-Ins, Cozy Fit, Max Cushioning, Arch Fit) all point to HTTPS destinations and are structurally intact.\n\n**Utility / secondary modules**\nNav bar (Women, Men, Kids, Clothing, New Arrivals, Sale), SMS opt-in (\"Text SKECHERS to 83828\"), iOS/Android app download, Curbside Pickup, Afterpay, Klarna, Find a Store. Coverage is thorough. The App Store and Google Play badge images are HTTP-served and will break. Social icons (Instagram, Facebook, YouTube) same problem.\n\n**Email-to-site continuity**\nPrimary CTA and nav links use `?src=template` UTM parameters. Comfort tech links land on correct technology sub-pages. BNPL links point to correct Afterpay and Klarna landing pages. Continuity is structurally sound where links are intact.\n\n**Bugs / friction / clarity issues**\n- `http://www.skechers.com/www.Skechers.com` — doubled-domain merge error in legal T&C copy (FAIL)\n- 13 images served over HTTP — expect rendering failures in Gmail, Outlook, Apple Mail\n- Hero image and 3 additional images have no alt text\n- \"SHOP OUR TOP COLLECTIONS\" CTA link resolves to invalid URL type — dead click\n- Tracking pixel (`o.gif`) served over HTTP with no alt text — minor but adds to the HTTP signal\n- SPF/DKIM authentication status unverified via AgentMail relay — deliverability unknown",
+    "sections": {
+      "executive_summary": [
+        "This is the second send in Skechers' non-member welcome flow — a reminder that a 20% welcome discount (WEL20-C39C3FPRRN, valid through April 10, 2026) is still on the table. The core mechanic is sound: re-nudge a prospect who didn't convert on the first touch. The problem is execution. A doubled-domain merge error lands in the legal copy, thirteen-plus images are served over HTTP and will silently break in most modern email clients, and critical images are missing alt text — meaning a significant portion of recipients likely sees a broken shell with invisible modules. The offer and structure are directionally correct; the technical quality is not."
+      ],
+      "business_impact_score": [
+        "**5 / 10**",
+        "The offer is competitive and the send logic is valid. But widespread image delivery failures and a visible URL bug in legal copy damage deliverability perception and brand credibility. Conversion is being lost to avoidable infrastructure errors, not strategy."
+      ],
+      "whats_working": [
+        "- **Subject line creates urgency without being hyperbolic.** \"You've still got 20% off\" is honest, benefit-forward, and earns the open on a second touch.",
+        "- **Promo code is prominently surfaced.** Code + CTA appear high in the email body — no hunting required.",
+        "- **Comfort technology callouts are present.** Slip-Ins, Cozy Fit, Max Cushioning, Arch Fit — these are Skechers' product differentiation pillars and they're linked correctly over HTTPS.",
+        "- **Utility footer is comprehensive.** BNPL (Afterpay, Klarna), Curbside Pickup, Find a Store, App download, SMS opt-in — the right friction-reducers are all present.",
+        "- **Skechers Plus upsell is placed appropriately.** Free shipping + returns is a meaningful conversion driver for a first-time buyer sitting on an unused promo code."
+      ],
+      "whats_weak": [
+        "- **HTTP image sources are endemic.** 13+ images — including the logo, app store badges, social icons, and utility module assets — are served via `http://image.emails.skechers.com`. Gmail, Outlook, and Apple Mail all block or proxy non-HTTPS images. Many recipients see blank modules where images should render.",
+        "- **Alt text is missing on key images.** The hero image, comfort tech banner, and utility icons have no alt text fallback. When images don't load (see above), there's nothing left — not even descriptive text.",
+        "- **Doubled-domain merge error in legal copy.** The T&C reads `http://www.skechers.com/www.Skechers.com` — a classic template variable that resolved incorrectly. It's in the fine print, but it signals sloppy QA and raises deliverability flags with spam filters that parse URLs.",
+        "- **\"SHOP OUR TOP COLLECTIONS\" CTA is broken.** The link resolves to an unknown URL type — this is a dead click on what should be a primary engagement point.",
+        "- **No meaningful urgency framing in body copy.** The subject line does the lifting, but if the hero is broken for image-blocked recipients, there's no reinforcing text in the visible body to drive action.",
+        "- **iGoDigital product recs appear without context.** The recommendation module fires but without a headline or framing copy visible in the text layer — if images fail, the product carousel is invisible and the logic block is orphaned."
+      ],
+      "recommendations": [
+        "1. **Migrate all image sources to HTTPS immediately.** `http://image.emails.skechers.com` across 13+ assets is a systemic issue — this should be a platform-level fix, not email-by-email patching.",
+        "2. **Add descriptive alt text to every image.** Hero, product recs, comfort tech tiles, utility icons — all of them. Alt text is the last line of defense when images block.",
+        "3. **Fix the \"SHOP OUR TOP COLLECTIONS\" link** before next send. Audit the template variable binding for this CTA.",
+        "4. **Fix the doubled-domain T&C URL.** The `www.Skechers.com/www.Skechers.com` merge error needs a template correction at the source. Low effort, real downside if left.",
+        "5. **Add a visible text fallback for the hero module.** Even a simple headline like \"Your 20% welcome discount expires April 10\" as a text element ensures image-blocked recipients get the message.",
+        "6. **Add a framing label above the recommendation module.** Something like \"Picked for you\" or \"Top styles to try\" gives context if the product images render and makes the module feel intentional rather than dropped in."
+      ],
+      "bottom_line": [
+        "This email has a legitimate reason to exist and a competitive offer to deliver. The welcome flow strategy is correct. But it's being undermined by a pervasive HTTP image problem that likely breaks the visual experience for a large share of recipients, compounded by a merge error that shouldn't make it out of QA. Fix the infrastructure first; the strategy will carry itself."
+      ],
+      "evidence": [
+        "**Overall purpose of the email**",
+        "Second touch in the non-member welcome series (campaign ID: `NONMEMWELCOME_2`). Goal is to recover unconverted first-touch recipients with the same 20% discount before it expires. Legitimate re-engagement mechanic.",
+        "**Hero / primary value proposition**",
+        "Code `WEL20-C39C3FPRRN` with a direct link to skechers.com. Offer clarity is high. The hero image (`bcc16007`) has no alt text and the CTA text around it isn't recoverable if the image breaks.",
+        "**Membership / benefits section**",
+        "Skechers Plus appears in the utility section with free shipping + returns framing and a \"JOIN NOW\" CTA linking correctly to the registration page. Well-positioned for a non-member audience, though it's below the fold and competes with a lot of other modules.",
+        "**Product discoverability / recommendation modules**",
+        "iGoDigital recs are present (rr/v2 pixel fires). No visible header text or fallback in the plain-text layer. If images don't render, this module contributes nothing. Comfort technology links (Slip-Ins, Cozy Fit, Max Cushioning, Arch Fit) all point to HTTPS destinations and are structurally intact.",
+        "**Utility / secondary modules**",
+        "Nav bar (Women, Men, Kids, Clothing, New Arrivals, Sale), SMS opt-in (\"Text SKECHERS to 83828\"), iOS/Android app download, Curbside Pickup, Afterpay, Klarna, Find a Store. Coverage is thorough. The App Store and Google Play badge images are HTTP-served and will break. Social icons (Instagram, Facebook, YouTube) same problem.",
+        "**Email-to-site continuity**",
+        "Primary CTA and nav links use `?src=template` UTM parameters. Comfort tech links land on correct technology sub-pages. BNPL links point to correct Afterpay and Klarna landing pages. Continuity is structurally sound where links are intact.",
+        "**Bugs / friction / clarity issues**",
+        "- `http://www.skechers.com/www.Skechers.com` — doubled-domain merge error in legal T&C copy (FAIL)",
+        "- 13 images served over HTTP — expect rendering failures in Gmail, Outlook, Apple Mail",
+        "- Hero image and 3 additional images have no alt text",
+        "- \"SHOP OUR TOP COLLECTIONS\" CTA link resolves to invalid URL type — dead click",
+        "- Tracking pixel (`o.gif`) served over HTTP with no alt text — minor but adds to the HTTP signal",
+        "- SPF/DKIM authentication status unverified via AgentMail relay — deliverability unknown"
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "link_analysis": {
+        "passed": 0,
+        "warned": 2,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "warn",
+            "label": "Link error",
+            "detail": "unknown url type: '/' (link text: \"SHOP OUR TOP COLLECTIONS\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjgxODNlMTI2LWRjZDYtNDEwYS1hMDQ0LWEwZmI4YTFmYmM1MSIsImRla1ZlcnNpb24iOjEsIml2IjoiRTVDNldXd1ZUY3FqNjVRY1VhaFU5QT09IiwiY2lwaGVyVGV4dCI6InMwWklkOXdUSkZpMjhMaGY4Qk1DUHFWQjdrNHlUcUxaVC80MkRuNlNQWGorSDNHWUpCY0ZBWXVKN2o2MjJCTmhwMW5iWHNWWEdURTE3TjdXSUtGZlpqbVVveTFVSjJsTGM4WmZQNWdSRTVDNldXd1ZUY3FqNjVRY1VhaFU5QT09IiwiYXV0aFRhZyI6IlgyWTVsS010VkNkcFMzUEdYeitZRVE9PSJ9"
+          },
+          {
+            "check_id": "link_rate_limited",
+            "status": "warn",
+            "label": "Rate limited (429)",
+            "detail": "Server returned 429 — link may be valid (link text: \"[image: bcc16007-f391-423b-868f-cb0ad4f03490.jpg]\")",
+            "url": "https://click.emails.skechers.com/?qs=eyJkZWtJZCI6IjI0OGRhZTY0LWJlYzYtNDFkYS04MzY5LWE2YjUxNDQyNWZhMCIsImRla1ZlcnNpb24iOjEsIml2IjoicGl2TVB5U1F5S2tuRXB2OUVid0dPUT09IiwiY2lwaGVyVGV4dCI6IlRHMDdLWkZ1R2NkVVI2NUxSMHk2QVVqS2tIV0cwN1lXUDJXRkNJdlVPV2VXTG02K1dRM0IzM3c2NmJiREVvZXphbWZ5TlVUREJoTmxVTmZlbEMzczVkaGlBNm93UlNkelZyY1RseWlwcGl2TVB5U1F5S2tuRXB2OUVid0dPUT09IiwiYXV0aFRhZyI6IjdPWFlZZ09xTUVVbmMxYTNFNWNvcVE9PSJ9"
+          }
+        ]
+      },
+      "rendering": {
+        "passed": 0,
+        "warned": 16,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_NONMEMWELCOME_2_12022025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_NONMEMWELCOME_2_12022025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: bcc16007-f391-423b-868f-cb0ad4f03490.jpg",
+            "detail": "src: https://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/bcc16007-f391-423b-868f-cb0ad4f03490.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ]
+      },
+      "personalization": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "merge_doubled_domain",
+            "status": "fail",
+            "label": "Doubled-domain merge error in URL",
+            "detail": "URL contains a repeated domain",
+            "url": "http://www.skechers.com/www.Skechers.com"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTgwODUyIiwiamIiOiI2MzYyMSIsImQ"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "17%",
+      "total_checks": 24,
+      "total_issues": 1,
+      "total_warnings": 19
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-16-you-ve-still-got-20-off-email-webview-render.png",
+    "pdf": "2026-03-16-you-ve-still-got-20-off-review.pdf"
+  }
+}

@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards",
+  "email": {
+    "subject": "Earn adiClub points to unlock more rewards",
+    "from": "adidas <adidas@us-news.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-14T16:40:20+00:00",
+    "date_formatted": "2026-03-14 16:40 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "**WALKER AUDIT — COMPETITIVE INTELLIGENCE**\n**From:** adidas (adidas@us-news.adidas.com)\n**Subject:** Earn adiClub points to unlock more rewards\n**Date:** 2026-03-15\n\n---\n\n## 1. Executive Summary\n\nThis is not a Skechers email. It is a competitor send from adidas, and it landed in Walker's monitoring inbox — likely via a list signup used for competitive tracking. It is reviewed here as competitive intelligence.\n\nThe email is an adiClub loyalty onboarding/engagement piece with a clear mission: educate members on how to earn points and drive re-engagement with the program. The structural concept is solid — multiple earn vectors, a clear dual-points explanation, and a \"Complete my profile\" retention play. But the execution is materially broken. Staging image URLs shipped in a live production send, a font CDN is returning 403s, the personalization greeting is empty (\"Hi ,\"), and a primary educational destination link is dead. For a loyalty email — where trust and polish directly affect program credibility — these are serious failures.\n\n---\n\n## 2. Business Impact Score\n\n**5 / 10**\n\nThe loyalty mechanics are genuinely well-structured and worth benchmarking. The production defects drag this well below what adidas's email program is capable of.\n\n---\n\n## 3. What's Working\n\n- **Multi-vector earn structure is clear.** Three earn pathways — purchase (10 pts/$1), referral (50 pts), and app activity — are laid out with specific point values. This specificity drives action better than vague \"earn rewards\" messaging.\n- **Dual-points system explanation is well-handled.** Explaining Level points vs. Points-to-spend in the same send avoids confusion downstream and reduces support load. This is a mature loyalty communication tactic worth studying.\n- **Referral incentive is specific and high-value.** 50 points for helping others find their fit is a concrete ask with a concrete reward — stronger than most referral copy.\n- **App integration as an earn vector is differentiated.** Tying loyalty to the adidas Running app creates cross-product stickiness that extends beyond purchase. Smart for a brand with an active fitness community.\n- **\"Complete my profile\" module.** Presence of a profile completion CTA suggests a thoughtful onboarding journey — this type of progressive engagement mechanic improves segmentation and personalization over time.\n\n---\n\n## 4. What's Weak\n\n- **Staging image domain in a live send.** Multiple images load from `image.staging.link.adidas.com`. This is a production pipeline failure — staging assets can be pulled or rate-limited at any point, breaking the email entirely post-send. This is a high-severity defect.\n- **Font CDN returning 403 across the board.** Six AdihausDIN and adineuePRO font files from `s3-eu-west-1.amazonaws.com` are blocked. Brand typography falls back to system fonts — brand consistency is lost.\n- **Empty personalization greeting.** \"Hi ,\" — a blank name field made it to deployment. For a loyalty email targeting identified members, this is a CRM data pipeline failure that breaks the relationship tone immediately.\n- **Broken \"Learn more about points\" destination.** The `go.adidas.com` link returns 403 — the primary educational CTA in the points explanation module goes nowhere.\n- **HTTP image sources.** Arrow images pull from `http://image.link.adidas.com` — non-HTTPS sources are blocked by default in most modern email clients, leaving broken icon slots.\n- **No product imagery or discovery.** The email is 100% loyalty mechanics with zero product exposure. A single product rail or featured item would bridge points motivation with purchase intent and improve conversion value.\n- **Plain text version is unusable.** Over 70% of the text body is raw encoded URLs. Any recipient on a text-only client sees gibberish.\n- **Missing alt text on most images.** If images are blocked (common in desktop clients), the email loses almost all its visual communication — there's no fallback text layer.\n\n---\n\n## 5. Recommendations\n\n1. **Immediately audit the image pipeline.** Staging domain in production is not a QA catch — it is a deployment process failure. Add an environment validation step that fails a send if staging domains are detected in image src attributes.\n2. **Fix the go.adidas.com points link before the next send in this series.** A broken educational CTA in a loyalty onboarding flow directly reduces program comprehension and retention.\n3. **Investigate and fix the CRM merge field failure.** The empty greeting slot suggests the name field is not populated at the point of send for a segment of the list. This needs a conditional fallback (e.g., \"Hi there,\") at minimum, and root-cause investigation.\n4. **Migrate all image sources to HTTPS.** The HTTP arrow images should have been caught in QA. Enforce HTTPS-only image sources as a send-time check.\n5. **Resolve font CDN permissions.** The S3 bucket policy appears to be blocking cross-origin requests. Either open access or migrate font hosting to a CDN configured for email.\n6. **Add a product discovery module.** Even a single 2-up or 3-up product row tied to the member's category (e.g., \"Earn on these — running shoes, training gear\") would materially improve this email's revenue contribution.\n7. **Fix the plain text version.** Strip tracking URLs from the text body; substitute readable link labels and destination context.\n\n---\n\n## 6. Bottom Line\n\nFor Walker's purposes as competitive intelligence: adidas's adiClub loyalty communication framework is sophisticated — the dual-points architecture, multi-earn-vector structure, and app-integrated earn pathway are all worth benchmarking against Skechers' loyalty email program. The conceptual design is ahead of most loyalty emails in the space.\n\nBut adidas shipped this with a staging environment leak, broken fonts, a dead link, and a blank greeting — failures that would be embarrassing at any tier, let alone from a global brand with this email volume. Skechers should not take comfort from this; it reinforces that production QA discipline is a real competitive advantage. The Skechers email program has room to outperform adidas on execution quality, which is the part the recipient actually experiences.\n\n---\n\n## 7. Evidence\n\n**Overall purpose of the email**\nLoyalty program onboarding/engagement. Educates members on adiClub earn mechanics and drives re-engagement through points accumulation pathways. Secondary goal: profile completion and app adoption.\n\n**Hero / primary value proposition**\n\"UNLOCK MORE REWARDS\" — with \"Earn 10 points for every $1 spent in-store or online\" as the anchor. Straightforward and specific. No lifestyle imagery visible in the text render; the hero appears to be copy-led rather than image-led, though image assets are present and likely serve as visual anchors if rendering correctly.\n\n**Membership / benefits section**\nWell-structured dual-points explanation (Level points vs. Points-to-spend) placed mid-email. This is the most substantive content in the email and earns its real estate. \"Learn more about points\" CTA links to a broken destination — undermining the section's entire purpose.\n\n**Product discoverability / recommendation modules**\nAbsent. There are no product modules, featured items, or category links beyond the nav bar (MEN / WOMEN / KIDS / STORE FINDER). This is a missed opportunity in a loyalty email where points and products should be connected explicitly.\n\n**Utility / secondary modules**\n- \"Complete my profile\" CTA — useful retention mechanic, appears twice (suggesting it anchors separate sections of the email)\n- \"Shop Now\" CTA — generic; appears without product context\n- Store Finder link in nav\n- App earn pathway copy — no app store link visible in the text extract\n\n**Email-to-site continuity**\nCannot be fully evaluated due to 403s on tracking links during QA probing (expected behavior for encrypted click tracking). The broken `go.adidas.com` destination for \"Learn more about points\" is a confirmed continuity break. Staging image domain raises concerns that other asset pipelines may have environmental mismatches.\n\n**Bugs / friction / clarity issues**\n- Staging image domain (`image.staging.link.adidas.com`) across multiple image assets — production pipeline failure\n- Six font files returning 403 from S3 — brand typography not rendering\n- Empty personalization: \"Hi ,\" — CRM merge field failure\n- \"Learn more about points\" destination (go.adidas.com) returns 403 — dead link\n- HTTP-sourced arrow images — blocked in secure email clients\n- Missing alt text on all major images — no fallback for image-blocked environments\n- Plain text body >70% raw encoded URLs — text version effectively unusable\n- Apparent template variable leak: `%%=Replace(@linkCoreMetrics,` visible in plain text — unrendered AMPscript/personalization tag exposed to recipients",
+    "sections": {
+      "executive_summary": [
+        "**From:** adidas (adidas@us-news.adidas.com)",
+        "**Subject:** Earn adiClub points to unlock more rewards",
+        "**Date:** 2026-03-15",
+        "This is not a Skechers email. It is a competitor send from adidas, and it landed in Walker's monitoring inbox — likely via a list signup used for competitive tracking. It is reviewed here as competitive intelligence.",
+        "The email is an adiClub loyalty onboarding/engagement piece with a clear mission: educate members on how to earn points and drive re-engagement with the program. The structural concept is solid — multiple earn vectors, a clear dual-points explanation, and a \"Complete my profile\" retention play. But the execution is materially broken. Staging image URLs shipped in a live production send, a font CDN is returning 403s, the personalization greeting is empty (\"Hi ,\"), and a primary educational destination link is dead. For a loyalty email — where trust and polish directly affect program credibility — these are serious failures."
+      ],
+      "business_impact_score": [
+        "**5 / 10**",
+        "The loyalty mechanics are genuinely well-structured and worth benchmarking. The production defects drag this well below what adidas's email program is capable of."
+      ],
+      "whats_working": [
+        "- **Multi-vector earn structure is clear.** Three earn pathways — purchase (10 pts/$1), referral (50 pts), and app activity — are laid out with specific point values. This specificity drives action better than vague \"earn rewards\" messaging.",
+        "- **Dual-points system explanation is well-handled.** Explaining Level points vs. Points-to-spend in the same send avoids confusion downstream and reduces support load. This is a mature loyalty communication tactic worth studying.",
+        "- **Referral incentive is specific and high-value.** 50 points for helping others find their fit is a concrete ask with a concrete reward — stronger than most referral copy.",
+        "- **App integration as an earn vector is differentiated.** Tying loyalty to the adidas Running app creates cross-product stickiness that extends beyond purchase. Smart for a brand with an active fitness community.",
+        "- **\"Complete my profile\" module.** Presence of a profile completion CTA suggests a thoughtful onboarding journey — this type of progressive engagement mechanic improves segmentation and personalization over time."
+      ],
+      "whats_weak": [
+        "- **Staging image domain in a live send.** Multiple images load from `image.staging.link.adidas.com`. This is a production pipeline failure — staging assets can be pulled or rate-limited at any point, breaking the email entirely post-send. This is a high-severity defect.",
+        "- **Font CDN returning 403 across the board.** Six AdihausDIN and adineuePRO font files from `s3-eu-west-1.amazonaws.com` are blocked. Brand typography falls back to system fonts — brand consistency is lost.",
+        "- **Empty personalization greeting.** \"Hi ,\" — a blank name field made it to deployment. For a loyalty email targeting identified members, this is a CRM data pipeline failure that breaks the relationship tone immediately.",
+        "- **Broken \"Learn more about points\" destination.** The `go.adidas.com` link returns 403 — the primary educational CTA in the points explanation module goes nowhere.",
+        "- **HTTP image sources.** Arrow images pull from `http://image.link.adidas.com` — non-HTTPS sources are blocked by default in most modern email clients, leaving broken icon slots.",
+        "- **No product imagery or discovery.** The email is 100% loyalty mechanics with zero product exposure. A single product rail or featured item would bridge points motivation with purchase intent and improve conversion value.",
+        "- **Plain text version is unusable.** Over 70% of the text body is raw encoded URLs. Any recipient on a text-only client sees gibberish.",
+        "- **Missing alt text on most images.** If images are blocked (common in desktop clients), the email loses almost all its visual communication — there's no fallback text layer."
+      ],
+      "recommendations": [
+        "1. **Immediately audit the image pipeline.** Staging domain in production is not a QA catch — it is a deployment process failure. Add an environment validation step that fails a send if staging domains are detected in image src attributes.",
+        "2. **Fix the go.adidas.com points link before the next send in this series.** A broken educational CTA in a loyalty onboarding flow directly reduces program comprehension and retention.",
+        "3. **Investigate and fix the CRM merge field failure.** The empty greeting slot suggests the name field is not populated at the point of send for a segment of the list. This needs a conditional fallback (e.g., \"Hi there,\") at minimum, and root-cause investigation.",
+        "4. **Migrate all image sources to HTTPS.** The HTTP arrow images should have been caught in QA. Enforce HTTPS-only image sources as a send-time check.",
+        "5. **Resolve font CDN permissions.** The S3 bucket policy appears to be blocking cross-origin requests. Either open access or migrate font hosting to a CDN configured for email.",
+        "6. **Add a product discovery module.** Even a single 2-up or 3-up product row tied to the member's category (e.g., \"Earn on these — running shoes, training gear\") would materially improve this email's revenue contribution.",
+        "7. **Fix the plain text version.** Strip tracking URLs from the text body; substitute readable link labels and destination context."
+      ],
+      "bottom_line": [
+        "For Walker's purposes as competitive intelligence: adidas's adiClub loyalty communication framework is sophisticated — the dual-points architecture, multi-earn-vector structure, and app-integrated earn pathway are all worth benchmarking against Skechers' loyalty email program. The conceptual design is ahead of most loyalty emails in the space.",
+        "But adidas shipped this with a staging environment leak, broken fonts, a dead link, and a blank greeting — failures that would be embarrassing at any tier, let alone from a global brand with this email volume. Skechers should not take comfort from this; it reinforces that production QA discipline is a real competitive advantage. The Skechers email program has room to outperform adidas on execution quality, which is the part the recipient actually experiences."
+      ],
+      "evidence": [
+        "**Overall purpose of the email**",
+        "Loyalty program onboarding/engagement. Educates members on adiClub earn mechanics and drives re-engagement through points accumulation pathways. Secondary goal: profile completion and app adoption.",
+        "**Hero / primary value proposition**",
+        "\"UNLOCK MORE REWARDS\" — with \"Earn 10 points for every $1 spent in-store or online\" as the anchor. Straightforward and specific. No lifestyle imagery visible in the text render; the hero appears to be copy-led rather than image-led, though image assets are present and likely serve as visual anchors if rendering correctly.",
+        "**Membership / benefits section**",
+        "Well-structured dual-points explanation (Level points vs. Points-to-spend) placed mid-email. This is the most substantive content in the email and earns its real estate. \"Learn more about points\" CTA links to a broken destination — undermining the section's entire purpose.",
+        "**Product discoverability / recommendation modules**",
+        "Absent. There are no product modules, featured items, or category links beyond the nav bar (MEN / WOMEN / KIDS / STORE FINDER). This is a missed opportunity in a loyalty email where points and products should be connected explicitly.",
+        "**Utility / secondary modules**",
+        "- \"Complete my profile\" CTA — useful retention mechanic, appears twice (suggesting it anchors separate sections of the email)",
+        "- \"Shop Now\" CTA — generic; appears without product context",
+        "- Store Finder link in nav",
+        "- App earn pathway copy — no app store link visible in the text extract",
+        "**Email-to-site continuity**",
+        "Cannot be fully evaluated due to 403s on tracking links during QA probing (expected behavior for encrypted click tracking). The broken `go.adidas.com` destination for \"Learn more about points\" is a confirmed continuity break. Staging image domain raises concerns that other asset pipelines may have environmental mismatches.",
+        "**Bugs / friction / clarity issues**",
+        "- Staging image domain (`image.staging.link.adidas.com`) across multiple image assets — production pipeline failure",
+        "- Six font files returning 403 from S3 — brand typography not rendering",
+        "- Empty personalization: \"Hi ,\" — CRM merge field failure",
+        "- \"Learn more about points\" destination (go.adidas.com) returns 403 — dead link",
+        "- HTTP-sourced arrow images — blocked in secure email clients",
+        "- Missing alt text on all major images — no fallback for image-blocked environments",
+        "- Plain text body >70% raw encoded URLs — text version effectively unusable",
+        "- Apparent template variable leak: `%%=Replace(@linkCoreMetrics,` visible in plain text — unrendered AMPscript/personalization tag exposed to recipients"
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "link_analysis": {
+        "passed": 0,
+        "warned": 22,
+        "failed": 9,
+        "checks": [
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Regular.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Regular.ttf)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Bold.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Bold.ttf)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Regular.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Regular.woff)"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"UNLOCK MORE REWARDS\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6IjVmOTcwZDQxLTVkMWQtNDA5MC1hNmY5LTgxNzQ5YzRiZGY2MiIsImRla1ZlcnNpb24iOjEsIml2IjoiYkcrT0FCSXdyK0IzcjJXRENJQzIrZz09IiwiY2lwaGVyVGV4dCI6Iml6bnlXazY5QWNWbzVVclFrSnBTS3pLc0ZXeHIrM0lndWdEZ1FlM1JJaFplSm1aYUZmM2t1bkdiaWxLMEF6MG56YWtPTkR3TXJhbDVWZVFlb1hmakNWOTArQ2syb2lHTFNiTHo4TE5zYjQ0QUVqQ3Y0SGV2WllNSWdMYjYiLCJhdXRoVGFnIjoiZCtNSlgzVDRLVGFpSVl0SnN2UHdzdz09In0%3D"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Bold.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Bold.woff)"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Adidas Logo\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6IjlkZDgyZDAxLTdjYTMtNGRhNS04OWIxLTZkOTAyZGMyMGZkOSIsImRla1ZlcnNpb24iOjEsIml2Ijoid0JYV1FOcVQ2Vk5iQ1VyaDdYanNJZz09IiwiY2lwaGVyVGV4dCI6Ijc3TmNWZ09WSCtNSTR0M0N2Q2RsV095ZmhSdlZCNXFnMS94QlYveHRQZ21DUnFTZ0daRi84U0VXelprN2JXb1ZSOTJ3c3dTSndHT1p4NTdKb0lMOW9VL0wyd1BBSGtPUENGWEFFSGZBRmRaQTJwUHBVMXNKU3VIdGVPd2kiLCJhdXRoVGFnIjoiZ3YyaFQ4dmJBOEFlUTQ4SVZjQVFkdz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"MEN\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6IjRhNDI4ZTI0LTU3OGItNDI1My04N2Q3LTMxMmIxMDI5NDM1ZiIsImRla1ZlcnNpb24iOjEsIml2IjoiWVJGNlJOSlZidFFuQmJHUkFCTjJFUT09IiwiY2lwaGVyVGV4dCI6IjlydzhmN094THhwTFNQcVd2b3RORWRrb21Nc1BpaWcvbVNYdXhEQTNsS1JXTGJSSUxWais0SE1GNlBtK295c054TWVobE5jQlNMRiswY3h3b0pSanh1MTlncUN2SkFYRmlIcXk1bkZoRVhwRTBsVnUxQ2NGc1pFQUUzWVIiLCJhdXRoVGFnIjoibEdQRzdYMkNvSzhrQmNXSWVyTG1jUT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"WOMEN\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6ImZmNTVjYWNlLWNkYjYtNGU1ZC05MmUwLWE5M2E0MjIxNGY5NiIsImRla1ZlcnNpb24iOjEsIml2IjoiaytyYmp0aVFiSmdzSDhwbytoanVGUT09IiwiY2lwaGVyVGV4dCI6IlVnaTBKaTM4d0dyemgzSm5Cb1R4VWIxL3JGTStkeGRDN0xTWjlxNGhRQmN0VnVxNE5vanNzbmZ6bWRYUFRsYlpra3BFRkdSQTRQZG4vc1RkaldtUnZaemVkbGlOcWg1OGR0OGhiK2VUNnR1TzJKQnNtQ3dmeW1qNkdPNFYiLCJhdXRoVGFnIjoiYVpHOW5ONTJXSTJxSG54MjN5RnY1dz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"KIDS\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6ImM5ZmRiOTY3LTVjOWEtNGNkZi1hYTc5LTcyMDI4MDEzM2YzZCIsImRla1ZlcnNpb24iOjEsIml2IjoiTkxlSmQvdkNObGRSMDd5TUdMZERGdz09IiwiY2lwaGVyVGV4dCI6IkEyN3QwemY3d3ptSFNOaFkydUlBOFBITFh0UkFVYk5ncktQTndkQ2c1K2dVeGFCS05veGZiME9aRE5pWlBMcWYyQ0VYRnhkVFpObUVUSGxsSERCMzJndlBhNTl0WnJZR09Dckc5YmMwdDRsMys4STJWMUhUdkl3WXQwTVgiLCJhdXRoVGFnIjoiTUhmYUM4OXJuMjFtdGdZNEtzYjF0dz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"STORE FINDER\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6ImRjOGU4Mzc0LTFjMTMtNDk1OC1hOWIzLTFjNWFkNjZiNWM1NiIsImRla1ZlcnNpb24iOjEsIml2IjoiOG4zbE9GYllPMGI2Nm54Qmh1VTZrUT09IiwiY2lwaGVyVGV4dCI6IktYc3NHeFNDVWNRNjUzRW5tbkNGYnZ0T0pMemkrVTdNbkxLSktZUkNiNWU1bVg2M0c4bzNRUWFWeHlnVlVSQWZ6YVppbVc2djA5UWNqNUlqU25jSlIwY2JKNXpEbjNnelh0WDJPWXp5ZmVVNFZ0ZzdSdnJxZkVHRzVUcVIiLCJhdXRoVGFnIjoiZHdsSFJ4c25uTU9mZUROZTFmWTVqQT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6ImVjMzNjN2U1LWVkNDAtNDE0OS1iYWZkLTczN2Y3Y2IyN2UxYSIsImRla1ZlcnNpb24iOjEsIml2IjoiMm1wOVNQNWFadktXY2RPZGszZHpoQT09IiwiY2lwaGVyVGV4dCI6IkFhalVhTklyQ0lQMVBENXFMZitrOEg5cmhWZnpvaU9TdFBYRlJodkVrOFNIZ0lwa1BxMmJlNXNvMExoNWxDbjR0NDNwMXIreStxdWduRGQyZHZKajlYeXk0eXJySVJGeDE3NzdQVHZhYW4xSS9scG04cFp4MDUyVGQzT0UiLCJhdXRoVGFnIjoiOG1QMWZMTGpLdXNoRVhIWHZ2czlPdz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Complete my profile\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6IjExNjFlZWRmLWZmMGQtNDI2ZC05YTRiLWMwMWQ0YTM2NzIyMyIsImRla1ZlcnNpb24iOjEsIml2IjoiU1dSdmZKVGxmUWhGNDFXYllVL3JJQT09IiwiY2lwaGVyVGV4dCI6IlVVTWJUVmhxZGRORXdLRCtIWmoyYWFqREFLMnY1ZlpqbmtkWFQ2YW1NT0VOeHV6VnNQTlpTZmZYRlhIdE9CVHJXRWxybCtjUGpNK0hSajBLT0I0YjFCQkpWV1I1WUtjOVBKSW05MzFKWkc5OGxPVjlDRVhqVlp0aFQrc2ciLCJhdXRoVGFnIjoiSGh2VUVFbFZaSGxncHowOGtpYjNmUT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6IjAyYjljNDhlLWEzOTctNGYwMC1iZWY5LTYyZDUyNTEwNGU5OCIsImRla1ZlcnNpb24iOjEsIml2IjoiTGxrTTV3dW96QjB6RzkyTS9kZFIzQT09IiwiY2lwaGVyVGV4dCI6IkFRazkvQWljYTZZMk0yeiswYUthK3dPbkthSnprTVRyNU1tWHpORzRUVTdkbkdTTHB5ei9NT1dNb0ZZeTBsSWVNdFJGdEtlcWZ3azRETWloZVVUL1Q5bXF3U080QjBVQ2s0elFnNzR1V1F6bkM2ak1IVE1iM1l6OTExSGMiLCJhdXRoVGFnIjoiUlA5UDJhckJJN2dIUlFLVGpOQ0R2Zz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6ImIzNzBmN2NmLTRjYzYtNDA0Ni1hMTgzLTk5Zjk4MDgyZjg4NSIsImRla1ZlcnNpb24iOjEsIml2IjoiMVE2ZEdBNTRyYjdTYi9mdjBJMUpNZz09IiwiY2lwaGVyVGV4dCI6IkFnNWhzaDh6c2N1U0NwalF0NWNtZFZJdllQM2FJa1FZbFFWOGdsWXFJL1d1M3daaUkrb21SaHFnM3dCQ0pMM1RwKzU0OEJ0eHNmbXpMb2NSNmEzbWJTTU5oZ2tPdGFRSHEyVUJ6YlBWRHAwWURuaXR2dEp2OSsvUWpVa3kiLCJhdXRoVGFnIjoicmVadEl3MkdDUTYxcEFlclpRSE5zdz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Shop Now\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6ImM3YzhhMjBhLTZiNGYtNGJkZS04NTViLWIzMzBjYzBiNDdhOCIsImRla1ZlcnNpb24iOjEsIml2IjoibFhjUURuMkRocFBPTmRJcDE3V0xqZz09IiwiY2lwaGVyVGV4dCI6Ing1c05GTXlhSWlQaDNZVGhhMU5wS1Y5Sis4Y0ZwWms3T3lHTWxvSmNtc24wVG5yWXNzckYveExvL204YjhNbUxXMnRuT1FMNlplZDIvWGxOeTFTY3hMcnhwY3l0VENTUW8ybk1CUENWZHhBT2ZZT0drODQxMGluWHRZdU8iLCJhdXRoVGFnIjoiVkp6RXV2R2x6SzFNSkpDamFjd0U4QT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6IjBmNTU0ZDcwLTE5NDEtNDc4My1hM2U1LTdiZDllYWViOWQzOSIsImRla1ZlcnNpb24iOjEsIml2IjoiOGpLRVU2Tm9jZEpuNjNpRTBLUlA2QT09IiwiY2lwaGVyVGV4dCI6IjVmWU5QdE10V0NDdHROaXlFeWRNeDNENTFjcXVQQzRqbkdZaUdTUUJsa2o1cFlxcXgvZW4rZGZIT1RpazRoWTZvSDN2VXRHcURSRXJJL0RUNzVRNExOVngySjhhZmJONDFpT1Fyanp5TW9SVG8yaHgwbWZyZUlUUXBFL28iLCJhdXRoVGFnIjoibERnczFYSFlueHA5czNqV0k1Q3VQQT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6IjhmODE0MjBiLTU5YTgtNGVmNi1hNGMwLTNiZjkzNjRlNWRkYSIsImRla1ZlcnNpb24iOjEsIml2IjoiQnd4NHQyeGdUbnBSSUx0emhyTFZ5UT09IiwiY2lwaGVyVGV4dCI6InBmQWZqeTVtT1RkOU9nQkllOURKcXNGenV2SVh6b3ZvQVl6OTN4b3pwQ1hGVnNoZ3lGbUVCRWo0eGVLUVFvYkVUVjVpWTV0K3lLVWRkOVZVamFKOWZZUlNvbm11ZCtqMHp5QUdORjhIREhpM2JHQk9lbEVndTNPR3N0WEoiLCJhdXRoVGFnIjoib24xOWhGS2llYTUzNlBUUElBWTBYdz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Complete my profile\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6ImVmYTJiY2EyLTIyYmUtNDI5MC1iMmQ1LWNkZGM1MDVlYzBkNCIsImRla1ZlcnNpb24iOjEsIml2IjoiQkxKeDB2a1ROYm5lQ0UwdDIvRjNMQT09IiwiY2lwaGVyVGV4dCI6IkVHZndDY0h4TUpxbktGdjNMRUxQZGQvSCtQWVY1QnhHODJDYzFWbkJ4Tm9xdGdEQ0xhYUdMallKd2RTMnVNaXFOaG10MW1PQUs3OU0wSDZyelJxZU1WWVl2QUhkMUdScDF0c0JXclFFc25IUytSTTF1ZDRJVFMzYjhYY3MiLCJhdXRoVGFnIjoiR3A0eFZoaThBZDNVWkduVzJ3RmF0QT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6ImUyZTJiMmE3LTAyYjgtNDM1Yy1hY2I1LTJhZGY5OTZlYTc4YiIsImRla1ZlcnNpb24iOjEsIml2IjoiTEROTEhMbzh5aVlMUitDQ1FTOExJdz09IiwiY2lwaGVyVGV4dCI6IlQ3eWlpZXRaL2g2NWQ5V20rbzZEcko2bThHcnhCWEJqZnFiSGhwZi8rTFE0WU4vcUlhNWZsWkpGWXhUTTNBQVRxQlFVSkRGMG1ZWjFTakhRdGVKSC9kZCtseElWVTJ0UDJ1YVpsMm9zTTBzY3VqektKZ3RINElKQkx3c2oiLCJhdXRoVGFnIjoiNGtmOTEzNlhFaFZUYTAvYTVwbVhhZz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6ImRmY2Y2MGE2LThmNjQtNDZhNy05Zjg3LTcwMGFiY2Y0Njc3NCIsImRla1ZlcnNpb24iOjEsIml2IjoiNk42dnRrMEJMNzZZNkRlNFVMNmphdz09IiwiY2lwaGVyVGV4dCI6InY3N2xVVW9DQXJrRlpnVzEyVHZSSmI2bHd1RmpFL2UxRENHSUUzNmd0MFhEVjhJTzc3VEd1VWR0Q2R1dDlzbmhINlUzTStPcWFPUXdzWDNGNjBWQUJKeWFmdm02bE40ZzhhYWloNGpvM3ErMlRRRXZ2cGpvTjdoUXZxTnIiLCJhdXRoVGFnIjoiUlVBRW5KcCsrYnFVM2lEeHBxS0hpQT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"Shop Now\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6IjI4ZmRkZmM5LWFmNzItNDQwMS1hZTVkLTA3M2NmMzRhNjg5MSIsImRla1ZlcnNpb24iOjEsIml2IjoiSWdTYmZEaEhwNGtxb3kvbDRRRGxjQT09IiwiY2lwaGVyVGV4dCI6ImNGRWlRcENmbTd4Rm5LWG83T3d5WEdjei94a21xQkVjSVVKUWVjRmFHY1U5eEJGN2V5NEhUVTdoejNRaHpCa0lnYVNWRHI5ZEFoL3UwbFQwbk1Sc0FjWFovMzMzR1dyeWFuMkxENTBpQkp0OE9FZW5pU3FqTCtYaEFPVnciLCJhdXRoVGFnIjoieEd3Qnhkbi9mZmNaYXZKcWZZc1BuUT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"arrow\")",
+            "url": "https://click.link.adidas.com/u/?qs=eyJkZWtJZCI6IjY2NTliZmQ2LTc2M2YtNGE3NC1hODgwLTZmYWQ5NDVmZTYzYiIsImRla1ZlcnNpb24iOjEsIml2IjoiYmpBTExHRCtZZGVoM2tvUHVWMlpQdz09IiwiY2lwaGVyVGV4dCI6IjY1eWRvam0yMTRyVG9RU0JKeFNLOWF5N3hmd1MyeHNCeks0VWZDdzdUdHp5Tll3dkE5TUxUOG1Ga0lJRTlzc2dzQ281WDcvUEo2MFpRMEJma01TM0hGNGlEVlcyMEhQMDZrbEh0cVp1TUFzc1lQNWgxNkhlU2crNVhaay8iLCJhdXRoVGFnIjoieExjY1hpSU5WYmJRYy9UcVNVZTJwZz09In0%3D"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://go.adidas.com/ihha/kbqustlc?cm_mmc=AdiEmail_CLC-_-None-_-MemOnb_Comms1.1-_-Marketing-_-howdopointswork-_-None-_-dv:eCom-_-cn:Welcome-_-pc:None&amp;cm_mmc1=US&amp;cm_mmca3=ILDCWJD70W1BE32X&amp;cm_mmca4=4134866&amp;cm_mmc2=adidas-NA-eCom-Email-CLC-None-Remarketing-US-Welcome-None-2603&amp;af_adset=MemOnb_Comms1.1&amp;af_ad=howdopointswork&amp;af_channel=Welcome&amp;af_reengagement_window=30d"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"[image: 18ab33b9-e5bc-4431-b3b7-b68144895785.jpg]\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6IjU3MzcyNjE2LWY1OWUtNDAxZS05NjY2LWQzY2FmZDA3NjhlZSIsImRla1ZlcnNpb24iOjEsIml2IjoiRXNEcDhCZ1VwV0xSVG1mRTkyZEpzQT09IiwiY2lwaGVyVGV4dCI6IldGY3BDb1pEZzJYZzdRakh5QlZJYlZhSERTQXFjUXp5TlBlVjlVd0dHelNSekpsM2RySmVNbDB2VUZodHJwMm81MklvdlJEUktFQmN4Q2U4eDI1bXJsdkRJNUs3N25GcXBTRlhxczBTd09ud0dCU2xZdEZPWjhUM1owbXciLCJhdXRoVGFnIjoiYm1hdVc4TWprcnZ1Y1dxbElWZXF6UT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"[image: e75976a4-abdb-4295-8436-fb9942a197bd.jpg]\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6IjdhMWIyMGMzLTM2MGItNDZmZC04ZTI2LWFlNjgzNDc5N2U1OCIsImRla1ZlcnNpb24iOjEsIml2IjoiYk5qRlRvVUNNaXhONHZIZEl3c2VRdz09IiwiY2lwaGVyVGV4dCI6Ik1VZEtpaEhIajVKaFNWR2kzOTIyMnQ0N2RVME8zMUFENXFMdkRJa1NYeHphM0ZmRG9KNTZ4OTRLVXhBRVdOZk42NElBZTl2SXQyQVUyM0hoZC9LZTBQMi94ajh1Yml4R0JCS1ViMjFzMk1WT2hRSXlMRTNpOGQwakN4NUQiLCJhdXRoVGFnIjoiOHA3US9iL0dQeTV1TEVZRUVwUnZiUT09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"[image: edd36963-06e9-4539-9ecc-ab0ef22ec159.jpg]\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6IjZlMmUzZjZlLTc4Y2EtNDc4OC1iNDgzLTc5YmIxYmY0NjYwMyIsImRla1ZlcnNpb24iOjEsIml2IjoiZ1M0anlRcjVOSXN0UElLTDd3RkFOdz09IiwiY2lwaGVyVGV4dCI6IkVFUDRrcHFMekdweXQxL1Bic1N0MkVwTzJycUlxYkhzQURJT0dtbS96OFNjQlBLakZBUHdvUmg1UmFaamQ2RDh3SVBxMjAyZDcrNlJlUGxMR3I4Vlhmd21OZDF5d29kZXlOcEU3UCtCTGlQSkN2azBpeTA4Z292dkFVQTMiLCJhdXRoVGFnIjoidnhWZC9DWTEzWExDaDE3STJrVHMvdz09In0%3D"
+          },
+          {
+            "check_id": "link_tracking_expired",
+            "status": "warn",
+            "label": "Tracking link returned 403",
+            "detail": "Email tracking links commonly reject direct probes or expire (link text: \"[image: ccad242a-2026-4d23-b3f6-fb91f678e872.jpg]\")",
+            "url": "https://click.link.adidas.com/?qs=eyJkZWtJZCI6ImMwZGZiMjAyLTU3ZjAtNGE1Mi05MDEyLTY1NDAyN2UyY2JlNiIsImRla1ZlcnNpb24iOjEsIml2IjoiRUJYRkZXWTBwM2gzbElYRnUzcmRUZz09IiwiY2lwaGVyVGV4dCI6InBubFZvdjU5YkZVclRVR3RxbmwvbHNXOWNKRmFvcmlNT0dpUU83S241cmdadER2NC9RSjJ3Z2ZkT3MreUR2UEgyemN6Qm9TbTZPaldUdm8xS0JTNnJFRVNsZ0ZEcTI0QjYzZ2cxN2tRRmNVVlpqU25lSGVVaGNXN2V0MU8iLCJhdXRoVGFnIjoiRkxxc1FSS1dBVU9yYmdIcmVDRFh1UT09In0%3D"
+          }
+        ]
+      },
+      "rendering": {
+        "passed": 0,
+        "warned": 17,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 18ab33b9-e5bc-4431-b3b7-b68144895785.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/18ab33b9-e5bc-4431-b3b7-b68144895785.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: e75976a4-abdb-4295-8436-fb9942a197bd.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/e75976a4-abdb-4295-8436-fb9942a197bd.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: ec73d063-d719-4456-a05b-e630d47b2019.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/ec73d063-d719-4456-a05b-e630d47b2019.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: edd36963-06e9-4539-9ecc-ab0ef22ec159.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/edd36963-06e9-4539-9ecc-ab0ef22ec159.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 030e5634-a88a-4834-858d-60ad86ea79f5.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/030e5634-a88a-4834-858d-60ad86ea79f5.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 57944e05-a0dd-4179-8ae7-cc7a733fc6d4.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/57944e05-a0dd-4179-8ae7-cc7a733fc6d4.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: ccad242a-2026-4d23-b3f6-fb91f678e872.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/ccad242a-2026-4d23-b3f6-fb91f678e872.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 10c0b56b-bcab-4ff4-b876-0ac981ace348.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/10c0b56b-bcab-4ff4-b876-0ac981ace348.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 37231f63-3f72-48f3-8047-2650e11742e8.gif",
+            "detail": "src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 37231f63-3f72-48f3-8047-2650e11742e8.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif"
+          },
+          {
+            "check_id": "text_mostly_urls",
+            "status": "warn",
+            "label": "Plain-text is >70% URLs",
+            "detail": "14671/17739 chars are URLs"
+          }
+        ]
+      },
+      "personalization": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "merge_empty_greeting",
+            "status": "fail",
+            "label": "Empty greeting slot",
+            "detail": "Greeting has empty name field (e.g. \"Hi ,\")"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.link.adidas.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDk3MzM1NyIsInMiOiIxNTQyNTU3MDY3IiwibGlkIjoiMTEiLCJqIjoiNDEzNDg2NiIsImpiIjoiMTU5MzMiLCJkIjo"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "7%",
+      "total_checks": 54,
+      "total_issues": 10,
+      "total_warnings": 40
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards-email-webview-render.png",
+    "pdf": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards-review.pdf"
+  }
+}
