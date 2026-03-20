@@ -1,17 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyPassword, createToken } from "@/lib/auth";
 
-// Temporary debug endpoint — remove after verifying
-export async function GET() {
-  const hash = process.env.AUTH_HASH ?? "(unset)";
-  const secretSet = process.env.AUTH_SECRET ? "yes" : "no";
-  return NextResponse.json({
-    hash_prefix: hash.slice(0, 8),
-    hash_length: hash.length,
-    secret_set: secretSet,
-  });
-}
-
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const password = body?.password;
