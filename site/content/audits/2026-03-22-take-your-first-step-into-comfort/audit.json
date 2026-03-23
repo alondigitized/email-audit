@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-22-take-your-first-step-into-comfort",
+  "email": {
+    "subject": "Take your first step into Comfort",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-22T16:10:59+00:00",
+    "date_formatted": "2026-03-22 16:10 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "\n## Walker Audit — Skechers \"Take your first step into Comfort\" (Spring Forward BOGO)\n\n**Date:** 2026-03-22 | **From:** no-reply@emails.skechers.com | **Campaign:** MKG_US_NA_U_MAX_NONPURCH_EN_03222026\n\n---\n\n### 1. Executive Summary\n\nThis is a promotional acquisition email targeting non-purchasers, built around the Spring Forward BOGO 50% Off sale running through April 6. The comfort-technology angle is solid — five distinct technology modules (Slip-Ins, Max Cushioning, Cozy Fit, Wide/Extra Wide, Glide-Step, Arch Fit) give subscribers multiple entry points by fit need, and gender-segmented Slip-Ins links show real merchandising intent. But the email's biggest problem arrives before it's opened: the preview text field is unpopulated, so the first readable text in the inbox is a raw `view.emails.skechers.com` URL. That alone will suppress open rates. Compound that with a subject line that undersells a strong BOGO offer, the absence of any Skechers Plus mention for a non-purchaser audience, and the systemic HTTP image issue that has appeared in every Skechers email reviewed in this session — and you have a campaign with a good promotional spine but a broken inbox moment and several missed conversion levers.\n\n---\n\n### 2. Business Impact Score\n\n**5 / 10**\n\nBOGO 50% is a compelling acquisition offer and the comfort-tech module structure is genuinely differentiated. But the broken inbox preview is a measurable open-rate drag, the subject line doesn't lead with the offer, and there's no loyalty upsell for an audience that hasn't bought yet.\n\n---\n\n### 3. What's Working\n\n- **BOGO 50% offer is clear and substantive.** The mechanics are unambiguous — equal or lesser value item, auto-applied at cart, valid online and at Outlet/Warehouse. Offer terms are specific and complete.\n- **Comfort technology modules are well structured.** Slip-Ins, Max Cushioning, Cozy Fit, Wide/Extra Wide, Glide-Step, and Arch Fit each link to pre-filtered results pages — this is a need-based discovery model that works for comfort-driven shoppers.\n- **Gender-segmented Slip-Ins links.** Separate Women and Men Slip-Ins CTAs show intentional merchandising, not just a generic brand dump.\n- **Consistent campaign tracking.** Every link carries `?src=Q1SPRINGFORWARD2026` — attribution is clean and consistent across all CTAs.\n- **Full category nav.** Women / Men / Kids / Clothing / New Arrivals / Sale are all present with tracking parameters. Baseline navigation is solid.\n- **Utility layer is complete.** SMS opt-in, iOS/Android app, Curbside Pickup, Afterpay (BNPL), and Store Locator are all present and linked. Purchase-barrier objections are covered.\n- **Offer exclusions are disclosed.** The legal block is thorough — store type restrictions, exclusion list, combination policy, and valid date range are all stated.\n\n---\n\n### 4. What's Weak\n\n- **Preview text is broken — raw URL in inbox.** The email body opens with `Skechers® https://view.emails.skechers.com/?vawpToken=...` as the first readable text. This will render verbatim as inbox preview in Gmail, Apple Mail, and Outlook. A subscriber sees a domain string before they see the offer. This is the most damaging issue in the email.\n- **Subject line undersells the offer.** \"Take your first step into Comfort\" is a soft, aspirational line that gives no signal about a BOGO 50% sale. For a non-purchaser audience being driven to convert, leaning on the offer in the subject line is a straightforward win being left on the table.\n- **No Skechers Plus mention anywhere.** This email is sent to non-purchasers. There is no membership upsell, no free-shipping hook, no loyalty introduction. For an audience that hasn't committed to a first purchase, Skechers Plus enrollment is both a conversion incentive and an LTV investment — its complete absence is a structural gap.\n- **No personalization.** Non-purchaser segment with no first name, no browse behavior reference, no product affinity signal. The email reads as a blast.\n- **Technology modules are comfort-only.** The five content modules all address fit/cushioning. There's no athletic, lifestyle, or price-point entry path. Subscribers whose shopping intent isn't comfort-first have no obvious hook.\n- **Sitewide offer landing page (`/m/sitewide-offer/`) may dilute technology module intent.** The first CTA lands on a general sitewide offer page, while the technology modules route to filtered results. The two different shopping experiences aren't integrated — the BOGO offer and the comfort-tech pitch feel like separate campaigns in one email.\n- **HTTP images — systemic and unresolved.** 15 image assets served over HTTP. Logo, utility icons, app badges, and social icons are all affected. This has appeared in every Skechers email reviewed and remains unfixed.\n- **No alt text on key images.** Tracking pixel (`o.gif`), one content image, and two unnamed assets are missing alt text — images-off rendering will leave visual gaps.\n\n---\n\n### 5. Recommendations\n\n1. **Fix the preheader immediately.** Add a hidden preheader element — text like \"Shop BOGO 50% Off — hundreds of styles, Slip-Ins, Max Cushioning & more →\" — so the inbox preview promotes the offer, not a URL. This is the highest-impact fix in the email.\n2. **Rewrite the subject line around the offer.** Test \"BOGO 50% Off — Shop Slip-Ins, Max Cushioning & More\" vs. the current comfort hook. Non-purchasers respond to explicit value signals in subject lines.\n3. **Add a Skechers Plus upsell module.** Place it between the technology modules and the utility footer. Frame it as a first-purchase accelerator: \"Join free and get free shipping on your first order — plus every order after that.\"\n4. **Promote the BOGO offer earlier in the email structure.** If the hero image carries the sale message (not verifiable without a render), ensure the offer is also referenced in at least one text element above the fold so it survives images-off rendering.\n5. **Migrate all image assets to HTTPS.** This is a systemic infrastructure ticket. The HTTP serving pattern affects every email in the program and creates inconsistent rendering in environments that block mixed content. It needs an engineering fix, not per-email patching.\n6. **Add alt text to all images.** Priority: the main hero/visual content image and any image that carries navigational meaning.\n7. **Consider a lifestyle or athletic technology module.** One module anchored to sport/athletic use or a trending style gives non-comfort-first subscribers a reason to click.\n\n---\n\n### 6. Bottom Line\n\nThe Spring Forward BOGO offer is strong and the comfort-technology merchandising structure is more sophisticated than it might look at first glance. But the email damages itself before it's opened — the broken inbox preview is a conversion-rate problem that no amount of good body content can recover from. Fix the preheader, move the offer into the subject line, and add a Plus upsell, and this email punches at a 7. As sent, it's a 5.\n\n---\n\n### 7. Evidence\n\n| Dimension | Finding |\n|---|---|\n| **Overall purpose** | Promotional acquisition email — drive non-purchasers to convert during the Spring Forward BOGO 50% Off sale (valid 3/4/26–4/6/26, online + Outlet/Warehouse). |\n| **Hero / primary value prop** | BOGO 50% off on regular-priced styles. Offer is substantiated with clear terms — valid dates, auto-apply mechanic, store restrictions. Subject line does not lead with the offer, which is a miss. |\n| **Membership / benefits section** | Absent. No Skechers Plus mention anywhere in the email. For a non-purchaser segment, this is a meaningful omission — Plus enrollment is both a first-purchase incentive and an LTV lever. |\n| **Product discoverability / recommendation modules** | Five comfort-technology modules: Slip-Ins (all, women, men), Max Cushioning, Cozy Fit, Wide/Extra Wide, Glide-Step, Arch Fit. All link to filtered new-arrivals pages — a legitimate need-based discovery structure. Coverage is comfort-only; no athletic or lifestyle pathway. |\n| **Utility / secondary modules** | SMS opt-in, iOS + Android app download, Curbside Pickup, Afterpay, Store Locator, social follows. Full utility coverage — this layer is well executed. |\n| **Email-to-site continuity** | `?src=Q1SPRINGFORWARD2026` applied consistently across all CTAs — solid campaign-level attribution. Technology modules route to `prefn1=technologyFeatureName` filtered pages, which is a high-confidence landing surface. Sitewide offer CTA and technology modules feel slightly disconnected in intent. |\n| **Bugs / friction / clarity issues** | **CRITICAL:** Preview text field unpopulated — raw `view.emails.skechers.com` URL renders as inbox preview in major clients. Direct open-rate impact. **SYSTEMIC:** 15 image assets served over HTTP (`image.emails.skechers.com`) — unresolved across all campaigns reviewed. Tracking pixel (`o.gif`) missing alt text and served over HTTP. Two additional images missing alt text. No deliverability authentication data available via AgentMail relay. |",
+    "sections": {
+      "executive_summary": [
+        "**Date:** 2026-03-22 | **From:** no-reply@emails.skechers.com | **Campaign:** MKG_US_NA_U_MAX_NONPURCH_EN_03222026",
+        "This is a promotional acquisition email targeting non-purchasers, built around the Spring Forward BOGO 50% Off sale running through April 6. The comfort-technology angle is solid — five distinct technology modules (Slip-Ins, Max Cushioning, Cozy Fit, Wide/Extra Wide, Glide-Step, Arch Fit) give subscribers multiple entry points by fit need, and gender-segmented Slip-Ins links show real merchandising intent. But the email's biggest problem arrives before it's opened: the preview text field is unpopulated, so the first readable text in the inbox is a raw `view.emails.skechers.com` URL. That alone will suppress open rates. Compound that with a subject line that undersells a strong BOGO offer, the absence of any Skechers Plus mention for a non-purchaser audience, and the systemic HTTP image issue that has appeared in every Skechers email reviewed in this session — and you have a campaign with a good promotional spine but a broken inbox moment and several missed conversion levers."
+      ],
+      "business_impact_score": [
+        "**5 / 10**",
+        "BOGO 50% is a compelling acquisition offer and the comfort-tech module structure is genuinely differentiated. But the broken inbox preview is a measurable open-rate drag, the subject line doesn't lead with the offer, and there's no loyalty upsell for an audience that hasn't bought yet."
+      ],
+      "whats_working": [
+        "- **BOGO 50% offer is clear and substantive.** The mechanics are unambiguous — equal or lesser value item, auto-applied at cart, valid online and at Outlet/Warehouse. Offer terms are specific and complete.",
+        "- **Comfort technology modules are well structured.** Slip-Ins, Max Cushioning, Cozy Fit, Wide/Extra Wide, Glide-Step, and Arch Fit each link to pre-filtered results pages — this is a need-based discovery model that works for comfort-driven shoppers.",
+        "- **Gender-segmented Slip-Ins links.** Separate Women and Men Slip-Ins CTAs show intentional merchandising, not just a generic brand dump.",
+        "- **Consistent campaign tracking.** Every link carries `?src=Q1SPRINGFORWARD2026` — attribution is clean and consistent across all CTAs.",
+        "- **Full category nav.** Women / Men / Kids / Clothing / New Arrivals / Sale are all present with tracking parameters. Baseline navigation is solid.",
+        "- **Utility layer is complete.** SMS opt-in, iOS/Android app, Curbside Pickup, Afterpay (BNPL), and Store Locator are all present and linked. Purchase-barrier objections are covered.",
+        "- **Offer exclusions are disclosed.** The legal block is thorough — store type restrictions, exclusion list, combination policy, and valid date range are all stated."
+      ],
+      "whats_weak": [
+        "- **Preview text is broken — raw URL in inbox.** The email body opens with `Skechers® https://view.emails.skechers.com/?vawpToken=...` as the first readable text. This will render verbatim as inbox preview in Gmail, Apple Mail, and Outlook. A subscriber sees a domain string before they see the offer. This is the most damaging issue in the email.",
+        "- **Subject line undersells the offer.** \"Take your first step into Comfort\" is a soft, aspirational line that gives no signal about a BOGO 50% sale. For a non-purchaser audience being driven to convert, leaning on the offer in the subject line is a straightforward win being left on the table.",
+        "- **No Skechers Plus mention anywhere.** This email is sent to non-purchasers. There is no membership upsell, no free-shipping hook, no loyalty introduction. For an audience that hasn't committed to a first purchase, Skechers Plus enrollment is both a conversion incentive and an LTV investment — its complete absence is a structural gap.",
+        "- **No personalization.** Non-purchaser segment with no first name, no browse behavior reference, no product affinity signal. The email reads as a blast.",
+        "- **Technology modules are comfort-only.** The five content modules all address fit/cushioning. There's no athletic, lifestyle, or price-point entry path. Subscribers whose shopping intent isn't comfort-first have no obvious hook.",
+        "- **Sitewide offer landing page (`/m/sitewide-offer/`) may dilute technology module intent.** The first CTA lands on a general sitewide offer page, while the technology modules route to filtered results. The two different shopping experiences aren't integrated — the BOGO offer and the comfort-tech pitch feel like separate campaigns in one email.",
+        "- **HTTP images — systemic and unresolved.** 15 image assets served over HTTP. Logo, utility icons, app badges, and social icons are all affected. This has appeared in every Skechers email reviewed and remains unfixed.",
+        "- **No alt text on key images.** Tracking pixel (`o.gif`), one content image, and two unnamed assets are missing alt text — images-off rendering will leave visual gaps."
+      ],
+      "recommendations": [
+        "1. **Fix the preheader immediately.** Add a hidden preheader element — text like \"Shop BOGO 50% Off — hundreds of styles, Slip-Ins, Max Cushioning & more →\" — so the inbox preview promotes the offer, not a URL. This is the highest-impact fix in the email.",
+        "2. **Rewrite the subject line around the offer.** Test \"BOGO 50% Off — Shop Slip-Ins, Max Cushioning & More\" vs. the current comfort hook. Non-purchasers respond to explicit value signals in subject lines.",
+        "3. **Add a Skechers Plus upsell module.** Place it between the technology modules and the utility footer. Frame it as a first-purchase accelerator: \"Join free and get free shipping on your first order — plus every order after that.\"",
+        "4. **Promote the BOGO offer earlier in the email structure.** If the hero image carries the sale message (not verifiable without a render), ensure the offer is also referenced in at least one text element above the fold so it survives images-off rendering.",
+        "5. **Migrate all image assets to HTTPS.** This is a systemic infrastructure ticket. The HTTP serving pattern affects every email in the program and creates inconsistent rendering in environments that block mixed content. It needs an engineering fix, not per-email patching.",
+        "6. **Add alt text to all images.** Priority: the main hero/visual content image and any image that carries navigational meaning.",
+        "7. **Consider a lifestyle or athletic technology module.** One module anchored to sport/athletic use or a trending style gives non-comfort-first subscribers a reason to click."
+      ],
+      "bottom_line": [
+        "The Spring Forward BOGO offer is strong and the comfort-technology merchandising structure is more sophisticated than it might look at first glance. But the email damages itself before it's opened — the broken inbox preview is a conversion-rate problem that no amount of good body content can recover from. Fix the preheader, move the offer into the subject line, and add a Plus upsell, and this email punches at a 7. As sent, it's a 5."
+      ],
+      "evidence": [
+        "| Dimension | Finding |",
+        "|---|---|",
+        "| **Overall purpose** | Promotional acquisition email — drive non-purchasers to convert during the Spring Forward BOGO 50% Off sale (valid 3/4/26–4/6/26, online + Outlet/Warehouse). |",
+        "| **Hero / primary value prop** | BOGO 50% off on regular-priced styles. Offer is substantiated with clear terms — valid dates, auto-apply mechanic, store restrictions. Subject line does not lead with the offer, which is a miss. |",
+        "| **Membership / benefits section** | Absent. No Skechers Plus mention anywhere in the email. For a non-purchaser segment, this is a meaningful omission — Plus enrollment is both a first-purchase incentive and an LTV lever. |",
+        "| **Product discoverability / recommendation modules** | Five comfort-technology modules: Slip-Ins (all, women, men), Max Cushioning, Cozy Fit, Wide/Extra Wide, Glide-Step, Arch Fit. All link to filtered new-arrivals pages — a legitimate need-based discovery structure. Coverage is comfort-only; no athletic or lifestyle pathway. |",
+        "| **Utility / secondary modules** | SMS opt-in, iOS + Android app download, Curbside Pickup, Afterpay, Store Locator, social follows. Full utility coverage — this layer is well executed. |",
+        "| **Email-to-site continuity** | `?src=Q1SPRINGFORWARD2026` applied consistently across all CTAs — solid campaign-level attribution. Technology modules route to `prefn1=technologyFeatureName` filtered pages, which is a high-confidence landing surface. Sitewide offer CTA and technology modules feel slightly disconnected in intent. |",
+        "| **Bugs / friction / clarity issues** | **CRITICAL:** Preview text field unpopulated — raw `view.emails.skechers.com` URL renders as inbox preview in major clients. Direct open-rate impact. **SYSTEMIC:** 15 image assets served over HTTP (`image.emails.skechers.com`) — unresolved across all campaigns reviewed. Tracking pixel (`o.gif`) missing alt text and served over HTTP. Two additional images missing alt text. No deliverability authentication data available via AgentMail relay. |"
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTg0NTEyIiwiamIiOiIyNTI2MyIsImQ"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 17,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=MKG_US_NA_U_MAX_NONPURCH_EN_03222026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=MKG_US_NA_U_MAX_NONPURCH_EN_03222026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Twitter\" (d76a5487-158e-4781-82a4-b65b04c051e4.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/d76a5487-158e-4781-82a4-b65b04c051e4.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-22-take-your-first-step-into-comfort-email-webview-render.png",
+    "pdf": "2026-03-22-take-your-first-step-into-comfort-review.pdf"
+  }
+}
