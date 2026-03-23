@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-23-last-day-to-redeem-your-voucher",
+    "subject": "⏳ Last day to redeem your voucher",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-23T16:43:15+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "31%",
+      "total_checks": 16,
+      "total_issues": 9,
+      "total_warnings": 2
+    },
+    "has_image": true
+  },
+  {
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off",
     "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
     "from_display_name": "SKECHERS",

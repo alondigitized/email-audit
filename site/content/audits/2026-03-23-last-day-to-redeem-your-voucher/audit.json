@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-23-last-day-to-redeem-your-voucher",
+  "email": {
+    "subject": "⏳ Last day to redeem your voucher",
+    "from": "adidas <adidas@us-news.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-23T16:43:15+00:00",
+    "date_formatted": "2026-03-23 16:43 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nA well-structured urgency email nudging adiClub members to redeem an expiring 15% voucher. The layout is clean and the hierarchy is sensible, but a critical character-encoding bug in the voucher section damages credibility at the most important moment, and a secondary module dilutes the urgency focus. The email does enough to drive redemption for engaged members, but leaves conversion on the table.\n\n---\n\n### 2. Business Impact Score: **6 / 10**\n\n---\n\n### 3. What's Working\n\n- **Urgency framing is clear.** \"Last day to redeem\" in the subject + product picks upfront creates a coherent moment of action.\n- **Promo code is prominently displayed.** The code `WELCOME-1325-HMW` is surfaced in a button-style element above the REDEEM ONLINE CTA — hard to miss.\n- **Two redemption paths offered.** Online checkout + in-store option (show email to staff) covers both use cases cleanly.\n- **Product picks above the fold.** Three product tiles with visible imagery give members something concrete to shop toward.\n- **Clean visual hierarchy.** The email reads top-to-bottom without confusion — voucher → profile CTA → app download.\n\n---\n\n### 4. What's Weak\n\n- **Critical encoding bug in the voucher headline.** The headline renders as **HEREÂ€™S 15% OFF** instead of HERE'S 15% OFF. This is visible in the email body and undermines trust at the highest-value moment in the email.\n- **Profile completion module undercuts urgency.** \"Complete Your Profile for 50 Points\" is a low-stakes retention ask that competes directly with the time-sensitive voucher message. It belongs in a different send.\n- **Product tiles are small and under-merchandised.** Three tiny thumbnail images with no clear product names or prices visible — they don't create enough desire to drive a click.\n- **No explicit deadline reinforcement in the body.** The subject says \"last day\" but the body only references \"March 24, 2026\" in fine print. A visible countdown or bolded expiry date in the hero would strengthen conversion.\n\n---\n\n### 5. Recommendations\n\n1. **Fix the encoding bug immediately.** The `HEREÂ€™S` rendering is a production-level defect. Audit the voucher content block for character encoding issues before the send window closes.\n2. **Remove or defer the profile completion module.** This is not the right send for it. Strip it out or move it below the app CTA to reduce cognitive load on the primary action.\n3. **Add expiry date to the hero.** Make \"Expires March 24\" bold and prominent inside the voucher section, not buried in an asterisked footnote.\n4. **Upgrade the product tiles.** Larger images, visible product names, and price callouts would make \"top picks\" feel like actual recommendations rather than decorative thumbnails.\n\n---\n\n### 6. Bottom Line\n\nThe email has sound bones — urgency-led, clear promo code, dual redemption paths — but the character encoding bug in the voucher headline is a credibility wound that needs to be fixed. If the encoding issue is resolved and the profile module removed, this becomes a solid 8/10 conversion email.\n\n---\n\n### 7. Evidence\n\n**Overall purpose:** Urgency-driven reminder to redeem an expiring 15% adiClub member voucher before March 24, 2026.\n\n**Hero / primary value proposition:** \"TOP PICKS FOR YOU\" leads, followed by three product thumbnails and a plain-language reminder about the expiring voucher. Functional but the product images don't do enough selling.\n\n**Membership / benefits section:** The voucher block is the core membership moment. It shows the promo code `WELCOME-1325-HMW`, two CTAs (code display + REDEEM ONLINE), and terms (*valid on full-priced items until March 24). Critically damaged by the `HEREÂ€™S` encoding bug in the headline.\n\n**Product discoverability / recommendation modules:** Three thumbnail-sized product images in a horizontal row. No product names or prices visible at this render size — low discoverability.\n\n**Utility / secondary modules:** (1) Complete Your Profile for 50 Points — out-of-place in an urgency email. (2) The Ultimate App for Members — App Store / Google Play badges. Both feel like filler in this context.\n\n**Bugs / friction / clarity issues:**\n- **VISIBLE BUG:** Voucher headline reads `HEREÂ€™S 15% OFF` — broken UTF-8 apostrophe rendering as mojibake characters. Clearly visible in the rendered email.\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"⏳ Last day to redeem your voucher\"\n\n**From:** adidas <adidas@us-news.adidas.com>\n\n---\n\n### 1. Technical Summary\n\nMultiple high-severity infrastructure issues are present: all four brand fonts return 403 from S3, staging CDN hostnames are embedded in a production send, and one CTA link contains illegal control characters that will break across all clients. Plain-text payload is also dominated by raw URLs, creating a deliverability risk.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Malformed CTA URL — control characters in token**\nThe following link contains a literal space and unencoded `+` characters inside the `tkn` query parameter, making it an invalid URL per RFC 3986:\n\n```\nhttps://go.adidas.com/ihha/lyxsr85w?pid=sfmc&tkn=X3GGIjX0...NsD2L0d0vfg88EyoFZ03SHIY+qRCOV5...\n```\nThe QA checker confirms: `URL can't contain control characters`. This will render the link non-functional in strict clients (iOS Mail, Gmail Android) and may cause click-tracking failures even where the redirect partially works.\n\n**[WARN] 22 tracking links skipped**\nAll `go.adidas.com` redirect links were not probed. Destination URL validity is unconfirmed.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[FAIL] All 8 brand font files return HTTP 403**\nEvery `@font-face` src in `<head>` is inaccessible:\n\n```\nhttps://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Regular.woff2  → 403\nhttps://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Bold.woff2    → 403\nhttps://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Regular.woff2 → 403\nhttps://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Bold.woff2    → 403\n(+ 4 corresponding .ttf / .woff fallbacks — all 403)\n```\nAll clients that support webfonts (Apple Mail, Outlook on Mac, iOS) will fall back to the `mso-font-alt: Arial` stack. Brand typography will not render for any recipient.\n\n**[FAIL] Staging CDN hostname in production email**\nMultiple images are served from `image.staging.link.adidas.com` rather than `image.link.adidas.com`:\n\n```\nhttps://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif  (appears 7×)\nhttps://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/b9aa5d2a-c492-4e2f-a045-d2b785fd93a0.jpg\nhttps://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/5bf3fd66-079e-49c6-9995-58885dce1ee1.jpg\nhttps://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/104/6c9cdf12-b118-4679-a55e-9d223a559bbc.png (appears 2×)\n```\nIf the staging environment is access-controlled or deprioritized under load, these images will fail to render for production recipients.\n\n**[WARN] 2 images served over HTTP (non-HTTPS)**\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/966ef092-a6d7-47fd-8703-d364ac06d9e7.png\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif\n```\nGmail and Outlook.com proxy all images over HTTPS; mixed-content images may be blocked or show broken in strict clients.\n\n**[WARN] 15 images missing `alt` text**\nAll flagged images — including the recurring `2373748f...gif` spacer/tracker (7 instances) and content images — have empty or absent `alt` attributes. Screen readers will skip them entirely; clients with images disabled will show blank space with no context.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge token syntax (e.g., `%%`, `{{`, `[%`) is visible in the provided HTML excerpt. The tracking URL includes what appear to be correctly resolved subscriber/campaign identifiers (`cm_mmca3=ILDCWJD70W1BE32X`, `cm_mmca4=4134869`). Cannot confirm full personalization surface from truncated source.\n\n---\n\n### 5. Compliance\n\n**[WARN] SPF/DKIM authentication status unknown**\nThe `Authentication-Results` header was not captured via the AgentMail relay. SPF and DKIM pass/fail status is unverified for `us-news.adidas.com`. Cannot confirm DMARC alignment.\n\n**[WARN] Plain-text version is URL-heavy**\nPlain-text body: 16,013 of 18,912 characters (85%) are URLs. This is well above the 70% threshold that spam filters flag as link-stuffing. It suggests the plain-text version is auto-generated from HTML without stripping tracking URLs — a common pattern but a measurable deliverability risk, particularly with conservative ISPs.\n\nCAN-SPAM physical address and unsubscribe mechanism could not be confirmed from the truncated source; these should be verified in the full HTML footer.\n\n---\n\n### 6. Email-to-Site Continuity\n\nThe one fully-visible destination URL targets `/us/welcome` with the following attribution stack:\n- `cm_mmc` (Coremetrics/IBM): `AdiEmail_CLC-_-None-_-MemOnb_Comms5-_-Marketing-_-preferences`\n- AppsFlyer: `af_adset=MemOnb_Comms5`, `af_ad=preferences`, `af_channel=Welcome`, `af_reengagement_window=30d`\n\nUTM parameter alignment appears consistent with a welcome/onboarding series. However, the link is currently broken due to the control character issue noted in §2, so continuity cannot be confirmed end-to-end.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **P0** | Malformed `tkn` parameter with control characters | URL-encode all token values; spaces → `%20`, `+` → `%2B` before insertion |\n| **P0** | Staging image CDN in production | Replace all `image.staging.link.adidas.com` hostnames with `image.link.adidas.com` before any future send |\n| **P1** | All font files returning 403 | Audit S3 bucket policy on `adidas-adl`; restore public read ACL or migrate font hosting to a CDN with guaranteed public access |\n| **P1** | 2 HTTP image sources | Update to `https://` — both are already on `image.link.adidas.com` so the HTTPS path should resolve |\n| **P2** | Authentication-Results not captured | Confirm SPF (`include:us-news.adidas.com`) and DKIM (`d=adidas.com`) pass in delivered headers; add DMARC monitoring if not already in place |\n| **P2** | Plain-text URL saturation (85%) | Generate plain-text version with link shortening or descriptive anchor text instead of raw tracking URLs |\n| **P3** | Missing `alt` text on 15 images | Add descriptive `alt` for content images; use `alt=\"\"` explicitly on decorative spacers/trackers |",
+    "sections": {
+      "executive_summary": [
+        "A well-structured urgency email nudging adiClub members to redeem an expiring 15% voucher. The layout is clean and the hierarchy is sensible, but a critical character-encoding bug in the voucher section damages credibility at the most important moment, and a secondary module dilutes the urgency focus. The email does enough to drive redemption for engaged members, but leaves conversion on the table."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Urgency framing is clear.** \"Last day to redeem\" in the subject + product picks upfront creates a coherent moment of action.",
+        "- **Promo code is prominently displayed.** The code `WELCOME-1325-HMW` is surfaced in a button-style element above the REDEEM ONLINE CTA — hard to miss.",
+        "- **Two redemption paths offered.** Online checkout + in-store option (show email to staff) covers both use cases cleanly.",
+        "- **Product picks above the fold.** Three product tiles with visible imagery give members something concrete to shop toward.",
+        "- **Clean visual hierarchy.** The email reads top-to-bottom without confusion — voucher → profile CTA → app download."
+      ],
+      "whats_weak": [
+        "- **Critical encoding bug in the voucher headline.** The headline renders as **HEREÂ€™S 15% OFF** instead of HERE'S 15% OFF. This is visible in the email body and undermines trust at the highest-value moment in the email.",
+        "- **Profile completion module undercuts urgency.** \"Complete Your Profile for 50 Points\" is a low-stakes retention ask that competes directly with the time-sensitive voucher message. It belongs in a different send.",
+        "- **Product tiles are small and under-merchandised.** Three tiny thumbnail images with no clear product names or prices visible — they don't create enough desire to drive a click.",
+        "- **No explicit deadline reinforcement in the body.** The subject says \"last day\" but the body only references \"March 24, 2026\" in fine print. A visible countdown or bolded expiry date in the hero would strengthen conversion."
+      ],
+      "recommendations": [
+        "1. **Fix the encoding bug immediately.** The `HEREÂ€™S` rendering is a production-level defect. Audit the voucher content block for character encoding issues before the send window closes.",
+        "2. **Remove or defer the profile completion module.** This is not the right send for it. Strip it out or move it below the app CTA to reduce cognitive load on the primary action.",
+        "3. **Add expiry date to the hero.** Make \"Expires March 24\" bold and prominent inside the voucher section, not buried in an asterisked footnote.",
+        "4. **Upgrade the product tiles.** Larger images, visible product names, and price callouts would make \"top picks\" feel like actual recommendations rather than decorative thumbnails.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **P0** | Malformed `tkn` parameter with control characters | URL-encode all token values; spaces → `%20`, `+` → `%2B` before insertion |",
+        "| **P0** | Staging image CDN in production | Replace all `image.staging.link.adidas.com` hostnames with `image.link.adidas.com` before any future send |",
+        "| **P1** | All font files returning 403 | Audit S3 bucket policy on `adidas-adl`; restore public read ACL or migrate font hosting to a CDN with guaranteed public access |",
+        "| **P1** | 2 HTTP image sources | Update to `https://` — both are already on `image.link.adidas.com` so the HTTPS path should resolve |",
+        "| **P2** | Authentication-Results not captured | Confirm SPF (`include:us-news.adidas.com`) and DKIM (`d=adidas.com`) pass in delivered headers; add DMARC monitoring if not already in place |",
+        "| **P2** | Plain-text URL saturation (85%) | Generate plain-text version with link shortening or descriptive anchor text instead of raw tracking URLs |",
+        "| **P3** | Missing `alt` text on 15 images | Add descriptive `alt` for content images; use `alt=\"\"` explicitly on decorative spacers/trackers |"
+      ],
+      "bottom_line": [
+        "The email has sound bones — urgency-led, clear promo code, dual redemption paths — but the character encoding bug in the voucher headline is a credibility wound that needs to be fixed. If the encoding issue is resolved and the profile module removed, this becomes a solid 8/10 conversion email."
+      ],
+      "evidence": [
+        "**Overall purpose:** Urgency-driven reminder to redeem an expiring 15% adiClub member voucher before March 24, 2026.",
+        "**Hero / primary value proposition:** \"TOP PICKS FOR YOU\" leads, followed by three product thumbnails and a plain-language reminder about the expiring voucher. Functional but the product images don't do enough selling.",
+        "**Membership / benefits section:** The voucher block is the core membership moment. It shows the promo code `WELCOME-1325-HMW`, two CTAs (code display + REDEEM ONLINE), and terms (*valid on full-priced items until March 24). Critically damaged by the `HEREÂ€™S` encoding bug in the headline.",
+        "**Product discoverability / recommendation modules:** Three thumbnail-sized product images in a horizontal row. No product names or prices visible at this render size — low discoverability.",
+        "**Utility / secondary modules:** (1) Complete Your Profile for 50 Points — out-of-place in an urgency email. (2) The Ultimate App for Members — App Store / Google Play badges. Both feel like filler in this context.",
+        "**Bugs / friction / clarity issues:**",
+        "- **VISIBLE BUG:** Voucher headline reads `HEREÂ€™S 15% OFF` — broken UTF-8 apostrophe rendering as mojibake characters. Clearly visible in the rendered email.",
+        "**From:** adidas <adidas@us-news.adidas.com>",
+        "Multiple high-severity infrastructure issues are present: all four brand fonts return 403 from S3, staging CDN hostnames are embedded in a production send, and one CTA link contains illegal control characters that will break across all clients. Plain-text payload is also dominated by raw URLs, creating a deliverability risk.",
+        "**[FAIL] Malformed CTA URL — control characters in token**",
+        "The following link contains a literal space and unencoded `+` characters inside the `tkn` query parameter, making it an invalid URL per RFC 3986:",
+        "```",
+        "https://go.adidas.com/ihha/lyxsr85w?pid=sfmc&tkn=X3GGIjX0...NsD2L0d0vfg88EyoFZ03SHIY+qRCOV5...",
+        "```",
+        "The QA checker confirms: `URL can't contain control characters`. This will render the link non-functional in strict clients (iOS Mail, Gmail Android) and may cause click-tracking failures even where the redirect partially works.",
+        "**[WARN] 22 tracking links skipped**",
+        "All `go.adidas.com` redirect links were not probed. Destination URL validity is unconfirmed.",
+        "**[FAIL] All 8 brand font files return HTTP 403**",
+        "Every `@font-face` src in `<head>` is inaccessible:",
+        "```",
+        "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Regular.woff2  → 403",
+        "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Bold.woff2    → 403",
+        "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Regular.woff2 → 403",
+        "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Bold.woff2    → 403",
+        "(+ 4 corresponding .ttf / .woff fallbacks — all 403)",
+        "```",
+        "All clients that support webfonts (Apple Mail, Outlook on Mac, iOS) will fall back to the `mso-font-alt: Arial` stack. Brand typography will not render for any recipient.",
+        "**[FAIL] Staging CDN hostname in production email**",
+        "Multiple images are served from `image.staging.link.adidas.com` rather than `image.link.adidas.com`:",
+        "```",
+        "https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif  (appears 7×)",
+        "https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/b9aa5d2a-c492-4e2f-a045-d2b785fd93a0.jpg",
+        "https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/5bf3fd66-079e-49c6-9995-58885dce1ee1.jpg",
+        "https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/104/6c9cdf12-b118-4679-a55e-9d223a559bbc.png (appears 2×)",
+        "```",
+        "If the staging environment is access-controlled or deprioritized under load, these images will fail to render for production recipients.",
+        "**[WARN] 2 images served over HTTP (non-HTTPS)**",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/966ef092-a6d7-47fd-8703-d364ac06d9e7.png",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif",
+        "```",
+        "Gmail and Outlook.com proxy all images over HTTPS; mixed-content images may be blocked or show broken in strict clients.",
+        "**[WARN] 15 images missing `alt` text**",
+        "All flagged images — including the recurring `2373748f...gif` spacer/tracker (7 instances) and content images — have empty or absent `alt` attributes. Screen readers will skip them entirely; clients with images disabled will show blank space with no context.",
+        "No unresolved merge token syntax (e.g., `%%`, `{{`, `[%`) is visible in the provided HTML excerpt. The tracking URL includes what appear to be correctly resolved subscriber/campaign identifiers (`cm_mmca3=ILDCWJD70W1BE32X`, `cm_mmca4=4134869`). Cannot confirm full personalization surface from truncated source.",
+        "**[WARN] SPF/DKIM authentication status unknown**",
+        "The `Authentication-Results` header was not captured via the AgentMail relay. SPF and DKIM pass/fail status is unverified for `us-news.adidas.com`. Cannot confirm DMARC alignment.",
+        "**[WARN] Plain-text version is URL-heavy**",
+        "Plain-text body: 16,013 of 18,912 characters (85%) are URLs. This is well above the 70% threshold that spam filters flag as link-stuffing. It suggests the plain-text version is auto-generated from HTML without stripping tracking URLs — a common pattern but a measurable deliverability risk, particularly with conservative ISPs.",
+        "CAN-SPAM physical address and unsubscribe mechanism could not be confirmed from the truncated source; these should be verified in the full HTML footer.",
+        "The one fully-visible destination URL targets `/us/welcome` with the following attribution stack:",
+        "- `cm_mmc` (Coremetrics/IBM): `AdiEmail_CLC-_-None-_-MemOnb_Comms5-_-Marketing-_-preferences`",
+        "- AppsFlyer: `af_adset=MemOnb_Comms5`, `af_ad=preferences`, `af_channel=Welcome`, `af_reengagement_window=30d`",
+        "UTM parameter alignment appears consistent with a welcome/onboarding series. However, the link is currently broken due to the control character issue noted in §2, so continuity cannot be confirmed end-to-end."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 9,
+        "checks": [
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Regular.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Regular.ttf)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Bold.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/AdihausDIN-Bold.ttf)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Regular.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Regular.woff)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Bold.woff2)"
+          },
+          {
+            "check_id": "link_4xx",
+            "status": "fail",
+            "label": "Broken link (403)",
+            "detail": "",
+            "url": "https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/adidas/assets/fonts/adidas/adineuePRO-Bold.woff)"
+          },
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "URL can't contain control characters. '/us/welcome?pid=sfmc&tkn=wywsMJxPH%2Ff27N1I1awRPs0A9SrXTw2cQ2J9POo8tBup3Sw62gOkKEyTSIkpmo8%2Fb%20UkrsPo9CaLH2p3",
+            "url": "https://go.adidas.com/ihha/lyxsr85w?pid=sfmc&amp;tkn=X3GGIjX0zopGWlbjVDLJv9H3LaEIpXEoXOYulQrGgTjKjApYDYlwVZqnPXDLwQa/NsD2L0d0vfg88EyoFZ03SHIY+qRCOV5rsEoujCFXYbsrkvmbsECLh8iQ1JzaQqjj+H7ytKS0RwEYPp5amKkwng==333433623538326233346239616665312d656539372d3462&amp;cm_mmc=AdiEmail_CLC-_-None-_-MemOnb_Comms5-_-Marketing-_-preferences-_-None-_-dv:eCom-_-cn:Welcome-_-pc:None&amp;cm_mmc1=US&amp;cm_mmca3=ILDCWJD70W1BE32X&amp;cm_mmca4=4134869&amp;cm_mmc2=adidas-NA-eCom-Email-CLC-None-Remarketing-US-Welcome-None-2603&amp;af_adset=MemOnb_Comms5&amp;af_ad=preferences&amp;af_channel=Welcome&amp;af_reengagement_window=30d"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.link.adidas.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDk3MzM1NyIsInMiOiIxNTQyNTU3MDY3IiwibGlkIjoiMTEiLCJqIjoiNDEzNDg2OSIsImpiIjoiMTM0NzciLCJkIjo"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 2,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "text_mostly_urls",
+            "status": "warn",
+            "label": "Plain-text is >70% URLs",
+            "detail": "16013/18912 chars are URLs"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 15,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "22 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 966ef092-a6d7-47fd-8703-d364ac06d9e7.png",
+            "detail": "src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/966ef092-a6d7-47fd-8703-d364ac06d9e7.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 966ef092-a6d7-47fd-8703-d364ac06d9e7.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/966ef092-a6d7-47fd-8703-d364ac06d9e7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: b9aa5d2a-c492-4e2f-a045-d2b785fd93a0.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/b9aa5d2a-c492-4e2f-a045-d2b785fd93a0.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 5bf3fd66-079e-49c6-9995-58885dce1ee1.jpg",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/5bf3fd66-079e-49c6-9995-58885dce1ee1.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 6c9cdf12-b118-4679-a55e-9d223a559bbc.png",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/104/6c9cdf12-b118-4679-a55e-9d223a559bbc.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 6c9cdf12-b118-4679-a55e-9d223a559bbc.png",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/104/6c9cdf12-b118-4679-a55e-9d223a559bbc.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2373748f-4913-4dfd-88b6-ca5c712d055b.gif",
+            "detail": "src: https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 37231f63-3f72-48f3-8047-2650e11742e8.gif",
+            "detail": "src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 37231f63-3f72-48f3-8047-2650e11742e8.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "31%",
+      "total_checks": 16,
+      "total_issues": 9,
+      "total_warnings": 2
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-23-last-day-to-redeem-your-voucher-email-webview-render.png",
+    "pdf": "2026-03-23-last-day-to-redeem-your-voucher-review.pdf"
+  }
+}
