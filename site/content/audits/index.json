@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-26-test-pro-us-na-u-bundle-retail-en-03272026easy-on-price-big-on-comfort",
+    "subject": "[Test]: PRO_US_NA_U_BUNDLE_RETAIL_EN_03272026Easy On Price, Big On Comfort",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-26T22:25:35+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    },
+    "has_image": true
+  },
+  {
     "slug": "2026-03-26-this-is-perfect-for-you",
     "subject": "This is perfect for you!",
     "from_display_name": "SKECHERS",
