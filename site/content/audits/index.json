@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-26-fwd-welcome-to-skechers",
+    "subject": "Fwd: Welcome to Skechers!",
+    "from_display_name": "Walker Miles",
+    "timestamp_iso": "2026-03-26T18:54:17.001000+00:00",
+    "score": "1/10",
+    "qa_summary": {
+      "overall_pass_rate": "12%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 5
+    },
+    "has_image": true
+  },
+  {
     "slug": "2026-03-26-it-s-back-in-stock-at-skechers-com",
     "subject": "It's Back in Stock at SKECHERS.com",
     "from_display_name": "SKECHERS",

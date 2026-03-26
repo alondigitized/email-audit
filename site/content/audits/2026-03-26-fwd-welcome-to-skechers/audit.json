@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-26-fwd-welcome-to-skechers",
+  "email": {
+    "subject": "Fwd: Welcome to Skechers!",
+    "from": "Walker Miles <walker@agentmail.to>",
+    "from_display_name": "Walker Miles",
+    "timestamp_iso": "2026-03-26T18:54:17.001000+00:00",
+    "date_formatted": "2026-03-26 18:54 UTC"
+  },
+  "review": {
+    "score": "1/10",
+    "raw_markdown": "\n## 2. Business Impact Score: 1/10\n\nA welcome email that delivers zero visible content is functionally equivalent to not sending one. This is the worst possible outcome for a first-touch message with a new subscriber.\n\n---\n\n## 3. What's Working\n\nNothing visible to evaluate.\n\n---\n\n## 4. What's Weak\n\nThe entire email. The render is a blank white page from top to bottom across the full height of the frame (~8000px tall). There is no hero, no copy, no CTA, no logo, no footer — nothing rendered at all.\n\n---\n\n## 5. Recommendations\n\n- **Treat this as a P0 incident.** A welcome email is the highest-open, highest-engagement message in any lifecycle program. Sending a blank email to new subscribers burns first-impression goodwill immediately.\n- **Audit the send immediately.** Determine whether this failure was isolated to this render or whether it reflects what live subscribers received.\n- **Re-send if confirmed broken.** A follow-up \"Oops, here's your welcome\" email with an apology and the intended offer is standard practice and typically outperforms the original if handled quickly.\n- **Review rendering pipeline.** Something broke between content assembly and delivery — check image hosting, template loading, and any dynamic content injection that may have failed silently.\n\n---\n\n## 6. Bottom Line\n\nThis email should not have been sent, or something went critically wrong between send and render. There is no content to evaluate. The business impact is negative: new subscribers received a blank message as their introduction to the Skechers brand. Immediate investigation and likely re-send is warranted.\n\n---\n\n## 7. Evidence\n\n- **Overall purpose:** Indeterminate — subject line says \"Welcome to Skechers\" suggesting a welcome/onboarding flow, but no content rendered to confirm\n- **Hero / primary value proposition:** Not visible\n- **Membership / benefits section:** Not visible\n- **Product discoverability / recommendation modules:** Not visible\n- **Utility / secondary modules:** Not visible\n- **Bugs / friction / clarity issues:** The entire email is blank white — complete render failure visible in the screenshot\n\n---\n\n## Technical Audit\n\n## Technical Audit — \"Welcome to Skechers!\"\n**From:** Walker Miles `<walker@agentmail.to>` | **Date:** 2026-03-26\n**Overall QA Score: 12% pass rate — 2 failures, 5 warnings**\n\n---\n\n### 1. Technical Summary\nHTML source was not recoverable from the AgentMail relay (no body available), limiting static analysis to automated QA findings only. Two hard failures were detected — missing unsubscribe link and missing plain-text fallback — both of which constitute CAN-SPAM violations and deliverability risks.\n\n---\n\n### 2. Link & Tracking Issues\n| Severity | Issue |\n|---|---|\n| WARN | `urls.txt` is empty — no URLs were extracted from the message body |\n\nAll link checks are blocked due to no extractable URLs. This indicates the email body either didn't render, was stripped by the relay, or contains no anchor tags. No UTM parameter validation is possible without recoverable links.\n\n---\n\n### 3. Rendering & Accessibility\n**Cannot fully assess** — HTML source unavailable.\n\n| Severity | Issue |\n|---|---|\n| FAIL | Plain-text fallback is 0 characters — multipart/alternative text part is absent or empty |\n\nA missing plain-text part causes rendering failures in text-only clients and some corporate mail environments, and is flagged as spam-indicative by several filtering systems (SpamAssassin, Postfix).\n\n---\n\n### 4. Personalization & Merge Tokens\n**Cannot assess** — HTML source unavailable. No merge token or dynamic content analysis possible.\n\n---\n\n### 5. Compliance\n| Severity | Issue | Requirement |\n|---|---|---|\n| FAIL | No unsubscribe link found in body | CAN-SPAM §5(a)(3) |\n| WARN | `List-Unsubscribe` header absent | RFC 2369 / inbox provider best practice |\n| WARN | `List-Unsubscribe-Post` header absent | RFC 8058 — one-click unsubscribe |\n| WARN | No physical mailing address detected in body | CAN-SPAM §5(a)(5) |\n| WARN | `Authentication-Results` header absent — SPF/DKIM status unknown | Deliverability / DMARC alignment |\n\nThe two CAN-SPAM failures (no unsubscribe link, no physical address) are legally material in the US. The missing `List-Unsubscribe-Post` header also risks Gmail and Yahoo bulk sender compliance (both require one-click unsubscribe for senders over 5k/day as of 2024).\n\nNote: The `List-Unsubscribe` and `Authentication-Results` gaps may be artifacts of the AgentMail relay stripping headers rather than the ESP not sending them — confirm against raw SMTP headers from the originating ESP.\n\n---\n\n### 6. Email-to-Site Continuity\n**Cannot assess** — no URLs were recovered from the message. UTM parameter coverage, landing page alignment, and link destination verification are all blocked until a renderable copy of the email is available.\n\n---\n\n### 7. Recommendations\n\n**Critical (resolve before send):**\n1. **Recover the HTML body** — the source was not captured by the relay. Reprocess or obtain directly from the ESP to enable full audit.\n2. **Add a visible unsubscribe link** in the email body. This is a CAN-SPAM hard requirement.\n3. **Add a plain-text alternative part** (`multipart/alternative` with a `text/plain` component). Even a minimal version is sufficient.\n4. **Include a physical mailing address** in the footer (street address or PO Box of the sender).\n\n**High priority:**\n5. **Add `List-Unsubscribe` and `List-Unsubscribe-Post` headers** at the ESP level to support one-click unsubscribe per RFC 8058 and Gmail/Yahoo bulk sender requirements.\n6. **Verify SPF/DKIM alignment** — confirm `Authentication-Results` headers are present on delivery; if not, diagnose DKIM signing at the ESP.\n\n**Blocked pending source recovery:**\n- Link/UTM audit\n- Merge token audit\n- Image alt-text and accessibility checks\n- Rendering compatibility checks",
+    "sections": {
+      "executive_summary": [
+        "A welcome email that delivers zero visible content is functionally equivalent to not sending one. This is the worst possible outcome for a first-touch message with a new subscriber."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "Nothing visible to evaluate."
+      ],
+      "whats_weak": [
+        "The entire email. The render is a blank white page from top to bottom across the full height of the frame (~8000px tall). There is no hero, no copy, no CTA, no logo, no footer — nothing rendered at all."
+      ],
+      "recommendations": [
+        "- **Treat this as a P0 incident.** A welcome email is the highest-open, highest-engagement message in any lifecycle program. Sending a blank email to new subscribers burns first-impression goodwill immediately.",
+        "- **Audit the send immediately.** Determine whether this failure was isolated to this render or whether it reflects what live subscribers received.",
+        "- **Re-send if confirmed broken.** A follow-up \"Oops, here's your welcome\" email with an apology and the intended offer is standard practice and typically outperforms the original if handled quickly.",
+        "- **Review rendering pipeline.** Something broke between content assembly and delivery — check image hosting, template loading, and any dynamic content injection that may have failed silently.",
+        "**Critical (resolve before send):**",
+        "1. **Recover the HTML body** — the source was not captured by the relay. Reprocess or obtain directly from the ESP to enable full audit.",
+        "2. **Add a visible unsubscribe link** in the email body. This is a CAN-SPAM hard requirement.",
+        "3. **Add a plain-text alternative part** (`multipart/alternative` with a `text/plain` component). Even a minimal version is sufficient.",
+        "4. **Include a physical mailing address** in the footer (street address or PO Box of the sender).",
+        "**High priority:**",
+        "5. **Add `List-Unsubscribe` and `List-Unsubscribe-Post` headers** at the ESP level to support one-click unsubscribe per RFC 8058 and Gmail/Yahoo bulk sender requirements.",
+        "6. **Verify SPF/DKIM alignment** — confirm `Authentication-Results` headers are present on delivery; if not, diagnose DKIM signing at the ESP.",
+        "**Blocked pending source recovery:**",
+        "- Link/UTM audit",
+        "- Merge token audit",
+        "- Image alt-text and accessibility checks",
+        "- Rendering compatibility checks"
+      ],
+      "bottom_line": [
+        "This email should not have been sent, or something went critically wrong between send and render. There is no content to evaluate. The business impact is negative: new subscribers received a blank message as their introduction to the Skechers brand. Immediate investigation and likely re-send is warranted."
+      ],
+      "evidence": [
+        "- **Overall purpose:** Indeterminate — subject line says \"Welcome to Skechers\" suggesting a welcome/onboarding flow, but no content rendered to confirm",
+        "- **Hero / primary value proposition:** Not visible",
+        "- **Membership / benefits section:** Not visible",
+        "- **Product discoverability / recommendation modules:** Not visible",
+        "- **Utility / secondary modules:** Not visible",
+        "- **Bugs / friction / clarity issues:** The entire email is blank white — complete render failure visible in the screenshot",
+        "**From:** Walker Miles `<walker@agentmail.to>` | **Date:** 2026-03-26",
+        "**Overall QA Score: 12% pass rate — 2 failures, 5 warnings**",
+        "HTML source was not recoverable from the AgentMail relay (no body available), limiting static analysis to automated QA findings only. Two hard failures were detected — missing unsubscribe link and missing plain-text fallback — both of which constitute CAN-SPAM violations and deliverability risks.",
+        "| Severity | Issue |",
+        "|---|---|",
+        "| WARN | `urls.txt` is empty — no URLs were extracted from the message body |",
+        "All link checks are blocked due to no extractable URLs. This indicates the email body either didn't render, was stripped by the relay, or contains no anchor tags. No UTM parameter validation is possible without recoverable links.",
+        "**Cannot fully assess** — HTML source unavailable.",
+        "| Severity | Issue |",
+        "|---|---|",
+        "| FAIL | Plain-text fallback is 0 characters — multipart/alternative text part is absent or empty |",
+        "A missing plain-text part causes rendering failures in text-only clients and some corporate mail environments, and is flagged as spam-indicative by several filtering systems (SpamAssassin, Postfix).",
+        "**Cannot assess** — HTML source unavailable. No merge token or dynamic content analysis possible.",
+        "| Severity | Issue | Requirement |",
+        "|---|---|---|",
+        "| FAIL | No unsubscribe link found in body | CAN-SPAM §5(a)(3) |",
+        "| WARN | `List-Unsubscribe` header absent | RFC 2369 / inbox provider best practice |",
+        "| WARN | `List-Unsubscribe-Post` header absent | RFC 8058 — one-click unsubscribe |",
+        "| WARN | No physical mailing address detected in body | CAN-SPAM §5(a)(5) |",
+        "| WARN | `Authentication-Results` header absent — SPF/DKIM status unknown | Deliverability / DMARC alignment |",
+        "The two CAN-SPAM failures (no unsubscribe link, no physical address) are legally material in the US. The missing `List-Unsubscribe-Post` header also risks Gmail and Yahoo bulk sender compliance (both require one-click unsubscribe for senders over 5k/day as of 2024).",
+        "Note: The `List-Unsubscribe` and `Authentication-Results` gaps may be artifacts of the AgentMail relay stripping headers rather than the ESP not sending them — confirm against raw SMTP headers from the originating ESP.",
+        "**Cannot assess** — no URLs were recovered from the message. UTM parameter coverage, landing page alignment, and link destination verification are all blocked until a renderable copy of the email is available."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "links_none",
+            "status": "warn",
+            "label": "No URLs found",
+            "detail": "urls.txt is empty or missing"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 0,
+        "warned": 3,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "header_list_unsub_missing",
+            "status": "warn",
+            "label": "List-Unsubscribe header not found",
+            "detail": "Header may not be captured by AgentMail relay"
+          },
+          {
+            "check_id": "header_one_click_missing",
+            "status": "warn",
+            "label": "List-Unsubscribe-Post header not found (RFC 8058)",
+            "detail": "One-click unsubscribe may not be supported"
+          },
+          {
+            "check_id": "canspam_address_missing",
+            "status": "warn",
+            "label": "No physical address detected",
+            "detail": "CAN-SPAM requires a physical mailing address"
+          },
+          {
+            "check_id": "body_unsub_missing",
+            "status": "fail",
+            "label": "No unsubscribe link found in body",
+            "detail": "CAN-SPAM requires a visible opt-out mechanism"
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "12%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 5
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-26-fwd-welcome-to-skechers-email-webview-render.png",
+    "pdf": "2026-03-26-fwd-welcome-to-skechers-review.pdf"
+  }
+}
