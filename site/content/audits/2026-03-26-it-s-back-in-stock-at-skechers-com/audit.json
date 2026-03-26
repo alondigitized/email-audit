@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-26-it-s-back-in-stock-at-skechers-com",
+  "email": {
+    "subject": "It's Back in Stock at SKECHERS.com",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-26T17:21:57+00:00",
+    "date_formatted": "2026-03-26 17:21 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## 1. Executive Summary\n\nA transactional back-in-stock alert that does its core job adequately but leaves significant conversion opportunity on the table. The product is identified, the CTA is present, and there's a cross-sell module — but the hero is undersized, the product image is tiny, and the emotional urgency that makes back-in-stock emails effective is almost entirely absent.\n\n---\n\n## 2. Business Impact Score: 5/10\n\nFunctional but underperforming. The email fulfills the basic promise (item is available again) without creating any real sense of urgency or desire.\n\n---\n\n## 3. What's Working\n\n- **Clear subject-line alignment** — the email opens with \"BACK IN STOCK ALERT!\" in bold, which matches the subject line immediately.\n- **Product details are explicit** — Style #, Color, Size, and Price are all visible in a structured list, confirming this is the exact item the recipient waited for.\n- **Single, unambiguous CTA** — \"BUY IT NOW\" button is prominent and directly below the product block.\n- **Cross-sell module** — \"You Might Also Be Interested In...\" shows four product thumbnails with names and presumably prices, which is smart placement for recipients who find the item already gone again.\n\n---\n\n## 4. What's Weak\n\n- **Hero image is postage-stamp sized** — the product photo is tiny relative to the email canvas. For a back-in-stock alert, the product image should be the emotional centerpiece; here it barely registers.\n- **No urgency language** — the subject and header say \"back in stock\" but nothing in the body communicates scarcity, time pressure, or demand (e.g., \"Limited quantity,\" \"Selling fast,\" \"Only a few left\"). This is the single most important driver of conversion in this email type and it's missing.\n- **\"Remember that style you love? It's back, but not for long. Shop it today before it's gone\" header copy** is buried in small gray text immediately below the logo — it reads like a disclaimer rather than a hook.\n- **No product lifestyle or contextual imagery** — the product thumbnail is catalog/product-page style and very small; a larger, worn-in-context image would drive purchase intent harder.\n- **Customer service number callout** feels like dead weight at this point in the conversion flow.\n\n---\n\n## 5. Recommendations\n\n1. **Triple the product image size** — make it the visual anchor of the email, not an afterthought in a spec table.\n2. **Add scarcity messaging** — a line like \"Only a few pairs left at your size\" directly above or below the CTA would sharply lift urgency.\n3. **Elevate the preheader copy** — move \"It's back, but not for long. Shop it today before it's gone\" into larger, styled headline text rather than small gray body copy.\n4. **Add a second CTA** after the cross-sell module — recipients who browse the recommendations should have an easy re-entry path to the original item.\n5. **Remove or condense the customer service block** — not relevant to the conversion moment; it diffuses focus.\n\n---\n\n## 6. Bottom Line\n\nThis email communicates the facts but misses the feeling. Back-in-stock emails work because they create a fleeting window — the item is available *now*, but maybe not for long. That tension needs to be felt viscerally in the design. Larger product image, scarcity copy, and one line of urgency would likely meaningfully improve conversion without any structural rebuild.\n\n---\n\n## 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Back-in-stock transactional alert for a specific saved/waitlisted item |\n| **Hero / primary value prop** | \"BACK IN STOCK ALERT!\" headline present but hero image is very small; no emotional urgency framing |\n| **Membership / benefits** | None visible |\n| **Product discoverability / recommendations** | \"You Might Also Be Interested In...\" shows 4 products with names, thumbnails, prices — solid module, well-placed |\n| **Utility / secondary modules** | Customer service email + phone, footer links (Shipping & Returns, Store Locator), social icons |\n| **Bugs / friction / clarity issues** | No visible rendering bugs; product image is intentionally included but rendered at a very small size that undermines its function |\n\n---\n\n## Technical Audit\n\n## Technical Audit — \"It's Back in Stock at SKECHERS.com\"\n**From:** SKECHERS `<no-reply@emails.skechers.com>`\n\n---\n\n### 1. Technical Summary\n\nThe email is structurally sound with standard Outlook/mobile compatibility boilerplate, but has three confirmed issues: a missing plain-text fallback, several images served over HTTP instead of HTTPS, and missing alt text on multiple images. SPF/DKIM authentication could not be verified through the relay.\n\n---\n\n### 2. Link & Tracking Issues\n\n- **26 tracking links** route through `click.emails.skechers.com` (Salesforce Marketing Cloud click-redirect). Links were not probed — destination URLs and UTM parameters could not be verified.\n- Open-pixel beacon fires via `click.emails.skechers.com/open.aspx?NBJUC24YDGGENDIIFTWBSORU5A...` — standard SFMC implementation, no anomaly.\n- Three additional third-party beacon pixels fire on load via `beacon.krxd.net` for Salesforce DMP user-matching and ad impression tracking. These are zero-dimension (`width=\"0\" height=\"0\"`) with `display:none`, consistent with standard practice.\n\n---\n\n### 3. Rendering & Accessibility\n\n**HTTP image sources (3 confirmed):**\nImages served over `http://image.emails.skechers.com` will be blocked by Gmail, Outlook, and most modern clients that enforce HTTPS mixed-content rules.\n\n| Image UUID | src |\n|---|---|\n| `dde00662` (Skechers logo) | `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png` |\n| `041c30ac` | `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/041c30ac-...png` |\n| `f9b5ed32` | `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/f9b5ed32-...png` |\n\n**Missing alt text (2 images):**\n- `041c30ac-21db-494b-a892-bbdbf4984b2a.png`\n- `f9b5ed32-ceef-41a6-8701-c0e0121ca99c.png`\n\nBoth are content images (not decorative spacers), so the missing alt text breaks screen reader accessibility and degrades the image-blocked rendering experience.\n\n**Other rendering notes:**\n- `user-scalable=0` in the viewport meta tag prevents pinch-zoom on mobile — an accessibility regression flagged under WCAG 1.4.4 (Resize Text).\n- `<meta content=\"text/html; charset=UTF-8\" />` is missing the `http-equiv` attribute: should be `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />`. This can cause character encoding fallback behavior in older clients.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nHTML source is truncated, so full token inspection is not possible. No unresolved merge tokens (e.g. `%%first_name%%`, `[FIRST NAME]`) were visible in the provided excerpt. No issues confirmed.\n\n---\n\n### 5. Compliance\n\n**Plain-text fallback — FAIL:**\n> Text version is 0 chars\n\nA missing plain-text alternative is a CAN-SPAM violation risk and degrades deliverability scoring with major ISPs (Gmail, Outlook, Yahoo). It also causes rendering failures for plain-text-only clients.\n\n**Authentication headers — unverified:**\n> `Authentication-Results` header not found via AgentMail relay\n\nSPF and DKIM pass/fail status cannot be confirmed. Given that the sending domain is `emails.skechers.com` (a subdomain likely aligned to SFMC), DKIM signing is expected — this should be verified directly against received headers from a live send.\n\n**Unsubscribe:** Not verifiable from the truncated source, but CAN-SPAM requires a functional unsubscribe mechanism. No issues confirmed in available HTML.\n\n---\n\n### 6. Email-to-Site Continuity\n\nAll 26 destination URLs are behind `click.emails.skechers.com` redirects — UTM parameters cannot be verified without probing resolved destinations. The campaign ID embedded in the Krux impression beacon (`campaignid=TRG_US_EN_BROWSEINSTOCK_1_03202025`) suggests back-end attribution is in place, but UTM propagation to skechers.com landing pages is unconfirmed.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **High** | Plain-text body is empty | Add a plain-text alternative in SFMC with at least a summarized version of the email content |\n| **High** | 3 images served over HTTP | Update `image.emails.skechers.com` asset URLs to `https://` — or confirm CDN redirect is in place and force HTTPS at the template level |\n| **Medium** | 2 images missing alt text | Add descriptive alt text to `041c30ac` and `f9b5ed32` images in SFMC content blocks |\n| **Medium** | `user-scalable=0` blocks pinch-zoom | Remove or change to `user-scalable=yes` for WCAG 1.4.4 compliance |\n| **Medium** | UTM parameters unverified | Probe resolved destination URLs to confirm UTM tags are present and consistent with campaign |\n| **Low** | `<meta charset>` missing `http-equiv` | Correct to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |\n| **Low** | DKIM/SPF unverified | Confirm authentication pass via received headers in a live inbox test |",
+    "sections": {
+      "executive_summary": [
+        "A transactional back-in-stock alert that does its core job adequately but leaves significant conversion opportunity on the table. The product is identified, the CTA is present, and there's a cross-sell module — but the hero is undersized, the product image is tiny, and the emotional urgency that makes back-in-stock emails effective is almost entirely absent.",
+        "Functional but underperforming. The email fulfills the basic promise (item is available again) without creating any real sense of urgency or desire."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Clear subject-line alignment** — the email opens with \"BACK IN STOCK ALERT!\" in bold, which matches the subject line immediately.",
+        "- **Product details are explicit** — Style #, Color, Size, and Price are all visible in a structured list, confirming this is the exact item the recipient waited for.",
+        "- **Single, unambiguous CTA** — \"BUY IT NOW\" button is prominent and directly below the product block.",
+        "- **Cross-sell module** — \"You Might Also Be Interested In...\" shows four product thumbnails with names and presumably prices, which is smart placement for recipients who find the item already gone again."
+      ],
+      "whats_weak": [
+        "- **Hero image is postage-stamp sized** — the product photo is tiny relative to the email canvas. For a back-in-stock alert, the product image should be the emotional centerpiece; here it barely registers.",
+        "- **No urgency language** — the subject and header say \"back in stock\" but nothing in the body communicates scarcity, time pressure, or demand (e.g., \"Limited quantity,\" \"Selling fast,\" \"Only a few left\"). This is the single most important driver of conversion in this email type and it's missing.",
+        "- **\"Remember that style you love? It's back, but not for long. Shop it today before it's gone\" header copy** is buried in small gray text immediately below the logo — it reads like a disclaimer rather than a hook.",
+        "- **No product lifestyle or contextual imagery** — the product thumbnail is catalog/product-page style and very small; a larger, worn-in-context image would drive purchase intent harder.",
+        "- **Customer service number callout** feels like dead weight at this point in the conversion flow."
+      ],
+      "recommendations": [
+        "1. **Triple the product image size** — make it the visual anchor of the email, not an afterthought in a spec table.",
+        "2. **Add scarcity messaging** — a line like \"Only a few pairs left at your size\" directly above or below the CTA would sharply lift urgency.",
+        "3. **Elevate the preheader copy** — move \"It's back, but not for long. Shop it today before it's gone\" into larger, styled headline text rather than small gray body copy.",
+        "4. **Add a second CTA** after the cross-sell module — recipients who browse the recommendations should have an easy re-entry path to the original item.",
+        "5. **Remove or condense the customer service block** — not relevant to the conversion moment; it diffuses focus.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **High** | Plain-text body is empty | Add a plain-text alternative in SFMC with at least a summarized version of the email content |",
+        "| **High** | 3 images served over HTTP | Update `image.emails.skechers.com` asset URLs to `https://` — or confirm CDN redirect is in place and force HTTPS at the template level |",
+        "| **Medium** | 2 images missing alt text | Add descriptive alt text to `041c30ac` and `f9b5ed32` images in SFMC content blocks |",
+        "| **Medium** | `user-scalable=0` blocks pinch-zoom | Remove or change to `user-scalable=yes` for WCAG 1.4.4 compliance |",
+        "| **Medium** | UTM parameters unverified | Probe resolved destination URLs to confirm UTM tags are present and consistent with campaign |",
+        "| **Low** | `<meta charset>` missing `http-equiv` | Correct to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |",
+        "| **Low** | DKIM/SPF unverified | Confirm authentication pass via received headers in a live inbox test |"
+      ],
+      "bottom_line": [
+        "This email communicates the facts but misses the feeling. Back-in-stock emails work because they create a fleeting window — the item is available *now*, but maybe not for long. That tension needs to be felt viscerally in the design. Larger product image, scarcity copy, and one line of urgency would likely meaningfully improve conversion without any structural rebuild."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Back-in-stock transactional alert for a specific saved/waitlisted item |",
+        "| **Hero / primary value prop** | \"BACK IN STOCK ALERT!\" headline present but hero image is very small; no emotional urgency framing |",
+        "| **Membership / benefits** | None visible |",
+        "| **Product discoverability / recommendations** | \"You Might Also Be Interested In...\" shows 4 products with names, thumbnails, prices — solid module, well-placed |",
+        "| **Utility / secondary modules** | Customer service email + phone, footer links (Shipping & Returns, Store Locator), social icons |",
+        "| **Bugs / friction / clarity issues** | No visible rendering bugs; product image is intentionally included but rendered at a very small size that undermines its function |",
+        "**From:** SKECHERS `<no-reply@emails.skechers.com>`",
+        "The email is structurally sound with standard Outlook/mobile compatibility boilerplate, but has three confirmed issues: a missing plain-text fallback, several images served over HTTP instead of HTTPS, and missing alt text on multiple images. SPF/DKIM authentication could not be verified through the relay.",
+        "- **26 tracking links** route through `click.emails.skechers.com` (Salesforce Marketing Cloud click-redirect). Links were not probed — destination URLs and UTM parameters could not be verified.",
+        "- Open-pixel beacon fires via `click.emails.skechers.com/open.aspx?NBJUC24YDGGENDIIFTWBSORU5A...` — standard SFMC implementation, no anomaly.",
+        "- Three additional third-party beacon pixels fire on load via `beacon.krxd.net` for Salesforce DMP user-matching and ad impression tracking. These are zero-dimension (`width=\"0\" height=\"0\"`) with `display:none`, consistent with standard practice.",
+        "**HTTP image sources (3 confirmed):**",
+        "Images served over `http://image.emails.skechers.com` will be blocked by Gmail, Outlook, and most modern clients that enforce HTTPS mixed-content rules.",
+        "| Image UUID | src |",
+        "|---|---|",
+        "| `dde00662` (Skechers logo) | `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png` |",
+        "| `041c30ac` | `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/041c30ac-...png` |",
+        "| `f9b5ed32` | `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/f9b5ed32-...png` |",
+        "**Missing alt text (2 images):**",
+        "- `041c30ac-21db-494b-a892-bbdbf4984b2a.png`",
+        "- `f9b5ed32-ceef-41a6-8701-c0e0121ca99c.png`",
+        "Both are content images (not decorative spacers), so the missing alt text breaks screen reader accessibility and degrades the image-blocked rendering experience.",
+        "**Other rendering notes:**",
+        "- `user-scalable=0` in the viewport meta tag prevents pinch-zoom on mobile — an accessibility regression flagged under WCAG 1.4.4 (Resize Text).",
+        "- `<meta content=\"text/html; charset=UTF-8\" />` is missing the `http-equiv` attribute: should be `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />`. This can cause character encoding fallback behavior in older clients.",
+        "HTML source is truncated, so full token inspection is not possible. No unresolved merge tokens (e.g. `%%first_name%%`, `[FIRST NAME]`) were visible in the provided excerpt. No issues confirmed.",
+        "**Plain-text fallback — FAIL:**",
+        "> Text version is 0 chars",
+        "A missing plain-text alternative is a CAN-SPAM violation risk and degrades deliverability scoring with major ISPs (Gmail, Outlook, Yahoo). It also causes rendering failures for plain-text-only clients.",
+        "**Authentication headers — unverified:**",
+        "> `Authentication-Results` header not found via AgentMail relay",
+        "SPF and DKIM pass/fail status cannot be confirmed. Given that the sending domain is `emails.skechers.com` (a subdomain likely aligned to SFMC), DKIM signing is expected — this should be verified directly against received headers from a live send.",
+        "**Unsubscribe:** Not verifiable from the truncated source, but CAN-SPAM requires a functional unsubscribe mechanism. No issues confirmed in available HTML.",
+        "All 26 destination URLs are behind `click.emails.skechers.com` redirects — UTM parameters cannot be verified without probing resolved destinations. The campaign ID embedded in the Krux impression beacon (`campaignid=TRG_US_EN_BROWSEINSTOCK_1_03202025`) suggests back-end attribution is in place, but UTM propagation to skechers.com landing pages is unconfirmed."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTgxMDAzIiwiamIiOiI1OTYwIiwiZCI"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 5,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 041c30ac-21db-494b-a892-bbdbf4984b2a.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/041c30ac-21db-494b-a892-bbdbf4984b2a.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 041c30ac-21db-494b-a892-bbdbf4984b2a.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/041c30ac-21db-494b-a892-bbdbf4984b2a.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: f9b5ed32-ceef-41a6-8701-c0e0121ca99c.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/f9b5ed32-ceef-41a6-8701-c0e0121ca99c.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: f9b5ed32-ceef-41a6-8701-c0e0121ca99c.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/8/f9b5ed32-ceef-41a6-8701-c0e0121ca99c.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 1,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-26-it-s-back-in-stock-at-skechers-com-email-webview-render.png",
+    "pdf": "2026-03-26-it-s-back-in-stock-at-skechers-com-review.pdf"
+  }
+}
