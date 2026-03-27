@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-27-test-mkg-us-na-w-multi-gender-en-03282026-bskechers-exclusives-the-shoes-you-can",
+    "subject": "[Test]: MKG_US_NA_W_MULTI_GENDER_EN_03282026_BSkechers Exclusives: The Shoes You Can't Get Anywhere Else",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-27T21:54:33+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true
+  },
+  {
     "slug": "2026-03-27-test-mkg-us-na-w-multi-gender-en-03282026-a-v3fresh-spring-styles-to-step-up-you",
     "subject": "[Test]: MKG_US_NA_W_MULTI_GENDER_EN_03282026_A_V3Fresh Spring Styles to Step Up Your Look",
     "from_display_name": "SKECHERS",
