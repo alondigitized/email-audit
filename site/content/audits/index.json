@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-27-it-s-back-in-stock-at-skechers-com",
+    "subject": "It's Back in Stock at SKECHERS.com",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-27T17:20:58+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true
+  },
+  {
     "slug": "2026-03-27-an-easy-way-to-try-the-comfort-everyone-talks-about",
     "subject": "An Easy Way to Try the Comfort Everyone Talks About",
     "from_display_name": "SKECHERS",
