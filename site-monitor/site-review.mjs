@@ -18,8 +18,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
-import { chromium, devices } from 'playwright';
+import { chromium as playwrightChromium, devices } from 'playwright';
+import { chromium } from 'playwright-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import AxeBuilder from '@axe-core/playwright';
+
+// Apply stealth patches — makes Playwright look like a real Chrome browser
+chromium.use(StealthPlugin());
 import dotenv from 'dotenv';
 
 const execFileAsync = promisify(execFile);
@@ -238,17 +243,20 @@ async function runJourney(persona, credentials, artifactDir) {
           break;
 
         case 'login': {
-          // Click the account icon on the homepage (same-origin nav avoids bot detection)
-          const accountLink = page.locator('#utility-login, a[aria-label*="Login" i], a[href*="/login"]').first();
-          await accountLink.click({ timeout: 5000 });
-          await page.waitForLoadState('domcontentloaded');
-          await delay(3000);
-          await dismissPopups(page);
-          // Fill login form — Skechers uses id="login-form-email" and id="login-form-password"
-          const emailInput = page.locator('#login-form-email, input[name="loginEmail"], input[type="email"]').first();
-          const passInput = page.locator('#login-form-password, input[name="loginPassword"], input[type="password"]').first();
+          // Navigate to login via JS click on account icon
           try {
-            await emailInput.fill(credentials.email, { timeout: 10000 });
+            await page.locator('#utility-login').evaluate(el => el.click());
+          } catch {
+            await page.goto(`${persona.site}/login/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+          }
+          // Wait for Kasada bot challenge to resolve (up to 15 seconds)
+          try {
+            await page.waitForSelector('#login-form-email, input[name="loginEmail"], form[action*="login"]', { timeout: 15000 });
+            await delay(1000);
+            await dismissPopups(page);
+            const emailInput = page.locator('#login-form-email, input[name="loginEmail"]').first();
+            const passInput = page.locator('#login-form-password, input[name="loginPassword"], input[type="password"]').first();
+            await emailInput.fill(credentials.email);
             await delay(300);
             await passInput.fill(credentials.password);
             await delay(500);
@@ -258,8 +266,11 @@ async function runJourney(persona, credentials, artifactDir) {
             await delay(3000);
             await dismissPopups(page);
           } catch (loginErr) {
-            log('Login form not found — bot detection may have blocked', { error: String(loginErr).slice(0, 200) });
-            // Continue journey without login — still valuable to review as logged-out user
+            log('Login blocked by bot protection — continuing as logged-out user', { error: String(loginErr).slice(0, 200) });
+            // Navigate back to homepage so subsequent steps work
+            await page.goto(persona.site, { waitUntil: 'domcontentloaded', timeout: 15000 });
+            await delay(2000);
+            await dismissPopups(page);
           }
           break;
         }
@@ -325,8 +336,18 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'view_cart': {
-          // Navigate directly to cart
-          await page.goto(`${persona.site}/cart/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+          // Click cart icon via JS
+          try {
+            await page.locator('#minicart-link, a[href*="/cart"]').first().evaluate(el => el.click());
+          } catch {
+            await page.goto(`${persona.site}/cart/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+          }
+          // Wait for Kasada challenge to resolve
+          try {
+            await page.waitForSelector('.cart-page, .cart-empty, #cart-items, [class*="cart"]', { timeout: 15000 });
+          } catch {
+            log('Cart page may be blocked by bot protection');
+          }
           await delay(2000);
           await dismissPopups(page);
           break;
