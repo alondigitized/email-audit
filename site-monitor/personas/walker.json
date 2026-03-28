@@ -1,0 +1,14 @@
+{
+  "name": "Walker Miles",
+  "age": 62,
+  "generation": "Boomer",
+  "gender": "Male",
+  "style": "Casual comfort, loves hands-free Slip-ins",
+  "shopping_habits": "Browses Men's, prefers comfort technology, price-conscious but loyal Skechers Plus member",
+  "tech_comfort": "Uses phone for browsing, prefers simple navigation, larger text",
+  "focus_areas": ["slip-in shoes", "comfort technology", "men's casual"],
+  "search_term": "slip in",
+  "category_path": ["Men", "Shoes"],
+  "site": "https://www.skechers.com",
+  "credentials_env_prefix": "SKECHERS"
+}

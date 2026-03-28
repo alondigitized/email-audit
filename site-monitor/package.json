@@ -1,0 +1,16 @@
+{
+  "name": "site-monitor",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "review": "node site-review.mjs",
+    "review:walker": "node site-review.mjs --persona walker",
+    "install-browser": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "dotenv": "^16.4.0",
+    "playwright": "^1.49.0"
+  }
+}

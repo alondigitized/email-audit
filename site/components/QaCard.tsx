@@ -7,6 +7,7 @@ const GROUP_ORDER: QaBusinessGroup[] = [
   "broken_experience",
   "compliance",
   "deliverability",
+  "accessibility",
   "info",
 ];
 
@@ -14,6 +15,7 @@ const GROUP_LABELS: Record<QaBusinessGroup, string> = {
   broken_experience: "Broken Experience",
   compliance: "Compliance",
   deliverability: "Deliverability",
+  accessibility: "Accessibility",
   info: "Info",
 };
 
@@ -66,6 +68,7 @@ function classifyChecks(
     broken_experience: [],
     compliance: [],
     deliverability: [],
+    accessibility: [],
     info: [],
   };
 

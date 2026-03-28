@@ -26,6 +26,11 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
         <ScoreBadge score={audit.score} />
       </span>
       <span className="flex flex-wrap gap-2 items-center text-[13px] text-muted">
+        {audit.type === "site" && (
+          <span className="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700">
+            Journey
+          </span>
+        )}
         <span>{audit.from_display_name}</span>
         <span className="text-line">&middot;</span>
         <span>{datetime}</span>

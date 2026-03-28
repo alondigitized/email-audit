@@ -459,6 +459,8 @@ async function publishSite() {
         score: ad.review.score,
         qa_summary: ad.qa?.summary || null,
         has_image: fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
+        type: ad.type || 'email',
+        persona: ad.persona || null,
       };
     })
     .filter(Boolean)

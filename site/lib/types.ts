@@ -1,6 +1,26 @@
+export interface JourneyStep {
+  step: number;
+  label: string;
+  viewport_screenshot: string | null;
+  fullpage_screenshot: string | null;
+  url: string;
+  status?: string;
+}
+
+export interface PerfStep {
+  step: number;
+  label: string;
+  url: string;
+  ttfb_ms?: number | null;
+  lcp_ms?: number | null;
+  cls?: number | null;
+}
+
 export interface AuditData {
   schema_version: number;
   slug: string;
+  type?: "email" | "site";
+  persona?: string | null;
   email: {
     subject: string;
     from: string;
@@ -18,6 +38,10 @@ export interface AuditData {
     render_image: string | null;
     pdf: string | null;
     webview_url: string | null;
+    journey_steps?: JourneyStep[];
+  };
+  performance?: {
+    steps: PerfStep[];
   };
 }
 
@@ -66,12 +90,15 @@ export interface AuditSummary {
   score: string;
   qa_summary: QaSummary | null;
   has_image: boolean;
+  type?: "email" | "site";
+  persona?: string | null;
 }
 
 export type QaBusinessGroup =
   | "broken_experience"
   | "compliance"
   | "deliverability"
+  | "accessibility"
   | "info";
 
 export interface SplitReview {
