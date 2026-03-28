@@ -1,5 +1,5 @@
 import { getAuditIndex } from "@/lib/audits";
-import { AuditCard } from "@/components/AuditCard";
+import { AuditList } from "@/components/AuditList";
 
 export default function Home() {
   const audits = getAuditIndex();
@@ -16,11 +16,7 @@ export default function Home() {
           automated QA results.
         </p>
       </div>
-      <div className="flex flex-col gap-3.5">
-        {audits.map((audit) => (
-          <AuditCard key={audit.slug} audit={audit} />
-        ))}
-      </div>
+      <AuditList audits={audits} />
     </>
   );
 }
