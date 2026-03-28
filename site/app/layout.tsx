@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Email Audit",
-  description: "Email audit reports and analysis",
+  title: "Experience Review",
+  description: "AI-powered reviews of brand experiences",
 };
 
 export default function RootLayout({

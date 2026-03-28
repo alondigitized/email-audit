@@ -75,13 +75,13 @@ export default async function AuditPage({
     <>
       <p className="mb-4">
         <Link href="/" className="text-ink no-underline hover:underline">
-          &larr; Back to all audits
+          &larr; Back to all reviews
         </Link>
       </p>
 
       {/* Hero */}
       <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm mb-5">
-        <div className="text-muted text-sm">Skechers Email Audit</div>
+        <div className="text-muted text-sm">Skechers Experience Review</div>
         <h1 className="text-xl font-bold mt-1 mb-3">{email.subject}</h1>
         <table className="mt-3.5">
           <tbody>
