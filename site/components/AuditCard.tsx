@@ -18,7 +18,7 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
       className="block bg-white border border-gray-200 rounded-2xl px-6 py-5 shadow-sm no-underline text-ink transition-[border-color,box-shadow] duration-150 hover:border-slate-400 hover:shadow-md"
     >
       <span className="flex items-start justify-between gap-4 mb-2.5">
-        <span className="text-[17px] font-bold leading-snug flex-1 min-w-0">
+        <span className="text-[17px] font-bold leading-snug flex-1 min-w-0 break-words overflow-hidden">
           {audit.subject}
         </span>
         <ScoreBadge score={audit.score} />
