@@ -20,10 +20,21 @@ MANIFEST = os.path.join(SCRIPT_DIR, "published-audits.json")
 AUDITS_DIR = os.path.join(SCRIPT_DIR, "audits")
 ASSETS_DIR = os.path.join(SCRIPT_DIR, "assets")
 
+# Site-level branding — edit here to rename everywhere
+SITE_TITLE = "Experience Review"
+SITE_BRAND = "Skechers Digital"
+SITE_BRAND_DETAIL = "Skechers Experience Review"
+SITE_DESCRIPTION = (
+    "AI-powered reviews of brand experiences\u2009—\u2009from marketing emails to website visits. "
+    "Each review scores creative quality, technical health, accessibility, and deliverability, "
+    "with actionable recommendations and automated QA results."
+)
+CSS_VERSION = "5"
+
 GATE_HTML = """\
 <div id="gate" style="display:none;position:fixed;inset:0;z-index:9999;background:#faf8f5;align-items:center;justify-content:center;flex-direction:column;font-family:Inter,Arial,sans-serif">
 <div style="background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:40px;max-width:360px;width:90%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.04)">
-<h2 style="margin:0 0 8px;color:#1f2937">Email Audit</h2>
+<h2 style="margin:0 0 8px;color:#1f2937">{SITE_TITLE}</h2>
 <p style="color:#6b7280;margin:0 0 20px;font-size:14px">Enter the shared secret to continue.</p>
 <input id="gate-in" type="password" placeholder="Shared secret" style="width:100%;padding:10px 14px;border:1px solid #e5e7eb;border-radius:10px;font-size:15px;margin-bottom:12px;box-sizing:border-box;outline:none">
 <button id="gate-btn" style="width:100%;padding:10px;background:#111827;color:#fff;border:none;border-radius:10px;font-size:15px;cursor:pointer">Unlock</button>
@@ -426,10 +437,10 @@ def build_audit_page(audit_data):
         f'<!doctype html><html><head><meta charset="utf-8">'
         f'<meta name="viewport" content="width=device-width,initial-scale=1">'
         f"<title>{esc(subject)}</title>"
-        f'<link rel="stylesheet" href="../styles.css?v=4"></head><body>'
+        f'<link rel="stylesheet" href="../styles.css?v={CSS_VERSION}"></head><body>'
         f"{GATE_HTML}"
-        f'<main><p><a href="../index.html">\u2190 Back to all audits</a></p>'
-        f'<div class="hero hero-detail"><div class="muted">Skechers Email Audit</div>'
+        f'<main><p><a href="../index.html">\u2190 Back to all reviews</a></p>'
+        f'<div class="hero hero-detail"><div class="muted">{SITE_BRAND_DETAIL}</div>'
         f"<h1>{esc(subject)}</h1>"
         f'<table class="meta-table">'
         f'<tr><td class="meta-label">From</td><td>{esc(from_addr)}</td></tr>'
@@ -483,12 +494,12 @@ def build_index(all_audit_data):
     page = (
         f'<!doctype html><html><head><meta charset="utf-8">'
         f'<meta name="viewport" content="width=device-width,initial-scale=1">'
-        f"<title>Email Audit</title>"
-        f'<link rel="stylesheet" href="styles.css?v=4"></head><body>'
+        f"<title>{SITE_TITLE}</title>"
+        f'<link rel="stylesheet" href="styles.css?v={CSS_VERSION}"></head><body>'
         f"{GATE_HTML}"
-        f'<main><div class="hero"><div class="muted">Skechers Digital</div>'
-        f"<h1>Email Audit</h1>"
-        f'<p class="muted">Homepage index of conducted email audits, with links to detailed audit pages.</p>'
+        f'<main><div class="hero"><div class="muted">{SITE_BRAND}</div>'
+        f"<h1>{SITE_TITLE}</h1>"
+        f'<p class="hero-desc">{SITE_DESCRIPTION}</p>'
         f'</div><div class="audit-list">'
         f"{cards_html}"
         f"</div></main>"
