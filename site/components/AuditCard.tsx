@@ -4,8 +4,11 @@ import { ScoreBadge } from "./ScoreBadge";
 import { QaBadge } from "./QaBadge";
 
 export function AuditCard({ audit }: { audit: AuditSummary }) {
-  const time = audit.timestamp_iso
-    ? new Date(audit.timestamp_iso).toLocaleTimeString("en-US", {
+  const datetime = audit.timestamp_iso
+    ? new Date(audit.timestamp_iso).toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
         hour: "numeric",
         minute: "2-digit",
       })
@@ -25,7 +28,7 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
       <span className="flex flex-wrap gap-2 items-center text-[13px] text-muted">
         <span>{audit.from_display_name}</span>
         <span className="text-line">&middot;</span>
-        <span>{time}</span>
+        <span>{datetime}</span>
         <span className="ml-auto">
           <QaBadge summary={audit.qa_summary} />
         </span>
