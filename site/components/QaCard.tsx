@@ -107,31 +107,34 @@ function StatusIcon({ status }: { status: string }) {
 
 function CheckTable({ checks }: { checks: QaCheck[] }) {
   return (
-    <table className="w-full border-collapse text-[13px]">
-      <tbody>
-        {checks.map((check, i) => (
-          <tr key={i}>
-            <td className="w-7 text-center py-1.5 px-2 border-b border-gray-200 align-top">
-              <StatusIcon status={check.status} />
-            </td>
-            <td className="py-1.5 px-2 border-b border-gray-200 align-top">
-              {check.label}
-            </td>
-            <td className="py-1.5 px-2 border-b border-gray-200 align-top">
-              {check.detail}
-              {check.url && (
-                <>
-                  <br />
-                  <span className="text-muted text-[11px] break-all">
-                    {check.url}
-                  </span>
-                </>
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="overflow-x-auto -mx-2">
+      <table className="w-full border-collapse text-[13px] min-w-0">
+        <tbody>
+          {checks.map((check, i) => (
+            <tr key={i}>
+              <td className="w-7 text-center py-1.5 px-2 border-b border-gray-200 align-top shrink-0">
+                <StatusIcon status={check.status} />
+              </td>
+              <td className="py-1.5 px-2 border-b border-gray-200 align-top max-md:hidden">
+                {check.label}
+              </td>
+              <td className="py-1.5 px-2 border-b border-gray-200 align-top break-words">
+                <span className="md:hidden font-medium">{check.label}: </span>
+                {check.detail}
+                {check.url && (
+                  <>
+                    <br />
+                    <span className="text-muted text-[11px] break-all">
+                      {check.url}
+                    </span>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

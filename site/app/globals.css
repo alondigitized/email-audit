@@ -13,4 +13,13 @@
 body {
   background: var(--color-surface);
   color: var(--color-ink);
+  overflow-x: hidden;
 }
+
+/* Prevent any child from causing horizontal scroll */
+html, body { max-width: 100vw; }
+
+/* Prose code blocks: scroll instead of overflow */
+.prose pre { overflow-x: auto; }
+.prose code { word-break: break-word; }
+.prose table { display: block; overflow-x: auto; }

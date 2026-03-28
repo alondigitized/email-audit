@@ -80,33 +80,23 @@ export default async function AuditPage({
       </p>
 
       {/* Hero */}
-      <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm mb-5">
+      <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm mb-5 overflow-hidden">
         <div className="text-muted text-sm">Skechers Experience Review</div>
-        <h1 className="text-xl font-bold mt-1 mb-3">{email.subject}</h1>
-        <table className="mt-3.5">
-          <tbody>
-            <tr>
-              <td className="text-muted font-semibold whitespace-nowrap w-20 py-1 pr-3 text-sm">
-                From
-              </td>
-              <td className="py-1 text-sm">{email.from}</td>
-            </tr>
-            <tr>
-              <td className="text-muted font-semibold whitespace-nowrap w-20 py-1 pr-3 text-sm">
-                Received
-              </td>
-              <td className="py-1 text-sm">{email.date_formatted}</td>
-            </tr>
-            <tr>
-              <td className="text-muted font-semibold whitespace-nowrap w-20 py-1 pr-3 text-sm">
-                Score
-              </td>
-              <td className="py-1">
-                <ScoreBadge score={review.score} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h1 className="text-xl font-bold mt-1 mb-3 break-words">{email.subject}</h1>
+        <div className="mt-3.5 flex flex-col gap-1 text-sm">
+          <div className="flex gap-3">
+            <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">From</span>
+            <span className="break-words min-w-0">{email.from}</span>
+          </div>
+          <div className="flex gap-3">
+            <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">Received</span>
+            <span>{email.date_formatted}</span>
+          </div>
+          <div className="flex gap-3 items-center">
+            <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">Score</span>
+            <ScoreBadge score={review.score} />
+          </div>
+        </div>
       </div>
 
       <TabNav
