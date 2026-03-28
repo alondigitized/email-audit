@@ -149,29 +149,40 @@ async function capturePerformance(page) {
 }
 
 async function dismissPopups(page) {
-  const selectors = [
-    // Cookie banners
-    'button:has-text("Accept")',
-    'button:has-text("Accept All")',
-    'button:has-text("Got it")',
-    '[id*="cookie"] button',
-    '[class*="cookie"] button',
-    // Newsletter modals
-    '[class*="modal"] button[class*="close"]',
-    '[class*="modal"] [aria-label="Close"]',
-    'button[aria-label="Close"]',
-    '[class*="popup"] button[class*="close"]',
-    // Generic overlays
-    '[class*="overlay"] button[class*="close"]',
-  ];
-  for (const sel of selectors) {
-    try {
-      const el = page.locator(sel).first();
-      if (await el.isVisible({ timeout: 1500 })) {
-        await el.click();
-        await delay(500);
-      }
-    } catch { /* not found, continue */ }
+  // Try multiple rounds — Skechers stacks popups
+  for (let round = 0; round < 3; round++) {
+    let dismissed = false;
+    const selectors = [
+      // Skechers-specific modal close button
+      'button.js-modal-close',
+      'button.close[aria-label="close"]',
+      // Cookie banners
+      'button:has-text("Accept")',
+      'button:has-text("Accept All")',
+      'button:has-text("Got it")',
+      '[id*="cookie"] button',
+      '[class*="cookie"] button',
+      // Newsletter modals
+      '[class*="modal"] button[class*="close"]',
+      '[class*="modal"] [aria-label="Close"]',
+      'button[aria-label="Close"]',
+      '[class*="popup"] button[class*="close"]',
+      // Generic overlays
+      '[class*="overlay"] button[class*="close"]',
+      // Skechers "Give Feedback" tab — not a blocker but can interfere
+    ];
+    for (const sel of selectors) {
+      try {
+        const el = page.locator(sel).first();
+        if (await el.isVisible({ timeout: 1000 })) {
+          await el.click();
+          await delay(500);
+          dismissed = true;
+        }
+      } catch { /* not found, continue */ }
+    }
+    if (!dismissed) break;
+    await delay(500);
   }
 }
 
@@ -227,38 +238,46 @@ async function runJourney(persona, credentials, artifactDir) {
           break;
 
         case 'login': {
-          // Look for sign-in / account link on mobile
-          const signInLink = page.locator('a:has-text("Sign In"), a:has-text("Log In"), a:has-text("My Account"), [href*="login"], [href*="signin"]').first();
-          if (await signInLink.isVisible({ timeout: 5000 })) {
-            await signInLink.click();
-            await page.waitForLoadState('domcontentloaded');
-            await delay(1500);
-          }
-          // Fill login form
-          const emailInput = page.locator('input[type="email"], input[name="email"], input[id*="email"], input[placeholder*="email" i]').first();
-          const passInput = page.locator('input[type="password"]').first();
-          await emailInput.fill(credentials.email);
-          await passInput.fill(credentials.password);
-          await delay(500);
-          // Submit
-          const submitBtn = page.locator('button[type="submit"], button:has-text("Sign In"), button:has-text("Log In")').first();
-          await submitBtn.click();
+          // Click the account icon on the homepage (same-origin nav avoids bot detection)
+          const accountLink = page.locator('#utility-login, a[aria-label*="Login" i], a[href*="/login"]').first();
+          await accountLink.click({ timeout: 5000 });
           await page.waitForLoadState('domcontentloaded');
           await delay(3000);
-          // Dismiss any post-login popups
           await dismissPopups(page);
+          // Fill login form — Skechers uses id="login-form-email" and id="login-form-password"
+          const emailInput = page.locator('#login-form-email, input[name="loginEmail"], input[type="email"]').first();
+          const passInput = page.locator('#login-form-password, input[name="loginPassword"], input[type="password"]').first();
+          try {
+            await emailInput.fill(credentials.email, { timeout: 10000 });
+            await delay(300);
+            await passInput.fill(credentials.password);
+            await delay(500);
+            const submitBtn = page.locator('button[type="submit"]:has-text("Log In"), button[type="submit"]:has-text("Sign In"), form button[type="submit"]').first();
+            await submitBtn.click();
+            await page.waitForLoadState('domcontentloaded');
+            await delay(3000);
+            await dismissPopups(page);
+          } catch (loginErr) {
+            log('Login form not found — bot detection may have blocked', { error: String(loginErr).slice(0, 200) });
+            // Continue journey without login — still valuable to review as logged-out user
+          }
           break;
         }
 
         case 'nav_category': {
-          // Open mobile hamburger menu if needed
-          const hamburger = page.locator('[aria-label="Menu"], [class*="hamburger"], button[class*="menu"], [data-testid*="menu"]').first();
-          if (await hamburger.isVisible({ timeout: 3000 })) {
-            await hamburger.click();
-            await delay(1000);
+          const catId = step.target.toLowerCase();
+          try {
+            // Try interactive: hamburger menu → category link
+            const hamburger = page.locator('#mobile-menu-button, button.navbar-toggler').first();
+            await hamburger.click({ timeout: 5000 });
+            await delay(1500);
+            const catLink = page.locator(`#${catId}, a[href="/${catId}/"]`).first();
+            await catLink.click({ timeout: 5000 });
+          } catch {
+            // Fallback: navigate directly
+            log('Hamburger nav failed, using direct URL');
+            await page.goto(`${persona.site}/${catId}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
           }
-          const catLink = page.getByRole('link', { name: step.target }).first();
-          await catLink.click();
           await page.waitForLoadState('domcontentloaded');
           await delay(2000);
           await dismissPopups(page);
@@ -266,8 +285,14 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'nav_subcategory': {
-          const subLink = page.getByRole('link', { name: step.target }).first();
-          await subLink.click();
+          // On mobile, after clicking Men, shoes might be in a submenu or we navigate directly
+          const subLink = page.locator(`a[href*="/${persona.category_path[0].toLowerCase()}/${step.target.toLowerCase()}/"]`).first();
+          try {
+            await subLink.click({ timeout: 5000 });
+          } catch {
+            // Fallback: navigate directly
+            await page.goto(`${persona.site}/${persona.category_path[0].toLowerCase()}/${step.target.toLowerCase()}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+          }
           await page.waitForLoadState('domcontentloaded');
           await delay(2000);
           await dismissPopups(page);
@@ -275,9 +300,9 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'first_product': {
-          // Click first product card
-          const productLink = page.locator('a[href*="/product/"], a[href*="/men/shoes/"], .product-card a, [data-testid*="product"] a, .product-tile a').first();
-          await productLink.click();
+          // Skechers V2 product tiles
+          const productLink = page.locator('a.c-product-tile-V2__title, a.c-product-tile-V2__body-elements-anchor-wrapper, a.c-product-tile__title').first();
+          await productLink.click({ timeout: 10000 });
           await page.waitForLoadState('domcontentloaded');
           await delay(2000);
           await dismissPopups(page);
@@ -285,46 +310,32 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'add_to_cart': {
-          // Select a size if needed (pick first available)
-          const sizeBtn = page.locator('[class*="size"] button:not([disabled]), [data-testid*="size"] button:not([disabled])').first();
+          // Select a size first (Skechers uses .c-size-selector buttons)
+          const sizeBtn = page.locator('.c-size-selector button:not([disabled]):not(.unavailable), button[data-attr-value]:not([disabled])').first();
           if (await sizeBtn.isVisible({ timeout: 3000 })) {
             await sizeBtn.click();
             await delay(500);
           }
           // Add to cart
-          const addBtn = page.locator('button:has-text("Add to Cart"), button:has-text("ADD TO CART"), button:has-text("Add to Bag")').first();
-          await addBtn.click();
+          const addBtn = page.locator('button.add-to-cart, button:has-text("Add to Cart"), button:has-text("ADD TO CART")').first();
+          await addBtn.click({ timeout: 10000 });
           await delay(3000);
           await dismissPopups(page);
           break;
         }
 
         case 'view_cart': {
-          const cartLink = page.locator('a[href*="/cart"], a[aria-label*="Cart" i], a[aria-label*="Bag" i], [data-testid*="cart"] a').first();
-          if (await cartLink.isVisible({ timeout: 3000 })) {
-            await cartLink.click();
-          } else {
-            await page.goto(`${persona.site}/cart`, { waitUntil: 'domcontentloaded', timeout: 30000 });
-          }
-          await page.waitForLoadState('domcontentloaded');
+          // Navigate directly to cart
+          await page.goto(`${persona.site}/cart/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
           await delay(2000);
           await dismissPopups(page);
           break;
         }
 
         case 'search': {
-          // Navigate to homepage first for search
-          await page.goto(persona.site, { waitUntil: 'domcontentloaded', timeout: 30000 });
-          await delay(1500);
-          await dismissPopups(page);
-          // Find and use search
-          const searchIcon = page.locator('a[href*="search"], button[aria-label*="Search" i], [data-testid*="search"], input[type="search"]').first();
-          await searchIcon.click();
-          await delay(1000);
-          const searchInput = page.locator('input[type="search"], input[name="q"], input[placeholder*="Search" i], input[aria-label*="Search" i]').first();
-          await searchInput.fill(persona.search_term);
-          await searchInput.press('Enter');
-          await page.waitForLoadState('domcontentloaded');
+          // Navigate to search results directly via URL
+          const searchUrl = `${persona.site}/search?q=${encodeURIComponent(persona.search_term)}`;
+          await page.goto(searchUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
           await delay(2000);
           await dismissPopups(page);
           break;
@@ -359,6 +370,12 @@ async function runJourney(persona, credentials, artifactDir) {
         stepResult.viewportScreenshot = captured.viewportScreenshot;
         stepResult.fullpageScreenshot = captured.fullpageScreenshot;
       } catch { /* can't capture, continue */ }
+      // Recover: navigate back to site root so next step starts clean
+      try {
+        await page.goto(persona.site, { waitUntil: 'domcontentloaded', timeout: 15000 });
+        await delay(2000);
+        await dismissPopups(page);
+      } catch { /* recovery failed, continue anyway */ }
     }
 
     steps.push(stepResult);
