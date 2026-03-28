@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-03-28-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-03-28T21:05:54.953Z",
+    "score": "2/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 13,
+      "total_issues": 1,
+      "total_warnings": 12
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-03-28-the-messi-collection",
     "subject": "The Messi collection",
     "from_display_name": "adidas",
@@ -11,7 +27,9 @@
       "total_issues": 2,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for",
@@ -25,7 +43,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online",
@@ -39,7 +59,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba",
@@ -53,7 +75,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-test-mkg-us-na-w-multi-gender-en-03282026-bskechers-exclusives-the-shoes-you-can",
@@ -67,7 +91,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-test-mkg-us-na-w-multi-gender-en-03282026-a-v3fresh-spring-styles-to-step-up-you",
@@ -81,7 +107,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-test-mkg-us-ecmpur-u-best-ecom-en-03292026-bthe-styles-everyone-s-searching-for",
@@ -95,7 +123,9 @@
       "total_issues": 0,
       "total_warnings": 2
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-test-mkg-us-na-w-multi-gender-en-03282026-a-v2fresh-spring-styles-to-step-up-you",
@@ -109,7 +139,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-it-s-back-in-stock-at-skechers-com",
@@ -123,7 +155,9 @@
       "total_issues": 1,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-27-an-easy-way-to-try-the-comfort-everyone-talks-about",
@@ -137,7 +171,9 @@
       "total_issues": 0,
       "total_warnings": 2
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-26-test-pro-us-nonpur-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-e",
@@ -151,7 +187,9 @@
       "total_issues": 0,
       "total_warnings": 2
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-26-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every",
@@ -165,7 +203,9 @@
       "total_issues": 0,
       "total_warnings": 2
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-26-test-pro-us-na-u-bundle-retail-en-03272026easy-on-price-big-on-comfort",
@@ -179,7 +219,9 @@
       "total_issues": 0,
       "total_warnings": 2
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-26-this-is-perfect-for-you",
@@ -188,7 +230,9 @@
     "timestamp_iso": "2026-03-26T19:24:10+00:00",
     "score": "5/10",
     "qa_summary": null,
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-26-fwd-welcome-to-skechers",
@@ -202,7 +246,9 @@
       "total_issues": 2,
       "total_warnings": 5
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-26-it-s-back-in-stock-at-skechers-com",
@@ -216,11 +262,13 @@
       "total_issues": 1,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-23-last-day-to-redeem-your-voucher",
-    "subject": "\u23f3 Last day to redeem your voucher",
+    "subject": "⏳ Last day to redeem your voucher",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-23T16:43:15+00:00",
     "score": "6/10",
@@ -230,11 +278,13 @@
       "total_issues": 9,
       "total_warnings": 2
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off",
-    "subject": "Your First Pair Just Became 2 \u2014 BOGO 50% Off!",
+    "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-03-23T15:13:13+00:00",
     "score": "5/10",
@@ -244,7 +294,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-22-take-your-first-step-into-comfort",
@@ -258,7 +310,9 @@
       "total_issues": 0,
       "total_warnings": 1
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-20-newest-drop-this-is-only-the-start",
@@ -272,7 +326,9 @@
       "total_issues": 2,
       "total_warnings": 6
     },
-    "has_image": false
+    "has_image": false,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-20-more-skechers-plus-benefits-are-waiting",
@@ -286,7 +342,9 @@
       "total_issues": 1,
       "total_warnings": 16
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-19-complete-your-profile-to-earn-50-adiclub-points",
@@ -300,7 +358,9 @@
       "total_issues": 9,
       "total_warnings": 11
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-19-made-for-match-days-and-fans-everywhere-jamaica-home-away-jerseys",
@@ -314,7 +374,9 @@
       "total_issues": 2,
       "total_warnings": 10
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-19-last-call-to-use-your-20-off-welcome-offer",
@@ -328,7 +390,9 @@
       "total_issues": 1,
       "total_warnings": 17
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-19-we-re-taking-00s-running-style-to-the-streets",
@@ -342,7 +406,9 @@
       "total_issues": 4,
       "total_warnings": 10
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-18-most-iconic-jerseys-from-the-past-decades",
@@ -356,7 +422,9 @@
       "total_issues": 2,
       "total_warnings": 30
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-17-unlock-more-rewards-with-the-adidas-app",
@@ -370,7 +438,9 @@
       "total_issues": 8,
       "total_warnings": 46
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-17-anthony-edwards-2-red-black-available-now",
@@ -384,7 +454,9 @@
       "total_issues": 2,
       "total_warnings": 38
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-16-tell-us-more-about-you",
@@ -398,7 +470,9 @@
       "total_issues": 5,
       "total_warnings": 25
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards",
@@ -412,7 +486,9 @@
       "total_issues": 10,
       "total_warnings": 40
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-16-your-skechers-plus-cheat-sheet",
@@ -426,7 +502,9 @@
       "total_issues": 2,
       "total_warnings": 23
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-16-your-20-off-welcome-offer-is-waiting",
@@ -440,7 +518,9 @@
       "total_issues": 1,
       "total_warnings": 18
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-16-it-s-back-in-stock-at-skechers-com",
@@ -454,7 +534,9 @@
       "total_issues": 1,
       "total_warnings": 16
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-16-you-ve-still-got-20-off",
@@ -468,7 +550,9 @@
       "total_issues": 1,
       "total_warnings": 19
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh",
@@ -482,7 +566,9 @@
       "total_issues": 1,
       "total_warnings": 26
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun",
@@ -496,7 +582,9 @@
       "total_issues": 1,
       "total_warnings": 22
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   },
   {
     "slug": "2026-03-12-welcome-to-skechers-fresh",
@@ -510,6 +598,8 @@
       "total_issues": 1,
       "total_warnings": 22
     },
-    "has_image": true
+    "has_image": true,
+    "type": "email",
+    "persona": null
   }
 ]
