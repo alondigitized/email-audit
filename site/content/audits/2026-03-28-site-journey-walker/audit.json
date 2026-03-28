@@ -7,20 +7,20 @@
     "subject": "Daily Journey: Walker Miles on www.skechers.com",
     "from": "https://www.skechers.com",
     "from_display_name": "www.skechers.com",
-    "timestamp_iso": "2026-03-28T21:05:54.953Z",
-    "date_formatted": "2026-03-28 21:05:54 UTC"
+    "timestamp_iso": "2026-03-28T21:13:06.020Z",
+    "date_formatted": "2026-03-28 21:13:06 UTC"
   },
   "review": {
-    "score": "2/10",
-    "raw_markdown": "Now I have everything I need. Here is Walker Miles's full journey review.\n\n---\n\n## Walker Miles — Skechers.com Mobile Experience Review\n**Date:** March 28, 2026 | **Device:** Phone (mobile viewport)\n\n---\n\n## 1. Executive Summary\n\nI went to Skechers dot com ready to shop. I'm a Plus member, I know what I want — Men's Hands-Free Slip-ins — and I've bought from these folks before. What happened? I landed on the homepage, a popup jumped in my face asking for my email, and I could not get rid of it. That popup sat on my screen through every single step I tried to take. I could not log in. I could not find Men's shoes. I could not tap a product. I could not add anything to my cart. I could not get to my cart. Six out of nine steps I tried — completely blocked by one popup that would not go away. The only saving grace was the search screen, which at least opened and showed me \"mens slip ins\" as a trending search. But by that point I had already given up in my head. I'm 62 years old. I don't have the patience for a website that traps me behind an email form.\n\n---\n\n## 2. Business Impact Score: **2 / 10**\n\nA loyal, price-conscious Plus member who came to buy shoes left empty-handed. That is about as bad as it gets.\n\n---\n\n## 3. What's Working\n\n**Homepage first impression is solid.** The BOGO 50% OFF banner was right at the top — easy to read, good contrast. The Spring Shopping Guide banner was clean, text was big enough to read without squinting, and the SHOP NOW button was a proper size for tapping. The page loaded quickly and felt modern.\n\n**Search overlay is actually well-designed.** When I finally got the search bar to open (Step 9), I was pleasantly surprised. \"Trending Searches\" chips were a nice touch — readable pill buttons, and \"mens slip ins\" was right there front and center. That told me Skechers knows their customers. The chips were large enough to tap without fumbling.\n\n**BOGO promotion is visible throughout.** Even on the search screen the blue banner persisted. That's good deal communication.\n\n---\n\n## 4. What's Weak\n\n**The popup destroyed my entire shopping trip.** This is not a small issue. Steps 2 through 8 — that is six consecutive steps — showed me the exact same \"Unlock 20% OFF\" email popup. The X button was visible in the top-right corner, but something about it did not work on mobile. The result: I was trapped. I could not log in as a Plus member. I could not browse Men's shoes. I could not view a product, add to cart, or check my cart. The entire purchase funnel was inaccessible.\n\n**No personalization whatsoever.** As a Skechers Plus member I expected to be recognized. Instead I got the same email signup popup that a first-time visitor gets. I already give Skechers my email. Don't ask me for it again before I've even seen a shoe.\n\n**Men's content was invisible.** The homepage showed me a family lifestyle photo for \"Spring Shopping Guide.\" Nice enough, but nothing specifically said \"Men's Comfort\" or \"Slip-ins\" on that first screen. For a guy who came specifically for Hands-Free Slip-ins, there was no shortcut, no \"Shop Men's Slip-ins\" hero — just a generic spring campaign.\n\n**Popular Products in search skewed Women's.** The two products shown under \"Popular Products\" in the search panel were both Women's Slip-ins. I'm a man looking for men's shoes. That panel should reflect who is searching, not just overall popularity.\n\n---\n\n## 5. Recommendations\n\n1. **Fix the popup dismiss on mobile immediately.** The X button has to work on the first tap. This is a P0 bug — it is actively preventing purchases. Test it on real phones, not just desktop.\n\n2. **Suppress the email popup for logged-in Plus members.** I am already in your loyalty program. Showing me an email signup popup is tone-deaf and wastes my time.\n\n3. **Add a \"Men's Slip-ins\" shortcut on the homepage.** A quick-tap tile or banner for the top men's comfort categories would get guys like me to product pages faster. Right now Men's is buried behind a hamburger menu.\n\n4. **Personalize the search Popular Products.** If I'm browsing Men's or I'm a known male customer, show me Men's popular products — not Women's.\n\n5. **Make the navigation more accessible.** The hamburger MENU label next to the icon is good. But once that popup traps you, there's no escape route visible. Consider a persistent \"Skip\" or \"No thanks\" link below the popup CTA.\n\n---\n\n## 6. Bottom Line\n\nSkechers had me. I was ready to buy. A broken email popup turned a loyal Plus member's shopping trip into a wall of frustration for six straight steps. The one bright spot — search — showed that the team understands what men like me are looking for (\"mens slip ins\" trending). But if I can't get past a popup to reach a single product page, the search suggestions don't matter. Fix the popup dismiss on mobile. That one fix would recover this entire journey.\n\n**I did not add anything to my cart today. Skechers lost a sale.**\n\n---\n\n## 7. Evidence — Step by Step\n\n**Step 1 — Homepage**\nI saw a clean, well-organized top bar: BOGO 50% OFF in a bold blue banner (readable), the Skechers logo, search icon, account icon, a cart showing 0 items, and a MENU label. Below that, a \"Spring Style Guide! Shop Now\" text link, then a big family lifestyle photo for Spring Shopping Guide with a large SHOP NOW button. The text was plenty big — no zooming needed. Touch targets on the main button looked adequate. Nothing specifically jumped out at me for Men's Slip-ins but first impressions were positive. Felt like a real retailer's site.\n\n**Step 2 — Dismiss Popups**\nA full-screen light blue popup covered everything. Big \"Unlock 20% OFF\" headline with \"PLUS, BE THE FIRST TO KNOW ABOUT SPECIAL OFFERS!\" The email input field and CONTINUE button were clearly visible. There was an X in the top-right to close. I would tap that X — I'm already a member, I don't need 20% off via email signup. The popup itself is visually clean and the text is readable. But the X is small and in a corner, which is hard to tap precisely on a phone.\n\n**Step 3 — Log In (FAILED)**\nSame popup. Still there. I never got to a login screen. The system timed out waiting for a password field that was hidden behind the popup. From my perspective: I tapped what I thought was the X, nothing happened, I tapped again, still nothing. No login. Zero personalization. I'm a Plus member and the site has no idea.\n\n**Step 4 — Men's Category (FAILED)**\nStill the same popup. Never got to Men's. The Men's navigation link was unreachable because the popup covered the entire screen. Tried to find my way to comfort shoes — couldn't get there.\n\n**Step 5 — Men's Shoes (FAILED)**\nSame popup. Same story. Six identical screenshots all showing me an email form I already dismissed (or tried to). At this point I'd be tapping my phone screen repeatedly in frustration wondering if the site is broken.\n\n**Step 6 — View Product (FAILED)**\nSame popup. The system log notes it actually found a \"Hands Free Slip-ins\" link in the navigation, but couldn't click it because the popup was blocking interaction. So the content I wanted existed — I just could not reach it.\n\n**Step 7 — Add to Cart (FAILED)**\nSame popup. Never saw a product. Never saw an Add to Cart button.\n\n**Step 8 — View Cart (FAILED)**\nSame popup. The system found the cart link but couldn't interact with it. Cart showed 0 items throughout — makes sense since nothing was added.\n\n**Step 9 — Search (SUCCESS — partial)**\nFinally something different. A clean search overlay opened with \"What are you looking for?\" in the search bar. \"Trending Searches\" showed pill buttons: womens slip ins, **mens slip ins**, arch fit, bobs, womens sandals, go walk, arch fit arcade, mens golf shoes. The \"mens slip ins\" chip was right there — relevant to me, large enough to tap. Below that, \"Popular Products\" showed two Women's Slip-ins ($85 and $88 — prices visible and clear). Good that I can see price upfront. Bad that men's products weren't featured here for a male customer. The BOGO 50% banner persisted at top — deal-aware, which I appreciate. Overall the search experience was the best-designed part of the whole trip, but I only got here because everything else was broken.\n\n---\n\n## Technical Audit\n\n## Technical Summary\n\nSite runs on **Salesforce Commerce Cloud** (SFCC/Demandware). TTFB is excellent at 44ms. The page carries an extremely heavy third-party script payload loaded in `<head>`. Bot protection (Kasada/KPSDK) is misfiring with 429s against its own fingerprinting endpoint. Nine axe violations present on Homepage, including one critical and one serious. LCP and CLS could not be captured — instrumentation gap.\n\n---\n\n## Accessibility\n\n| Severity | Rule | Impact |\n|---|---|---|\n| Critical | `aria-required-parent` | ARIA roles orphaned from required parent containers — screen readers will misinterpret or skip these elements entirely |\n| Serious | `link-name` | Links with no discernible text — likely bare icon/image links missing `aria-label` or inner text |\n| Moderate | `landmark-main-is-top-level`, `landmark-no-duplicate-main` | Multiple `<main>` elements detected; only one is permitted and it must be a direct child of `<body>` |\n| Moderate | `landmark-complementary-is-top-level` | `<aside>` nested inside another landmark — must be top-level |\n| Moderate | `landmark-unique` | Repeated landmark roles without distinguishing labels |\n| Moderate | `heading-order` | Non-sequential heading levels (e.g. h1 → h3) — breaks document outline for AT and crawlers |\n| Moderate | `region` | Content outside any landmark region — invisible to landmark navigation |\n| Minor | `aria-allowed-role` | `role` attribute value invalid for the host element |\n\n**Priority fixes:** `aria-required-parent` (critical) and `link-name` (serious) should be addressed first. The landmark cluster (5 violations) likely traces to a single structural issue — a nested `<main>` or mis-scoped `<aside>` — so fixing the DOM structure may clear all five at once.\n\n---\n\n## SEO\n\n- `<html lang=\"en\">` is set correctly.\n- Heading order violations directly harm crawler document-outline parsing and can suppress rich results.\n- No canonical, meta description, or structured data visible in the truncated HTML sample — cannot confirm presence or absence; full `<head>` review needed.\n- Duplicate Yahoo `ytc.js` loaded twice — not an SEO issue directly, but indicates tag manager hygiene problems that could produce duplicate event fires and skew analytics-driven SEO decisions.\n\n---\n\n## Performance\n\n- **TTFB 44ms** — excellent; origin response is fast.\n- **LCP / CLS not captured** — metrics pipeline needs instrumentation (e.g. `web-vitals` library reporting to an endpoint, or RUM via Quantum Metric if already deployed).\n- **Third-party script count is high.** Scripts loaded in `<head>` (all `async`):\n  - Pinterest, TikTok (×2), Google Tag Manager, GTM destinations (×3), Bloomreach, CreativeCdn, Impact, Quantum Metric, Reddit, Yahoo (×2 — duplicate), Bing, Monetate (×2), Google Analytics, Tune/Go2SDK, WebFont Loader — **~17–18 third-party script requests** before first paint.\n  - `async` prevents parser blocking but each script still consumes DNS + TCP + TLS + download budget. On a cold mobile connection this degrades LCP.\n- **WebFont Loader** (`webfontloader.js`) loads Mulish in 5 weights client-side. This is a render-blocking pattern — the FOUT/FOIT window is observable in the `wf-*` classes applied to `<html>`. Prefer `<link rel=\"preload\">` + `font-display: swap` with self-hosted or Google Fonts CDN directly.\n- **Inline `--vh` custom property** (`style=\"--vh: 6.64px\"`) is set via JavaScript. This is a known mobile viewport-height workaround, but it triggers a synchronous style recalculation on every resize/scroll event if unthrottled.\n- **Monetate loaded twice** (`se.monetate.net/js/3/...` and `se.monetate.net/js/2/...`) — verify this is intentional (custom + entry) and not a misconfiguration.\n\n---\n\n## Mobile Optimization\n\n- The `--vh` hack is present and functional, suggesting the team is aware of mobile browser chrome height issues. Ensure the resize handler is debounced/throttled.\n- No `<meta name=\"viewport\">` visible in the truncated sample — must be present and set to `width=device-width, initial-scale=1`. Its absence would cause the desktop layout to render at full width on mobile.\n- Font weights (n3/n4/n5/n6/n7 of Mulish) all appear to load regardless of usage. Subsetting and limiting to weights actually used would reduce font payload on mobile.\n\n---\n\n## Console & Network Errors\n\n**429 on Kasada KPSDK fingerprinting endpoint:**\n```\nhttps://www.skechers.com/149e9513-.../fp?x-kpsdk-v=j-1.2.291\n```\n- This is the Kasada bot-protection fingerprinting (`/fp`) call being rate-limited by the site's own infrastructure.\n- Two identical requests hitting 429 indicates either a retry loop in the KPSDK client SDK or a misconfigured rate limit on the `/fp` route.\n- **Impact:** If fingerprinting fails, Kasada cannot build a valid session token, which may cause downstream bot-protection challenges to fire against legitimate users, or silently degrade bot detection accuracy.\n- **Action:** Check the KPSDK integration version (`j-1.2.291`) against Kasada's current recommended version, and verify the `/fp` endpoint is excluded from any CDN or WAF rate-limiting rules.\n\n---\n\n## Recommendations\n\n1. **[Critical]** Fix `aria-required-parent` — audit all ARIA role assignments and wrap them in the correct parent roles per the ARIA spec.\n2. **[Serious]** Add `aria-label` or visible text to all bare links (`link-name` violation) — particularly icon-only nav/social links.\n3. **[Moderate]** Audit and deduplicate landmark structure — locate the nested `<main>` and mis-scoped `<aside>` and correct the DOM hierarchy to resolve 5 landmark violations in one change.\n4. **[Moderate]** Fix heading order — ensure `h1` → `h2` → `h3` progression with no skipped levels.\n5. **[High]** Investigate and resolve the KPSDK 429 loop — contact Kasada support, check WAF/CDN rules for the `/fp` path, and confirm SDK version compatibility.\n6. **[Medium]** Remove the duplicate Yahoo `ytc.js` tag — audit GTM container for duplicate tag firing rules.\n7. **[Medium]** Instrument LCP and CLS capture — without these metrics the performance baseline is incomplete.\n8. **[Medium]** Replace WebFont Loader with `<link rel=\"preload\">` + CSS `font-display: swap` and self-host or directly reference Google Fonts to eliminate the JS-driven font loading FOUT window.\n9. **[Low]** Audit the full third-party script list against actual business requirements — defer or remove any tags not contributing to conversion or compliance.",
+    "score": "3/10",
+    "raw_markdown": "---\n\n# Walker Miles — Skechers.com Mobile Experience Review\n**Date:** March 28, 2026 | **Compared to yesterday:** 2/10\n\n---\n\n## 1. Executive Summary\n\nWell, I'll be honest with you — this is rough. I picked up my phone to buy a pair of Slip-ins like I've done a dozen times, and I couldn't get through the front door. The login page went completely blank. The hamburger menu did nothing. I couldn't tap into a product. The cart was a white screen. If I didn't already know the URL for Men's Shoes by heart, I'd have given up after two minutes. The homepage looks nice enough, and the search mostly works, but you can't run a shoe store where a guy can't log in and can't buy anything. This is not a shopping experience — it's a frustrating obstacle course.\n\n---\n\n## 2. Business Impact Score: 3/10\n\n**Marginal improvement from yesterday's 2/10.** The homepage loads cleanly this time, and Men's Shoes is directly accessible by URL. The BOGO deal is prominently shown. But login, mobile navigation, product pages, add-to-cart, and the cart itself are all either blank or broken. That's the entire purchase funnel gone. A loyal Skechers Plus member like me can't even sign in to use my benefits.\n\n---\n\n## 3. What's Working\n\n- **Homepage loaded cleanly.** The BOGO 50% OFF banner hit me right at the top — I noticed it immediately. Good real estate for a deal-conscious guy like me.\n- **Popup dismissed without drama.** After the popup cleared, the Skechers Plus \"Free Shipping\" offer appeared in that sub-banner. That's relevant to me as a member. No fight required to close anything.\n- **Men's Shoes page loads and looks solid.** \"Hands Free Slip-Ins\" is the very first category tile — that's exactly what I'm looking for and it's right there front and center. Good call. 620 results, clear Filter and Sort controls, reasonable text size.\n- **Search returns slip-in results.** Typing \"slip in\" got me 1,017 results. The search engine understood what I wanted.\n- **BOGO deal is consistent.** I saw it on every single page that loaded. If this is a real promotion, the visibility is excellent.\n\n---\n\n## 4. What's Weak\n\n- **Login page is a blank white screen.** Completely empty. I tapped the account icon, and nothing happened — no form, no fields, no buttons. I'm a Skechers Plus member. My points, my free shipping, my saved sizes — all locked away behind a broken door. This is the single biggest failure.\n- **Mobile menu is dead.** Couldn't open the hamburger menu at all. As someone who navigates menus rather than typing URLs, this cuts off my main way of moving around the site.\n- **Product pages never loaded.** Got stuck on the category page. I can see the Hands Free Slip-Ins tile sitting right there and I can't tap into it. That's like walking to the shoe shelf and having an invisible wall stop me.\n- **Add to Cart never happened.** No product page, no \"Add to Cart\" button ever appeared. The whole purchase attempt collapsed.\n- **Cart is a blank white screen.** When the system tried to take me to my cart, there was nothing there. Not even an error. Just white.\n- **Search shows Women's first.** I searched \"slip in\" and the first two results shown are both Women's shoes. I'm a 62-year-old man — I want Men's Slip-ins. There's no personalization happening here at all.\n- **\"GET 20% OFF\" pop-in is intrusive.** A dark banner kept sliding up from the bottom of the Men's Shoes page, covering the Filter controls. I can handle it, but it's annoying when I'm trying to use those buttons.\n- **No sense that the site knows who I am.** Even on the steps that worked, nothing said \"Welcome back, Walker\" or showed my member status. Complete strangers and loyal Plus members get the exact same experience.\n\n---\n\n## 5. Recommendations\n\n1. **Fix the login page immediately.** This is a complete failure for returning customers and member-program loyalty. A blank login screen is unacceptable on any device.\n2. **Test the mobile hamburger menu weekly.** It's the primary navigation for phone users. If it's broken, the whole site is broken for mobile.\n3. **Fix product tap-throughs from category pages.** The invisible element blocking clicks on the Men's Shoes tiles needs a developer looking at it today.\n4. **Render the cart.** A blank cart page at the end of a shopping session is the most direct path to losing a sale.\n5. **Filter search results by gender when the user is logged in.** A signed-in male member searching \"slip in\" should see Men's results first by default.\n6. **Reduce pop-in frequency on the category page.** The \"GET 20% OFF\" bar is showing up on top of navigation controls.\n\n---\n\n## 6. Bottom Line\n\nI've been buying Skechers for years. I know their shoes, I trust the brand, and I'm already in their loyalty program. If I can't log in, can't navigate the menu, can't tap a product, and can't see my cart — I'm going to walk into a store instead or buy from someone else. This site is failing its most loyal customers on mobile. Yesterday was a 2/10. Today I'm calling it **3/10** — the homepage and Men's Shoes page are a little better, and search kinda works, but the purchase funnel is completely broken from login through checkout. That's not a mobile experience. That's a placeholder.\n\n---\n\n## 7. Evidence\n\n**Step 1 — Homepage**\nWhat I saw: Clean, bright homepage. BOGO 50% OFF across the top banner. \"Spring Style Guide\" sub-banner. Family lifestyle photo, \"SPRING SHOPPING GUIDE\" headline, dark \"SHOP NOW\" button. Easy to read without zooming. Icons for search, account, bag, and MENU are small but workable. Not personalized — no mention of my account or Plus status. Nothing targeted at men's comfort/slip-ins on first load.\n\n**Step 2 — Dismiss Popups**\nWhat I saw: Same homepage, but the sub-banner switched to \"Free Shipping with Skechers Plus Join Now for free.\" That's relevant to me as a Plus member, even though I wasn't logged in. No intrusive modal popup to fight. This was smooth and easy. One small bright spot.\n\n**Step 3 — Login**\nWhat I saw: A completely blank white screen. Nothing. No form, no fields, no Skechers branding. The system timed out trying to find the email input. From my perspective as a user, I tapped the account icon and the page just... died. Completely unacceptable. I'd assume the site is down and probably call customer service or leave.\n\n**Step 4 — Men's Category**\nWhat I saw: Another blank white screen. The system tried to tap the mobile menu button and couldn't find it. From my perspective, I tapped the hamburger menu icon and nothing opened. The site is navigationally locked on mobile. I'd be completely stuck here.\n\n**Step 5 — Men's Shoes**\nWhat I saw: A proper, working page. \"Men's Shoes\" heading with a description about comfort and lifestyle. Category tiles showing \"Hands Free Slip-Ins\" first — exactly what I want — followed by \"Athletic Sneakers.\" 620 results count displayed. Filter and Sort by controls at the bottom. The layout is readable on mobile; text is reasonably sized. The \"Hands Free Slip-Ins\" placement at the front is good merchandising for my persona. This is the one step that consistently works.\n\n**Step 6 — View Product**\nWhat I saw: Same Men's Shoes category page, but now with a dark \"GET 20% OFF X\" bar sliding up from the bottom, partially obscuring the Filter button. The system couldn't click through to an individual product — the link was hidden behind another element. From my perspective, I see the Slip-Ins tile, I tap it, and nothing happens. I might try a few more times, get frustrated, and give up.\n\n**Step 7 — Add to Cart**\nWhat I saw: Men's Shoes category page again, this time with a new \"Find the Perfect Pair with our Shoe Finder. Get Started\" banner and the continuing \"GET 20% OFF\" bar at the bottom. Never got to a product page. No Add to Cart button ever appeared. The Shoe Finder feature is actually a potentially good idea for someone like me who cares about comfort tech, but I never got to test it because I'm stuck on the category page.\n\n**Step 8 — View Cart**\nWhat I saw: Blank white screen. Complete page failure. I never actually added anything to the cart (since the product page was inaccessible), but even navigating to the cart URL directly returned nothing. If I somehow got something in my cart through another path, I'd open the cart and see white. I'd think I lost my items.\n\n**Step 9 — Search**\nWhat I saw: Search results page for \"SLIP IN\" — 1,017 results shown. The heading reads \"SLIP IN\" and result count \"(1017)\" is visible below. Filter and Sort by controls are present. However, the first two visible products are both labeled **Women's** — \"Skechers Slip-ins: Arch Fit Arcade - See Ya There\" and \"Skechers Slip-ins: Contour Foam - Cozy Fit.\" As a 62-year-old man shopping for myself, seeing Women's shoes first is disorienting. There's no gender filter applied by default even though it could reasonably infer my preference. The results are slip-in relevant, which is good, but the Women's-first ordering would send me scrolling or bouncing.\n\n---\n\n## Technical Audit\n\n## Technical Summary\n\nThe audit covers 4 steps: Homepage, Men's Shoes category, View Cart, and Search. Two critical infrastructure issues dominate: the View Cart page is being intercepted by **Kasada bot protection** (serving a JS challenge page instead of cart content), and all 5 network/console errors are HTTP 429s from that same bot detection system. LCP and CLS were not captured on any step, indicating incomplete Web Vitals instrumentation.\n\n---\n\n## Accessibility\n\n**21 violations across 4 pages. Severity breakdown:**\n\n| Severity | Count |\n|---|---|\n| Critical | 1 |\n| Serious | 3 |\n| Moderate | 13 |\n| Minor | 4 |\n\n**Critical/Serious:**\n- **`aria-required-parent` (critical) — Homepage:** ARIA role present without required ancestor role in DOM. Likely a carousel or listitem component rendered outside its required container.\n- **`link-name` (serious) — Homepage:** One or more `<a>` elements have no accessible text — no visible text, no `aria-label`, no `title`. Screen readers announce as blank links.\n- **`document-title` (serious) — View Cart:** `<title>` element is absent. The View Cart source confirms this: `<!DOCTYPE html><html><head></head>` — the Kasada interstitial page has an empty `<head>`.\n- **`html-has-lang` (serious) — View Cart:** Same root cause — Kasada challenge page emits `<html>` without `lang` attribute.\n\n**Structural/Landmark issues (recurring across pages):**\n- `landmark-no-duplicate-main`, `landmark-main-is-top-level`, `landmark-one-main`, `landmark-complementary-is-top-level`, `landmark-unique`, `region` — these appear on Homepage, Men's Shoes, and Search. Indicates a deeply nested or duplicated `<main>`/`<aside>` landmark structure, likely caused by CMS template composition or injected widget markup.\n- `heading-order` (Homepage) and `page-has-heading-one` (View Cart) — heading hierarchy is broken or entirely absent.\n\n**Minor:**\n- `aria-allowed-role` (Homepage, Men's Shoes): Likely `role` applied to elements that don't permit it (e.g., `role=\"listitem\"` on a `<div>` that is itself a child of a non-list element).\n- `image-redundant-alt` (Men's Shoes): `alt` text duplicates visible caption text.\n\n---\n\n## SEO\n\n- **View Cart page is un-crawlable.** The Kasada bot protection challenge page is what Googlebot would receive. It has no `<title>`, no `lang`, no `<main>`, no `<h1>`, and no indexable content — only a JS fingerprinting payload.\n- **Duplicate GTM/GA IDs in script tags:** Two Google Analytics destination IDs appear side-by-side — `G-XZTV9LQ9DQ` and `G-1234567890` (the latter appears to be a placeholder/test ID that leaked to production). This would cause double-firing of GA4 events and inflated session counts.\n- Homepage and Men's Shoes have `lang=\"en\"` on `<html>` — correct.\n- No canonical tag issues visible in the truncated source.\n\n---\n\n## Performance\n\n| Page | TTFB | LCP | CLS |\n|---|---|---|---|\n| Homepage | 34ms | Not captured | Not captured |\n| Men's Shoes | 60ms | Not captured | Not captured |\n| View Cart | **184ms** | Not captured | Not captured |\n| Search | 36ms | Not captured | Not captured |\n\n- **TTFB is acceptable** on 3 of 4 pages. View Cart's 184ms is elevated — likely overhead from the Kasada challenge layer adding a round-trip before serving content.\n- **LCP and CLS were not measured on any page.** The instrumentation did not capture these Core Web Vitals. Without LCP, it's unknown whether the above-the-fold image/text paint is within the 2.5s threshold. This is a gap in the audit tooling, not necessarily a site failure — but it needs to be fixed.\n- **Third-party script payload is heavy.** Each page loads 14–16 third-party scripts: TikTok Pixel (×2 files), Google Tag Manager, 4 separate GA/Ads destination scripts, Monetate (×2), Pinterest, Bloomreach, QuantumMetric, Reddit Pixel, Yahoo/Yimg (**loaded twice** — duplicate tag on Homepage and Men's Shoes), Bing BAT, Impact.com, Tune, TrustArc. This directly competes with LCP resources on mobile.\n- **Duplicate Yahoo script** (`s.yimg.com/wi/ytc.js` appears twice in Homepage and Men's Shoes `<head>`) — wasted request.\n\n---\n\n## Mobile Optimization\n\n- **Viewport height workaround active:** All pages inject `style=\"--vh: 6.640000000000001px;\"` on `<html>` at runtime. This is a JS-based fix for the `100vh` bug in mobile Safari/Chrome where the browser chrome affects the viewport. The raw float value (`6.64px` × 100 = `664px`) confirms it's calculating `window.innerHeight / 100`. This is a known pattern but introduces a layout dependency on JS execution before paint.\n- **WebFont loading via WebFontLoader JS** (`webfontloader.js` from cdnjs): This library triggers FOUT (Flash of Unstyled Text) on slow connections. The `wf-*-active` classes on `<html>` confirm it controls font rendering. Modern `font-display: swap` in CSS `@font-face` would be preferable and eliminates the JS dependency.\n- No `<meta name=\"viewport\">` visible in truncated source, but the `--vh` JS calculation implies one is present — cannot confirm `width=device-width, initial-scale=1` without full source.\n\n---\n\n## Console & Network Errors\n\nAll 5 console errors and all 5 network errors are **HTTP 429 (Too Many Requests)** from the same source:\n\n| URL | Count |\n|---|---|\n| `/149e9513-.../fp?x-kpsdk-v=j-1.2.291` | 3 |\n| `/login/` | 1 |\n| `/cart/` | 1 |\n\n**Root cause: Kasada bot protection.** The GUID-prefixed path (`/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/`) is Kasada's challenge infrastructure embedded at the origin. The `fp` endpoint is a browser fingerprinting probe. The 429s indicate the automated browser session was flagged and rate-limited before completing the fingerprint challenge.\n\nThis is expected behavior when running automated Playwright/Puppeteer tests against Kasada-protected pages — the bot detection correctly identified the headless browser. However, it means **the View Cart and Login page measurements are invalid** — the page content was never served.\n\nThe View Cart HTML confirms this: the source is the raw Kasada challenge page (`window.KPSDK={}; KPSDK.start=...`) with an injected `<script src=\"/149e9513-.../ips.js\">` (Kasada's integrity protection script), not the actual cart.\n\n---\n\n## Recommendations\n\n1. **Fix the audit tooling for Kasada-protected pages.** Cart and Login data is unusable. Options: use a session cookie from a real authenticated browser session, add the test IP/UA to a Kasada allowlist, or use Kasada's official testing bypass if available.\n\n2. **Add LCP and CLS instrumentation.** Without these, the audit cannot assess Core Web Vitals compliance. Use `PerformanceObserver` with `largest-contentful-paint` and `layout-shift` entry types, or ensure the test runner captures them via `page.evaluate()` after `load`.\n\n3. **Remove duplicate `s.yimg.com/wi/ytc.js` script tag** on Homepage and Men's Shoes — one request is wasted.\n\n4. **Remove or replace the test GA4 ID `G-1234567890`** on all pages — this appears to be a placeholder that shipped to production alongside the real ID `G-XZTV9LQ9DQ`.\n\n5. **Fix `aria-required-parent` (critical)** — audit the component that renders the orphaned ARIA role child and wrap it in the correct parent role container.\n\n6. **Add `aria-label` to anonymous `<a>` elements** on Homepage to resolve the `link-name` serious violation.\n\n7. **Fix duplicated/nested landmark structure** (homepage, Men's Shoes, Search) — audit template composition to ensure only one `<main>` exists per page and `<aside>` elements are at top level.\n\n8. **Replace WebFontLoader with `font-display: swap`** in CSS `@font-face` declarations to eliminate JS-gated font rendering on mobile.",
     "sections": {}
   },
   "qa": {
     "summary": {
       "overall_pass_rate": "0%",
-      "total_checks": 13,
+      "total_checks": 30,
       "total_issues": 1,
-      "total_warnings": 12
+      "total_warnings": 29
     },
     "categories": {
       "broken_experience": {
@@ -34,6 +34,27 @@
             "label": "HTTP 429",
             "detail": "Failed request",
             "url": "https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.291"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/login/"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.291"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/cart/"
           },
           {
             "check_id": "network_429",
@@ -102,6 +123,72 @@
             "status": "warn",
             "label": "region",
             "detail": "Ensure all page content is contained by landmarks (Homepage)"
+          },
+          {
+            "check_id": "axe_aria-allowed-role",
+            "status": "warn",
+            "label": "aria-allowed-role",
+            "detail": "Ensure role attribute has an appropriate value for the element (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_image-redundant-alt",
+            "status": "warn",
+            "label": "image-redundant-alt",
+            "detail": "Ensure image alternative is not repeated as text (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_landmark-complementary-is-top-level",
+            "status": "warn",
+            "label": "landmark-complementary-is-top-level",
+            "detail": "Ensure the complementary landmark or aside is at top level (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_landmark-unique",
+            "status": "warn",
+            "label": "landmark-unique",
+            "detail": "Ensure landmarks are unique (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_region",
+            "status": "warn",
+            "label": "region",
+            "detail": "Ensure all page content is contained by landmarks (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_document-title",
+            "status": "warn",
+            "label": "document-title",
+            "detail": "Ensure each HTML document contains a non-empty <title> element (View Cart)"
+          },
+          {
+            "check_id": "axe_html-has-lang",
+            "status": "warn",
+            "label": "html-has-lang",
+            "detail": "Ensure every HTML document has a lang attribute (View Cart)"
+          },
+          {
+            "check_id": "axe_landmark-one-main",
+            "status": "warn",
+            "label": "landmark-one-main",
+            "detail": "Ensure the document has a main landmark (View Cart)"
+          },
+          {
+            "check_id": "axe_page-has-heading-one",
+            "status": "warn",
+            "label": "page-has-heading-one",
+            "detail": "Ensure that the page, or at least one of its frames contains a level-one heading (View Cart)"
+          },
+          {
+            "check_id": "axe_landmark-complementary-is-top-level",
+            "status": "warn",
+            "label": "landmark-complementary-is-top-level",
+            "detail": "Ensure the complementary landmark or aside is at top level (Search)"
+          },
+          {
+            "check_id": "axe_landmark-unique",
+            "status": "warn",
+            "label": "landmark-unique",
+            "detail": "Ensure landmarks are unique (Search)"
           }
         ]
       },
@@ -122,7 +209,28 @@
             "status": "warn",
             "label": "Console error",
             "detail": "Failed to load resource: the server responded with a status of 429 ()",
-            "url": "https://www.skechers.com/"
+            "url": "https://www.skechers.com/login/"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/men/shoes/"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/cart/"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/search/?q=slip%20in"
           }
         ]
       }
@@ -154,7 +262,7 @@
         "label": "Log In",
         "viewport_screenshot": "step-03-login-viewport.png",
         "fullpage_screenshot": "step-03-login-fullpage.png",
-        "url": "https://www.skechers.com/",
+        "url": "https://www.skechers.com/login/",
         "status": "failed"
       },
       {
@@ -162,7 +270,7 @@
         "label": "Men's Category",
         "viewport_screenshot": "step-04-mens-category-viewport.png",
         "fullpage_screenshot": "step-04-mens-category-fullpage.png",
-        "url": "https://www.skechers.com/",
+        "url": "https://www.skechers.com/login/",
         "status": "failed"
       },
       {
@@ -170,15 +278,15 @@
         "label": "Men's Shoes",
         "viewport_screenshot": "step-05-mens-shoes-viewport.png",
         "fullpage_screenshot": "step-05-mens-shoes-fullpage.png",
-        "url": "https://www.skechers.com/",
-        "status": "failed"
+        "url": "https://www.skechers.com/men/shoes/",
+        "status": "ok"
       },
       {
         "step": 6,
         "label": "View Product",
         "viewport_screenshot": "step-06-product-viewport.png",
         "fullpage_screenshot": "step-06-product-fullpage.png",
-        "url": "https://www.skechers.com/",
+        "url": "https://www.skechers.com/men/shoes/",
         "status": "failed"
       },
       {
@@ -186,7 +294,7 @@
         "label": "Add to Cart",
         "viewport_screenshot": "step-07-add-to-cart-viewport.png",
         "fullpage_screenshot": "step-07-add-to-cart-fullpage.png",
-        "url": "https://www.skechers.com/",
+        "url": "https://www.skechers.com/men/shoes/",
         "status": "failed"
       },
       {
@@ -194,16 +302,16 @@
         "label": "View Cart",
         "viewport_screenshot": "step-08-cart-viewport.png",
         "fullpage_screenshot": "step-08-cart-fullpage.png",
-        "url": "https://www.skechers.com/",
-        "status": "failed"
+        "url": "https://www.skechers.com/cart/",
+        "status": "ok"
       },
       {
         "step": 9,
         "label": "Search",
         "viewport_screenshot": "step-09-search-viewport.png",
         "fullpage_screenshot": "step-09-search-fullpage.png",
-        "url": "https://www.skechers.com/",
-        "status": "failed"
+        "url": "https://www.skechers.com/search/?q=slip%20in",
+        "status": "ok"
       }
     ]
   },
@@ -213,7 +321,31 @@
         "step": 1,
         "label": "Homepage",
         "url": "https://www.skechers.com/",
-        "ttfb_ms": 44,
+        "ttfb_ms": 34,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 5,
+        "label": "Men's Shoes",
+        "url": "https://www.skechers.com/men/shoes/",
+        "ttfb_ms": 60,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 8,
+        "label": "View Cart",
+        "url": "https://www.skechers.com/cart/",
+        "ttfb_ms": 184,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 9,
+        "label": "Search",
+        "url": "https://www.skechers.com/search/?q=slip%20in",
+        "ttfb_ms": 36,
         "lcp_ms": null,
         "cls": null
       }

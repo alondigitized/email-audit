@@ -3,13 +3,13 @@
     "slug": "2026-03-28-site-journey-walker",
     "subject": "Daily Journey: Walker Miles on www.skechers.com",
     "from_display_name": "www.skechers.com",
-    "timestamp_iso": "2026-03-28T21:05:54.953Z",
-    "score": "2/10",
+    "timestamp_iso": "2026-03-28T21:13:06.020Z",
+    "score": "3/10",
     "qa_summary": {
       "overall_pass_rate": "0%",
-      "total_checks": 13,
+      "total_checks": 30,
       "total_issues": 1,
-      "total_warnings": 12
+      "total_warnings": 29
     },
     "has_image": true,
     "type": "site",
