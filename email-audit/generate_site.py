@@ -184,11 +184,14 @@ def build_audit_data(entry, msg, review_text, qa_report, slug):
     dt = parse_timestamp(msg)
     cleaned_review = strip_preamble(review_text)
 
+    artifact_dir = entry.get("artifactDir", "")
     render_exists = os.path.exists(
-        os.path.join(entry.get("artifactDir", ""), "email-webview-render.png")
+        os.path.join(artifact_dir, "email-webview-render.png")
     )
     pdf_path = entry.get("pdfPath", "")
     pdf_exists = bool(pdf_path) and os.path.exists(pdf_path)
+
+    webview_url = read_file(os.path.join(artifact_dir, "webview-url.txt")).strip()
 
     return {
         "schema_version": 1,
@@ -209,6 +212,7 @@ def build_audit_data(entry, msg, review_text, qa_report, slug):
         "assets": {
             "render_image": f"{slug}-email-webview-render.png" if render_exists else None,
             "pdf": f"{slug}-review.pdf" if pdf_exists else None,
+            "webview_url": webview_url or None,
         },
     }
 

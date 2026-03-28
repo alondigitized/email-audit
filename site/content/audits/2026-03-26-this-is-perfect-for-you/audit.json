@@ -105,6 +105,7 @@
   "qa": null,
   "assets": {
     "render_image": "2026-03-26-this-is-perfect-for-you-email-webview-render.png",
-    "pdf": "2026-03-26-this-is-perfect-for-you-review.pdf"
+    "pdf": "2026-03-26-this-is-perfect-for-you-review.pdf",
+    "webview_url": null
   }
 }

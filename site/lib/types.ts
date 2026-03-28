@@ -17,6 +17,7 @@ export interface AuditData {
   assets: {
     render_image: string | null;
     pdf: string | null;
+    webview_url: string | null;
   };
 }
 

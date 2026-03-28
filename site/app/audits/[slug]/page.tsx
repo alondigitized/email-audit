@@ -45,7 +45,7 @@ function TwoColLayout({
   );
 }
 
-function EmailImage({ slug }: { slug: string }) {
+function EmailImage({ slug, webviewUrl }: { slug: string; webviewUrl?: string | null }) {
   return (
     <div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -54,6 +54,16 @@ function EmailImage({ slug }: { slug: string }) {
         alt="Email webview render"
         className="w-full border border-gray-200 rounded-2xl"
       />
+      {webviewUrl && (
+        <a
+          href={webviewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block text-center text-sm text-muted mt-2 hover:text-ink transition-colors"
+        >
+          View original email &rarr;
+        </a>
+      )}
     </div>
   );
 }
@@ -112,7 +122,7 @@ export default async function AuditPage({
                     <ReviewContent markdown={content} />
                   </div>
                 }
-                right={<EmailImage slug={slug} />}
+                right={<EmailImage slug={slug} webviewUrl={assets.webview_url} />}
               />
             ),
           },
@@ -132,7 +142,7 @@ export default async function AuditPage({
                       <div />
                     )
                   }
-                  right={<EmailImage slug={slug} />}
+                  right={<EmailImage slug={slug} webviewUrl={assets.webview_url} />}
                 />
                 <QaCard qa={qa} />
               </div>

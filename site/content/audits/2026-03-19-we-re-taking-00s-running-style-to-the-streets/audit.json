@@ -435,6 +435,7 @@
   },
   "assets": {
     "render_image": "2026-03-19-we-re-taking-00s-running-style-to-the-streets-email-webview-render.png",
-    "pdf": "2026-03-19-we-re-taking-00s-running-style-to-the-streets-review.pdf"
+    "pdf": "2026-03-19-we-re-taking-00s-running-style-to-the-streets-review.pdf",
+    "webview_url": null
   }
 }

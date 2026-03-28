@@ -347,6 +347,7 @@
   },
   "assets": {
     "render_image": "2026-03-23-last-day-to-redeem-your-voucher-email-webview-render.png",
-    "pdf": "2026-03-23-last-day-to-redeem-your-voucher-review.pdf"
+    "pdf": "2026-03-23-last-day-to-redeem-your-voucher-review.pdf",
+    "webview_url": null
   }
 }

@@ -158,6 +158,7 @@
   },
   "assets": {
     "render_image": "2026-03-26-fwd-welcome-to-skechers-email-webview-render.png",
-    "pdf": "2026-03-26-fwd-welcome-to-skechers-review.pdf"
+    "pdf": "2026-03-26-fwd-welcome-to-skechers-review.pdf",
+    "webview_url": null
   }
 }
