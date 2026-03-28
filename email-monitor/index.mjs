@@ -576,8 +576,16 @@ async function processMessage(client, state, message, source = 'unknown') {
     } catch (err) {
       log('telegram text send failed (non-fatal)', { id, error: String(err).slice(0, 500) });
     }
+    // Generate PDF (non-fatal — site publishing should not depend on PDF success)
     const qaReportPath = path.join(artifacts.dir, 'qa-report.json');
-    const pdfPath = await generatePdf(artifacts, reviewText, qaReportPath);
+    let pdfPath = '';
+    try {
+      pdfPath = await generatePdf(artifacts, reviewText, qaReportPath);
+    } catch (err) {
+      log('pdf generation failed (non-fatal)', { id, error: String(err).slice(0, 500) });
+    }
+
+    // Publish to site — this is the critical path
     updatePublishedManifest({
       messageId: id,
       subject: fullMessage.subject,
@@ -592,7 +600,15 @@ async function processMessage(client, state, message, source = 'unknown') {
     } catch (err) {
       log('site publish failed (non-fatal)', { id, error: String(err).slice(0, 500) });
     }
-    await sendPdf(pdfPath, path.basename(pdfPath), `Automated one-pager PDF for: ${fullMessage.subject}`);
+
+    // Send PDF via Telegram if available
+    if (pdfPath) {
+      try {
+        await sendPdf(pdfPath, path.basename(pdfPath), `Automated one-pager PDF for: ${fullMessage.subject}`);
+      } catch (err) {
+        log('telegram pdf send failed (non-fatal)', { id, error: String(err).slice(0, 500) });
+      }
+    }
     markSeen(state, id);
     log('message completed', { id, source, pdfPath, rendered: !!rendered, published });
   } catch (err) {
