@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-03-28-the-messi-collection",
+    "subject": "The Messi collection",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-28T03:09:00+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true
+  },
+  {
     "slug": "2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for",
     "subject": "[Test]: MKG_US_NA_U_BEST_GENDER_EN_03292026The Styles Everyone's Searching For",
     "from_display_name": "SKECHERS",
@@ -206,7 +220,7 @@
   },
   {
     "slug": "2026-03-23-last-day-to-redeem-your-voucher",
-    "subject": "⏳ Last day to redeem your voucher",
+    "subject": "\u23f3 Last day to redeem your voucher",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-23T16:43:15+00:00",
     "score": "6/10",
@@ -220,7 +234,7 @@
   },
   {
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off",
-    "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
+    "subject": "Your First Pair Just Became 2 \u2014 BOGO 50% Off!",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-03-23T15:13:13+00:00",
     "score": "5/10",

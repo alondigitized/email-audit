@@ -134,14 +134,14 @@
   },
   {
     "messageId": "<28085ed0-fc0e-4865-8a8f-c629a288140a@dfw1s10mta512.xt.local>",
-    "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
+    "subject": "Your First Pair Just Became 2 \u2014 BOGO 50% Off!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-23-your-first-pair-just-became-2-bogo-50-off",
     "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-23-your-first-pair-just-became-2-bogo-50-off-review.pdf",
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off"
   },
   {
     "messageId": "<85b7defb-799e-433c-972b-2e1a78c1a9dc@ind1s01mta1408.xt.local>",
-    "subject": "⏳ Last day to redeem your voucher",
+    "subject": "\u23f3 Last day to redeem your voucher",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-23-last-day-to-redeem-your-voucher",
     "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-23-last-day-to-redeem-your-voucher-review.pdf",
     "slug": "2026-03-23-last-day-to-redeem-your-voucher"
@@ -250,5 +250,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for",
     "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for-review.pdf",
     "slug": "2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for"
+  },
+  {
+    "messageId": "<0102019d326a9c73-47e3b8b6-d528-4ef2-828e-6812a6bc9c8d-000000@eu-west-1.amazonses.com>",
+    "subject": "The Messi collection",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-28-the-messi-collection",
+    "pdfPath": "",
+    "slug": "2026-03-28-the-messi-collection"
   }
 ]
