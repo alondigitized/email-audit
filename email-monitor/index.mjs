@@ -19,6 +19,7 @@ const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || 'main';
 const OPENCLAW_PROFILE = process.env.OPENCLAW_PROFILE || 'walker';
 const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG_PATH || '/Users/alontsang/.openclaw-walker/openclaw.json';
 const OPENCLAW_STATE_DIR = process.env.OPENCLAW_STATE_DIR || '/Users/alontsang/.openclaw-walker';
+const SITE_BASE_URL = process.env.SITE_BASE_URL || 'https://email-audit-git-main-alons-projects-c876f5a6.vercel.app';
 const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS || 15000);
 const STARTUP_LOOKBACK = Number(process.env.STARTUP_LOOKBACK || 10);
 const STATE_PATH = path.join(__dirname, 'state.json');
@@ -571,26 +572,15 @@ async function processMessage(client, state, message, source = 'unknown') {
       ? mergeReviews(contentReview, technicalReview)
       : technicalReview;
 
-    try {
-      await sendTelegramText(reviewText);
-    } catch (err) {
-      log('telegram text send failed (non-fatal)', { id, error: String(err).slice(0, 500) });
-    }
-    // Generate PDF (non-fatal — site publishing should not depend on PDF success)
-    const qaReportPath = path.join(artifacts.dir, 'qa-report.json');
-    let pdfPath = '';
-    try {
-      pdfPath = await generatePdf(artifacts, reviewText, qaReportPath);
-    } catch (err) {
-      log('pdf generation failed (non-fatal)', { id, error: String(err).slice(0, 500) });
-    }
+    // Save review text to disk
+    fs.writeFileSync(path.join(artifacts.dir, 'review.txt'), reviewText, 'utf8');
 
     // Publish to site — this is the critical path
     updatePublishedManifest({
       messageId: id,
       subject: fullMessage.subject,
       artifactDir: artifacts.dir,
-      pdfPath,
+      pdfPath: '',
       slug: artifacts.slug,
     });
     let published = false;
@@ -601,16 +591,15 @@ async function processMessage(client, state, message, source = 'unknown') {
       log('site publish failed (non-fatal)', { id, error: String(err).slice(0, 500) });
     }
 
-    // Send PDF via Telegram if available
-    if (pdfPath) {
-      try {
-        await sendPdf(pdfPath, path.basename(pdfPath), `Automated one-pager PDF for: ${fullMessage.subject}`);
-      } catch (err) {
-        log('telegram pdf send failed (non-fatal)', { id, error: String(err).slice(0, 500) });
-      }
+    // Send Telegram notification with link to detail page
+    const detailUrl = `${SITE_BASE_URL}/audits/${artifacts.slug}`;
+    try {
+      await sendTelegramText(`New review: ${fullMessage.subject}\n${detailUrl}`);
+    } catch (err) {
+      log('telegram notification failed (non-fatal)', { id, error: String(err).slice(0, 500) });
     }
     markSeen(state, id);
-    log('message completed', { id, source, pdfPath, rendered: !!rendered, published });
+    log('message completed', { id, source, slug: artifacts.slug, rendered: !!rendered, published });
   } catch (err) {
     markFailed(state, id);
     log('message failed; marked failed and will not auto-retry', { id, source, error: String(err) });
