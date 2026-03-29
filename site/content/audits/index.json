@@ -224,6 +224,22 @@
     "persona": null
   },
   {
+    "slug": "2026-03-29-test-pro-us-na-u-bundle-full-en-03272026-v3your-go-to-comfort-times-two",
+    "subject": "[Test]: PRO_US_NA_U_BUNDLE_FULL_EN_03272026_V3Your Go-To Comfort, Times Two",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-26T22:20:33+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-26-this-is-perfect-for-you",
     "subject": "This is perfect for you!",
     "from_display_name": "SKECHERS",
