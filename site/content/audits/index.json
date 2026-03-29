@@ -176,6 +176,22 @@
     "persona": null
   },
   {
+    "slug": "2026-03-29-test-mkg-us-na-m-cozy-gender-en-03282026get-excited-to-step-into-pillow-like-com",
+    "subject": "[Test]: MKG_US_NA_M_COZY_GENDER_EN_03282026Get Excited to Step Into Pillow-Like Comfort",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-26T23:34:33+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-29-test-pro-us-nonpur-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-e",
     "subject": "[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026An Easy Way to Try the Comfort Everyone Talks About",
     "from_display_name": "SKECHERS",
