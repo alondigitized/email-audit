@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-test-pro-us-nonpur-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-e",
+  "email": {
+    "subject": "[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026An Easy Way to Try the Comfort Everyone Talks About",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-26T22:30:35+00:00",
+    "date_formatted": "2026-03-26 22:30 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## Email Review: Skechers BOGO Spring Sale — Non-Purchaser Bundle\n\n---\n\n### 1. Executive Summary\n\nA clean, structurally sound promotional email built around a BOGO 50% off Spring Sale offer. The layout is organized and the product sections are easy to scan. However, this email has a critical pre-send defect: the subject line is an exposed internal test string (`[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026...`), and the preview text renders as raw URL/token garbage. If this deployed to real recipients, inbox deliverability and sender trust would take a hit before anyone even opened it.\n\n---\n\n### 2. Business Impact Score: **5/10**\n\nThe email earns its score on visual execution alone. The subject line and preview text defects are disqualifying for a live send — they alone drop a solid 7 into a 5.\n\n---\n\n### 3. What's Working\n\n- **Hero offer is unmistakable.** BOGO 50% off in bold, large type. No confusion about the value prop.\n- **Three-section product grid works well.** Women's → Men's → Kids' flows logically and broadens appeal for household shoppers. Each section has its own SHOP NOW.\n- **Utility footer is complete.** SMS opt-in, BNPL (Afterpay), curbside pickup, and Find a Store all present. These serve late-funnel hesitation well.\n- **Secondary nav links** (WOMEN / MEN / KIDS / CLOTHING / NEW ARRIVALS / SALE) add discovery without cluttering the body.\n\n---\n\n### 4. What's Weak\n\n- **Subject line is an internal test artifact.** `[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026` is visible to any recipient — exposes campaign naming conventions and signals an unsent/unreviewed email.\n- **Preview text is broken.** It renders raw URLs and token strings rather than compelling copy. First impression in inbox is severely damaged.\n- **\"DISCOUNT APPLIES AT CART\" is easy to miss.** Set in small gray text below the CTAs — an important friction-reducing detail that should be more prominent.\n- **Product shots lack differentiation.** All three sections (Women's, Men's, Kids') show shoes in near-identical flat-lay row format with no callouts, names, or prices. For a non-purchaser audience, there's no hook to any specific style.\n- **No social proof or first-purchase nudge.** The target is non-purchasers. The email doesn't lean into \"why try Skechers\" — no ratings, no testimonial pull-quote, no \"most-loved\" label. It reads like a retention email, not an acquisition email.\n\n---\n\n### 5. Recommendations\n\n1. **Hold send until subject line and preview text are corrected.** Strip the test prefix and internal code. Write a subject like *\"Buy One, Get One 50% Off — Spring Sale Is On\"* and a preview like *\"Shop women's, men's & kids' styles. Discount applies at cart.\"*\n2. **Promote \"Discount applies at cart\" closer to the hero CTA.** Move it immediately below the offer headline, not buried after the buttons.\n3. **Add one named style or \"bestseller\" callout per gender section.** Even one annotated shoe (\"Our #1 Walker\") gives non-purchasers a decision anchor.\n4. **Add a first-purchase trust signal in the hero.** A brief line — *\"Free shipping on your first order\"* or *\"30-day easy returns\"* — reduces the main barrier for a non-purchaser audience.\n5. **Test a single focused CTA.** Two CTAs in the hero (SHOP NOW + FIND A STORE) split attention. For an email audience, lead with SHOP NOW and move Find a Store to the footer.\n\n---\n\n### 6. Bottom Line\n\nSolid bones, broken surface. The email's structure and offer are ready to perform — the BOGO message is clear, the product grid is scannable, and the utility module is well-built. But this cannot go live with the current subject line and preview text. Fix those first. Then consider whether a non-purchaser audience needs more persuasion scaffolding (social proof, style callouts) before this earn its full potential.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Spring Sale BOGO 50% off — drive first purchase from non-buyer segment |\n| **Hero / primary value prop** | BOGO 50% off prominently displayed; SHOP NOW + FIND A STORE CTAs; \"discount at cart\" note present but small |\n| **Membership / benefits** | None present — not a loyalty-focused send |\n| **Product discoverability** | Three rows (Women's, Men's, Kids') with 4 shoes each; uniform layout, no style names or prices visible |\n| **Utility / secondary modules** | SMS opt-in, Afterpay, Curbside Pickup, Find a Store, text nav links — all visible and intact |\n| **Bugs / friction / clarity issues** | Subject line exposes internal test code and campaign ID; preview text renders as raw URL/token strings — both visible in the send metadata at top of render |\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers BUNDLE_NONPURCH Email\n**From:** no-reply@emails.skechers.com | **Campaign:** PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026\n\n---\n\n### 1. Technical Summary\nThis email has a pervasive HTTP-vs-HTTPS image hosting issue affecting the entire `image.emails.skechers.com` CDN, which will cause image blocking in most modern email clients. A secondary concern is an apparent test-send artifact left in the subject line that concatenates the campaign ID directly into visible subject copy.\n\n---\n\n### 2. Link & Tracking Issues\n\n**Subject line concatenation error**\nThe subject line reads: `[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026An Easy Way to Try...` — the campaign ID token and subject copy are merged without a separator, indicating a template rendering failure or a test-send configuration that was never cleaned up before delivery.\n\n**`[Test]:` prefix in subject**\nThe `[Test]:` prefix is present in the delivered subject. If this reached real recipients, it is a broken send; if this is a pre-send review copy, the prefix must be removed before production deployment.\n\n**Return Path pixel — missing protocol**\n```html\n<img src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\" ...>\n```\nThis `src` has no `http://` or `https://` scheme. It will fail to load in all clients as a relative URL resolving to a non-existent path.\n\n**Ink1000 pixel — HTTP**\n```\nhttp://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8103142203&mi_ecmp=...\n```\nServed over plain HTTP. Will be blocked or flagged by secure clients; engagement tracking from this pixel is unreliable.\n\n**26 click-redirect links unverifiable**\nAll CTA links route through `click.emails.skechers.com` — expected for SFMC click tracking, but destination URLs and UTM parameters could not be probed by automated QA. Manual spot-check of final destinations is required.\n\n---\n\n### 3. Rendering & Accessibility\n\n**HTTP image sources — CDN-wide issue**\nEvery image hosted on `image.emails.skechers.com` uses `http://`, not `https://`:\n- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662...png` (Skechers logo)\n- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73...png`\n- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f...png` (App Store badge)\n- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0...png` (Google Play badge)\n- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5...png` (AfterPay)\n- Social icons: Instagram, Twitter, Facebook, Pinterest, YouTube — all HTTP\n\nGmail, Outlook.com, and Apple Mail proxy or block mixed-content HTTP images. This will render the email imageless for a significant portion of recipients.\n\n**Missing alt text — 4 images**\n| Image | src |\n|---|---|\n| `o.gif` (ink1000 pixel) | `http://www.ink1000.com/.../o.gif` |\n| `49468f73...png` | `http://image.emails.skechers.com/.../49468f73...png` |\n| `00100b23...png` | `http://image.emails.skechers.com/.../00100b23...png` |\n| `fc08601a...png` | `http://image.emails.skechers.com/.../fc08601a...png` |\n\nDecorative tracking pixels should have `alt=\"\"` (blank, not omitted); content images require descriptive alt text for screen readers and image-off rendering.\n\n**`<meta http-equiv>` missing `http-equiv` attribute**\n```html\n<meta content=\"text/html; charset=utf-8\" />\n```\nThe `http-equiv=\"Content-Type\"` attribute is absent. The charset declaration will be ignored by parsers that require it. Should be:\n```html\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n```\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved `%%variable%%` or `{{token}}` placeholders visible in the truncated source. However, the subject line concatenation failure (campaign ID + subject copy run together) suggests a merge field or dynamic content block is misconfigured in the sending platform template. This warrants inspection of the SFMC template before any future send.\n\n---\n\n### 5. Compliance\n\n**SPF/DKIM unverified**\n`Authentication-Results` header was not captured by the QA relay. SPF and DKIM pass/fail status for `emails.skechers.com` is unknown from this sample. Confirm alignment via a test send through a header-inspection tool (e.g., mail-tester.com or MXToolbox).\n\n**Plain-text ratio — deliverability risk**\n71% of the plain-text alternative (4,149 / 5,792 chars) is URLs. Aggressive spam filters score heavily against plain-text versions that are URL-dense with minimal human-readable content. The plain-text version should summarize offer copy, not just replicate redirect links.\n\n**CAN-SPAM / unsubscribe**\nPhysical mailing address and unsubscribe mechanism were not visible in the truncated HTML but are required. Confirm both are present in the footer of the full template.\n\n---\n\n### 6. Email-to-Site Continuity\n\nAll 26 CTAs pass through `click.emails.skechers.com` redirects; final destination UTM parameters were not resolvable by automated probe. Manual verification required to confirm:\n- `utm_source`, `utm_medium`, `utm_campaign` are appended on all landing page URLs\n- Campaign ID (`PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026`) is consistently used as `utm_campaign` value\n- Landing pages load correctly and reflect the BOGO 50% offer stated in the preheader\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **P0** | `[Test]:` prefix + campaign ID in subject | Remove before any production send; fix template merge block |\n| **P0** | All `image.emails.skechers.com` images on HTTP | Update CDN references to `https://` — affects logo, product, social, and payment badge images |\n| **P1** | Return Path pixel missing URL scheme | Add `https://` to `pixel.app.returnpath.net/pixel.gif` src |\n| **P1** | Ink1000 pixel on HTTP | Switch to `https://` or confirm vendor supports HTTPS |\n| **P1** | SPF/DKIM not verified | Run a header-inspection test send before production deployment |\n| **P2** | 4 images missing alt text | Add `alt=\"\"` to decorative images; add descriptive alt to content images |\n| **P2** | `<meta charset>` malformed | Add `http-equiv=\"Content-Type\"` attribute |\n| **P2** | Plain-text URL density at 71% | Rewrite plain-text alternative with human-readable copy |\n| **P3** | 26 redirect links unprobed | Manually spot-check 3–5 CTAs to confirm UTM params and landing page alignment |",
+    "sections": {
+      "executive_summary": [
+        "A clean, structurally sound promotional email built around a BOGO 50% off Spring Sale offer. The layout is organized and the product sections are easy to scan. However, this email has a critical pre-send defect: the subject line is an exposed internal test string (`[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026...`), and the preview text renders as raw URL/token garbage. If this deployed to real recipients, inbox deliverability and sender trust would take a hit before anyone even opened it.",
+        "The email earns its score on visual execution alone. The subject line and preview text defects are disqualifying for a live send — they alone drop a solid 7 into a 5."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero offer is unmistakable.** BOGO 50% off in bold, large type. No confusion about the value prop.",
+        "- **Three-section product grid works well.** Women's → Men's → Kids' flows logically and broadens appeal for household shoppers. Each section has its own SHOP NOW.",
+        "- **Utility footer is complete.** SMS opt-in, BNPL (Afterpay), curbside pickup, and Find a Store all present. These serve late-funnel hesitation well.",
+        "- **Secondary nav links** (WOMEN / MEN / KIDS / CLOTHING / NEW ARRIVALS / SALE) add discovery without cluttering the body."
+      ],
+      "whats_weak": [
+        "- **Subject line is an internal test artifact.** `[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026` is visible to any recipient — exposes campaign naming conventions and signals an unsent/unreviewed email.",
+        "- **Preview text is broken.** It renders raw URLs and token strings rather than compelling copy. First impression in inbox is severely damaged.",
+        "- **\"DISCOUNT APPLIES AT CART\" is easy to miss.** Set in small gray text below the CTAs — an important friction-reducing detail that should be more prominent.",
+        "- **Product shots lack differentiation.** All three sections (Women's, Men's, Kids') show shoes in near-identical flat-lay row format with no callouts, names, or prices. For a non-purchaser audience, there's no hook to any specific style.",
+        "- **No social proof or first-purchase nudge.** The target is non-purchasers. The email doesn't lean into \"why try Skechers\" — no ratings, no testimonial pull-quote, no \"most-loved\" label. It reads like a retention email, not an acquisition email."
+      ],
+      "recommendations": [
+        "1. **Hold send until subject line and preview text are corrected.** Strip the test prefix and internal code. Write a subject like *\"Buy One, Get One 50% Off — Spring Sale Is On\"* and a preview like *\"Shop women's, men's & kids' styles. Discount applies at cart.\"*",
+        "2. **Promote \"Discount applies at cart\" closer to the hero CTA.** Move it immediately below the offer headline, not buried after the buttons.",
+        "3. **Add one named style or \"bestseller\" callout per gender section.** Even one annotated shoe (\"Our #1 Walker\") gives non-purchasers a decision anchor.",
+        "4. **Add a first-purchase trust signal in the hero.** A brief line — *\"Free shipping on your first order\"* or *\"30-day easy returns\"* — reduces the main barrier for a non-purchaser audience.",
+        "5. **Test a single focused CTA.** Two CTAs in the hero (SHOP NOW + FIND A STORE) split attention. For an email audience, lead with SHOP NOW and move Find a Store to the footer.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **P0** | `[Test]:` prefix + campaign ID in subject | Remove before any production send; fix template merge block |",
+        "| **P0** | All `image.emails.skechers.com` images on HTTP | Update CDN references to `https://` — affects logo, product, social, and payment badge images |",
+        "| **P1** | Return Path pixel missing URL scheme | Add `https://` to `pixel.app.returnpath.net/pixel.gif` src |",
+        "| **P1** | Ink1000 pixel on HTTP | Switch to `https://` or confirm vendor supports HTTPS |",
+        "| **P1** | SPF/DKIM not verified | Run a header-inspection test send before production deployment |",
+        "| **P2** | 4 images missing alt text | Add `alt=\"\"` to decorative images; add descriptive alt to content images |",
+        "| **P2** | `<meta charset>` malformed | Add `http-equiv=\"Content-Type\"` attribute |",
+        "| **P2** | Plain-text URL density at 71% | Rewrite plain-text alternative with human-readable copy |",
+        "| **P3** | 26 redirect links unprobed | Manually spot-check 3–5 CTAs to confirm UTM params and landing page alignment |"
+      ],
+      "bottom_line": [
+        "Solid bones, broken surface. The email's structure and offer are ready to perform — the BOGO message is clear, the product grid is scannable, and the utility module is well-built. But this cannot go live with the current subject line and preview text. Fix those first. Then consider whether a non-purchaser audience needs more persuasion scaffolding (social proof, style callouts) before this earn its full potential."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Spring Sale BOGO 50% off — drive first purchase from non-buyer segment |",
+        "| **Hero / primary value prop** | BOGO 50% off prominently displayed; SHOP NOW + FIND A STORE CTAs; \"discount at cart\" note present but small |",
+        "| **Membership / benefits** | None present — not a loyalty-focused send |",
+        "| **Product discoverability** | Three rows (Women's, Men's, Kids') with 4 shoes each; uniform layout, no style names or prices visible |",
+        "| **Utility / secondary modules** | SMS opt-in, Afterpay, Curbside Pickup, Find a Store, text nav links — all visible and intact |",
+        "| **Bugs / friction / clarity issues** | Subject line exposes internal test code and campaign ID; preview text renders as raw URL/token strings — both visible in the send metadata at top of render |",
+        "**From:** no-reply@emails.skechers.com | **Campaign:** PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026",
+        "This email has a pervasive HTTP-vs-HTTPS image hosting issue affecting the entire `image.emails.skechers.com` CDN, which will cause image blocking in most modern email clients. A secondary concern is an apparent test-send artifact left in the subject line that concatenates the campaign ID directly into visible subject copy.",
+        "**Subject line concatenation error**",
+        "The subject line reads: `[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026An Easy Way to Try...` — the campaign ID token and subject copy are merged without a separator, indicating a template rendering failure or a test-send configuration that was never cleaned up before delivery.",
+        "**`[Test]:` prefix in subject**",
+        "The `[Test]:` prefix is present in the delivered subject. If this reached real recipients, it is a broken send; if this is a pre-send review copy, the prefix must be removed before production deployment.",
+        "**Return Path pixel — missing protocol**",
+        "```html",
+        "<img src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\" ...>",
+        "```",
+        "This `src` has no `http://` or `https://` scheme. It will fail to load in all clients as a relative URL resolving to a non-existent path.",
+        "**Ink1000 pixel — HTTP**",
+        "```",
+        "http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8103142203&mi_ecmp=...",
+        "```",
+        "Served over plain HTTP. Will be blocked or flagged by secure clients; engagement tracking from this pixel is unreliable.",
+        "**26 click-redirect links unverifiable**",
+        "All CTA links route through `click.emails.skechers.com` — expected for SFMC click tracking, but destination URLs and UTM parameters could not be probed by automated QA. Manual spot-check of final destinations is required.",
+        "**HTTP image sources — CDN-wide issue**",
+        "Every image hosted on `image.emails.skechers.com` uses `http://`, not `https://`:",
+        "- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662...png` (Skechers logo)",
+        "- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73...png`",
+        "- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f...png` (App Store badge)",
+        "- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0...png` (Google Play badge)",
+        "- `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5...png` (AfterPay)",
+        "- Social icons: Instagram, Twitter, Facebook, Pinterest, YouTube — all HTTP",
+        "Gmail, Outlook.com, and Apple Mail proxy or block mixed-content HTTP images. This will render the email imageless for a significant portion of recipients.",
+        "**Missing alt text — 4 images**",
+        "| Image | src |",
+        "|---|---|",
+        "| `o.gif` (ink1000 pixel) | `http://www.ink1000.com/.../o.gif` |",
+        "| `49468f73...png` | `http://image.emails.skechers.com/.../49468f73...png` |",
+        "| `00100b23...png` | `http://image.emails.skechers.com/.../00100b23...png` |",
+        "| `fc08601a...png` | `http://image.emails.skechers.com/.../fc08601a...png` |",
+        "Decorative tracking pixels should have `alt=\"\"` (blank, not omitted); content images require descriptive alt text for screen readers and image-off rendering.",
+        "**`<meta http-equiv>` missing `http-equiv` attribute**",
+        "```html",
+        "<meta content=\"text/html; charset=utf-8\" />",
+        "```",
+        "The `http-equiv=\"Content-Type\"` attribute is absent. The charset declaration will be ignored by parsers that require it. Should be:",
+        "```html",
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
+        "```",
+        "No unresolved `%%variable%%` or `{{token}}` placeholders visible in the truncated source. However, the subject line concatenation failure (campaign ID + subject copy run together) suggests a merge field or dynamic content block is misconfigured in the sending platform template. This warrants inspection of the SFMC template before any future send.",
+        "**SPF/DKIM unverified**",
+        "`Authentication-Results` header was not captured by the QA relay. SPF and DKIM pass/fail status for `emails.skechers.com` is unknown from this sample. Confirm alignment via a test send through a header-inspection tool (e.g., mail-tester.com or MXToolbox).",
+        "**Plain-text ratio — deliverability risk**",
+        "71% of the plain-text alternative (4,149 / 5,792 chars) is URLs. Aggressive spam filters score heavily against plain-text versions that are URL-dense with minimal human-readable content. The plain-text version should summarize offer copy, not just replicate redirect links.",
+        "**CAN-SPAM / unsubscribe**",
+        "Physical mailing address and unsubscribe mechanism were not visible in the truncated HTML but are required. Confirm both are present in the footer of the full template.",
+        "All 26 CTAs pass through `click.emails.skechers.com` redirects; final destination UTM parameters were not resolvable by automated probe. Manual verification required to confirm:",
+        "- `utm_source`, `utm_medium`, `utm_campaign` are appended on all landing page URLs",
+        "- Campaign ID (`PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026`) is consistently used as `utm_campaign` value",
+        "- Landing pages load correctly and reflect the BOGO 50% offer stated in the preheader"
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTEzMDA3MDYyIiwibGlkIjoiMjUiLCJqIjoiMTg0ODA3IiwiamIiOiIxIiwiZCI6IjE"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 2,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "text_mostly_urls",
+            "status": "warn",
+            "label": "Plain-text is >70% URLs",
+            "detail": "4149/5792 chars are URLs"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 17,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8103142203&mi_ecmp=PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8103142203&mi_ecmp=PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03272026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Twitter\" (d76a5487-158e-4781-82a4-b65b04c051e4.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/d76a5487-158e-4781-82a4-b65b04c051e4.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-test-pro-us-nonpur-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-e-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=UDKSTI5FMT2UNLHFNE4MIE6FWY.100221"
+  }
+}
