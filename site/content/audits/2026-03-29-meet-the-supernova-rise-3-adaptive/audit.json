@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-meet-the-supernova-rise-3-adaptive",
+  "email": {
+    "subject": "Meet the Supernova Rise 3 Adaptive",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-27T02:04:30+00:00",
+    "date_formatted": "2026-03-27 02:04 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nA well-intentioned product launch email for an adaptive athletic shoe, but the execution undersells the product. The hero image is small, the copy is generic, and the email quickly pivots to an unrelated product (Handball Spezial) and a geo-targeted module (\"Gear Near You\") that fragments focus. The result feels like a multi-product newsletter rather than a dedicated adaptive product launch — a missed opportunity to make a meaningful statement.\n\n---\n\n### 2. Business Impact Score: **5 / 10**\n\n---\n\n### 3. What's Working\n\n- **Clear product name and positioning.** \"Supernova Rise 3 Adaptive\" is called out plainly, and the one-line description (\"made with athletes with disabilities\") establishes purpose quickly.\n- **Promo banner present.** The \"Save 30% on eligible styles with code MARCH\" banner at the top captures discount-seekers immediately — good for click conversion.\n- **Gear Near You module.** Leopard-print imagery is visually arresting and the local store angle is a solid retention/foot-traffic tactic.\n- **Clean layout.** The email is legible, well-spaced, and not cluttered.\n\n---\n\n### 4. What's Weak\n\n- **Hero image is too small and passive.** The adaptive shoe is shown in a low-key, muted shot. For an adaptive athlete product, this needed a more powerful, human-centered visual — someone wearing the shoe in action. The image reads more like a product thumbnail than a hero.\n- **Copy is thin.** The body description is two short sentences. For a product positioned around disability inclusion, this feels like it needed more substance — a brief athlete story, a key feature callout, or a clear differentiator.\n- **Focus is split.** Handball Spezial appears as a second featured product with its own headline and body copy. It competes for the same visual hierarchy as Supernova Rise 3 Adaptive. This dilutes the adaptive product launch narrative entirely.\n- **CTA is not visible on the hero section.** There is no clearly visible button or CTA link on the Supernova Rise 3 Adaptive section — the primary product has no call to action in the render.\n- **Gear Near You module is unexplained.** The leopard-print shoe grid is visually dominant but the connection to the email's stated theme (adaptive product) is nonexistent. It feels algorithmically inserted.\n- **Promo code is not tied to the hero product.** The \"MARCH\" discount banner is floating at top — it's unclear whether it applies to the Adaptive shoe, which undermines urgency.\n\n---\n\n### 5. Recommendations\n\n1. **Lead with a human.** Replace the product-only hero with an athlete-in-motion shot. Adaptive footwear earns brand equity through storytelling, not still-life photography.\n2. **Add a CTA button to the Supernova section.** \"Shop Supernova Rise 3 Adaptive\" should appear directly below the product copy with a high-contrast button.\n3. **Remove Handball Spezial or relegate it to a secondary row.** If this is a product launch email, protect the single-product focus. Handball Spezial belongs in a digest, not here.\n4. **Tie the promo to the featured product.** Restate the code adjacent to the CTA: \"Use MARCH for 30% off, including the Rise 3 Adaptive.\" This closes the conversion loop.\n5. **Expand body copy to 3–4 lines.** Add one specific feature (e.g., adaptive closure system, wider fit, orthotic-compatible) to give the reader a reason to click beyond brand loyalty.\n\n---\n\n### 6. Bottom Line\n\nThe email has the right ingredients — adaptive product, promo code, local store engagement — but fails to unify them into a coherent narrative. The adaptive product launch is buried by a competing product and a geo module. With a stronger hero, a visible CTA, and tighter focus, this could be a brand-building and commercially effective send. As rendered, it's a middling multi-product email that doesn't do justice to either product.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Launch of Supernova Rise 3 Adaptive, an athletic shoe for athletes with disabilities |\n| **Hero / primary value prop** | Small product image, minimal copy, no visible CTA button |\n| **Membership / benefits** | Not present |\n| **Product discoverability** | \"Gear Near You\" module shows 4 leopard-print shoe images — visually strong but thematically disconnected |\n| **Secondary product module** | Handball Spezial gets its own headline and body copy, competing with the hero product |\n| **Utility / secondary modules** | Promo bar (MARCH code), standard footer with account/privacy/support links |\n| **Bugs / friction** | No visible CTA on the Supernova Rise 3 Adaptive section; promo code not contextually linked to the featured product |\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Meet the Supernova Rise 3 Adaptive\"\n**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-29\n\n---\n\n### 1. Technical Summary\nThe email has one broken click-redirect link, a missing plain-text body (CAN-SPAM risk), and multiple non-HTTPS image sources that will be blocked by major email clients. Authentication header status is unverified due to relay configuration.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken redirect — malformed href**\nQA extracted a relative-path href `/g/bf4c0485-2527-41ac-b292-227d0bac76fd?txn=5dd5c280-2b89-11f1-bce3-9a305ea1f7ea` which is not a valid absolute URL. The underlying destination wraps through `https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3...`. The redirect chain will fail for any subscriber whose client does not resolve relative hrefs — this CTA is silently broken for a portion of recipients.\n\n**[WARN] 25 tracking links not probed**\nAll click-redirect domains were skipped during HTTP validation. Destination URLs and redirect chain integrity are unconfirmed.\n\n**[INFO] `<meta name=\"referrer\" content=\"no-referrer\">`**\nThis header suppresses the HTTP referrer on all link clicks, which will cause referrer-based analytics attribution to report `(direct)` for all traffic sourced from this email, independent of UTM parameters.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[FAIL] Non-HTTPS image sources — 5 instances**\nEmail clients with mixed-content blocking (Gmail, Outlook 365, Apple Mail) will suppress these images entirely:\n\n- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` — referenced **4 times** (alt: \"arrow\")\n- `http://click.comms.adidas.com/CI0/0102019d2d09309f-1af24857-982a-4e15-a528-2834fc7656bc-000000/GPYKM7k8Aa2fdYR49cpr4HF_L...` — 1 instance (no alt text)\n\n**[WARN] Missing alt text — 2 images**\n- `https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3...` — no `alt` attribute\n- `http://click.comms.adidas.com/CI0/.../GPYKM7k8Aa2fdYR49cpr4HF_L...` — no `alt` attribute\n\nBoth will render as empty broken boxes when images are disabled, with no fallback text for screen readers.\n\n**[INFO] Duplicate `@font-face` declarations**\n`AdihausDIN` (400, 700) and `AdineuePRO` (400, 600) are declared identically across two separate `<style>` blocks. Both blocks use `local()` fallbacks only (no remote font sources), so the custom typefaces will never load. This is intentional for email compatibility but the duplication adds unnecessary weight.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens visible in the truncated HTML. Personalization IDs (`mi_cid`, `mi_mid`, `cp_cid`) are present in tracking URL query strings, indicating subscriber-level token substitution completed successfully at send time.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text fallback is empty (0 chars)**\nCAN-SPAM does not strictly mandate a text part, but sending with a zero-length text alternative is flagged by major spam filters (SpamAssassin `MIME_HTML_ONLY`) and degrades deliverability. Best practice requires a substantive text equivalent.\n\n**[WARN] Authentication-Results header not found**\nSPF and DKIM pass/fail status could not be verified — the message was relayed via AgentMail and the `Authentication-Results` header was absent from the captured sample. Sending domain is `us-news.comms.adidas.com`; alignment with `adidas.com` DMARC policy is unconfirmed.\n\n**[INFO] `<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\">` present**\nCorrectly suppresses web-viewed copies from search indexing.\n\n---\n\n### 6. Email-to-Site Continuity\n\nThe broken redirect identified in §2 means at least one CTA does not reliably deliver subscribers to the intended landing page. UTM parameters are embedded within the `dv.adidas.com` redirect payload (base64-encoded `cp_tp` parameter), so attribution depends entirely on that redirect resolving successfully — the broken link breaks the UTM chain as well.\n\nThe `no-referrer` meta tag (§2) will cause all sessions from this email to appear as direct traffic in any analytics platform that relies on referrer headers as a secondary attribution signal.\n\n---\n\n### 7. Recommendations\n\n| Priority | Action |\n|----------|--------|\n| **Critical** | Fix the malformed href on the broken redirect; replace relative path with a valid absolute URL |\n| **High** | Upgrade all `http://` image sources to `https://` — `image.link.adidas.com` and `click.comms.adidas.com` both support HTTPS |\n| **High** | Add a plain-text MIME part with substantive content to avoid spam filter penalties and improve deliverability |\n| **Medium** | Add `alt` attributes to the two images currently missing them |\n| **Medium** | Confirm `Authentication-Results` (SPF/DKIM) are passing for `us-news.comms.adidas.com` against the `adidas.com` DMARC policy |\n| **Low** | Remove duplicate `@font-face` blocks to reduce HTML payload size |\n| **Low** | Evaluate whether `no-referrer` is intentional — if not, remove it to restore referrer-based analytics signals |",
+    "sections": {
+      "executive_summary": [
+        "A well-intentioned product launch email for an adaptive athletic shoe, but the execution undersells the product. The hero image is small, the copy is generic, and the email quickly pivots to an unrelated product (Handball Spezial) and a geo-targeted module (\"Gear Near You\") that fragments focus. The result feels like a multi-product newsletter rather than a dedicated adaptive product launch — a missed opportunity to make a meaningful statement."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Clear product name and positioning.** \"Supernova Rise 3 Adaptive\" is called out plainly, and the one-line description (\"made with athletes with disabilities\") establishes purpose quickly.",
+        "- **Promo banner present.** The \"Save 30% on eligible styles with code MARCH\" banner at the top captures discount-seekers immediately — good for click conversion.",
+        "- **Gear Near You module.** Leopard-print imagery is visually arresting and the local store angle is a solid retention/foot-traffic tactic.",
+        "- **Clean layout.** The email is legible, well-spaced, and not cluttered."
+      ],
+      "whats_weak": [
+        "- **Hero image is too small and passive.** The adaptive shoe is shown in a low-key, muted shot. For an adaptive athlete product, this needed a more powerful, human-centered visual — someone wearing the shoe in action. The image reads more like a product thumbnail than a hero.",
+        "- **Copy is thin.** The body description is two short sentences. For a product positioned around disability inclusion, this feels like it needed more substance — a brief athlete story, a key feature callout, or a clear differentiator.",
+        "- **Focus is split.** Handball Spezial appears as a second featured product with its own headline and body copy. It competes for the same visual hierarchy as Supernova Rise 3 Adaptive. This dilutes the adaptive product launch narrative entirely.",
+        "- **CTA is not visible on the hero section.** There is no clearly visible button or CTA link on the Supernova Rise 3 Adaptive section — the primary product has no call to action in the render.",
+        "- **Gear Near You module is unexplained.** The leopard-print shoe grid is visually dominant but the connection to the email's stated theme (adaptive product) is nonexistent. It feels algorithmically inserted.",
+        "- **Promo code is not tied to the hero product.** The \"MARCH\" discount banner is floating at top — it's unclear whether it applies to the Adaptive shoe, which undermines urgency."
+      ],
+      "recommendations": [
+        "1. **Lead with a human.** Replace the product-only hero with an athlete-in-motion shot. Adaptive footwear earns brand equity through storytelling, not still-life photography.",
+        "2. **Add a CTA button to the Supernova section.** \"Shop Supernova Rise 3 Adaptive\" should appear directly below the product copy with a high-contrast button.",
+        "3. **Remove Handball Spezial or relegate it to a secondary row.** If this is a product launch email, protect the single-product focus. Handball Spezial belongs in a digest, not here.",
+        "4. **Tie the promo to the featured product.** Restate the code adjacent to the CTA: \"Use MARCH for 30% off, including the Rise 3 Adaptive.\" This closes the conversion loop.",
+        "5. **Expand body copy to 3–4 lines.** Add one specific feature (e.g., adaptive closure system, wider fit, orthotic-compatible) to give the reader a reason to click beyond brand loyalty.",
+        "| Priority | Action |",
+        "|----------|--------|",
+        "| **Critical** | Fix the malformed href on the broken redirect; replace relative path with a valid absolute URL |",
+        "| **High** | Upgrade all `http://` image sources to `https://` — `image.link.adidas.com` and `click.comms.adidas.com` both support HTTPS |",
+        "| **High** | Add a plain-text MIME part with substantive content to avoid spam filter penalties and improve deliverability |",
+        "| **Medium** | Add `alt` attributes to the two images currently missing them |",
+        "| **Medium** | Confirm `Authentication-Results` (SPF/DKIM) are passing for `us-news.comms.adidas.com` against the `adidas.com` DMARC policy |",
+        "| **Low** | Remove duplicate `@font-face` blocks to reduce HTML payload size |",
+        "| **Low** | Evaluate whether `no-referrer` is intentional — if not, remove it to restore referrer-based analytics signals |"
+      ],
+      "bottom_line": [
+        "The email has the right ingredients — adaptive product, promo code, local store engagement — but fails to unify them into a coherent narrative. The adaptive product launch is buried by a competing product and a geo module. With a stronger hero, a visible CTA, and tighter focus, this could be a brand-building and commercially effective send. As rendered, it's a middling multi-product email that doesn't do justice to either product."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Launch of Supernova Rise 3 Adaptive, an athletic shoe for athletes with disabilities |",
+        "| **Hero / primary value prop** | Small product image, minimal copy, no visible CTA button |",
+        "| **Membership / benefits** | Not present |",
+        "| **Product discoverability** | \"Gear Near You\" module shows 4 leopard-print shoe images — visually strong but thematically disconnected |",
+        "| **Secondary product module** | Handball Spezial gets its own headline and body copy, competing with the hero product |",
+        "| **Utility / secondary modules** | Promo bar (MARCH code), standard footer with account/privacy/support links |",
+        "| **Bugs / friction** | No visible CTA on the Supernova Rise 3 Adaptive section; promo code not contextually linked to the featured product |",
+        "**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-29",
+        "The email has one broken click-redirect link, a missing plain-text body (CAN-SPAM risk), and multiple non-HTTPS image sources that will be blocked by major email clients. Authentication header status is unverified due to relay configuration.",
+        "**[FAIL] Broken redirect — malformed href**",
+        "QA extracted a relative-path href `/g/bf4c0485-2527-41ac-b292-227d0bac76fd?txn=5dd5c280-2b89-11f1-bce3-9a305ea1f7ea` which is not a valid absolute URL. The underlying destination wraps through `https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3...`. The redirect chain will fail for any subscriber whose client does not resolve relative hrefs — this CTA is silently broken for a portion of recipients.",
+        "**[WARN] 25 tracking links not probed**",
+        "All click-redirect domains were skipped during HTTP validation. Destination URLs and redirect chain integrity are unconfirmed.",
+        "**[INFO] `<meta name=\"referrer\" content=\"no-referrer\">`**",
+        "This header suppresses the HTTP referrer on all link clicks, which will cause referrer-based analytics attribution to report `(direct)` for all traffic sourced from this email, independent of UTM parameters.",
+        "**[FAIL] Non-HTTPS image sources — 5 instances**",
+        "Email clients with mixed-content blocking (Gmail, Outlook 365, Apple Mail) will suppress these images entirely:",
+        "- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` — referenced **4 times** (alt: \"arrow\")",
+        "- `http://click.comms.adidas.com/CI0/0102019d2d09309f-1af24857-982a-4e15-a528-2834fc7656bc-000000/GPYKM7k8Aa2fdYR49cpr4HF_L...` — 1 instance (no alt text)",
+        "**[WARN] Missing alt text — 2 images**",
+        "- `https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3...` — no `alt` attribute",
+        "- `http://click.comms.adidas.com/CI0/.../GPYKM7k8Aa2fdYR49cpr4HF_L...` — no `alt` attribute",
+        "Both will render as empty broken boxes when images are disabled, with no fallback text for screen readers.",
+        "**[INFO] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` (400, 700) and `AdineuePRO` (400, 600) are declared identically across two separate `<style>` blocks. Both blocks use `local()` fallbacks only (no remote font sources), so the custom typefaces will never load. This is intentional for email compatibility but the duplication adds unnecessary weight.",
+        "No unresolved merge tokens visible in the truncated HTML. Personalization IDs (`mi_cid`, `mi_mid`, `cp_cid`) are present in tracking URL query strings, indicating subscriber-level token substitution completed successfully at send time.",
+        "**[FAIL] Plain-text fallback is empty (0 chars)**",
+        "CAN-SPAM does not strictly mandate a text part, but sending with a zero-length text alternative is flagged by major spam filters (SpamAssassin `MIME_HTML_ONLY`) and degrades deliverability. Best practice requires a substantive text equivalent.",
+        "**[WARN] Authentication-Results header not found**",
+        "SPF and DKIM pass/fail status could not be verified — the message was relayed via AgentMail and the `Authentication-Results` header was absent from the captured sample. Sending domain is `us-news.comms.adidas.com`; alignment with `adidas.com` DMARC policy is unconfirmed.",
+        "**[INFO] `<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\">` present**",
+        "Correctly suppresses web-viewed copies from search indexing.",
+        "The broken redirect identified in §2 means at least one CTA does not reliably deliver subscribers to the intended landing page. UTM parameters are embedded within the `dv.adidas.com` redirect payload (base64-encoded `cp_tp` parameter), so attribution depends entirely on that redirect resolving successfully — the broken link breaks the UTM chain as well.",
+        "The `no-referrer` meta tag (§2) will cause all sessions from this email to appear as direct traffic in any analytics platform that relies on referrer headers as a secondary attribution signal."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/bf4c0485-2527-41ac-b292-227d0bac76fd?txn=5dd5c280-2b89-11f1-bce3-9a305ea1f7ea'",
+            "url": "https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3.eJx1z79LAmEYB_Deu_PuuQP15Y3yeHE4bjpaQqHFDMzhBsdawkW3on8htyD6bUkQbRoNETQ0VJNDUEMQOhSkWIY1SL8gojl6XisQs-Xlw_t9nvd9HkOCcQZQa6yVVCpzL9Q_dKbBk5_KJrcDcHU6jdcq5M83S6r9GwwcStiUW-inxFTsXYn1QSHokIQChJKx1jlhpA3WC01OiSO3BywAj5xKHdWpdAqDuSCVuzwTgndOFZNYxJHiBhwc-8wbzcqqCUOU8O_yNk-5bBDeOPX8NOw3vOaRZj14_m0QU71yqnZ8Hk6HMdgJUq3rcs-cgqN0LPfCqf632syr1pkUBrj12jLcj6JmfaiLOKroRxVc1KVQ1Y14oDbEeyIAZYfLsDQZ0eEkirPurRNkPYZc3RK8E8y1WBxBVnKCZRdZ3SYxkgS4DjEZPmdQFaH5DKoqtJxJ6rAxzBSorxDkYhTZzJIvQ7JhMA==&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d30aa-e780-7000-8fa0-9e724dd84ad6"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=tDnMVoR5SotrP/jbe9IQ6EKO3z6j5vZM2jdnvx7Rqocif6QIfD6RrvA/AuPgSsuEANQeZtWDehZpt4wjkmSDALJTNDW0p2PsiVhQDRdNbVBTKJJcN6Oi"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 7,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "25 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: bf4c0485-2527-41ac-b292-227d0bac76fd",
+            "detail": "src: https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3.eJx1z79LAmEYB_Deu_PuuQP15Y3yeHE4bjpaQqHFDMzhBsdawk"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: GPYKM7k8Aa2fdYR49cpr4HF_Lf15f_kFK17UeUEBPLA=450",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d2d09309f-1af24857-982a-4e15-a528-2834fc7656bc-000000/GPYKM7k8Aa2fdYR49cpr4HF_L"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: GPYKM7k8Aa2fdYR49cpr4HF_Lf15f_kFK17UeUEBPLA=450",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d2d09309f-1af24857-982a-4e15-a528-2834fc7656bc-000000/GPYKM7k8Aa2fdYR49cpr4HF_L"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-meet-the-supernova-rise-3-adaptive-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
