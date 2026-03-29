@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-fwd-welcome-to-skechers",
+  "email": {
+    "subject": "Fwd: Welcome to Skechers!",
+    "from": "Walker Miles <walker@agentmail.to>",
+    "from_display_name": "Walker Miles",
+    "timestamp_iso": "2026-03-26T18:54:17.001000+00:00",
+    "date_formatted": "2026-03-26 18:54 UTC"
+  },
+  "review": {
+    "score": "1/10",
+    "raw_markdown": "## Skechers Welcome Email Review\n**From:** Skechers | **Subject:** Welcome to Skechers!\n\n---\n\n### 1. Executive Summary\n\nThe email rendered as a completely blank white canvas. There is no visible content — no logo, no hero image, no copy, no CTAs, no footer. Nothing. Whatever Skechers sent, the recipient sees an empty white rectangle. This is a total deliverability and brand failure for what should be a high-value first-touch welcome message.\n\n---\n\n### 2. Business Impact Score: 1/10\n\nThe only reason this isn't a 0 is that the email was technically delivered. It made no impression, drove no action, and wasted the highest-engagement moment in the subscriber lifecycle.\n\n---\n\n### 3. What's Working\n\nNothing is visible to evaluate.\n\n---\n\n### 4. What's Weak\n\nEverything. The welcome email — typically the single highest open-rate message a brand sends — rendered as a blank page. First impressions for this subscriber are gone. There is no brand presence, no value proposition, no onboarding hook, no CTA.\n\n---\n\n### 5. Recommendations\n\n1. **Audit the rendering environment immediately.** Confirm whether this blank render is isolated to this capture or reproducible across clients (Gmail, Apple Mail, Outlook).\n2. **Check image hosting.** If the email is image-only, broken CDN or image-blocking could explain a fully blank render.\n3. **Test a fallback.** Any welcome email should have live text + a fallback background color so *something* renders even when images are blocked.\n4. **Re-send with a fixed version** to this segment if the issue is confirmed systemic — welcome emails are too valuable to forfeit.\n\n---\n\n### 6. Bottom Line\n\nA blank welcome email is among the worst outcomes in email marketing. Skechers lost the new-subscriber moment entirely. This needs immediate investigation and a re-engagement touch before the subscriber goes cold.\n\n---\n\n### 7. Evidence\n\n| Module | Observed |\n|---|---|\n| Overall purpose | Welcome / onboarding (inferred from subject) |\n| Hero / primary value prop | Not visible |\n| Membership / benefits section | Not visible |\n| Product recommendation modules | Not visible |\n| Utility / secondary modules | Not visible |\n| **Bugs / friction** | **Full email rendered blank white — zero content visible** |\n\n---\n\n## Technical Audit\n\n## Technical Audit — Welcome to Skechers!\n\n**From:** Walker Miles <walker@agentmail.to>\n**Subject:** Fwd: Welcome to Skechers!\n**Date:** 2026-03-29\n\n---\n\n### 1. Technical Summary\n\nNo HTML source was captured for this email — the body is unavailable, likely due to a relay/forwarding issue through AgentMail. All findings below are derived exclusively from automated QA checks against headers and extracted artifacts. Audit coverage is severely limited as a result.\n\n---\n\n### 2. Link & Tracking Issues\n\n| Severity | Finding |\n|----------|---------|\n| WARN | `urls.txt` is empty — no URLs were extracted from the message. Either the body was not captured, or the email contains no anchor links. Cannot verify UTM parameters, click tracking, or redirect chains. |\n\nNo link-level analysis possible without HTML source.\n\n---\n\n### 3. Rendering & Accessibility\n\nNo issues found — HTML source unavailable; rendering analysis cannot be performed.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo issues found — HTML source unavailable; merge token analysis cannot be performed.\n\n---\n\n### 5. Compliance (CAN-SPAM / RFC 8058)\n\n| Severity | Finding | Evidence |\n|----------|---------|---------|\n| FAIL | No unsubscribe link detected in body | `urls.txt` empty; no opt-out mechanism confirmed — CAN-SPAM §5(a)(3) violation risk |\n| FAIL | No plain-text fallback | Text version is 0 chars — violates deliverability best practices and may trigger spam filters |\n| WARN | `List-Unsubscribe` header absent | Not captured by AgentMail relay — one-click unsubscribe (RFC 8058) status unknown |\n| WARN | `List-Unsubscribe-Post` header absent | RFC 8058 one-click unsubscribe likely unsupported |\n| WARN | No physical mailing address detected | Required by CAN-SPAM §5(a)(5) |\n\n**Critical:** Two of the five CAN-SPAM-related checks are hard failures. If the unsubscribe link and physical address are genuinely absent from the email body (not just a capture artifact), this email is non-compliant.\n\n---\n\n### 6. Email-to-Site Continuity\n\nCannot assess — no URLs were extracted. UTM parameter coverage, landing page alignment, and redirect behavior are all unverifiable.\n\n---\n\n### 7. Recommendations\n\n1. **Resolve body capture failure first.** The missing HTML source is the root blocker. Confirm whether AgentMail's relay/forwarding pipeline is stripping the body or if the original send was malformed. Re-run the full audit once source is available.\n\n2. **Verify unsubscribe link presence.** If the body capture failure is confirmed as the cause of the missing unsubscribe detection, validate manually. If the link is genuinely absent, this is a CAN-SPAM violation and must be corrected before sending.\n\n3. **Add plain-text MIME part.** 0-char text alternative will degrade deliverability and fail inbox preview in many clients. Generate a stripped-text version from the HTML body.\n\n4. **Confirm physical address is in footer.** This is a hard CAN-SPAM requirement regardless of email type (including transactional welcome emails).\n\n5. **Check header capture in AgentMail relay.** `List-Unsubscribe` and `Authentication-Results` headers are expected but missing — investigate whether the relay is dropping headers before storage, which would create a blind spot in all future audits.\n\n---\n\n**Overall QA Score: 12% pass rate (2 pass / 2 fail / 5 warn)** — audit blocked by missing body; re-audit required after capture issue is resolved.",
+    "sections": {
+      "executive_summary": [
+        "**From:** Skechers | **Subject:** Welcome to Skechers!",
+        "The email rendered as a completely blank white canvas. There is no visible content — no logo, no hero image, no copy, no CTAs, no footer. Nothing. Whatever Skechers sent, the recipient sees an empty white rectangle. This is a total deliverability and brand failure for what should be a high-value first-touch welcome message.",
+        "The only reason this isn't a 0 is that the email was technically delivered. It made no impression, drove no action, and wasted the highest-engagement moment in the subscriber lifecycle."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "Nothing is visible to evaluate."
+      ],
+      "whats_weak": [
+        "Everything. The welcome email — typically the single highest open-rate message a brand sends — rendered as a blank page. First impressions for this subscriber are gone. There is no brand presence, no value proposition, no onboarding hook, no CTA."
+      ],
+      "recommendations": [
+        "1. **Audit the rendering environment immediately.** Confirm whether this blank render is isolated to this capture or reproducible across clients (Gmail, Apple Mail, Outlook).",
+        "2. **Check image hosting.** If the email is image-only, broken CDN or image-blocking could explain a fully blank render.",
+        "3. **Test a fallback.** Any welcome email should have live text + a fallback background color so *something* renders even when images are blocked.",
+        "4. **Re-send with a fixed version** to this segment if the issue is confirmed systemic — welcome emails are too valuable to forfeit.",
+        "1. **Resolve body capture failure first.** The missing HTML source is the root blocker. Confirm whether AgentMail's relay/forwarding pipeline is stripping the body or if the original send was malformed. Re-run the full audit once source is available.",
+        "2. **Verify unsubscribe link presence.** If the body capture failure is confirmed as the cause of the missing unsubscribe detection, validate manually. If the link is genuinely absent, this is a CAN-SPAM violation and must be corrected before sending.",
+        "3. **Add plain-text MIME part.** 0-char text alternative will degrade deliverability and fail inbox preview in many clients. Generate a stripped-text version from the HTML body.",
+        "4. **Confirm physical address is in footer.** This is a hard CAN-SPAM requirement regardless of email type (including transactional welcome emails).",
+        "5. **Check header capture in AgentMail relay.** `List-Unsubscribe` and `Authentication-Results` headers are expected but missing — investigate whether the relay is dropping headers before storage, which would create a blind spot in all future audits.",
+        "**Overall QA Score: 12% pass rate (2 pass / 2 fail / 5 warn)** — audit blocked by missing body; re-audit required after capture issue is resolved."
+      ],
+      "bottom_line": [
+        "A blank welcome email is among the worst outcomes in email marketing. Skechers lost the new-subscriber moment entirely. This needs immediate investigation and a re-engagement touch before the subscriber goes cold."
+      ],
+      "evidence": [
+        "| Module | Observed |",
+        "|---|---|",
+        "| Overall purpose | Welcome / onboarding (inferred from subject) |",
+        "| Hero / primary value prop | Not visible |",
+        "| Membership / benefits section | Not visible |",
+        "| Product recommendation modules | Not visible |",
+        "| Utility / secondary modules | Not visible |",
+        "| **Bugs / friction** | **Full email rendered blank white — zero content visible** |",
+        "**From:** Walker Miles <walker@agentmail.to>",
+        "**Subject:** Fwd: Welcome to Skechers!",
+        "**Date:** 2026-03-29",
+        "No HTML source was captured for this email — the body is unavailable, likely due to a relay/forwarding issue through AgentMail. All findings below are derived exclusively from automated QA checks against headers and extracted artifacts. Audit coverage is severely limited as a result.",
+        "| Severity | Finding |",
+        "|----------|---------|",
+        "| WARN | `urls.txt` is empty — no URLs were extracted from the message. Either the body was not captured, or the email contains no anchor links. Cannot verify UTM parameters, click tracking, or redirect chains. |",
+        "No link-level analysis possible without HTML source.",
+        "No issues found — HTML source unavailable; rendering analysis cannot be performed.",
+        "No issues found — HTML source unavailable; merge token analysis cannot be performed.",
+        "| Severity | Finding | Evidence |",
+        "|----------|---------|---------|",
+        "| FAIL | No unsubscribe link detected in body | `urls.txt` empty; no opt-out mechanism confirmed — CAN-SPAM §5(a)(3) violation risk |",
+        "| FAIL | No plain-text fallback | Text version is 0 chars — violates deliverability best practices and may trigger spam filters |",
+        "| WARN | `List-Unsubscribe` header absent | Not captured by AgentMail relay — one-click unsubscribe (RFC 8058) status unknown |",
+        "| WARN | `List-Unsubscribe-Post` header absent | RFC 8058 one-click unsubscribe likely unsupported |",
+        "| WARN | No physical mailing address detected | Required by CAN-SPAM §5(a)(5) |",
+        "**Critical:** Two of the five CAN-SPAM-related checks are hard failures. If the unsubscribe link and physical address are genuinely absent from the email body (not just a capture artifact), this email is non-compliant.",
+        "Cannot assess — no URLs were extracted. UTM parameter coverage, landing page alignment, and redirect behavior are all unverifiable."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "links_none",
+            "status": "warn",
+            "label": "No URLs found",
+            "detail": "urls.txt is empty or missing"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 0,
+        "warned": 3,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "header_list_unsub_missing",
+            "status": "warn",
+            "label": "List-Unsubscribe header not found",
+            "detail": "Header may not be captured by AgentMail relay"
+          },
+          {
+            "check_id": "header_one_click_missing",
+            "status": "warn",
+            "label": "List-Unsubscribe-Post header not found (RFC 8058)",
+            "detail": "One-click unsubscribe may not be supported"
+          },
+          {
+            "check_id": "canspam_address_missing",
+            "status": "warn",
+            "label": "No physical address detected",
+            "detail": "CAN-SPAM requires a physical mailing address"
+          },
+          {
+            "check_id": "body_unsub_missing",
+            "status": "fail",
+            "label": "No unsubscribe link found in body",
+            "detail": "CAN-SPAM requires a visible opt-out mechanism"
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "12%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 5
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-fwd-welcome-to-skechers-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
