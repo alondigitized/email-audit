@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-28-back-to-the-70s-with-handball-spezial",
+  "email": {
+    "subject": "Back to the ’70s with Handball Spezial",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-28T19:04:41+00:00",
+    "date_formatted": "2026-03-28 19:04 UTC"
+  },
+  "review": {
+    "score": "5.5/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nA clean, focused product launch email from adidas promoting the Handball Spezial sneaker with a retro '70s positioning. The email is visually restrained — a single hero section with three colorways, one headline, one body copy block, and three gender-segmented CTAs (Shop Men, Shop Women, Shop Kids). A \"Save 30% on eligible styles with code MARCH\" banner sits at the top, though it is disconnected from the Handball Spezial content below. This is a newsletter/editorial-style email, not a hard-sell promotional blast, and it succeeds at building product awareness. But it underdelivers on conversion: no pricing, no individual product links, and no social proof to justify why a shopper should buy this particular sneaker today.\n\n---\n\n### 2. Business Impact Score\n\n**5.5 / 10**\n\nThe email will generate awareness of the Handball Spezial relaunch among adidas newsletter subscribers. It will not drive strong immediate conversion because it gives the reader no concrete reason to click through — no price, no scarcity, no urgency, and no connection between the 30% promo code and the featured product. Shoppers who are already interested in the Spezial will click. Everyone else will scroll past.\n\n---\n\n### 3. What's Working\n\n- **Clean, editorial layout.** The email is visually uncluttered — white background, one product story, three colorways shot from the same angle. It feels like a magazine page, not a sales flyer. This matches adidas's brand positioning as a premium sportswear brand.\n- **\"THE '70S ARE BACK\" headline** is bold, brief, and sets the retro tone immediately. Good use of nostalgia as a hook.\n- **Three colorways shown together** — the navy, cream, and burgundy Handball Spezial are displayed in a clean row, giving the shopper immediate visual variety without overwhelming them.\n- **Gender-segmented CTAs** (Shop Men, Shop Women, Shop Kids) are a smart inclusion. Instead of one generic \"Shop Now,\" the email acknowledges that this shoe comes in different gender/age categories, reducing the clicks needed to reach the right product page.\n- **Preheader text is well-written:** \"Shop the timeless, sport-inspired look of Handball Spezial and channel the vintage style of the '70s.\" This reinforces the subject line and gives the shopper a reason to open.\n- **\"Stories, styles and sportswear at adidas, since 1949\" footer tagline** is a subtle brand heritage nod that complements the retro product positioning.\n- **Compliance is solid.** The QA report confirms List-Unsubscribe header, one-click unsubscribe, physical address, and body unsubscribe link all pass.\n\n---\n\n### 4. What's Weak\n\n- **The 30% OFF promo banner at the top is completely disconnected from the Handball Spezial content.** The banner says \"Save 30% on eligible styles with code MARCH\" and links to a \"Shop Now\" button — but there's no indication whether Handball Spezial is one of the \"eligible styles.\" If it is, this is a missed conversion opportunity. If it isn't, the banner creates a confusing bait-and-switch expectation.\n- **No pricing on the product.** Three shoes are shown but no price is mentioned anywhere. The shopper has to click through to find out what they're committing to. For a heritage re-release, the price point is a key selling point (Spezials are typically in the $90–$110 range — competitive and worth calling out).\n- **No individual product links on the shoe images.** The three Handball Spezial images appear to be purely visual — not individually clickable to their respective colorway pages. The only CTAs are the gender-segmented text links below. A shopper who sees the burgundy pair and wants to buy it has to click \"Shop Men,\" land on a category page, and then find the burgundy colorway. That is one too many steps.\n- **No social proof or editorial context.** The email calls the Handball Spezial a \"classic, throwback style\" with \"premium materials and fresh colorways\" — but doesn't say why this re-release matters now. Is it a limited drop? Is it selling fast? Has it trended on social media? The copy is safe but lacks the editorial punch that would make a non-sneakerhead care.\n- **Body copy is thin.** One sentence describing the shoe is all the editorial content the email offers. For a product-story email, this is underwritten. Compare to how Nike or New Balance tells a product story in email — there's usually a design detail, a heritage callout, or a styling tip.\n- **\"Display images to show real-time content\" alt text** appears on multiple DaVinci-personalized image slots. If images fail to load, the recipient sees this generic placeholder text, which is meaningless and reveals the martech plumbing.\n\n---\n\n### 5. Recommendations\n\n1. **Connect the 30% promo to the product.** If Handball Spezial qualifies for the MARCH code, say so explicitly: \"Save 30% on Handball Spezial with code MARCH.\" If it doesn't qualify, consider removing the banner to avoid confusion — or swap in a Spezial-specific offer.\n2. **Add pricing.** Display the retail price ($100) next to the product image. If the MARCH code applies, show the discounted price as well.\n3. **Make each colorway clickable.** Wrap each shoe image in a direct link to that specific colorway's product page. Reduce clicks to purchase.\n4. **Add one editorial detail.** Include a sentence about the shoe's heritage (\"First released in 1979 for German handball courts\"), a styling tip (\"Pair with wide-leg trousers for the full retro look\"), or a scarcity signal (\"Limited colorways, available while supplies last\").\n5. **Fix the \"Display images to show real-time content\" alt text.** Replace with descriptive alt text: \"Handball Spezial in Navy Blue\" or \"adidas Handball Spezial — 3 colorways.\" If these are DaVinci dynamic slots, configure the alt fallback in the template.\n6. **Add a secondary module.** The email ends abruptly after the CTAs. Consider a \"Complete the Look\" section with complementary products (Originals apparel, track pants) or a \"You Might Also Like\" row to extend engagement.\n\n---\n\n### 6. Bottom Line\n\nThis email nails the aesthetic — it's clean, focused, and on-brand for adidas Originals. But an editorial email still needs to convert, and this one does the minimum: three shoes, one sentence of copy, three CTAs. No pricing, no urgency, no individual product links, and a disconnected promo banner that confuses more than it helps. The Handball Spezial is a strong enough product to sell itself to sneaker enthusiasts, but this email doesn't do the work needed to convert the broader audience that a newsletter reach provides.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Product awareness for Handball Spezial re-release, framed as a retro/heritage story. Secondary: 30% OFF promo code (disconnected). |\n| **Hero / primary value prop** | \"THE '70S ARE BACK\" headline + three colorways of Handball Spezial. One sentence of body copy. Gender-segmented CTAs (Men, Women, Kids). |\n| **Promo / offer** | \"Save 30% on eligible styles with code MARCH\" banner at top — not linked to the featured product. Creates ambiguity about applicability. |\n| **Product discoverability** | Three colorways shown; no individual product links; no pricing; no size/stock information. |\n| **Utility / secondary modules** | \"Stories, styles and sportswear at adidas, since 1949\" footer, My Account, Privacy Statement, Support, Unsubscribe, adidas.com/us. Minimal but complete. |\n| **Bugs / friction / clarity issues** | 1 failed link check (unknown URL type on a DaVinci tracking redirect). \"Display images to show real-time content\" alt text on multiple dynamic image slots. 6 arrow images served over HTTP. 1 tracking pixel missing alt text and served over HTTP. Plain-text fallback missing (0 chars). |\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Back to the '70s with Handball Spezial\"\n**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-28\n\n---\n\n### 1. Technical Summary\n\nThe email has a 62% QA pass rate with 2 hard failures and 1 warning across 8 automated checks. The primary issues are a broken DaVinci tracking link, missing plain-text fallback, and systemic HTTP image delivery for arrow icons and a tracking pixel. Authentication status is unknown due to missing relay headers. Compliance checks (List-Unsubscribe, one-click unsub, physical address, body unsub link) all pass cleanly.\n\n---\n\n### 2. Link & Tracking Issues\n\n**Broken DaVinci redirect link (FAIL)**\n```\nlink_error: unknown url type: '/g/b17b7641-f438-4464-885c-f1e88242f89e?txn=...'\n```\nA DaVinci personalization tracking URL is malformed — it uses a relative path (`/g/...`) instead of an absolute URL. This link will fail to resolve when clicked. It appears to be a tracking/impression beacon rather than a user-facing CTA, but it still represents a broken asset in the email.\n\n**32 tracking links skipped in QA** — These are click-redirect domains (click.comms.adidas.com) that were not probed for HTTP status. Destination URL validity is assumed but not confirmed.\n\n**DaVinci encrypted redirect URLs** — All user-facing links route through `click.comms.adidas.com` with DaVinci-encrypted payloads containing UTM parameters (cm_mmc, cm_mmc1, cm_mmc2, cm_mmca3, cm_mmca4) and AppsFlyer attribution parameters (af_reengagement_window, pid, c, af_adset, af_ad, af_channel). Campaign ID visible in URL: `ynl119rklk`. UTM correctness cannot be verified without decrypting the redirect destination.\n\n---\n\n### 3. Rendering & Accessibility\n\n**6 HTTP arrow images** — All six arrow icon images use `http://image.link.adidas.com`:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nThese are the small arrow icons next to the \"SHOP MEN,\" \"SHOP WOMEN,\" and \"SHOP KIDS\" CTAs (desktop and mobile variants). Gmail will proxy these; Apple Mail may block them. The arrows may fail to render for a segment of recipients.\n\n**1 HTTP tracking pixel** — A click.comms.adidas.com open pixel is served over HTTP and is missing alt text:\n```\nhttp://click.comms.adidas.com/CI0/0102019d35d58f64-.../ryjIzSsVeoo4HjhxbLfFD7Oy6...\n```\n\n**1 image missing alt text** — The DaVinci tracking beacon image (`b17b7641-f438...`) has no alt attribute. Minor impact since it's a hidden tracking pixel.\n\n**\"Display images to show real-time content\" alt text on 5+ images** — Multiple DaVinci-personalized image slots use this generic alt fallback. If images fail to load, recipients see this unhelpful placeholder text instead of a meaningful description.\n\n**Dual desktop/mobile content blocks** — The email uses `hideMobile` and `show-mobile` CSS classes to switch between desktop and mobile layouts. Gmail's Android app ignores `@media` queries, which could cause both versions to render simultaneously.\n\n**Staging CDN domain detected** — The adidas logo is served from `image.staging.link.adidas.com` instead of the production CDN. This is a deployment oversight — staging assets may be removed or changed without notice.\n\n---\n\n### 4. Personalization & Merge Tokens\n\n**No unresolved merge tokens** detected in the HTML. The personalization status is \"pass\" in the QA report. However, the DaVinci dynamic image slots (mi.adidas.com/p/rp/...) suggest server-side personalization is being used for the hero banner and product images. The rendered output appears correct based on the screenshot.\n\n**Subscriber ID exposed in URLs** — `mi_u=ILDCWJD70W1BE32X` appears in multiple image and link URLs. This is a hashed subscriber identifier passed to the DaVinci personalization engine. Confirm this is a non-reversible hash rather than a PII-adjacent value.\n\n---\n\n### 5. Compliance\n\n**List-Unsubscribe header: PASS** — Present with a valid HTTPS URL pointing to adidas's acquisition API opt-out endpoint.\n\n**One-click unsubscribe: PASS** — `List-Unsubscribe=One-Click` header present, meeting Gmail and Yahoo's February 2024 bulk sender requirements.\n\n**CAN-SPAM physical address: PASS** — Physical address found in body (adidas America, Inc., 5055 N. Greeley Avenue, Portland, OR 97217).\n\n**Body unsubscribe link: PASS** — Unsubscribe link found in the email body.\n\n**Plain-text fallback: FAIL** — Text version is 0 characters. This is a deliverability risk: some spam filters penalize emails with no plain-text MIME part. It also means recipients whose email clients prefer plain text see an empty message.\n\n**Authentication-Results header: WARN** — Not captured by the QA relay, so SPF/DKIM alignment for `us-news.comms.adidas.com` cannot be confirmed.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**Gender-segmented CTAs route through DaVinci redirects** to adidas.com category pages. The UTM parameters embedded in the encrypted payload should attribute traffic to this specific send (campaign_id=ynl119rklk). Confirm that the landing pages for \"Shop Men,\" \"Shop Women,\" and \"Shop Kids\" filter to Handball Spezial products rather than dropping the shopper on a generic category page.\n\n**30% MARCH promo code** — If the promo banner links to a landing page, that page should have the MARCH code pre-applied or prominently displayed. If the shopper has to manually enter the code at checkout, friction increases and the conversion lift from the promo decreases.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Fix |\n|----------|-------|-----|\n| High | Broken DaVinci tracking link (relative URL `/g/...`) | Fix URL generation to include absolute `https://` prefix |\n| High | Plain-text fallback is 0 chars | Generate a plain-text MIME part from the HTML content |\n| High | 6 arrow images served over HTTP | Update `image.link.adidas.com` asset URLs to `https://` |\n| High | Staging CDN domain for adidas logo | Replace `image.staging.link.adidas.com` with production CDN domain |\n| Medium | \"Display images to show real-time content\" alt text | Replace with descriptive alt text per image slot (e.g., \"Handball Spezial colorways\") |\n| Medium | HTTP tracking pixel (click.comms.adidas.com) missing alt + HTTP | Switch to HTTPS; add empty alt=\"\" for accessibility compliance |\n| Medium | Verify SPF/DKIM alignment for us-news.comms.adidas.com | Pull raw delivered headers; confirm DKIM d= alignment |\n| Medium | Gmail Android dual-render risk | Add `max-height:0;overflow:hidden` fallback for mobile-only blocks |\n| Low | Confirm mi_u subscriber ID is non-reversible hash | Review DaVinci configuration to ensure PII is not exposed |\n| Low | Verify UTM params on landing pages | Decrypt a sample redirect and confirm utm_campaign matches campaign taxonomy |",
+    "sections": {
+      "executive_summary": [
+        "A clean, focused product launch email from adidas promoting the Handball Spezial sneaker with a retro '70s positioning. The email is visually restrained — a single hero section with three colorways, one headline, one body copy block, and three gender-segmented CTAs (Shop Men, Shop Women, Shop Kids). A \"Save 30% on eligible styles with code MARCH\" banner sits at the top, though it is disconnected from the Handball Spezial content below. This is a newsletter/editorial-style email, not a hard-sell promotional blast, and it succeeds at building product awareness. But it underdelivers on conversion: no pricing, no individual product links, and no social proof to justify why a shopper should buy this particular sneaker today."
+      ],
+      "business_impact_score": [
+        "**5.5 / 10**",
+        "The email will generate awareness of the Handball Spezial relaunch among adidas newsletter subscribers. It will not drive strong immediate conversion because it gives the reader no concrete reason to click through — no price, no scarcity, no urgency, and no connection between the 30% promo code and the featured product. Shoppers who are already interested in the Spezial will click. Everyone else will scroll past."
+      ],
+      "whats_working": [
+        "- **Clean, editorial layout.** The email is visually uncluttered — white background, one product story, three colorways shot from the same angle. It feels like a magazine page, not a sales flyer. This matches adidas's brand positioning as a premium sportswear brand.",
+        "- **\"THE '70S ARE BACK\" headline** is bold, brief, and sets the retro tone immediately. Good use of nostalgia as a hook.",
+        "- **Three colorways shown together** — the navy, cream, and burgundy Handball Spezial are displayed in a clean row, giving the shopper immediate visual variety without overwhelming them.",
+        "- **Gender-segmented CTAs** (Shop Men, Shop Women, Shop Kids) are a smart inclusion. Instead of one generic \"Shop Now,\" the email acknowledges that this shoe comes in different gender/age categories, reducing the clicks needed to reach the right product page.",
+        "- **Preheader text is well-written:** \"Shop the timeless, sport-inspired look of Handball Spezial and channel the vintage style of the '70s.\" This reinforces the subject line and gives the shopper a reason to open.",
+        "- **\"Stories, styles and sportswear at adidas, since 1949\" footer tagline** is a subtle brand heritage nod that complements the retro product positioning.",
+        "- **Compliance is solid.** The QA report confirms List-Unsubscribe header, one-click unsubscribe, physical address, and body unsubscribe link all pass."
+      ],
+      "whats_weak": [
+        "- **The 30% OFF promo banner at the top is completely disconnected from the Handball Spezial content.** The banner says \"Save 30% on eligible styles with code MARCH\" and links to a \"Shop Now\" button — but there's no indication whether Handball Spezial is one of the \"eligible styles.\" If it is, this is a missed conversion opportunity. If it isn't, the banner creates a confusing bait-and-switch expectation.",
+        "- **No pricing on the product.** Three shoes are shown but no price is mentioned anywhere. The shopper has to click through to find out what they're committing to. For a heritage re-release, the price point is a key selling point (Spezials are typically in the $90–$110 range — competitive and worth calling out).",
+        "- **No individual product links on the shoe images.** The three Handball Spezial images appear to be purely visual — not individually clickable to their respective colorway pages. The only CTAs are the gender-segmented text links below. A shopper who sees the burgundy pair and wants to buy it has to click \"Shop Men,\" land on a category page, and then find the burgundy colorway. That is one too many steps.",
+        "- **No social proof or editorial context.** The email calls the Handball Spezial a \"classic, throwback style\" with \"premium materials and fresh colorways\" — but doesn't say why this re-release matters now. Is it a limited drop? Is it selling fast? Has it trended on social media? The copy is safe but lacks the editorial punch that would make a non-sneakerhead care.",
+        "- **Body copy is thin.** One sentence describing the shoe is all the editorial content the email offers. For a product-story email, this is underwritten. Compare to how Nike or New Balance tells a product story in email — there's usually a design detail, a heritage callout, or a styling tip.",
+        "- **\"Display images to show real-time content\" alt text** appears on multiple DaVinci-personalized image slots. If images fail to load, the recipient sees this generic placeholder text, which is meaningless and reveals the martech plumbing."
+      ],
+      "recommendations": [
+        "1. **Connect the 30% promo to the product.** If Handball Spezial qualifies for the MARCH code, say so explicitly: \"Save 30% on Handball Spezial with code MARCH.\" If it doesn't qualify, consider removing the banner to avoid confusion — or swap in a Spezial-specific offer.",
+        "2. **Add pricing.** Display the retail price ($100) next to the product image. If the MARCH code applies, show the discounted price as well.",
+        "3. **Make each colorway clickable.** Wrap each shoe image in a direct link to that specific colorway's product page. Reduce clicks to purchase.",
+        "4. **Add one editorial detail.** Include a sentence about the shoe's heritage (\"First released in 1979 for German handball courts\"), a styling tip (\"Pair with wide-leg trousers for the full retro look\"), or a scarcity signal (\"Limited colorways, available while supplies last\").",
+        "5. **Fix the \"Display images to show real-time content\" alt text.** Replace with descriptive alt text: \"Handball Spezial in Navy Blue\" or \"adidas Handball Spezial — 3 colorways.\" If these are DaVinci dynamic slots, configure the alt fallback in the template.",
+        "6. **Add a secondary module.** The email ends abruptly after the CTAs. Consider a \"Complete the Look\" section with complementary products (Originals apparel, track pants) or a \"You Might Also Like\" row to extend engagement.",
+        "| Priority | Issue | Fix |",
+        "|----------|-------|-----|",
+        "| High | Broken DaVinci tracking link (relative URL `/g/...`) | Fix URL generation to include absolute `https://` prefix |",
+        "| High | Plain-text fallback is 0 chars | Generate a plain-text MIME part from the HTML content |",
+        "| High | 6 arrow images served over HTTP | Update `image.link.adidas.com` asset URLs to `https://` |",
+        "| High | Staging CDN domain for adidas logo | Replace `image.staging.link.adidas.com` with production CDN domain |",
+        "| Medium | \"Display images to show real-time content\" alt text | Replace with descriptive alt text per image slot (e.g., \"Handball Spezial colorways\") |",
+        "| Medium | HTTP tracking pixel (click.comms.adidas.com) missing alt + HTTP | Switch to HTTPS; add empty alt=\"\" for accessibility compliance |",
+        "| Medium | Verify SPF/DKIM alignment for us-news.comms.adidas.com | Pull raw delivered headers; confirm DKIM d= alignment |",
+        "| Medium | Gmail Android dual-render risk | Add `max-height:0;overflow:hidden` fallback for mobile-only blocks |",
+        "| Low | Confirm mi_u subscriber ID is non-reversible hash | Review DaVinci configuration to ensure PII is not exposed |",
+        "| Low | Verify UTM params on landing pages | Decrypt a sample redirect and confirm utm_campaign matches campaign taxonomy |"
+      ],
+      "bottom_line": [
+        "This email nails the aesthetic — it's clean, focused, and on-brand for adidas Originals. But an editorial email still needs to convert, and this one does the minimum: three shoes, one sentence of copy, three CTAs. No pricing, no urgency, no individual product links, and a disconnected promo banner that confuses more than it helps. The Handball Spezial is a strong enough product to sell itself to sneaker enthusiasts, but this email doesn't do the work needed to convert the broader audience that a newsletter reach provides."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Product awareness for Handball Spezial re-release, framed as a retro/heritage story. Secondary: 30% OFF promo code (disconnected). |",
+        "| **Hero / primary value prop** | \"THE '70S ARE BACK\" headline + three colorways of Handball Spezial. One sentence of body copy. Gender-segmented CTAs (Men, Women, Kids). |",
+        "| **Promo / offer** | \"Save 30% on eligible styles with code MARCH\" banner at top — not linked to the featured product. Creates ambiguity about applicability. |",
+        "| **Product discoverability** | Three colorways shown; no individual product links; no pricing; no size/stock information. |",
+        "| **Utility / secondary modules** | \"Stories, styles and sportswear at adidas, since 1949\" footer, My Account, Privacy Statement, Support, Unsubscribe, adidas.com/us. Minimal but complete. |",
+        "| **Bugs / friction / clarity issues** | 1 failed link check (unknown URL type on a DaVinci tracking redirect). \"Display images to show real-time content\" alt text on multiple dynamic image slots. 6 arrow images served over HTTP. 1 tracking pixel missing alt text and served over HTTP. Plain-text fallback missing (0 chars). |",
+        "**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-28",
+        "The email has a 62% QA pass rate with 2 hard failures and 1 warning across 8 automated checks. The primary issues are a broken DaVinci tracking link, missing plain-text fallback, and systemic HTTP image delivery for arrow icons and a tracking pixel. Authentication status is unknown due to missing relay headers. Compliance checks (List-Unsubscribe, one-click unsub, physical address, body unsub link) all pass cleanly.",
+        "**Broken DaVinci redirect link (FAIL)**",
+        "```",
+        "link_error: unknown url type: '/g/b17b7641-f438-4464-885c-f1e88242f89e?txn=...'",
+        "```",
+        "A DaVinci personalization tracking URL is malformed — it uses a relative path (`/g/...`) instead of an absolute URL. This link will fail to resolve when clicked. It appears to be a tracking/impression beacon rather than a user-facing CTA, but it still represents a broken asset in the email.",
+        "**32 tracking links skipped in QA** — These are click-redirect domains (click.comms.adidas.com) that were not probed for HTTP status. Destination URL validity is assumed but not confirmed.",
+        "**DaVinci encrypted redirect URLs** — All user-facing links route through `click.comms.adidas.com` with DaVinci-encrypted payloads containing UTM parameters (cm_mmc, cm_mmc1, cm_mmc2, cm_mmca3, cm_mmca4) and AppsFlyer attribution parameters (af_reengagement_window, pid, c, af_adset, af_ad, af_channel). Campaign ID visible in URL: `ynl119rklk`. UTM correctness cannot be verified without decrypting the redirect destination.",
+        "**6 HTTP arrow images** — All six arrow icon images use `http://image.link.adidas.com`:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "These are the small arrow icons next to the \"SHOP MEN,\" \"SHOP WOMEN,\" and \"SHOP KIDS\" CTAs (desktop and mobile variants). Gmail will proxy these; Apple Mail may block them. The arrows may fail to render for a segment of recipients.",
+        "**1 HTTP tracking pixel** — A click.comms.adidas.com open pixel is served over HTTP and is missing alt text:",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d35d58f64-.../ryjIzSsVeoo4HjhxbLfFD7Oy6...",
+        "```",
+        "**1 image missing alt text** — The DaVinci tracking beacon image (`b17b7641-f438...`) has no alt attribute. Minor impact since it's a hidden tracking pixel.",
+        "**\"Display images to show real-time content\" alt text on 5+ images** — Multiple DaVinci-personalized image slots use this generic alt fallback. If images fail to load, recipients see this unhelpful placeholder text instead of a meaningful description.",
+        "**Dual desktop/mobile content blocks** — The email uses `hideMobile` and `show-mobile` CSS classes to switch between desktop and mobile layouts. Gmail's Android app ignores `@media` queries, which could cause both versions to render simultaneously.",
+        "**Staging CDN domain detected** — The adidas logo is served from `image.staging.link.adidas.com` instead of the production CDN. This is a deployment oversight — staging assets may be removed or changed without notice.",
+        "**No unresolved merge tokens** detected in the HTML. The personalization status is \"pass\" in the QA report. However, the DaVinci dynamic image slots (mi.adidas.com/p/rp/...) suggest server-side personalization is being used for the hero banner and product images. The rendered output appears correct based on the screenshot.",
+        "**Subscriber ID exposed in URLs** — `mi_u=ILDCWJD70W1BE32X` appears in multiple image and link URLs. This is a hashed subscriber identifier passed to the DaVinci personalization engine. Confirm this is a non-reversible hash rather than a PII-adjacent value.",
+        "**List-Unsubscribe header: PASS** — Present with a valid HTTPS URL pointing to adidas's acquisition API opt-out endpoint.",
+        "**One-click unsubscribe: PASS** — `List-Unsubscribe=One-Click` header present, meeting Gmail and Yahoo's February 2024 bulk sender requirements.",
+        "**CAN-SPAM physical address: PASS** — Physical address found in body (adidas America, Inc., 5055 N. Greeley Avenue, Portland, OR 97217).",
+        "**Body unsubscribe link: PASS** — Unsubscribe link found in the email body.",
+        "**Plain-text fallback: FAIL** — Text version is 0 characters. This is a deliverability risk: some spam filters penalize emails with no plain-text MIME part. It also means recipients whose email clients prefer plain text see an empty message.",
+        "**Authentication-Results header: WARN** — Not captured by the QA relay, so SPF/DKIM alignment for `us-news.comms.adidas.com` cannot be confirmed.",
+        "**Gender-segmented CTAs route through DaVinci redirects** to adidas.com category pages. The UTM parameters embedded in the encrypted payload should attribute traffic to this specific send (campaign_id=ynl119rklk). Confirm that the landing pages for \"Shop Men,\" \"Shop Women,\" and \"Shop Kids\" filter to Handball Spezial products rather than dropping the shopper on a generic category page.",
+        "**30% MARCH promo code** — If the promo banner links to a landing page, that page should have the MARCH code pre-applied or prominently displayed. If the shopper has to manually enter the code at checkout, friction increases and the conversion lift from the promo decreases."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/b17b7641-f438-4464-885c-f1e88242f89e?txn=39221200-2ad9-11f1-9ca4-b2872873faee'",
+            "url": "https://dv.adidas.com/o/b17b7641-f438-4464-885c-f1e88242f89e?cp_tp=v3.eJzjYuIIFuLgWLt49jk2AWYpXo7n3zmF2Dle8QswS8goiXNMepAFFGbj2HBqwTk2JZiEVgsTUNOdU8ICjBIsSt8ZhUQ5FspoMHqxcDAKMAaByQiuBC4hYY7nUgKMGszIEkLiHC-lBJjQVMcnxAMl2mQEmLEYY8jxSUqARYJRgVGDyYmLo38dr0QTh8JWNi8ukBIpiHIkdoYH0Ky3UgKsaGYZJRgBJZbICLBhdetrKQF2DRY0t76REuDAVC2xgE3hKJMRB8ddXiVmjkeOQFYzH5B1xgnI2ssPZC10A7Iug1g33axYOW6bSjFYcXCc15Bi5uhOd2CM4uC4bijEzPGvGsi6AWJ11ABZN0GsnpooTo4p1kIsHPd6GYHMLhsg83k_IwAvZEvm&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d3487-ac80-7000-b10b-aa6adb236e56"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=2i/f1b1/Xo7rimTgJLke45FQ4zejNj4hiOu4PQUlDI0eUkC+StMqM/l9f1tKED/n+aaiVcw0vCW5/fuJG2Qi61vAWo95lf+gvbdyDqfsT1JV2WPNbK9M"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "32 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: b17b7641-f438-4464-885c-f1e88242f89e",
+            "detail": "src: https://dv.adidas.com/o/b17b7641-f438-4464-885c-f1e88242f89e?cp_tp=v3.eJzjYuIIFuLgWLt49jk2AWYpXo7n3zmF2Dle8QswS8goiXNMep"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: ryjIzSsVeoo4HjhxbLfFD7Oy61cpvz3yU76xbBaJl0w=450",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000/ryjIzSsVeoo4HjhxbLfFD7Oy6"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: ryjIzSsVeoo4HjhxbLfFD7Oy61cpvz3yU76xbBaJl0w=450",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000/ryjIzSsVeoo4HjhxbLfFD7Oy6"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-28-back-to-the-70s-with-handball-spezial-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
