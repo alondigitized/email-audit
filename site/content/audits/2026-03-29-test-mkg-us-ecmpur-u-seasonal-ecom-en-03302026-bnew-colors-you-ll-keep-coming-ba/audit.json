@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba",
+  "email": {
+    "subject": "[Test]: MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_BNew Colors You'll Keep Coming Back To",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-27T21:26:33+00:00",
+    "date_formatted": "2026-03-27 21:26 UTC"
+  },
+  "review": {
+    "score": "6.5/10",
+    "raw_markdown": "## 1. Executive Summary\n\nA clean, color-forward product email anchored around three new colorways of a single shoe. The vertical color-blocking structure is visually distinctive and reinforces the \"new colors\" message effectively. However, the email is narrow and dense at small render size, the hero copy is thin, and the product recommendation module at the bottom competes with the focal story rather than extending it. This is a solid mid-funnel email that could convert better with sharper hierarchy and one stronger CTA moment.\n\n---\n\n## 2. Business Impact Score: **6.5 / 10**\n\n---\n\n## 3. What's Working\n\n- **Color storytelling works.** Slate → Taupe → Olive as sequential color chapters is smart visual merchandising. The named color labels read clearly and help the customer self-select.\n- **Lifestyle + product photography pairing.** Each color section pairs a context shot with a clean product shot, giving both aspiration and clarity.\n- **Consistent module cadence.** The repeat structure (lifestyle image → color name → product shot → CTA) is easy to scan and removes cognitive load.\n- **\"More Spring Essentials\" teaser.** The seasonal bridge module at the bottom-middle provides a natural next step for customers not sold on this shoe.\n\n---\n\n## 4. What's Weak\n\n- **Hero is underpowered.** \"Cool + Colorful\" is generic. There's no product name, no price signal, no urgency — nothing to anchor the scroll before you get to the color chapters.\n- **CTAs are small and repetitive.** Each color section has a small button, but at this render size they're easy to miss and visually identical. No single CTA dominates.\n- **\"Shop Our Newest Arrivals\" module dilutes focus.** Four small product thumbnails at the bottom scatter attention. The products are too small to evaluate at this size and work against the single-shoe narrative.\n- **Footer is dense.** The text-heavy footer (preferences, legal, address) feels abrupt after the visual product content and is visually heavy relative to the rest of the email.\n- **No price or promotion signal.** For a purchase-segment audience (ECMPUR), there's no price, discount, or value hook visible anywhere — a missed conversion lever.\n\n---\n\n## 5. Recommendations\n\n1. **Strengthen the hero.** Add the shoe name and a one-line differentiator (e.g., comfort claim or \"now in 3 new colors\") directly under \"Cool + Colorful\" before the first color chapter begins.\n2. **Add one dominant CTA.** After all three colors are shown, place a single high-contrast \"Shop All Colors\" button to consolidate intent before the footer.\n3. **Cut or shrink the \"Newest Arrivals\" module.** It's competing with the email's purpose. If kept, make it a cleaner 2-up grid with visible product names.\n4. **Surface a price or offer.** Even \"Starting at $X\" or free shipping would give the purchase-segment recipient a conversion reason the current email lacks.\n5. **Increase CTA button size.** Each per-color CTA should be wider and higher-contrast to be actionable on mobile.\n\n---\n\n## 6. Bottom Line\n\nThe color-chapter structure is genuinely good and the right creative idea for this send. Execution falls short in hero depth, CTA hierarchy, and the absence of any price or offer signal for a purchase-intent segment. Fix the hero and add one consolidating CTA and this email earns a point or two back.\n\n---\n\n## 7. Evidence\n\n**Overall purpose:** Showcase three new colorways of a single Skechers shoe to a past-purchaser segment and drive product page clicks.\n\n**Hero / primary value proposition:** \"Cool + Colorful\" headline over a lifestyle image. Value prop is style/aesthetic only — no product name, price, or performance claim visible.\n\n**Membership / benefits section:** None visible.\n\n**Product discoverability / recommendation modules:** Three sequential color modules (Slate, Taupe, Olive), each with lifestyle + product imagery and a small CTA button. A \"Shop Our Newest Arrivals\" 4-product grid appears below the color story.\n\n**Utility / secondary modules:** \"More Spring Essentials\" banner bridging the color chapters to the broader seasonal catalog. Standard text footer with preference and legal links.\n\n**Bugs / friction / clarity issues:** No visible broken images or rendering errors. Product thumbnails in the \"Newest Arrivals\" grid are very small at this render size — borderline unidentifiable on mobile. No other visual bugs observed.\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers BOGO Colors Email\n**Campaign:** `MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B`\n**Date audited:** 2026-03-29\n\n---\n\n### 1. Technical Summary\n\nThe email carries a `[Test]:` subject prefix and a subject-line concatenation defect that would expose an internal campaign ID to subscribers. Additionally, all footer/asset images are served over HTTP, which will cause image blocking in major clients that enforce HTTPS.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[WARN] 26 click links unverifiable** — All CTAs route through `click.emails.skechers.com` (SFMC click-redirect). Destination URLs and UTM integrity could not be probed by the automated checker. Manual spot-check of final destinations is required before send.\n\n**[INFO] Third-party audience-sync pixels present:**\n- `beacon.krxd.net` — two fire events: SHA-256 hashed email match (`partner_uid=28374a...`) and a raw subscriber sub-ID (`partner_uid=2396422`). The plain-text sub-ID variant leaks an internal subscriber identifier to a third-party domain.\n- `pixel.app.returnpath.net/pixel.gif` — Return Path inbox monitoring pixel, served over **HTTP** (no HTTPS).\n- `http://www.ink1000.com/…/o.gif` — Third-party open-tracker, served over **HTTP**.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[FAIL] HTTP image sources — 15 assets** — All hosted on `image.emails.skechers.com` and `ink1000.com` are served via `http://`. Gmail, Yahoo Mail, and Apple Mail strip or block mixed-content images. Affected assets include the Skechers logo, app store badges, social icons (Instagram, Twitter, Facebook, Pinterest, YouTube), and the ink1000 tracking pixel.\n\nExample evidence:\n```\nsrc=\"http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png\"  (Skechers logo)\nsrc=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&...\"\n```\n\n**[WARN] Missing `alt` text on 4 images:**\n- `o.gif` (ink1000 open tracker) — `alt=\"\"` present but no descriptive value; acceptable for a tracking pixel.\n- `49468f73-...png` — no `alt` attribute at all.\n- `00100b23-...png` — no `alt` attribute.\n- `fc08601a-...png` — no `alt` attribute.\n\nImages without `alt` attributes render as broken image icons in image-blocked environments and fail WCAG 2.1 SC 1.1.1.\n\n**[WARN] Malformed charset meta tag:**\n```html\n<meta content=\"text/html; charset=utf-8\" />\n```\nMissing `http-equiv=\"Content-Type\"`. Some older clients may fail to declare UTF-8, risking character-encoding issues in the subject/preheader.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved `%%token%%` or `{{handlebars}}` placeholders detected in the truncated source. No issues found.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Subject line contains `[Test]:` prefix** — Subject reads:\n```\n[Test]: MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_BNew Colors You'll Keep Coming Back To\n```\nThis is a production-blocking issue if the email deploys to live subscribers. CAN-SPAM §5(a)(6) prohibits deceptive subject lines; a `[Test]:` tag on a commercial send is also poor practice and may trigger spam filters.\n\n**[FAIL] Subject-line concatenation defect** — The campaign ID `MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B` is directly concatenated with the display subject `New Colors You'll Keep Coming Back To` with no separator. This exposes a raw internal campaign identifier to subscribers and suggests a broken template variable substitution.\n\n**[WARN] SPF/DKIM authentication status unknown** — The AgentMail relay did not return `Authentication-Results` headers. SPF/DKIM/DMARC pass status could not be confirmed. Sending domain `emails.skechers.com` must be verified against Skechers' published DMARC policy before deployment.\n\nPhysical address and unsubscribe link presence could not be verified from the truncated source — confirm both are present in the footer per CAN-SPAM §5(a)(5) and §5(a)(3).\n\n---\n\n### 6. Email-to-Site Continuity\n\nAll 26 CTAs route through the SFMC click-redirect wrapper. UTM parameter presence on final destination URLs could not be confirmed without resolving the redirects. The campaignid value `MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B` appears in the Krux ad-impression pixel, confirming campaign attribution is wired. No issues found beyond the unverifiable click links noted above.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|----------|-------|--------|\n| **P0** | `[Test]:` subject prefix | Remove before production send |\n| **P0** | Campaign ID concatenated into subject | Fix template: add space/separator or remove campaign ID from subject field |\n| **P1** | 15 HTTP image sources | Migrate all `image.emails.skechers.com` and `ink1000.com` assets to HTTPS; coordinate with ESP asset hosting |\n| **P1** | SPF/DKIM unverified | Confirm authentication headers resolve correctly through AgentMail relay before send |\n| **P2** | 3 images missing `alt` attributes | Add descriptive `alt` text to `49468f73`, `00100b23`, `fc08601a` PNGs |\n| **P2** | Raw sub-ID in Krux pixel | Evaluate whether `partner_uid=2396422` (plain-text subscriber ID) is intentional; consider removing or hashing |\n| **P3** | Malformed charset meta | Change to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />` |\n| **P3** | Spot-check 26 click URLs | Manually verify UTM params and landing page alignment on a representative sample of CTAs |",
+    "sections": {
+      "executive_summary": [
+        "A clean, color-forward product email anchored around three new colorways of a single shoe. The vertical color-blocking structure is visually distinctive and reinforces the \"new colors\" message effectively. However, the email is narrow and dense at small render size, the hero copy is thin, and the product recommendation module at the bottom competes with the focal story rather than extending it. This is a solid mid-funnel email that could convert better with sharper hierarchy and one stronger CTA moment."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Color storytelling works.** Slate → Taupe → Olive as sequential color chapters is smart visual merchandising. The named color labels read clearly and help the customer self-select.",
+        "- **Lifestyle + product photography pairing.** Each color section pairs a context shot with a clean product shot, giving both aspiration and clarity.",
+        "- **Consistent module cadence.** The repeat structure (lifestyle image → color name → product shot → CTA) is easy to scan and removes cognitive load.",
+        "- **\"More Spring Essentials\" teaser.** The seasonal bridge module at the bottom-middle provides a natural next step for customers not sold on this shoe."
+      ],
+      "whats_weak": [
+        "- **Hero is underpowered.** \"Cool + Colorful\" is generic. There's no product name, no price signal, no urgency — nothing to anchor the scroll before you get to the color chapters.",
+        "- **CTAs are small and repetitive.** Each color section has a small button, but at this render size they're easy to miss and visually identical. No single CTA dominates.",
+        "- **\"Shop Our Newest Arrivals\" module dilutes focus.** Four small product thumbnails at the bottom scatter attention. The products are too small to evaluate at this size and work against the single-shoe narrative.",
+        "- **Footer is dense.** The text-heavy footer (preferences, legal, address) feels abrupt after the visual product content and is visually heavy relative to the rest of the email.",
+        "- **No price or promotion signal.** For a purchase-segment audience (ECMPUR), there's no price, discount, or value hook visible anywhere — a missed conversion lever."
+      ],
+      "recommendations": [
+        "1. **Strengthen the hero.** Add the shoe name and a one-line differentiator (e.g., comfort claim or \"now in 3 new colors\") directly under \"Cool + Colorful\" before the first color chapter begins.",
+        "2. **Add one dominant CTA.** After all three colors are shown, place a single high-contrast \"Shop All Colors\" button to consolidate intent before the footer.",
+        "3. **Cut or shrink the \"Newest Arrivals\" module.** It's competing with the email's purpose. If kept, make it a cleaner 2-up grid with visible product names.",
+        "4. **Surface a price or offer.** Even \"Starting at $X\" or free shipping would give the purchase-segment recipient a conversion reason the current email lacks.",
+        "5. **Increase CTA button size.** Each per-color CTA should be wider and higher-contrast to be actionable on mobile.",
+        "| Priority | Issue | Action |",
+        "|----------|-------|--------|",
+        "| **P0** | `[Test]:` subject prefix | Remove before production send |",
+        "| **P0** | Campaign ID concatenated into subject | Fix template: add space/separator or remove campaign ID from subject field |",
+        "| **P1** | 15 HTTP image sources | Migrate all `image.emails.skechers.com` and `ink1000.com` assets to HTTPS; coordinate with ESP asset hosting |",
+        "| **P1** | SPF/DKIM unverified | Confirm authentication headers resolve correctly through AgentMail relay before send |",
+        "| **P2** | 3 images missing `alt` attributes | Add descriptive `alt` text to `49468f73`, `00100b23`, `fc08601a` PNGs |",
+        "| **P2** | Raw sub-ID in Krux pixel | Evaluate whether `partner_uid=2396422` (plain-text subscriber ID) is intentional; consider removing or hashing |",
+        "| **P3** | Malformed charset meta | Change to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />` |",
+        "| **P3** | Spot-check 26 click URLs | Manually verify UTM params and landing page alignment on a representative sample of CTAs |"
+      ],
+      "bottom_line": [
+        "The color-chapter structure is genuinely good and the right creative idea for this send. Execution falls short in hero depth, CTA hierarchy, and the absence of any price or offer signal for a purchase-intent segment. Fix the hero and add one consolidating CTA and this email earns a point or two back."
+      ],
+      "evidence": [
+        "**Overall purpose:** Showcase three new colorways of a single Skechers shoe to a past-purchaser segment and drive product page clicks.",
+        "**Hero / primary value proposition:** \"Cool + Colorful\" headline over a lifestyle image. Value prop is style/aesthetic only — no product name, price, or performance claim visible.",
+        "**Membership / benefits section:** None visible.",
+        "**Product discoverability / recommendation modules:** Three sequential color modules (Slate, Taupe, Olive), each with lifestyle + product imagery and a small CTA button. A \"Shop Our Newest Arrivals\" 4-product grid appears below the color story.",
+        "**Utility / secondary modules:** \"More Spring Essentials\" banner bridging the color chapters to the broader seasonal catalog. Standard text footer with preference and legal links.",
+        "**Bugs / friction / clarity issues:** No visible broken images or rendering errors. Product thumbnails in the \"Newest Arrivals\" grid are very small at this render size — borderline unidentifiable on mobile. No other visual bugs observed.",
+        "**Campaign:** `MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B`",
+        "**Date audited:** 2026-03-29",
+        "The email carries a `[Test]:` subject prefix and a subject-line concatenation defect that would expose an internal campaign ID to subscribers. Additionally, all footer/asset images are served over HTTP, which will cause image blocking in major clients that enforce HTTPS.",
+        "**[WARN] 26 click links unverifiable** — All CTAs route through `click.emails.skechers.com` (SFMC click-redirect). Destination URLs and UTM integrity could not be probed by the automated checker. Manual spot-check of final destinations is required before send.",
+        "**[INFO] Third-party audience-sync pixels present:**",
+        "- `beacon.krxd.net` — two fire events: SHA-256 hashed email match (`partner_uid=28374a...`) and a raw subscriber sub-ID (`partner_uid=2396422`). The plain-text sub-ID variant leaks an internal subscriber identifier to a third-party domain.",
+        "- `pixel.app.returnpath.net/pixel.gif` — Return Path inbox monitoring pixel, served over **HTTP** (no HTTPS).",
+        "- `http://www.ink1000.com/…/o.gif` — Third-party open-tracker, served over **HTTP**.",
+        "**[FAIL] HTTP image sources — 15 assets** — All hosted on `image.emails.skechers.com` and `ink1000.com` are served via `http://`. Gmail, Yahoo Mail, and Apple Mail strip or block mixed-content images. Affected assets include the Skechers logo, app store badges, social icons (Instagram, Twitter, Facebook, Pinterest, YouTube), and the ink1000 tracking pixel.",
+        "Example evidence:",
+        "```",
+        "src=\"http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png\"  (Skechers logo)",
+        "src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&...\"",
+        "```",
+        "**[WARN] Missing `alt` text on 4 images:**",
+        "- `o.gif` (ink1000 open tracker) — `alt=\"\"` present but no descriptive value; acceptable for a tracking pixel.",
+        "- `49468f73-...png` — no `alt` attribute at all.",
+        "- `00100b23-...png` — no `alt` attribute.",
+        "- `fc08601a-...png` — no `alt` attribute.",
+        "Images without `alt` attributes render as broken image icons in image-blocked environments and fail WCAG 2.1 SC 1.1.1.",
+        "**[WARN] Malformed charset meta tag:**",
+        "```html",
+        "<meta content=\"text/html; charset=utf-8\" />",
+        "```",
+        "Missing `http-equiv=\"Content-Type\"`. Some older clients may fail to declare UTF-8, risking character-encoding issues in the subject/preheader.",
+        "No unresolved `%%token%%` or `{{handlebars}}` placeholders detected in the truncated source. No issues found.",
+        "**[FAIL] Subject line contains `[Test]:` prefix** — Subject reads:",
+        "```",
+        "[Test]: MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_BNew Colors You'll Keep Coming Back To",
+        "```",
+        "This is a production-blocking issue if the email deploys to live subscribers. CAN-SPAM §5(a)(6) prohibits deceptive subject lines; a `[Test]:` tag on a commercial send is also poor practice and may trigger spam filters.",
+        "**[FAIL] Subject-line concatenation defect** — The campaign ID `MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B` is directly concatenated with the display subject `New Colors You'll Keep Coming Back To` with no separator. This exposes a raw internal campaign identifier to subscribers and suggests a broken template variable substitution.",
+        "**[WARN] SPF/DKIM authentication status unknown** — The AgentMail relay did not return `Authentication-Results` headers. SPF/DKIM/DMARC pass status could not be confirmed. Sending domain `emails.skechers.com` must be verified against Skechers' published DMARC policy before deployment.",
+        "Physical address and unsubscribe link presence could not be verified from the truncated source — confirm both are present in the footer per CAN-SPAM §5(a)(5) and §5(a)(3).",
+        "All 26 CTAs route through the SFMC click-redirect wrapper. UTM parameter presence on final destination URLs could not be confirmed without resolving the redirects. The campaignid value `MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B` appears in the Krux ad-impression pixel, confirming campaign attribution is wired. No issues found beyond the unverifiable click links noted above."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMjM5NjQyMiIsImxpZCI6IjI1IiwiaiI6IjE4NDg3MyIsImpiIjoiMSIsImQiOiIxMDA"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 17,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&mi_ecmp=MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&mi_ecmp=MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_B"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Twitter\" (d76a5487-158e-4781-82a4-b65b04c051e4.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/d76a5487-158e-4781-82a4-b65b04c051e4.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=B3B2BZNBP6KUNNEOCEXPZJFABA.100218"
+  }
+}
