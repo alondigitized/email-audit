@@ -1,15 +1,15 @@
 [
   {
-    "slug": "2026-03-29-it-s-back-in-stock-at-skechers-com",
-    "subject": "It's Back in Stock at SKECHERS.com",
-    "from_display_name": "SKECHERS",
-    "timestamp_iso": "2026-03-29T17:20:37+00:00",
-    "score": "5/10",
+    "slug": "2026-03-29-verify-pipeline-test-2026-03-29-21-09",
+    "subject": "[Verify] Pipeline Test 2026-03-29 21:09",
+    "from_display_name": "Walker Miles",
+    "timestamp_iso": "2026-03-29T21:09:49+00:00",
+    "score": "—",
     "qa_summary": {
-      "overall_pass_rate": "71%",
-      "total_checks": 7,
+      "overall_pass_rate": "25%",
+      "total_checks": 8,
       "total_issues": 1,
-      "total_warnings": 1
+      "total_warnings": 5
     },
     "has_image": true,
     "type": "email",
@@ -60,7 +60,7 @@
   },
   {
     "slug": "2026-03-29-back-to-the-70s-with-handball-spezial",
-    "subject": "Back to the \u201970s with Handball Spezial",
+    "subject": "Back to the ’70s with Handball Spezial",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-28T19:04:41+00:00",
     "score": "4/10",
@@ -155,22 +155,6 @@
     "persona": null
   },
   {
-    "slug": "2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba",
-    "subject": "[Test]: MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_BNew Colors You'll Keep Coming Back To",
-    "from_display_name": "SKECHERS",
-    "timestamp_iso": "2026-03-27T22:32:34+00:00",
-    "score": "6.5/10",
-    "qa_summary": {
-      "overall_pass_rate": "83%",
-      "total_checks": 6,
-      "total_issues": 0,
-      "total_warnings": 1
-    },
-    "has_image": true,
-    "type": "email",
-    "persona": null
-  },
-  {
     "slug": "2026-03-29-test-mkg-us-na-w-multi-gender-en-03282026-bskechers-exclusives-the-shoes-you-can",
     "subject": "[Test]: MKG_US_NA_W_MULTI_GENDER_EN_03282026_BSkechers Exclusives: The Shoes You Can't Get Anywhere Else",
     "from_display_name": "SKECHERS",
@@ -192,6 +176,22 @@
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-03-27T21:38:34+00:00",
     "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
+    "slug": "2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba",
+    "subject": "[Test]: MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_BNew Colors You'll Keep Coming Back To",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-27T21:26:33+00:00",
+    "score": "6.5/10",
     "qa_summary": {
       "overall_pass_rate": "83%",
       "total_checks": 6,
@@ -417,8 +417,24 @@
     "persona": null
   },
   {
+    "slug": "2026-03-29-it-s-back-in-stock-at-skechers-com",
+    "subject": "It's Back in Stock at SKECHERS.com",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-26T17:21:57+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on",
-    "subject": "The countdown to FIFA World Cup 26\u2122 is on",
+    "subject": "The countdown to FIFA World Cup 26™ is on",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-25T18:07:23+00:00",
     "score": "3/10",
@@ -450,7 +466,7 @@
   },
   {
     "slug": "2026-03-29-last-day-to-redeem-your-voucher",
-    "subject": "\u23f3 Last day to redeem your voucher",
+    "subject": "⏳ Last day to redeem your voucher",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-23T16:43:15+00:00",
     "score": "5/10",
@@ -466,7 +482,7 @@
   },
   {
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off",
-    "subject": "Your First Pair Just Became 2 \u2014 BOGO 50% Off!",
+    "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-03-23T15:13:13+00:00",
     "score": "5/10",

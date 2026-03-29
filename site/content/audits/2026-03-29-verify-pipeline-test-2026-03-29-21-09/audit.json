@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-verify-pipeline-test-2026-03-29-21-09",
+  "email": {
+    "subject": "[Verify] Pipeline Test 2026-03-29 21:09",
+    "from": "Walker Miles <walker@agentmail.to>",
+    "from_display_name": "Walker Miles",
+    "timestamp_iso": "2026-03-29T21:09:49+00:00",
+    "date_formatted": "2026-03-29 21:09 UTC"
+  },
+  "review": {
+    "score": "—",
+    "raw_markdown": "\n## 1. Executive Summary\n\nA bare-bones automated test email confirming the audit pipeline fired. Two lines of text, no styling, no structure beyond a bold heading. It does its one job — proof of delivery — and nothing more.\n\n---\n\n## 2. Business Impact Score: N/A\n\nNot a consumer-facing email. Scoring against marketing criteria is not applicable.\n\n---\n\n## 3. What's Working\n\n- **Heading is clear.** \"Pipeline Verification\" immediately identifies the message type.\n- **Timestamp is precise.** ISO 8601 format (`2026-03-29T21:09:47.892Z`) is unambiguous for debugging and logging.\n- **Confirmation copy is direct.** \"This email verifies that the audit pipeline is operational.\" — no ambiguity about purpose.\n\n---\n\n## 4. What's Weak\n\n- **Massive blank canvas below the content.** The render is extremely tall (~8000px) with two lines of text at the top. The email body is generating a large empty area — possibly a template with unfilled sections or a container div with fixed height.\n- **No sender context or routing metadata visible.** For an ops/verification email, a run ID, environment tag (prod/staging), or link to logs would make it more actionable.\n\n---\n\n## 5. Recommendations\n\n1. **Collapse the empty space.** The template appears to be rendering a full-height container. Strip it down to content height only for internal test emails.\n2. **Add a run/job ID** to the body so any delivery issue can be cross-referenced with logs without relying solely on the timestamp.\n3. **Tag the environment** (e.g., `[PROD]` vs `[STAGING]`) in the heading or body to prevent confusion if multiple environments share the same inbox.\n\n---\n\n## 6. Bottom Line\n\nFunctionally sufficient as a delivery check. The only real issue is the enormous blank space in the rendered output, which suggests a template scaffold is being used that isn't sized for minimal content. Fix the container height; the rest is fine for an internal ping.\n\n---\n\n## 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Automated pipeline health check, not a consumer send |\n| **Hero / value prop** | N/A — heading + single confirmation sentence |\n| **Membership / benefits** | Not present |\n| **Product / recommendation modules** | Not present |\n| **Utility / secondary modules** | Not present |\n| **Bugs / friction** | Large blank render area (~8000px tall for ~2 lines of content) — likely an oversized template container |\n\n---\n\n## Technical Audit\n\n## Technical Audit — Pipeline Test 2026-03-29 21:09\n\n### 1. Technical Summary\nThis is an automated pipeline verification email, not a marketing send. The HTML payload is minimal and structurally valid, but the message fails several compliance checks that would apply if this template were used in production.\n\n---\n\n### 2. Link & Tracking Issues\n**[WARN]** No URLs detected in the email body (`urls.txt` empty/missing). No tracking pixels, click-tracking wrappers, or linked assets were found. For a verification email this is expected, but confirms the link-extraction stage of the audit pipeline received no data to process.\n\n---\n\n### 3. Rendering & Accessibility\nNo issues with the HTML structure itself — a single `<div dir=\"ltr\">` with `<h1>` and `<p>` tags. No images, no tables, no media queries. Renders trivially across clients.\n\nNo issues found beyond the bare-minimum markup (no `lang` attribute on a root element, no `<title>` — acceptable for a test payload).\n\n---\n\n### 4. Personalization & Merge Tokens\nNo merge tokens or personalization variables present. No issues found for this message type.\n\n---\n\n### 5. Compliance (CAN-SPAM / RFC 8058)\n\n| Check | Result | Evidence |\n|---|---|---|\n| Physical mailing address | **FAIL** | Not present in body |\n| Unsubscribe link in body | **FAIL** | Not present in body |\n| `List-Unsubscribe` header | **WARN** | Not captured by AgentMail relay |\n| `List-Unsubscribe-Post` (RFC 8058) | **WARN** | One-click unsubscribe absent |\n| SPF/DKIM via `Authentication-Results` | **WARN** | Header not present in captured data |\n\nThese are hard failures for any commercial send. For a `[Verify]` internal test message, the missing address and unsubscribe link are expected but should be noted if this template scaffolding is ever reused for real sends.\n\nThe missing `Authentication-Results` header is an instrumentation gap — the AgentMail relay is not forwarding authentication results, so SPF/DKIM pass/fail status cannot be confirmed from the captured payload.\n\n---\n\n### 6. Email-to-Site Continuity\nNo URLs present → no UTM parameters to evaluate. No landing page alignment issues applicable.\n\n---\n\n### 7. Recommendations\n\n1. **Fix relay header capture** — `Authentication-Results` should be forwarded by the AgentMail relay so deliverability audits have SPF/DKIM signal. Investigate relay configuration or headers being stripped before ingestion.\n2. **Compliance scaffolding for test templates** — If any variant of this template is promoted to a real send, inject a physical address block and unsubscribe footer before deployment. Consider adding them to the base test template now to exercise the compliance checks end-to-end.\n3. **Unsubscribe header injection** — Add `List-Unsubscribe` and `List-Unsubscribe-Post` headers at send time (even for test sends) so the compliance check pipeline can be verified against real header values rather than always warning on absence.\n4. **Pipeline pass rate baseline** — 25% pass rate is expected for a stub verification email with no real content. Establish a separate pass-rate baseline for actual marketing sends so this metric is meaningful.",
+    "sections": {
+      "executive_summary": [
+        "A bare-bones automated test email confirming the audit pipeline fired. Two lines of text, no styling, no structure beyond a bold heading. It does its one job — proof of delivery — and nothing more.",
+        "Not a consumer-facing email. Scoring against marketing criteria is not applicable."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Heading is clear.** \"Pipeline Verification\" immediately identifies the message type.",
+        "- **Timestamp is precise.** ISO 8601 format (`2026-03-29T21:09:47.892Z`) is unambiguous for debugging and logging.",
+        "- **Confirmation copy is direct.** \"This email verifies that the audit pipeline is operational.\" — no ambiguity about purpose."
+      ],
+      "whats_weak": [
+        "- **Massive blank canvas below the content.** The render is extremely tall (~8000px) with two lines of text at the top. The email body is generating a large empty area — possibly a template with unfilled sections or a container div with fixed height.",
+        "- **No sender context or routing metadata visible.** For an ops/verification email, a run ID, environment tag (prod/staging), or link to logs would make it more actionable."
+      ],
+      "recommendations": [
+        "1. **Collapse the empty space.** The template appears to be rendering a full-height container. Strip it down to content height only for internal test emails.",
+        "2. **Add a run/job ID** to the body so any delivery issue can be cross-referenced with logs without relying solely on the timestamp.",
+        "3. **Tag the environment** (e.g., `[PROD]` vs `[STAGING]`) in the heading or body to prevent confusion if multiple environments share the same inbox.",
+        "1. **Fix relay header capture** — `Authentication-Results` should be forwarded by the AgentMail relay so deliverability audits have SPF/DKIM signal. Investigate relay configuration or headers being stripped before ingestion.",
+        "2. **Compliance scaffolding for test templates** — If any variant of this template is promoted to a real send, inject a physical address block and unsubscribe footer before deployment. Consider adding them to the base test template now to exercise the compliance checks end-to-end.",
+        "3. **Unsubscribe header injection** — Add `List-Unsubscribe` and `List-Unsubscribe-Post` headers at send time (even for test sends) so the compliance check pipeline can be verified against real header values rather than always warning on absence.",
+        "4. **Pipeline pass rate baseline** — 25% pass rate is expected for a stub verification email with no real content. Establish a separate pass-rate baseline for actual marketing sends so this metric is meaningful."
+      ],
+      "bottom_line": [
+        "Functionally sufficient as a delivery check. The only real issue is the enormous blank space in the rendered output, which suggests a template scaffold is being used that isn't sized for minimal content. Fix the container height; the rest is fine for an internal ping."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Automated pipeline health check, not a consumer send |",
+        "| **Hero / value prop** | N/A — heading + single confirmation sentence |",
+        "| **Membership / benefits** | Not present |",
+        "| **Product / recommendation modules** | Not present |",
+        "| **Utility / secondary modules** | Not present |",
+        "| **Bugs / friction** | Large blank render area (~8000px tall for ~2 lines of content) — likely an oversized template container |",
+        "This is an automated pipeline verification email, not a marketing send. The HTML payload is minimal and structurally valid, but the message fails several compliance checks that would apply if this template were used in production.",
+        "**[WARN]** No URLs detected in the email body (`urls.txt` empty/missing). No tracking pixels, click-tracking wrappers, or linked assets were found. For a verification email this is expected, but confirms the link-extraction stage of the audit pipeline received no data to process.",
+        "No issues with the HTML structure itself — a single `<div dir=\"ltr\">` with `<h1>` and `<p>` tags. No images, no tables, no media queries. Renders trivially across clients.",
+        "No issues found beyond the bare-minimum markup (no `lang` attribute on a root element, no `<title>` — acceptable for a test payload).",
+        "No merge tokens or personalization variables present. No issues found for this message type.",
+        "| Check | Result | Evidence |",
+        "|---|---|---|",
+        "| Physical mailing address | **FAIL** | Not present in body |",
+        "| Unsubscribe link in body | **FAIL** | Not present in body |",
+        "| `List-Unsubscribe` header | **WARN** | Not captured by AgentMail relay |",
+        "| `List-Unsubscribe-Post` (RFC 8058) | **WARN** | One-click unsubscribe absent |",
+        "| SPF/DKIM via `Authentication-Results` | **WARN** | Header not present in captured data |",
+        "These are hard failures for any commercial send. For a `[Verify]` internal test message, the missing address and unsubscribe link are expected but should be noted if this template scaffolding is ever reused for real sends.",
+        "The missing `Authentication-Results` header is an instrumentation gap — the AgentMail relay is not forwarding authentication results, so SPF/DKIM pass/fail status cannot be confirmed from the captured payload.",
+        "No URLs present → no UTM parameters to evaluate. No landing page alignment issues applicable."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "links_none",
+            "status": "warn",
+            "label": "No URLs found",
+            "detail": "urls.txt is empty or missing"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 0,
+        "warned": 3,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "header_list_unsub_missing",
+            "status": "warn",
+            "label": "List-Unsubscribe header not found",
+            "detail": "Header may not be captured by AgentMail relay"
+          },
+          {
+            "check_id": "header_one_click_missing",
+            "status": "warn",
+            "label": "List-Unsubscribe-Post header not found (RFC 8058)",
+            "detail": "One-click unsubscribe may not be supported"
+          },
+          {
+            "check_id": "canspam_address_missing",
+            "status": "warn",
+            "label": "No physical address detected",
+            "detail": "CAN-SPAM requires a physical mailing address"
+          },
+          {
+            "check_id": "body_unsub_missing",
+            "status": "fail",
+            "label": "No unsubscribe link found in body",
+            "detail": "CAN-SPAM requires a visible opt-out mechanism"
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 1,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "rendering_ok",
+            "status": "pass",
+            "label": "Rendering checks passed",
+            "detail": "No issues found"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "25%",
+      "total_checks": 8,
+      "total_issues": 1,
+      "total_warnings": 5
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-verify-pipeline-test-2026-03-29-21-09-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
