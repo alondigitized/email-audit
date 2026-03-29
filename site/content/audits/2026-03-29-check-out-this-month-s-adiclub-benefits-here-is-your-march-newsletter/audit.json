@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-check-out-this-month-s-adiclub-benefits-here-is-your-march-newsletter",
+  "email": {
+    "subject": "Check out this month's adiClub benefits, here is your March Newsletter",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-24T01:13:04+00:00",
+    "date_formatted": "2026-03-24 01:13 UTC"
+  },
+  "review": {
+    "score": "4/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nA cluttered, low-conviction newsletter that tries to do too much and lands softly on all of it. The Climacool giveaway is the strongest hook but gets buried under competing modules. The \"Exclusive Superstar Icon Kit\" and \"Win a Barnminster Travel Kit\" contests fragment attention further, making this feel like three separate emails stitched together. The bottom \"Stay in the Know\" section is a wall of grey text that most recipients will skip entirely.\n\n---\n\n### 2. Business Impact Score: **4/10**\n\nHigh volume of asks, low clarity on any single one. Engagement rate will be diluted by the module sprawl.\n\n---\n\n### 3. What's Working\n\n- **The Climacool hero** is visually strong — the shoe product shot is clean and the headline \"Your Chance to Win: The Climacool Kit\" is direct and benefit-led.\n- **Top promo bar** (\"Save 30% on eligible orders with code MARCH\") is immediately visible and actionable — the clearest CTA in the entire email.\n- **Brand voice** is consistent and the dark/high-contrast visual treatment feels premium.\n\n---\n\n### 4. What's Weak\n\n- **Too many contest modules.** Climacool win + Superstar Icon Kit + Barnminster Travel Kit = three separate sweepstakes in one scroll. No hierarchy between them.\n- **\"Stay in the Know\" block** is a dense paragraph of small grey text with no visual break or subheads. It reads like fine print, not content.\n- **CTA labels are generic and repetitive** — \"Shop or Enter\" repeated verbatim across modules creates no urgency or differentiation.\n- **The Superstar module** appears very small with low visual weight relative to the Climacool hero — the product image is thumbnail-sized and doesn't justify being a standalone module.\n- **Subject line is weak.** \"Check out this month's adiClub benefits\" is bland; \"here is your March Newsletter\" is redundant. Neither creates urgency.\n\n---\n\n### 5. Recommendations\n\n1. **Pick one hero contest and commit to it.** Lead with Climacool and move the secondary giveaways to a single stacked \"More to Win\" row — don't give each equal billing.\n2. **Rewrite the top-of-email headline.** \"Your adiClub Newsletter\" tells recipients nothing — replace with a value-forward line like \"3 Ways to Win This March.\"\n3. **Replace the \"Stay in the Know\" paragraph** with 2–3 scannable bullets or a simple icon/text row. Nobody reads a grey text block.\n4. **Differentiate CTAs.** \"Enter to Win,\" \"Claim Your Kit,\" \"Shop Now\" — each should match the specific module action.\n5. **Drop the Barnminster module or give it more visual weight.** As rendered, it's a mid-email orphan with weak imagery.\n\n---\n\n### 6. Bottom Line\n\nThis email reads like a monthly digest built by committee — too many modules, no dominant CTA, and a text-heavy footer that drags the experience down. The 30% discount code deserved to be a far bigger story. As structured, most of the value is lost in the noise.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | adiClub member newsletter for March — discount + multiple contest entries |\n| **Hero / primary value prop** | Climacool Kit giveaway — strong visual, direct headline, but CTA button is small |\n| **Membership / benefits** | Implied via \"adiClub\" branding, but no member-specific benefits or points callout visible |\n| **Product discoverability** | Minimal — Superstar shoe is shown but dwarfed; no product grid or recommendations |\n| **Utility / secondary modules** | \"Stay in the Know\" paragraph + social row at footer — low readability, low engagement potential |\n| **Bugs / friction** | No broken images; all text renders cleanly. The Barnminster module image is small but not broken. No visible rendering defects. |\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas adiClub March Newsletter\n\n**From:** adidas `<adidas@us-news.comms.adidas.com>`\n**Date:** 2026-03-29\n\n---\n\n### 1. Technical Summary\n\nThe email has a confirmed broken destination link, six repeated HTTP (non-HTTPS) image sources that will be blocked by modern clients, and a zero-byte plain-text fallback — each a distinct deliverability or rendering failure. Overall QA pass rate is 62%.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken destination URL — relative path used instead of absolute**\nThe click-redirect for one CTA resolves to an internal path `/g/61d35233-df4f-4193-8809-05341234a275` rather than a valid absolute URL. The ESP wraps it as:\n```\nhttps://dv.adidas.com/o/61d35233-df4f-4193-8809-05341234a275?txn=d424f580-2b86-11f1-857b-9a305ea1f7ea\n```\nThe QA error (`unknown url type: '/g/...'`) indicates the raw destination stored in the ESP is a relative path — the outer redirect will fail to resolve it for recipients. The specific transaction ID (`txn=d424f580-2b86-11f1-857b-9a305ea1f7ea`) confirms this is a live send, not a test seed.\n\n**[WARN] 34 tracking/click-redirect links not probed**\nAll outbound links pass through `click.comms.adidas.com` or `dv.adidas.com` redirect chains. Destination URL integrity beyond the broken link above is unverified.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] Six HTTP (non-HTTPS) image sources — same asset repeated**\nThe arrow icon (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) appears six times with an insecure source:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nGmail, Outlook.com, and Apple Mail on iOS will block mixed-content images by default. The asset should be served over `https://`.\n\n**[WARN] HTTP tracking pixel**\n```\nhttp://click.comms.adidas.com/CI0/0102019d1d6705db-7d4b80a5-8e7a-4303-b7c8-464a90b26726-000000/...\n```\nOpen-tracking pixel served over HTTP — also missing alt text. Most clients will block this, suppressing open-rate data.\n\n**[WARN] Two images missing `alt` text**\n- `61d35233-df4f-4193-8809-05341234a275` (content image, no alt)\n- `waEFykn6qxjiPEs_Rp2US1OXc4xLAN7laoOB122-ceU=449` (tracking pixel, no alt)\nImages-off rendering will show empty boxes for the content image.\n\n**[NOTE] Duplicate `@font-face` declarations**\n`AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly different fallback stacks (`local('Calibri'), local('Sans Serif')` present in block 1, absent in block 2). This is harmless but indicates template merge artifact — extra CSS weight.\n\n**[NOTE] Malformed meta charset tag**\n```html\n<meta content=\"text/html; charset=UTF-8\" />\n```\nMissing `http-equiv=\"Content-Type\"` attribute. Should be:\n```html\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n```\nBrowsers and some webview renderers may not honor charset without the `http-equiv`.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens (`{{`, `%%`, `[[`) visible in the available HTML source. ESP-level identifiers (`mi_mid`, `cp_cid`) appear correctly substituted in tracking URLs. No issues found on available source.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text fallback is 0 characters**\nCAN-SPAM (and its equivalents) require a usable plain-text alternative to be present in the MIME multipart structure. A zero-byte text/plain part fails this requirement and increases spam-filter scoring.\n\n**[WARN] Authentication-Results header not found**\nSPF and DKIM pass/fail status is unverifiable from the received copy — the `Authentication-Results` header was absent from the AgentMail relay data. Sending domain is `us-news.comms.adidas.com`; DMARC alignment should be confirmed at the ESP level before assuming pass.\n\n**[NOTE] Unsubscribe and physical address**\nNot verifiable from truncated source — footer was cut. These must be present and functional for CAN-SPAM compliance.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**[WARN] `referrer` meta tag suppresses referrer data**\n```html\n<meta name=\"referrer\" content=\"no-referrer\" />\n```\nThis is appropriate for the email webview itself (prevents leaking the email URL), but if any link opens in a webview rather than the system browser, referrer will be stripped and UTM attribution via `document.referrer` on the landing page will fail. Confirm all CTAs open in the external browser (`target=\"_blank\"` or equivalent mobile handler).\n\n**[NOTE] UTM parameter coverage on 34 click-redirect links unverified**\nAll links pass through `click.comms.adidas.com` — destination-level UTM params (`utm_source`, `utm_medium`, `utm_campaign`) could not be confirmed due to click-redirect architecture. If UTMs are appended post-redirect by the ESP, verify the broken link above also receives them once fixed.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **P0** | Broken destination URL (`/g/61d35233...`) | Fix the raw destination in the ESP to an absolute `https://` URL; re-send or trigger a correction email if already deployed |\n| **P0** | Plain-text fallback is 0 chars | Populate the `text/plain` MIME part — minimum: subject line, CTA URLs, and unsubscribe link |\n| **P1** | 6× HTTP arrow images + 1× HTTP tracking pixel | Update all `image.link.adidas.com` and `click.comms.adidas.com` image sources to `https://` |\n| **P1** | Missing `Authentication-Results` | Confirm SPF/DKIM alignment on `us-news.comms.adidas.com` at ESP level; surface headers in monitoring |\n| **P2** | Two images missing alt text | Add descriptive alt for content image; add `alt=\"\"` (empty) for tracking pixel |\n| **P2** | Duplicate `@font-face` blocks | Remove duplicate declarations from template; audit template merge logic |\n| **P3** | Meta charset missing `http-equiv` | Correct to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |",
+    "sections": {
+      "executive_summary": [
+        "A cluttered, low-conviction newsletter that tries to do too much and lands softly on all of it. The Climacool giveaway is the strongest hook but gets buried under competing modules. The \"Exclusive Superstar Icon Kit\" and \"Win a Barnminster Travel Kit\" contests fragment attention further, making this feel like three separate emails stitched together. The bottom \"Stay in the Know\" section is a wall of grey text that most recipients will skip entirely.",
+        "High volume of asks, low clarity on any single one. Engagement rate will be diluted by the module sprawl."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **The Climacool hero** is visually strong — the shoe product shot is clean and the headline \"Your Chance to Win: The Climacool Kit\" is direct and benefit-led.",
+        "- **Top promo bar** (\"Save 30% on eligible orders with code MARCH\") is immediately visible and actionable — the clearest CTA in the entire email.",
+        "- **Brand voice** is consistent and the dark/high-contrast visual treatment feels premium."
+      ],
+      "whats_weak": [
+        "- **Too many contest modules.** Climacool win + Superstar Icon Kit + Barnminster Travel Kit = three separate sweepstakes in one scroll. No hierarchy between them.",
+        "- **\"Stay in the Know\" block** is a dense paragraph of small grey text with no visual break or subheads. It reads like fine print, not content.",
+        "- **CTA labels are generic and repetitive** — \"Shop or Enter\" repeated verbatim across modules creates no urgency or differentiation.",
+        "- **The Superstar module** appears very small with low visual weight relative to the Climacool hero — the product image is thumbnail-sized and doesn't justify being a standalone module.",
+        "- **Subject line is weak.** \"Check out this month's adiClub benefits\" is bland; \"here is your March Newsletter\" is redundant. Neither creates urgency."
+      ],
+      "recommendations": [
+        "1. **Pick one hero contest and commit to it.** Lead with Climacool and move the secondary giveaways to a single stacked \"More to Win\" row — don't give each equal billing.",
+        "2. **Rewrite the top-of-email headline.** \"Your adiClub Newsletter\" tells recipients nothing — replace with a value-forward line like \"3 Ways to Win This March.\"",
+        "3. **Replace the \"Stay in the Know\" paragraph** with 2–3 scannable bullets or a simple icon/text row. Nobody reads a grey text block.",
+        "4. **Differentiate CTAs.** \"Enter to Win,\" \"Claim Your Kit,\" \"Shop Now\" — each should match the specific module action.",
+        "5. **Drop the Barnminster module or give it more visual weight.** As rendered, it's a mid-email orphan with weak imagery.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **P0** | Broken destination URL (`/g/61d35233...`) | Fix the raw destination in the ESP to an absolute `https://` URL; re-send or trigger a correction email if already deployed |",
+        "| **P0** | Plain-text fallback is 0 chars | Populate the `text/plain` MIME part — minimum: subject line, CTA URLs, and unsubscribe link |",
+        "| **P1** | 6× HTTP arrow images + 1× HTTP tracking pixel | Update all `image.link.adidas.com` and `click.comms.adidas.com` image sources to `https://` |",
+        "| **P1** | Missing `Authentication-Results` | Confirm SPF/DKIM alignment on `us-news.comms.adidas.com` at ESP level; surface headers in monitoring |",
+        "| **P2** | Two images missing alt text | Add descriptive alt for content image; add `alt=\"\"` (empty) for tracking pixel |",
+        "| **P2** | Duplicate `@font-face` blocks | Remove duplicate declarations from template; audit template merge logic |",
+        "| **P3** | Meta charset missing `http-equiv` | Correct to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |"
+      ],
+      "bottom_line": [
+        "This email reads like a monthly digest built by committee — too many modules, no dominant CTA, and a text-heavy footer that drags the experience down. The 30% discount code deserved to be a far bigger story. As structured, most of the value is lost in the noise."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | adiClub member newsletter for March — discount + multiple contest entries |",
+        "| **Hero / primary value prop** | Climacool Kit giveaway — strong visual, direct headline, but CTA button is small |",
+        "| **Membership / benefits** | Implied via \"adiClub\" branding, but no member-specific benefits or points callout visible |",
+        "| **Product discoverability** | Minimal — Superstar shoe is shown but dwarfed; no product grid or recommendations |",
+        "| **Utility / secondary modules** | \"Stay in the Know\" paragraph + social row at footer — low readability, low engagement potential |",
+        "| **Bugs / friction** | No broken images; all text renders cleanly. The Barnminster module image is small but not broken. No visible rendering defects. |",
+        "**From:** adidas `<adidas@us-news.comms.adidas.com>`",
+        "**Date:** 2026-03-29",
+        "The email has a confirmed broken destination link, six repeated HTTP (non-HTTPS) image sources that will be blocked by modern clients, and a zero-byte plain-text fallback — each a distinct deliverability or rendering failure. Overall QA pass rate is 62%.",
+        "**[FAIL] Broken destination URL — relative path used instead of absolute**",
+        "The click-redirect for one CTA resolves to an internal path `/g/61d35233-df4f-4193-8809-05341234a275` rather than a valid absolute URL. The ESP wraps it as:",
+        "```",
+        "https://dv.adidas.com/o/61d35233-df4f-4193-8809-05341234a275?txn=d424f580-2b86-11f1-857b-9a305ea1f7ea",
+        "```",
+        "The QA error (`unknown url type: '/g/...'`) indicates the raw destination stored in the ESP is a relative path — the outer redirect will fail to resolve it for recipients. The specific transaction ID (`txn=d424f580-2b86-11f1-857b-9a305ea1f7ea`) confirms this is a live send, not a test seed.",
+        "**[WARN] 34 tracking/click-redirect links not probed**",
+        "All outbound links pass through `click.comms.adidas.com` or `dv.adidas.com` redirect chains. Destination URL integrity beyond the broken link above is unverified.",
+        "**[WARN] Six HTTP (non-HTTPS) image sources — same asset repeated**",
+        "The arrow icon (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) appears six times with an insecure source:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Gmail, Outlook.com, and Apple Mail on iOS will block mixed-content images by default. The asset should be served over `https://`.",
+        "**[WARN] HTTP tracking pixel**",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d1d6705db-7d4b80a5-8e7a-4303-b7c8-464a90b26726-000000/...",
+        "```",
+        "Open-tracking pixel served over HTTP — also missing alt text. Most clients will block this, suppressing open-rate data.",
+        "**[WARN] Two images missing `alt` text**",
+        "- `61d35233-df4f-4193-8809-05341234a275` (content image, no alt)",
+        "- `waEFykn6qxjiPEs_Rp2US1OXc4xLAN7laoOB122-ceU=449` (tracking pixel, no alt)",
+        "Images-off rendering will show empty boxes for the content image.",
+        "**[NOTE] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly different fallback stacks (`local('Calibri'), local('Sans Serif')` present in block 1, absent in block 2). This is harmless but indicates template merge artifact — extra CSS weight.",
+        "**[NOTE] Malformed meta charset tag**",
+        "```html",
+        "<meta content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Missing `http-equiv=\"Content-Type\"` attribute. Should be:",
+        "```html",
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Browsers and some webview renderers may not honor charset without the `http-equiv`.",
+        "No unresolved merge tokens (`{{`, `%%`, `[[`) visible in the available HTML source. ESP-level identifiers (`mi_mid`, `cp_cid`) appear correctly substituted in tracking URLs. No issues found on available source.",
+        "**[FAIL] Plain-text fallback is 0 characters**",
+        "CAN-SPAM (and its equivalents) require a usable plain-text alternative to be present in the MIME multipart structure. A zero-byte text/plain part fails this requirement and increases spam-filter scoring.",
+        "**[WARN] Authentication-Results header not found**",
+        "SPF and DKIM pass/fail status is unverifiable from the received copy — the `Authentication-Results` header was absent from the AgentMail relay data. Sending domain is `us-news.comms.adidas.com`; DMARC alignment should be confirmed at the ESP level before assuming pass.",
+        "**[NOTE] Unsubscribe and physical address**",
+        "Not verifiable from truncated source — footer was cut. These must be present and functional for CAN-SPAM compliance.",
+        "**[WARN] `referrer` meta tag suppresses referrer data**",
+        "```html",
+        "<meta name=\"referrer\" content=\"no-referrer\" />",
+        "```",
+        "This is appropriate for the email webview itself (prevents leaking the email URL), but if any link opens in a webview rather than the system browser, referrer will be stripped and UTM attribution via `document.referrer` on the landing page will fail. Confirm all CTAs open in the external browser (`target=\"_blank\"` or equivalent mobile handler).",
+        "**[NOTE] UTM parameter coverage on 34 click-redirect links unverified**",
+        "All links pass through `click.comms.adidas.com` — destination-level UTM params (`utm_source`, `utm_medium`, `utm_campaign`) could not be confirmed due to click-redirect architecture. If UTMs are appended post-redirect by the ESP, verify the broken link above also receives them once fixed."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/61d35233-df4f-4193-8809-05341234a275?txn=d424f580-2b86-11f1-857b-9a305ea1f7ea'",
+            "url": "https://dv.adidas.com/o/61d35233-df4f-4193-8809-05341234a275?cp_tp=v3.eJzjYuIIFuLgePGj4RybALMUL0fXR04hdo5X_ALMEuJK4hxvG7OAwmwcE460n2NTgklobWECaprVKSbAIsGqtJxJSJRjoYwGoxcLB6MAYxCYjOBK4BIS5nguJcCowYwsISTO8VJKgAlNdXxCPFCiTUaAGYsxehwfpQRYFBg1mJw4OS4f4pPoYVTI8-ICyUtB1CKxMxiFDDk-SQmwSjCCdXBx_NzBJ9EqqrBEEI8WoE-lBNjQ7DZKMAJKLJERYMfqt9dSAhwaLGh-eyMlwImpWmIBm8JRJiMOjr38SswcC92sWDlum0oxWHFw3OWSYub4JBPFwXHdUIiZ4181kHUDxOqoAbJuglg9NVGcHFOshVg47vUyApldNkDm835GAIaUSrY=&amp;cp_cid=d63aafc3fa4b9098&amp;mi_mid=019d1edb-9400-7000-ab0b-76505116337d"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=Ssi/3QtbBFLNsRVj816MXp+0UNEdIk1gXZHX3YTasEsPVONIxrKcAKRIw2spxZdQKiXFMvREmqy/PdfcEFIJ4a94Hf7cyHR166JAYZTInEmCoYmK+2ay"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "34 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 61d35233-df4f-4193-8809-05341234a275",
+            "detail": "src: https://dv.adidas.com/o/61d35233-df4f-4193-8809-05341234a275?cp_tp=v3.eJzjYuIIFuLgePGj4RybALMUL0fXR04hdo5X_ALMEuJK4hxvG7"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: waEFykn6qxjiPEs_Rp2US1OXc4xLAN7laoOB122-ceU=449",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d1d6705db-7d4b80a5-8e7a-4303-b7c8-464a90b26726-000000/waEFykn6qxjiPEs_Rp2US1OXc"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: waEFykn6qxjiPEs_Rp2US1OXc4xLAN7laoOB122-ceU=449",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d1d6705db-7d4b80a5-8e7a-4303-b7c8-464a90b26726-000000/waEFykn6qxjiPEs_Rp2US1OXc"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-check-out-this-month-s-adiclub-benefits-here-is-your-march-newsletter-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}

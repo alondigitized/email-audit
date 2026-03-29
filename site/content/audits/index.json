@@ -267,6 +267,22 @@
     "persona": null
   },
   {
+    "slug": "2026-03-29-check-out-this-month-s-adiclub-benefits-here-is-your-march-newsletter",
+    "subject": "Check out this month's adiClub benefits, here is your March Newsletter",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-24T01:13:04+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-29-last-day-to-redeem-your-voucher",
     "subject": "⏳ Last day to redeem your voucher",
     "from_display_name": "adidas",
