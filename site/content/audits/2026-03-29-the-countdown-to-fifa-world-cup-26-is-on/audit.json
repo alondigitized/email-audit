@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on",
+  "email": {
+    "subject": "The countdown to FIFA World Cup 26™ is on",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-25T18:07:23+00:00",
+    "date_formatted": "2026-03-25 18:07 UTC"
+  },
+  "review": {
+    "score": "3/10",
+    "raw_markdown": "## adidas — \"The countdown to FIFA World Cup 26™ is on\"\n\n---\n\n### 1. Executive Summary\n\nA missed opportunity on a marquee moment. Adidas has a genuine cultural event — FIFA World Cup 2026 — and a full line of national team jerseys to sell, but this email delivers almost none of it. The send amounts to one atmospheric photo, three paragraphs of brand copy, and a non-clickable pseudo-CTA. A character encoding failure corrupts the trademark symbol throughout, and the top banner promoting 30% off with code MARCH creates a confusing message: are the jerseys on sale or aren't they?\n\n---\n\n### 2. Business Impact Score: **3 / 10**\n\n---\n\n### 3. What's Working\n\n- **Hero image is compelling.** The newsstand-style display showing a wall of colorful national team jerseys (green Mexico, yellow Brazil, red/blue others) is visually arresting and communicates the global scale of the collection at a glance.\n- **Brand voice is on-point.** The body copy — \"carries the passion and hope of a nation\" — is clean and emotionally resonant.\n- **Footer is well-structured.** Account links, unsubscribe, support, and legal are cleanly laid out and readable.\n\n---\n\n### 4. What's Weak\n\n- **Character encoding failure, repeatedly.** The trademark symbol renders as `â,¢` in every instance: the headline reads \"FIFA WORLD CUP 26â,¢ HOME JERSEYS,\" the subhead repeats it, and the footnote truncates with a dangling `â`. This is visible, embarrassing, and undermines brand credibility on a flagship campaign.\n- **No CTA button.** The call-to-action is plain text — \"Shop online or at your local adidas store.*\" — buried at the bottom of a copy block. There is no button, no link styling, no urgency trigger.\n- **No product modules.** The entire middle of the email is blank space that should contain jersey cards. There are no individual country callouts, no product images beyond the hero, no prices, no \"Shop [Country]\" links.\n- **Confusing dual message.** The top promotional banner (\"Save 30% on eligible styles with code MARCH\") sits directly above World Cup jersey content. It's unclear whether the discount applies to these jerseys. The signals conflict and dilute both messages.\n- **Copy does all the work alone.** Three paragraphs describing jerseys without showing them creates no purchase intent. The email tells rather than shows.\n\n---\n\n### 5. Recommendations\n\n1. **Fix the encoding bug immediately.** The `â,¢` rendering is a production defect visible in every headline and the footnote. Resend or issue a corrected version for any future deployments.\n2. **Add a proper CTA button.** Replace the text line with a high-contrast button: \"Shop World Cup Jerseys\" or \"Find Your National Team.\" This is table stakes.\n3. **Build a product grid below the hero.** 4–6 jersey tiles (Mexico, USA, Brazil, etc.) with country name + \"Shop Now\" links would immediately unlock revenue from this send.\n4. **Separate the sale banner from the World Cup narrative.** Either remove the 30% banner from this send or explicitly state whether it applies to the jerseys. Mixed signals reduce both conversion paths.\n5. **Add a countdown or date anchor.** The subject line says \"the countdown is on\" but the email has no date, no tournament timeline, no urgency mechanism. A \"Tournament starts [date]\" line or countdown graphic would add momentum.\n\n---\n\n### 6. Bottom Line\n\nThis email uses a major cultural marketing moment to deliver brand awareness copy when it should be driving jersey sales. The structural gaps — no product tiles, no CTA button, broken character encoding — are not minor polish issues; they are revenue leaks. The bones (hero image, brand voice) are solid, but the execution needs a rebuild before the next send in this campaign.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Announce/launch FIFA World Cup 2026 Home Jersey collection |\n| **Hero / primary value prop** | Full-width newsstand image of hanging national team jerseys — visually strong, no product link |\n| **Membership / benefits** | None present |\n| **Product discoverability** | Absent — no product tiles, no country selection, no price points |\n| **Utility / secondary modules** | Top banner: \"Save 30% on eligible styles with code MARCH / SHOP NOW →\" — contextually misaligned |\n| **Bugs / friction** | `â,¢` encoding error in headline, subhead, and footnote; text-only CTA with no button; footnote truncated mid-character |\n\n---\n\n## Technical Audit\n\n## Technical Audit — \"The countdown to FIFA World Cup 26™ is on\"\n**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-29\n\n---\n\n### 1. Technical Summary\n\nThe email has two confirmed failures: a broken offer link and a missing plain-text alternative. Six arrow images are served over HTTP and will be blocked in security-conscious clients. Authentication header status is unverified, and a `no-referrer` meta tag will silently break referrer-based attribution on the landing page.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken offer link**\nThe QA resolver encountered an unknown URL type (`/g/`) when following the offer redirect:\n```\nhttps://dv.adidas.com/o/14474c62-8fdb-45c3-ab6d-d437c501bbb6?cp_tp=v3.eJzjYuII...\n```\nThe link resolves to a `/g/` path variant that the resolver cannot handle, indicating a possible mis-configured offer ID or redirect rule on `dv.adidas.com`. The image associated with this link (`14474c62-8fdb-45c3-ab6d-d437c501bbb6`) also has no alt text, meaning if the image fails to render, the CTA is invisible.\n\n**[WARN] 29 tracking links not validated**\nAll `click.comms.adidas.com` redirect URLs were skipped during HTTP probing. Link health on final destinations is unconfirmed.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] Six HTTP (non-HTTPS) image references — same asset, repeated**\nThe arrow icon `b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` is embedded six times over HTTP:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nGmail, Outlook.com, and Apple Mail all block mixed-content images by default. All six instances will render as broken images.\n\n**[WARN] Tracking pixel served over HTTP**\nThe open-tracking pixel at `http://click.comms.adidas.com/CI0/0102019d262e05f4-...` is also HTTP. Beyond the mixed-content block risk, this will under-count opens in HTTPS-enforcing clients.\n\n**[WARN] Two images missing `alt` text**\n- Offer image: `14474c62-8fdb-45c3-ab6d-d437c501bbb6` (linked CTA — missing alt means the link has no accessible label)\n- Tracking pixel: `VRpQKzCKp7rf33xIJuwxidqFMhCG6uNcuVWCTZe5IsA=450`\n\n**[INFO] `<meta>` charset tag malformed**\n```html\n<meta content=\"text/html; charset=UTF-8\" />\n```\nMissing the required `http-equiv=\"Content-Type\"` attribute. Some older parsers will not pick up the charset declaration, risking character encoding fallback.\n\n**[INFO] Duplicate `@font-face` declarations**\n`AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly different fallback lists (`local('Calibri')` in one, absent in the other). The second block overrides the first. The redundancy adds ~1 KB to the payload and the inconsistency is a maintenance risk.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens or raw placeholder syntax (e.g., `{{`, `%%`, `[%`) detected in the visible HTML. No issues found.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text alternative is absent**\nQA reports 0 characters in the text/plain MIME part. While CAN-SPAM does not mandate a plain-text part, many spam filters (SpamAssassin, Proofpoint) penalize HTML-only messages. This also renders the email inaccessible to text-only clients.\n\n**[WARN] Authentication-Results header not verifiable**\nSPF and DKIM status could not be confirmed via the AgentMail relay. Sending domain is `us-news.comms.adidas.com`; alignment with `adidas.com` DMARC policy (`p=reject` or `p=quarantine`) should be verified via the ESP delivery logs.\n\n**[INFO] Unsubscribe and physical address**\nNot visible in the truncated source provided; assume present in footer — verify `List-Unsubscribe` header and one-click `List-Unsubscribe-Post` (RFC 8058) are present for Gmail/Yahoo bulk sender compliance.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**[WARN] `no-referrer` meta tag suppresses HTTP referrer**\n```html\n<meta name=\"referrer\" content=\"no-referrer\" />\n```\nThis directive strips the `Referer` header on all clicks out of the email. If the landing page uses referrer-based attribution (e.g., as a fallback when UTM params are stripped by link shorteners), attribution will fail silently. If UTM params are present on all links this is low-risk, but the tag is unnecessary and should be removed or scoped.\n\n**[INFO] UTM parameter coverage unverified**\n29 tracking links were not probed. Confirm that all destination URLs carry consistent `utm_source`, `utm_medium`, and `utm_campaign` values, especially on the broken `dv.adidas.com` offer link once it is fixed.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| P0 | Broken `dv.adidas.com` offer link | Validate offer ID `14474c62-8fdb-45c3-ab6d-d437c501bbb6` in the offer management platform; confirm redirect path type matches (`/o/` vs `/g/`) |\n| P0 | Plain-text body is empty | Add a plain-text MIME alternative with at minimum subject line, key offer text, and unsubscribe URL |\n| P1 | 6× HTTP arrow images | Update `src` to `https://image.link.adidas.com/...` (same host, protocol change only) |\n| P1 | HTTP tracking pixel | Update open-pixel `src` to HTTPS |\n| P1 | Missing alt text on linked offer image | Add descriptive `alt` (e.g., `alt=\"Shop FIFA World Cup 26 collection\"`) so CTA is reachable when image is blocked |\n| P2 | `no-referrer` meta tag | Remove unless deliberately suppressing referrer for privacy; UTM params should carry all needed attribution |\n| P2 | DKIM/SPF alignment | Pull delivery headers from ESP for this send and confirm `dkim=pass` and `spf=pass` aligned to `adidas.com` |\n| P3 | Malformed charset meta | Change to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |\n| P3 | Duplicate `@font-face` blocks | Consolidate into a single block with the union of fallbacks |",
+    "sections": {
+      "executive_summary": [
+        "A missed opportunity on a marquee moment. Adidas has a genuine cultural event — FIFA World Cup 2026 — and a full line of national team jerseys to sell, but this email delivers almost none of it. The send amounts to one atmospheric photo, three paragraphs of brand copy, and a non-clickable pseudo-CTA. A character encoding failure corrupts the trademark symbol throughout, and the top banner promoting 30% off with code MARCH creates a confusing message: are the jerseys on sale or aren't they?"
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero image is compelling.** The newsstand-style display showing a wall of colorful national team jerseys (green Mexico, yellow Brazil, red/blue others) is visually arresting and communicates the global scale of the collection at a glance.",
+        "- **Brand voice is on-point.** The body copy — \"carries the passion and hope of a nation\" — is clean and emotionally resonant.",
+        "- **Footer is well-structured.** Account links, unsubscribe, support, and legal are cleanly laid out and readable."
+      ],
+      "whats_weak": [
+        "- **Character encoding failure, repeatedly.** The trademark symbol renders as `â,¢` in every instance: the headline reads \"FIFA WORLD CUP 26â,¢ HOME JERSEYS,\" the subhead repeats it, and the footnote truncates with a dangling `â`. This is visible, embarrassing, and undermines brand credibility on a flagship campaign.",
+        "- **No CTA button.** The call-to-action is plain text — \"Shop online or at your local adidas store.*\" — buried at the bottom of a copy block. There is no button, no link styling, no urgency trigger.",
+        "- **No product modules.** The entire middle of the email is blank space that should contain jersey cards. There are no individual country callouts, no product images beyond the hero, no prices, no \"Shop [Country]\" links.",
+        "- **Confusing dual message.** The top promotional banner (\"Save 30% on eligible styles with code MARCH\") sits directly above World Cup jersey content. It's unclear whether the discount applies to these jerseys. The signals conflict and dilute both messages.",
+        "- **Copy does all the work alone.** Three paragraphs describing jerseys without showing them creates no purchase intent. The email tells rather than shows."
+      ],
+      "recommendations": [
+        "1. **Fix the encoding bug immediately.** The `â,¢` rendering is a production defect visible in every headline and the footnote. Resend or issue a corrected version for any future deployments.",
+        "2. **Add a proper CTA button.** Replace the text line with a high-contrast button: \"Shop World Cup Jerseys\" or \"Find Your National Team.\" This is table stakes.",
+        "3. **Build a product grid below the hero.** 4–6 jersey tiles (Mexico, USA, Brazil, etc.) with country name + \"Shop Now\" links would immediately unlock revenue from this send.",
+        "4. **Separate the sale banner from the World Cup narrative.** Either remove the 30% banner from this send or explicitly state whether it applies to the jerseys. Mixed signals reduce both conversion paths.",
+        "5. **Add a countdown or date anchor.** The subject line says \"the countdown is on\" but the email has no date, no tournament timeline, no urgency mechanism. A \"Tournament starts [date]\" line or countdown graphic would add momentum.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| P0 | Broken `dv.adidas.com` offer link | Validate offer ID `14474c62-8fdb-45c3-ab6d-d437c501bbb6` in the offer management platform; confirm redirect path type matches (`/o/` vs `/g/`) |",
+        "| P0 | Plain-text body is empty | Add a plain-text MIME alternative with at minimum subject line, key offer text, and unsubscribe URL |",
+        "| P1 | 6× HTTP arrow images | Update `src` to `https://image.link.adidas.com/...` (same host, protocol change only) |",
+        "| P1 | HTTP tracking pixel | Update open-pixel `src` to HTTPS |",
+        "| P1 | Missing alt text on linked offer image | Add descriptive `alt` (e.g., `alt=\"Shop FIFA World Cup 26 collection\"`) so CTA is reachable when image is blocked |",
+        "| P2 | `no-referrer` meta tag | Remove unless deliberately suppressing referrer for privacy; UTM params should carry all needed attribution |",
+        "| P2 | DKIM/SPF alignment | Pull delivery headers from ESP for this send and confirm `dkim=pass` and `spf=pass` aligned to `adidas.com` |",
+        "| P3 | Malformed charset meta | Change to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |",
+        "| P3 | Duplicate `@font-face` blocks | Consolidate into a single block with the union of fallbacks |"
+      ],
+      "bottom_line": [
+        "This email uses a major cultural marketing moment to deliver brand awareness copy when it should be driving jersey sales. The structural gaps — no product tiles, no CTA button, broken character encoding — are not minor polish issues; they are revenue leaks. The bones (hero image, brand voice) are solid, but the execution needs a rebuild before the next send in this campaign."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Announce/launch FIFA World Cup 2026 Home Jersey collection |",
+        "| **Hero / primary value prop** | Full-width newsstand image of hanging national team jerseys — visually strong, no product link |",
+        "| **Membership / benefits** | None present |",
+        "| **Product discoverability** | Absent — no product tiles, no country selection, no price points |",
+        "| **Utility / secondary modules** | Top banner: \"Save 30% on eligible styles with code MARCH / SHOP NOW →\" — contextually misaligned |",
+        "| **Bugs / friction** | `â,¢` encoding error in headline, subhead, and footnote; text-only CTA with no button; footnote truncated mid-character |",
+        "**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-29",
+        "The email has two confirmed failures: a broken offer link and a missing plain-text alternative. Six arrow images are served over HTTP and will be blocked in security-conscious clients. Authentication header status is unverified, and a `no-referrer` meta tag will silently break referrer-based attribution on the landing page.",
+        "**[FAIL] Broken offer link**",
+        "The QA resolver encountered an unknown URL type (`/g/`) when following the offer redirect:",
+        "```",
+        "https://dv.adidas.com/o/14474c62-8fdb-45c3-ab6d-d437c501bbb6?cp_tp=v3.eJzjYuII...",
+        "```",
+        "The link resolves to a `/g/` path variant that the resolver cannot handle, indicating a possible mis-configured offer ID or redirect rule on `dv.adidas.com`. The image associated with this link (`14474c62-8fdb-45c3-ab6d-d437c501bbb6`) also has no alt text, meaning if the image fails to render, the CTA is invisible.",
+        "**[WARN] 29 tracking links not validated**",
+        "All `click.comms.adidas.com` redirect URLs were skipped during HTTP probing. Link health on final destinations is unconfirmed.",
+        "**[WARN] Six HTTP (non-HTTPS) image references — same asset, repeated**",
+        "The arrow icon `b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` is embedded six times over HTTP:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Gmail, Outlook.com, and Apple Mail all block mixed-content images by default. All six instances will render as broken images.",
+        "**[WARN] Tracking pixel served over HTTP**",
+        "The open-tracking pixel at `http://click.comms.adidas.com/CI0/0102019d262e05f4-...` is also HTTP. Beyond the mixed-content block risk, this will under-count opens in HTTPS-enforcing clients.",
+        "**[WARN] Two images missing `alt` text**",
+        "- Offer image: `14474c62-8fdb-45c3-ab6d-d437c501bbb6` (linked CTA — missing alt means the link has no accessible label)",
+        "- Tracking pixel: `VRpQKzCKp7rf33xIJuwxidqFMhCG6uNcuVWCTZe5IsA=450`",
+        "**[INFO] `<meta>` charset tag malformed**",
+        "```html",
+        "<meta content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Missing the required `http-equiv=\"Content-Type\"` attribute. Some older parsers will not pick up the charset declaration, risking character encoding fallback.",
+        "**[INFO] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly different fallback lists (`local('Calibri')` in one, absent in the other). The second block overrides the first. The redundancy adds ~1 KB to the payload and the inconsistency is a maintenance risk.",
+        "No unresolved merge tokens or raw placeholder syntax (e.g., `{{`, `%%`, `[%`) detected in the visible HTML. No issues found.",
+        "**[FAIL] Plain-text alternative is absent**",
+        "QA reports 0 characters in the text/plain MIME part. While CAN-SPAM does not mandate a plain-text part, many spam filters (SpamAssassin, Proofpoint) penalize HTML-only messages. This also renders the email inaccessible to text-only clients.",
+        "**[WARN] Authentication-Results header not verifiable**",
+        "SPF and DKIM status could not be confirmed via the AgentMail relay. Sending domain is `us-news.comms.adidas.com`; alignment with `adidas.com` DMARC policy (`p=reject` or `p=quarantine`) should be verified via the ESP delivery logs.",
+        "**[INFO] Unsubscribe and physical address**",
+        "Not visible in the truncated source provided; assume present in footer — verify `List-Unsubscribe` header and one-click `List-Unsubscribe-Post` (RFC 8058) are present for Gmail/Yahoo bulk sender compliance.",
+        "**[WARN] `no-referrer` meta tag suppresses HTTP referrer**",
+        "```html",
+        "<meta name=\"referrer\" content=\"no-referrer\" />",
+        "```",
+        "This directive strips the `Referer` header on all clicks out of the email. If the landing page uses referrer-based attribution (e.g., as a fallback when UTM params are stripped by link shorteners), attribution will fail silently. If UTM params are present on all links this is low-risk, but the tag is unnecessary and should be removed or scoped.",
+        "**[INFO] UTM parameter coverage unverified**",
+        "29 tracking links were not probed. Confirm that all destination URLs carry consistent `utm_source`, `utm_medium`, and `utm_campaign` values, especially on the broken `dv.adidas.com` offer link once it is fixed."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/14474c62-8fdb-45c3-ab6d-d437c501bbb6?txn=0a627500-2b87-11f1-8290-b2872873faee'",
+            "url": "https://dv.adidas.com/o/14474c62-8fdb-45c3-ab6d-d437c501bbb6?cp_tp=v3.eJzjYuIIFuLgeNvZc45NgFmKl-PdZ04hdo5X_ALMEpJK4hx7NmcBhdk4FhydcI5NCSah1cIE1HSjW1iAUYJF6TujkCjHQhkNRi8WDkYBxiAwGcGVwCUkzPFcSoBRgxlZQkic46WUABOa6viEeKBEm4wAMxZjDDk-SQmwSDAqMGowOXFxXJzEK_GRQ-E1hxcXSIkURDkSO8MdaNZbKQFWNLOMEoyAEktkBNiwuvW1lAC7BguaW99ICXBgqpZYwKZwlMmIg-MurxIzxyNHIKuZD8g64wRk7eUHsha6AVmXQaybblasHLdNpRisODjOa0gxc3SnOzBGcXBcNxRi5vhXDWTdALE6aoCsmyBWT00UJ8cUayEWjnu9jEBmlw2Q-byfEQB3UExb&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d2514-9880-7000-bfcf-75971adbbf38"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=8oGFFuYFQtnhdPCbHijTF8MAGrnIFe6arSfKhUo/wmERfg2x2MWZNYlPOvBTr7K1+XokF7tzQwi1EszBBZUoWXsTPfldKhK6e3vzMnOKLScqTjxpDiMI"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "29 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 14474c62-8fdb-45c3-ab6d-d437c501bbb6",
+            "detail": "src: https://dv.adidas.com/o/14474c62-8fdb-45c3-ab6d-d437c501bbb6?cp_tp=v3.eJzjYuIIFuLgeNvZc45NgFmKl-PdZ04hdo5X_ALMEpJK4hx7Nm"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: VRpQKzCKp7rf33xIJuwxidqFMhCG6uNcuVWCTZe5IsA=450",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d262e05f4-12a671eb-e6e8-4453-9f99-b383a94557f3-000000/VRpQKzCKp7rf33xIJuwxidqFM"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: VRpQKzCKp7rf33xIJuwxidqFMhCG6uNcuVWCTZe5IsA=450",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d262e05f4-12a671eb-e6e8-4453-9f99-b383a94557f3-000000/VRpQKzCKp7rf33xIJuwxidqFM"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
