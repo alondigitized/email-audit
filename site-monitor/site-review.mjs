@@ -198,19 +198,26 @@ async function runJourney(persona, credentials, artifactDir) {
   const steps = [];
   let allAxeViolations = [];
 
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    ...device,
-    // Stealth: override webdriver detection
-    bypassCSP: true,
-  });
-
-  // Remove navigator.webdriver flag
-  await context.addInitScript(() => {
-    Object.defineProperty(navigator, 'webdriver', { get: () => false });
-  });
+  // Connect to real Chrome if available (bypasses Kasada), else launch Playwright's Chromium
+  let browser, context, usingRealChrome = false;
+  const CHROME_DEBUG_PORT = process.env.CHROME_DEBUG_PORT || '9222';
+  try {
+    const cdpUrl = `http://localhost:${CHROME_DEBUG_PORT}`;
+    browser = await playwrightChromium.connectOverCDP(cdpUrl);
+    // Use Chrome's default context (carries real fingerprint + cookies)
+    context = browser.contexts()[0] || await browser.newContext({ ...device, bypassCSP: true });
+    usingRealChrome = true;
+    log('Connected to real Chrome via CDP (using default context)');
+  } catch {
+    log('No real Chrome found, launching Playwright Chromium');
+    browser = await chromium.launch({ headless: true });
+    context = await browser.newContext({ ...device, bypassCSP: true });
+  }
 
   const page = await context.newPage();
+
+  // Set mobile viewport even when using Chrome's default context
+  await page.setViewportSize({ width: device.viewport.width, height: device.viewport.height });
 
   // Capture console errors and network failures
   page.on('console', msg => {
@@ -243,34 +250,54 @@ async function runJourney(persona, credentials, artifactDir) {
           break;
 
         case 'login': {
-          // Navigate to login via JS click on account icon
-          try {
-            await page.locator('#utility-login').evaluate(el => el.click());
-          } catch {
-            await page.goto(`${persona.site}/login/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
-          }
-          // Wait for Kasada bot challenge to resolve (up to 15 seconds)
-          try {
-            await page.waitForSelector('#login-form-email, input[name="loginEmail"], form[action*="login"]', { timeout: 15000 });
-            await delay(1000);
-            await dismissPopups(page);
-            const emailInput = page.locator('#login-form-email, input[name="loginEmail"]').first();
-            const passInput = page.locator('#login-form-password, input[name="loginPassword"], input[type="password"]').first();
-            await emailInput.fill(credentials.email);
-            await delay(300);
-            await passInput.fill(credentials.password);
-            await delay(500);
-            const submitBtn = page.locator('button[type="submit"]:has-text("Log In"), button[type="submit"]:has-text("Sign In"), form button[type="submit"]').first();
-            await submitBtn.click();
-            await page.waitForLoadState('domcontentloaded');
-            await delay(3000);
-            await dismissPopups(page);
-          } catch (loginErr) {
-            log('Login blocked by bot protection — continuing as logged-out user', { error: String(loginErr).slice(0, 200) });
-            // Navigate back to homepage so subsequent steps work
-            await page.goto(persona.site, { waitUntil: 'domcontentloaded', timeout: 15000 });
-            await delay(2000);
-            await dismissPopups(page);
+          // Try loading saved cookies first (from manual login session)
+          const cookiePath = path.join(__dirname, 'cookies', `${PERSONA_NAME}-skechers.json`);
+          if (fs.existsSync(cookiePath)) {
+            try {
+              const cookies = JSON.parse(fs.readFileSync(cookiePath, 'utf8'));
+              await context.addCookies(cookies);
+              await page.goto(persona.site, { waitUntil: 'domcontentloaded', timeout: 30000 });
+              await delay(2000);
+              await dismissPopups(page);
+              log('Loaded saved login cookies');
+            } catch (err) {
+              log('Failed to load saved cookies', { error: String(err).slice(0, 200) });
+            }
+          } else {
+            // No saved cookies — try form login via hamburger nav
+            try {
+              const hamburger = page.locator('#mobile-menu-button, button.navbar-toggler').first();
+              await hamburger.click({ timeout: 5000 }).catch(() => {});
+              await delay(1500);
+              const loginLink = page.locator('a:has-text("Log in")').first();
+              await loginLink.click({ timeout: 5000 });
+              await page.waitForLoadState('domcontentloaded');
+              await delay(3000);
+              await dismissPopups(page);
+              await page.waitForSelector('input[type="password"]', { timeout: 15000 });
+              await delay(1000);
+              const emailInput = page.locator('#login-form-email, form input[type="email"]').first();
+              const passInput = page.locator('input[type="password"]').first();
+              await emailInput.fill(credentials.email);
+              await delay(300);
+              await passInput.fill(credentials.password);
+              await delay(500);
+              const submitBtn = page.locator('form:has(input[type="password"]) button').first();
+              await submitBtn.click();
+              await page.waitForLoadState('domcontentloaded');
+              await delay(3000);
+              // Save cookies for next run
+              const cookies = await context.cookies();
+              fs.mkdirSync(path.join(__dirname, 'cookies'), { recursive: true });
+              fs.writeFileSync(cookiePath, JSON.stringify(cookies, null, 2));
+              log('Login successful — saved cookies for future runs');
+              await dismissPopups(page);
+            } catch (loginErr) {
+              log('Login failed — continuing as logged-out user', { error: String(loginErr).slice(0, 200) });
+              await page.goto(persona.site, { waitUntil: 'domcontentloaded', timeout: 15000 });
+              await delay(2000);
+              await dismissPopups(page);
+            }
           }
           break;
         }
