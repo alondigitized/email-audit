@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-disney-s-goofy-soccermania",
+  "email": {
+    "subject": "Disney's Goofy Soccermania",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-23T04:10:18+00:00",
+    "date_formatted": "2026-03-23 04:10 UTC"
+  },
+  "review": {
+    "score": "3/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nThis email announces a Disney x adidas Originals kids' collection with genuine brand equity to spend, then squanders it. The IP partnership is barely visible, there are zero product tiles, and the single CTA is a generic promotional banner. A collector's-item collab is reduced to a one-paragraph announcement email.\n\n---\n\n### 2. Business Impact Score: **3 / 10**\n\nCompelling premise, near-zero execution. The email builds no commercial momentum — no product exposure, no second CTA, no reason to click beyond a discount code buried at the top.\n\n---\n\n### 3. What's Working\n\n- **Promo banner is clear.** \"Save 30% on eligible styles with code MARCH.\" + SHOP NOW is legible and high-contrast at the top.\n- **Headline lands.** \"DISNEY'S GOOFY SOCCERMANIA\" is bold and well-sized — the collection name registers immediately.\n- **Hero image has energy.** Outdoor soccer scene with a kid, a goal, and co-branded adidas Originals + Disney logos feels authentic to the target (parents of young kids).\n\n---\n\n### 4. What's Weak\n\n- **No products shown.** Not a single item from the collection is visible. For a product launch email, this is a critical failure.\n- **Goofy is nowhere.** The email is literally named after Goofy, but the character doesn't appear anywhere — not in the hero, not in a product shot, not in a graphic. The Disney license is invisible beyond a small logo in the photo.\n- **One CTA for the entire email.** The only clickable path is the top banner SHOP NOW. There's no dedicated \"Shop the Collection\" button beneath the copy.\n- **Hero image is awkwardly cropped.** The top of the image cuts off partway through the scene — we see legs, a ball, and a goal, but the framing feels like a mistake rather than a deliberate crop.\n- **Body copy is generic.** \"Chase their goals, both on and off the field\" reads like filler. For a Disney collab, the copy should lean harder into character, fun, and IP-specific storytelling.\n- **Extreme length (too short).** The email ends after one paragraph. There's no product grid, no \"complete the look,\" no secondary module.\n\n---\n\n### 5. Recommendations\n\n1. **Add a product grid.** Show 3–6 items from the Soccermania range with images, names, and prices. This is a product launch email — the products must be visible.\n2. **Put Goofy front and center.** Use character art or a lifestyle shot featuring Goofy prominently. The IP is the hook; use it.\n3. **Add a dedicated collection CTA.** Below the body copy, add a full-width button: \"Shop Goofy Soccermania.\" The discount banner CTA should be secondary.\n4. **Fix the hero crop.** Either use a wider/taller image that properly frames the scene, or reframe to a cleaner composition.\n5. **Sharpen the copy.** Lean into the Goofy personality — silly, optimistic, chaotic fun. \"Chase their goals\" is forgettable. \"Goofy would wear this to training. That's the point.\" isn't.\n\n---\n\n### 6. Bottom Line\n\nThis email has a Disney x adidas kids' collab to sell and almost nothing to show for it. No products, no character, no second CTA. It reads like a placeholder or a teaser that was accidentally sent as the launch. The 30% off code is the only commercial lever, and it's not tied to the collection at all. Needs a full rebuild with product modules and IP-forward creative.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Launch/announce the Goofy Soccermania kids' collection |\n| **Hero / primary value prop** | Outdoor soccer photo with co-branding; reads as lifestyle but crops awkwardly, no Goofy character visible |\n| **Promo banner** | \"Save 30% with code MARCH\" — clear but generic, not tied to the collab |\n| **Membership / benefits** | Not present |\n| **Product discovery modules** | Absent — no tiles, no items, no prices |\n| **Secondary CTA / utility** | Not present; one SHOP NOW button in the banner is the only link in the body |\n| **Footer** | Standard utility links (My Account, Privacy, Support, Unsubscribe, adidas.com/us) + legal copy — clean |\n| **Visible bugs / friction** | Hero image crop is visually awkward (top of scene cut off); no other hard rendering bugs visible |\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Disney's Goofy Soccermania\"\n\n**From:** adidas `<adidas@us-news.comms.adidas.com>`\n**Date:** 2026-03-29\n\n---\n\n### 1. Technical Summary\n\nThe email has one broken CTA link caused by an unresolved internal deep-link type, a missing plain-text MIME part (hard CAN-SPAM/deliverability risk), and three HTTP (non-HTTPS) image sources that will be blocked by most modern email clients. Authentication posture cannot be confirmed due to missing `Authentication-Results` headers in the relay.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken deep link on at least one CTA**\nThe QA probe returned `unknown url type: '/g/693dafb9-0332-4901-a29d-08d47cc741d6'`, indicating the click-tracking layer received a path it couldn't resolve. The outer redirect URL is:\n```\nhttps://dv.adidas.com/o/693dafb9-0332-4901-a29d-08d47cc741d6\n  ?cp_tp=v3.eJzj...\n  &cp_cid=d63aafc3fa4b9098\n  &mi_mid=019d1afe-cf00-7000-9962-8ce957af6ac5\n```\nThe `/g/` path prefix suggests a product or content deep-link type that failed to resolve in the Movable Ink/DV rendering layer. Recipients clicking this CTA land on an error or redirect loop rather than the intended product page.\n\n**[WARN] 18 click-redirect links unverifiable**\nAll 18 links route through `click.comms.adidas.com` — the QA probe skipped HTTP probing on these. Final landing page destinations (including UTM integrity) cannot be confirmed without click-through testing in a live or seed environment.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] Two images served over HTTP**\nThe \"arrow\" asset is referenced twice via non-HTTPS URL:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nGmail, Outlook.com, and iOS Mail block mixed-content images by default. This asset will not render for a significant portion of recipients.\n\n**[WARN] Missing `alt` text on two images**\n- `dv.adidas.com/o/693dafb9-0332-4901-a29d-08d47cc741d6` — appears to be a content image; no `alt` attribute\n- `click.comms.adidas.com/CI0/...2Q1-rifl8gMUCoY9FtL_U0vxZ...` — likely a tracking pixel but should have `alt=\"\"`\n\n**[INFO] Duplicate `@font-face` declarations**\n`AdihausDIN` and `AdineuePRO` are each declared twice across two separate `<style>` blocks with inconsistent fallback lists (first block includes `Calibri`/`Sans Serif`; second drops them). This is harmless but indicates template assembly inconsistency. Neither declaration loads a remote font file — both fall back to local system fonts only, which is acceptable for email.\n\n**[INFO] `<meta charset>` missing `http-equiv`**\n```html\n<meta content=\"text/html; charset=UTF-8\" />\n```\nShould be:\n```html\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n```\nWithout `http-equiv`, some legacy clients (older Outlook, Lotus Notes) may not apply the charset declaration.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo issues found. The `mi_mid` (message ID) and `cp_cid` (contact ID) parameters visible in the tracking URLs appear populated with non-placeholder values. No unresolved `{{token}}` or `%%token%%` patterns detected in the truncated source.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text MIME part is empty (0 characters)**\nCAN-SPAM does not technically mandate a text part, but a zero-length text body causes Outlook's junk filter and SpamAssassin to assign a high spam score. More critically, Gmail and Apple Mail use the text part for smart features (calendar extraction, package tracking); its absence degrades inbox placement. This is a send-time defect that should be treated as a blocker.\n\n**[WARN] SPF/DKIM/DMARC authentication status unconfirmed**\nThe `Authentication-Results` header was not captured via the AgentMail relay. Sending domain is `us-news.comms.adidas.com`; DKIM alignment requires a `d=us-news.comms.adidas.com` (or parent domain `adidas.com`) signature. Cannot confirm pass/fail without raw header access.\n\n**No issues found** on: `ROBOTS: NOINDEX, NOFOLLOW` (present), `referrer: no-referrer` (present), unsubscribe link presence (not verifiable from truncated source but standard for adidas sends).\n\n---\n\n### 6. Email-to-Site Continuity\n\n**[UNVERIFIABLE] UTM parameter presence on final destinations**\nAll 18 trackable CTAs pass through `click.comms.adidas.com` redirects. Because the probe skipped HTTP resolution on these domains, it's unknown whether UTM params (`utm_source`, `utm_medium`, `utm_campaign`) are appended to the final adidas.com landing pages. Without this, analytics attribution for this campaign will be incomplete.\n\n**[FAIL] Broken CTA breaks site continuity entirely for that link**\nThe `/g/`-type deep link (see §2) means at least one CTA does not reach its intended product or collection page.\n\n---\n\n### 7. Recommendations\n\n| Priority | Action |\n|---|---|\n| **P0** | Fix the broken `/g/` deep-link CTA — identify the unresolved asset/product ID in the Movable Ink or DV rendering config before resend |\n| **P0** | Add a plain-text MIME part — even a stripped-down version of the key copy and CTA URLs is sufficient to resolve the deliverability risk |\n| **P1** | Migrate the two HTTP arrow image URLs to HTTPS (`https://image.link.adidas.com/...`) |\n| **P1** | Add `alt=\"\"` to the tracking pixel and a descriptive `alt` to the content image missing attribution |\n| **P2** | Verify SPF/DKIM pass on `us-news.comms.adidas.com` via raw header inspection before next send |\n| **P2** | Confirm UTM params are appended downstream of `click.comms.adidas.com` redirects via click-through test on a seed address |\n| **P3** | Add `http-equiv=\"Content-Type\"` to the charset `<meta>` tag |\n| **P3** | Deduplicate the `@font-face` blocks to a single canonical `<style>` block |",
+    "sections": {
+      "executive_summary": [
+        "This email announces a Disney x adidas Originals kids' collection with genuine brand equity to spend, then squanders it. The IP partnership is barely visible, there are zero product tiles, and the single CTA is a generic promotional banner. A collector's-item collab is reduced to a one-paragraph announcement email.",
+        "Compelling premise, near-zero execution. The email builds no commercial momentum — no product exposure, no second CTA, no reason to click beyond a discount code buried at the top."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Promo banner is clear.** \"Save 30% on eligible styles with code MARCH.\" + SHOP NOW is legible and high-contrast at the top.",
+        "- **Headline lands.** \"DISNEY'S GOOFY SOCCERMANIA\" is bold and well-sized — the collection name registers immediately.",
+        "- **Hero image has energy.** Outdoor soccer scene with a kid, a goal, and co-branded adidas Originals + Disney logos feels authentic to the target (parents of young kids)."
+      ],
+      "whats_weak": [
+        "- **No products shown.** Not a single item from the collection is visible. For a product launch email, this is a critical failure.",
+        "- **Goofy is nowhere.** The email is literally named after Goofy, but the character doesn't appear anywhere — not in the hero, not in a product shot, not in a graphic. The Disney license is invisible beyond a small logo in the photo.",
+        "- **One CTA for the entire email.** The only clickable path is the top banner SHOP NOW. There's no dedicated \"Shop the Collection\" button beneath the copy.",
+        "- **Hero image is awkwardly cropped.** The top of the image cuts off partway through the scene — we see legs, a ball, and a goal, but the framing feels like a mistake rather than a deliberate crop.",
+        "- **Body copy is generic.** \"Chase their goals, both on and off the field\" reads like filler. For a Disney collab, the copy should lean harder into character, fun, and IP-specific storytelling.",
+        "- **Extreme length (too short).** The email ends after one paragraph. There's no product grid, no \"complete the look,\" no secondary module."
+      ],
+      "recommendations": [
+        "1. **Add a product grid.** Show 3–6 items from the Soccermania range with images, names, and prices. This is a product launch email — the products must be visible.",
+        "2. **Put Goofy front and center.** Use character art or a lifestyle shot featuring Goofy prominently. The IP is the hook; use it.",
+        "3. **Add a dedicated collection CTA.** Below the body copy, add a full-width button: \"Shop Goofy Soccermania.\" The discount banner CTA should be secondary.",
+        "4. **Fix the hero crop.** Either use a wider/taller image that properly frames the scene, or reframe to a cleaner composition.",
+        "5. **Sharpen the copy.** Lean into the Goofy personality — silly, optimistic, chaotic fun. \"Chase their goals\" is forgettable. \"Goofy would wear this to training. That's the point.\" isn't.",
+        "| Priority | Action |",
+        "|---|---|",
+        "| **P0** | Fix the broken `/g/` deep-link CTA — identify the unresolved asset/product ID in the Movable Ink or DV rendering config before resend |",
+        "| **P0** | Add a plain-text MIME part — even a stripped-down version of the key copy and CTA URLs is sufficient to resolve the deliverability risk |",
+        "| **P1** | Migrate the two HTTP arrow image URLs to HTTPS (`https://image.link.adidas.com/...`) |",
+        "| **P1** | Add `alt=\"\"` to the tracking pixel and a descriptive `alt` to the content image missing attribution |",
+        "| **P2** | Verify SPF/DKIM pass on `us-news.comms.adidas.com` via raw header inspection before next send |",
+        "| **P2** | Confirm UTM params are appended downstream of `click.comms.adidas.com` redirects via click-through test on a seed address |",
+        "| **P3** | Add `http-equiv=\"Content-Type\"` to the charset `<meta>` tag |",
+        "| **P3** | Deduplicate the `@font-face` blocks to a single canonical `<style>` block |"
+      ],
+      "bottom_line": [
+        "This email has a Disney x adidas kids' collab to sell and almost nothing to show for it. No products, no character, no second CTA. It reads like a placeholder or a teaser that was accidentally sent as the launch. The 30% off code is the only commercial lever, and it's not tied to the collection at all. Needs a full rebuild with product modules and IP-forward creative."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Launch/announce the Goofy Soccermania kids' collection |",
+        "| **Hero / primary value prop** | Outdoor soccer photo with co-branding; reads as lifestyle but crops awkwardly, no Goofy character visible |",
+        "| **Promo banner** | \"Save 30% with code MARCH\" — clear but generic, not tied to the collab |",
+        "| **Membership / benefits** | Not present |",
+        "| **Product discovery modules** | Absent — no tiles, no items, no prices |",
+        "| **Secondary CTA / utility** | Not present; one SHOP NOW button in the banner is the only link in the body |",
+        "| **Footer** | Standard utility links (My Account, Privacy, Support, Unsubscribe, adidas.com/us) + legal copy — clean |",
+        "| **Visible bugs / friction** | Hero image crop is visually awkward (top of scene cut off); no other hard rendering bugs visible |",
+        "**From:** adidas `<adidas@us-news.comms.adidas.com>`",
+        "**Date:** 2026-03-29",
+        "The email has one broken CTA link caused by an unresolved internal deep-link type, a missing plain-text MIME part (hard CAN-SPAM/deliverability risk), and three HTTP (non-HTTPS) image sources that will be blocked by most modern email clients. Authentication posture cannot be confirmed due to missing `Authentication-Results` headers in the relay.",
+        "**[FAIL] Broken deep link on at least one CTA**",
+        "The QA probe returned `unknown url type: '/g/693dafb9-0332-4901-a29d-08d47cc741d6'`, indicating the click-tracking layer received a path it couldn't resolve. The outer redirect URL is:",
+        "```",
+        "https://dv.adidas.com/o/693dafb9-0332-4901-a29d-08d47cc741d6",
+        "?cp_tp=v3.eJzj...",
+        "&cp_cid=d63aafc3fa4b9098",
+        "&mi_mid=019d1afe-cf00-7000-9962-8ce957af6ac5",
+        "```",
+        "The `/g/` path prefix suggests a product or content deep-link type that failed to resolve in the Movable Ink/DV rendering layer. Recipients clicking this CTA land on an error or redirect loop rather than the intended product page.",
+        "**[WARN] 18 click-redirect links unverifiable**",
+        "All 18 links route through `click.comms.adidas.com` — the QA probe skipped HTTP probing on these. Final landing page destinations (including UTM integrity) cannot be confirmed without click-through testing in a live or seed environment.",
+        "**[WARN] Two images served over HTTP**",
+        "The \"arrow\" asset is referenced twice via non-HTTPS URL:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Gmail, Outlook.com, and iOS Mail block mixed-content images by default. This asset will not render for a significant portion of recipients.",
+        "**[WARN] Missing `alt` text on two images**",
+        "- `dv.adidas.com/o/693dafb9-0332-4901-a29d-08d47cc741d6` — appears to be a content image; no `alt` attribute",
+        "- `click.comms.adidas.com/CI0/...2Q1-rifl8gMUCoY9FtL_U0vxZ...` — likely a tracking pixel but should have `alt=\"\"`",
+        "**[INFO] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` and `AdineuePRO` are each declared twice across two separate `<style>` blocks with inconsistent fallback lists (first block includes `Calibri`/`Sans Serif`; second drops them). This is harmless but indicates template assembly inconsistency. Neither declaration loads a remote font file — both fall back to local system fonts only, which is acceptable for email.",
+        "**[INFO] `<meta charset>` missing `http-equiv`**",
+        "```html",
+        "<meta content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Should be:",
+        "```html",
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Without `http-equiv`, some legacy clients (older Outlook, Lotus Notes) may not apply the charset declaration.",
+        "No issues found. The `mi_mid` (message ID) and `cp_cid` (contact ID) parameters visible in the tracking URLs appear populated with non-placeholder values. No unresolved `{{token}}` or `%%token%%` patterns detected in the truncated source.",
+        "**[FAIL] Plain-text MIME part is empty (0 characters)**",
+        "CAN-SPAM does not technically mandate a text part, but a zero-length text body causes Outlook's junk filter and SpamAssassin to assign a high spam score. More critically, Gmail and Apple Mail use the text part for smart features (calendar extraction, package tracking); its absence degrades inbox placement. This is a send-time defect that should be treated as a blocker.",
+        "**[WARN] SPF/DKIM/DMARC authentication status unconfirmed**",
+        "The `Authentication-Results` header was not captured via the AgentMail relay. Sending domain is `us-news.comms.adidas.com`; DKIM alignment requires a `d=us-news.comms.adidas.com` (or parent domain `adidas.com`) signature. Cannot confirm pass/fail without raw header access.",
+        "**No issues found** on: `ROBOTS: NOINDEX, NOFOLLOW` (present), `referrer: no-referrer` (present), unsubscribe link presence (not verifiable from truncated source but standard for adidas sends).",
+        "**[UNVERIFIABLE] UTM parameter presence on final destinations**",
+        "All 18 trackable CTAs pass through `click.comms.adidas.com` redirects. Because the probe skipped HTTP resolution on these domains, it's unknown whether UTM params (`utm_source`, `utm_medium`, `utm_campaign`) are appended to the final adidas.com landing pages. Without this, analytics attribution for this campaign will be incomplete.",
+        "**[FAIL] Broken CTA breaks site continuity entirely for that link**",
+        "The `/g/`-type deep link (see §2) means at least one CTA does not reach its intended product or collection page."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/693dafb9-0332-4901-a29d-08d47cc741d6?txn=447f4700-2b86-11f1-a7f2-b2872873faee'",
+            "url": "https://dv.adidas.com/o/693dafb9-0332-4901-a29d-08d47cc741d6?cp_tp=v3.eJzjYuIIFuLg2Hf191k2AWYpXo7PHziF2Dle8QswS4gpiXPc-58JFGbjOPC16RybEkxCawsTUNODE6ICjBKsSsuZhEQ5FspoMHqxcDAKMAaByQiuBC4hYY7nUgKMGszIEkLiHC-lBJjQVMcnxAMl2mQEmLEYo8fxUUqARYFRg8mJk-PyIT6JHkaFPC8ukLwURC0SO4NRyJDjk5QAqwQjWAcXx-25fBKNbArHWHFqcQTa_VZKgA3NbqMEI6DEEhkBdqx-ey0lwKHBgua3N1ICnJiqJRawKRxlMuLguMurxMzxyBHIauYDss44AVl7-YGshW5A1mUQ66abFSvHbVMpBisOjvMaUswc3ekOjFEcHNcNhZg5_lUDWTdArI4aIOsmiNVTE8XJMcVaiIXjXi8jkNllA2Q-72cEAEywU80=&amp;cp_cid=d63aafc3fa4b9098&amp;mi_mid=019d1afe-cf00-7000-9962-8ce957af6ac5"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=DZDXSvnsiCbQ7nAydAUtNYVqbAC85gnl9IF6Ar8UFuX6VuBzRLLoZGqWcvigQx99HbNiqh1utaBrFtXeGBIwdecwbTDvrvLx8NYc+KJEmpnQjiBm0FGG"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 5,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "18 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 693dafb9-0332-4901-a29d-08d47cc741d6",
+            "detail": "src: https://dv.adidas.com/o/693dafb9-0332-4901-a29d-08d47cc741d6?cp_tp=v3.eJzjYuIIFuLg2Hf191k2AWYpXo7PHziF2Dle8QswS4gpiXPc-5"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2Q1-rifl8gMUCoY9FtL_U0vxZ9ZencZIO9G-90_9YQU=449",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d18e2ecad-35b8de89-ff3b-4dc3-9942-fb3465b10d3b-000000/2Q1-rifl8gMUCoY9FtL_U0vxZ"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 2Q1-rifl8gMUCoY9FtL_U0vxZ9ZencZIO9G-90_9YQU=449",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d18e2ecad-35b8de89-ff3b-4dc3-9942-fb3465b10d3b-000000/2Q1-rifl8gMUCoY9FtL_U0vxZ"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-disney-s-goofy-soccermania-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}

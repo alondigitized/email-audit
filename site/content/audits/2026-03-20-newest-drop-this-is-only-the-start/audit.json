@@ -328,6 +328,7 @@
   },
   "assets": {
     "render_image": null,
-    "pdf": "2026-03-20-newest-drop-this-is-only-the-start-review.pdf"
+    "pdf": "2026-03-20-newest-drop-this-is-only-the-start-review.pdf",
+    "webview_url": null
   }
 }

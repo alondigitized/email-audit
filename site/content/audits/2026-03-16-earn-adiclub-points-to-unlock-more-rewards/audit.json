@@ -476,6 +476,7 @@
   },
   "assets": {
     "render_image": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards-email-webview-render.png",
-    "pdf": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards-review.pdf"
+    "pdf": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards-review.pdf",
+    "webview_url": null
   }
 }
