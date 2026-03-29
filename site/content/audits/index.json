@@ -112,6 +112,22 @@
     "persona": null
   },
   {
+    "slug": "2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-b-v2the-styles-everyone-s-searching-f",
+    "subject": "[Test]: MKG_US_ECMPUR_U_BEST_ECOM_EN_03292026_B_V2The Styles Everyone's Searching For",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-27T21:07:35+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-bthe-styles-everyone-s-searching-for",
     "subject": "[Test]: MKG_US_ECMPUR_U_BEST_ECOM_EN_03292026_BThe Styles Everyone's Searching For",
     "from_display_name": "SKECHERS",
