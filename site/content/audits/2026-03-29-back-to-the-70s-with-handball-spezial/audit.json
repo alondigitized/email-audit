@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-back-to-the-70s-with-handball-spezial",
+  "email": {
+    "subject": "Back to the ’70s with Handball Spezial",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-28T19:04:41+00:00",
+    "date_formatted": "2026-03-28 19:04 UTC"
+  },
+  "review": {
+    "score": "4/10",
+    "raw_markdown": "## Email Review: \"Back to the '70s with Handball Spezial\"\n**From:** adidas | **Subject:** Back to the '70s with Handball Spezial\n\n---\n\n### 1. Executive Summary\n\nA stripped-down product email that leads with a discount offer but fails to build any real desire for the Handball Spezial before asking for the click. The product thumbnails are small and crowded, the headline lands below the shoes rather than above them, and there's no CTA in the product section. The '70s nostalgia angle has genuine potential here — adidas has a strong story to tell — but the execution buries it at the bottom as a few lines of body copy. This email converts on the promo code, not on the product.\n\n---\n\n### 2. Business Impact Score: **4 / 10**\n\n---\n\n### 3. What's Working\n\n- **Promo banner is clear and prominent.** \"Save 30% on eligible styles with code MARCH\" with a \"SHOP NOW\" CTA sits right at the top — hard to miss, easy to act on.\n- **Colorway variety is well-represented.** Five distinct colorways (navy, burgundy, leopard print, cream, black) communicate range and justify browsing.\n- **Clean, uncluttered layout.** No visual noise competing with the product.\n\n---\n\n### 4. What's Weak\n\n- **Headline sequence is inverted.** \"THE '70S ARE BACK\" appears *below* the product grid. The story should hook first; the product grid should land after emotional context is set.\n- **Product thumbnails are too small.** Five shoes in a 2-column grid renders each image at minimal size — detail is lost, especially on the leopard and white colorways where texture is the selling point.\n- **No product-level CTAs.** The grid has no \"Shop This Color\" links or individual buttons. After the top banner, the path to purchase disappears entirely.\n- **Body copy is weak.** \"Versatile enough for any look\" is generic filler. The '70s positioning deserves something with more identity.\n- **No price anchoring.** There's no original price shown alongside the 30% discount to reinforce perceived value.\n- **The \"STORIES, STYLES AND SPORTSWEAR AT ADIDAS, SINCE 1949\" tagline is orphaned.** It appears isolated above the footer with no content surrounding it — reads like a broken module.\n\n---\n\n### 5. Recommendations\n\n1. **Flip the structure.** Lead with the headline and a hero lifestyle shot of the Handball Spezial being worn, then reveal the colorway grid below.\n2. **Add individual colorway CTAs.** Each product thumbnail should link directly to that colorway's PDP, not to a generic landing page.\n3. **Show original + sale price.** Even a \"Was $110 → $77\" format materially improves click-through on promo emails.\n4. **Punch up the copy.** Lean harder into the archival angle — the Handball Spezial has a real '70s handball origin story. Use it.\n5. **Remove or populate the orphaned tagline module.** If it's a brand statement, give it visual context. If it's filler, cut it.\n\n---\n\n### 6. Bottom Line\n\nThis email will convert bargain hunters who already know the Handball Spezial. It will not convert anyone who needs to be sold on why they want it. The nostalgia positioning is squandered by an inverted layout and a product grid that shrinks the shoes to thumbnail size. A small structural reorder and bigger images would have a meaningful impact on engagement.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Drive purchase of Handball Spezial; secondary support from 30% off MARCH code |\n| **Hero / primary value prop** | No hero image; product grid functions as hero but at insufficient scale |\n| **Membership / benefits** | Not present |\n| **Product discoverability** | 5-colorway grid (2-col layout); no individual CTAs or labels; images too small to show material detail |\n| **Utility / secondary modules** | Orphaned brand tagline above footer; footer has My Account, Privacy, Support, Unsubscribe, adidas.com/us |\n| **Bugs / friction / clarity issues** | None visible (no broken images, no overlapping text); the orphaned tagline is a structural gap, not a render bug |\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Back to the '70s with Handball Spezial\"\n**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-29\n\n---\n\n### 1. Technical Summary\n\nThe email has one confirmed broken CTA link caused by a relative URL being passed to the click-redirect resolver. Deliverability risk is elevated due to a missing plain-text body and unverifiable DKIM/SPF status. Several images are served over HTTP, which will be blocked by modern clients.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken click URL — relative path passed to redirect resolver**\nThe QA link check returned `unknown url type: '/g/b17b7641-f438-4464-885c-f1e88242f89e?txn=...'`. The `/g/...` path is a relative URL that was passed as the destination to the `dv.adidas.com` click-redirect wrapper instead of an absolute `https://` URL. Affected redirect:\n```\nhttps://dv.adidas.com/o/b17b7641-f438-4464-885c-f1e88242f89e?cp_tp=v3.eJzjYuII...\n```\nThis CTA will resolve to a broken or unintended page for recipients.\n\n**[WARN] 32 tracking links not validated** — all click-throughs route through `click.comms.adidas.com`; destination URLs were not probed. The broken link above is the only confirmed failure, but destination alignment cannot be confirmed for the remaining 31.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] Six instances of the same image served over HTTP**\nThe \"arrow\" graphic (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) appears 6 times via:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nGmail, Outlook (cached images on), and Apple Mail will block mixed-content HTTP image loads. This will produce broken image icons in a large share of clients.\n\n**[WARN] Tracking pixel served over HTTP**\n```\nhttp://click.comms.adidas.com/CI0/0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000/...\n```\nOpen-tracking reliability will be degraded where clients block HTTP resources.\n\n**[WARN] Two images missing `alt` text**\n- Hero/product image: `b17b7641-f438-4464-885c-f1e88242f89e` (no `alt` attribute)\n- Tracking pixel: `ryjIzSsVeoo4HjhxbLfFD7Oy6...` (no `alt`, though `alt=\"\"` is acceptable for decorative/tracking pixels)\n\n**[INFO] Duplicate `@font-face` declarations** — `AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly differing fallback lists (`Calibri` / `Sans Serif` present in block 1, absent in block 2). No rendering failure, but the redundancy indicates a template assembly issue.\n\n**[INFO] `<meta charset>` missing `http-equiv`** — `<meta content=\"text/html; charset=UTF-8\" />` should be `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` for correct handling in legacy clients using the HTML 4.01 Transitional doctype declared.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens or exposed placeholder syntax (e.g., `{{first_name}}`, `%%first_name%%`) detected in the truncated source. No issues found.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text multipart/alternative body missing**\nQA reports 0 characters in the text version. CAN-SPAM does not strictly require a text part, but its absence increases spam-filter score and breaks accessibility for text-only clients and screen readers. Best practice (and some ESP policies) treat this as a violation.\n\n**[WARN] SPF/DKIM/DMARC authentication status unverifiable**\nThe `Authentication-Results` header was not present in the captured message (expected via AgentMail relay). Sending domain `us-news.comms.adidas.com` should have aligned SPF and DKIM records; status cannot be confirmed from available data.\n\n**[INFO]** `<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\" />` and `<meta name=\"referrer\" content=\"no-referrer\" />` are present — correct for suppressing indexing and referrer leakage from webview renders.\n\nUnsubscribe link presence could not be confirmed from the truncated source, but the sending domain and infrastructure (Salesforce Marketing Cloud pattern) typically includes this in the footer.\n\n---\n\n### 6. Email-to-Site Continuity\n\nUTM parameters cannot be inspected directly — all 32 links route through `click.comms.adidas.com` redirects, which obscure the final destination and query strings. The one confirmed broken link (`/g/b17b7641-f438-4464-885c-f1e88242f89e`) means at least one CTA lands on a broken or incorrect page, representing a direct continuity failure. All other links are unvalidated.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| P0 | Broken CTA — relative URL in click resolver | Replace `/g/b17b7641...` with a fully-qualified `https://` destination URL and re-test the redirect chain |\n| P1 | Plain-text body absent | Add a text/plain alternative part; minimum viable version is subject line + plain-text CTAs + unsubscribe URL |\n| P1 | 6× arrow image + tracking pixel over HTTP | Update all `image.link.adidas.com` and `click.comms.adidas.com` asset URLs to `https://` |\n| P2 | Missing `alt` on product image | Add descriptive `alt` text (e.g., `alt=\"Handball Spezial shoe\"`); set tracking pixel to `alt=\"\"` |\n| P2 | Authentication header unverifiable | Confirm SPF/DKIM alignment for `us-news.comms.adidas.com` with the ESP; request relay headers for verification |\n| P3 | Duplicate `@font-face` blocks | Consolidate into a single `<style>` block during template build; standardize fallback list |\n| P3 | `<meta charset>` missing `http-equiv` | Correct to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |",
+    "sections": {
+      "executive_summary": [
+        "**From:** adidas | **Subject:** Back to the '70s with Handball Spezial",
+        "A stripped-down product email that leads with a discount offer but fails to build any real desire for the Handball Spezial before asking for the click. The product thumbnails are small and crowded, the headline lands below the shoes rather than above them, and there's no CTA in the product section. The '70s nostalgia angle has genuine potential here — adidas has a strong story to tell — but the execution buries it at the bottom as a few lines of body copy. This email converts on the promo code, not on the product."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Promo banner is clear and prominent.** \"Save 30% on eligible styles with code MARCH\" with a \"SHOP NOW\" CTA sits right at the top — hard to miss, easy to act on.",
+        "- **Colorway variety is well-represented.** Five distinct colorways (navy, burgundy, leopard print, cream, black) communicate range and justify browsing.",
+        "- **Clean, uncluttered layout.** No visual noise competing with the product."
+      ],
+      "whats_weak": [
+        "- **Headline sequence is inverted.** \"THE '70S ARE BACK\" appears *below* the product grid. The story should hook first; the product grid should land after emotional context is set.",
+        "- **Product thumbnails are too small.** Five shoes in a 2-column grid renders each image at minimal size — detail is lost, especially on the leopard and white colorways where texture is the selling point.",
+        "- **No product-level CTAs.** The grid has no \"Shop This Color\" links or individual buttons. After the top banner, the path to purchase disappears entirely.",
+        "- **Body copy is weak.** \"Versatile enough for any look\" is generic filler. The '70s positioning deserves something with more identity.",
+        "- **No price anchoring.** There's no original price shown alongside the 30% discount to reinforce perceived value.",
+        "- **The \"STORIES, STYLES AND SPORTSWEAR AT ADIDAS, SINCE 1949\" tagline is orphaned.** It appears isolated above the footer with no content surrounding it — reads like a broken module."
+      ],
+      "recommendations": [
+        "1. **Flip the structure.** Lead with the headline and a hero lifestyle shot of the Handball Spezial being worn, then reveal the colorway grid below.",
+        "2. **Add individual colorway CTAs.** Each product thumbnail should link directly to that colorway's PDP, not to a generic landing page.",
+        "3. **Show original + sale price.** Even a \"Was $110 → $77\" format materially improves click-through on promo emails.",
+        "4. **Punch up the copy.** Lean harder into the archival angle — the Handball Spezial has a real '70s handball origin story. Use it.",
+        "5. **Remove or populate the orphaned tagline module.** If it's a brand statement, give it visual context. If it's filler, cut it.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| P0 | Broken CTA — relative URL in click resolver | Replace `/g/b17b7641...` with a fully-qualified `https://` destination URL and re-test the redirect chain |",
+        "| P1 | Plain-text body absent | Add a text/plain alternative part; minimum viable version is subject line + plain-text CTAs + unsubscribe URL |",
+        "| P1 | 6× arrow image + tracking pixel over HTTP | Update all `image.link.adidas.com` and `click.comms.adidas.com` asset URLs to `https://` |",
+        "| P2 | Missing `alt` on product image | Add descriptive `alt` text (e.g., `alt=\"Handball Spezial shoe\"`); set tracking pixel to `alt=\"\"` |",
+        "| P2 | Authentication header unverifiable | Confirm SPF/DKIM alignment for `us-news.comms.adidas.com` with the ESP; request relay headers for verification |",
+        "| P3 | Duplicate `@font-face` blocks | Consolidate into a single `<style>` block during template build; standardize fallback list |",
+        "| P3 | `<meta charset>` missing `http-equiv` | Correct to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |"
+      ],
+      "bottom_line": [
+        "This email will convert bargain hunters who already know the Handball Spezial. It will not convert anyone who needs to be sold on why they want it. The nostalgia positioning is squandered by an inverted layout and a product grid that shrinks the shoes to thumbnail size. A small structural reorder and bigger images would have a meaningful impact on engagement."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Drive purchase of Handball Spezial; secondary support from 30% off MARCH code |",
+        "| **Hero / primary value prop** | No hero image; product grid functions as hero but at insufficient scale |",
+        "| **Membership / benefits** | Not present |",
+        "| **Product discoverability** | 5-colorway grid (2-col layout); no individual CTAs or labels; images too small to show material detail |",
+        "| **Utility / secondary modules** | Orphaned brand tagline above footer; footer has My Account, Privacy, Support, Unsubscribe, adidas.com/us |",
+        "| **Bugs / friction / clarity issues** | None visible (no broken images, no overlapping text); the orphaned tagline is a structural gap, not a render bug |",
+        "**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-03-29",
+        "The email has one confirmed broken CTA link caused by a relative URL being passed to the click-redirect resolver. Deliverability risk is elevated due to a missing plain-text body and unverifiable DKIM/SPF status. Several images are served over HTTP, which will be blocked by modern clients.",
+        "**[FAIL] Broken click URL — relative path passed to redirect resolver**",
+        "The QA link check returned `unknown url type: '/g/b17b7641-f438-4464-885c-f1e88242f89e?txn=...'`. The `/g/...` path is a relative URL that was passed as the destination to the `dv.adidas.com` click-redirect wrapper instead of an absolute `https://` URL. Affected redirect:",
+        "```",
+        "https://dv.adidas.com/o/b17b7641-f438-4464-885c-f1e88242f89e?cp_tp=v3.eJzjYuII...",
+        "```",
+        "This CTA will resolve to a broken or unintended page for recipients.",
+        "**[WARN] 32 tracking links not validated** — all click-throughs route through `click.comms.adidas.com`; destination URLs were not probed. The broken link above is the only confirmed failure, but destination alignment cannot be confirmed for the remaining 31.",
+        "**[WARN] Six instances of the same image served over HTTP**",
+        "The \"arrow\" graphic (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) appears 6 times via:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Gmail, Outlook (cached images on), and Apple Mail will block mixed-content HTTP image loads. This will produce broken image icons in a large share of clients.",
+        "**[WARN] Tracking pixel served over HTTP**",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000/...",
+        "```",
+        "Open-tracking reliability will be degraded where clients block HTTP resources.",
+        "**[WARN] Two images missing `alt` text**",
+        "- Hero/product image: `b17b7641-f438-4464-885c-f1e88242f89e` (no `alt` attribute)",
+        "- Tracking pixel: `ryjIzSsVeoo4HjhxbLfFD7Oy6...` (no `alt`, though `alt=\"\"` is acceptable for decorative/tracking pixels)",
+        "**[INFO] Duplicate `@font-face` declarations** — `AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly differing fallback lists (`Calibri` / `Sans Serif` present in block 1, absent in block 2). No rendering failure, but the redundancy indicates a template assembly issue.",
+        "**[INFO] `<meta charset>` missing `http-equiv`** — `<meta content=\"text/html; charset=UTF-8\" />` should be `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` for correct handling in legacy clients using the HTML 4.01 Transitional doctype declared.",
+        "No unresolved merge tokens or exposed placeholder syntax (e.g., `{{first_name}}`, `%%first_name%%`) detected in the truncated source. No issues found.",
+        "**[FAIL] Plain-text multipart/alternative body missing**",
+        "QA reports 0 characters in the text version. CAN-SPAM does not strictly require a text part, but its absence increases spam-filter score and breaks accessibility for text-only clients and screen readers. Best practice (and some ESP policies) treat this as a violation.",
+        "**[WARN] SPF/DKIM/DMARC authentication status unverifiable**",
+        "The `Authentication-Results` header was not present in the captured message (expected via AgentMail relay). Sending domain `us-news.comms.adidas.com` should have aligned SPF and DKIM records; status cannot be confirmed from available data.",
+        "**[INFO]** `<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\" />` and `<meta name=\"referrer\" content=\"no-referrer\" />` are present — correct for suppressing indexing and referrer leakage from webview renders.",
+        "Unsubscribe link presence could not be confirmed from the truncated source, but the sending domain and infrastructure (Salesforce Marketing Cloud pattern) typically includes this in the footer.",
+        "UTM parameters cannot be inspected directly — all 32 links route through `click.comms.adidas.com` redirects, which obscure the final destination and query strings. The one confirmed broken link (`/g/b17b7641-f438-4464-885c-f1e88242f89e`) means at least one CTA lands on a broken or incorrect page, representing a direct continuity failure. All other links are unvalidated."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/b17b7641-f438-4464-885c-f1e88242f89e?txn=7e544b80-2b8e-11f1-b302-b2872873faee'",
+            "url": "https://dv.adidas.com/o/b17b7641-f438-4464-885c-f1e88242f89e?cp_tp=v3.eJzjYuIIFuLgWLt49jk2AWYpXo7n3zmF2Dle8QswS8goiXNMepAFFGbj2HBqwTk2JZiEVgsTUNOdU8ICjBIsSt8ZhUQ5FspoMHqxcDAKMAaByQiuBC4hYY7nUgKMGszIEkLiHC-lBJjQVMcnxAMl2mQEmLEYY8jxSUqARYJRgVGDyYmLo38dr0QTh8JWNi8ukBIpiHIkdoYH0Ky3UgKsaGYZJRgBJZbICLBhdetrKQF2DRY0t76REuDAVC2xgE3hKJMRB8ddXiVmjkeOQFYzH5B1xgnI2ssPZC10A7Iug1g33axYOW6bSjFYcXCc15Bi5uhOd2CM4uC4bijEzPGvGsi6AWJ11ABZN0GsnpooTo4p1kIsHPd6GYHMLhsg83k_IwAvZEvm&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d3487-ac80-7000-b10b-aa6adb236e56"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=2i/f1b1/Xo7rimTgJLke45FQ4zejNj4hiOu4PQUlDI0eUkC+StMqM/l9f1tKED/n+aaiVcw0vCW5/fuJG2Qi61vAWo95lf+gvbdyDqfsT1JV2WPNbK9M"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "32 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: b17b7641-f438-4464-885c-f1e88242f89e",
+            "detail": "src: https://dv.adidas.com/o/b17b7641-f438-4464-885c-f1e88242f89e?cp_tp=v3.eJzjYuIIFuLgWLt49jk2AWYpXo7n3zmF2Dle8QswS8goiXNMep"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: ryjIzSsVeoo4HjhxbLfFD7Oy61cpvz3yU76xbBaJl0w=450",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000/ryjIzSsVeoo4HjhxbLfFD7Oy6"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: ryjIzSsVeoo4HjhxbLfFD7Oy61cpvz3yU76xbBaJl0w=450",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000/ryjIzSsVeoo4HjhxbLfFD7Oy6"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-back-to-the-70s-with-handball-spezial-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
