@@ -134,7 +134,7 @@
   },
   {
     "messageId": "<28085ed0-fc0e-4865-8a8f-c629a288140a@dfw1s10mta512.xt.local>",
-    "subject": "Your First Pair Just Became 2 \u2014 BOGO 50% Off!",
+    "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-23-your-first-pair-just-became-2-bogo-50-off",
     "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-23-your-first-pair-just-became-2-bogo-50-off-review.pdf",
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off"
@@ -154,13 +154,6 @@
     "slug": "2026-03-26-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every"
   },
   {
-    "messageId": "<cbeb5caa-913c-4498-9a40-bc56c9ced1b1@dfw1s10mta889.xt.local>",
-    "subject": "[Test]: MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026Check Out What's Trending Online",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-27-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online",
-    "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-27-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online-review.pdf",
-    "slug": "2026-03-27-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online"
-  },
-  {
     "messageId": "<8a951ddd-7a83-46e5-89c3-297125036f35@dfw1s10mta888.xt.local>",
     "subject": "[Test]: MKG_US_NA_U_BEST_GENDER_EN_03292026The Styles Everyone's Searching For",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for",
@@ -173,6 +166,18 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-28-the-messi-collection",
     "pdfPath": "",
     "slug": "2026-03-28-the-messi-collection"
+  },
+  {
+    "messageId": "<e7KE1zDgQHiNbOU-rlGaeg@geopod-ismtpd-25>",
+    "subject": "Did you forget something?",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-28-did-you-forget-something",
+    "slug": "2026-03-28-did-you-forget-something"
+  },
+  {
+    "messageId": "<0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000@eu-west-1.amazonses.com>",
+    "subject": "Back to the '70s with Handball Spezial",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-28-back-to-the-70s-with-handball-spezial",
+    "slug": "2026-03-28-back-to-the-70s-with-handball-spezial"
   },
   {
     "messageId": "2026-03-29-site-journey-walker",
@@ -189,7 +194,7 @@
   },
   {
     "messageId": "<85b7defb-799e-433c-972b-2e1a78c1a9dc@ind1s01mta1408.xt.local>",
-    "subject": "\u23f3 Last day to redeem your voucher",
+    "subject": "⏳ Last day to redeem your voucher",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-last-day-to-redeem-your-voucher",
     "slug": "2026-03-29-last-day-to-redeem-your-voucher"
   },
@@ -201,7 +206,7 @@
   },
   {
     "messageId": "<0102019d262e05f4-12a671eb-e6e8-4453-9f99-b383a94557f3-000000@eu-west-1.amazonses.com>",
-    "subject": "The countdown to FIFA World Cup 26\u2122 is on",
+    "subject": "The countdown to FIFA World Cup 26™ is on",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-the-countdown-to-fifa-world-cup-26-is-on",
     "slug": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on"
   },
@@ -318,5 +323,17 @@
     "subject": "Everybody Wants These Styles",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-everybody-wants-these-styles",
     "slug": "2026-03-29-everybody-wants-these-styles"
+  },
+  {
+    "messageId": "<cbeb5caa-913c-4498-9a40-bc56c9ced1b1@dfw1s10mta889.xt.local>",
+    "subject": "[Test]: MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026Check Out What's Trending Online",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online",
+    "slug": "2026-03-29-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online"
+  },
+  {
+    "messageId": "<a8f43aa9-f354-4c3b-8941-95d034f95243@dfw1s10mta243.xt.local>",
+    "subject": "[Test]: MKG_US_NONPUR_U_BEST_NONPURCH_EN_03292026Everybody Wants These Styles",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-nonpur-u-best-nonpurch-en-03292026everybody-wants-these-styles",
+    "slug": "2026-03-29-test-mkg-us-nonpur-u-best-nonpurch-en-03292026everybody-wants-these-styles"
   }
 ]
