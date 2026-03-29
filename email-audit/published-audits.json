@@ -134,50 +134,10 @@
   },
   {
     "messageId": "<28085ed0-fc0e-4865-8a8f-c629a288140a@dfw1s10mta512.xt.local>",
-    "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
+    "subject": "Your First Pair Just Became 2 \u2014 BOGO 50% Off!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-23-your-first-pair-just-became-2-bogo-50-off",
     "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-23-your-first-pair-just-became-2-bogo-50-off-review.pdf",
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off"
-  },
-  {
-    "messageId": "<M_7AENLAQauZaokcpwGL-Q@geopod-ismtpd-74>",
-    "subject": "This is perfect for you!",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-26-this-is-perfect-for-you",
-    "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-26-this-is-perfect-for-you-review.pdf",
-    "slug": "2026-03-26-this-is-perfect-for-you"
-  },
-  {
-    "messageId": "<6343b017-e3a4-4206-b021-f71bd76556ad@dfw1s10mta513.xt.local>",
-    "subject": "[Test]: PRO_US_NA_U_BUNDLE_NONPURCH_EN_03272026An Easy Way to Try the Comfort Everyone Talks About",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-26-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every",
-    "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-26-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every-review.pdf",
-    "slug": "2026-03-26-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every"
-  },
-  {
-    "messageId": "<8a951ddd-7a83-46e5-89c3-297125036f35@dfw1s10mta888.xt.local>",
-    "subject": "[Test]: MKG_US_NA_U_BEST_GENDER_EN_03292026The Styles Everyone's Searching For",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for",
-    "pdfPath": "/Users/alontsang/.openclaw-walker/workspace/reports/2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for-review.pdf",
-    "slug": "2026-03-27-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for"
-  },
-  {
-    "messageId": "<0102019d326a9c73-47e3b8b6-d528-4ef2-828e-6812a6bc9c8d-000000@eu-west-1.amazonses.com>",
-    "subject": "The Messi collection",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-28-the-messi-collection",
-    "pdfPath": "",
-    "slug": "2026-03-28-the-messi-collection"
-  },
-  {
-    "messageId": "<e7KE1zDgQHiNbOU-rlGaeg@geopod-ismtpd-25>",
-    "subject": "Did you forget something?",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-28-did-you-forget-something",
-    "slug": "2026-03-28-did-you-forget-something"
-  },
-  {
-    "messageId": "<0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000@eu-west-1.amazonses.com>",
-    "subject": "Back to the '70s with Handball Spezial",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-28-back-to-the-70s-with-handball-spezial",
-    "slug": "2026-03-28-back-to-the-70s-with-handball-spezial"
   },
   {
     "messageId": "2026-03-29-site-journey-walker",
@@ -194,7 +154,7 @@
   },
   {
     "messageId": "<85b7defb-799e-433c-972b-2e1a78c1a9dc@ind1s01mta1408.xt.local>",
-    "subject": "⏳ Last day to redeem your voucher",
+    "subject": "\u23f3 Last day to redeem your voucher",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-last-day-to-redeem-your-voucher",
     "slug": "2026-03-29-last-day-to-redeem-your-voucher"
   },
@@ -206,7 +166,7 @@
   },
   {
     "messageId": "<0102019d262e05f4-12a671eb-e6e8-4453-9f99-b383a94557f3-000000@eu-west-1.amazonses.com>",
-    "subject": "The countdown to FIFA World Cup 26™ is on",
+    "subject": "The countdown to FIFA World Cup 26\u2122 is on",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-the-countdown-to-fifa-world-cup-26-is-on",
     "slug": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on"
   },
@@ -265,12 +225,6 @@
     "slug": "2026-03-29-an-easy-way-to-try-the-comfort-everyone-talks-about"
   },
   {
-    "messageId": "<39320e4b-6228-4e31-af2e-e4f0ffb7765d@dfw1s10mta512.xt.local>",
-    "subject": "It's Back in Stock at SKECHERS.com",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-it-s-back-in-stock-at-skechers-com-39320e4b-6228-4e31-af2e-",
-    "slug": "2026-03-29-it-s-back-in-stock-at-skechers-com"
-  },
-  {
     "messageId": "<098e0bee-77a3-4fc3-9c3c-a0c62f40fe37@dfw1s10mta697.xt.local>",
     "subject": "[Test]: MKG_US_NA_W_MULTI_GENDER_EN_03282026_A_V2Fresh Spring Styles to Step Up Your Look",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-na-w-multi-gender-en-03282026-a-v2fresh-spring-styles-to-step-up-you",
@@ -313,18 +267,6 @@
     "slug": "2026-03-29-test-mkg-us-na-w-multi-gender-en-03282026-bskechers-exclusives-the-shoes-you-can"
   },
   {
-    "messageId": "<47fce9de-e030-4e84-b3e2-ae8e7b1c6708@dfw1s10mta515.xt.local>",
-    "subject": "[Test]: MKG_US_ECMPUR_U_SEASONAL_ECOM_EN_03302026_BNew Colors You'll Keep Coming Back To",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba-47fce9de-e030-4e84-b3e2-",
-    "slug": "2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba"
-  },
-  {
-    "messageId": "<8ccbda01-bad6-46ec-832e-92b0f0f2a72f@dfw1s10mta513.xt.local>",
-    "subject": "Everybody Wants These Styles",
-    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-everybody-wants-these-styles",
-    "slug": "2026-03-29-everybody-wants-these-styles"
-  },
-  {
     "messageId": "<cbeb5caa-913c-4498-9a40-bc56c9ced1b1@dfw1s10mta889.xt.local>",
     "subject": "[Test]: MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026Check Out What's Trending Online",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online",
@@ -335,5 +277,53 @@
     "subject": "[Test]: MKG_US_NONPUR_U_BEST_NONPURCH_EN_03292026Everybody Wants These Styles",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-nonpur-u-best-nonpurch-en-03292026everybody-wants-these-styles",
     "slug": "2026-03-29-test-mkg-us-nonpur-u-best-nonpurch-en-03292026everybody-wants-these-styles"
+  },
+  {
+    "messageId": "<806cd418-a470-4373-9075-a1c635fc49c8@dfw1s10mta889.xt.local>",
+    "subject": "[Test]: MKG_US_ECMPUR_U_BEST_ECOM_EN_03292026_AThe Styles Everyone's Searching For",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-athe-styles-everyone-s-searching-for",
+    "slug": "2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-athe-styles-everyone-s-searching-for"
+  },
+  {
+    "messageId": "<8a951ddd-7a83-46e5-89c3-297125036f35@dfw1s10mta888.xt.local>",
+    "subject": "[Test]: MKG_US_NA_U_BEST_GENDER_EN_03292026The Styles Everyone's Searching For",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for",
+    "slug": "2026-03-29-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for"
+  },
+  {
+    "messageId": "<0102019d326a9c73-47e3b8b6-d528-4ef2-828e-6812a6bc9c8d-000000@eu-west-1.amazonses.com>",
+    "subject": "The Messi collection",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-the-messi-collection",
+    "slug": "2026-03-29-the-messi-collection"
+  },
+  {
+    "messageId": "<0102019d35d58f64-703d861e-5ec2-46a3-89a2-1c79d4978f55-000000@eu-west-1.amazonses.com>",
+    "subject": "Back to the \u201970s with Handball Spezial",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-back-to-the-70s-with-handball-spezial",
+    "slug": "2026-03-29-back-to-the-70s-with-handball-spezial"
+  },
+  {
+    "messageId": "<M_7AENLAQauZaokcpwGL-Q@geopod-ismtpd-74>",
+    "subject": "This is perfect for you!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-this-is-perfect-for-you-m-7aenlaqauzaokcpwgl-q-g",
+    "slug": "2026-03-29-this-is-perfect-for-you"
+  },
+  {
+    "messageId": "<6343b017-e3a4-4206-b021-f71bd76556ad@dfw1s10mta513.xt.local>",
+    "subject": "[Test]: PRO_US_NA_U_BUNDLE_NONPURCH_EN_03272026An Easy Way to Try the Comfort Everyone Talks About",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every-6343b017-e3a4-4206-b021-",
+    "slug": "2026-03-29-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every"
+  },
+  {
+    "messageId": "<e7KE1zDgQHiNbOU-rlGaeg@geopod-ismtpd-25>",
+    "subject": "Did you forget something?",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-did-you-forget-something-e7ke1zdgqhinbou-rlgaeg-g",
+    "slug": "2026-03-29-did-you-forget-something"
+  },
+  {
+    "messageId": "<8ccbda01-bad6-46ec-832e-92b0f0f2a72f@dfw1s10mta513.xt.local>",
+    "subject": "Everybody Wants These Styles",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-03-29-everybody-wants-these-styles-8ccbda01-bad6-46ec-832e-",
+    "slug": "2026-03-29-everybody-wants-these-styles"
   }
 ]
