@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "slug": "2026-03-29-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online",
+  "email": {
+    "subject": "[Test]: MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026Check Out What's Trending Online",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-27T22:57:34+00:00",
+    "date_formatted": "2026-03-27 22:57 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## 1. Executive Summary\n\nA best-sellers/trending email for retail purchasers that leans heavily on product category browsing rather than urgency or storytelling. The structure is logical — hero offer, then category modules — but the hero is visually undersized and the product modules feel mechanical. Multiple lifestyle images carry the email, but the overall impression is a functional catalog browse, not a compelling \"here's what you're missing\" moment.\n\n---\n\n## 2. Business Impact Score: 5/10\n\nSolid bones, weak execution. The content mix is correct for re-engagement of retail buyers, but the visual hierarchy and offer clarity don't push conversion.\n\n---\n\n## 3. What's Working\n\n- **Clear promotional hook at the top** — \"50% OFF\" is prominently badged in the header banner, giving instant incentive.\n- **Category architecture is logical** — Sandals → Hands Free Slip-Ins → Arch Fit flows naturally and covers Skechers' three strongest traffic-driving franchise categories.\n- **Lifestyle photography is strong** — The sandal and Arch Fit hero images are aspirational and appropriately scaled.\n- **\"New & For You\" section** adds a personalization signal that differentiates this send from a plain catalog.\n- **Footer utility is complete** — store locator, social icons, unsubscribe, and app download are all present and visible.\n\n---\n\n## 4. What's Weak\n\n- **Hero is undersized and low-impact.** The top banner is thin; \"50% OFF\" reads small and the CTA (\"SHOP NOW\") is minimal. There's no headline copy anchoring *why* the recipient should care right now.\n- **Subject line artifact visible in preview.** The email subject carries a test prefix and a garbled preview string (raw URL text), which would destroy open rates and signal untested deployment if this went live.\n- **Category module headers are plain text blocks** — \"MOST SEARCHED STYLES,\" \"HANDS FREE SLIP-INS,\" \"ARCH FIT\" — with no subheads, benefit copy, or product counts. They read like nav labels, not selling moments.\n- **\"New & For You\" module is visually underpowered** — the product tiles in that row are noticeably smaller than the category hero images, making the personalized section feel like an afterthought.\n- **CTA buttons are inconsistent** — some modules use \"SHOP NOW,\" others use \"SHOP [CATEGORY NAME].\" No hierarchy signals which action is primary.\n- **No social proof or urgency mechanism** — no \"bestseller\" badges, ratings callouts, or inventory language. For a \"trending\" email, there's nothing that actually conveys trendiness.\n\n---\n\n## 5. Recommendations\n\n1. **Fix the subject line and preview before any live deployment** — the test prefix and raw URL in the preview text are disqualifying.\n2. **Expand the hero banner** to at least 30% of the fold. Add a one-line benefit headline (\"Your next favorite style is on sale\") alongside the offer badge.\n3. **Add one proof point per category module** — e.g., \"Our #1 sandal\" or a star rating — to justify the \"most searched\" claim visually.\n4. **Standardize CTA copy** to a single primary pattern (\"SHOP [CATEGORY]\") and reserve \"SHOP NOW\" for the hero only.\n5. **Increase \"New & For You\" tile size** to match the category modules, or move it higher to leverage personalization as a hook rather than a closer.\n6. **Add urgency copy** to the offer banner — a sale end date or \"while supplies last\" line turns 50% off from a claim into a reason to act now.\n\n---\n\n## 6. Bottom Line\n\nThe email does the basics: it presents relevant categories, shows lifestyle imagery, and includes a discount. But it reads like a weekly inventory push, not a curated \"this is trending and you should know about it\" send. The biggest immediate risk is the test subject line and preview text — if this is close to deployment, that's a live fire issue. Beyond that, the email needs a stronger hero and social proof to earn its \"trending\" premise.\n\n---\n\n## 7. Evidence\n\n**Overall purpose:** Re-engage retail purchasers with a 50%-off offer and surface Skechers' most-searched categories to drive online conversion.\n\n**Hero / primary value proposition:** Top banner badge reads \"50% OFF\" with a \"SHOP NOW\" CTA. Thin and low-energy; the discount is the only hook.\n\n**Membership / benefits section:** Not present in this email — no loyalty or Skechers Elite messaging visible.\n\n**Product discoverability / recommendation modules:** Three named category modules (Sandals, Hands Free Slip-Ins, Arch Fit), each with a lifestyle hero image and a CTA. \"New & For You\" row with smaller product tiles at the bottom. Coverage is good; depth per module is thin.\n\n**Utility / secondary modules:** Footer includes app download badges, social icons (Instagram, Facebook, YouTube, Pinterest), \"Find a Store,\" free shipping/free returns callout, and standard unsubscribe/preference links.\n\n**Bugs / friction / clarity issues:** Subject line contains a test prefix tag and the email preview renders a raw URL string — both are clearly visible in the metadata and would appear to recipients. No image rendering failures or layout breaks visible in the body itself.\n\n---\n\n## Technical Audit\n\n## Technical Audit — MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026\n\n---\n\n### 1. Technical Summary\n\nTest deployment of a retail-purchaser BOGO campaign. Primary issues are widespread HTTP (non-HTTPS) image sources across all footer assets, a broken tracking pixel (missing protocol scheme), and a CSS desktop/mobile toggle that will suppress desktop layout in Outlook and Gmail.\n\n---\n\n### 2. Link & Tracking Issues\n\n| Severity | Issue | Evidence |\n|---|---|---|\n| **High** | Return Path inbox pixel missing protocol — broken relative URL, will not load | `src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef...\"` (no `https://`) |\n| **Medium** | ink1000.com open-tracking pixel served over HTTP | `src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&mi_ecmp=...\"` |\n| **Info** | 26 click URLs wrapped via `click.emails.skechers.com` encrypted redirect — destination URLs and UTM params unverifiable without resolution | QA: 26 tracking links skipped |\n| **Info** | Kruxd user-match beacons expose subscriber ID and SHA-256 hash in query string | `partner_uid=2396422` and `partner_uid=28374a795c423f502bec...` in beacon URLs — review against data governance policy |\n\n---\n\n### 3. Rendering & Accessibility\n\n**HTTP mixed content (14 images):**\nAll `image.emails.skechers.com` assets use `http://` — will be blocked in Outlook 2019+, iOS Mail with \"Block All Remote Content,\" and many corporate proxies. Affected assets include logo, all social icons (Instagram, Twitter, Facebook, Pinterest, YouTube), app store badges (App Store, Google Play), AfterPay badge, and at least 3 unnamed images:\n\n```\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png  (Skechers logo)\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-...png\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-...png  (App Store)\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-...png  (Google Play)\n... (10 additional assets)\n```\n\n**Desktop content suppression in Outlook/Gmail:**\nThe CSS toggle is inverted — `desktop-content` defaults to `display:none` and is shown only via `@media screen and (min-width: 768px)`. Outlook (all versions via Word renderer) and Gmail desktop ignore `<style>` blocks entirely, so desktop layout will never render for those clients; only mobile layout will display.\n\n```css\n/* Problematic pattern */\n.desktop-content { display: none; }         /* default: hidden */\n@media screen and (min-width: 768px) {\n  .desktop-content { display: block !important; }  /* Outlook/Gmail never reaches this */\n}\n```\n\n**Missing alt text (3 content images):**\n- `49468f73-4651-4af3-bea2-61d1ae5db486.png`\n- `00100b23-0afa-4715-a8cd-23bb46f9d2b2.png`\n- `fc08601a-fcce-4c96-8b90-39e5a55d6c05.png`\n\n**Malformed meta tags:**\n- `<meta content=\"text/html; charset=utf-8\" />` — missing `http-equiv=\"Content-Type\"` attribute\n- `<meta content=\"IE=Edge\" />` — missing `http-equiv=\"X-UA-Compatible\"` attribute\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens (`%%...%%` or `{{...}}`) detected in the provided source. Subject line contains `[Test]:` prefix — must be stripped before production deployment.\n\n---\n\n### 5. Compliance\n\n| Item | Status |\n|---|---|\n| SPF/DKIM authentication | **Unverified** — Authentication-Results header absent via AgentMail relay |\n| Unsubscribe mechanism | Not verifiable — footer HTML truncated in source provided; confirm list-unsubscribe header and in-body link are present |\n| Physical mailing address | Not verifiable from truncated source — confirm CAN-SPAM §5(a)(5) footer address is present |\n| `[Test]:` subject prefix | Must be removed before production send |\n\n---\n\n### 6. Email-to-Site Continuity\n\n- Campaign ID `MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026` is consistent across all three tracking beacons (Kruxd impression pixel, ink1000 open pixel, Kruxd ad impression) — attribution chain is intact at the email layer.\n- Landing page UTM alignment cannot be confirmed: all 26 CTAs route through `click.emails.skechers.com` encrypted redirects that cannot be resolved without live HTTP requests.\n\n---\n\n### 7. Recommendations\n\n1. **[Critical]** Migrate all `http://image.emails.skechers.com/` sources to `https://` — affects logo, all social/payment/app store footer icons. This is a single CDN hostname change.\n2. **[Critical]** Fix Return Path pixel: prepend `https://` to `pixel.app.returnpath.net/pixel.gif?r=...` — currently a broken relative URL that never fires.\n3. **[High]** Fix desktop/mobile CSS toggle: invert defaults so `desktop-content` is visible by default and `mobile-content` is hidden, revealed via max-width media query. Alternatively, use MSO conditional comments to serve desktop layout to Outlook outside the media query system.\n4. **[High]** Confirm SPF and DKIM pass in production send headers before deployment.\n5. **[Medium]** Add descriptive alt text to the 3 unnamed content images flagged above.\n6. **[Low]** Add missing `http-equiv` attributes to both `<meta>` tags in `<head>`.\n7. **[Low]** Remove `[Test]:` subject line prefix before production deployment.",
+    "sections": {
+      "executive_summary": [
+        "A best-sellers/trending email for retail purchasers that leans heavily on product category browsing rather than urgency or storytelling. The structure is logical — hero offer, then category modules — but the hero is visually undersized and the product modules feel mechanical. Multiple lifestyle images carry the email, but the overall impression is a functional catalog browse, not a compelling \"here's what you're missing\" moment.",
+        "Solid bones, weak execution. The content mix is correct for re-engagement of retail buyers, but the visual hierarchy and offer clarity don't push conversion."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Clear promotional hook at the top** — \"50% OFF\" is prominently badged in the header banner, giving instant incentive.",
+        "- **Category architecture is logical** — Sandals → Hands Free Slip-Ins → Arch Fit flows naturally and covers Skechers' three strongest traffic-driving franchise categories.",
+        "- **Lifestyle photography is strong** — The sandal and Arch Fit hero images are aspirational and appropriately scaled.",
+        "- **\"New & For You\" section** adds a personalization signal that differentiates this send from a plain catalog.",
+        "- **Footer utility is complete** — store locator, social icons, unsubscribe, and app download are all present and visible."
+      ],
+      "whats_weak": [
+        "- **Hero is undersized and low-impact.** The top banner is thin; \"50% OFF\" reads small and the CTA (\"SHOP NOW\") is minimal. There's no headline copy anchoring *why* the recipient should care right now.",
+        "- **Subject line artifact visible in preview.** The email subject carries a test prefix and a garbled preview string (raw URL text), which would destroy open rates and signal untested deployment if this went live.",
+        "- **Category module headers are plain text blocks** — \"MOST SEARCHED STYLES,\" \"HANDS FREE SLIP-INS,\" \"ARCH FIT\" — with no subheads, benefit copy, or product counts. They read like nav labels, not selling moments.",
+        "- **\"New & For You\" module is visually underpowered** — the product tiles in that row are noticeably smaller than the category hero images, making the personalized section feel like an afterthought.",
+        "- **CTA buttons are inconsistent** — some modules use \"SHOP NOW,\" others use \"SHOP [CATEGORY NAME].\" No hierarchy signals which action is primary.",
+        "- **No social proof or urgency mechanism** — no \"bestseller\" badges, ratings callouts, or inventory language. For a \"trending\" email, there's nothing that actually conveys trendiness."
+      ],
+      "recommendations": [
+        "1. **Fix the subject line and preview before any live deployment** — the test prefix and raw URL in the preview text are disqualifying.",
+        "2. **Expand the hero banner** to at least 30% of the fold. Add a one-line benefit headline (\"Your next favorite style is on sale\") alongside the offer badge.",
+        "3. **Add one proof point per category module** — e.g., \"Our #1 sandal\" or a star rating — to justify the \"most searched\" claim visually.",
+        "4. **Standardize CTA copy** to a single primary pattern (\"SHOP [CATEGORY]\") and reserve \"SHOP NOW\" for the hero only.",
+        "5. **Increase \"New & For You\" tile size** to match the category modules, or move it higher to leverage personalization as a hook rather than a closer.",
+        "6. **Add urgency copy** to the offer banner — a sale end date or \"while supplies last\" line turns 50% off from a claim into a reason to act now.",
+        "1. **[Critical]** Migrate all `http://image.emails.skechers.com/` sources to `https://` — affects logo, all social/payment/app store footer icons. This is a single CDN hostname change.",
+        "2. **[Critical]** Fix Return Path pixel: prepend `https://` to `pixel.app.returnpath.net/pixel.gif?r=...` — currently a broken relative URL that never fires.",
+        "3. **[High]** Fix desktop/mobile CSS toggle: invert defaults so `desktop-content` is visible by default and `mobile-content` is hidden, revealed via max-width media query. Alternatively, use MSO conditional comments to serve desktop layout to Outlook outside the media query system.",
+        "4. **[High]** Confirm SPF and DKIM pass in production send headers before deployment.",
+        "5. **[Medium]** Add descriptive alt text to the 3 unnamed content images flagged above.",
+        "6. **[Low]** Add missing `http-equiv` attributes to both `<meta>` tags in `<head>`.",
+        "7. **[Low]** Remove `[Test]:` subject line prefix before production deployment."
+      ],
+      "bottom_line": [
+        "The email does the basics: it presents relevant categories, shows lifestyle imagery, and includes a discount. But it reads like a weekly inventory push, not a curated \"this is trending and you should know about it\" send. The biggest immediate risk is the test subject line and preview text — if this is close to deployment, that's a live fire issue. Beyond that, the email needs a stronger hero and social proof to earn its \"trending\" premise."
+      ],
+      "evidence": [
+        "**Overall purpose:** Re-engage retail purchasers with a 50%-off offer and surface Skechers' most-searched categories to drive online conversion.",
+        "**Hero / primary value proposition:** Top banner badge reads \"50% OFF\" with a \"SHOP NOW\" CTA. Thin and low-energy; the discount is the only hook.",
+        "**Membership / benefits section:** Not present in this email — no loyalty or Skechers Elite messaging visible.",
+        "**Product discoverability / recommendation modules:** Three named category modules (Sandals, Hands Free Slip-Ins, Arch Fit), each with a lifestyle hero image and a CTA. \"New & For You\" row with smaller product tiles at the bottom. Coverage is good; depth per module is thin.",
+        "**Utility / secondary modules:** Footer includes app download badges, social icons (Instagram, Facebook, YouTube, Pinterest), \"Find a Store,\" free shipping/free returns callout, and standard unsubscribe/preference links.",
+        "**Bugs / friction / clarity issues:** Subject line contains a test prefix tag and the email preview renders a raw URL string — both are clearly visible in the metadata and would appear to recipients. No image rendering failures or layout breaks visible in the body itself.",
+        "Test deployment of a retail-purchaser BOGO campaign. Primary issues are widespread HTTP (non-HTTPS) image sources across all footer assets, a broken tracking pixel (missing protocol scheme), and a CSS desktop/mobile toggle that will suppress desktop layout in Outlook and Gmail.",
+        "| Severity | Issue | Evidence |",
+        "|---|---|---|",
+        "| **High** | Return Path inbox pixel missing protocol — broken relative URL, will not load | `src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef...\"` (no `https://`) |",
+        "| **Medium** | ink1000.com open-tracking pixel served over HTTP | `src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&mi_ecmp=...\"` |",
+        "| **Info** | 26 click URLs wrapped via `click.emails.skechers.com` encrypted redirect — destination URLs and UTM params unverifiable without resolution | QA: 26 tracking links skipped |",
+        "| **Info** | Kruxd user-match beacons expose subscriber ID and SHA-256 hash in query string | `partner_uid=2396422` and `partner_uid=28374a795c423f502bec...` in beacon URLs — review against data governance policy |",
+        "**HTTP mixed content (14 images):**",
+        "All `image.emails.skechers.com` assets use `http://` — will be blocked in Outlook 2019+, iOS Mail with \"Block All Remote Content,\" and many corporate proxies. Affected assets include logo, all social icons (Instagram, Twitter, Facebook, Pinterest, YouTube), app store badges (App Store, Google Play), AfterPay badge, and at least 3 unnamed images:",
+        "```",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png  (Skechers logo)",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-...png",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-...png  (App Store)",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-...png  (Google Play)",
+        "... (10 additional assets)",
+        "```",
+        "**Desktop content suppression in Outlook/Gmail:**",
+        "The CSS toggle is inverted — `desktop-content` defaults to `display:none` and is shown only via `@media screen and (min-width: 768px)`. Outlook (all versions via Word renderer) and Gmail desktop ignore `<style>` blocks entirely, so desktop layout will never render for those clients; only mobile layout will display.",
+        "```css",
+        "/* Problematic pattern */",
+        ".desktop-content { display: none; }         /* default: hidden */",
+        "@media screen and (min-width: 768px) {",
+        ".desktop-content { display: block !important; }  /* Outlook/Gmail never reaches this */",
+        "}",
+        "```",
+        "**Missing alt text (3 content images):**",
+        "- `49468f73-4651-4af3-bea2-61d1ae5db486.png`",
+        "- `00100b23-0afa-4715-a8cd-23bb46f9d2b2.png`",
+        "- `fc08601a-fcce-4c96-8b90-39e5a55d6c05.png`",
+        "**Malformed meta tags:**",
+        "- `<meta content=\"text/html; charset=utf-8\" />` — missing `http-equiv=\"Content-Type\"` attribute",
+        "- `<meta content=\"IE=Edge\" />` — missing `http-equiv=\"X-UA-Compatible\"` attribute",
+        "No unresolved merge tokens (`%%...%%` or `{{...}}`) detected in the provided source. Subject line contains `[Test]:` prefix — must be stripped before production deployment.",
+        "| Item | Status |",
+        "|---|---|",
+        "| SPF/DKIM authentication | **Unverified** — Authentication-Results header absent via AgentMail relay |",
+        "| Unsubscribe mechanism | Not verifiable — footer HTML truncated in source provided; confirm list-unsubscribe header and in-body link are present |",
+        "| Physical mailing address | Not verifiable from truncated source — confirm CAN-SPAM §5(a)(5) footer address is present |",
+        "| `[Test]:` subject prefix | Must be removed before production send |",
+        "- Campaign ID `MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026` is consistent across all three tracking beacons (Kruxd impression pixel, ink1000 open pixel, Kruxd ad impression) — attribution chain is intact at the email layer.",
+        "- Landing page UTM alignment cannot be confirmed: all 26 CTAs route through `click.emails.skechers.com` encrypted redirects that cannot be resolved without live HTTP requests."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMjM5NjQyMiIsImxpZCI6IjI1IiwiaiI6IjE4NDg4OCIsImpiIjoiMSIsImQiOiIxMDA"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 17,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&mi_ecmp=MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9015215849&mi_ecmp=MKG_US_RETPUR_U_BEST_RETAIL_EN_03292026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Twitter\" (d76a5487-158e-4781-82a4-b65b04c051e4.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/d76a5487-158e-4781-82a4-b65b04c051e4.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-03-29-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=LSPJHZ3AI26ETCTK5TC5FYA2QI.100215"
+  }
+}
