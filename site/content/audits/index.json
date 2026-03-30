@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-03-30-test-pro-us-nonpur-u-bundle-nonpurch-en-03312026why-start-with-one-pair-when-you",
+    "subject": "[Test]: PRO_US_NONPUR_U_BUNDLE_NONPURCH_EN_03312026Why Start With One Pair When You Can Save With Two!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-30T21:36:38+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-b-v2it-s-time-to-double-up-on-comfo",
     "subject": "[Test]: PRO_US_ECMPUR_U_BUNDLE_ECOM_EN_03312026_B_V2It's Time to Double Up on Comfort",
     "from_display_name": "SKECHERS",
