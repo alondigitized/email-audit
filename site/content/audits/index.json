@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-ait-s-time-to-double-up-on-comfort",
+    "subject": "[Test]: PRO_US_ECMPUR_U_BUNDLE_ECOM_EN_03312026_AIt's Time to Double Up on Comfort",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-30T19:25:33+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-bit-s-time-to-double-up-on-comfort",
     "subject": "[Test]: PRO_US_ECMPUR_U_BUNDLE_ECOM_EN_03312026_BIt's Time to Double Up on Comfort",
     "from_display_name": "SKECHERS",
