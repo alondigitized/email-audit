@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-03-31-trail-tested-track-ready-meet-the-new-agravic",
+    "subject": "Trail-tested. Track-ready. Meet the new Agravic.",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-03-31T02:11:25+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-30-test-pro-us-na-u-bundle-full-en-03312026everything-s-better-in-pairs",
     "subject": "[Test]: PRO_US_NA_U_BUNDLE_FULL_EN_03312026Everything's Better in Pairs",
     "from_display_name": "SKECHERS",
