@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026try-the-comfort-everyone-s-talkin",
+    "subject": "[Test]: MKG_US_NONPUR_U_TREND_NONPURCH_EN_04012026Try the Comfort Everyone's Talking About",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-31T16:49:36+00:00",
+    "score": "5.5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-31-why-start-with-one-pair-when-you-can-save-with-two",
     "subject": "Why Start With One Pair When You Can Save With Two!",
     "from_display_name": "SKECHERS",
