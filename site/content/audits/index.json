@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-03-31-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-03-31T13:04:27.430Z",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-03-31-trail-tested-track-ready-meet-the-new-agravic",
     "subject": "Trail-tested. Track-ready. Meet the new Agravic.",
     "from_display_name": "adidas",
