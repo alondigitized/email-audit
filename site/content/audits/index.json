@@ -16,6 +16,22 @@
     "persona": null
   },
   {
+    "slug": "2026-04-01-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026-btry-the-comfort-everyone-s-talk",
+    "subject": "[Test]: MKG_US_NONPUR_U_TREND_NONPURCH_EN_04012026_BTry the Comfort Everyone's Talking About",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-31T20:31:34+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026-atry-the-comfort-everyone-s-talk",
     "subject": "[Test]: MKG_US_NONPUR_U_TREND_NONPURCH_EN_04012026_ATry the Comfort Everyone's Talking About",
     "from_display_name": "SKECHERS",
