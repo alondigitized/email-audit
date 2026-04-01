@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-01-test-ret-us-na-u-store1423-zip-en-04022026celebrate-our-birthday-in-ridgewood",
+    "subject": "[Test]: RET_US_NA_U_STORE1423_ZIP_EN_04022026Celebrate our Birthday in Ridgewood",
+    "from_display_name": "SKECHERS STORES",
+    "timestamp_iso": "2026-04-01T23:37:35+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-01-test-mkg-us-ecmpur-u-arch-ecom-en-04032026-ayour-go-to-arch-fit-upgraded",
     "subject": "[Test]: MKG_US_ECMPUR_U_ARCH_ECOM_EN_04032026_AYour Go-To Arch Fit, Upgraded",
     "from_display_name": "SKECHERS",
