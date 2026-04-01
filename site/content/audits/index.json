@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-01-just-restocked-real-madrid-bring-back-jerseys-0102019d49964fe3-7b88df2",
+    "subject": "Just restocked: Real Madrid Bring Back jerseys",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-01T15:08:00+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-01-try-the-comfort-everyone-s-talking-about",
     "subject": "Try the Comfort Everyone's Talking About",
     "from_display_name": "SKECHERS",

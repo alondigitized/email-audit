@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-01-just-restocked-real-madrid-bring-back-jerseys-0102019d49964fe3-7b88df2",
+  "email": {
+    "subject": "Just restocked: Real Madrid Bring Back jerseys",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-01T15:08:00+00:00",
+    "date_formatted": "2026-04-01 15:08 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## Email Review: \"Just restocked: Real Madrid Bring Back jerseys\"\n**From:** adidas | **Date:** 2026-04-01\n\n---\n\n### 1. Executive Summary\n\nThis email attempts to serve two distinct purposes — a product restock alert for Real Madrid Bring Back jerseys and a membership raffle for a signed Jude Bellingham newspaper — and does neither particularly well. The hero does solid visual work, but a broken character encoding bug corrupts the body copy, and the dual-module structure splits focus at exactly the moment the subject line's urgency (\"Just restocked\") should be closing the loop. The Jude Newspaper module is the stronger creative idea but it's buried and underserved.\n\n---\n\n### 2. Business Impact Score: 5/10\n\nHeld back by the encoding bug and a muddled message hierarchy. The Real Madrid brand equity is real; the execution doesn't capitalize on it.\n\n---\n\n### 3. What's Working\n\n- **Hero imagery is clean and on-brand.** The three-panel Real Madrid jersey carousel is well-lit and visually confident — white kits read as premium and instantly recognizable.\n- **\"LEGENDARY STYLE - ICONIC VIBES\" headline** is punchy and era-appropriate for a Bring Back/throwback angle.\n- **Jude Newspaper module has genuine intrigue.** The \"THE JUDE TIMES / BELLINGHAM\" newspaper prop is visually creative and membership-exclusive framing adds scarcity.\n- **Layout is simple and uncluttered** — no visual noise, adidas branding stays consistent throughout.\n\n---\n\n### 4. What's Weak\n\n- **Visible encoding artifacts in body copy.** The product description block contains broken characters — rendered as `â€™s` instead of apostrophes (e.g., \"Judeâ€™s world,\" \"clubâ€™s\"). This is visible and unprofessional; it damages credibility at the moment the reader is evaluating whether to buy.\n- **No urgency mechanics in the product section.** The subject line says \"Just restocked\" but the body module doesn't reinforce scarcity — no \"limited sizes,\" no \"shop before it sells out,\" no unit count. The restock narrative is abandoned after the subject line.\n- **Two competing value propositions with no hierarchy.** Buy the jersey OR enter a raffle? These should be sequenced (buy → qualify, or separate sends), not stacked. Neither gets a strong CTA emphasis.\n- **No visible price or product details.** The jersey section doesn't show a price point, which forces the reader to click just to learn the basics.\n- **\"Win the Jude Newspaper\" is app-exclusive but that's a footnote.** \"Exclusive to members only in the adidas app\" is small text below the module. This should be the lead — it's the reason to open the app.\n\n---\n\n### 5. Recommendations\n\n1. **Fix the encoding bug immediately** — this is table-stakes. Characters like `â€™` in rendered copy should trigger a resend or suppression before further deployment.\n2. **Separate these two value propositions into distinct sends**, or if keeping them together, make the jersey purchase the gate to the Jude raffle entry.\n3. **Add scarcity language to the hero block** — even a simple \"Back in stock — limited run\" sub-headline validates the subject line and creates pull.\n4. **Surface the app-exclusive angle for the Jude Newspaper as a headline**, not a footnote. \"Members only. Open the app to enter.\" is a stronger call to action than what's currently shown.\n5. **Include a visible price or \"Shop Now\" CTA on the jersey module** so the conversion path is a single click, not a hunt.\n\n---\n\n### 6. Bottom Line\n\nThere's a legitimately compelling campaign in here — Real Madrid nostalgia kits plus a Jude Bellingham collectible raffle is strong material. But the encoding bug undercuts trust in the product copy, the dual-module structure diffuses urgency, and the app-exclusive hook is buried. Fix the bug, pick one primary CTA, and treat the Jude raffle as a reward mechanism rather than a side item.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Restock notification for Real Madrid Bring Back jerseys, with a secondary membership raffle for a Jude Bellingham signed newspaper |\n| **Hero / primary value prop** | Three-panel Real Madrid jersey imagery with \"LEGENDARY STYLE - ICONIC VIBES\" headline; strong visual, but no price or explicit CTA button visible in the panel |\n| **Membership / benefits section** | \"Win the Jude Newspaper\" module — raffle for a signed newspaper exclusive to adidas app members; visually distinct but undersells the app-exclusive hook |\n| **Product discoverability** | Limited — jersey module shows product but no specs, price, or clear shop link |\n| **Utility / secondary modules** | Standard footer: My Account, Privacy Statement, Support, Unsubscribe, adidas.com — functional, no issues |\n| **Bugs / friction / clarity** | **Visible encoding artifact** in body copy: apostrophes rendered as `â€™` (confirmed visible in both the jersey description block and the Jude Newspaper copy) |\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Just restocked: Real Madrid Bring Back jerseys\"\n\n---\n\n### 1. Technical Summary\n\nOne broken click-through link will prevent a subset of recipients from reaching the intended landing page. Several images are served over HTTP, risking blocked rendering in modern clients that enforce mixed-content policies.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Malformed deep-link URL**\nThe QA scanner flagged an unknown URL type `/g/b161e063-...` embedded inside a tracking redirect:\n```\nhttps://dv.adidas.com/o/b161e063-1d58-477c-86eb-3c36f4a70261?txn=092a8580-...\n```\nThe destination path uses `/g/` rather than the expected `/o/` scheme used by the outer redirect wrapper. This likely resolves to a 404 or redirect loop for any click that resolves this particular link. Needs to be corrected in the ESP template before the next send.\n\n**[WARN] 24 tracking links not probed**\nAll 24 click-redirect links point through `click.comms.adidas.com` or `dv.adidas.com` and were skipped from HTTP validation. The one confirmed broken link above was caught via URL-structure analysis, not an HTTP probe — additional broken destinations may exist undetected.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] 5 images served over HTTP (mixed content)**\nThe following image appears 4 times in the email (reused arrow asset):\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nAnd the tracking pixel:\n```\nhttp://click.comms.adidas.com/CI0/0102019d49964fe3-7b88df2e-d266-4f4f-86f8-4a88a854e34a-000000/...\n```\nBoth use `http://`. Gmail, Apple Mail, and Outlook 365 proxy or block non-HTTPS image loads. The arrow image will likely render broken for a significant portion of recipients. The tracking pixel will also fail to fire in these clients, undercounting open rates.\n\n**[WARN] 2 images missing `alt` text**\n- `b161e063-1d58-477c-86eb-3c36f4a70261` (linked hero/product image) — no `alt` attribute\n- `VuE8rrIurYIBzHRxEeSr4B2ga...` (tracking pixel) — no `alt` attribute\n\nThe missing alt on a linked product image is the higher-priority issue: recipients with images disabled see no label, and screen reader users get no content description.\n\n**Duplicate `@font-face` declarations**\nThe `AdihausDIN` and `AdineuePRO` font-faces are declared twice in two separate `<style>` blocks. The second declaration has a shorter `src` stack (drops `Calibri`/`Sans Serif`). This is harmless functionally but adds dead weight (~500 bytes) and creates maintainability risk if the two declarations drift further.\n\n**HTML 4.01 Transitional DOCTYPE**\n```html\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" ...>\n```\nThis is a legacy doctype that triggers quirks mode in some rendering engines. No functional breakage confirmed, but it is out of step with current ESP best practices (HTML5 or XHTML 1.0 Transitional are more predictable across modern clients).\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens (e.g., `{{first_name}}`, `*|FNAME|*`) were visible in the truncated HTML source. No issues found.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text alternative is empty**\n```\nText version is 0 chars\n```\nCAN-SPAM and best-practice deliverability guidelines require a readable plain-text part. A zero-length text part can trigger spam filters and increases the risk of inbox placement failures. Some corporate mail gateways also reject or quarantine HTML-only messages.\n\n**[WARN] Authentication headers not confirmed**\nSPF/DKIM status could not be verified via the AgentMail relay. The sending domain `us-news.comms.adidas.com` should be covered by adidas's existing DKIM/SPF records, but this send's headers did not expose a parseable `Authentication-Results` value for confirmation. This should be verified against raw message headers.\n\nNo unsubscribe link issues detected in the truncated source (a footer unsubscribe block is present based on CSS class references like `.mobile-footer-padding-block`).\n\n---\n\n### 6. Email-to-Site Continuity\n\nThe broken `/g/` deep-link (item 2 above) directly breaks email-to-site continuity for at least one CTA. UTM parameter integrity on the remaining 23 tracked links cannot be confirmed without HTTP probing through the redirect chain. No issues found beyond the confirmed broken link.\n\n---\n\n### 7. Recommendations\n\n| Priority | Action |\n|---|---|\n| **P0** | Fix the malformed `/g/` destination URL in `dv.adidas.com/o/b161e063...` — active broken CTA |\n| **P0** | Add a plain-text multipart alternative — currently 0 chars; compliance and deliverability risk |\n| **P1** | Migrate both HTTP image URLs to HTTPS — affects the arrow asset (×4) and the open-tracking pixel |\n| **P1** | Add `alt` text to the linked product hero image (`b161e063...`) |\n| **P2** | Confirm DKIM/SPF pass via raw header inspection on the next send |\n| **P2** | Probe all 24 redirect links end-to-end to rule out additional broken destinations |\n| **P3** | Deduplicate the `@font-face` declarations across the two `<style>` blocks |",
+    "sections": {
+      "executive_summary": [
+        "**From:** adidas | **Date:** 2026-04-01",
+        "This email attempts to serve two distinct purposes — a product restock alert for Real Madrid Bring Back jerseys and a membership raffle for a signed Jude Bellingham newspaper — and does neither particularly well. The hero does solid visual work, but a broken character encoding bug corrupts the body copy, and the dual-module structure splits focus at exactly the moment the subject line's urgency (\"Just restocked\") should be closing the loop. The Jude Newspaper module is the stronger creative idea but it's buried and underserved.",
+        "Held back by the encoding bug and a muddled message hierarchy. The Real Madrid brand equity is real; the execution doesn't capitalize on it."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero imagery is clean and on-brand.** The three-panel Real Madrid jersey carousel is well-lit and visually confident — white kits read as premium and instantly recognizable.",
+        "- **\"LEGENDARY STYLE - ICONIC VIBES\" headline** is punchy and era-appropriate for a Bring Back/throwback angle.",
+        "- **Jude Newspaper module has genuine intrigue.** The \"THE JUDE TIMES / BELLINGHAM\" newspaper prop is visually creative and membership-exclusive framing adds scarcity.",
+        "- **Layout is simple and uncluttered** — no visual noise, adidas branding stays consistent throughout."
+      ],
+      "whats_weak": [
+        "- **Visible encoding artifacts in body copy.** The product description block contains broken characters — rendered as `â€™s` instead of apostrophes (e.g., \"Judeâ€™s world,\" \"clubâ€™s\"). This is visible and unprofessional; it damages credibility at the moment the reader is evaluating whether to buy.",
+        "- **No urgency mechanics in the product section.** The subject line says \"Just restocked\" but the body module doesn't reinforce scarcity — no \"limited sizes,\" no \"shop before it sells out,\" no unit count. The restock narrative is abandoned after the subject line.",
+        "- **Two competing value propositions with no hierarchy.** Buy the jersey OR enter a raffle? These should be sequenced (buy → qualify, or separate sends), not stacked. Neither gets a strong CTA emphasis.",
+        "- **No visible price or product details.** The jersey section doesn't show a price point, which forces the reader to click just to learn the basics.",
+        "- **\"Win the Jude Newspaper\" is app-exclusive but that's a footnote.** \"Exclusive to members only in the adidas app\" is small text below the module. This should be the lead — it's the reason to open the app."
+      ],
+      "recommendations": [
+        "1. **Fix the encoding bug immediately** — this is table-stakes. Characters like `â€™` in rendered copy should trigger a resend or suppression before further deployment.",
+        "2. **Separate these two value propositions into distinct sends**, or if keeping them together, make the jersey purchase the gate to the Jude raffle entry.",
+        "3. **Add scarcity language to the hero block** — even a simple \"Back in stock — limited run\" sub-headline validates the subject line and creates pull.",
+        "4. **Surface the app-exclusive angle for the Jude Newspaper as a headline**, not a footnote. \"Members only. Open the app to enter.\" is a stronger call to action than what's currently shown.",
+        "5. **Include a visible price or \"Shop Now\" CTA on the jersey module** so the conversion path is a single click, not a hunt.",
+        "| Priority | Action |",
+        "|---|---|",
+        "| **P0** | Fix the malformed `/g/` destination URL in `dv.adidas.com/o/b161e063...` — active broken CTA |",
+        "| **P0** | Add a plain-text multipart alternative — currently 0 chars; compliance and deliverability risk |",
+        "| **P1** | Migrate both HTTP image URLs to HTTPS — affects the arrow asset (×4) and the open-tracking pixel |",
+        "| **P1** | Add `alt` text to the linked product hero image (`b161e063...`) |",
+        "| **P2** | Confirm DKIM/SPF pass via raw header inspection on the next send |",
+        "| **P2** | Probe all 24 redirect links end-to-end to rule out additional broken destinations |",
+        "| **P3** | Deduplicate the `@font-face` declarations across the two `<style>` blocks |"
+      ],
+      "bottom_line": [
+        "There's a legitimately compelling campaign in here — Real Madrid nostalgia kits plus a Jude Bellingham collectible raffle is strong material. But the encoding bug undercuts trust in the product copy, the dual-module structure diffuses urgency, and the app-exclusive hook is buried. Fix the bug, pick one primary CTA, and treat the Jude raffle as a reward mechanism rather than a side item."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Restock notification for Real Madrid Bring Back jerseys, with a secondary membership raffle for a Jude Bellingham signed newspaper |",
+        "| **Hero / primary value prop** | Three-panel Real Madrid jersey imagery with \"LEGENDARY STYLE - ICONIC VIBES\" headline; strong visual, but no price or explicit CTA button visible in the panel |",
+        "| **Membership / benefits section** | \"Win the Jude Newspaper\" module — raffle for a signed newspaper exclusive to adidas app members; visually distinct but undersells the app-exclusive hook |",
+        "| **Product discoverability** | Limited — jersey module shows product but no specs, price, or clear shop link |",
+        "| **Utility / secondary modules** | Standard footer: My Account, Privacy Statement, Support, Unsubscribe, adidas.com — functional, no issues |",
+        "| **Bugs / friction / clarity** | **Visible encoding artifact** in body copy: apostrophes rendered as `â€™` (confirmed visible in both the jersey description block and the Jude Newspaper copy) |",
+        "One broken click-through link will prevent a subset of recipients from reaching the intended landing page. Several images are served over HTTP, risking blocked rendering in modern clients that enforce mixed-content policies.",
+        "**[FAIL] Malformed deep-link URL**",
+        "The QA scanner flagged an unknown URL type `/g/b161e063-...` embedded inside a tracking redirect:",
+        "```",
+        "https://dv.adidas.com/o/b161e063-1d58-477c-86eb-3c36f4a70261?txn=092a8580-...",
+        "```",
+        "The destination path uses `/g/` rather than the expected `/o/` scheme used by the outer redirect wrapper. This likely resolves to a 404 or redirect loop for any click that resolves this particular link. Needs to be corrected in the ESP template before the next send.",
+        "**[WARN] 24 tracking links not probed**",
+        "All 24 click-redirect links point through `click.comms.adidas.com` or `dv.adidas.com` and were skipped from HTTP validation. The one confirmed broken link above was caught via URL-structure analysis, not an HTTP probe — additional broken destinations may exist undetected.",
+        "**[WARN] 5 images served over HTTP (mixed content)**",
+        "The following image appears 4 times in the email (reused arrow asset):",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "And the tracking pixel:",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d49964fe3-7b88df2e-d266-4f4f-86f8-4a88a854e34a-000000/...",
+        "```",
+        "Both use `http://`. Gmail, Apple Mail, and Outlook 365 proxy or block non-HTTPS image loads. The arrow image will likely render broken for a significant portion of recipients. The tracking pixel will also fail to fire in these clients, undercounting open rates.",
+        "**[WARN] 2 images missing `alt` text**",
+        "- `b161e063-1d58-477c-86eb-3c36f4a70261` (linked hero/product image) — no `alt` attribute",
+        "- `VuE8rrIurYIBzHRxEeSr4B2ga...` (tracking pixel) — no `alt` attribute",
+        "The missing alt on a linked product image is the higher-priority issue: recipients with images disabled see no label, and screen reader users get no content description.",
+        "**Duplicate `@font-face` declarations**",
+        "The `AdihausDIN` and `AdineuePRO` font-faces are declared twice in two separate `<style>` blocks. The second declaration has a shorter `src` stack (drops `Calibri`/`Sans Serif`). This is harmless functionally but adds dead weight (~500 bytes) and creates maintainability risk if the two declarations drift further.",
+        "**HTML 4.01 Transitional DOCTYPE**",
+        "```html",
+        "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" ...>",
+        "```",
+        "This is a legacy doctype that triggers quirks mode in some rendering engines. No functional breakage confirmed, but it is out of step with current ESP best practices (HTML5 or XHTML 1.0 Transitional are more predictable across modern clients).",
+        "No unresolved merge tokens (e.g., `{{first_name}}`, `*|FNAME|*`) were visible in the truncated HTML source. No issues found.",
+        "**[FAIL] Plain-text alternative is empty**",
+        "```",
+        "Text version is 0 chars",
+        "```",
+        "CAN-SPAM and best-practice deliverability guidelines require a readable plain-text part. A zero-length text part can trigger spam filters and increases the risk of inbox placement failures. Some corporate mail gateways also reject or quarantine HTML-only messages.",
+        "**[WARN] Authentication headers not confirmed**",
+        "SPF/DKIM status could not be verified via the AgentMail relay. The sending domain `us-news.comms.adidas.com` should be covered by adidas's existing DKIM/SPF records, but this send's headers did not expose a parseable `Authentication-Results` value for confirmation. This should be verified against raw message headers.",
+        "No unsubscribe link issues detected in the truncated source (a footer unsubscribe block is present based on CSS class references like `.mobile-footer-padding-block`).",
+        "The broken `/g/` deep-link (item 2 above) directly breaks email-to-site continuity for at least one CTA. UTM parameter integrity on the remaining 23 tracked links cannot be confirmed without HTTP probing through the redirect chain. No issues found beyond the confirmed broken link."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/b161e063-1d58-477c-86eb-3c36f4a70261?txn=092a8580-2ddd-11f1-86a0-8668c83b363d'",
+            "url": "https://dv.adidas.com/o/b161e063-1d58-477c-86eb-3c36f4a70261?cp_tp=v3.eJzjYuIIFuLg2Ll5wzk2AWYpXo7jvziF2Dle8QuwSDAqiXM8_pYFFGbj-PB0yzk2JZiE1lYmoKaWvSICjBIsSiuYhEQ5FspoMHqxcDAKMAaByQiuBC4hYY7nUgKMGszIEkLiHC-lBJjQVMcnxAMl2mQEmLEYY8jxSQpkrQKjBpMTF8euR7wS31gVZrJ5cYGUSEGUI7EzbIT0OT5ICbBCNfzZwifxg12hH7cGVqDlb6UE2NAsN0owAkoskRFgx-q511ICHBosaJ57IyXAialaYgGbwlEmIw6Ou7xKzByPHIGsZj4g64wTkLWXH8ha6AZkXQaxbrpZsXLcNpVisOLgOK8hxczRnQ5k7TMCsvbXAVn7QaxDdQ6MURwc1w2FmDn-VQNZN0Csjhog6yaI1VMTxckxxVqIheNeLyOQ2WUDZD7vZwQA-p1ZVQ==&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d4845-6280-7000-bf17-73ed6b5cefe6"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=zGuFD8kDt4jcgoJGr5EfE5NjAEDj85VVefLpIsRTu8kG88vLB2TP7UDcorjIqi/p+o1J54lhas6WegVn/yoeztrmF7Xpm9+oN0LG3ICq/iaSSyBigeRx"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 7,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "24 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: b161e063-1d58-477c-86eb-3c36f4a70261",
+            "detail": "src: https://dv.adidas.com/o/b161e063-1d58-477c-86eb-3c36f4a70261?cp_tp=v3.eJzjYuIIFuLg2Ll5wzk2AWYpXo7jvziF2Dle8QuwSDAqiXM8_p"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: VuE8rrIurYIBzHRxEeSr4B2gae6zBib4H-eCWQHhtfU=451",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d49964fe3-7b88df2e-d266-4f4f-86f8-4a88a854e34a-000000/VuE8rrIurYIBzHRxEeSr4B2ga"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: VuE8rrIurYIBzHRxEeSr4B2gae6zBib4H-eCWQHhtfU=451",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d49964fe3-7b88df2e-d266-4f4f-86f8-4a88a854e34a-000000/VuE8rrIurYIBzHRxEeSr4B2ga"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-01-just-restocked-real-madrid-bring-back-jerseys-0102019d49964fe3-7b88df2-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
