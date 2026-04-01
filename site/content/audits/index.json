@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-01-test-ret-us-na-u-store1569-zip-en-04022026sale-ending-soon-celebrate-our-birthda",
+    "subject": "[Test]: RET_US_NA_U_STORE1569_ZIP_EN_04022026SALE Ending Soon! Celebrate our Birthday in Wauwatosa",
+    "from_display_name": "SKECHERS STORES",
+    "timestamp_iso": "2026-04-01T21:50:33+00:00",
+    "score": "6.5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-01-your-skechers-plus-monthly-summary-is-here",
     "subject": "Your Skechers Plus Monthly Summary is Here",
     "from_display_name": "SKECHERS PLUS",

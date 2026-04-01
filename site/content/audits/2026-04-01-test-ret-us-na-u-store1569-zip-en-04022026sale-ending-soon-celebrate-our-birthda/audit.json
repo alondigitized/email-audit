@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-01-test-ret-us-na-u-store1569-zip-en-04022026sale-ending-soon-celebrate-our-birthda",
+  "email": {
+    "subject": "[Test]: RET_US_NA_U_STORE1569_ZIP_EN_04022026SALE Ending Soon! Celebrate our Birthday in Wauwatosa",
+    "from": "SKECHERS STORES <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS STORES",
+    "timestamp_iso": "2026-04-01T21:50:33+00:00",
+    "date_formatted": "2026-04-01 21:50 UTC"
+  },
+  "review": {
+    "score": "6.5/10",
+    "raw_markdown": "## 1. Executive Summary\n\nA tightly focused local store birthday sale email for Skechers Wauwatosa (Mayfair Collection location). The core offer — Buy 2 Pairs, Get the 3rd Free through 4/5 — is clear and prominent. The email does its primary job: drive foot traffic to a specific store with a compelling, time-limited incentive. However, it's visually compressed and category navigation is bare-bones, leaving money on the table for shoppers who need a bit more inspiration to act.\n\n---\n\n## 2. Business Impact Score: **6.5 / 10**\n\nStrong offer clarity and urgency, but weak product merchandising and a sparse visual hierarchy limit conversion potential.\n\n---\n\n## 3. What's Working\n\n- **Offer legibility**: \"Buy 2 Pairs, Get the 3rd Free / Limited Time Only Thru 4/5\" is large, bold, and impossible to miss. The urgency mechanic and deadline are both visible without scrolling.\n- **Store-specific CTA**: Full address (11500 W Burleigh St, Wauwatosa, WI) and phone number (414.360.6595) are present, with a clear \"Get Directions\" button — the right action for a local retail email.\n- **Hero image**: The lifestyle shot with the model holding shoes is on-brand and communicates the celebratory tone. The confetti styling and \"Celebrate our birthday!\" headline reinforce the occasion.\n- **App / utility bar**: The App Store/Google Play download links, Curbside Pickup notice, Shop Now/Pay Later, Klarna, and Find a Store row cover the full utility layer efficiently.\n- **Social footer**: Instagram and Facebook icons are present.\n\n---\n\n## 4. What's Weak\n\n- **Zero product merchandising**: There are no individual product images, no featured styles, no prices. A Buy 2 Get 1 offer lives or dies on desire — showing actual shoes would significantly lift click-through.\n- **Category navigation is text-only and generic**: Women / Men / Kids / Wide appear as plain text links under \"Shop Additional Styles.\" No imagery, no category-specific hooks. This section reads like a fallback rather than an invitation.\n- **Hero image is small and cluttered**: The lifestyle photo is competing with overlaid Skechers branding/logo inside the image itself, making it feel busy. The model is partially cut off.\n- **\"Mayfair Collection\" naming is unexplained**: The header says \"Mayfair Collection\" but it's unclear if this refers to a product line or the Mayfair Mall location. Ambiguity weakens the message.\n- **Subject line carries test prefixes**: The subject line visible in the email metadata begins with `[Test]:` and a long campaign code. If deployed as-is, this immediately signals an internal test to consumers and destroys credibility.\n- **Preview text is broken**: The preview renders as a raw URL (`Skechers® https://view.emails.skechers.com/...`), not a human-readable message. This is a missed opportunity and looks like a rendering error to recipients.\n\n---\n\n## 5. Recommendations\n\n1. **Add 3–6 product tiles below the hero** — show bestsellers or birthday-sale-eligible styles with prices to create desire and give shoppers something to click before visiting the store.\n2. **Fix the preview text** — it should read something like \"Birthday Sale ends 4/5 — Buy 2 pairs, get your 3rd FREE at Wauwatosa.\" This is low-effort, high-impact.\n3. **Remove the `[Test]:` prefix and campaign code from the subject line** before any live send.\n4. **Clarify \"Mayfair Collection\"** — either drop it or add one line of copy explaining what it refers to.\n5. **Make category links visual** — swap the plain text Women/Men/Kids/Wide row for small banner tiles or image buttons. Even a modest visual treatment improves engagement.\n6. **Consider a secondary CTA for online shoppers** — the email is store-focused, but adding \"Shop Online\" with the same offer (if eligible) captures recipients who won't drive in.\n\n---\n\n## 6. Bottom Line\n\nThis email is functionally correct for a local store event — the offer, deadline, and store details are all visible and clean. But it's doing the minimum. Without product imagery or any visual merchandising, it relies entirely on the offer strength to drive action. The broken preview text and test subject line are must-fix issues before deployment. Addressing product display and preview text alone would meaningfully improve performance.\n\n---\n\n## 7. Evidence\n\n| Section | Observation |\n|---|---|\n| **Overall purpose** | Drive in-store traffic for Wauwatosa Mayfair store birthday sale (Buy 2, Get 3rd Free, ends 4/5) |\n| **Hero / primary value prop** | \"Celebrate our birthday! / Mayfair Collection\" with lifestyle image + bold offer copy. Offer is clear; image is small and internally cluttered |\n| **Membership / benefits** | Not present — no loyalty, no adiClub-equivalent visible |\n| **Product discoverability** | None — no product images, no style names, no pricing anywhere in the email |\n| **Utility / secondary modules** | Strong: App download, Curbside Pickup, Shop Now/Pay Later, Klarna, Find a Store all visible |\n| **Bugs / friction / clarity issues** | (1) Preview text renders as a raw URL; (2) Subject line has `[Test]:` prefix and full campaign code visible; (3) \"Mayfair Collection\" label is ambiguous |\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers Store 1569 Birthday Sale (RET_US_NA_U_STORE1569_ZIP_EN_04022026)\n\n---\n\n### 1. Technical Summary\n\nA store-targeted promotional email with no structural failures but several compounding infrastructure issues: pervasive HTTP image loading across a hardened CDN domain, a protocol-stripped tracking pixel that will silently fail, and unverifiable authentication headers. The `[Test]:` subject prefix confirms this is a pre-production send.\n\n---\n\n### 2. Link & Tracking Issues\n\n**`[CRITICAL]` ReturnPath pixel missing protocol — will silently fail**\nThe Inbox Monitor pixel is rendered as a protocol-relative path without `//`, making it a relative URL:\n```html\n<img src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\" />\n```\nEmail clients will attempt to resolve this as a relative path, not an external host. The pixel will 404 silently. Correct form: `https://pixel.app.returnpath.net/pixel.gif?...`\n\n**`[WARN]` 28 tracking links not probed**\nAll CTAs route through `click.emails.skechers.com` redirect domain. Destination URL integrity and UTM parameter presence on landing pages are unverifiable from this audit alone — see Section 6.\n\n**`[INFO]` 4 third-party tracking/data-match pixels present**\n- `beacon.krxd.net` (×3) — Salesforce DMP user-match and ad impression, includes SHA-256 hashed subscriber email (`d115e72c...`) and plaintext subscriber ID (`102541952`)\n- `click.emails.skechers.com/open.aspx` — ESP open pixel\n- `ink1000.com` — Secondary open/engagement pixel (HTTP — see Section 3)\n\n---\n\n### 3. Rendering & Accessibility\n\n**`[HIGH]` Systemic HTTP image loading — 13 affected assets**\nAll `image.emails.skechers.com` hosted images use `http://`, not `https://`. Gmail, Outlook.com, and Apple Mail proxy or block mixed-content images. Affected includes content images, app store badges, social icons, and UI elements:\n```\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662...png\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73...png\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f...png\n... (10 additional)\n```\nThis is a CDN configuration issue — `image.emails.skechers.com` supports HTTPS; all `src` values need the protocol updated.\n\n**`[HIGH]` Secondary open pixel served over HTTP**\n```html\n<img src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8091927189&...\" />\n```\nMixed content; will be blocked by secure clients. Also missing `alt=\"\"`.\n\n**`[MEDIUM]` `* { -webkit-text-size-adjust: none }` applied globally**\nSet on the wildcard selector rather than `100%`. This prevents user-initiated text scaling on iOS, which is a WCAG 1.4.4 (Resize Text) failure. Should be `100%`.\n\n**`[MEDIUM]` Missing `http-equiv` attributes on two meta tags**\n```html\n<meta content=\"text/html; charset=utf-8\" />         <!-- missing http-equiv=\"Content-Type\" -->\n<meta content=\"IE=Edge\" />                            <!-- missing http-equiv=\"X-UA-Compatible\" -->\n```\nWithout `http-equiv`, both tags are no-ops. Outlook/IE rendering mode hint will not apply.\n\n**`[LOW]` 3 images missing alt text**\n`o.gif` (ink1000), `dde00662...png`, `49468f73...png` — all flagged with empty or absent `alt`. Screen readers will announce raw filenames or skip silently depending on client.\n\n---\n\n### 4. Personalization & Merge Tokens\n\n**`[CRITICAL]` `[Test]:` prefix present in subject line**\nSubject: `[Test]: RET_US_NA_U_STORE1569_ZIP_EN_04022026SALE Ending Soon! Celebrate our Birthday in Wauwatosa`\n\nThe raw campaign ID has been concatenated directly into the display subject (`...04022026SALE`) with no space separator, suggesting the test-send template has a merge token or prefix that was not stripped. Must be resolved before production deployment.\n\n**`[INFO]` Store-level targeting appears properly bound**\nCampaign ID `RET_US_NA_U_STORE1569_ZIP_EN_04022026` and Krxd `campaignid` param are consistent. No unresolved `%%FIELD%%` or `{{token}}` placeholders visible in the truncated source.\n\n---\n\n### 5. Compliance\n\n**`[WARN]` SPF/DKIM authentication unverifiable**\nAuthentication-Results header was not captured via the AgentMail relay. Sender domain `emails.skechers.com` should have DKIM signing and SPF alignment configured. Cannot confirm pass/fail from available data.\n\n**`[INFO]` Preheader present and non-empty**\n`\"Buy 2 Pairs, Get the 3rd Free\"` — correctly hidden via `display:none`.\n\n**`[INFO]` CAN-SPAM surface elements**\nPhysical address and unsubscribe mechanism were not visible in the truncated HTML but are expected in the footer. Full source review needed to confirm presence and formatting.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**`[UNVERIFIABLE]` UTM parameter coverage on CTAs**\nAll 28 links route through `click.emails.skechers.com` redirects. UTM parameter presence on the final landing page URLs cannot be confirmed without resolving the redirects. The campaign ID in the Krxd pixel (`RET_US_NA_U_STORE1569_ZIP_EN_04022026`) provides a reference value that UTMs should mirror.\n\n**`[INFO]` Store 1569 / Wauwatosa geo-targeting**\nThe ZIP-targeted campaign ID implies store-specific landing pages. If CTAs point to a generic `/sale` page rather than a store-locator or store-specific URL, geo-continuity breaks for non-local recipients receiving this via ZIP targeting.\n\n---\n\n### 7. Recommendations\n\n| Priority | Action |\n|---|---|\n| P0 | Remove `[Test]:` prefix and fix subject line concatenation before any production send |\n| P0 | Fix ReturnPath pixel — add `https://` protocol to `pixel.app.returnpath.net/pixel.gif` |\n| P1 | Migrate all `image.emails.skechers.com` asset URLs from `http://` to `https://` — systemic CDN config change, not per-email |\n| P1 | Migrate `ink1000.com` open pixel to HTTPS |\n| P1 | Obtain and publish Authentication-Results for this send; confirm DKIM pass on `emails.skechers.com` |\n| P2 | Change `* { -webkit-text-size-adjust: none }` to `100%` in base stylesheet |\n| P2 | Add `http-equiv=\"Content-Type\"` and `http-equiv=\"X-UA-Compatible\"` to affected meta tags |\n| P3 | Add `alt=\"\"` to the 3 flagged images |\n| P3 | Resolve 28 tracked CTAs and audit UTM parameter completeness against `RET_US_NA_U_STORE1569_ZIP_EN_04022026` |",
+    "sections": {
+      "executive_summary": [
+        "A tightly focused local store birthday sale email for Skechers Wauwatosa (Mayfair Collection location). The core offer — Buy 2 Pairs, Get the 3rd Free through 4/5 — is clear and prominent. The email does its primary job: drive foot traffic to a specific store with a compelling, time-limited incentive. However, it's visually compressed and category navigation is bare-bones, leaving money on the table for shoppers who need a bit more inspiration to act.",
+        "Strong offer clarity and urgency, but weak product merchandising and a sparse visual hierarchy limit conversion potential."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Offer legibility**: \"Buy 2 Pairs, Get the 3rd Free / Limited Time Only Thru 4/5\" is large, bold, and impossible to miss. The urgency mechanic and deadline are both visible without scrolling.",
+        "- **Store-specific CTA**: Full address (11500 W Burleigh St, Wauwatosa, WI) and phone number (414.360.6595) are present, with a clear \"Get Directions\" button — the right action for a local retail email.",
+        "- **Hero image**: The lifestyle shot with the model holding shoes is on-brand and communicates the celebratory tone. The confetti styling and \"Celebrate our birthday!\" headline reinforce the occasion.",
+        "- **App / utility bar**: The App Store/Google Play download links, Curbside Pickup notice, Shop Now/Pay Later, Klarna, and Find a Store row cover the full utility layer efficiently.",
+        "- **Social footer**: Instagram and Facebook icons are present."
+      ],
+      "whats_weak": [
+        "- **Zero product merchandising**: There are no individual product images, no featured styles, no prices. A Buy 2 Get 1 offer lives or dies on desire — showing actual shoes would significantly lift click-through.",
+        "- **Category navigation is text-only and generic**: Women / Men / Kids / Wide appear as plain text links under \"Shop Additional Styles.\" No imagery, no category-specific hooks. This section reads like a fallback rather than an invitation.",
+        "- **Hero image is small and cluttered**: The lifestyle photo is competing with overlaid Skechers branding/logo inside the image itself, making it feel busy. The model is partially cut off.",
+        "- **\"Mayfair Collection\" naming is unexplained**: The header says \"Mayfair Collection\" but it's unclear if this refers to a product line or the Mayfair Mall location. Ambiguity weakens the message.",
+        "- **Subject line carries test prefixes**: The subject line visible in the email metadata begins with `[Test]:` and a long campaign code. If deployed as-is, this immediately signals an internal test to consumers and destroys credibility.",
+        "- **Preview text is broken**: The preview renders as a raw URL (`Skechers® https://view.emails.skechers.com/...`), not a human-readable message. This is a missed opportunity and looks like a rendering error to recipients."
+      ],
+      "recommendations": [
+        "1. **Add 3–6 product tiles below the hero** — show bestsellers or birthday-sale-eligible styles with prices to create desire and give shoppers something to click before visiting the store.",
+        "2. **Fix the preview text** — it should read something like \"Birthday Sale ends 4/5 — Buy 2 pairs, get your 3rd FREE at Wauwatosa.\" This is low-effort, high-impact.",
+        "3. **Remove the `[Test]:` prefix and campaign code from the subject line** before any live send.",
+        "4. **Clarify \"Mayfair Collection\"** — either drop it or add one line of copy explaining what it refers to.",
+        "5. **Make category links visual** — swap the plain text Women/Men/Kids/Wide row for small banner tiles or image buttons. Even a modest visual treatment improves engagement.",
+        "6. **Consider a secondary CTA for online shoppers** — the email is store-focused, but adding \"Shop Online\" with the same offer (if eligible) captures recipients who won't drive in.",
+        "| Priority | Action |",
+        "|---|---|",
+        "| P0 | Remove `[Test]:` prefix and fix subject line concatenation before any production send |",
+        "| P0 | Fix ReturnPath pixel — add `https://` protocol to `pixel.app.returnpath.net/pixel.gif` |",
+        "| P1 | Migrate all `image.emails.skechers.com` asset URLs from `http://` to `https://` — systemic CDN config change, not per-email |",
+        "| P1 | Migrate `ink1000.com` open pixel to HTTPS |",
+        "| P1 | Obtain and publish Authentication-Results for this send; confirm DKIM pass on `emails.skechers.com` |",
+        "| P2 | Change `* { -webkit-text-size-adjust: none }` to `100%` in base stylesheet |",
+        "| P2 | Add `http-equiv=\"Content-Type\"` and `http-equiv=\"X-UA-Compatible\"` to affected meta tags |",
+        "| P3 | Add `alt=\"\"` to the 3 flagged images |",
+        "| P3 | Resolve 28 tracked CTAs and audit UTM parameter completeness against `RET_US_NA_U_STORE1569_ZIP_EN_04022026` |"
+      ],
+      "bottom_line": [
+        "This email is functionally correct for a local store event — the offer, deadline, and store details are all visible and clean. But it's doing the minimum. Without product imagery or any visual merchandising, it relies entirely on the offer strength to drive action. The broken preview text and test subject line are must-fix issues before deployment. Addressing product display and preview text alone would meaningfully improve performance."
+      ],
+      "evidence": [
+        "| Section | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Drive in-store traffic for Wauwatosa Mayfair store birthday sale (Buy 2, Get 3rd Free, ends 4/5) |",
+        "| **Hero / primary value prop** | \"Celebrate our birthday! / Mayfair Collection\" with lifestyle image + bold offer copy. Offer is clear; image is small and internally cluttered |",
+        "| **Membership / benefits** | Not present — no loyalty, no adiClub-equivalent visible |",
+        "| **Product discoverability** | None — no product images, no style names, no pricing anywhere in the email |",
+        "| **Utility / secondary modules** | Strong: App download, Curbside Pickup, Shop Now/Pay Later, Klarna, Find a Store all visible |",
+        "| **Bugs / friction / clarity issues** | (1) Preview text renders as a raw URL; (2) Subject line has `[Test]:` prefix and full campaign code visible; (3) \"Mayfair Collection\" label is ambiguous |",
+        "A store-targeted promotional email with no structural failures but several compounding infrastructure issues: pervasive HTTP image loading across a hardened CDN domain, a protocol-stripped tracking pixel that will silently fail, and unverifiable authentication headers. The `[Test]:` subject prefix confirms this is a pre-production send.",
+        "**`[CRITICAL]` ReturnPath pixel missing protocol — will silently fail**",
+        "The Inbox Monitor pixel is rendered as a protocol-relative path without `//`, making it a relative URL:",
+        "```html",
+        "<img src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\" />",
+        "```",
+        "Email clients will attempt to resolve this as a relative path, not an external host. The pixel will 404 silently. Correct form: `https://pixel.app.returnpath.net/pixel.gif?...`",
+        "**`[WARN]` 28 tracking links not probed**",
+        "All CTAs route through `click.emails.skechers.com` redirect domain. Destination URL integrity and UTM parameter presence on landing pages are unverifiable from this audit alone — see Section 6.",
+        "**`[INFO]` 4 third-party tracking/data-match pixels present**",
+        "- `beacon.krxd.net` (×3) — Salesforce DMP user-match and ad impression, includes SHA-256 hashed subscriber email (`d115e72c...`) and plaintext subscriber ID (`102541952`)",
+        "- `click.emails.skechers.com/open.aspx` — ESP open pixel",
+        "- `ink1000.com` — Secondary open/engagement pixel (HTTP — see Section 3)",
+        "**`[HIGH]` Systemic HTTP image loading — 13 affected assets**",
+        "All `image.emails.skechers.com` hosted images use `http://`, not `https://`. Gmail, Outlook.com, and Apple Mail proxy or block mixed-content images. Affected includes content images, app store badges, social icons, and UI elements:",
+        "```",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662...png",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73...png",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f...png",
+        "... (10 additional)",
+        "```",
+        "This is a CDN configuration issue — `image.emails.skechers.com` supports HTTPS; all `src` values need the protocol updated.",
+        "**`[HIGH]` Secondary open pixel served over HTTP**",
+        "```html",
+        "<img src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8091927189&...\" />",
+        "```",
+        "Mixed content; will be blocked by secure clients. Also missing `alt=\"\"`.",
+        "**`[MEDIUM]` `* { -webkit-text-size-adjust: none }` applied globally**",
+        "Set on the wildcard selector rather than `100%`. This prevents user-initiated text scaling on iOS, which is a WCAG 1.4.4 (Resize Text) failure. Should be `100%`.",
+        "**`[MEDIUM]` Missing `http-equiv` attributes on two meta tags**",
+        "```html",
+        "<meta content=\"text/html; charset=utf-8\" />         <!-- missing http-equiv=\"Content-Type\" -->",
+        "<meta content=\"IE=Edge\" />                            <!-- missing http-equiv=\"X-UA-Compatible\" -->",
+        "```",
+        "Without `http-equiv`, both tags are no-ops. Outlook/IE rendering mode hint will not apply.",
+        "**`[LOW]` 3 images missing alt text**",
+        "`o.gif` (ink1000), `dde00662...png`, `49468f73...png` — all flagged with empty or absent `alt`. Screen readers will announce raw filenames or skip silently depending on client.",
+        "**`[CRITICAL]` `[Test]:` prefix present in subject line**",
+        "Subject: `[Test]: RET_US_NA_U_STORE1569_ZIP_EN_04022026SALE Ending Soon! Celebrate our Birthday in Wauwatosa`",
+        "The raw campaign ID has been concatenated directly into the display subject (`...04022026SALE`) with no space separator, suggesting the test-send template has a merge token or prefix that was not stripped. Must be resolved before production deployment.",
+        "**`[INFO]` Store-level targeting appears properly bound**",
+        "Campaign ID `RET_US_NA_U_STORE1569_ZIP_EN_04022026` and Krxd `campaignid` param are consistent. No unresolved `%%FIELD%%` or `{{token}}` placeholders visible in the truncated source.",
+        "**`[WARN]` SPF/DKIM authentication unverifiable**",
+        "Authentication-Results header was not captured via the AgentMail relay. Sender domain `emails.skechers.com` should have DKIM signing and SPF alignment configured. Cannot confirm pass/fail from available data.",
+        "**`[INFO]` Preheader present and non-empty**",
+        "`\"Buy 2 Pairs, Get the 3rd Free\"` — correctly hidden via `display:none`.",
+        "**`[INFO]` CAN-SPAM surface elements**",
+        "Physical address and unsubscribe mechanism were not visible in the truncated HTML but are expected in the footer. Full source review needed to confirm presence and formatting.",
+        "**`[UNVERIFIABLE]` UTM parameter coverage on CTAs**",
+        "All 28 links route through `click.emails.skechers.com` redirects. UTM parameter presence on the final landing page URLs cannot be confirmed without resolving the redirects. The campaign ID in the Krxd pixel (`RET_US_NA_U_STORE1569_ZIP_EN_04022026`) provides a reference value that UTMs should mirror.",
+        "**`[INFO]` Store 1569 / Wauwatosa geo-targeting**",
+        "The ZIP-targeted campaign ID implies store-specific landing pages. If CTAs point to a generic `/sale` page rather than a store-locator or store-specific URL, geo-continuity breaks for non-local recipients receiving this via ZIP targeting."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTAyNTQxOTUyIiwibGlkIjoiMjUiLCJqIjoiMTg1MTI1IiwiamIiOiIxIiwiZCI6IjE"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 14,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "28 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8091927189&mi_ecmp=RET_US_NA_U_STORE1569_ZIP_EN_04022026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8091927189&mi_ecmp=RET_US_NA_U_STORE1569_ZIP_EN_04022026"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: dde00662-169f-447d-b0e2-fc65f6c2290c.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: dde00662-169f-447d-b0e2-fc65f6c2290c.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Curbside Pickup\" (00100b23-0afa-4715-a8cd-23bb46f9d2b2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Find A Store\" (fc08601a-fcce-4c96-8b90-39e5a55d6c05.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-01-test-ret-us-na-u-store1569-zip-en-04022026sale-ending-soon-celebrate-our-birthda-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=F22XBABEYUEUNCIALKBUEPKXCQ.100214"
+  }
+}
