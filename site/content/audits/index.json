@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-01-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-01T13:05:10.356Z",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-03-31-test-mkg-us-na-u-new-wide-en-04022026your-favorites-fit-for-your-feet",
     "subject": "[Test]: MKG_US_NA_U_NEW_WIDE_EN_04022026Your Favorites, Fit for Your Feet",
     "from_display_name": "SKECHERS",
