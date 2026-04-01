@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-01-your-skechers-plus-monthly-summary-is-here",
+  "email": {
+    "subject": "Your Skechers Plus Monthly Summary is Here",
+    "from": "SKECHERS PLUS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS PLUS",
+    "timestamp_iso": "2026-04-01T21:18:45+00:00",
+    "date_formatted": "2026-04-01 21:18 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## 1. Executive Summary\n\nA functional loyalty summary email that delivers the core message — 1,000 points balance and a $5 reward earned — but wastes the opportunity by burying the reward CTA, rendering the preview text as raw JSON schema, and leaning on a generic product grid that does nothing to personalize the experience. The email does what it needs to do, barely.\n\n---\n\n## 2. Business Impact Score: 5/10\n\n---\n\n## 3. What's Working\n\n- **Points balance is prominent.** The \"1,000 Current Points Balance\" hero stat is large, bold, and instantly readable — the primary job of a monthly summary.\n- **$5 reward announcement** is clearly communicated mid-email with a distinct visual treatment.\n- **Structural completeness.** The email covers all expected utility modules: app download, store pickup, afterpay/klarna, loyalty program info, and social links.\n- **Product grid is visually clean.** \"We picked these just for you\" features lifestyle-appropriate footwear images in a tidy layout.\n\n---\n\n## 4. What's Weak\n\n- **Preview text is broken JSON schema.** The inbox preview reads: `[{ \"@context\": \"http://schema.org/\", \"@type\": \"Organization\", \"logo\": \"https://...` — this is raw structured data exposed as visible preview copy. It's the first thing recipients see before opening and signals a broken, untrustworthy send.\n- **The $5 reward has no standalone CTA.** There's a \"VIEW MY ACCOUNT\" button nearby, but it's undersized and doesn't call out the reward redemption directly. A $5 incentive should have its own action.\n- **\"Shop Deals\" CTA is disconnected.** A blue banner with a \"D\" logo and \"SHOP DEALS >\" appears mid-email without adequate context — it reads as a broken module or orphaned banner.\n- **Product recommendations are generic.** Five shoes, no personalization signals visible — no \"based on your last purchase\" or \"your size\" language. The headline \"We picked these just for you\" promises personalization that the content doesn't deliver.\n- **\"Shop Additional Styles\" section is a text-only link list** (Women, Men, Kids, Clothing, New Arrivals, Sale) — essentially a nav bar in the middle of an email. This is utility padding, not merchandising.\n- **Points earned detail (\"Points Earned: 1000 / Points Spent: 0\") is too small.** Secondary data is fine-print level when it should reinforce the engagement story.\n\n---\n\n## 5. Recommendations\n\n1. **Fix the preview text immediately.** The JSON schema should never be exposed as inbox preview copy — this is a deployment error that degrades open rates and sender trust.\n2. **Add a dedicated \"Redeem Your $5 Reward\" CTA button.** Make it the primary action in the reward section; don't make users hunt for the redemption path.\n3. **Remove or redesign the \"Shop Deals\" banner.** It looks like a broken asset. Either give it a real headline and product context, or cut it.\n4. **Replace the text nav list with 2–3 curated category tiles.** Images convert; link lists do not.\n5. **Add one personalization signal to the product grid** — even a line like \"Based on styles you've browsed\" would validate the \"picked for you\" headline and improve click-through.\n\n---\n\n## 6. Bottom Line\n\nThe broken preview text is the most damaging issue — it hurts open rates before anyone sees the email. Inside, the reward notification is underserved by its CTA, and the product module promises personalization it doesn't deliver. Fix the preview text and add a reward redemption button; this email's core value prop is solid but its execution leaves points on the table.\n\n---\n\n## 7. Evidence\n\n- **Overall purpose:** Monthly loyalty summary — balance reporting + reward notification + product discovery\n- **Hero / primary value prop:** 1,000-point balance display; $5 reward earned announcement\n- **Membership / benefits section:** Points balance shown (Earned: 1000, Spent: 0); reward tier acknowledgment; Skechers Plus branding visible\n- **Product discoverability / recommendation modules:** 5-product grid (\"We picked these just for you\"); additional styles text-nav (Women, Men, Kids, Clothing, New Arrivals, Sale)\n- **Utility / secondary modules:** App download (Google Play / App Store), curbside pickup, Afterpay + Klarna financing, Find a Store, Discover Plus upgrade prompt, social follow icons (Facebook, Instagram, YouTube, TikTok)\n- **Bugs / friction / clarity issues:**\n  - Preview text renders raw JSON-LD schema — visible broken copy in inbox\n  - \"Shop Deals\" blue banner appears as a partially-rendered or orphaned module with no supporting headline or product imagery\n  - No dedicated reward redemption button despite $5 reward being announced\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers Plus Monthly Summary\n\n**From:** SKECHERS PLUS `<no-reply@emails.skechers.com>`\n**Campaign ID:** `TRG_US_EN_MONTHLYSUMMARY_1_02272026_B`\n\n---\n\n### 1. Technical Summary\n\nThe email has a significant mixed-content problem — 14 image assets are served over HTTP and will be blocked or trigger security warnings in most modern email clients. A staging subdomain asset (`image.devemails.skechers.com`) was also detected in the production send, indicating a pre-flight environment leak.\n\n---\n\n### 2. Link & Tracking Issues\n\n**Tracking pixels (4 third-party beacons detected):**\n\n| Vendor | Domain | Protocol |\n|---|---|---|\n| SFMC open pixel | `click.emails.skechers.com` | HTTPS |\n| Krux/Salesforce DMP (2x) | `beacon.krxd.net` | HTTPS |\n| Validity/Everest | `ink1000.com` | **HTTP** |\n| Return Path/Validity | `pixel.app.returnpath.net` | **No protocol prefix** |\n\n- `ink1000.com` pixel uses plain HTTP — will be blocked by Gmail, Apple Mail, and Outlook clients that enforce HTTPS:\n  ```\n  src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=...\"\n  ```\n- `pixel.app.returnpath.net/pixel.gif?r=964ce1db...` is missing the protocol scheme entirely — behavior is client-dependent; many will treat as relative URL and fail silently.\n- 24 click-through links on `click.emails.skechers.com` could not be probed (redirect domain); no broken destination URLs confirmed, but continuity is unverified.\n\n---\n\n### 3. Rendering & Accessibility\n\n**Mixed content (HTTP image sources) — 14 confirmed violations:**\n\nAll footer utility icons and app store badges are served over HTTP from `image.emails.skechers.com`:\n- App Store badge: `http://image.emails.skechers.com/.../0ec56c9f-eec2-471a-898d-0ca1cea7e115.png`\n- Google Play badge: `http://image.emails.skechers.com/.../9bb508d0-4b38-483d-8459-cf54186a0b9f.png`\n- Curbside Pickup, AfterPay, Find A Store, Instagram, Facebook, Pinterest, YouTube icons: all `http://`\n- Skechers logo: `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png`\n\nClients that block mixed content (Gmail web, Outlook 2019+) will show broken image placeholders for all of these.\n\n**Staging subdomain asset in production send:**\n```\nsrc=\"https://image.devemails.skechers.com/lib/fe33157075640674761d74/m/1/summary-tier-blue-angle.png\"\n```\n`image.devemails.skechers.com` is not the production CDN domain. If this environment is access-restricted or rotated, the tier status graphic will fail to render for all recipients.\n\n**Missing alt text (4 images):**\n- `o.gif` (ink1000.com tracking pixel) — low severity\n- `summary-tier-blue-angle.png` — tier status graphic; no alt means screen readers skip member tier context entirely\n- `128ede3f-d941-4bd7-8984-58076a839e59.gif` — unknown content, no fallback\n- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — also HTTP; double failure\n\n**Zoom / accessibility:**\n- Viewport meta includes `maximum-scale=1`, which prevents user-initiated zoom on iOS — accessibility violation under WCAG 1.4.4.\n- `* { -webkit-text-size-adjust: none; }` applied globally suppresses automatic font scaling on mobile WebKit, compounding the zoom restriction.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nThe HTML references `.tierStatus` and `.tier-wrapper` CSS classes and the subject line implies per-member point totals, confirming dynamic tier/points personalization is expected. The truncated source prevents full token audit, but:\n\n- The staging asset path (`devemails.skechers.com`) for `summary-tier-blue-angle.png` suggests this tier graphic may be environment-conditional — confirm the production URL resolves correctly.\n- Campaign ID embedded in Krux pixel: `campaignid=TRG_US_EN_MONTHLYSUMMARY_1_02272026_B` — this is the **B variant**; confirm A/B split is intentional and the B-variant pixel isn't firing on A-variant sends.\n\n---\n\n### 5. Compliance\n\n**Authentication:**\n- `Authentication-Results` header not found via AgentMail relay — SPF and DKIM pass/fail status unverified. This is a relay visibility gap, not confirmed authentication failure, but should be validated directly against mail headers before deployment at scale.\n\n**CAN-SPAM / unsubscribe:**\n- Physical mailing address and unsubscribe mechanism not visible in the truncated source but are expected in the footer. Cannot confirm presence from available HTML — verify in full source.\n\n**No other compliance issues confirmed from available data.**\n\n---\n\n### 6. Email-to-Site Continuity\n\n- 24 click links route through `click.emails.skechers.com` tracking redirects — final destinations unverified due to redirect skip in QA probe. UTM parameter presence on destination URLs is unconfirmed.\n- Campaign ID in tracking pixels (`02272026` date component) suggests this template originated in late February 2026 — confirm campaign IDs and any date-stamped parameters were updated for the current send date (2026-04-01).\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **High** | 14 HTTP image sources | Migrate all `image.emails.skechers.com` asset URLs to HTTPS |\n| **High** | Staging CDN domain in production | Replace `image.devemails.skechers.com` with production CDN domain before send |\n| **High** | ink1000.com pixel over HTTP | Update to HTTPS or confirm vendor supports it |\n| **Medium** | Return Path pixel missing protocol | Add `https://` prefix to `pixel.app.returnpath.net` src |\n| **Medium** | SPF/DKIM status unverified | Pull raw headers from a seed send and confirm both pass |\n| **Medium** | Missing alt text on tier graphic | Add descriptive alt (e.g., `alt=\"Blue tier member\"`) to `summary-tier-blue-angle.png` |\n| **Medium** | `maximum-scale=1` in viewport | Remove or change to `maximum-scale=5` to restore user zoom |\n| **Low** | Campaign date stamp in pixel IDs | Confirm `02272026` in `campaignid` values is correct or update for current send |\n| **Low** | Missing alt on 3 additional images | Add empty `alt=\"\"` on pure-decorative images; descriptive alt on content images |",
+    "sections": {
+      "executive_summary": [
+        "A functional loyalty summary email that delivers the core message — 1,000 points balance and a $5 reward earned — but wastes the opportunity by burying the reward CTA, rendering the preview text as raw JSON schema, and leaning on a generic product grid that does nothing to personalize the experience. The email does what it needs to do, barely."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Points balance is prominent.** The \"1,000 Current Points Balance\" hero stat is large, bold, and instantly readable — the primary job of a monthly summary.",
+        "- **$5 reward announcement** is clearly communicated mid-email with a distinct visual treatment.",
+        "- **Structural completeness.** The email covers all expected utility modules: app download, store pickup, afterpay/klarna, loyalty program info, and social links.",
+        "- **Product grid is visually clean.** \"We picked these just for you\" features lifestyle-appropriate footwear images in a tidy layout."
+      ],
+      "whats_weak": [
+        "- **Preview text is broken JSON schema.** The inbox preview reads: `[{ \"@context\": \"http://schema.org/\", \"@type\": \"Organization\", \"logo\": \"https://...` — this is raw structured data exposed as visible preview copy. It's the first thing recipients see before opening and signals a broken, untrustworthy send.",
+        "- **The $5 reward has no standalone CTA.** There's a \"VIEW MY ACCOUNT\" button nearby, but it's undersized and doesn't call out the reward redemption directly. A $5 incentive should have its own action.",
+        "- **\"Shop Deals\" CTA is disconnected.** A blue banner with a \"D\" logo and \"SHOP DEALS >\" appears mid-email without adequate context — it reads as a broken module or orphaned banner.",
+        "- **Product recommendations are generic.** Five shoes, no personalization signals visible — no \"based on your last purchase\" or \"your size\" language. The headline \"We picked these just for you\" promises personalization that the content doesn't deliver.",
+        "- **\"Shop Additional Styles\" section is a text-only link list** (Women, Men, Kids, Clothing, New Arrivals, Sale) — essentially a nav bar in the middle of an email. This is utility padding, not merchandising.",
+        "- **Points earned detail (\"Points Earned: 1000 / Points Spent: 0\") is too small.** Secondary data is fine-print level when it should reinforce the engagement story."
+      ],
+      "recommendations": [
+        "1. **Fix the preview text immediately.** The JSON schema should never be exposed as inbox preview copy — this is a deployment error that degrades open rates and sender trust.",
+        "2. **Add a dedicated \"Redeem Your $5 Reward\" CTA button.** Make it the primary action in the reward section; don't make users hunt for the redemption path.",
+        "3. **Remove or redesign the \"Shop Deals\" banner.** It looks like a broken asset. Either give it a real headline and product context, or cut it.",
+        "4. **Replace the text nav list with 2–3 curated category tiles.** Images convert; link lists do not.",
+        "5. **Add one personalization signal to the product grid** — even a line like \"Based on styles you've browsed\" would validate the \"picked for you\" headline and improve click-through.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **High** | 14 HTTP image sources | Migrate all `image.emails.skechers.com` asset URLs to HTTPS |",
+        "| **High** | Staging CDN domain in production | Replace `image.devemails.skechers.com` with production CDN domain before send |",
+        "| **High** | ink1000.com pixel over HTTP | Update to HTTPS or confirm vendor supports it |",
+        "| **Medium** | Return Path pixel missing protocol | Add `https://` prefix to `pixel.app.returnpath.net` src |",
+        "| **Medium** | SPF/DKIM status unverified | Pull raw headers from a seed send and confirm both pass |",
+        "| **Medium** | Missing alt text on tier graphic | Add descriptive alt (e.g., `alt=\"Blue tier member\"`) to `summary-tier-blue-angle.png` |",
+        "| **Medium** | `maximum-scale=1` in viewport | Remove or change to `maximum-scale=5` to restore user zoom |",
+        "| **Low** | Campaign date stamp in pixel IDs | Confirm `02272026` in `campaignid` values is correct or update for current send |",
+        "| **Low** | Missing alt on 3 additional images | Add empty `alt=\"\"` on pure-decorative images; descriptive alt on content images |"
+      ],
+      "bottom_line": [
+        "The broken preview text is the most damaging issue — it hurts open rates before anyone sees the email. Inside, the reward notification is underserved by its CTA, and the product module promises personalization it doesn't deliver. Fix the preview text and add a reward redemption button; this email's core value prop is solid but its execution leaves points on the table."
+      ],
+      "evidence": [
+        "- **Overall purpose:** Monthly loyalty summary — balance reporting + reward notification + product discovery",
+        "- **Hero / primary value prop:** 1,000-point balance display; $5 reward earned announcement",
+        "- **Membership / benefits section:** Points balance shown (Earned: 1000, Spent: 0); reward tier acknowledgment; Skechers Plus branding visible",
+        "- **Product discoverability / recommendation modules:** 5-product grid (\"We picked these just for you\"); additional styles text-nav (Women, Men, Kids, Clothing, New Arrivals, Sale)",
+        "- **Utility / secondary modules:** App download (Google Play / App Store), curbside pickup, Afterpay + Klarna financing, Find a Store, Discover Plus upgrade prompt, social follow icons (Facebook, Instagram, YouTube, TikTok)",
+        "- **Bugs / friction / clarity issues:**",
+        "- Preview text renders raw JSON-LD schema — visible broken copy in inbox",
+        "- \"Shop Deals\" blue banner appears as a partially-rendered or orphaned module with no supporting headline or product imagery",
+        "- No dedicated reward redemption button despite $5 reward being announced",
+        "**From:** SKECHERS PLUS `<no-reply@emails.skechers.com>`",
+        "**Campaign ID:** `TRG_US_EN_MONTHLYSUMMARY_1_02272026_B`",
+        "The email has a significant mixed-content problem — 14 image assets are served over HTTP and will be blocked or trigger security warnings in most modern email clients. A staging subdomain asset (`image.devemails.skechers.com`) was also detected in the production send, indicating a pre-flight environment leak.",
+        "**Tracking pixels (4 third-party beacons detected):**",
+        "| Vendor | Domain | Protocol |",
+        "|---|---|---|",
+        "| SFMC open pixel | `click.emails.skechers.com` | HTTPS |",
+        "| Krux/Salesforce DMP (2x) | `beacon.krxd.net` | HTTPS |",
+        "| Validity/Everest | `ink1000.com` | **HTTP** |",
+        "| Return Path/Validity | `pixel.app.returnpath.net` | **No protocol prefix** |",
+        "- `ink1000.com` pixel uses plain HTTP — will be blocked by Gmail, Apple Mail, and Outlook clients that enforce HTTPS:",
+        "```",
+        "src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=...\"",
+        "```",
+        "- `pixel.app.returnpath.net/pixel.gif?r=964ce1db...` is missing the protocol scheme entirely — behavior is client-dependent; many will treat as relative URL and fail silently.",
+        "- 24 click-through links on `click.emails.skechers.com` could not be probed (redirect domain); no broken destination URLs confirmed, but continuity is unverified.",
+        "**Mixed content (HTTP image sources) — 14 confirmed violations:**",
+        "All footer utility icons and app store badges are served over HTTP from `image.emails.skechers.com`:",
+        "- App Store badge: `http://image.emails.skechers.com/.../0ec56c9f-eec2-471a-898d-0ca1cea7e115.png`",
+        "- Google Play badge: `http://image.emails.skechers.com/.../9bb508d0-4b38-483d-8459-cf54186a0b9f.png`",
+        "- Curbside Pickup, AfterPay, Find A Store, Instagram, Facebook, Pinterest, YouTube icons: all `http://`",
+        "- Skechers logo: `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png`",
+        "Clients that block mixed content (Gmail web, Outlook 2019+) will show broken image placeholders for all of these.",
+        "**Staging subdomain asset in production send:**",
+        "```",
+        "src=\"https://image.devemails.skechers.com/lib/fe33157075640674761d74/m/1/summary-tier-blue-angle.png\"",
+        "```",
+        "`image.devemails.skechers.com` is not the production CDN domain. If this environment is access-restricted or rotated, the tier status graphic will fail to render for all recipients.",
+        "**Missing alt text (4 images):**",
+        "- `o.gif` (ink1000.com tracking pixel) — low severity",
+        "- `summary-tier-blue-angle.png` — tier status graphic; no alt means screen readers skip member tier context entirely",
+        "- `128ede3f-d941-4bd7-8984-58076a839e59.gif` — unknown content, no fallback",
+        "- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — also HTTP; double failure",
+        "**Zoom / accessibility:**",
+        "- Viewport meta includes `maximum-scale=1`, which prevents user-initiated zoom on iOS — accessibility violation under WCAG 1.4.4.",
+        "- `* { -webkit-text-size-adjust: none; }` applied globally suppresses automatic font scaling on mobile WebKit, compounding the zoom restriction.",
+        "The HTML references `.tierStatus` and `.tier-wrapper` CSS classes and the subject line implies per-member point totals, confirming dynamic tier/points personalization is expected. The truncated source prevents full token audit, but:",
+        "- The staging asset path (`devemails.skechers.com`) for `summary-tier-blue-angle.png` suggests this tier graphic may be environment-conditional — confirm the production URL resolves correctly.",
+        "- Campaign ID embedded in Krux pixel: `campaignid=TRG_US_EN_MONTHLYSUMMARY_1_02272026_B` — this is the **B variant**; confirm A/B split is intentional and the B-variant pixel isn't firing on A-variant sends.",
+        "**Authentication:**",
+        "- `Authentication-Results` header not found via AgentMail relay — SPF and DKIM pass/fail status unverified. This is a relay visibility gap, not confirmed authentication failure, but should be validated directly against mail headers before deployment at scale.",
+        "**CAN-SPAM / unsubscribe:**",
+        "- Physical mailing address and unsubscribe mechanism not visible in the truncated source but are expected in the footer. Cannot confirm presence from available HTML — verify in full source.",
+        "**No other compliance issues confirmed from available data.**",
+        "- 24 click links route through `click.emails.skechers.com` tracking redirects — final destinations unverified due to redirect skip in QA probe. UTM parameter presence on destination URLs is unconfirmed.",
+        "- Campaign ID in tracking pixels (`02272026` date component) suggests this template originated in late February 2026 — confirm campaign IDs and any date-stamped parameters were updated for the current send date (2026-04-01)."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTg0NDM4IiwiamIiOiI4MTI0IiwiZCI"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 16,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "24 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_MONTHLYSUMMARY_1_02272026_B"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=TRG_US_EN_MONTHLYSUMMARY_1_02272026_B"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: summary-tier-blue-angle.png",
+            "detail": "src: https://image.devemails.skechers.com/lib/fe33157075640674761d74/m/1/summary-tier-blue-angle.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 128ede3f-d941-4bd7-8984-58076a839e59.gif",
+            "detail": "src: https://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/128ede3f-d941-4bd7-8984-58076a839e59.gif"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Curbside Pickup\" (00100b23-0afa-4715-a8cd-23bb46f9d2b2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Find A Store\" (fc08601a-fcce-4c96-8b90-39e5a55d6c05.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-01-your-skechers-plus-monthly-summary-is-here-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=57RXUFYUCYHEDPYQEEZQLP4VJA.100218"
+  }
+}
