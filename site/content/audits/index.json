@@ -16,6 +16,22 @@
     "persona": null
   },
   {
+    "slug": "2026-04-01-test-mkg-us-retpur-u-trend-retail-en-04012026-byour-next-spring-favorites-are-wa",
+    "subject": "[Test]: MKG_US_RETPUR_U_TREND_RETAIL_EN_04012026_BYour Next Spring Favorites Are Waiting",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-03-31T20:34:42+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-01-test-mkg-us-retpur-u-trend-retail-en-04012026-ayour-next-spring-favorites-are-wa",
     "subject": "[Test]: MKG_US_RETPUR_U_TREND_RETAIL_EN_04012026_AYour Next Spring Favorites Are Waiting",
     "from_display_name": "SKECHERS",
