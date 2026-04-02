@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-02-bold-brave-new",
+  "email": {
+    "subject": "Bold. Brave. New.",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-02T14:01:21+00:00",
+    "date_formatted": "2026-04-02 14:01 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nThis is a brand-editorial email announcing the adidas x Audi Revolt F1 Team collection. The creative is clean and the F1 positioning is compelling, but the email is almost entirely devoid of commercial infrastructure — no product tiles, no pricing, no inline CTAs tied to the collection. It reads like a press release wrapped in brand photography. The sole \"Shop Now\" button is buried in a top banner that's thematically disconnected from the F1 launch content below it. A subscriber who wants to buy after reading this has nowhere obvious to go.\n\n---\n\n### 2. Business Impact Score: **5 / 10**\n\nStrong brand moment, weak conversion engine.\n\n---\n\n### 3. What's Working\n\n- **Hero photography is premium.** The three-person podium shot in Audi F1 gear is confident and on-brand. The image commands attention.\n- **Headline copy lands.** \"COMING FOR THE PODIUM\" is punchy and contextually appropriate — no ambiguity about the storyline.\n- **Second image carries the momentum.** The solo athlete shot in the sand/cream colorway contrasts well with the dark hero and keeps the scroll going.\n- **Brand voice is consistent.** \"Bold. Brave. New.\" as subject line aligns with the editorial tone throughout.\n\n---\n\n### 4. What's Weak\n\n- **Zero collection CTAs below the fold.** After two compelling images and two paragraphs of copy, there is no button or link directing the reader to shop the Audi Revolt collection. The email ends with a tagline. That's a full conversion gap.\n- **The top banner is a non-sequitur.** \"Explore the latest adidas best sellers — SHOP NOW\" drops the reader into generic best-sellers before they've even seen the F1 launch. It dilutes the premium positioning of the collection announcement immediately.\n- **No product discoverability.** No tiles, no individual product callouts, no prices. A subscriber cannot learn what's in the collection or what it costs from this email alone.\n- **\"READY TO TAKEOVER\" is a grammatical error.** Should read \"READY TO TAKE OVER\" — visible to every reader, undermines the premium tone.\n- **Body copy is vague.** \"Future classics,\" \"upset the balance,\" \"heralds in a bold new era\" — this is aspirational filler. It tells the reader nothing concrete about the collection (silhouettes, price point, availability).\n- **Social proof hook goes unused.** The \"13.4k others\" label at the top is a missed social proof signal — it goes nowhere and has no functional role in the email.\n\n---\n\n### 5. Recommendations\n\n1. **Add a dedicated collection CTA** below each content block — \"Shop the Audi Revolt Collection\" — linked directly to the collection landing page. This is non-negotiable for a launch email.\n2. **Remove or relocate the best-sellers banner.** It cannibalizes the F1 announcement's premium feel at first glance. If cross-sell is needed, put it in the footer, not above the hero.\n3. **Fix \"READY TO TAKEOVER\" → \"READY TO TAKE OVER.\"** Simple copy error, high visibility.\n4. **Add 2–3 product tiles** mid-email: jersey, jacket, at minimum. Show the product, show the price. Give the reader a reason to click beyond brand sentiment.\n5. **Sharpen the body copy.** Replace vague brand-speak with specifics: what's in the collection, when it drops, whether it's limited.\n\n---\n\n### 6. Bottom Line\n\nAdidas is sitting on a genuinely exciting brand story — a new F1 team, a premium collaboration, strong creative assets — and then sending subscribers home with no way to act on it. The email generates awareness but abandons the conversion entirely. One CTA button and a product module would meaningfully change the performance of this send.\n\n---\n\n### 7. Evidence\n\n**Overall purpose:** Launch announcement for the adidas x Audi Revolt F1 Team fanwear collection.\n\n**Hero / primary value proposition:** Three F1 team members in full kit, headline \"COMING FOR THE PODIUM.\" Strong visual entry, but no CTA is paired with it.\n\n**Membership / benefits section:** None visible.\n\n**Product discoverability / recommendation modules:** None visible. No product tiles, no SKUs, no pricing anywhere in the email body.\n\n**Utility / secondary modules:** Top banner (\"Explore the latest adidas best sellers — SHOP NOW\") functions as the only active commercial module, but it's thematically misaligned with the F1 launch content. Footer includes standard links: My Account, Privacy Statement, Support, Unsubscribe, adidas.com/us.\n\n**Bugs / friction / clarity issues:**\n- \"READY TO TAKEOVER\" — grammatical error visible in the second section headline.\n- No CTA buttons tied to the F1 collection anywhere in the main email body — a structural gap, not a rendering bug.\n- The \"13.4k others\" label in the header appears orphaned — no context or action attached to it.\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Bold. Brave. New.\" (2026-04-02)\n\n---\n\n### 1. Technical Summary\n\nTwo hard failures: a broken product link and a missing plain-text body. Five additional warnings cover HTTP image sources and missing alt attributes, which affect rendering in security-strict clients and screen reader accessibility.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Malformed link — broken URL type**\n\nThe QA probe flagged `unknown url type` for:\n```\n/g/de020a12-f506-4a6d-ba76-f53ae0dec709?txn=9b459300-2e9c-11f1-8f22-8668c83b363d\n```\nThis is a relative path that was not resolved to an absolute URL before send. The wrapping redirect URL (`https://dv.adidas.com/o/de020a12...`) is valid, but the inner destination is malformed — clicks on this CTA will 404 or error.\n\n**[INFO] 24 tracking links** use click-redirect domains and were not HTTP-probed. Destination validity for these CTAs is unverified.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] HTTP image sources (not HTTPS) — may be blocked**\n\nThe arrow icon is loaded 4× via plain HTTP:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nGmail, Outlook.com, and Apple Mail all proxy or block mixed-content HTTP image loads. This image will be invisible in those clients.\n\nThe tracking pixel is also HTTP:\n```\nhttp://click.comms.adidas.com/CI0/0102019d4e7fa4bb-c4f0671d-1e57-4f91-b211-91fe96a5f163-000000/...\n```\nOpen tracking will undercount in clients that block HTTP resources.\n\n**[WARN] Missing alt text on 2 images**\n\n- `de020a12-f506-4a6d-ba76-f53ae0dec709` (product/hero image via `dv.adidas.com`)\n- `NJ5cJu1R32Qcii28q19L__aJDRwrlSavm65GT8G91FU=451` (tracking pixel via `click.comms.adidas.com`)\n\nImages-off rendering and screen readers receive no description for either.\n\n**[INFO] Malformed charset meta tag**\n\n```html\n<meta content=\"text/html; charset=UTF-8\" />\n```\nMissing `http-equiv=\"Content-Type\"`. Correct form:\n```html\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n```\nMost clients are tolerant, but this is technically invalid HTML 4.01.\n\n**[INFO] Duplicate `@font-face` declarations**\n\n`AdihausDIN` and `AdineuePRO` are each declared twice across two separate `<style>` blocks with identical `src` values. No functional breakage, but adds ~1 KB of dead CSS.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo issues found. No unresolved `{{token}}` or `%%token%%` patterns visible in the provided source.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text fallback absent**\n\nQA reports text version is 0 characters. CAN-SPAM and most ESP policies require a multipart/alternative text body. This is also a deliverability signal — spam filters treat HTML-only messages as higher risk.\n\n**[WARN] Authentication-Results header not present**\n\nSPF/DKIM validation status could not be confirmed via the AgentMail relay. Sending domain is `us-news.comms.adidas.com` (Salesforce Marketing Cloud). If DKIM is misconfigured on this subdomain, inbox placement is at risk.\n\n---\n\n### 6. Email-to-Site Continuity\n\nThe broken inner URL (`/g/de020a12...`) defeats tracking for that specific CTA — any click revenue attribution is lost regardless of UTM presence in the outer redirect.\n\nFor the 24 functioning tracking links, UTM-equivalent parameters (`cp_tp`, `cp_cid`, `mi_cid`, `mi_mid`) are present in the encoded redirect payloads. Full landing page UTM mapping could not be verified without probing the destinations.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Fix |\n|----------|-------|-----|\n| P0 | Broken link (`/g/de020a12...`) | Resolve relative URL to absolute before send; verify CTA destination resolves |\n| P0 | Plain-text body is empty | Generate a stripped-text multipart alternative (min ~200 chars) |\n| P1 | HTTP image sources (5 instances) | Change `http://image.link.adidas.com/...` and `http://click.comms.adidas.com/...` to `https://` |\n| P1 | SPF/DKIM unverifiable | Confirm DKIM record is published for `us-news.comms.adidas.com` and passes in a seed test before next send |\n| P2 | Missing alt text (2 images) | Add descriptive `alt=\"\"` (or empty string for decorative) to both flagged images |\n| P3 | Duplicate `@font-face` blocks | Deduplicate the two `<style>` font declarations |\n| P3 | Malformed charset meta | Add `http-equiv=\"Content-Type\"` attribute |",
+    "sections": {
+      "executive_summary": [
+        "This is a brand-editorial email announcing the adidas x Audi Revolt F1 Team collection. The creative is clean and the F1 positioning is compelling, but the email is almost entirely devoid of commercial infrastructure — no product tiles, no pricing, no inline CTAs tied to the collection. It reads like a press release wrapped in brand photography. The sole \"Shop Now\" button is buried in a top banner that's thematically disconnected from the F1 launch content below it. A subscriber who wants to buy after reading this has nowhere obvious to go.",
+        "Strong brand moment, weak conversion engine."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero photography is premium.** The three-person podium shot in Audi F1 gear is confident and on-brand. The image commands attention.",
+        "- **Headline copy lands.** \"COMING FOR THE PODIUM\" is punchy and contextually appropriate — no ambiguity about the storyline.",
+        "- **Second image carries the momentum.** The solo athlete shot in the sand/cream colorway contrasts well with the dark hero and keeps the scroll going.",
+        "- **Brand voice is consistent.** \"Bold. Brave. New.\" as subject line aligns with the editorial tone throughout."
+      ],
+      "whats_weak": [
+        "- **Zero collection CTAs below the fold.** After two compelling images and two paragraphs of copy, there is no button or link directing the reader to shop the Audi Revolt collection. The email ends with a tagline. That's a full conversion gap.",
+        "- **The top banner is a non-sequitur.** \"Explore the latest adidas best sellers — SHOP NOW\" drops the reader into generic best-sellers before they've even seen the F1 launch. It dilutes the premium positioning of the collection announcement immediately.",
+        "- **No product discoverability.** No tiles, no individual product callouts, no prices. A subscriber cannot learn what's in the collection or what it costs from this email alone.",
+        "- **\"READY TO TAKEOVER\" is a grammatical error.** Should read \"READY TO TAKE OVER\" — visible to every reader, undermines the premium tone.",
+        "- **Body copy is vague.** \"Future classics,\" \"upset the balance,\" \"heralds in a bold new era\" — this is aspirational filler. It tells the reader nothing concrete about the collection (silhouettes, price point, availability).",
+        "- **Social proof hook goes unused.** The \"13.4k others\" label at the top is a missed social proof signal — it goes nowhere and has no functional role in the email."
+      ],
+      "recommendations": [
+        "1. **Add a dedicated collection CTA** below each content block — \"Shop the Audi Revolt Collection\" — linked directly to the collection landing page. This is non-negotiable for a launch email.",
+        "2. **Remove or relocate the best-sellers banner.** It cannibalizes the F1 announcement's premium feel at first glance. If cross-sell is needed, put it in the footer, not above the hero.",
+        "3. **Fix \"READY TO TAKEOVER\" → \"READY TO TAKE OVER.\"** Simple copy error, high visibility.",
+        "4. **Add 2–3 product tiles** mid-email: jersey, jacket, at minimum. Show the product, show the price. Give the reader a reason to click beyond brand sentiment.",
+        "5. **Sharpen the body copy.** Replace vague brand-speak with specifics: what's in the collection, when it drops, whether it's limited.",
+        "| Priority | Issue | Fix |",
+        "|----------|-------|-----|",
+        "| P0 | Broken link (`/g/de020a12...`) | Resolve relative URL to absolute before send; verify CTA destination resolves |",
+        "| P0 | Plain-text body is empty | Generate a stripped-text multipart alternative (min ~200 chars) |",
+        "| P1 | HTTP image sources (5 instances) | Change `http://image.link.adidas.com/...` and `http://click.comms.adidas.com/...` to `https://` |",
+        "| P1 | SPF/DKIM unverifiable | Confirm DKIM record is published for `us-news.comms.adidas.com` and passes in a seed test before next send |",
+        "| P2 | Missing alt text (2 images) | Add descriptive `alt=\"\"` (or empty string for decorative) to both flagged images |",
+        "| P3 | Duplicate `@font-face` blocks | Deduplicate the two `<style>` font declarations |",
+        "| P3 | Malformed charset meta | Add `http-equiv=\"Content-Type\"` attribute |"
+      ],
+      "bottom_line": [
+        "Adidas is sitting on a genuinely exciting brand story — a new F1 team, a premium collaboration, strong creative assets — and then sending subscribers home with no way to act on it. The email generates awareness but abandons the conversion entirely. One CTA button and a product module would meaningfully change the performance of this send."
+      ],
+      "evidence": [
+        "**Overall purpose:** Launch announcement for the adidas x Audi Revolt F1 Team fanwear collection.",
+        "**Hero / primary value proposition:** Three F1 team members in full kit, headline \"COMING FOR THE PODIUM.\" Strong visual entry, but no CTA is paired with it.",
+        "**Membership / benefits section:** None visible.",
+        "**Product discoverability / recommendation modules:** None visible. No product tiles, no SKUs, no pricing anywhere in the email body.",
+        "**Utility / secondary modules:** Top banner (\"Explore the latest adidas best sellers — SHOP NOW\") functions as the only active commercial module, but it's thematically misaligned with the F1 launch content. Footer includes standard links: My Account, Privacy Statement, Support, Unsubscribe, adidas.com/us.",
+        "**Bugs / friction / clarity issues:**",
+        "- \"READY TO TAKEOVER\" — grammatical error visible in the second section headline.",
+        "- No CTA buttons tied to the F1 collection anywhere in the main email body — a structural gap, not a rendering bug.",
+        "- The \"13.4k others\" label in the header appears orphaned — no context or action attached to it.",
+        "Two hard failures: a broken product link and a missing plain-text body. Five additional warnings cover HTTP image sources and missing alt attributes, which affect rendering in security-strict clients and screen reader accessibility.",
+        "**[FAIL] Malformed link — broken URL type**",
+        "The QA probe flagged `unknown url type` for:",
+        "```",
+        "/g/de020a12-f506-4a6d-ba76-f53ae0dec709?txn=9b459300-2e9c-11f1-8f22-8668c83b363d",
+        "```",
+        "This is a relative path that was not resolved to an absolute URL before send. The wrapping redirect URL (`https://dv.adidas.com/o/de020a12...`) is valid, but the inner destination is malformed — clicks on this CTA will 404 or error.",
+        "**[INFO] 24 tracking links** use click-redirect domains and were not HTTP-probed. Destination validity for these CTAs is unverified.",
+        "**[WARN] HTTP image sources (not HTTPS) — may be blocked**",
+        "The arrow icon is loaded 4× via plain HTTP:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Gmail, Outlook.com, and Apple Mail all proxy or block mixed-content HTTP image loads. This image will be invisible in those clients.",
+        "The tracking pixel is also HTTP:",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d4e7fa4bb-c4f0671d-1e57-4f91-b211-91fe96a5f163-000000/...",
+        "```",
+        "Open tracking will undercount in clients that block HTTP resources.",
+        "**[WARN] Missing alt text on 2 images**",
+        "- `de020a12-f506-4a6d-ba76-f53ae0dec709` (product/hero image via `dv.adidas.com`)",
+        "- `NJ5cJu1R32Qcii28q19L__aJDRwrlSavm65GT8G91FU=451` (tracking pixel via `click.comms.adidas.com`)",
+        "Images-off rendering and screen readers receive no description for either.",
+        "**[INFO] Malformed charset meta tag**",
+        "```html",
+        "<meta content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Missing `http-equiv=\"Content-Type\"`. Correct form:",
+        "```html",
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Most clients are tolerant, but this is technically invalid HTML 4.01.",
+        "**[INFO] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` and `AdineuePRO` are each declared twice across two separate `<style>` blocks with identical `src` values. No functional breakage, but adds ~1 KB of dead CSS.",
+        "No issues found. No unresolved `{{token}}` or `%%token%%` patterns visible in the provided source.",
+        "**[FAIL] Plain-text fallback absent**",
+        "QA reports text version is 0 characters. CAN-SPAM and most ESP policies require a multipart/alternative text body. This is also a deliverability signal — spam filters treat HTML-only messages as higher risk.",
+        "**[WARN] Authentication-Results header not present**",
+        "SPF/DKIM validation status could not be confirmed via the AgentMail relay. Sending domain is `us-news.comms.adidas.com` (Salesforce Marketing Cloud). If DKIM is misconfigured on this subdomain, inbox placement is at risk.",
+        "The broken inner URL (`/g/de020a12...`) defeats tracking for that specific CTA — any click revenue attribution is lost regardless of UTM presence in the outer redirect.",
+        "For the 24 functioning tracking links, UTM-equivalent parameters (`cp_tp`, `cp_cid`, `mi_cid`, `mi_mid`) are present in the encoded redirect payloads. Full landing page UTM mapping could not be verified without probing the destinations."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/de020a12-f506-4a6d-ba76-f53ae0dec709?txn=9b459300-2e9c-11f1-8f22-8668c83b363d'",
+            "url": "https://dv.adidas.com/o/de020a12-f506-4a6d-ba76-f53ae0dec709?cp_tp=v3.eJzjYuIIFuLguHpt6zk2AWYpXo7DvzmF2Dle8QuwSDApiXNMbMwGCrNxPHiz8xybEkxCq4UJqOnCAlEBRgkWpe-MQqIcC2U0GL1YOBgFGIPAZARXApeQMMdzKQFGDWZkCSFxjpdSAkxoquMT4oESbTICzFiMMeT4JAW0llGBUYPJiYvjXw-fxAkuheWcXlwgJVIQ5UjsDBugWW-lBFjRzDJKMAJKLJERYMPq1tdSAuwaLGhufSMlwIGpWmIBm8JRJiMOjru8SswcjxyBrGY-IOuME5C1lx_IWugGZF0GsW66WbFy3DaVYrDi4DivIcXM0Z3uwBjFwXHdUIiZ4181kHUDxOqoAbJuglg9NVGcHFOshVg47vUyApldNkDm837GDEYASoZMyQ==&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d4e47-7880-7000-85d3-969bda1b820c"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=t6caEvS1WNFvXRVM7oDpk2e9XlQn9AUpte9UQwqslkbwsCvDGLrjLtdpErQ4nXOUKOVkQoaE6GZp33oLq1mYDMhtHDelvQue6QyZ7+Z9IKof1/oSpo1o"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 7,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "24 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: de020a12-f506-4a6d-ba76-f53ae0dec709",
+            "detail": "src: https://dv.adidas.com/o/de020a12-f506-4a6d-ba76-f53ae0dec709?cp_tp=v3.eJzjYuIIFuLguHpt6zk2AWYpXo7DvzmF2Dle8QuwSDApiXNMbM"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: NJ5cJu1R32Qcii28q19L__aJDRwrlSavm65GT8G91FU=451",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d4e7fa4bb-c4f0671d-1e57-4f91-b211-91fe96a5f163-000000/NJ5cJu1R32Qcii28q19L__aJD"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: NJ5cJu1R32Qcii28q19L__aJDRwrlSavm65GT8G91FU=451",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d4e7fa4bb-c4f0671d-1e57-4f91-b211-91fe96a5f163-000000/NJ5cJu1R32Qcii28q19L__aJD"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-02-bold-brave-new-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}

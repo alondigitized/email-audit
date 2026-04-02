@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-02-bold-brave-new",
+    "subject": "Bold. Brave. New.",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-02T14:01:21+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-02-your-items-are-waiting",
     "subject": "Your Items Are Waiting!",
     "from_display_name": "SKECHERS",
