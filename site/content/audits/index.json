@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-02-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-02T13:04:26.606Z",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-01-test-ret-us-na-u-store1423-zip-en-04022026celebrate-our-birthday-in-ridgewood",
     "subject": "[Test]: RET_US_NA_U_STORE1423_ZIP_EN_04022026Celebrate our Birthday in Ridgewood",
     "from_display_name": "SKECHERS STORES",
