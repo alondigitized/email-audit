@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-03-discover-the-support-you-ve-been-looking-for",
+    "subject": "Discover the Support You've Been Looking For",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-03T15:04:32+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-03-did-you-forget-something",
     "subject": "Did you forget something?",
     "from_display_name": "SKECHERS",
