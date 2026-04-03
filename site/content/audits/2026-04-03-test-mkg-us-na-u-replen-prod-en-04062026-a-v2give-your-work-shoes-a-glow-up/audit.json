@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-a-v2give-your-work-shoes-a-glow-up",
+  "email": {
+    "subject": "[Test]: MKG_US_NA_U_REPLEN_PROD_EN_04062026_A_V2Give Your Work Shoes a Glow-Up",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-03T19:33:34+00:00",
+    "date_formatted": "2026-04-03 19:33 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## 1. Executive Summary\n\nA lean, functional work footwear replenishment email targeting people due for a shoe refresh. The concept is sound — \"Work Refresh\" as a replenishment hook — but execution is thin. Product photography is competent, category navigation is present, and the offer (Buy One Get One 50% Off) is visible at the top. The email does its job at a basic level but leaves significant conversion value on the table through low-energy creative, absent social proof, and a category structure that prioritizes breadth over depth.\n\n---\n\n## 2. Business Impact Score: 5/10\n\nServiceable but forgettable. The offer is real, the product is shown, and there are clear CTAs. But nothing here earns a click that a generic promotional email wouldn't already get from an engaged subscriber.\n\n---\n\n## 3. What's Working\n\n- **Offer visibility**: BOGO 50% off is positioned at the very top in the banner — hard to miss.\n- **Clear category segmentation**: Slip-Resistant, Safety Toe, and Wide Fit are called out as distinct sections with dedicated \"Shop\" CTAs. This mirrors how work shoe buyers actually think.\n- **Hero image variety**: The lifestyle montage (multiple workers in different contexts) does a decent job of broadening relevance — kitchen, warehouse, outdoor settings.\n- **Footer utility**: App download, Curbside Pickup, Find a Store, and Shop Now Pay Later are all present. Practical and expected for this audience.\n\n---\n\n## 4. What's Weak\n\n- **\"Work Refresh\" headline underperforms**: The headline is decorative and small. Given that this is a replenishment push, there's a missed opportunity to make the value proposition emotionally resonant — something like urgency around worn-out shoes or safety risk.\n- **Product shots are all dark/black shoes**: Every product module shows nearly identical dark colorways against white backgrounds. This creates visual monotony and makes it hard to differentiate the three categories.\n- **No pricing visible**: None of the product tiles show price, original vs. sale price, or how the BOGO applies. The offer is announced but never resolved at the product level.\n- **Category navigation bar is weak**: Women / Men / Kids / Clothing / New Arrivals / Sale appears as a plain text list mid-email. It reads as secondary nav filler, not a compelling click target.\n- **No social proof**: No ratings, no review counts, no \"bestseller\" or \"most popular in your industry\" callouts. Work shoe buyers are practical — social proof would convert here.\n- **Subject line is exposed as a test**: \"[Test]:\" prefix is visible in the subject line, indicating this is a QA/test send and not a live deployment.\n\n---\n\n## 5. Recommendations\n\n1. **Surface the BOGO math at the product level** — show an original price crossed out next to the discounted pair price so the offer clicks at the moment of consideration.\n2. **Differentiate product images by category** — show a brown or grey slip-resistant style, a steel-toe boot in a non-black color, a wide-fit sneaker in a distinct colorway. Visual differentiation makes the three modules feel like actual choices.\n3. **Add one proof point per category** — even a simple \"★ 4.7 (2,300+ reviews)\" under a hero product would meaningfully lift clicks.\n4. **Rewrite the hero copy** — replace \"Work Refresh\" with something that creates urgency specific to replenishment: \"Still wearing last year's pair?\" or \"Your feet logged 300+ hours. Time to replace.\"\n5. **Confirm this is not deployed with the test subject line** — \"[Test]:\" in the subject line would be a significant quality failure if sent to a live list.\n\n---\n\n## 6. Bottom Line\n\nTechnically complete, strategically average. The segmented category approach (Slip-Resistant / Safety Toe / Wide Fit) is the strongest structural choice in the email. Everything else — creative, copy, pricing transparency, social proof — is at minimum viable, not maximum impact. For a replenishment audience that's already brand-aware, this email doesn't give them a compelling reason to act today.\n\n---\n\n## 7. Evidence\n\n**Overall purpose**: Work footwear replenishment push, anchored to a BOGO 50% off promotional offer. Targeted at buyers likely due for a shoe replacement.\n\n**Hero / primary value proposition**: BOGO 50% off banner at top. Below that, a lifestyle montage of workers in various industries followed by the \"Work Refresh\" headline. The offer and concept are set up but not emotionally reinforced in the body.\n\n**Membership / benefits section**: None visible. No loyalty, adiClub-equivalent, or member-exclusive messaging present.\n\n**Product discoverability / recommendation modules**: Three clearly delineated modules — Slip-Resistant, Safety Toe, Wide Fit — each with a single product image and a dedicated \"Shop [Category]\" CTA button. Product variety is low; all shown styles are black/dark.\n\n**Utility / secondary modules**: Category nav bar (Women, Men, Kids, Clothing, New Arrivals, Sale). Footer with App download, Curbside Pickup, Find a Store, Shop Now Pay Later. Standard but functional.\n\n**Bugs / friction / clarity issues**: The subject line includes a \"[Test]:\" prefix, which is visible and would be a live send error if deployed. No other visible rendering bugs — images load, text is legible, CTAs are present and distinguishable.\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers Work Shoes Replenishment Email\n**Campaign:** `MKG_US_NA_U_REPLEN_PROD_EN_04062026_A` | **Platform:** Salesforce Marketing Cloud\n\n---\n\n### 1. Technical Summary\n\nSFMC-hosted replenishment email with 26 tracked click links and multiple beacon pixels. Primary risks are a broken inbox-monitoring pixel (missing protocol), pervasive HTTP image sourcing across all hosted assets, and two accessibility violations in the viewport/CSS declarations.\n\n---\n\n### 2. Link & Tracking Issues\n\n**Broken — Return Path pixel missing protocol:**\n```\nsrc=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\"\n```\nNo `https://` prefix. Browsers/mail clients treat this as a relative URL — pixel fires against the wrong origin and silently drops all inbox monitoring data.\n\n**HTTP tracking pixel — Ink1000:**\n```\nsrc=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=MKG_US_NA_U_REPLEN_PROD_EN_04062026_A\"\n```\nServed over HTTP. Mixed content; blocked in most modern clients.\n\n**26 click-redirect links** via `click.emails.skechers.com` — standard SFMC pattern, not probed. Destination UTM params not inspectable from encrypted query strings.\n\n**Passing:** SFMC open pixel (`click.emails.skechers.com/open.aspx`) and Krux beacons both use HTTPS correctly.\n\n---\n\n### 3. Rendering & Accessibility\n\n**HTTP image sources (15+ assets):** Every image hosted on `image.emails.skechers.com` is served over HTTP:\n```\nsrc=\"http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png\"  ← Skechers logo\nsrc=\"http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/...\"  ← all footer/social/payment icons\n```\nMixed content triggers blocking warnings or silent image suppression in Gmail, Outlook.com, and Apple Mail. All should be `https://`.\n\n**Missing alt text on functional images:**\n- `49468f73-4651-4af3-bea2-61d1ae5db486.png`\n- `00100b23-0afa-4715-a8cd-23bb46f9d2b2.png`\n- `fc08601a-fcce-4c96-8b90-39e5a55d6c05.png`\n\n**Viewport blocks zoom (WCAG 1.4.4 violation):**\n```html\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\" />\n```\n`maximum-scale=1` prevents users from zooming — fails SC 1.4.4 (Resize Text).\n\n**Text resize disabled on iOS:**\n```css\n* { -webkit-text-size-adjust: none; }\n```\n`none` disables all automatic text scaling. Should be `100%` — `none` also breaks font scaling in some iOS mail clients.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens detected in the provided source. Preheader is hardcoded:\n```\n\"Upgrade Your Workday Comfort - BOGO 50% Off or 20% off 1 pair\"\n```\nNo dynamic personalization in preheader or visible body copy. Krux pixel carries raw subscriber ID (`partner_uid=7187828`) consistent with a test send.\n\n---\n\n### 5. Compliance\n\n**Subject line is malformed — test prefix not stripped, and campaign code concatenated directly into subject copy:**\n```\n[Test]: MKG_US_NA_U_REPLEN_PROD_EN_04062026_A_V2Give Your Work Shoes a Glow-Up\n```\nMissing space between `_V2` and `Give`. This is a pre-production send; both issues must be resolved before deployment.\n\n**SPF/DKIM status unknown:** `Authentication-Results` header not present in QA capture. Cannot confirm DMARC alignment. Must be verified at relay level before production send.\n\n**CAN-SPAM:** Physical address and unsubscribe link not visible in truncated source — cannot confirm from available HTML. Assumed present in production template footer; verify before send.\n\n---\n\n### 6. Email-to-Site Continuity\n\nCampaign ID `MKG_US_NA_U_REPLEN_PROD_EN_04062026_A` is consistently applied across the Krux impression pixel (`campaignid=`), Ink1000 pixel (`mi_ecmp=`), and subject line — good cross-channel consistency.\n\nUTM parameters on destination URLs are not inspectable from the encrypted SFMC click-redirect query strings. UTM alignment should be verified via a test click-through before production.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Fix |\n|---|---|---|\n| **Critical** | Return Path pixel broken (no protocol) | Change `src=\"pixel.app.returnpath.net/...\"` → `src=\"https://pixel.app.returnpath.net/...\"` |\n| **High** | All `image.emails.skechers.com` assets over HTTP | Migrate entire image library to `https://image.emails.skechers.com` |\n| **High** | Subject line: `[Test]` prefix + missing space before copy | Strip `[Test]:` prefix; insert space between campaign code suffix and subject copy |\n| **High** | SPF/DKIM unverified | Confirm `Authentication-Results` is present and DMARC-aligned in relay headers before production |\n| **Medium** | `maximum-scale=1` blocks zoom | Remove `maximum-scale=1` from viewport meta |\n| **Medium** | `-webkit-text-size-adjust: none` | Replace `none` with `100%` |\n| **Medium** | 3 functional images missing alt text | Add descriptive `alt` attributes to `49468f73`, `00100b23`, `fc08601a` PNGs |\n| **Low** | Ink1000 tracking pixel over HTTP | Update to HTTPS or evaluate whether this vendor is still needed |",
+    "sections": {
+      "executive_summary": [
+        "A lean, functional work footwear replenishment email targeting people due for a shoe refresh. The concept is sound — \"Work Refresh\" as a replenishment hook — but execution is thin. Product photography is competent, category navigation is present, and the offer (Buy One Get One 50% Off) is visible at the top. The email does its job at a basic level but leaves significant conversion value on the table through low-energy creative, absent social proof, and a category structure that prioritizes breadth over depth.",
+        "Serviceable but forgettable. The offer is real, the product is shown, and there are clear CTAs. But nothing here earns a click that a generic promotional email wouldn't already get from an engaged subscriber."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Offer visibility**: BOGO 50% off is positioned at the very top in the banner — hard to miss.",
+        "- **Clear category segmentation**: Slip-Resistant, Safety Toe, and Wide Fit are called out as distinct sections with dedicated \"Shop\" CTAs. This mirrors how work shoe buyers actually think.",
+        "- **Hero image variety**: The lifestyle montage (multiple workers in different contexts) does a decent job of broadening relevance — kitchen, warehouse, outdoor settings.",
+        "- **Footer utility**: App download, Curbside Pickup, Find a Store, and Shop Now Pay Later are all present. Practical and expected for this audience."
+      ],
+      "whats_weak": [
+        "- **\"Work Refresh\" headline underperforms**: The headline is decorative and small. Given that this is a replenishment push, there's a missed opportunity to make the value proposition emotionally resonant — something like urgency around worn-out shoes or safety risk.",
+        "- **Product shots are all dark/black shoes**: Every product module shows nearly identical dark colorways against white backgrounds. This creates visual monotony and makes it hard to differentiate the three categories.",
+        "- **No pricing visible**: None of the product tiles show price, original vs. sale price, or how the BOGO applies. The offer is announced but never resolved at the product level.",
+        "- **Category navigation bar is weak**: Women / Men / Kids / Clothing / New Arrivals / Sale appears as a plain text list mid-email. It reads as secondary nav filler, not a compelling click target.",
+        "- **No social proof**: No ratings, no review counts, no \"bestseller\" or \"most popular in your industry\" callouts. Work shoe buyers are practical — social proof would convert here.",
+        "- **Subject line is exposed as a test**: \"[Test]:\" prefix is visible in the subject line, indicating this is a QA/test send and not a live deployment."
+      ],
+      "recommendations": [
+        "1. **Surface the BOGO math at the product level** — show an original price crossed out next to the discounted pair price so the offer clicks at the moment of consideration.",
+        "2. **Differentiate product images by category** — show a brown or grey slip-resistant style, a steel-toe boot in a non-black color, a wide-fit sneaker in a distinct colorway. Visual differentiation makes the three modules feel like actual choices.",
+        "3. **Add one proof point per category** — even a simple \"★ 4.7 (2,300+ reviews)\" under a hero product would meaningfully lift clicks.",
+        "4. **Rewrite the hero copy** — replace \"Work Refresh\" with something that creates urgency specific to replenishment: \"Still wearing last year's pair?\" or \"Your feet logged 300+ hours. Time to replace.\"",
+        "5. **Confirm this is not deployed with the test subject line** — \"[Test]:\" in the subject line would be a significant quality failure if sent to a live list.",
+        "| Priority | Issue | Fix |",
+        "|---|---|---|",
+        "| **Critical** | Return Path pixel broken (no protocol) | Change `src=\"pixel.app.returnpath.net/...\"` → `src=\"https://pixel.app.returnpath.net/...\"` |",
+        "| **High** | All `image.emails.skechers.com` assets over HTTP | Migrate entire image library to `https://image.emails.skechers.com` |",
+        "| **High** | Subject line: `[Test]` prefix + missing space before copy | Strip `[Test]:` prefix; insert space between campaign code suffix and subject copy |",
+        "| **High** | SPF/DKIM unverified | Confirm `Authentication-Results` is present and DMARC-aligned in relay headers before production |",
+        "| **Medium** | `maximum-scale=1` blocks zoom | Remove `maximum-scale=1` from viewport meta |",
+        "| **Medium** | `-webkit-text-size-adjust: none` | Replace `none` with `100%` |",
+        "| **Medium** | 3 functional images missing alt text | Add descriptive `alt` attributes to `49468f73`, `00100b23`, `fc08601a` PNGs |",
+        "| **Low** | Ink1000 tracking pixel over HTTP | Update to HTTPS or evaluate whether this vendor is still needed |"
+      ],
+      "bottom_line": [
+        "Technically complete, strategically average. The segmented category approach (Slip-Resistant / Safety Toe / Wide Fit) is the strongest structural choice in the email. Everything else — creative, copy, pricing transparency, social proof — is at minimum viable, not maximum impact. For a replenishment audience that's already brand-aware, this email doesn't give them a compelling reason to act today."
+      ],
+      "evidence": [
+        "**Overall purpose**: Work footwear replenishment push, anchored to a BOGO 50% off promotional offer. Targeted at buyers likely due for a shoe replacement.",
+        "**Hero / primary value proposition**: BOGO 50% off banner at top. Below that, a lifestyle montage of workers in various industries followed by the \"Work Refresh\" headline. The offer and concept are set up but not emotionally reinforced in the body.",
+        "**Membership / benefits section**: None visible. No loyalty, adiClub-equivalent, or member-exclusive messaging present.",
+        "**Product discoverability / recommendation modules**: Three clearly delineated modules — Slip-Resistant, Safety Toe, Wide Fit — each with a single product image and a dedicated \"Shop [Category]\" CTA button. Product variety is low; all shown styles are black/dark.",
+        "**Utility / secondary modules**: Category nav bar (Women, Men, Kids, Clothing, New Arrivals, Sale). Footer with App download, Curbside Pickup, Find a Store, Shop Now Pay Later. Standard but functional.",
+        "**Bugs / friction / clarity issues**: The subject line includes a \"[Test]:\" prefix, which is visible and would be a live send error if deployed. No other visible rendering bugs — images load, text is legible, CTAs are present and distinguishable.",
+        "**Campaign:** `MKG_US_NA_U_REPLEN_PROD_EN_04062026_A` | **Platform:** Salesforce Marketing Cloud",
+        "SFMC-hosted replenishment email with 26 tracked click links and multiple beacon pixels. Primary risks are a broken inbox-monitoring pixel (missing protocol), pervasive HTTP image sourcing across all hosted assets, and two accessibility violations in the viewport/CSS declarations.",
+        "**Broken — Return Path pixel missing protocol:**",
+        "```",
+        "src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\"",
+        "```",
+        "No `https://` prefix. Browsers/mail clients treat this as a relative URL — pixel fires against the wrong origin and silently drops all inbox monitoring data.",
+        "**HTTP tracking pixel — Ink1000:**",
+        "```",
+        "src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=MKG_US_NA_U_REPLEN_PROD_EN_04062026_A\"",
+        "```",
+        "Served over HTTP. Mixed content; blocked in most modern clients.",
+        "**26 click-redirect links** via `click.emails.skechers.com` — standard SFMC pattern, not probed. Destination UTM params not inspectable from encrypted query strings.",
+        "**Passing:** SFMC open pixel (`click.emails.skechers.com/open.aspx`) and Krux beacons both use HTTPS correctly.",
+        "**HTTP image sources (15+ assets):** Every image hosted on `image.emails.skechers.com` is served over HTTP:",
+        "```",
+        "src=\"http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png\"  ← Skechers logo",
+        "src=\"http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/...\"  ← all footer/social/payment icons",
+        "```",
+        "Mixed content triggers blocking warnings or silent image suppression in Gmail, Outlook.com, and Apple Mail. All should be `https://`.",
+        "**Missing alt text on functional images:**",
+        "- `49468f73-4651-4af3-bea2-61d1ae5db486.png`",
+        "- `00100b23-0afa-4715-a8cd-23bb46f9d2b2.png`",
+        "- `fc08601a-fcce-4c96-8b90-39e5a55d6c05.png`",
+        "**Viewport blocks zoom (WCAG 1.4.4 violation):**",
+        "```html",
+        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\" />",
+        "```",
+        "`maximum-scale=1` prevents users from zooming — fails SC 1.4.4 (Resize Text).",
+        "**Text resize disabled on iOS:**",
+        "```css",
+        "* { -webkit-text-size-adjust: none; }",
+        "```",
+        "`none` disables all automatic text scaling. Should be `100%` — `none` also breaks font scaling in some iOS mail clients.",
+        "No unresolved merge tokens detected in the provided source. Preheader is hardcoded:",
+        "```",
+        "\"Upgrade Your Workday Comfort - BOGO 50% Off or 20% off 1 pair\"",
+        "```",
+        "No dynamic personalization in preheader or visible body copy. Krux pixel carries raw subscriber ID (`partner_uid=7187828`) consistent with a test send.",
+        "**Subject line is malformed — test prefix not stripped, and campaign code concatenated directly into subject copy:**",
+        "```",
+        "[Test]: MKG_US_NA_U_REPLEN_PROD_EN_04062026_A_V2Give Your Work Shoes a Glow-Up",
+        "```",
+        "Missing space between `_V2` and `Give`. This is a pre-production send; both issues must be resolved before deployment.",
+        "**SPF/DKIM status unknown:** `Authentication-Results` header not present in QA capture. Cannot confirm DMARC alignment. Must be verified at relay level before production send.",
+        "**CAN-SPAM:** Physical address and unsubscribe link not visible in truncated source — cannot confirm from available HTML. Assumed present in production template footer; verify before send.",
+        "Campaign ID `MKG_US_NA_U_REPLEN_PROD_EN_04062026_A` is consistently applied across the Krux impression pixel (`campaignid=`), Ink1000 pixel (`mi_ecmp=`), and subject line — good cross-channel consistency.",
+        "UTM parameters on destination URLs are not inspectable from the encrypted SFMC click-redirect query strings. UTM alignment should be verified via a test click-through before production."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiNzE4NzgyOCIsImxpZCI6IjI1IiwiaiI6IjE4NTIzMCIsImpiIjoiMSIsImQiOiIxMDA"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 17,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=MKG_US_NA_U_REPLEN_PROD_EN_04062026_A"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=MKG_US_NA_U_REPLEN_PROD_EN_04062026_A"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Twitter\" (d76a5487-158e-4781-82a4-b65b04c051e4.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/d76a5487-158e-4781-82a4-b65b04c051e4.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-a-v2give-your-work-shoes-a-glow-up-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=QXD4RPGMGVVEPJ6P3DKPRS74FM.100214"
+  }
+}

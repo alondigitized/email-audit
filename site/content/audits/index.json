@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-a-v2give-your-work-shoes-a-glow-up",
+    "subject": "[Test]: MKG_US_NA_U_REPLEN_PROD_EN_04062026_A_V2Give Your Work Shoes a Glow-Up",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-03T19:33:34+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-agive-your-work-shoes-a-glow-up",
     "subject": "[Test]: MKG_US_NA_U_REPLEN_PROD_EN_04062026_AGive Your Work Shoes A Glow-Up",
     "from_display_name": "SKECHERS",
