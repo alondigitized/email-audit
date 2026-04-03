@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-03-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04052026spring-fling-sale-double-the-",
+    "subject": "[Test]: PRO_US_ECMPURL24_U_SITEBUNDLE_ECOM_EN_04052026Spring Fling Sale = Double the Style & Savings",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-03T17:11:34+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-03-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04052026take-your-pick-during-the",
     "subject": "[Test]: PRO_US_NONPUR180_U_SITEBUNDLE_NONPURCH_EN_04052026Take Your Pick During the Spring Fling Sale",
     "from_display_name": "SKECHERS",
