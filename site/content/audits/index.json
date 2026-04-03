@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-03-test-mkg-us-nonpuropen-u-new-nonpurch-en-04062026out-with-the-old-into-spring",
+    "subject": "[Test]: MKG_US_NONPUROPEN_U_NEW_NONPURCH_EN_04062026Out with the Old & Into Spring 🌸",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-03T21:48:33+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-03-test-mkg-us-nonpuropen-u-multi-nonpurch-en-04062026out-with-the-old-into-spring",
     "subject": "[Test]: MKG_US_NONPUROPEN_U_MULTI_NONPURCH_EN_04062026Out with the Old & Into Spring 🌸",
     "from_display_name": "SKECHERS",
