@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-04-start-with-one-get-the-second-for-less",
+    "subject": "Start With One. Get the Second For Less",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-04T16:06:10+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-04-did-you-forget-something",
     "subject": "Did you forget something?",
     "from_display_name": "SKECHERS",
