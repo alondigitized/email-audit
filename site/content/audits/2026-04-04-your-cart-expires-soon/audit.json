@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-04-your-cart-expires-soon",
+  "email": {
+    "subject": "Your cart expires soon!",
+    "from": "SKECHERS <hello@msgs.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-04T23:01:49+00:00",
+    "date_formatted": "2026-04-04 23:01 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## Skechers — \"Your cart expires soon!\" Cart Abandonment Email\n\n---\n\n### 1. Executive Summary\n\nThis is a textbook cart abandonment email that gets the fundamentals right — hero product, recovery CTA, cross-sell modules — but undercuts urgency at every step. The subject line promises expiring cart pressure; the email body delivers none of it. The single hero product is clean and recognizable, but the abandon-recovery experience is diluted by a deep stack of navigation-style modules that push the user toward browsing, not buying. The overall structure is competent but generic, and the missed urgency angle is the email's biggest commercial failure.\n\n---\n\n### 2. Business Impact Score: **5 / 10**\n\nFunctional enough to recover some abandoners. Not optimized to convert at the rate a dedicated cart recovery program should.\n\n---\n\n### 3. What's Working\n\n- **Hero product presentation is clean.** The Max Cushioning Air 2.0 is shown with a confident top-of-email rendering. Product name and model are readable.\n- **\"YOU LIKED THESE AND YOU WEREN'T WRONG\" headline** is casual, personality-driven, and reduces buyer regret friction — a smart tone for a recovery email.\n- **\"COMPLETE YOUR ORDER\" CTA** is prominent, in brand blue, above the fold. Placement is correct.\n- **Buy One Get One 50% Off banner** is a genuine conversion lever and is placed in the right zone (mid-email, after the hero).\n- **Cross-sell row** (Best Sellers) directly below the hero is appropriate — gives alternative paths if the hero product isn't quite right.\n\n---\n\n### 4. What's Weak\n\n- **Zero urgency in the body.** The subject line says \"your cart expires soon\" — that urgency disappears the moment you open the email. There's no countdown, no \"expires in 24 hours,\" no stock scarcity signal. The pressure promised in the subject is not delivered, which erodes trust and reduces conversion.\n- **The hero product image is small and the product page detail is minimal.** At this render size, pricing is not visible near the hero product, which is a friction point — users shouldn't have to click to know what they're being asked to pay.\n- **Too many navigation modules.** Women / Men / Kids / Clothing / New Arrivals / Sale — this is a full site nav repeated in email form. It converts a high-intent cart recovery moment into a general browse session, diluting click concentration.\n- **BOGO offer is unattributed to the cart.** The 50% off banner appears disconnected from the specific abandoned product. Does it apply? The email doesn't say.\n- **\"Shop Now, Pay Later\" and app download modules** at the bottom are utility content that belongs in a general newsletter, not a cart abandonment flow. They add length and scroll without aiding recovery.\n- **Product cross-sell images are thumbnail-sized.** The Best Sellers row is too small to merchandise effectively.\n\n---\n\n### 5. Recommendations\n\n1. **Add urgency copy to the body** — \"Your cart expires in 24 hours\" or a visible countdown. The subject line sets an expectation that must be paid off.\n2. **Show price near the hero product** — cart abandoners are price-sensitive; removing the friction of a click to see cost is a quick win.\n3. **Tie the BOGO offer explicitly to the cart item** — \"Add another pair — your BOGO deal applies now\" closes the gap between the promotion and the recovery action.\n4. **Cut the nav modules (Women/Men/Kids/Clothing/Sale).** This isn't a newsletter; route all intent toward the cart, not category browsing.\n5. **Remove or relocate the app download and pay-later modules** to a post-purchase flow where they're more relevant.\n6. **Add social proof near the hero** — a star rating or \"X people bought this today\" near the abandoned product increases purchase confidence.\n\n---\n\n### 6. Bottom Line\n\nSkechers sends a structurally adequate cart abandonment email that fails its primary job: converting high-intent abandoners under time pressure. The urgency promised in the subject line evaporates in the body, the email is padded with general-browse modules, and the BOGO offer floats without connecting to the cart. Strip the nav noise, inject real urgency, anchor the offer to the specific product — and this email performs meaningfully better.\n\n---\n\n### 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Cart abandonment recovery — returning user to a specific abandoned product (Max Cushioning Air 2.0) |\n| **Hero / primary value prop** | Hero product with \"YOU LIKED THESE\" headline and \"COMPLETE YOUR ORDER\" CTA. Clean but no pricing, no urgency signal |\n| **Membership / benefits** | None visible |\n| **Product discoverability / recommendation modules** | Best Sellers cross-sell row below hero (4 products, thumbnail size); category nav links (Women, Men, Kids, Clothing, New Arrivals, Sale) |\n| **Utility / secondary modules** | BOGO 50% off banner; Shop Now Pay Later (Afterpay/Klarna logos); App download (Apple/Google); Curbside Pickup; Find a Store; Follow Us (social icons) |\n| **Bugs / friction / clarity issues** | No visible broken images or rendering errors. Pricing absent from hero zone. Urgency promised in subject not reflected anywhere in the visible email body |\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers \"Your cart expires soon!\"\n**From:** hello@msgs.skechers.com | **ESP:** Attentive\n\n---\n\n### 1. Technical Summary\nAbandoned cart email built on Attentive's platform with standard table-based layout. Primary technical concern is consistent use of HTTP (non-HTTPS) click-tracking links across all CTAs, which exposes redirect traffic to interception and triggers browser/client security warnings.\n\n---\n\n### 2. Link & Tracking Issues\n\n**HTTP tracking URLs (all visible links affected)**\nEvery link in the source routes through `http://skechers.attentivemail.com/ls/click?upn=...` — unencrypted HTTP, not HTTPS.\n\nEvidence:\n```\nhttp://skechers.attentivemail.com/ls/click?upn=u001.LNc6VorXOZu5avyAvDTfGTW...\nhttp://skechers.attentivemail.com/ls/click?upn=u001.LNc6VorXOZu5avyAvDTfGQTJ...\n```\n\nThis is an ESP configuration issue. Attentive supports HTTPS click tracking — the sending account should have SSL enabled on the custom tracking domain. HTTP links: (a) fail Mixed Content checks in some webmail clients rendering over HTTPS, (b) expose the click token in plaintext, (c) may be flagged by security gateways.\n\n**Web version link**\nPresent and functional. Routes through same HTTP tracking endpoint.\n\n**Destination UTM params**\nCannot confirm — HTML is truncated before destination URLs are exposed post-redirect. See Section 6.\n\n---\n\n### 3. Rendering & Accessibility\n\n**Empty `<title>` tag**\n```html\n<title></title>\n```\nBlank title is displayed in some email clients' tab/window bars and can be indexed. Should be set to something meaningful (e.g., \"Your Skechers Cart | Expires Soon\").\n\n**`#MessageViewBody a` CSS override**\n```css\n#MessageViewBody a { color: inherit; text-decoration: none }\n```\nThis Gmail-targeting rule strips link underlines and color globally. The inline `style=\"color:#434343\"` on the \"web version\" anchor partially overrides this, but any CTA anchor that relies on stylesheet-level color (not inline) will be affected in Gmail webmail. Verify all CTA `<a>` tags have inline `color` and any desired text-decoration set.\n\n**Layout tables missing `role=\"presentation\"`**\nVisible `<table>` elements (`.nl-container`, `.row`, `.row-content`) do not include `role=\"presentation\"`. Screen readers will announce these as data tables. Standard fix: add `role=\"presentation\"` to all layout tables.\n\n**Image alt text**\nHTML is truncated before `<img>` tags are visible — cannot confirm. Must verify all product/hero images carry descriptive `alt` text; decorative spacers should use `alt=\"\"`.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens (e.g., `{{first_name}}`, `%%EMAIL%%`) are visible in the provided HTML. Preheader copy is static: *\"You left something in your cart, get it before it's gone!\"* — no first-name personalization present.\n\nIf cart item personalization (product name, image, price) is injected server-side before send, this cannot be confirmed from static HTML alone. Verify in Attentive preview mode that cart block renders populated data and not empty/fallback content.\n\n---\n\n### 5. Compliance\n\n**CAN-SPAM / unsubscribe**\nHTML is truncated — footer is not present in the provided source. Cannot confirm:\n- Physical mailing address\n- Clear unsubscribe mechanism\n\nThese are legal requirements. Must be verified in full source. Attentive's default footer typically includes both, but any customization should be audited.\n\n**Sending domain alignment**\n- Envelope from: `msgs.skechers.com`\n- Tracking domain: `skechers.attentivemail.com`\n\nThe subdomain `msgs.skechers.com` should have SPF, DKIM, and DMARC records configured. The mismatch between sending domain and tracking domain is normal for ESPs but DMARC alignment requires the `d=` value in the DKIM signature to align with `msgs.skechers.com` or the parent `skechers.com`. Cannot verify without email headers.\n\n---\n\n### 6. Email-to-Site Continuity\n\nCannot fully audit — destination URLs are behind the Attentive redirect (`/ls/click?upn=...`) and the HTML is truncated before post-redirect parameters are visible. \n\n**Action required:** Decode a sample tracking URL and confirm:\n1. UTM parameters are present (e.g., `utm_source`, `utm_medium=email`, `utm_campaign`, `utm_content`)\n2. Destination lands on an authenticated cart recovery page (not generic homepage)\n3. Cart items pre-populate correctly for the recipient\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Fix |\n|---|---|---|\n| High | All click-tracking URLs use HTTP | Enable SSL on `skechers.attentivemail.com` tracking domain in Attentive account settings |\n| High | Footer compliance not confirmed | Audit full HTML for physical address + unsubscribe link |\n| Medium | Layout tables missing `role=\"presentation\"` | Add `role=\"presentation\"` to all layout `<table>` elements |\n| Medium | UTM params unconfirmed | Decode a tracking link and verify UTM chain to landing page |\n| Medium | Image alt text unconfirmed | Audit all `<img>` tags in full source |\n| Low | Empty `<title>` tag | Set to descriptive value |\n| Low | `#MessageViewBody a` override | Ensure all CTA `<a>` tags have inline `color` to override Gmail stripping |",
+    "sections": {
+      "executive_summary": [
+        "This is a textbook cart abandonment email that gets the fundamentals right — hero product, recovery CTA, cross-sell modules — but undercuts urgency at every step. The subject line promises expiring cart pressure; the email body delivers none of it. The single hero product is clean and recognizable, but the abandon-recovery experience is diluted by a deep stack of navigation-style modules that push the user toward browsing, not buying. The overall structure is competent but generic, and the missed urgency angle is the email's biggest commercial failure.",
+        "Functional enough to recover some abandoners. Not optimized to convert at the rate a dedicated cart recovery program should."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero product presentation is clean.** The Max Cushioning Air 2.0 is shown with a confident top-of-email rendering. Product name and model are readable.",
+        "- **\"YOU LIKED THESE AND YOU WEREN'T WRONG\" headline** is casual, personality-driven, and reduces buyer regret friction — a smart tone for a recovery email.",
+        "- **\"COMPLETE YOUR ORDER\" CTA** is prominent, in brand blue, above the fold. Placement is correct.",
+        "- **Buy One Get One 50% Off banner** is a genuine conversion lever and is placed in the right zone (mid-email, after the hero).",
+        "- **Cross-sell row** (Best Sellers) directly below the hero is appropriate — gives alternative paths if the hero product isn't quite right."
+      ],
+      "whats_weak": [
+        "- **Zero urgency in the body.** The subject line says \"your cart expires soon\" — that urgency disappears the moment you open the email. There's no countdown, no \"expires in 24 hours,\" no stock scarcity signal. The pressure promised in the subject is not delivered, which erodes trust and reduces conversion.",
+        "- **The hero product image is small and the product page detail is minimal.** At this render size, pricing is not visible near the hero product, which is a friction point — users shouldn't have to click to know what they're being asked to pay.",
+        "- **Too many navigation modules.** Women / Men / Kids / Clothing / New Arrivals / Sale — this is a full site nav repeated in email form. It converts a high-intent cart recovery moment into a general browse session, diluting click concentration.",
+        "- **BOGO offer is unattributed to the cart.** The 50% off banner appears disconnected from the specific abandoned product. Does it apply? The email doesn't say.",
+        "- **\"Shop Now, Pay Later\" and app download modules** at the bottom are utility content that belongs in a general newsletter, not a cart abandonment flow. They add length and scroll without aiding recovery.",
+        "- **Product cross-sell images are thumbnail-sized.** The Best Sellers row is too small to merchandise effectively."
+      ],
+      "recommendations": [
+        "1. **Add urgency copy to the body** — \"Your cart expires in 24 hours\" or a visible countdown. The subject line sets an expectation that must be paid off.",
+        "2. **Show price near the hero product** — cart abandoners are price-sensitive; removing the friction of a click to see cost is a quick win.",
+        "3. **Tie the BOGO offer explicitly to the cart item** — \"Add another pair — your BOGO deal applies now\" closes the gap between the promotion and the recovery action.",
+        "4. **Cut the nav modules (Women/Men/Kids/Clothing/Sale).** This isn't a newsletter; route all intent toward the cart, not category browsing.",
+        "5. **Remove or relocate the app download and pay-later modules** to a post-purchase flow where they're more relevant.",
+        "6. **Add social proof near the hero** — a star rating or \"X people bought this today\" near the abandoned product increases purchase confidence.",
+        "| Priority | Issue | Fix |",
+        "|---|---|---|",
+        "| High | All click-tracking URLs use HTTP | Enable SSL on `skechers.attentivemail.com` tracking domain in Attentive account settings |",
+        "| High | Footer compliance not confirmed | Audit full HTML for physical address + unsubscribe link |",
+        "| Medium | Layout tables missing `role=\"presentation\"` | Add `role=\"presentation\"` to all layout `<table>` elements |",
+        "| Medium | UTM params unconfirmed | Decode a tracking link and verify UTM chain to landing page |",
+        "| Medium | Image alt text unconfirmed | Audit all `<img>` tags in full source |",
+        "| Low | Empty `<title>` tag | Set to descriptive value |",
+        "| Low | `#MessageViewBody a` override | Ensure all CTA `<a>` tags have inline `color` to override Gmail stripping |"
+      ],
+      "bottom_line": [
+        "Skechers sends a structurally adequate cart abandonment email that fails its primary job: converting high-intent abandoners under time pressure. The urgency promised in the subject line evaporates in the body, the email is padded with general-browse modules, and the BOGO offer floats without connecting to the cart. Strip the nav noise, inject real urgency, anchor the offer to the specific product — and this email performs meaningfully better."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Cart abandonment recovery — returning user to a specific abandoned product (Max Cushioning Air 2.0) |",
+        "| **Hero / primary value prop** | Hero product with \"YOU LIKED THESE\" headline and \"COMPLETE YOUR ORDER\" CTA. Clean but no pricing, no urgency signal |",
+        "| **Membership / benefits** | None visible |",
+        "| **Product discoverability / recommendation modules** | Best Sellers cross-sell row below hero (4 products, thumbnail size); category nav links (Women, Men, Kids, Clothing, New Arrivals, Sale) |",
+        "| **Utility / secondary modules** | BOGO 50% off banner; Shop Now Pay Later (Afterpay/Klarna logos); App download (Apple/Google); Curbside Pickup; Find a Store; Follow Us (social icons) |",
+        "| **Bugs / friction / clarity issues** | No visible broken images or rendering errors. Pricing absent from hero zone. Urgency promised in subject not reflected anywhere in the visible email body |",
+        "**From:** hello@msgs.skechers.com | **ESP:** Attentive",
+        "Abandoned cart email built on Attentive's platform with standard table-based layout. Primary technical concern is consistent use of HTTP (non-HTTPS) click-tracking links across all CTAs, which exposes redirect traffic to interception and triggers browser/client security warnings.",
+        "**HTTP tracking URLs (all visible links affected)**",
+        "Every link in the source routes through `http://skechers.attentivemail.com/ls/click?upn=...` — unencrypted HTTP, not HTTPS.",
+        "```",
+        "http://skechers.attentivemail.com/ls/click?upn=u001.LNc6VorXOZu5avyAvDTfGTW...",
+        "http://skechers.attentivemail.com/ls/click?upn=u001.LNc6VorXOZu5avyAvDTfGQTJ...",
+        "```",
+        "This is an ESP configuration issue. Attentive supports HTTPS click tracking — the sending account should have SSL enabled on the custom tracking domain. HTTP links: (a) fail Mixed Content checks in some webmail clients rendering over HTTPS, (b) expose the click token in plaintext, (c) may be flagged by security gateways.",
+        "**Web version link**",
+        "Present and functional. Routes through same HTTP tracking endpoint.",
+        "**Destination UTM params**",
+        "Cannot confirm — HTML is truncated before destination URLs are exposed post-redirect. See Section 6.",
+        "**Empty `<title>` tag**",
+        "```html",
+        "<title></title>",
+        "```",
+        "Blank title is displayed in some email clients' tab/window bars and can be indexed. Should be set to something meaningful (e.g., \"Your Skechers Cart | Expires Soon\").",
+        "**`#MessageViewBody a` CSS override**",
+        "```css",
+        "#MessageViewBody a { color: inherit; text-decoration: none }",
+        "```",
+        "This Gmail-targeting rule strips link underlines and color globally. The inline `style=\"color:#434343\"` on the \"web version\" anchor partially overrides this, but any CTA anchor that relies on stylesheet-level color (not inline) will be affected in Gmail webmail. Verify all CTA `<a>` tags have inline `color` and any desired text-decoration set.",
+        "**Layout tables missing `role=\"presentation\"`**",
+        "Visible `<table>` elements (`.nl-container`, `.row`, `.row-content`) do not include `role=\"presentation\"`. Screen readers will announce these as data tables. Standard fix: add `role=\"presentation\"` to all layout tables.",
+        "**Image alt text**",
+        "HTML is truncated before `<img>` tags are visible — cannot confirm. Must verify all product/hero images carry descriptive `alt` text; decorative spacers should use `alt=\"\"`.",
+        "No unresolved merge tokens (e.g., `{{first_name}}`, `%%EMAIL%%`) are visible in the provided HTML. Preheader copy is static: *\"You left something in your cart, get it before it's gone!\"* — no first-name personalization present.",
+        "If cart item personalization (product name, image, price) is injected server-side before send, this cannot be confirmed from static HTML alone. Verify in Attentive preview mode that cart block renders populated data and not empty/fallback content.",
+        "**CAN-SPAM / unsubscribe**",
+        "HTML is truncated — footer is not present in the provided source. Cannot confirm:",
+        "- Physical mailing address",
+        "- Clear unsubscribe mechanism",
+        "These are legal requirements. Must be verified in full source. Attentive's default footer typically includes both, but any customization should be audited.",
+        "**Sending domain alignment**",
+        "- Envelope from: `msgs.skechers.com`",
+        "- Tracking domain: `skechers.attentivemail.com`",
+        "The subdomain `msgs.skechers.com` should have SPF, DKIM, and DMARC records configured. The mismatch between sending domain and tracking domain is normal for ESPs but DMARC alignment requires the `d=` value in the DKIM signature to align with `msgs.skechers.com` or the parent `skechers.com`. Cannot verify without email headers.",
+        "Cannot fully audit — destination URLs are behind the Attentive redirect (`/ls/click?upn=...`) and the HTML is truncated before post-redirect parameters are visible.",
+        "**Action required:** Decode a sample tracking URL and confirm:",
+        "1. UTM parameters are present (e.g., `utm_source`, `utm_medium=email`, `utm_campaign`, `utm_content`)",
+        "2. Destination lands on an authenticated cart recovery page (not generic homepage)",
+        "3. Cart items pre-populate correctly for the recipient"
+      ]
+    }
+  },
+  "qa": null,
+  "assets": {
+    "render_image": "2026-04-04-your-cart-expires-soon-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}

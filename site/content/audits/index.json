@@ -1,5 +1,16 @@
 [
   {
+    "slug": "2026-04-04-your-cart-expires-soon",
+    "subject": "Your cart expires soon!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-04T23:01:49+00:00",
+    "score": "5/10",
+    "qa_summary": null,
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-04-start-with-one-get-the-second-for-less",
     "subject": "Start With One. Get the Second For Less",
     "from_display_name": "SKECHERS",
