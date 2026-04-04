@@ -1,5 +1,16 @@
 [
   {
+    "slug": "2026-04-04-did-you-forget-something",
+    "subject": "Did you forget something?",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-04T13:21:20+00:00",
+    "score": "5.5/10",
+    "qa_summary": null,
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-04-site-journey-walker",
     "subject": "Daily Journey: Walker Miles on www.skechers.com",
     "from_display_name": "www.skechers.com",
