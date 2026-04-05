@@ -1,5 +1,16 @@
 [
   {
+    "slug": "2026-04-05-your-items-are-waiting",
+    "subject": "Your Items Are Waiting!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-05T13:21:26+00:00",
+    "score": "5/10",
+    "qa_summary": null,
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-05-site-journey-walker",
     "subject": "Daily Journey: Walker Miles on www.skechers.com",
     "from_display_name": "www.skechers.com",
