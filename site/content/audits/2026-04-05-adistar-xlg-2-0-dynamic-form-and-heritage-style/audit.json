@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-05-adistar-xlg-2-0-dynamic-form-and-heritage-style",
+  "email": {
+    "subject": "Adistar XLG 2.0: dynamic form and heritage style",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-05T05:09:04+00:00",
+    "date_formatted": "2026-04-05 05:09 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "## Email Review: Adistar XLG 2.0 — adidas\n\n---\n\n### 1. Executive Summary\n\nA dual-purpose email pairing a new shoe launch (Adistar XLG 2.0) with an adiClub x Spotify Premium benefit offer. The hero is visually strong and the shoe gets prominent placement, but the structural logic falls apart in the second half. The Spotify module is roughly equal in visual weight to the product hero, creating a split-focus email that serves neither message especially well. The product section lacks a proper CTA button, relying on a bare text link — the single most damaging conversion issue in the render.\n\n---\n\n### 2. Business Impact Score: 5/10\n\nStrong creative assets undermined by a weak CTA and a diluted message hierarchy.\n\n---\n\n### 3. What's Working\n\n- **Hero image is confident.** The orange Adistar XLG sneaker pops against a muted background — shoe photography is doing its job.\n- **Clean layout.** The email doesn't feel cluttered; there's breathing room between sections.\n- **Spotify benefit thematically adjacent.** \"Run without limits\" connecting a running shoe to a streaming partnership is a coherent enough brand logic for existing loyalists.\n- **adiClub branding is consistent.** The membership section uses the recognizable badge and visual identity correctly.\n\n---\n\n### 4. What's Weak\n\n- **No CTA button on the hero product.** The product section's call to action appears as a plain text link (\"Shop online or at your local adidas store\"), not a button. This is a serious friction point — it's visually passive and easily missed on mobile.\n- **Two competing narratives, neither dominant.** The shoe launch and the Spotify offer each occupy roughly half the email's real estate. Subscribers can't tell which one is the point of the email.\n- **Body copy is too small to scan.** Both the product description and the Spotify section use small type that doesn't hold up as a readable skim layer.\n- **No price, no urgency.** New launch emails typically need at least one anchor: price point, limited availability, or a deadline. None is visible here.\n- **Spotify module lacks a clear button CTA** in the visible render — same problem as the product section.\n\n---\n\n### 5. Recommendations\n\n1. **Add a button CTA beneath the shoe.** Replace or supplement the text link with a solid button (\"Shop Adistar XLG 2.0\"). This is the single highest-ROI fix.\n2. **Pick a primary message.** Either lead with the shoe and relegate Spotify to a supporting module with less visual weight, or make this a Spotify benefit email with the shoe as social proof. Don't split 50/50.\n3. **Add urgency or a value hook.** \"New arrival,\" a price, or a launch date would give subscribers a reason to act now rather than later.\n4. **Increase body copy size.** Both sections' descriptive text appears below comfortable reading size in the render.\n\n---\n\n### 6. Bottom Line\n\nThis email has the visual ingredients to convert — great shoe, clean design, a real membership benefit — but it's structurally indecisive. The absence of a button CTA on the product is the most urgent fix. Addressing the 50/50 split between the shoe and Spotify would lift this from a middling engagement email to a focused launch driver.\n\n---\n\n### 7. Evidence\n\n**Overall purpose:** New product introduction (Adistar XLG 2.0) combined with an adiClub membership benefit (Spotify Premium partnership).\n\n**Hero / primary value proposition:** Full-bleed image of the Adistar XLG sneaker in a warm orange colorway with \"ADISTAR XLG\" text overlaid. Followed immediately below by a headline \"ADISTAR XLG 2.0\" and short descriptor copy. The shoe is the visual anchor but loses momentum with no button CTA.\n\n**Membership / benefits section:** adiClub x Spotify Premium module with headline \"RUN WITHOUT LIMITS — GET SPOTIFY PREMIUM.\" Includes supporting copy about earning points and redeeming for Spotify access. Badge logo present. No visible button CTA in the render.\n\n**Product discoverability / recommendation modules:** None. No cross-sell, no related products, no \"complete the look\" rail. This is a single-product email with no discovery pathway.\n\n**Utility / secondary modules:** Standard adidas footer with My Account, Privacy Statement, Support, Unsubscribe, and adidas stores links. Legal/disclaimer text below the fold. Functional and expected.\n\n**Bugs / friction / clarity issues:** No broken images or rendering artifacts visible. The only structural issue visible in the render is the text-link CTA replacing what should be a button in both the product section and the Spotify section.\n\n---\n\n## Technical Audit\n\n## Technical Audit — Adistar XLG 2.0: dynamic form and heritage style\n**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-04-04\n\n---\n\n### 1. Technical Summary\nThe email has two broken destination URLs (one a doubled-domain encoding bug, one an unresolvable URL type), a missing plain-text fallback (0 chars), and multiple non-HTTPS image sources that will be blocked by major mail clients with image security policies. Authentication header data is absent from the relay.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Doubled-domain encoding bug — store locator link**\nThe \"Shop online or at your local adidas store.*\" CTA encodes a full `https://www.adidas.com` URL as a literal path segment inside the click-tracker, resulting in a malformed destination:\n```\nhttps://click.comms.adidas.com/CL0/https:%2F%2Fwww.adidas.com%2Fus%2Fstores/1/\n  0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/\n  Z5o0H75g2TGyvdzLqy7D2cmUC55RbRqD2xfT5DRCzNc=451\n```\nExpected pattern: `https://click.comms.adidas.com/CL0/<token>/...` with the destination URL passed as a parameter, not embedded in the path. This link will not resolve correctly.\n\n**[FAIL] Unknown URL type — dynamic video/content asset**\nThe QA checker flagged an unresolvable URL type for a `dv.adidas.com` asset linked with the identifier `d08c2834-b447-4d34-a609-1443f1e084bb`. The link checker returned `unknown url type: '/g/...'`, suggesting the asset resolver is returning a relative path or malformed redirect rather than a full URL. This asset may fail to load or route incorrectly.\n\n**[WARN] 37 tracking links not probed**\nAll click-redirect URLs through `click.comms.adidas.com` were skipped during HTTP validation. No broken destination URLs can be confirmed or excluded for those links without a full crawl.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] Non-HTTPS image sources — will be blocked**\nThe arrow icon (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) is referenced **8 times** via HTTP:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nThe open/tracking pixel is also served over HTTP:\n```\nhttp://click.comms.adidas.com/CI0/0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/...\n```\nGmail (2023+), Apple Mail, and Outlook block mixed-content images. The arrow will render as a broken image in most clients; the HTTP pixel will silently fail to fire.\n\n**[WARN] Missing alt text on 2 images**\n- `dv.adidas.com` asset `d08c2834-b447-4d34-a609-1443f1e084bb` — no `alt` attribute\n- Tracking pixel `1tezU6s2LqgZr6qvFwbhBZOqkkjym0RZ3BV4l6w3Qvs=451` — no `alt` attribute\n\nThe tracking pixel omission is standard practice, but the content image (`dv.adidas.com`) should carry descriptive alt text for screen readers and image-blocked rendering.\n\n**[WARN] Duplicate `@font-face` declarations**\n`AdihausDIN` (400, 700) and `AdineuePRO` (400, 600) are each declared twice across two separate `<style>` blocks in `<head>`. The second block is a subset of the first (fewer fallbacks). While not functionally breaking, it adds unnecessary CSS weight and risks parser inconsistency in older Outlook rendering engines.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo issues found. No unresolved merge tokens (e.g., `{{first_name}}`, `*|FNAME|*`) detected in the available HTML source.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text fallback is 0 characters**\nThe `text/plain` MIME part is empty. CAN-SPAM does not explicitly mandate a text part, but its absence degrades deliverability scores (SpamAssassin, Barracuda) and breaks rendering in text-only clients and accessibility tools. Best practice and most ESP guidelines require a substantive plain-text alternative.\n\n**[WARN] Authentication-Results header not present**\nSPF and DKIM pass/fail status could not be verified via the AgentMail relay. This is an observability gap in the audit pipeline rather than a confirmed auth failure, but it should be confirmed that DKIM is signed for `us-news.comms.adidas.com` and SPF is aligned with the sending IP.\n\nCAN-SPAM physical address and unsubscribe mechanism were present in the footer (confirmed by HTML structure); no issues there.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**[FAIL] Store locator link will not resolve**\nAs noted in §2, the doubled-domain encoding bug means clicks on the store CTA will not reach `adidas.com/us/stores`. Users will hit a broken URL or a click-tracker error page.\n\nNo UTM parameter stripping issues identified in the available link samples — the `click.comms.adidas.com` redirects appear to pass through to destination URLs with parameters intact (where destination URLs are correctly encoded).\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|----------|-------|--------|\n| P0 | Doubled-domain store locator URL | Re-encode destination URL correctly in the click-tracker template; verify the rendered href before send |\n| P0 | `dv.adidas.com` unknown URL type | Confirm asset `d08c2834-...` resolves to a valid absolute URL; check the dynamic content resolver config |\n| P1 | Plain-text fallback is empty | Generate and attach a substantive `text/plain` part (minimum: subject, key CTAs, unsubscribe URL) |\n| P1 | HTTP image sources (×9) | Update `image.link.adidas.com` and `click.comms.adidas.com` pixel references to HTTPS |\n| P2 | Missing alt text on content image | Add descriptive `alt` to the `dv.adidas.com` asset |\n| P2 | Authentication headers unverifiable | Confirm DKIM signing and SPF alignment for `us-news.comms.adidas.com` at send time |\n| P3 | Duplicate `@font-face` blocks | Consolidate into a single `<style>` block to reduce CSS payload |",
+    "sections": {
+      "executive_summary": [
+        "A dual-purpose email pairing a new shoe launch (Adistar XLG 2.0) with an adiClub x Spotify Premium benefit offer. The hero is visually strong and the shoe gets prominent placement, but the structural logic falls apart in the second half. The Spotify module is roughly equal in visual weight to the product hero, creating a split-focus email that serves neither message especially well. The product section lacks a proper CTA button, relying on a bare text link — the single most damaging conversion issue in the render.",
+        "Strong creative assets undermined by a weak CTA and a diluted message hierarchy."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero image is confident.** The orange Adistar XLG sneaker pops against a muted background — shoe photography is doing its job.",
+        "- **Clean layout.** The email doesn't feel cluttered; there's breathing room between sections.",
+        "- **Spotify benefit thematically adjacent.** \"Run without limits\" connecting a running shoe to a streaming partnership is a coherent enough brand logic for existing loyalists.",
+        "- **adiClub branding is consistent.** The membership section uses the recognizable badge and visual identity correctly."
+      ],
+      "whats_weak": [
+        "- **No CTA button on the hero product.** The product section's call to action appears as a plain text link (\"Shop online or at your local adidas store\"), not a button. This is a serious friction point — it's visually passive and easily missed on mobile.",
+        "- **Two competing narratives, neither dominant.** The shoe launch and the Spotify offer each occupy roughly half the email's real estate. Subscribers can't tell which one is the point of the email.",
+        "- **Body copy is too small to scan.** Both the product description and the Spotify section use small type that doesn't hold up as a readable skim layer.",
+        "- **No price, no urgency.** New launch emails typically need at least one anchor: price point, limited availability, or a deadline. None is visible here.",
+        "- **Spotify module lacks a clear button CTA** in the visible render — same problem as the product section."
+      ],
+      "recommendations": [
+        "1. **Add a button CTA beneath the shoe.** Replace or supplement the text link with a solid button (\"Shop Adistar XLG 2.0\"). This is the single highest-ROI fix.",
+        "2. **Pick a primary message.** Either lead with the shoe and relegate Spotify to a supporting module with less visual weight, or make this a Spotify benefit email with the shoe as social proof. Don't split 50/50.",
+        "3. **Add urgency or a value hook.** \"New arrival,\" a price, or a launch date would give subscribers a reason to act now rather than later.",
+        "4. **Increase body copy size.** Both sections' descriptive text appears below comfortable reading size in the render.",
+        "| Priority | Issue | Action |",
+        "|----------|-------|--------|",
+        "| P0 | Doubled-domain store locator URL | Re-encode destination URL correctly in the click-tracker template; verify the rendered href before send |",
+        "| P0 | `dv.adidas.com` unknown URL type | Confirm asset `d08c2834-...` resolves to a valid absolute URL; check the dynamic content resolver config |",
+        "| P1 | Plain-text fallback is empty | Generate and attach a substantive `text/plain` part (minimum: subject, key CTAs, unsubscribe URL) |",
+        "| P1 | HTTP image sources (×9) | Update `image.link.adidas.com` and `click.comms.adidas.com` pixel references to HTTPS |",
+        "| P2 | Missing alt text on content image | Add descriptive `alt` to the `dv.adidas.com` asset |",
+        "| P2 | Authentication headers unverifiable | Confirm DKIM signing and SPF alignment for `us-news.comms.adidas.com` at send time |",
+        "| P3 | Duplicate `@font-face` blocks | Consolidate into a single `<style>` block to reduce CSS payload |"
+      ],
+      "bottom_line": [
+        "This email has the visual ingredients to convert — great shoe, clean design, a real membership benefit — but it's structurally indecisive. The absence of a button CTA on the product is the most urgent fix. Addressing the 50/50 split between the shoe and Spotify would lift this from a middling engagement email to a focused launch driver."
+      ],
+      "evidence": [
+        "**Overall purpose:** New product introduction (Adistar XLG 2.0) combined with an adiClub membership benefit (Spotify Premium partnership).",
+        "**Hero / primary value proposition:** Full-bleed image of the Adistar XLG sneaker in a warm orange colorway with \"ADISTAR XLG\" text overlaid. Followed immediately below by a headline \"ADISTAR XLG 2.0\" and short descriptor copy. The shoe is the visual anchor but loses momentum with no button CTA.",
+        "**Membership / benefits section:** adiClub x Spotify Premium module with headline \"RUN WITHOUT LIMITS — GET SPOTIFY PREMIUM.\" Includes supporting copy about earning points and redeeming for Spotify access. Badge logo present. No visible button CTA in the render.",
+        "**Product discoverability / recommendation modules:** None. No cross-sell, no related products, no \"complete the look\" rail. This is a single-product email with no discovery pathway.",
+        "**Utility / secondary modules:** Standard adidas footer with My Account, Privacy Statement, Support, Unsubscribe, and adidas stores links. Legal/disclaimer text below the fold. Functional and expected.",
+        "**Bugs / friction / clarity issues:** No broken images or rendering artifacts visible. The only structural issue visible in the render is the text-link CTA replacing what should be a button in both the product section and the Spotify section.",
+        "**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-04-04",
+        "The email has two broken destination URLs (one a doubled-domain encoding bug, one an unresolvable URL type), a missing plain-text fallback (0 chars), and multiple non-HTTPS image sources that will be blocked by major mail clients with image security policies. Authentication header data is absent from the relay.",
+        "**[FAIL] Doubled-domain encoding bug — store locator link**",
+        "The \"Shop online or at your local adidas store.*\" CTA encodes a full `https://www.adidas.com` URL as a literal path segment inside the click-tracker, resulting in a malformed destination:",
+        "```",
+        "https://click.comms.adidas.com/CL0/https:%2F%2Fwww.adidas.com%2Fus%2Fstores/1/",
+        "0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/",
+        "Z5o0H75g2TGyvdzLqy7D2cmUC55RbRqD2xfT5DRCzNc=451",
+        "```",
+        "Expected pattern: `https://click.comms.adidas.com/CL0/<token>/...` with the destination URL passed as a parameter, not embedded in the path. This link will not resolve correctly.",
+        "**[FAIL] Unknown URL type — dynamic video/content asset**",
+        "The QA checker flagged an unresolvable URL type for a `dv.adidas.com` asset linked with the identifier `d08c2834-b447-4d34-a609-1443f1e084bb`. The link checker returned `unknown url type: '/g/...'`, suggesting the asset resolver is returning a relative path or malformed redirect rather than a full URL. This asset may fail to load or route incorrectly.",
+        "**[WARN] 37 tracking links not probed**",
+        "All click-redirect URLs through `click.comms.adidas.com` were skipped during HTTP validation. No broken destination URLs can be confirmed or excluded for those links without a full crawl.",
+        "**[WARN] Non-HTTPS image sources — will be blocked**",
+        "The arrow icon (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) is referenced **8 times** via HTTP:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "The open/tracking pixel is also served over HTTP:",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/...",
+        "```",
+        "Gmail (2023+), Apple Mail, and Outlook block mixed-content images. The arrow will render as a broken image in most clients; the HTTP pixel will silently fail to fire.",
+        "**[WARN] Missing alt text on 2 images**",
+        "- `dv.adidas.com` asset `d08c2834-b447-4d34-a609-1443f1e084bb` — no `alt` attribute",
+        "- Tracking pixel `1tezU6s2LqgZr6qvFwbhBZOqkkjym0RZ3BV4l6w3Qvs=451` — no `alt` attribute",
+        "The tracking pixel omission is standard practice, but the content image (`dv.adidas.com`) should carry descriptive alt text for screen readers and image-blocked rendering.",
+        "**[WARN] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` (400, 700) and `AdineuePRO` (400, 600) are each declared twice across two separate `<style>` blocks in `<head>`. The second block is a subset of the first (fewer fallbacks). While not functionally breaking, it adds unnecessary CSS weight and risks parser inconsistency in older Outlook rendering engines.",
+        "No issues found. No unresolved merge tokens (e.g., `{{first_name}}`, `*|FNAME|*`) detected in the available HTML source.",
+        "**[FAIL] Plain-text fallback is 0 characters**",
+        "The `text/plain` MIME part is empty. CAN-SPAM does not explicitly mandate a text part, but its absence degrades deliverability scores (SpamAssassin, Barracuda) and breaks rendering in text-only clients and accessibility tools. Best practice and most ESP guidelines require a substantive plain-text alternative.",
+        "**[WARN] Authentication-Results header not present**",
+        "SPF and DKIM pass/fail status could not be verified via the AgentMail relay. This is an observability gap in the audit pipeline rather than a confirmed auth failure, but it should be confirmed that DKIM is signed for `us-news.comms.adidas.com` and SPF is aligned with the sending IP.",
+        "CAN-SPAM physical address and unsubscribe mechanism were present in the footer (confirmed by HTML structure); no issues there.",
+        "**[FAIL] Store locator link will not resolve**",
+        "As noted in §2, the doubled-domain encoding bug means clicks on the store CTA will not reach `adidas.com/us/stores`. Users will hit a broken URL or a click-tracker error page.",
+        "No UTM parameter stripping issues identified in the available link samples — the `click.comms.adidas.com` redirects appear to pass through to destination URLs with parameters intact (where destination URLs are correctly encoded)."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 3,
+        "checks": [
+          {
+            "check_id": "link_doubled_domain",
+            "status": "fail",
+            "label": "Doubled-domain bug in URL",
+            "detail": "URL contains a doubled domain pattern (link text: \"Shop online or at your local adidas store.*\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fwww.adidas.com%2Fus%2Fstores/1/0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/Z5o0H75g2TGyvdzLqy7D2cmUC55RbRqD2xfT5DRCzNc=451"
+          },
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/d08c2834-b447-4d34-a609-1443f1e084bb?txn=a58aab80-30ad-11f1-b02d-ae5aeed300aa'",
+            "url": "https://dv.adidas.com/o/d08c2834-b447-4d34-a609-1443f1e084bb?cp_tp=v3.eJzjYuIIFuLgeDjnwDk2AWYpXo7WP5xC7Byv-AVYJFiUxDmOtWUDhdk4Ltw4fo5NCSahtZUJqOnZKjEBRqCqFUxCohwLZTQYvVg4GAUYg8BkBFcCl5Awx3MpAUYNZmQJIXGOl1ICTGiq4xPigRJtMgLMWIwx5PgkBbSWUYFRg8mJi-PzCT6JbewK69m8uEBKpCDKkdgZNkL6HB-kBFihGk4f4JNoYlc4i1sDM9Dyt1ICbGiWGyUYASWWyAiwY_XcaykBDg0WNM-9kRLgxFQtsYBN4SiTEQfHXV4lZo5HjkBWMx-QdcYJyNrLD2QtdAOyLoNYN92sWDlum0oxWHFwnNeQYuboTndgjOLguG4oxMzxrxrIugFiddQAWTdBrJ6aKE6OKdZCLBz3ehmBzC4bIPNxP2MGIwCu_1Op&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d5b27-5e80-7000-a7c1-020858674a3f"
+          },
+          {
+            "check_id": "merge_doubled_domain",
+            "status": "fail",
+            "label": "Doubled-domain merge error in URL",
+            "detail": "URL contains a repeated domain",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fwww.adidas.com%2Fus%2Fstores/1/0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/Z5o0H75g2TGyvdzLqy7D2cmUC55RbRqD2xfT5DRCzNc=451"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=PhLwG+QxrrHMdqWrLWG4ZF9rb+rU9EgLQF4dbp6iuUC/oO6sAraK+2j8A30Nu2bgz5NCzbgOo7/HE4IJQGOoTLF+3jDI7c7Y8RBWQQ21VN3rn7MtU1HJ"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 11,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "37 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: d08c2834-b447-4d34-a609-1443f1e084bb",
+            "detail": "src: https://dv.adidas.com/o/d08c2834-b447-4d34-a609-1443f1e084bb?cp_tp=v3.eJzjYuIIFuLgeDjnwDk2AWYpXo7WP5xC7Byv-AVYJFiUxDmOtW"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 1tezU6s2LqgZr6qvFwbhBZOqkkjym0RZ3BV4l6w3Qvs=451",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/1tezU6s2LqgZr6qvFwbhBZOqk"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 1tezU6s2LqgZr6qvFwbhBZOqkkjym0RZ3BV4l6w3Qvs=451",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d5c0b6723-e8e49d30-2950-4c60-bd8d-cde35bcc502c-000000/1tezU6s2LqgZr6qvFwbhBZOqk"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "44%",
+      "total_checks": 9,
+      "total_issues": 4,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-05-adistar-xlg-2-0-dynamic-form-and-heritage-style-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}

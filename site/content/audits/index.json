@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-05-adistar-xlg-2-0-dynamic-form-and-heritage-style",
+    "subject": "Adistar XLG 2.0: dynamic form and heritage style",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-05T05:09:04+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "44%",
+      "total_checks": 9,
+      "total_issues": 4,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-04-your-cart-expires-soon",
     "subject": "Your cart expires soon!",
     "from_display_name": "SKECHERS",
