@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-b-v2one-pair-of-sandals-won-t-cut-it",
+  "email": {
+    "subject": "[Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V2One Pair of Sandals Won’t Cut It",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-06T21:58:34+00:00",
+    "date_formatted": "2026-04-06 21:58 UTC"
+  },
+  "review": {
+    "score": "6.5/10",
+    "raw_markdown": "## 1. Executive Summary\n\nA solid seasonal sandal push anchored by a strong promotional offer (Buy One Get One 50% off) and clean gender segmentation. The email does a competent job of covering the sandal category broadly, but the layout loses focus in the bottom half — a tonal shift to \"Walking in Style\" sneakers undermines the sandal-season thesis, and the site-navigation footer module adds clutter without converting value.\n\n---\n\n## 2. Business Impact Score: **6.5 / 10**\n\nStrong top half, diluted bottom half. The offer is clear and the hero works, but the email is trying to do too much.\n\n---\n\n## 3. What's Working\n\n- **Hero is unambiguous.** \"SANDAL SEASON\" in large display type, with the BOGO 50% offer immediately below — zero ambiguity about the ask.\n- **Gender segmentation is clean.** Women / Men / Kids each get a dedicated section with product imagery and a category CTA. Logical, scannable, efficient.\n- **Offer stays visible.** The promotional banner at the top ensures even a quick scroll keeps the deal in view.\n- **Product imagery is functional.** Sandal shots are clear and category-appropriate.\n\n---\n\n## 4. What's Weak\n\n- **Category drift.** The \"Walking in Style\" module breaks the sandal-season narrative. Sneakers mid-email feel like a separate send stitched in — it signals a lack of editorial focus.\n- **\"Keep It Casual\" module is vague.** It sits beside \"Walking in Style\" but the product shown (a blue sneaker) doesn't reinforce sandals at all. Two non-sandal modules in a row is a structural problem.\n- **\"Only at Skechers\" module is noisy.** The yellow/orange background creates high contrast that feels out-of-brand and visually loud after the cleaner top half.\n- **Footer navigation bar is low-value.** The text link row (Women / Men / Kids / Clothing / New Arrivals / Sale) duplicates what the email body already covered. At this scroll depth, it's friction, not utility.\n- **Preview text is broken.** The visible preview reads as a raw URL string — a clear pre-send QA failure that damages first impression in the inbox.\n\n---\n\n## 5. Recommendations\n\n1. **Cut or move the sneaker modules.** \"Walking in Style\" and \"Keep It Casual\" belong in a separate email. If cross-category coverage is a business requirement, move them below the fold and keep the sandal story intact through the first 2/3 of the email.\n2. **Fix preview text before any live send.** The URL string in preview is the first thing recipients read. It must be replaced with compelling copy that reinforces the BOGO offer.\n3. **Simplify the \"Only at Skechers\" module.** Reduce visual noise — either tone down the background color or restructure it as a lighter editorial callout.\n4. **Remove the redundant nav footer.** That real estate is better used for a final CTA or a trust signal (free shipping, easy returns).\n5. **Add one urgency signal.** The BOGO offer has no expiration visible anywhere in the email. Even a \"this weekend only\" line would lift urgency meaningfully.\n\n---\n\n## 6. Bottom Line\n\nThe top third of this email is doing its job well. The BOGO hook is sharp and the gender-segmented sandal sections are clean. But the email loses coherence once it pivots to sneakers — a recipient who clicked in for sandals is now being asked to think about something else entirely. Tighten the focus, fix the preview text, and this is an 8.\n\n---\n\n## 7. Evidence\n\n| Module | Observation |\n|---|---|\n| **Overall purpose** | Promote Sandal Season with a BOGO 50% off offer, gender-segmented category CTAs |\n| **Hero / primary value prop** | \"SANDAL SEASON\" display header + BOGO 50% banner. Clear and prominent. Works. |\n| **Membership / benefits** | Not present |\n| **Product discoverability** | Three gender lanes (Women, Men, Kids) each with sandal imagery and a shop CTA. Adequate but not deep — no individual product callouts or bestseller badges |\n| **Utility / secondary modules** | \"Walking in Style\" sneaker module, \"Keep It Casual\" sneaker module, \"Only at Skechers\" exclusives block, text nav footer, social icons, legal footer |\n| **Bugs / friction / clarity issues** | Preview text renders as a raw URL — visible QA failure. No other broken images or rendering errors observed. |\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers Sandals Email (MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V2)\n\n---\n\n### 1. Technical Summary\n\nA Skechers SFMC sandals promotional email (B_V2 variant) with a retained `[Test]:` subject prefix and 13 image assets served over unencrypted HTTP, creating mixed-content blocking exposure across major clients. Campaign ID inconsistency between the subject line variant identifier and embedded tracking pixels will cause attribution fragmentation.\n\n---\n\n### 2. Link & Tracking Issues\n\n**Campaign ID mismatch across pixels**\nSubject line and creative identify this as variant `B_V2`, but both the Krux ad impression pixel and the Movable Ink pixel reference the base variant `B`:\n- Krux: `campaignid=MKG_US_NA_U_SAND_GENDER_EN_04072026_B`\n- Movable Ink: `mi_ecmp=MKG_US_NA_U_SAND_GENDER_EN_04072026_B`\n\nAny reporting that splits on `B` vs `B_V2` will misattribute these opens/impressions.\n\n**Movable Ink pixel over HTTP**\n`http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=...`\nPlain HTTP — will be blocked by Gmail, Outlook, and Apple Mail in mixed-content mode.\n\n**26 click-through URLs** routed through `click.emails.skechers.com/?qs=eyJ...` (SFMC encrypted redirect, HTTPS). UTM parameter contents are not inspectable from the source; downstream UTM alignment cannot be confirmed without redirect resolution.\n\n**Krux user-match pixels**: Two beacons present — one with a SHA-256 `partner_uid`, one with raw numeric `partner_uid=7187828`. Confirm the numeric value is a merge token and not a hardcoded test subscriber ID.\n\n---\n\n### 3. Rendering & Accessibility\n\n**HTTP image sources — 13 affected assets**\nAll `image.emails.skechers.com` assets are served over HTTP. Affected images include the Skechers logo, app store badges, social icons, and multiple content images:\n```\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png  (logo)\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png  (App Store)\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png  (Google Play)\n... and 9 additional assets\n```\nThese will be blocked or display broken in clients that enforce mixed-content policies.\n\n**Missing alt text — 4 images**\n- `o.gif` (Movable Ink pixel) — no `alt=\"\"`\n- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — no alt\n- `00100b23-0afa-4715-a8cd-23bb46f9d2b2.png` — no alt\n- `fc08601a-fcce-4c96-8b90-39e5a55d6c05.png` — no alt\n\nContent images require descriptive alt text; decorative/tracking pixels require `alt=\"\"`.\n\n**Viewport `maximum-scale=1`**\n```html\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\" />\n```\nDisables user pinch-to-zoom on mobile — accessibility barrier (WCAG 1.4.4).\n\n**`-webkit-text-size-adjust: none`**\nApplied globally in `<style>`. Suppresses automatic font scaling on iOS; should be `100%` instead of `none`.\n\n**Malformed `<meta>` tags**\nBoth of the following are missing their `http-equiv` attribute:\n- Charset: `<meta content=\"text/html; charset=utf-8\" />` → should be `http-equiv=\"Content-Type\"`\n- IE compat: `<meta content=\"IE=Edge\" />` → should be `http-equiv=\"X-UA-Compatible\"`\n\nThese are ignored by most clients today but represent malformed markup.\n\n---\n\n### 4. Personalization & Merge Tokens\n\n**Movable Ink subscriber ID**\n`mi_u=9012945763` in the Movable Ink pixel appears as a rendered static value in the provided source. Verify this is a dynamic SFMC merge field (e.g., `%%subscriberid%%`) and not a hardcoded test value that survived into production templates.\n\n**Krux numeric subscriber ID**\n`partner_uid=7187828` in the second Krux beacon — same concern as above; confirm it resolves per-subscriber.\n\nNo unrendered AMPscript or Handlebars-style merge tokens (`%%`, `{{`) are visible in the truncated source.\n\n---\n\n### 5. Compliance\n\n**`[Test]:` prefix in subject line**\n```\nSubject: [Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V2One Pair of Sandals Won't Cut It\n```\nTest flag was not stripped before send. Also note there is no space between the internal campaign ID and the display subject (\"B_V2**One** Pair...\").\n\n**SPF/DKIM authentication**\n`Authentication-Results` header not detected via AgentMail relay. SPF/DKIM pass/fail status for `emails.skechers.com` is unverifiable. Confirm DMARC alignment is configured for this subdomain.\n\n**Footer / CAN-SPAM**\nHTML is truncated; unsubscribe mechanism and physical mailing address cannot be confirmed from provided source. Must be verified against the full render.\n\n---\n\n### 6. Email-to-Site Continuity\n\nAll 26 click links use SFMC's encrypted redirect (`?qs=eyJ...` base64 payload). UTM parameters — if present — are encoded inside the redirect and cannot be confirmed from the HTML source alone. QA probe was skipped on all 26. Recommend decrypting or following a sample of links to verify `utm_source`, `utm_medium`, and `utm_campaign` values are set correctly, and that `utm_campaign` matches the `B_V2` variant identifier (not bare `B`).\n\nPreheader copy references \"BOGO 50% Off or 20% Off 1 Pair\" — offer alignment with landing page cannot be confirmed without link resolution.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **High** | `[Test]:` subject prefix + malformed subject (no space before display text) | Strip test flag; fix concatenation before production send |\n| **High** | 13 HTTP image sources (`image.emails.skechers.com`) | Update CDN config or template URLs to HTTPS across all assets |\n| **High** | Movable Ink pixel over HTTP (`ink1000.com`) | Change scheme to HTTPS |\n| **Medium** | Campaign ID mismatch (`B` vs `B_V2`) in Krux and Movable Ink pixels | Align all pixel `campaignid`/`mi_ecmp` values to `B_V2` |\n| **Medium** | SPF/DKIM unverifiable | Confirm DMARC alignment for `emails.skechers.com`; review DNS records |\n| **Medium** | `mi_u` and Krux `partner_uid` may be static test values | Audit template to confirm both are SFMC merge fields |\n| **Medium** | 3 content images missing descriptive alt text | Add meaningful alt text; use `alt=\"\"` for tracking pixels only |\n| **Low** | `maximum-scale=1` in viewport | Remove or replace with `maximum-scale=5` to restore user zoom |\n| **Low** | `-webkit-text-size-adjust: none` | Change to `100%` |\n| **Low** | Malformed `<meta>` tags (missing `http-equiv`) | Add correct `http-equiv` attributes to charset and IE-compat metas |",
+    "sections": {
+      "executive_summary": [
+        "A solid seasonal sandal push anchored by a strong promotional offer (Buy One Get One 50% off) and clean gender segmentation. The email does a competent job of covering the sandal category broadly, but the layout loses focus in the bottom half — a tonal shift to \"Walking in Style\" sneakers undermines the sandal-season thesis, and the site-navigation footer module adds clutter without converting value.",
+        "Strong top half, diluted bottom half. The offer is clear and the hero works, but the email is trying to do too much."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero is unambiguous.** \"SANDAL SEASON\" in large display type, with the BOGO 50% offer immediately below — zero ambiguity about the ask.",
+        "- **Gender segmentation is clean.** Women / Men / Kids each get a dedicated section with product imagery and a category CTA. Logical, scannable, efficient.",
+        "- **Offer stays visible.** The promotional banner at the top ensures even a quick scroll keeps the deal in view.",
+        "- **Product imagery is functional.** Sandal shots are clear and category-appropriate."
+      ],
+      "whats_weak": [
+        "- **Category drift.** The \"Walking in Style\" module breaks the sandal-season narrative. Sneakers mid-email feel like a separate send stitched in — it signals a lack of editorial focus.",
+        "- **\"Keep It Casual\" module is vague.** It sits beside \"Walking in Style\" but the product shown (a blue sneaker) doesn't reinforce sandals at all. Two non-sandal modules in a row is a structural problem.",
+        "- **\"Only at Skechers\" module is noisy.** The yellow/orange background creates high contrast that feels out-of-brand and visually loud after the cleaner top half.",
+        "- **Footer navigation bar is low-value.** The text link row (Women / Men / Kids / Clothing / New Arrivals / Sale) duplicates what the email body already covered. At this scroll depth, it's friction, not utility.",
+        "- **Preview text is broken.** The visible preview reads as a raw URL string — a clear pre-send QA failure that damages first impression in the inbox."
+      ],
+      "recommendations": [
+        "1. **Cut or move the sneaker modules.** \"Walking in Style\" and \"Keep It Casual\" belong in a separate email. If cross-category coverage is a business requirement, move them below the fold and keep the sandal story intact through the first 2/3 of the email.",
+        "2. **Fix preview text before any live send.** The URL string in preview is the first thing recipients read. It must be replaced with compelling copy that reinforces the BOGO offer.",
+        "3. **Simplify the \"Only at Skechers\" module.** Reduce visual noise — either tone down the background color or restructure it as a lighter editorial callout.",
+        "4. **Remove the redundant nav footer.** That real estate is better used for a final CTA or a trust signal (free shipping, easy returns).",
+        "5. **Add one urgency signal.** The BOGO offer has no expiration visible anywhere in the email. Even a \"this weekend only\" line would lift urgency meaningfully.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **High** | `[Test]:` subject prefix + malformed subject (no space before display text) | Strip test flag; fix concatenation before production send |",
+        "| **High** | 13 HTTP image sources (`image.emails.skechers.com`) | Update CDN config or template URLs to HTTPS across all assets |",
+        "| **High** | Movable Ink pixel over HTTP (`ink1000.com`) | Change scheme to HTTPS |",
+        "| **Medium** | Campaign ID mismatch (`B` vs `B_V2`) in Krux and Movable Ink pixels | Align all pixel `campaignid`/`mi_ecmp` values to `B_V2` |",
+        "| **Medium** | SPF/DKIM unverifiable | Confirm DMARC alignment for `emails.skechers.com`; review DNS records |",
+        "| **Medium** | `mi_u` and Krux `partner_uid` may be static test values | Audit template to confirm both are SFMC merge fields |",
+        "| **Medium** | 3 content images missing descriptive alt text | Add meaningful alt text; use `alt=\"\"` for tracking pixels only |",
+        "| **Low** | `maximum-scale=1` in viewport | Remove or replace with `maximum-scale=5` to restore user zoom |",
+        "| **Low** | `-webkit-text-size-adjust: none` | Change to `100%` |",
+        "| **Low** | Malformed `<meta>` tags (missing `http-equiv`) | Add correct `http-equiv` attributes to charset and IE-compat metas |"
+      ],
+      "bottom_line": [
+        "The top third of this email is doing its job well. The BOGO hook is sharp and the gender-segmented sandal sections are clean. But the email loses coherence once it pivots to sneakers — a recipient who clicked in for sandals is now being asked to think about something else entirely. Tighten the focus, fix the preview text, and this is an 8."
+      ],
+      "evidence": [
+        "| Module | Observation |",
+        "|---|---|",
+        "| **Overall purpose** | Promote Sandal Season with a BOGO 50% off offer, gender-segmented category CTAs |",
+        "| **Hero / primary value prop** | \"SANDAL SEASON\" display header + BOGO 50% banner. Clear and prominent. Works. |",
+        "| **Membership / benefits** | Not present |",
+        "| **Product discoverability** | Three gender lanes (Women, Men, Kids) each with sandal imagery and a shop CTA. Adequate but not deep — no individual product callouts or bestseller badges |",
+        "| **Utility / secondary modules** | \"Walking in Style\" sneaker module, \"Keep It Casual\" sneaker module, \"Only at Skechers\" exclusives block, text nav footer, social icons, legal footer |",
+        "| **Bugs / friction / clarity issues** | Preview text renders as a raw URL — visible QA failure. No other broken images or rendering errors observed. |",
+        "A Skechers SFMC sandals promotional email (B_V2 variant) with a retained `[Test]:` subject prefix and 13 image assets served over unencrypted HTTP, creating mixed-content blocking exposure across major clients. Campaign ID inconsistency between the subject line variant identifier and embedded tracking pixels will cause attribution fragmentation.",
+        "**Campaign ID mismatch across pixels**",
+        "Subject line and creative identify this as variant `B_V2`, but both the Krux ad impression pixel and the Movable Ink pixel reference the base variant `B`:",
+        "- Krux: `campaignid=MKG_US_NA_U_SAND_GENDER_EN_04072026_B`",
+        "- Movable Ink: `mi_ecmp=MKG_US_NA_U_SAND_GENDER_EN_04072026_B`",
+        "Any reporting that splits on `B` vs `B_V2` will misattribute these opens/impressions.",
+        "**Movable Ink pixel over HTTP**",
+        "`http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=...`",
+        "Plain HTTP — will be blocked by Gmail, Outlook, and Apple Mail in mixed-content mode.",
+        "**26 click-through URLs** routed through `click.emails.skechers.com/?qs=eyJ...` (SFMC encrypted redirect, HTTPS). UTM parameter contents are not inspectable from the source; downstream UTM alignment cannot be confirmed without redirect resolution.",
+        "**Krux user-match pixels**: Two beacons present — one with a SHA-256 `partner_uid`, one with raw numeric `partner_uid=7187828`. Confirm the numeric value is a merge token and not a hardcoded test subscriber ID.",
+        "**HTTP image sources — 13 affected assets**",
+        "All `image.emails.skechers.com` assets are served over HTTP. Affected images include the Skechers logo, app store badges, social icons, and multiple content images:",
+        "```",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png  (logo)",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png  (App Store)",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png  (Google Play)",
+        "... and 9 additional assets",
+        "```",
+        "These will be blocked or display broken in clients that enforce mixed-content policies.",
+        "**Missing alt text — 4 images**",
+        "- `o.gif` (Movable Ink pixel) — no `alt=\"\"`",
+        "- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — no alt",
+        "- `00100b23-0afa-4715-a8cd-23bb46f9d2b2.png` — no alt",
+        "- `fc08601a-fcce-4c96-8b90-39e5a55d6c05.png` — no alt",
+        "Content images require descriptive alt text; decorative/tracking pixels require `alt=\"\"`.",
+        "**Viewport `maximum-scale=1`**",
+        "```html",
+        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\" />",
+        "```",
+        "Disables user pinch-to-zoom on mobile — accessibility barrier (WCAG 1.4.4).",
+        "**`-webkit-text-size-adjust: none`**",
+        "Applied globally in `<style>`. Suppresses automatic font scaling on iOS; should be `100%` instead of `none`.",
+        "**Malformed `<meta>` tags**",
+        "Both of the following are missing their `http-equiv` attribute:",
+        "- Charset: `<meta content=\"text/html; charset=utf-8\" />` → should be `http-equiv=\"Content-Type\"`",
+        "- IE compat: `<meta content=\"IE=Edge\" />` → should be `http-equiv=\"X-UA-Compatible\"`",
+        "These are ignored by most clients today but represent malformed markup.",
+        "**Movable Ink subscriber ID**",
+        "`mi_u=9012945763` in the Movable Ink pixel appears as a rendered static value in the provided source. Verify this is a dynamic SFMC merge field (e.g., `%%subscriberid%%`) and not a hardcoded test value that survived into production templates.",
+        "**Krux numeric subscriber ID**",
+        "`partner_uid=7187828` in the second Krux beacon — same concern as above; confirm it resolves per-subscriber.",
+        "No unrendered AMPscript or Handlebars-style merge tokens (`%%`, `{{`) are visible in the truncated source.",
+        "**`[Test]:` prefix in subject line**",
+        "```",
+        "Subject: [Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V2One Pair of Sandals Won't Cut It",
+        "```",
+        "Test flag was not stripped before send. Also note there is no space between the internal campaign ID and the display subject (\"B_V2**One** Pair...\").",
+        "**SPF/DKIM authentication**",
+        "`Authentication-Results` header not detected via AgentMail relay. SPF/DKIM pass/fail status for `emails.skechers.com` is unverifiable. Confirm DMARC alignment is configured for this subdomain.",
+        "**Footer / CAN-SPAM**",
+        "HTML is truncated; unsubscribe mechanism and physical mailing address cannot be confirmed from provided source. Must be verified against the full render.",
+        "All 26 click links use SFMC's encrypted redirect (`?qs=eyJ...` base64 payload). UTM parameters — if present — are encoded inside the redirect and cannot be confirmed from the HTML source alone. QA probe was skipped on all 26. Recommend decrypting or following a sample of links to verify `utm_source`, `utm_medium`, and `utm_campaign` values are set correctly, and that `utm_campaign` matches the `B_V2` variant identifier (not bare `B`).",
+        "Preheader copy references \"BOGO 50% Off or 20% Off 1 Pair\" — offer alignment with landing page cannot be confirmed without link resolution."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiNzE4NzgyOCIsImxpZCI6IjI1IiwiaiI6IjE4NTI5OSIsImpiIjoiMSIsImQiOiIxMDA"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 17,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=MKG_US_NA_U_SAND_GENDER_EN_04072026_B"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=9012945763&mi_ecmp=MKG_US_NA_U_SAND_GENDER_EN_04072026_B"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Twitter\" (d76a5487-158e-4781-82a4-b65b04c051e4.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/d76a5487-158e-4781-82a4-b65b04c051e4.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Pinterest\" (573ab181-a4a3-40af-a067-1e301b167d99.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/573ab181-a4a3-40af-a067-1e301b167d99.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-b-v2one-pair-of-sandals-won-t-cut-it-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=H2N4F3OT2OJUXL5LEGJYCSPX5Y.100215"
+  }
+}
