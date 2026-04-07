@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-07-test-mkg-us-ecmpurl24-w-new-gender-en-04082026-spring-into-a-new-level-of-comfor",
+    "subject": "[Test]: MKG_US_ECMPURL24_W_NEW_GENDER_EN_04082026🌱 Spring into a new level of comfort",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-07T22:35:34+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-07-test-mkg-us-nonpur180-w-new-nonpurch-en-04082026-v2-spring-into-comfort-like-you",
     "subject": "[Test]: MKG_US_NONPUR180_W_NEW_NONPURCH_EN_04082026_V2🌱 Spring into comfort like you've never felt before!",
     "from_display_name": "SKECHERS",
