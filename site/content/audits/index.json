@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-07-test-mkg-us-na-u-golf-perf-en-04082026-v2find-the-right-shoe-for-your-game",
+    "subject": "[Test]: MKG_US_NA_U_GOLF_PERF_EN_04082026_V2Find the right shoe for your game",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-07T20:34:43+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-07-test-mkg-us-na-u-golf-perf-en-04082026find-the-right-shoe-for-your-game",
     "subject": "[Test]: MKG_US_NA_U_GOLF_PERF_EN_04082026Find the right shoe for your game",
     "from_display_name": "SKECHERS",
