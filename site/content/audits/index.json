@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-07-test-mkg-us-nonpur180-w-new-nonpurch-en-04082026-spring-into-comfort-like-you-ve",
+    "subject": "[Test]: MKG_US_NONPUR180_W_NEW_NONPURCH_EN_04082026🌱 Spring into comfort like you've never felt before!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-07T21:11:36+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-07-test-mkg-us-na-u-golf-perf-en-04082026-v2find-the-right-shoe-for-your-game",
     "subject": "[Test]: MKG_US_NA_U_GOLF_PERF_EN_04082026_V2Find the right shoe for your game",
     "from_display_name": "SKECHERS",
