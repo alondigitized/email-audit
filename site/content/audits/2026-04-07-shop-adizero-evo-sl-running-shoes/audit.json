@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-07-shop-adizero-evo-sl-running-shoes",
+  "email": {
+    "subject": "Shop Adizero Evo SL running shoes",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-07T00:04:16+00:00",
+    "date_formatted": "2026-04-07 00:04 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "## adidas — \"Shop Adizero Evo SL Running Shoes\"\n\n---\n\n### 1. Executive Summary\n\nA lean, performance-focused email built around the Adizero Evo SL launch. The creative is strong — action photography, clean typography, and a tight product grid — but the email is undermined by a visible character encoding bug in a key secondary headline. The Spotify Premium cross-promotion is a genuinely interesting value-add but lands awkwardly as a near-equal visual weight to the primary product push.\n\n---\n\n### 2. Business Impact Score: **6 / 10**\n\n---\n\n### 3. What's Working\n\n- **Hero photography is sharp.** Two runners in motion, product on foot, high contrast — communicates performance without needing much copy.\n- **Product grid is functional.** The 2x2 lifestyle grid shows the shoe across multiple contexts and complements the hero well.\n- **Layout discipline.** The email doesn't overstuff. Each section has breathing room and a clear job to do.\n- **Spotify partnership is differentiated.** Cross-brand offers in running emails are rare and can earn opens on their own. The concept is right.\n\n---\n\n### 4. What's Weak\n\n- **Encoding bug in the Spotify headline — visible and bad.** The secondary section reads \"RUN WITHOUT LIMITS â€\" GET SPOTIFY PREMIUM\" with garbled characters where the em dash should be. This is live in the render and degrades trust immediately.\n- **CTA hierarchy is unclear.** The email has two distinct value propositions (buy shoes, get Spotify) with no visual signal that one outranks the other. The recipient has to decide which thing they're being asked to do.\n- **Body copy is small and dense.** The intro paragraph below the hero is hard to read at a glance. It may say something important but it won't get read.\n- **The Spotify module feels bolted on.** There's no visible transition or connective tissue between \"buy this shoe\" and \"get Spotify Premium.\" The editorial logic isn't communicated.\n\n---\n\n### 5. Recommendations\n\n1. **Fix the encoding bug now.** The garbled em dash in the Spotify headline needs a resend or a correction. This is the top priority.\n2. **Make the Spotify offer feel earned.** Add a single line of copy explaining the connection — e.g., \"Every Adizero Evo SL purchase includes 3 months of Spotify Premium.\" Right now the pairing looks accidental.\n3. **Elevate one primary CTA.** Either the shoe or the Spotify offer should be the clear hero. If Spotify is secondary, shrink it and push it below a prominent shoe CTA.\n4. **Increase intro copy size or cut it.** If the body copy under the hero headline can't be skimmed in 3 seconds, it should be shorter or larger — not both small and long.\n5. **Add a price anchor.** No price or urgency signal is visible anywhere. For a performance launch email, even a \"Starting at $X\" line gives the recipient a reason to click now vs. later.\n\n---\n\n### 6. Bottom Line\n\nSolid production quality with real strategic upside from the Spotify partnership, but the encoding bug in that same module makes it the email's biggest liability. The creative earns a 7; execution lands at a 6. Fix the render issue and sharpen the CTA hierarchy before using this template again.\n\n---\n\n### 7. Evidence\n\n**Overall purpose:** Drive awareness and purchase consideration for the Adizero Evo SL running shoe, with a secondary cross-promotional offer of Spotify Premium.\n\n**Hero / primary value proposition:** Full-width action shot of two runners, overlaid with \"ADIZERO EVO SL\" in large type. Strong visual, minimal copy. Effective at establishing the shoe as a performance product.\n\n**Membership / benefits section:** Not present. No adiClub callout, points offer, or member-exclusive framing visible.\n\n**Product discoverability / recommendation modules:** 2x2 product/lifestyle grid showing the shoe in multiple looks and settings. No pricing, colorway labels, or ratings visible — functional but minimal.\n\n**Utility / secondary modules:** Spotify Premium co-promotion module with a lifestyle image of a woman and bold headline text. Positioned as a near-equal section to the primary product push.\n\n**Bugs / friction / clarity issues:** The Spotify section headline visibly reads \"RUN WITHOUT LIMITS â€\" GET SPOTIFY PREMIUM\" — the em dash character has failed to render and is displaying as raw encoding artifacts. This is the only visible bug but it appears in a prominent, high-contrast headline.\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Shop Adizero Evo SL\" Email\n\n**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-04-06\n\n---\n\n### 1. Technical Summary\n\nThe email has two confirmed broken links (doubled-domain URL construction defect and a malformed relative URL), a missing plain-text fallback, and 8 instances of the same arrow image served over HTTP. Overall QA pass rate is 44%.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Doubled-domain URL — store locator link**\nThe \"local adidas store.\" link wraps an AppsFlyer deep-link URL inside the click-tracking domain without proper encoding, creating a doubled-domain pattern that will likely 404 or redirect incorrectly:\n```\nhttps://click.comms.adidas.com/CL0/https:%2F%2Fgo.adidas.com%2Fihha%3Faf_ios_url=...\n```\nThe outer tracker should encode the inner URL once; double-encoding `https://` as `https:%2F%2F` nested inside a `click.comms.adidas.com/CL0/` path is a known Salesforce Marketing Cloud wrapping defect. The same URL appears flagged twice (both the `[FAIL] Doubled-domain bug` and `[FAIL] Doubled-domain merge error` checks), confirming it is a single broken link hit by two detection rules.\n\n**[FAIL] Malformed relative URL — dynamic content image link**\nOne link resolves to a relative path rather than an absolute URL:\n```\nunknown url type: '/g/d53c4f08-d290-4662-a0e5-3c149a613728?txn=...'\n```\nThe `href` was apparently templated as a relative path (`/g/...`) but the base domain was never prepended — likely a merge token that did not resolve. The surrounding element is the `dv.adidas.com` dynamic content block (`d53c4f08-d290-4662-a0e5-3c149a613728`). This link is non-functional in all clients.\n\n**38 tracking links skipped** from HTTP probe — not failures, but click-redirect domains (`click.comms.adidas.com`) were not validated for destination reachability.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] Arrow image served over HTTP (8 instances — same asset)**\nAll instances point to the same file:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nGmail, Outlook.com, and Apple Mail proxy or block mixed-content HTTP images. The arrow will render as a broken image icon in any client that enforces HTTPS-only image loading. The asset should be served from `https://`.\n\n**[WARN] Missing alt text — 2 images**\n- Dynamic content image: `d53c4f08-d290-4662-a0e5-3c149a613728` (dv.adidas.com block)\n- Tracking pixel: `0HgFmkrMZs9CvhR30bqWGT2EqKoFfLmivR57uDZ3Rdw=451` (click.comms.adidas.com open-tracking pixel — `alt=\"\"` is acceptable here, but the flag suggests the attribute is absent entirely rather than empty)\n\nThe dv.adidas.com image missing alt text is the more significant accessibility gap; if images are blocked, the content conveys nothing.\n\n**Custom fonts declared twice**\n`AdihausDIN` and `AdineuePRO` `@font-face` blocks are duplicated across two separate `<style>` blocks with slightly different `src` fallback lists. This is harmless but bloats the `<head>` and may cause rendering inconsistency if clients apply the first or last declaration differently.\n\n---\n\n### 4. Personalization & Merge Tokens\n\n**[FAIL] Unresolved merge token — dynamic content link**\nThe `href` value `/g/d53c4f08-d290-4662-a0e5-3c149a613728?txn=a9d1d880-3215-11f1-8deb-ae5aeed300aa` is a relative path fragment, consistent with a personalization or dynamic content token that did not resolve to a full URL at send time. No other unresolved tokens (e.g., `%%FIRST_NAME%%`, `[FIRST NAME]`) are visible in the truncated source.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text fallback missing**\nThe text/plain MIME part is 0 characters. CAN-SPAM does not explicitly mandate a plain-text part, but its complete absence degrades deliverability scoring (SpamAssassin, Postfix content filters penalize HTML-only messages) and breaks accessibility for screen-reader-only mail clients.\n\n**[WARN] Authentication headers not verified**\nSPF/DKIM/DMARC status could not be confirmed via the AgentMail relay — `Authentication-Results` header was not present in the captured data. Sending domain `us-news.comms.adidas.com` should have a published DMARC policy aligned to `adidas.com`; this could not be verified from available data.\n\nUnsubscribe link and physical address presence cannot be confirmed from the truncated HTML, but no automated check flagged them as missing.\n\n---\n\n### 6. Email-to-Site Continuity\n\nThe store-locator AppsFlyer link contains UTM-equivalent parameters (`pid=Email`, `c=NAM-Retail_Stores`, `af_xp=email`) which are structurally correct for AppsFlyer attribution, but the link itself is broken (see §2), so no attribution will be captured for store-locator clicks regardless.\n\nThe `dv.adidas.com` dynamic content link is non-functional (relative URL), so any UTM params on its destination are also unreachable.\n\nNo issues found with UTM parameters on the remaining 38 tracked links (not probed for destination alignment, but parameter presence was not flagged).\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|----------|-------|--------|\n| **P0** | Store-locator link doubled-domain defect | Re-wrap the AppsFlyer URL through the SFMC click-tracker correctly — the inner URL must be URL-encoded as a single parameter, not concatenated into the path |\n| **P0** | Relative URL on dynamic content block (`d53c4f08`) | Confirm the merge token or dynamic content rule that generates this `href`; ensure the base domain (`https://www.adidas.com`) is prepended before send |\n| **P1** | Arrow image HTTP → HTTPS (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) | Update asset CDN reference to `https://image.link.adidas.com/...` across all 8 instances |\n| **P1** | Plain-text fallback absent | Add a meaningful `text/plain` MIME part (even a condensed version of the email body + key links) |\n| **P2** | Missing `alt` on dv.adidas.com image block | Add descriptive `alt` text to the dynamic content image |\n| **P2** | Duplicate `@font-face` declarations | Consolidate into a single `<style>` block |\n| **P3** | Authentication-Results not verified | Confirm SPF/DKIM alignment for `us-news.comms.adidas.com` in production send headers |",
+    "sections": {
+      "executive_summary": [
+        "A lean, performance-focused email built around the Adizero Evo SL launch. The creative is strong — action photography, clean typography, and a tight product grid — but the email is undermined by a visible character encoding bug in a key secondary headline. The Spotify Premium cross-promotion is a genuinely interesting value-add but lands awkwardly as a near-equal visual weight to the primary product push."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero photography is sharp.** Two runners in motion, product on foot, high contrast — communicates performance without needing much copy.",
+        "- **Product grid is functional.** The 2x2 lifestyle grid shows the shoe across multiple contexts and complements the hero well.",
+        "- **Layout discipline.** The email doesn't overstuff. Each section has breathing room and a clear job to do.",
+        "- **Spotify partnership is differentiated.** Cross-brand offers in running emails are rare and can earn opens on their own. The concept is right."
+      ],
+      "whats_weak": [
+        "- **Encoding bug in the Spotify headline — visible and bad.** The secondary section reads \"RUN WITHOUT LIMITS â€\" GET SPOTIFY PREMIUM\" with garbled characters where the em dash should be. This is live in the render and degrades trust immediately.",
+        "- **CTA hierarchy is unclear.** The email has two distinct value propositions (buy shoes, get Spotify) with no visual signal that one outranks the other. The recipient has to decide which thing they're being asked to do.",
+        "- **Body copy is small and dense.** The intro paragraph below the hero is hard to read at a glance. It may say something important but it won't get read.",
+        "- **The Spotify module feels bolted on.** There's no visible transition or connective tissue between \"buy this shoe\" and \"get Spotify Premium.\" The editorial logic isn't communicated."
+      ],
+      "recommendations": [
+        "1. **Fix the encoding bug now.** The garbled em dash in the Spotify headline needs a resend or a correction. This is the top priority.",
+        "2. **Make the Spotify offer feel earned.** Add a single line of copy explaining the connection — e.g., \"Every Adizero Evo SL purchase includes 3 months of Spotify Premium.\" Right now the pairing looks accidental.",
+        "3. **Elevate one primary CTA.** Either the shoe or the Spotify offer should be the clear hero. If Spotify is secondary, shrink it and push it below a prominent shoe CTA.",
+        "4. **Increase intro copy size or cut it.** If the body copy under the hero headline can't be skimmed in 3 seconds, it should be shorter or larger — not both small and long.",
+        "5. **Add a price anchor.** No price or urgency signal is visible anywhere. For a performance launch email, even a \"Starting at $X\" line gives the recipient a reason to click now vs. later.",
+        "| Priority | Issue | Action |",
+        "|----------|-------|--------|",
+        "| **P0** | Store-locator link doubled-domain defect | Re-wrap the AppsFlyer URL through the SFMC click-tracker correctly — the inner URL must be URL-encoded as a single parameter, not concatenated into the path |",
+        "| **P0** | Relative URL on dynamic content block (`d53c4f08`) | Confirm the merge token or dynamic content rule that generates this `href`; ensure the base domain (`https://www.adidas.com`) is prepended before send |",
+        "| **P1** | Arrow image HTTP → HTTPS (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) | Update asset CDN reference to `https://image.link.adidas.com/...` across all 8 instances |",
+        "| **P1** | Plain-text fallback absent | Add a meaningful `text/plain` MIME part (even a condensed version of the email body + key links) |",
+        "| **P2** | Missing `alt` on dv.adidas.com image block | Add descriptive `alt` text to the dynamic content image |",
+        "| **P2** | Duplicate `@font-face` declarations | Consolidate into a single `<style>` block |",
+        "| **P3** | Authentication-Results not verified | Confirm SPF/DKIM alignment for `us-news.comms.adidas.com` in production send headers |"
+      ],
+      "bottom_line": [
+        "Solid production quality with real strategic upside from the Spotify partnership, but the encoding bug in that same module makes it the email's biggest liability. The creative earns a 7; execution lands at a 6. Fix the render issue and sharpen the CTA hierarchy before using this template again."
+      ],
+      "evidence": [
+        "**Overall purpose:** Drive awareness and purchase consideration for the Adizero Evo SL running shoe, with a secondary cross-promotional offer of Spotify Premium.",
+        "**Hero / primary value proposition:** Full-width action shot of two runners, overlaid with \"ADIZERO EVO SL\" in large type. Strong visual, minimal copy. Effective at establishing the shoe as a performance product.",
+        "**Membership / benefits section:** Not present. No adiClub callout, points offer, or member-exclusive framing visible.",
+        "**Product discoverability / recommendation modules:** 2x2 product/lifestyle grid showing the shoe in multiple looks and settings. No pricing, colorway labels, or ratings visible — functional but minimal.",
+        "**Utility / secondary modules:** Spotify Premium co-promotion module with a lifestyle image of a woman and bold headline text. Positioned as a near-equal section to the primary product push.",
+        "**Bugs / friction / clarity issues:** The Spotify section headline visibly reads \"RUN WITHOUT LIMITS â€\" GET SPOTIFY PREMIUM\" — the em dash character has failed to render and is displaying as raw encoding artifacts. This is the only visible bug but it appears in a prominent, high-contrast headline.",
+        "**From:** adidas@us-news.comms.adidas.com | **Date:** 2026-04-06",
+        "The email has two confirmed broken links (doubled-domain URL construction defect and a malformed relative URL), a missing plain-text fallback, and 8 instances of the same arrow image served over HTTP. Overall QA pass rate is 44%.",
+        "**[FAIL] Doubled-domain URL — store locator link**",
+        "The \"local adidas store.\" link wraps an AppsFlyer deep-link URL inside the click-tracking domain without proper encoding, creating a doubled-domain pattern that will likely 404 or redirect incorrectly:",
+        "```",
+        "https://click.comms.adidas.com/CL0/https:%2F%2Fgo.adidas.com%2Fihha%3Faf_ios_url=...",
+        "```",
+        "The outer tracker should encode the inner URL once; double-encoding `https://` as `https:%2F%2F` nested inside a `click.comms.adidas.com/CL0/` path is a known Salesforce Marketing Cloud wrapping defect. The same URL appears flagged twice (both the `[FAIL] Doubled-domain bug` and `[FAIL] Doubled-domain merge error` checks), confirming it is a single broken link hit by two detection rules.",
+        "**[FAIL] Malformed relative URL — dynamic content image link**",
+        "One link resolves to a relative path rather than an absolute URL:",
+        "```",
+        "unknown url type: '/g/d53c4f08-d290-4662-a0e5-3c149a613728?txn=...'",
+        "```",
+        "The `href` was apparently templated as a relative path (`/g/...`) but the base domain was never prepended — likely a merge token that did not resolve. The surrounding element is the `dv.adidas.com` dynamic content block (`d53c4f08-d290-4662-a0e5-3c149a613728`). This link is non-functional in all clients.",
+        "**38 tracking links skipped** from HTTP probe — not failures, but click-redirect domains (`click.comms.adidas.com`) were not validated for destination reachability.",
+        "**[WARN] Arrow image served over HTTP (8 instances — same asset)**",
+        "All instances point to the same file:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Gmail, Outlook.com, and Apple Mail proxy or block mixed-content HTTP images. The arrow will render as a broken image icon in any client that enforces HTTPS-only image loading. The asset should be served from `https://`.",
+        "**[WARN] Missing alt text — 2 images**",
+        "- Dynamic content image: `d53c4f08-d290-4662-a0e5-3c149a613728` (dv.adidas.com block)",
+        "- Tracking pixel: `0HgFmkrMZs9CvhR30bqWGT2EqKoFfLmivR57uDZ3Rdw=451` (click.comms.adidas.com open-tracking pixel — `alt=\"\"` is acceptable here, but the flag suggests the attribute is absent entirely rather than empty)",
+        "The dv.adidas.com image missing alt text is the more significant accessibility gap; if images are blocked, the content conveys nothing.",
+        "**Custom fonts declared twice**",
+        "`AdihausDIN` and `AdineuePRO` `@font-face` blocks are duplicated across two separate `<style>` blocks with slightly different `src` fallback lists. This is harmless but bloats the `<head>` and may cause rendering inconsistency if clients apply the first or last declaration differently.",
+        "**[FAIL] Unresolved merge token — dynamic content link**",
+        "The `href` value `/g/d53c4f08-d290-4662-a0e5-3c149a613728?txn=a9d1d880-3215-11f1-8deb-ae5aeed300aa` is a relative path fragment, consistent with a personalization or dynamic content token that did not resolve to a full URL at send time. No other unresolved tokens (e.g., `%%FIRST_NAME%%`, `[FIRST NAME]`) are visible in the truncated source.",
+        "**[FAIL] Plain-text fallback missing**",
+        "The text/plain MIME part is 0 characters. CAN-SPAM does not explicitly mandate a plain-text part, but its complete absence degrades deliverability scoring (SpamAssassin, Postfix content filters penalize HTML-only messages) and breaks accessibility for screen-reader-only mail clients.",
+        "**[WARN] Authentication headers not verified**",
+        "SPF/DKIM/DMARC status could not be confirmed via the AgentMail relay — `Authentication-Results` header was not present in the captured data. Sending domain `us-news.comms.adidas.com` should have a published DMARC policy aligned to `adidas.com`; this could not be verified from available data.",
+        "Unsubscribe link and physical address presence cannot be confirmed from the truncated HTML, but no automated check flagged them as missing.",
+        "The store-locator AppsFlyer link contains UTM-equivalent parameters (`pid=Email`, `c=NAM-Retail_Stores`, `af_xp=email`) which are structurally correct for AppsFlyer attribution, but the link itself is broken (see §2), so no attribution will be captured for store-locator clicks regardless.",
+        "The `dv.adidas.com` dynamic content link is non-functional (relative URL), so any UTM params on its destination are also unreachable.",
+        "No issues found with UTM parameters on the remaining 38 tracked links (not probed for destination alignment, but parameter presence was not flagged)."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 3,
+        "checks": [
+          {
+            "check_id": "link_doubled_domain",
+            "status": "fail",
+            "label": "Doubled-domain bug in URL",
+            "detail": "URL contains a doubled domain pattern (link text: \"local adidas store.\")",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fgo.adidas.com%2Fihha%3Faf_ios_url=https%253A%252F%252Fwww.adidas.com%252Fus%252Fstores%26af_android_url=https%253A%252F%252Fwww.adidas.com%252Fus%252Fstores%26af_web_dp=https%253A%252F%252Fwww.adidas.com%252Fus%252Fstores%26af_xp=email%26pid=Email%26c=NAM-Retail_Stores%26af_dp=adidas%253A%252F%252Fretail%252Fstores%252Ffind%252Fin-store%26deep_link_value=adidas%253A%252F%252Fretail%252Fstores%252Ffind%252Fin-store/1/0102019d6541133e-211fcd48-2374-4cc0-9a0d-7f10bd3b2652-000000/O2CDJdSy29-LhB_-6V_0ePbKXO0M_3uveDssaMprrUE=451"
+          },
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/d53c4f08-d290-4662-a0e5-3c149a613728?txn=a9d1d880-3215-11f1-8deb-ae5aeed300aa'",
+            "url": "https://dv.adidas.com/o/d53c4f08-d290-4662-a0e5-3c149a613728?cp_tp=v3.eJzjYuIIFuLguPPo1Dk2AWYpXo7uP5xC7Byv-AVYJNiUxDmWtmcDhdk4GiZdPMemBJPQ2soE1PS8QVSAUYJFaQWTkCjHQhkNRi8WDkYBxiAwGcGVwCUkzPFcSoBRgxlZQkic46WUABOa6viEeKBEm4wAMxZjDDk-SQGtZVRg1GBy4uJ48ZdXYgefwhouLy6QEimIciR2hr2QPscHKQFWqIbTB_gkmtgVzrLh1MAMtPytlAAbmuVGCUZAiSUyAuxYPfdaSoBDgwXNc2-kBDgxVUssYFM4ymTEwXGXV4mZ45EjkNXMB2SdcQKy9vIDWQvdgKzLINZNNytWjtumUgxWHBznNaSYObrTHRijODiuGwoxc_yrBrJugFgdNUDWTRCrpyaKk2OKtRALx71eRiCzywbIfNzPmMEIAByJU14=&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d6987-ca00-7000-8d32-b43f6deb0208"
+          },
+          {
+            "check_id": "merge_doubled_domain",
+            "status": "fail",
+            "label": "Doubled-domain merge error in URL",
+            "detail": "URL contains a repeated domain",
+            "url": "https://click.comms.adidas.com/CL0/https:%2F%2Fgo.adidas.com%2Fihha%3Faf_ios_url=https%253A%252F%252Fwww.adidas.com%252Fus%252Fstores%26af_android_url=https%253A%252F%252Fwww.adidas.com%252Fus%252Fstores%26af_web_dp=https%253A%252F%252Fwww.adidas.com%252Fus%252Fstores%26af_xp=email%26pid=Email%26c=NAM-Retail_Stores%26af_dp=adidas%253A%252F%252Fretail%252Fstores%252Ffind%252Fin-store%26deep_link_value=adidas%253A%252F%252Fretail%252Fstores%252Ffind%252Fin-store/1/0102019d6541133e-211fcd48-2374-4cc0-9a0d-7f10bd3b2652-000000/O2CDJdSy29-LhB_-6V_0ePbKXO0M_3uveDssaMprrUE=451"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=8zvZG38mCCjUH13rQuDYYnfJSVn7CARsD7N4pI7c2q7bf74ze7iEhcEyGThRuVk7Dz9+fB3OkOkXRm7NnbHafsLRfhnc8fK96rWlLyDsyL+HJr8/D4a3"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 11,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "38 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: d53c4f08-d290-4662-a0e5-3c149a613728",
+            "detail": "src: https://dv.adidas.com/o/d53c4f08-d290-4662-a0e5-3c149a613728?cp_tp=v3.eJzjYuIIFuLguPPo1Dk2AWYpXo7uP5xC7Byv-AVYJNiUxDmWtm"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 0HgFmkrMZs9CvhR30bqWGT2EqKoFfLmivR57uDZ3Rdw=451",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d6541133e-211fcd48-2374-4cc0-9a0d-7f10bd3b2652-000000/0HgFmkrMZs9CvhR30bqWGT2Eq"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 0HgFmkrMZs9CvhR30bqWGT2EqKoFfLmivR57uDZ3Rdw=451",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d6541133e-211fcd48-2374-4cc0-9a0d-7f10bd3b2652-000000/0HgFmkrMZs9CvhR30bqWGT2Eq"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "44%",
+      "total_checks": 9,
+      "total_issues": 4,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-07-shop-adizero-evo-sl-running-shoes-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
