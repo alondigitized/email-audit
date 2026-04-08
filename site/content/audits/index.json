@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-08-test-pro-us-retpuropen-u-sitebundle-retail-en-04092026-v2the-right-pair-right-no",
+    "subject": "[Test]: PRO_US_RETPUROPEN_U_SITEBUNDLE_RETAIL_EN_04092026_V2The right pair, right now, whenever you want to shop!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-08T19:10:36+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-08-test-pro-us-retpuropen-u-sitebundle-retail-en-04092026the-right-pair-right-now-w",
     "subject": "[Test]: PRO_US_RETPUROPEN_U_SITEBUNDLE_RETAIL_EN_04092026The right pair, right now, whenever you want to shop!",
     "from_display_name": "SKECHERS",
