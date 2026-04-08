@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-08-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-08T13:04:09.714Z",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 34,
+      "total_issues": 4,
+      "total_warnings": 30
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-07-test-mkg-us-na-w-new-gender-en-04082026-spring-into-a-new-level-of-comfort",
     "subject": "[Test]: MKG_US_NA_W_NEW_GENDER_EN_04082026🌱 Spring into a new level of comfort",
     "from_display_name": "SKECHERS",
