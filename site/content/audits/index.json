@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-09-purechill-is-your-go-to-for-before-and-after-sport",
+    "subject": "Purechill is your go-to for before and after sport",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-09T00:06:29+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-08-test-ret-us-na-u-store1423-zip-en-04102026sale-ends-soon-celebrate-our-birthday--fdbb6dc3-9794-4c04-b04c-",
     "subject": "[Test]: RET_US_NA_U_STORE1423_ZIP_EN_04102026SALE Ends Soon! Celebrate our Birthday in Ridgewood",
     "from_display_name": "SKECHERS STORES",

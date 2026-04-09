@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-09-purechill-is-your-go-to-for-before-and-after-sport",
+  "email": {
+    "subject": "Purechill is your go-to for before and after sport",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-09T00:06:29+00:00",
+    "date_formatted": "2026-04-09 00:06 UTC"
+  },
+  "review": {
+    "score": "4/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nThis email promises Purechill but barely delivers it. The subject line sets a clear product intent, yet the email contains zero product images of the Purechill shoe and no dedicated CTA to buy it. Instead, the email pivots to a James Harden Superstar sneaker giveaway — a completely different product — which ends up being the dominant visual. The result is a confusing, low-conversion email that fails the product it claims to be promoting.\n\n---\n\n### 2. Business Impact Score\n\n**4 / 10**\n\nThe brand presentation is clean and the Harden contest has potential, but the core Purechill product is invisible and unshoppable. Lost conversion opportunity.\n\n---\n\n### 3. What's Working\n\n- **Clean, minimal layout.** The email doesn't feel cluttered — it gives each section room to breathe.\n- **Harden contest visual is strong.** The signed sneaker + photo collage layout reads like a premium, authentic moment. It's the most compelling visual in the email.\n- **adiClub exclusivity hook works.** \"Exclusively for adiClub members\" on the contest is a solid membership value driver.\n- **Brand tone is consistent.** Copy in the Purechill section (\"outside the lines of play,\" \"casual comfort at its core\") is on-brand and clear.\n\n---\n\n### 4. What's Weak\n\n- **The Purechill shoe is never shown.** The entire \"FROM PERFORMANCE TO COMFORT\" section is headline + body copy with no product image. You cannot see what you're being sold.\n- **No Purechill CTA.** After reading the product description, there is no button to shop, explore, or learn more about Purechill. The only CTA in the email (\"SHOP NOW\") belongs to a generic hero banner for \"the latest adidas best sellers\" — not Purechill specifically.\n- **Hero banner is off-message.** The yellow overlay banner on the hero says \"Explore the latest adidas best sellers\" which undercuts the Purechill narrative immediately. This feels like leftover evergreen content injected into a product launch email.\n- **Two unrelated products compete for attention.** Purechill (a comfort/lifestyle shoe) and the Harden Superstar sneaker (a contest prize) have no narrative connection. The email reads like two campaigns stapled together.\n- **The Harden section has no CTA either.** There is no \"Enter Now\" button visible — the contest is described but there's no clear action path.\n- **No product details, price, or social proof for Purechill.** A consumer has nothing to act on.\n\n---\n\n### 5. Recommendations\n\n1. **Show the shoe.** Add at least one product image of the Purechill — ideally a lifestyle shot and a clean product render — in the \"Performance to Comfort\" section.\n2. **Add a Purechill CTA button.** Place a \"Shop Purechill\" or \"Get Yours\" button directly below the product copy. This is the most critical fix.\n3. **Fix or remove the generic hero banner.** If the email is about Purechill, the hero should be Purechill. Replace the \"Explore best sellers\" overlay with Purechill-specific messaging.\n4. **Add a contest CTA.** The Harden section needs an \"Enter Now\" button. Describing a giveaway with no action path is a wasted engagement opportunity.\n5. **Consider separating these campaigns.** The Purechill launch and the Harden contest are strong enough individually — combining them dilutes both. If they must coexist, create a clearer narrative bridge or sequence them separately.\n6. **Consider a price anchor.** Even a \"Starting at $X\" line gives the reader a purchase signal.\n\n---\n\n### 6. Bottom Line\n\nThis email is structurally broken for its stated purpose. A product email without a product image and without a product CTA will not drive Purechill sales. The Harden contest is a stronger hook visually, but it also goes unmonetized. Both halves need CTAs; the Purechill half needs a product photo first. Fix these two things and the email's score jumps significantly.\n\n---\n\n### 7. Evidence\n\n**Overall purpose:** Promote the Purechill shoe as a lifestyle/recovery option and drive entries to a James Harden Superstar sneaker giveaway. Two goals, one email, weak execution on both.\n\n**Hero / primary value proposition:** Dark, moody athletic lifestyle photo with a yellow \"Explore the latest adidas best sellers\" banner overlay and a \"SHOP NOW\" CTA. The hero does not mention or show Purechill. Misaligned with the email's stated subject.\n\n**Membership / benefits section:** adiClub is mentioned once in the contest section (\"Exclusively for adiClub members\"). No dedicated benefits module, no membership upsell, no loyalty points mention.\n\n**Product discoverability / recommendation modules:** None. There is no product grid, no \"you may also like,\" no product tiles. Purechill gets a text description only — no image, no price, no link.\n\n**Utility / secondary modules:** Footer contains My Account, Privacy Statement, Support, Unsubscribe, and adidas status links. Minimal but functional.\n\n**Bugs / friction / clarity issues:** No broken images or overlapping text observed. The email renders cleanly. The problems are structural and strategic, not visual — but the absence of product imagery in the Purechill section is a visible content gap that a recipient would notice immediately.\n\n---\n\n## Technical Audit\n\n## Technical Audit — \"Purechill is your go-to for before and after sport\"\n**From:** adidas <adidas@us-news.comms.adidas.com>\n\n---\n\n### 1. Technical Summary\nOne broken click-redirect causes a non-functional CTA link. The email also has a missing plain-text body, HTTP-sourced images, and duplicate `@font-face` declarations that add unnecessary payload weight.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken redirect — malformed internal path**\nQA detected an unknown URL type during link resolution:\n```\n/g/2e654590-a440-4de8-bc51-116b6edbc654?txn=fe0cc200-33a7-11f1-b5a8-8668c83b363d\n```\nThe target resolves via `https://dv.adidas.com/o/2e654590-a440-4de8-bc51-116b6edbc654?cp_tp=v3...`. The `/g/` path segment is not a recognized redirect scheme — this link likely results in a 404 or dead end for recipients who click it.\n\n**[WARN] 24 tracking/redirect links skipped**\nAll click-wrapped links route through `click.comms.adidas.com` or `dv.adidas.com`. HTTP probing was skipped for these, so destination validity cannot be confirmed beyond the one flagged failure above.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] HTTP image sources — blocked by strict clients (4 instances)**\nThe arrow icon image is sourced over plain HTTP and appears 4 times:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nModern email clients (Gmail, Outlook 365, Apple Mail with MPP) may block or refuse to load non-HTTPS images.\n\n**[WARN] HTTP tracking pixel**\n```\nhttp://click.comms.adidas.com/CI0/0102019d6f8fcfa6-be175df9-7365-49c5-a2ff-6dbb803daf09-000000/...\n```\nAlso served over HTTP. Open-tracking reliability will degrade in clients with mixed-content blocking.\n\n**[WARN] Missing `alt` text on 2 images**\n- Hero/content image: `src` resolving to `dv.adidas.com/o/2e654590-a440-4de8-bc51-116b6edbc654`\n- Tracking pixel: `click.comms.adidas.com/CI0/...`\n\nThe tracking pixel omission is acceptable, but the content image missing `alt` text is an accessibility gap (WCAG 2.1 §1.1.1) and degrades the image-blocked experience.\n\n**[WARN] Duplicate `@font-face` declarations**\n`AdihausDIN` (400, 700) and `AdineuePRO` (400, 600) are each declared twice across two separate `<style>` blocks. Both blocks map to local system fonts (`Arial`, `Helvetica`) — no custom font is actually loaded. The duplication is harmless but adds ~1.5 KB of redundant CSS.\n\n**[NOTE] Legacy DOCTYPE**\n`<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">` — HTML 4.01 Transitional is commonly used for Outlook compatibility but prevents standards-mode rendering in modern clients.\n\n**[NOTE] Malformed `<meta charset>` tag**\n```html\n<meta content=\"text/html; charset=UTF-8\" />\n```\nMissing `http-equiv=\"Content-Type\"` attribute. The tag is non-functional as written; charset should be declared as `<meta charset=\"UTF-8\">` (HTML5) or with the full `http-equiv` attribute.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unfired or exposed merge tokens detected in the truncated source. No issues found.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text body absent**\nQA confirmed: `Text version is 0 chars`. CAN-SPAM and best-practice deliverability guidelines require a plain-text alternative part. Its absence can trigger spam filters and is flagged by major ESPs as a compliance gap.\n\n**[WARN] SPF/DKIM authentication status unverifiable**\n`Authentication-Results` header was not present in the sampled message. SPF/DKIM pass/fail status for `us-news.comms.adidas.com` cannot be confirmed via this audit. If relay is through AgentMail, the sending domain's alignment with the `From:` header domain should be verified.\n\n**[NOTE] `ROBOTS: NOINDEX, NOFOLLOW` and `referrer: no-referrer` are present** — these are appropriate for email webview renders and present no compliance issue.\n\nUnsubscribe link presence could not be confirmed from truncated HTML; this should be verified in the full source.\n\n---\n\n### 6. Email-to-Site Continuity\n\nUTM parameters are embedded within base64-encoded `cp_tp` payloads on `dv.adidas.com` click-redirect URLs. Direct UTM inspection is not possible without decoding. The broken `/g/` redirect (see §2) means at least one CTA will not deliver any UTM data at all, as the user never reaches the destination.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **Critical** | Broken `/g/` redirect on `dv.adidas.com` CTA | Re-generate or re-map the redirect URL before resend |\n| **High** | Plain-text body is empty | Populate multipart/alternative text part — minimum stripped-text version of all CTAs and body copy |\n| **High** | 4× arrow images + 1 tracking pixel over HTTP | Update `image.link.adidas.com` and `click.comms.adidas.com` asset URLs to HTTPS |\n| **Medium** | Missing `alt` on content image | Add descriptive `alt` text to the hero/product image |\n| **Medium** | SPF/DKIM status unconfirmed | Verify `Authentication-Results` in delivered headers; confirm `us-news.comms.adidas.com` is DKIM-signed and SPF-aligned |\n| **Low** | Duplicate `@font-face` blocks | Consolidate into one `<style>` block |\n| **Low** | Malformed `<meta charset>` | Replace with `<meta charset=\"UTF-8\">` |",
+    "sections": {
+      "executive_summary": [
+        "This email promises Purechill but barely delivers it. The subject line sets a clear product intent, yet the email contains zero product images of the Purechill shoe and no dedicated CTA to buy it. Instead, the email pivots to a James Harden Superstar sneaker giveaway — a completely different product — which ends up being the dominant visual. The result is a confusing, low-conversion email that fails the product it claims to be promoting."
+      ],
+      "business_impact_score": [
+        "**4 / 10**",
+        "The brand presentation is clean and the Harden contest has potential, but the core Purechill product is invisible and unshoppable. Lost conversion opportunity."
+      ],
+      "whats_working": [
+        "- **Clean, minimal layout.** The email doesn't feel cluttered — it gives each section room to breathe.",
+        "- **Harden contest visual is strong.** The signed sneaker + photo collage layout reads like a premium, authentic moment. It's the most compelling visual in the email.",
+        "- **adiClub exclusivity hook works.** \"Exclusively for adiClub members\" on the contest is a solid membership value driver.",
+        "- **Brand tone is consistent.** Copy in the Purechill section (\"outside the lines of play,\" \"casual comfort at its core\") is on-brand and clear."
+      ],
+      "whats_weak": [
+        "- **The Purechill shoe is never shown.** The entire \"FROM PERFORMANCE TO COMFORT\" section is headline + body copy with no product image. You cannot see what you're being sold.",
+        "- **No Purechill CTA.** After reading the product description, there is no button to shop, explore, or learn more about Purechill. The only CTA in the email (\"SHOP NOW\") belongs to a generic hero banner for \"the latest adidas best sellers\" — not Purechill specifically.",
+        "- **Hero banner is off-message.** The yellow overlay banner on the hero says \"Explore the latest adidas best sellers\" which undercuts the Purechill narrative immediately. This feels like leftover evergreen content injected into a product launch email.",
+        "- **Two unrelated products compete for attention.** Purechill (a comfort/lifestyle shoe) and the Harden Superstar sneaker (a contest prize) have no narrative connection. The email reads like two campaigns stapled together.",
+        "- **The Harden section has no CTA either.** There is no \"Enter Now\" button visible — the contest is described but there's no clear action path.",
+        "- **No product details, price, or social proof for Purechill.** A consumer has nothing to act on."
+      ],
+      "recommendations": [
+        "1. **Show the shoe.** Add at least one product image of the Purechill — ideally a lifestyle shot and a clean product render — in the \"Performance to Comfort\" section.",
+        "2. **Add a Purechill CTA button.** Place a \"Shop Purechill\" or \"Get Yours\" button directly below the product copy. This is the most critical fix.",
+        "3. **Fix or remove the generic hero banner.** If the email is about Purechill, the hero should be Purechill. Replace the \"Explore best sellers\" overlay with Purechill-specific messaging.",
+        "4. **Add a contest CTA.** The Harden section needs an \"Enter Now\" button. Describing a giveaway with no action path is a wasted engagement opportunity.",
+        "5. **Consider separating these campaigns.** The Purechill launch and the Harden contest are strong enough individually — combining them dilutes both. If they must coexist, create a clearer narrative bridge or sequence them separately.",
+        "6. **Consider a price anchor.** Even a \"Starting at $X\" line gives the reader a purchase signal.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **Critical** | Broken `/g/` redirect on `dv.adidas.com` CTA | Re-generate or re-map the redirect URL before resend |",
+        "| **High** | Plain-text body is empty | Populate multipart/alternative text part — minimum stripped-text version of all CTAs and body copy |",
+        "| **High** | 4× arrow images + 1 tracking pixel over HTTP | Update `image.link.adidas.com` and `click.comms.adidas.com` asset URLs to HTTPS |",
+        "| **Medium** | Missing `alt` on content image | Add descriptive `alt` text to the hero/product image |",
+        "| **Medium** | SPF/DKIM status unconfirmed | Verify `Authentication-Results` in delivered headers; confirm `us-news.comms.adidas.com` is DKIM-signed and SPF-aligned |",
+        "| **Low** | Duplicate `@font-face` blocks | Consolidate into one `<style>` block |",
+        "| **Low** | Malformed `<meta charset>` | Replace with `<meta charset=\"UTF-8\">` |"
+      ],
+      "bottom_line": [
+        "This email is structurally broken for its stated purpose. A product email without a product image and without a product CTA will not drive Purechill sales. The Harden contest is a stronger hook visually, but it also goes unmonetized. Both halves need CTAs; the Purechill half needs a product photo first. Fix these two things and the email's score jumps significantly."
+      ],
+      "evidence": [
+        "**Overall purpose:** Promote the Purechill shoe as a lifestyle/recovery option and drive entries to a James Harden Superstar sneaker giveaway. Two goals, one email, weak execution on both.",
+        "**Hero / primary value proposition:** Dark, moody athletic lifestyle photo with a yellow \"Explore the latest adidas best sellers\" banner overlay and a \"SHOP NOW\" CTA. The hero does not mention or show Purechill. Misaligned with the email's stated subject.",
+        "**Membership / benefits section:** adiClub is mentioned once in the contest section (\"Exclusively for adiClub members\"). No dedicated benefits module, no membership upsell, no loyalty points mention.",
+        "**Product discoverability / recommendation modules:** None. There is no product grid, no \"you may also like,\" no product tiles. Purechill gets a text description only — no image, no price, no link.",
+        "**Utility / secondary modules:** Footer contains My Account, Privacy Statement, Support, Unsubscribe, and adidas status links. Minimal but functional.",
+        "**Bugs / friction / clarity issues:** No broken images or overlapping text observed. The email renders cleanly. The problems are structural and strategic, not visual — but the absence of product imagery in the Purechill section is a visible content gap that a recipient would notice immediately.",
+        "**From:** adidas <adidas@us-news.comms.adidas.com>",
+        "One broken click-redirect causes a non-functional CTA link. The email also has a missing plain-text body, HTTP-sourced images, and duplicate `@font-face` declarations that add unnecessary payload weight.",
+        "**[FAIL] Broken redirect — malformed internal path**",
+        "QA detected an unknown URL type during link resolution:",
+        "```",
+        "/g/2e654590-a440-4de8-bc51-116b6edbc654?txn=fe0cc200-33a7-11f1-b5a8-8668c83b363d",
+        "```",
+        "The target resolves via `https://dv.adidas.com/o/2e654590-a440-4de8-bc51-116b6edbc654?cp_tp=v3...`. The `/g/` path segment is not a recognized redirect scheme — this link likely results in a 404 or dead end for recipients who click it.",
+        "**[WARN] 24 tracking/redirect links skipped**",
+        "All click-wrapped links route through `click.comms.adidas.com` or `dv.adidas.com`. HTTP probing was skipped for these, so destination validity cannot be confirmed beyond the one flagged failure above.",
+        "**[WARN] HTTP image sources — blocked by strict clients (4 instances)**",
+        "The arrow icon image is sourced over plain HTTP and appears 4 times:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Modern email clients (Gmail, Outlook 365, Apple Mail with MPP) may block or refuse to load non-HTTPS images.",
+        "**[WARN] HTTP tracking pixel**",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d6f8fcfa6-be175df9-7365-49c5-a2ff-6dbb803daf09-000000/...",
+        "```",
+        "Also served over HTTP. Open-tracking reliability will degrade in clients with mixed-content blocking.",
+        "**[WARN] Missing `alt` text on 2 images**",
+        "- Hero/content image: `src` resolving to `dv.adidas.com/o/2e654590-a440-4de8-bc51-116b6edbc654`",
+        "- Tracking pixel: `click.comms.adidas.com/CI0/...`",
+        "The tracking pixel omission is acceptable, but the content image missing `alt` text is an accessibility gap (WCAG 2.1 §1.1.1) and degrades the image-blocked experience.",
+        "**[WARN] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` (400, 700) and `AdineuePRO` (400, 600) are each declared twice across two separate `<style>` blocks. Both blocks map to local system fonts (`Arial`, `Helvetica`) — no custom font is actually loaded. The duplication is harmless but adds ~1.5 KB of redundant CSS.",
+        "**[NOTE] Legacy DOCTYPE**",
+        "`<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">` — HTML 4.01 Transitional is commonly used for Outlook compatibility but prevents standards-mode rendering in modern clients.",
+        "**[NOTE] Malformed `<meta charset>` tag**",
+        "```html",
+        "<meta content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Missing `http-equiv=\"Content-Type\"` attribute. The tag is non-functional as written; charset should be declared as `<meta charset=\"UTF-8\">` (HTML5) or with the full `http-equiv` attribute.",
+        "No unfired or exposed merge tokens detected in the truncated source. No issues found.",
+        "**[FAIL] Plain-text body absent**",
+        "QA confirmed: `Text version is 0 chars`. CAN-SPAM and best-practice deliverability guidelines require a plain-text alternative part. Its absence can trigger spam filters and is flagged by major ESPs as a compliance gap.",
+        "**[WARN] SPF/DKIM authentication status unverifiable**",
+        "`Authentication-Results` header was not present in the sampled message. SPF/DKIM pass/fail status for `us-news.comms.adidas.com` cannot be confirmed via this audit. If relay is through AgentMail, the sending domain's alignment with the `From:` header domain should be verified.",
+        "**[NOTE] `ROBOTS: NOINDEX, NOFOLLOW` and `referrer: no-referrer` are present** — these are appropriate for email webview renders and present no compliance issue.",
+        "Unsubscribe link presence could not be confirmed from truncated HTML; this should be verified in the full source.",
+        "UTM parameters are embedded within base64-encoded `cp_tp` payloads on `dv.adidas.com` click-redirect URLs. Direct UTM inspection is not possible without decoding. The broken `/g/` redirect (see §2) means at least one CTA will not deliver any UTM data at all, as the user never reaches the destination."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/2e654590-a440-4de8-bc51-116b6edbc654?txn=fe0cc200-33a7-11f1-b5a8-8668c83b363d'",
+            "url": "https://dv.adidas.com/o/2e654590-a440-4de8-bc51-116b6edbc654?cp_tp=v3.eJx1z79LQlEUB_Duu8_r8YF6uSE-Lg6PNz1awgct1mAODo61hItuCf0JiQhFRD8hWtoyIipqaIimkoJoCR0qUiSFGvoN0dgQnWcFYrZcPtzvOffcoykwLAB2t69KjFPphYe8Jtzw5OeqDmYQlg_G8JpBvlIrMfM36NlXsGnyI8CJrpqbighAIWSRhAqEk6HmOaKlNdEN95ITi7YGIgiPkitt1al0CoOpEKcdngnDu8SxxCCWEtNgY8-n7zBjy5XQnBL5Xd7iTEz0wpvkrp-Gs2OffsmMxv8NFIe_Ss7ahttpG4P1EHd3XO5ZcrDUtuVeJPf8rdZXmXGq2AA3XpPC7SBqwoc6j6EO_ahCHHXhqBqPuKDWJ7siAGVLUpgdRR3ZqGIOVXR0kot4oBHF_y-tEGTd4UKT5TiyukaiJAlwHRYUPsdRFUfTWVTV0Vw26YHlfqFCfZ4gZwaQd4skQ74AZW5g2A==&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d7253-fc80-7000-a2ed-d686bf6752b3"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=knrCZxI+k0pZ0F9BxYLgEx84YRirhvAcLIJb1vCFGT6Yr3Ou18N210dYwZIVnHIcYcvBT3yT7+aLF/DKSHUkMdb9xCLA6TknwYXGJXd2bAkJmHk+cRJq"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 7,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "24 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 2e654590-a440-4de8-bc51-116b6edbc654",
+            "detail": "src: https://dv.adidas.com/o/2e654590-a440-4de8-bc51-116b6edbc654?cp_tp=v3.eJx1z79LQlEUB_Duu8_r8YF6uSE-Lg6PNz1awgct1mAODo61hI"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 9_78fo3xvB0HOdWNJAIOvtJIEIJOhY8JIsXTc8pkDwQ=452",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d6f8fcfa6-be175df9-7365-49c5-a2ff-6dbb803daf09-000000/9_78fo3xvB0HOdWNJAIOvtJIE"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 9_78fo3xvB0HOdWNJAIOvtJIEIJOhY8JIsXTc8pkDwQ=452",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d6f8fcfa6-be175df9-7365-49c5-a2ff-6dbb803daf09-000000/9_78fo3xvB0HOdWNJAIOvtJIE"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-09-purechill-is-your-go-to-for-before-and-after-sport-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
