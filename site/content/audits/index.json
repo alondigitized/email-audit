@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-a-v2the-arcades-you-know-love-in-colors",
+    "subject": "[Test]: MKG_US_NA_W_ARCH_GENDER_EN_04102026_A_V2The Arcades You Know & Love in Colors You’ll Adore",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-09T22:44:33+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-athe-arcades-you-know-love-in-colors-yo",
     "subject": "[Test]: MKG_US_NA_W_ARCH_GENDER_EN_04102026_AThe Arcades You Know & Love in Colors You’ll Adore",
     "from_display_name": "SKECHERS",
