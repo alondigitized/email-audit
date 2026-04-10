@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026feel-good-styles-for-you-them",
+    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026Feel-Good Styles for You & Them 🐾",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-10T17:38:33+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-10-test-ret-us-na-u-store1423-zip-en-04102026-v2sale-ends-soon-celebrate-our-birthd",
     "subject": "[Test]: RET_US_NA_U_STORE1423_ZIP_EN_04102026_V2SALE Ends Soon! Celebrate our Birthday in Ridgewood",
     "from_display_name": "SKECHERS STORES",
