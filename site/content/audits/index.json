@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-10-test-mkg-us-na-u-seasonal-gender-en-04112026the-perfect-pair-or-2-for-her",
+    "subject": "[Test]: MKG_US_NA_U_SEASONAL_GENDER_EN_04112026The Perfect Pair (or 2) for Her",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-10T18:29:33+00:00",
+    "score": "6.5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-10-adiclub-days-are-coming",
     "subject": "adiClub Days are coming",
     "from_display_name": "adidas",
