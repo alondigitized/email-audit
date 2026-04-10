@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-10-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04122026styles-made-for-spring-weeken",
+    "subject": "[Test]: PRO_US_ECMPURL24_U_SITEBUNDLE_ECOM_EN_04122026Styles Made for Spring Weekends",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-10T22:15:34+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-10-test-pro-us-na-u-sitebundle-full-en-04122026-v3styles-made-for-spring-weekends",
     "subject": "[Test]: PRO_US_NA_U_SITEBUNDLE_FULL_EN_04122026_V3Styles Made for Spring Weekends",
     "from_display_name": "SKECHERS",
