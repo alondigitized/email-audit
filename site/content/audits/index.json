@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-10-test-mkg-us-nonpurclick-u-slipin-nonpurch-en-04132026-v2from-sneakers-to-sandals",
+    "subject": "[Test]: MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132026_V2From Sneakers to Sandals it's Slip-In Season 🤩",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-10T22:58:36+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-10-test-mkg-us-nonpur180-u-slipin-nonpurch-en-04132026from-sneakers-to-sandals-it-s",
     "subject": "[Test]: MKG_US_NONPUR180_U_SLIPIN_NONPURCH_EN_04132026From Sneakers to Sandals it's Slip-In Season 🤩",
     "from_display_name": "SKECHERS",
