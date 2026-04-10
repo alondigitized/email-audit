@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-10-enjoy-your-everyday-runs-in-the-new-supernova-rise-3",
+  "email": {
+    "subject": "Enjoy your everyday runs in the new Supernova Rise 3",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-10T01:06:11+00:00",
+    "date_formatted": "2026-04-10 01:06 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nThis is a product launch email for the adidas Supernova Rise 3, anchored by a strong hero visual and paired with a Spotify Premium sweepstakes incentive. The visual craft is above average, but the email suffers from a structural problem: it tries to serve two distinct objectives (launch the shoe, promote a Spotify partnership giveaway) without prioritizing either. The result is a diluted message. The CTA architecture is also thin — there is only one visible action in the top half, and the sweepstakes module does not have a prominent button visible at the render size. Runners who scroll casually will miss the offer entirely.\n\n---\n\n### 2. Business Impact Score: **6 / 10**\n\nCompetent execution with a real opportunity cost. The shoe earns a better showcase than this structure allows.\n\n---\n\n### 3. What's Working\n\n- **Hero image is excellent.** High-energy, action-forward photography of a runner mid-stride with the shoe clearly featured. Dynamic and on-brand for the performance running segment.\n- **\"SUPERCOMFORT SUPERNOVA\" headline** is clean and benefit-led — comfort is the right differentiator to lead with for an everyday trainer.\n- **Spotify Premium co-brand** adds external value to the offer and gives the email a second hook for subscribers who are already runners and music listeners.\n- **Footer navigation** (Stories, Styles, Sportswear, etc.) provides a clean utility bar for secondary discovery.\n\n---\n\n### 4. What's Weak\n\n- **Dual-purpose dilution.** A shoe launch and a sweepstakes giveaway are two different emails. The Spotify module undercuts the product narrative rather than reinforcing it — the shoe becomes the path to a prize rather than the hero.\n- **No visible price, colorways, or product details.** For a product launch email, the shoe is shown but not sold. No colorway options, no price anchor, no \"Shop Now\" or \"Explore the Shoe\" CTA tied directly to the shoe.\n- **Sweepstakes module lacks a visible CTA button.** At normal scroll depth the \"Enter to win\" section reads as descriptive copy, not an action prompt. No button is visible.\n- **The pre-header/banner offer (\"Explore the latest adidas best sellers — Shop Now\")** is generic and wastes the pre-header slot. A product-specific hook would dramatically improve open-to-click conversion.\n- **Body copy is small and low-contrast.** The comfort claim (\"intentionally made the shoe 20% softer than the previous version\") is a strong stat that deserves callout treatment — it's buried in paragraph-sized text at a size that blurs at render scale.\n\n---\n\n### 5. Recommendations\n\n1. **Split the emails.** Launch the Supernova Rise 3 on its own. Move the Spotify sweepstakes to a separate send or a secondary module in a newsletter. Don't cannibalize a product launch.\n2. **Add a direct shoe CTA.** Place a \"Shop Supernova Rise 3\" button immediately below the SUPERCOMFORT headline. This is the highest-intent moment in the email.\n3. **Make the 20% softer stat a visual callout.** Pull it out of body copy and treat it as a badge or a bold inline stat. It's a proof point that earns trust and justifies purchase.\n4. **Fix the pre-header.** Change \"Explore the latest adidas best sellers\" to something like \"Meet the Supernova Rise 3 — 20% softer, built for every run.\" Specific beats generic every time.\n5. **Give the sweepstakes a visible button.** If it stays in this email, the entry CTA needs a button with clear contrast and label (\"Enter to Win\").\n\n---\n\n### 6. Bottom Line\n\nThe email looks like adidas, performs the basics, and won't embarrass the brand. But for a product launch, it lacks focus and selling intent. The shoe deserves a dedicated email that moves from awareness to purchase consideration — this one stalls at awareness. The Spotify tie-in is a wasted co-brand opportunity when buried this deep without a clear CTA.\n\n---\n\n### 7. Evidence\n\n| Module | What's Visible |\n|---|---|\n| **Overall purpose** | Supernova Rise 3 product launch with a Spotify Premium sweepstakes co-promotion |\n| **Hero / primary value proposition** | Full-bleed action photo of runner wearing the shoe; \"SUPERCOMFORT SUPERNOVA\" headline; brief comfort-focused copy referencing 20% softer than previous version |\n| **Membership / benefits section** | Not present |\n| **Product discoverability / recommendation modules** | None — no colorways, no secondary product tiles, no cross-sell |\n| **Partnership / incentive module** | Spotify Premium co-brand visual; sweepstakes offer to win running shoes, apparel, and 1-year Spotify Premium via adidas app; entry copy visible but no button visible |\n| **Utility / secondary modules** | Standard adidas footer nav (Stories, Styles, Sportswear) and legal footer with address and unsubscribe links |\n| **Bugs / friction / clarity issues** | No visible image breaks or rendering errors; body copy and sweepstakes copy are very small at render scale and difficult to read; no CTA button visible in the sweepstakes section |\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas Supernova Rise 3 Email\n\n**From:** adidas <adidas@us-news.comms.adidas.com>\n**Subject:** Enjoy your everyday runs in the new Supernova Rise 3\n**Audit Date:** 2026-04-09\n\n---\n\n### 1. Technical Summary\n\nOne broken link caused by a malformed relative URL in a redirect chain will silently fail for affected recipients. Seven images are served over HTTP (not HTTPS), risking mixed-content blocks in secure mail clients, and the plain-text MIME part is absent, degrading deliverability and inbox placement.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken redirect — malformed relative URL**\nThe click-tracking wrapper for one CTA resolves to an invalid `unknown url type: '/g/...'` path. The final destination path is a bare relative slug (`/g/245e9d5c-bc74-41cd-9382-b9cc2d51053d`) embedded inside the redirect payload instead of a fully-qualified URL.\n\n- Redirect wrapper: `https://dv.adidas.com/o/245e9d5c-bc74-41cd-9382-b9cc2d51053d?cp_tp=v3.eJzj...`\n- Decoded destination slug: `/g/245e9d5c-bc74-41cd-9382-b9cc2d51053d`\n- Effect: any recipient who clicks this CTA reaches a broken destination.\n\n**[INFO] 30 click-tracking links** routed through `click.comms.adidas.com` — standard click-redirect pattern, not individually probed.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] 7 images served over HTTP**\nAll instances are the same arrow icon (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) loaded 6 times, plus one pixel/beacon image:\n\n- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` (×6)\n- `http://click.comms.adidas.com/CI0/0102019d74ecd50d-05392a55-.../L1Ti9SiPm-...` (×1)\n\nApple Mail, Gmail (secure fetch), and Outlook 2016+ may block or proxy these, breaking the arrow UI element and open-pixel tracking.\n\n**[WARN] 2 images missing `alt` text**\n- `dv.adidas.com/o/245e9d5c-bc74-41cd-9382-b9cc2d51053d?...` — content image, no `alt`\n- `click.comms.adidas.com/CI0/.../L1Ti9SiPm-...` — tracking pixel, should have `alt=\"\"`\n\n**[WARN] Malformed `<meta>` charset tag**\n```html\n<meta content=\"text/html; charset=UTF-8\" />\n```\nMissing required `http-equiv=\"Content-Type\"` attribute. Some older clients may not honor the charset declaration, causing encoding issues with non-ASCII characters.\n\n**[WARN] Duplicate `@font-face` declarations**\n`AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly different `src` stacks (second block omits `Calibri`/`Sans Serif`). Neither block loads an actual web font URL — both map to local system font fallbacks only. The `font-display: swap` property is unsupported in email clients and has no effect.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens or exposed placeholder syntax visible in the truncated source. Cannot fully verify without complete HTML; no issues confirmed.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text MIME part is absent**\nQA reports 0 characters in the text version. While CAN-SPAM does not explicitly mandate a plain-text part, its absence degrades spam filter scoring (SpamAssassin `MIME_HTML_ONLY` rule), reduces accessibility for screen-reader-only clients, and is flagged by major ISP filters (Gmail, Yahoo) as a bulk-mail signal.\n\n**[WARN] SPF/DKIM authentication status unverified**\n`Authentication-Results` header was not captured via the AgentMail relay. The sending domain `us-news.comms.adidas.com` (a subdomain of `comms.adidas.com`) requires its own SPF/DKIM alignment; cannot confirm pass/fail from available data.\n\n`<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\" />` and `<meta name=\"referrer\" content=\"no-referrer\" />` are present — correct for suppressing indexing and referrer leakage in webview renders.\n\nUnsubscribe link presence cannot be confirmed from the truncated source, but is presumed present given adidas's standard footer pattern.\n\n---\n\n### 6. Email-to-Site Continuity\n\n30 CTAs pass through `click.comms.adidas.com` redirect wrappers — cannot inspect final UTM parameters without resolving the redirects. The one confirmed broken link (§2) means at least one CTA has no valid destination at all, bypassing UTM attribution entirely for that click path.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| P0 | Broken CTA redirect resolves to relative URL `/g/245e9d5c-...` | Regenerate the redirect payload with a fully-qualified `https://` destination URL; re-QA before any resend |\n| P1 | Plain-text MIME part is 0 chars | Generate a plain-text equivalent (product name, CTA URLs, unsubscribe link) and attach as `text/plain` part |\n| P1 | 7 images served over HTTP | Update `image.link.adidas.com` and `click.comms.adidas.com` asset/pixel URLs to HTTPS |\n| P2 | SPF/DKIM alignment unverified | Confirm `us-news.comms.adidas.com` subdomain is covered by adidas's DKIM selector and SPF `include:` chain; capture `Authentication-Results` in next QA pass |\n| P2 | Arrow image referenced 6× via same HTTP URL | Deduplicate to a single HTTPS `<img>` reference or use a CSS/SVG arrow to eliminate redundant HTTP fetches |\n| P3 | Missing `alt` on content image | Add descriptive `alt` text; set `alt=\"\"` on the tracking pixel |\n| P3 | Malformed charset `<meta>` | Change to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |\n| P3 | Duplicate `@font-face` blocks | Consolidate into a single `<style>` block with a unified `src` stack |",
+    "sections": {
+      "executive_summary": [
+        "This is a product launch email for the adidas Supernova Rise 3, anchored by a strong hero visual and paired with a Spotify Premium sweepstakes incentive. The visual craft is above average, but the email suffers from a structural problem: it tries to serve two distinct objectives (launch the shoe, promote a Spotify partnership giveaway) without prioritizing either. The result is a diluted message. The CTA architecture is also thin — there is only one visible action in the top half, and the sweepstakes module does not have a prominent button visible at the render size. Runners who scroll casually will miss the offer entirely.",
+        "Competent execution with a real opportunity cost. The shoe earns a better showcase than this structure allows."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero image is excellent.** High-energy, action-forward photography of a runner mid-stride with the shoe clearly featured. Dynamic and on-brand for the performance running segment.",
+        "- **\"SUPERCOMFORT SUPERNOVA\" headline** is clean and benefit-led — comfort is the right differentiator to lead with for an everyday trainer.",
+        "- **Spotify Premium co-brand** adds external value to the offer and gives the email a second hook for subscribers who are already runners and music listeners.",
+        "- **Footer navigation** (Stories, Styles, Sportswear, etc.) provides a clean utility bar for secondary discovery."
+      ],
+      "whats_weak": [
+        "- **Dual-purpose dilution.** A shoe launch and a sweepstakes giveaway are two different emails. The Spotify module undercuts the product narrative rather than reinforcing it — the shoe becomes the path to a prize rather than the hero.",
+        "- **No visible price, colorways, or product details.** For a product launch email, the shoe is shown but not sold. No colorway options, no price anchor, no \"Shop Now\" or \"Explore the Shoe\" CTA tied directly to the shoe.",
+        "- **Sweepstakes module lacks a visible CTA button.** At normal scroll depth the \"Enter to win\" section reads as descriptive copy, not an action prompt. No button is visible.",
+        "- **The pre-header/banner offer (\"Explore the latest adidas best sellers — Shop Now\")** is generic and wastes the pre-header slot. A product-specific hook would dramatically improve open-to-click conversion.",
+        "- **Body copy is small and low-contrast.** The comfort claim (\"intentionally made the shoe 20% softer than the previous version\") is a strong stat that deserves callout treatment — it's buried in paragraph-sized text at a size that blurs at render scale."
+      ],
+      "recommendations": [
+        "1. **Split the emails.** Launch the Supernova Rise 3 on its own. Move the Spotify sweepstakes to a separate send or a secondary module in a newsletter. Don't cannibalize a product launch.",
+        "2. **Add a direct shoe CTA.** Place a \"Shop Supernova Rise 3\" button immediately below the SUPERCOMFORT headline. This is the highest-intent moment in the email.",
+        "3. **Make the 20% softer stat a visual callout.** Pull it out of body copy and treat it as a badge or a bold inline stat. It's a proof point that earns trust and justifies purchase.",
+        "4. **Fix the pre-header.** Change \"Explore the latest adidas best sellers\" to something like \"Meet the Supernova Rise 3 — 20% softer, built for every run.\" Specific beats generic every time.",
+        "5. **Give the sweepstakes a visible button.** If it stays in this email, the entry CTA needs a button with clear contrast and label (\"Enter to Win\").",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| P0 | Broken CTA redirect resolves to relative URL `/g/245e9d5c-...` | Regenerate the redirect payload with a fully-qualified `https://` destination URL; re-QA before any resend |",
+        "| P1 | Plain-text MIME part is 0 chars | Generate a plain-text equivalent (product name, CTA URLs, unsubscribe link) and attach as `text/plain` part |",
+        "| P1 | 7 images served over HTTP | Update `image.link.adidas.com` and `click.comms.adidas.com` asset/pixel URLs to HTTPS |",
+        "| P2 | SPF/DKIM alignment unverified | Confirm `us-news.comms.adidas.com` subdomain is covered by adidas's DKIM selector and SPF `include:` chain; capture `Authentication-Results` in next QA pass |",
+        "| P2 | Arrow image referenced 6× via same HTTP URL | Deduplicate to a single HTTPS `<img>` reference or use a CSS/SVG arrow to eliminate redundant HTTP fetches |",
+        "| P3 | Missing `alt` on content image | Add descriptive `alt` text; set `alt=\"\"` on the tracking pixel |",
+        "| P3 | Malformed charset `<meta>` | Change to `<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />` |",
+        "| P3 | Duplicate `@font-face` blocks | Consolidate into a single `<style>` block with a unified `src` stack |"
+      ],
+      "bottom_line": [
+        "The email looks like adidas, performs the basics, and won't embarrass the brand. But for a product launch, it lacks focus and selling intent. The shoe deserves a dedicated email that moves from awareness to purchase consideration — this one stalls at awareness. The Spotify tie-in is a wasted co-brand opportunity when buried this deep without a clear CTA."
+      ],
+      "evidence": [
+        "| Module | What's Visible |",
+        "|---|---|",
+        "| **Overall purpose** | Supernova Rise 3 product launch with a Spotify Premium sweepstakes co-promotion |",
+        "| **Hero / primary value proposition** | Full-bleed action photo of runner wearing the shoe; \"SUPERCOMFORT SUPERNOVA\" headline; brief comfort-focused copy referencing 20% softer than previous version |",
+        "| **Membership / benefits section** | Not present |",
+        "| **Product discoverability / recommendation modules** | None — no colorways, no secondary product tiles, no cross-sell |",
+        "| **Partnership / incentive module** | Spotify Premium co-brand visual; sweepstakes offer to win running shoes, apparel, and 1-year Spotify Premium via adidas app; entry copy visible but no button visible |",
+        "| **Utility / secondary modules** | Standard adidas footer nav (Stories, Styles, Sportswear) and legal footer with address and unsubscribe links |",
+        "| **Bugs / friction / clarity issues** | No visible image breaks or rendering errors; body copy and sweepstakes copy are very small at render scale and difficult to read; no CTA button visible in the sweepstakes section |",
+        "**From:** adidas <adidas@us-news.comms.adidas.com>",
+        "**Subject:** Enjoy your everyday runs in the new Supernova Rise 3",
+        "**Audit Date:** 2026-04-09",
+        "One broken link caused by a malformed relative URL in a redirect chain will silently fail for affected recipients. Seven images are served over HTTP (not HTTPS), risking mixed-content blocks in secure mail clients, and the plain-text MIME part is absent, degrading deliverability and inbox placement.",
+        "**[FAIL] Broken redirect — malformed relative URL**",
+        "The click-tracking wrapper for one CTA resolves to an invalid `unknown url type: '/g/...'` path. The final destination path is a bare relative slug (`/g/245e9d5c-bc74-41cd-9382-b9cc2d51053d`) embedded inside the redirect payload instead of a fully-qualified URL.",
+        "- Redirect wrapper: `https://dv.adidas.com/o/245e9d5c-bc74-41cd-9382-b9cc2d51053d?cp_tp=v3.eJzj...`",
+        "- Decoded destination slug: `/g/245e9d5c-bc74-41cd-9382-b9cc2d51053d`",
+        "- Effect: any recipient who clicks this CTA reaches a broken destination.",
+        "**[INFO] 30 click-tracking links** routed through `click.comms.adidas.com` — standard click-redirect pattern, not individually probed.",
+        "**[WARN] 7 images served over HTTP**",
+        "All instances are the same arrow icon (`b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg`) loaded 6 times, plus one pixel/beacon image:",
+        "- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` (×6)",
+        "- `http://click.comms.adidas.com/CI0/0102019d74ecd50d-05392a55-.../L1Ti9SiPm-...` (×1)",
+        "Apple Mail, Gmail (secure fetch), and Outlook 2016+ may block or proxy these, breaking the arrow UI element and open-pixel tracking.",
+        "**[WARN] 2 images missing `alt` text**",
+        "- `dv.adidas.com/o/245e9d5c-bc74-41cd-9382-b9cc2d51053d?...` — content image, no `alt`",
+        "- `click.comms.adidas.com/CI0/.../L1Ti9SiPm-...` — tracking pixel, should have `alt=\"\"`",
+        "**[WARN] Malformed `<meta>` charset tag**",
+        "```html",
+        "<meta content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Missing required `http-equiv=\"Content-Type\"` attribute. Some older clients may not honor the charset declaration, causing encoding issues with non-ASCII characters.",
+        "**[WARN] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` and `AdineuePRO` are declared twice across two separate `<style>` blocks with slightly different `src` stacks (second block omits `Calibri`/`Sans Serif`). Neither block loads an actual web font URL — both map to local system font fallbacks only. The `font-display: swap` property is unsupported in email clients and has no effect.",
+        "No unresolved merge tokens or exposed placeholder syntax visible in the truncated source. Cannot fully verify without complete HTML; no issues confirmed.",
+        "**[FAIL] Plain-text MIME part is absent**",
+        "QA reports 0 characters in the text version. While CAN-SPAM does not explicitly mandate a plain-text part, its absence degrades spam filter scoring (SpamAssassin `MIME_HTML_ONLY` rule), reduces accessibility for screen-reader-only clients, and is flagged by major ISP filters (Gmail, Yahoo) as a bulk-mail signal.",
+        "**[WARN] SPF/DKIM authentication status unverified**",
+        "`Authentication-Results` header was not captured via the AgentMail relay. The sending domain `us-news.comms.adidas.com` (a subdomain of `comms.adidas.com`) requires its own SPF/DKIM alignment; cannot confirm pass/fail from available data.",
+        "`<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\" />` and `<meta name=\"referrer\" content=\"no-referrer\" />` are present — correct for suppressing indexing and referrer leakage in webview renders.",
+        "Unsubscribe link presence cannot be confirmed from the truncated source, but is presumed present given adidas's standard footer pattern.",
+        "30 CTAs pass through `click.comms.adidas.com` redirect wrappers — cannot inspect final UTM parameters without resolving the redirects. The one confirmed broken link (§2) means at least one CTA has no valid destination at all, bypassing UTM attribution entirely for that click path."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/245e9d5c-bc74-41cd-9382-b9cc2d51053d?txn=8c9d4400-3479-11f1-858e-ae5aeed300aa'",
+            "url": "https://dv.adidas.com/o/245e9d5c-bc74-41cd-9382-b9cc2d51053d?cp_tp=v3.eJzjYuIIFuLg6Jly-xybALMUL0dvE5cQO8crfgEWCU4lcY7rB7KBwmwcE6Y_PMemBJPQamECalp7T0SAUYJF6TujkCjHQhkNRi8WDkYBxiAwGcGVwCUkzPFcSoBRgxlZQkic46WUABOa6viEeKBEm4wAMxZjDDk-SQGtZVRg1GBy4uI4_J5XYh-vwgcuLy6QEimIciR2hhPQrLdSAqxoZhklGAEllsgIsGF162spAXYNFjS3vpES4MBULbGATeEokxEHx11eJWaOR45AVjMfkHXGCcjayw9kLXQDsi6DWDfdrFg5bptKMVhxcJzXkGLm6E53YIzi4LhuKMTM8a8ayLoBYnXUAFk3QayemihOjinWQiwc93oZgcwuGyDzcT9jBiMAQD9MUg==&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d78fa-de00-7000-90bb-8863c26c3ad8"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=y5akTGdPYIXlTmnMnTaZ198+4wgmBEPLsuVp+Gnz935Q4+zpmtEYv3dKT55m0LEndhKW8GQMTrITcFO36nvNWCsOeFM3saVUPfeSlyOlKWkyvfljNYz+"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "30 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 245e9d5c-bc74-41cd-9382-b9cc2d51053d",
+            "detail": "src: https://dv.adidas.com/o/245e9d5c-bc74-41cd-9382-b9cc2d51053d?cp_tp=v3.eJzjYuIIFuLg6Jly-xybALMUL0dvE5cQO8crfgEWCU4lcY7rB7"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: L1Ti9SiPm-LHeYxIaaGCdu28GuqK5A0bVjoAWDqEOM0=452",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d74ecd50d-05392a55-48f2-4143-ac9f-45c4ba3f9b99-000000/L1Ti9SiPm-LHeYxIaaGCdu28G"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: L1Ti9SiPm-LHeYxIaaGCdu28GuqK5A0bVjoAWDqEOM0=452",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d74ecd50d-05392a55-48f2-4143-ac9f-45c4ba3f9b99-000000/L1Ti9SiPm-LHeYxIaaGCdu28G"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-10-enjoy-your-everyday-runs-in-the-new-supernova-rise-3-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
