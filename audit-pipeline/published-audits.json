@@ -1201,5 +1201,11 @@
     "subject": "[Test]: MKG_US_RETPUROPEN_U_SLIPIN_RETAIL_EN_04132026The Season to Slip-In to Sandals & Sneakers 🤩",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-test-mkg-us-retpuropen-u-slipin-retail-en-04132026the-season-to-slip-in-to-sanda-fd7dd727-62db-407b-a13d-",
     "slug": "2026-04-11-test-mkg-us-retpuropen-u-slipin-retail-en-04132026the-season-to-slip-in-to-sanda-fd7dd727-62db-407b-a13d-"
+  },
+  {
+    "messageId": "<0100019d7a0b0c5e-0cfd1c34-874f-494e-a6e9-89f70a2667c9-000000@email.amazonses.com>",
+    "subject": "[Verify] Pipeline Test 2026-04-11 00:57",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-verify-pipeline-test-2026-04-11-00-57",
+    "slug": "2026-04-11-verify-pipeline-test-2026-04-11-00-57"
   }
 ]

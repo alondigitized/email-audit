@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-11-verify-pipeline-test-2026-04-11-00-57",
+    "subject": "[Verify] Pipeline Test 2026-04-11 00:57",
+    "from_display_name": "Walker Miles",
+    "timestamp_iso": "2026-04-11T00:57:17+00:00",
+    "score": "1/10",
+    "qa_summary": {
+      "overall_pass_rate": "25%",
+      "total_checks": 8,
+      "total_issues": 1,
+      "total_warnings": 5
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-11-test-mkg-us-retpuropen-u-slipin-retail-en-04132026the-season-to-slip-in-to-sanda-fd7dd727-62db-407b-a13d-",
     "subject": "[Test]: MKG_US_RETPUROPEN_U_SLIPIN_RETAIL_EN_04132026The Season to Slip-In to Sandals & Sneakers 🤩",
     "from_display_name": "SKECHERS",
