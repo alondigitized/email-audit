@@ -84,6 +84,7 @@ def parse_review_sections(review_text):
         "whats_weak": [],
         "recommendations": [],
         "bottom_line": [],
+        "subject_line": [],
         "evidence": [],
     }
     current = "executive_summary"
@@ -108,6 +109,8 @@ def parse_review_sections(review_text):
             current = "recommendations"; continue
         if cleaned == "bottom line":
             current = "bottom_line"; continue
+        if cleaned in ("subject line analysis", "subject line", "subject"):
+            current = "subject_line"; continue
         if cleaned in ("evidence", "evidence & analysis", "evidence and analysis"):
             current = "evidence"; continue
 
