@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-11-earn-50-points-for-completing-your-profile",
+    "subject": "Earn 50 points for completing your profile",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-11T17:37:07+00:00",
+    "score": "3/10",
+    "qa_summary": {
+      "overall_pass_rate": "25%",
+      "total_checks": 16,
+      "total_issues": 10,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-11-more-sun-more-savings",
     "subject": "More Sun, More Savings!",
     "from_display_name": "Shoe Carnival",

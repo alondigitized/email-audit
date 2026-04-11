@@ -1256,5 +1256,11 @@
     "subject": "More Sun, More Savings!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-more-sun-more-savings",
     "slug": "2026-04-11-more-sun-more-savings"
+  },
+  {
+    "messageId": "<bda06040-86dd-4330-849b-4539f2da2d61@ind1s01mta1401.xt.local>",
+    "subject": "Earn 50 points for completing your profile",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-earn-50-points-for-completing-your-profile",
+    "slug": "2026-04-11-earn-50-points-for-completing-your-profile"
   }
 ]
