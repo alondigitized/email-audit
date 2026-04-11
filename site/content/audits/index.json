@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-11-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-11T13:03:55.557Z",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-11-you-absolutely-need-these",
     "subject": "You absolutely need these.",
     "from_display_name": "Famous Footwear",
