@@ -1207,5 +1207,11 @@
     "subject": "Welcome to the (email) list 🎉",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-welcome-to-the-email-list",
     "slug": "2026-04-11-welcome-to-the-email-list"
+  },
+  {
+    "messageId": "<ca3650b3-706b-4d10-8f46-d527191a35db@iad4s12mta1194.xt.local>",
+    "subject": "Welcome to Shoe Carnival!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-welcome-to-shoe-carnival",
+    "slug": "2026-04-11-welcome-to-shoe-carnival"
   }
 ]

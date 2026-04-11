@@ -1,5 +1,16 @@
 [
   {
+    "slug": "2026-04-11-welcome-to-shoe-carnival",
+    "subject": "Welcome to Shoe Carnival!",
+    "from_display_name": "Shoe Carnival",
+    "timestamp_iso": "2026-04-11T02:12:09+00:00",
+    "score": "4/10",
+    "qa_summary": null,
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-04-11-welcome-to-the-email-list",
     "subject": "Welcome to the (email) list 🎉",
     "from_display_name": "DSW",
