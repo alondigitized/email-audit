@@ -18,18 +18,26 @@ const DAYS = 14;
 const SENDER_COLORS = {
   Skechers: "#003594",
   adidas: "#f97316",
+  "Famous Footwear": "#dc2626",
+  "Shoe Carnival": "#eab308",
+  DSW: "#db2777",
   Other: "#9ca3af",
 } as const;
 
 type SenderBucket = keyof typeof SENDER_COLORS;
+const SENDER_ORDER: SenderBucket[] = [
+  "Skechers",
+  "adidas",
+  "Famous Footwear",
+  "Shoe Carnival",
+  "DSW",
+  "Other",
+];
 
-interface DayBucket {
+type DayBucket = {
   date: string;
   label: string;
-  Skechers: number;
-  adidas: number;
-  Other: number;
-}
+} & Record<SenderBucket, number>;
 
 function startOfUtcDay(d: Date): Date {
   return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
@@ -39,6 +47,9 @@ function bucketSender(name: string): SenderBucket {
   const n = (name || "").toLowerCase();
   if (n.includes("skechers")) return "Skechers";
   if (n.includes("adidas")) return "adidas";
+  if (n.includes("famous footwear")) return "Famous Footwear";
+  if (n.includes("shoe carnival")) return "Shoe Carnival";
+  if (n.includes("dsw")) return "DSW";
   return "Other";
 }
 
@@ -51,17 +62,16 @@ function buildData(audits: AuditSummary[]): DayBucket[] {
   for (let i = 0; i < DAYS; i++) {
     const d = new Date(start);
     d.setUTCDate(d.getUTCDate() + i);
-    out.push({
+    const row = {
       date: d.toISOString().slice(0, 10),
       label: d.toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
         timeZone: "UTC",
       }),
-      Skechers: 0,
-      adidas: 0,
-      Other: 0,
-    });
+    } as DayBucket;
+    for (const s of SENDER_ORDER) row[s] = 0;
+    out.push(row);
   }
 
   for (const a of audits) {
@@ -86,21 +96,23 @@ interface Props {
   onSelectDate: (date: string | null) => void;
 }
 
+function dayTotal(d: DayBucket): number {
+  let sum = 0;
+  for (const s of SENDER_ORDER) sum += d[s];
+  return sum;
+}
+
 export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
   const data = buildData(audits);
-  const total = data.reduce(
-    (s, d) => s + d.Skechers + d.adidas + d.Other,
-    0
+  const total = data.reduce((s, d) => s + dayTotal(d), 0);
+  const peak = data.reduce((m, d) => Math.max(m, dayTotal(d)), 0);
+  const totalsBySender = SENDER_ORDER.reduce(
+    (acc, s) => {
+      acc[s] = data.reduce((sum, d) => sum + d[s], 0);
+      return acc;
+    },
+    {} as Record<SenderBucket, number>
   );
-  const peak = data.reduce(
-    (m, d) => Math.max(m, d.Skechers + d.adidas + d.Other),
-    0
-  );
-  const totalsBySender = {
-    Skechers: data.reduce((s, d) => s + d.Skechers, 0),
-    adidas: data.reduce((s, d) => s + d.adidas, 0),
-    Other: data.reduce((s, d) => s + d.Other, 0),
-  };
 
   function handleBarClick(data: unknown) {
     const clicked = (data as { date?: string } | null)?.date;
@@ -163,37 +175,23 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
                 return `${value} (${n})`;
               }}
             />
-            <Bar
-              dataKey="Skechers"
-              stackId="a"
-              cursor="pointer"
-              onClick={handleBarClick}
-            >
-              {data.map((d) => (
-                <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.Skechers)} />
-              ))}
-            </Bar>
-            <Bar
-              dataKey="adidas"
-              stackId="a"
-              cursor="pointer"
-              onClick={handleBarClick}
-            >
-              {data.map((d) => (
-                <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.adidas)} />
-              ))}
-            </Bar>
-            <Bar
-              dataKey="Other"
-              stackId="a"
-              radius={[3, 3, 0, 0]}
-              cursor="pointer"
-              onClick={handleBarClick}
-            >
-              {data.map((d) => (
-                <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.Other)} />
-              ))}
-            </Bar>
+            {SENDER_ORDER.map((sender, i) => (
+              <Bar
+                key={sender}
+                dataKey={sender}
+                stackId="a"
+                cursor="pointer"
+                onClick={handleBarClick}
+                radius={i === SENDER_ORDER.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
+              >
+                {data.map((d) => (
+                  <Cell
+                    key={d.date}
+                    fill={fillForBar(d.date, SENDER_COLORS[sender])}
+                  />
+                ))}
+              </Bar>
+            ))}
           </BarChart>
         </ResponsiveContainer>
       </div>
