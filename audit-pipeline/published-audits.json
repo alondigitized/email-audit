@@ -1165,5 +1165,17 @@
     "subject": "[Test]: PRO_US_RETPURL24_U_SITEBUNDLE_RETAIL_EN_04052026Two Ways to Save During the Spring Fling Sale",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-test-pro-us-retpurl24-u-sitebundle-retail-en-04052026two-ways-to-save-during-the",
     "slug": "2026-04-11-test-pro-us-retpurl24-u-sitebundle-retail-en-04052026two-ways-to-save-during-the"
+  },
+  {
+    "messageId": "<KfJltoLZStGEVSXexGYYGw@geopod-ismtpd-2>",
+    "subject": "Your Items Are Waiting!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-your-items-are-waiting",
+    "slug": "2026-04-11-your-items-are-waiting"
+  },
+  {
+    "messageId": "<rZgoeGk0T-K_ndAnSihEnw@geopod-ismtpd-86>",
+    "subject": "Your cart expires soon!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-your-cart-expires-soon-rzgoegk0t-k-ndansihenw-g",
+    "slug": "2026-04-11-your-cart-expires-soon-rzgoegk0t-k-ndansihenw-g"
   }
 ]
