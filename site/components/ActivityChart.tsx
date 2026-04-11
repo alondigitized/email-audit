@@ -102,10 +102,8 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
     Other: data.reduce((s, d) => s + d.Other, 0),
   };
 
-  function handleChartClick(state: unknown) {
-    const payload = (state as { activePayload?: { payload?: { date?: string } }[] } | null)
-      ?.activePayload?.[0]?.payload;
-    const clicked = payload?.date;
+  function handleBarClick(data: unknown) {
+    const clicked = (data as { date?: string } | null)?.date;
     if (!clicked) return;
     onSelectDate(clicked === selectedDate ? null : clicked);
   }
@@ -128,7 +126,6 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
           <BarChart
             data={data}
             margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
-            onClick={handleChartClick}
           >
             <CartesianGrid
               strokeDasharray="3 3"
@@ -166,17 +163,33 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
                 return `${value} (${n})`;
               }}
             />
-            <Bar dataKey="Skechers" stackId="a" cursor="pointer">
+            <Bar
+              dataKey="Skechers"
+              stackId="a"
+              cursor="pointer"
+              onClick={handleBarClick}
+            >
               {data.map((d) => (
                 <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.Skechers)} />
               ))}
             </Bar>
-            <Bar dataKey="adidas" stackId="a" cursor="pointer">
+            <Bar
+              dataKey="adidas"
+              stackId="a"
+              cursor="pointer"
+              onClick={handleBarClick}
+            >
               {data.map((d) => (
                 <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.adidas)} />
               ))}
             </Bar>
-            <Bar dataKey="Other" stackId="a" radius={[3, 3, 0, 0]} cursor="pointer">
+            <Bar
+              dataKey="Other"
+              stackId="a"
+              radius={[3, 3, 0, 0]}
+              cursor="pointer"
+              onClick={handleBarClick}
+            >
               {data.map((d) => (
                 <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.Other)} />
               ))}
