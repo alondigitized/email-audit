@@ -1238,5 +1238,11 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-11-site-journey-walker",
     "pdfPath": "",
     "slug": "2026-04-11-site-journey-walker"
+  },
+  {
+    "messageId": "<q0kOMiJtT6mARs70xax5eQ@geopod-ismtpd-3>",
+    "subject": "Your Items Are Waiting!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-your-items-are-waiting-q0komijtt6mars70xax5eq-g",
+    "slug": "2026-04-11-your-items-are-waiting-q0komijtt6mars70xax5eq-g"
   }
 ]
