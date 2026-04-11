@@ -14,14 +14,7 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 const API_KEY = process.env.AGENTMAIL_API_KEY;
 const INBOX_ID = process.env.INBOX_ID || 'walker@agentmail.to';
-const TELEGRAM_TARGET = process.env.TELEGRAM_TARGET;
-const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || 'main';
-const OPENCLAW_PROFILE = process.env.OPENCLAW_PROFILE || 'walker';
-const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG_PATH || '/Users/alontsang/.openclaw-walker/openclaw.json';
-const OPENCLAW_STATE_DIR = process.env.OPENCLAW_STATE_DIR || '/Users/alontsang/.openclaw-walker';
-const SITE_BASE_URL = process.env.SITE_BASE_URL || 'https://email-audit-git-main-alons-projects-c876f5a6.vercel.app';
 const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS || 15000);
-const STARTUP_LOOKBACK = Number(process.env.STARTUP_LOOKBACK || 10);
 const STATE_PATH = path.join(__dirname, 'state.json');
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_PATH = path.join(LOG_DIR, 'monitor.log');
@@ -31,13 +24,12 @@ const SITE_MANIFEST = path.join(SITE_DIR, 'published-audits.json');
 const SITE_GENERATOR = path.join(SITE_DIR, 'generate_site.py');
 const ARTIFACTS_DIR = path.join(REPORTS_DIR, 'email-artifacts');
 const RENDER_SWIFT = path.join(path.dirname(__dirname), 'scripts', 'render_web_url.swift');
-const PDF_SCRIPT = path.join(__dirname, 'generate_review_pdf.py');
 const QA_SCRIPT = path.join(__dirname, 'qa_checks.py');
+const MAX_RETRIES = 3;
 const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'sonnet';
 const CLAUDE_EFFORT = process.env.CLAUDE_EFFORT || 'high';
 
 if (!API_KEY) throw new Error('Missing AGENTMAIL_API_KEY');
-if (!TELEGRAM_TARGET) throw new Error('Missing TELEGRAM_TARGET');
 
 fs.mkdirSync(LOG_DIR, { recursive: true });
 
@@ -54,10 +46,12 @@ function loadState() {
       processedMessageIds: Array.isArray(parsed.processedMessageIds) ? parsed.processedMessageIds : [],
       inFlightMessageIds: Array.isArray(parsed.inFlightMessageIds) ? parsed.inFlightMessageIds : [],
       failedMessageIds: Array.isArray(parsed.failedMessageIds) ? parsed.failedMessageIds : [],
+      retryCounts: parsed.retryCounts && typeof parsed.retryCounts === 'object' ? parsed.retryCounts : {},
       lastPollAt: parsed.lastPollAt || null,
+      lastSuccessAt: parsed.lastSuccessAt || null,
     };
   } catch {
-    return { processedMessageIds: [], inFlightMessageIds: [], failedMessageIds: [], lastPollAt: null };
+    return { processedMessageIds: [], inFlightMessageIds: [], failedMessageIds: [], retryCounts: {}, lastPollAt: null, lastSuccessAt: null };
   }
 }
 
@@ -66,7 +60,9 @@ function saveState(state) {
     processedMessageIds: Array.from(new Set(state.processedMessageIds)).slice(-1000),
     inFlightMessageIds: Array.from(new Set(state.inFlightMessageIds || [])).slice(-1000),
     failedMessageIds: Array.from(new Set(state.failedMessageIds || [])).slice(-1000),
+    retryCounts: state.retryCounts || {},
     lastPollAt: state.lastPollAt || null,
+    lastSuccessAt: state.lastSuccessAt || null,
   };
   fs.writeFileSync(STATE_PATH, JSON.stringify(trimmed, null, 2));
 }
@@ -89,6 +85,7 @@ function markSeen(state, id) {
   if (!seen(state, id)) {
     state.processedMessageIds.push(id);
     state.inFlightMessageIds = (state.inFlightMessageIds || []).filter((x) => x !== id);
+    state.lastSuccessAt = new Date().toISOString();
     saveState(state);
   }
 }
@@ -102,11 +99,6 @@ function markInFlight(state, id) {
     state.inFlightMessageIds = [...(state.inFlightMessageIds || []), id];
     saveState(state);
   }
-}
-
-function clearInFlight(state, id) {
-  state.inFlightMessageIds = (state.inFlightMessageIds || []).filter((x) => x !== id);
-  saveState(state);
 }
 
 function shorten(text, max = 2400) {
@@ -125,58 +117,6 @@ function slugify(text) {
 
 function dateSlug(iso) {
   return String(iso || new Date().toISOString()).slice(0, 10);
-}
-
-async function sendPdf(pathToPdf, filename, caption) {
-  const args = [
-    'message', 'send',
-    '--channel', 'telegram',
-    '--target', TELEGRAM_TARGET,
-    '--message', caption,
-    '--media', pathToPdf,
-  ];
-  const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 10);
-  if (stdout?.trim()) log('pdf send stdout', { stdout: stdout.trim().slice(0, 1000) });
-  if (stderr?.trim()) log('pdf send stderr', { stderr: stderr.trim().slice(0, 1000) });
-}
-
-function openclawExec(commandArgs, maxBuffer = 1024 * 1024 * 10) {
-  return execFileAsync('openclaw', ['--profile', OPENCLAW_PROFILE, ...commandArgs], {
-    maxBuffer,
-    env: {
-      ...process.env,
-      OPENCLAW_PROFILE,
-      OPENCLAW_CONFIG_PATH,
-      OPENCLAW_STATE_DIR,
-    },
-  });
-}
-
-async function sendTelegramText(text) {
-  const MAX_LEN = 4000;
-  const chunks = [];
-  let remaining = text;
-  while (remaining.length > 0) {
-    if (remaining.length <= MAX_LEN) {
-      chunks.push(remaining);
-      break;
-    }
-    let cut = remaining.lastIndexOf('\n', MAX_LEN);
-    if (cut < MAX_LEN * 0.5) cut = MAX_LEN;
-    chunks.push(remaining.slice(0, cut));
-    remaining = remaining.slice(cut).replace(/^\n+/, '');
-  }
-  for (const chunk of chunks) {
-    const args = [
-      'message', 'send',
-      '--channel', 'telegram',
-      '--target', TELEGRAM_TARGET,
-      '--message', chunk,
-    ];
-    const { stdout, stderr } = await openclawExec(args, 1024 * 1024 * 5);
-    if (stdout?.trim()) log('telegram send stdout', { stdout: stdout.trim().slice(0, 1000) });
-    if (stderr?.trim()) log('telegram send stderr', { stderr: stderr.trim().slice(0, 1000) });
-  }
 }
 
 async function generateReview(message, { images = [], label = 'review' } = {}) {
@@ -337,7 +277,7 @@ async function saveArtifacts(msg) {
   const webview = urls.find((u) => u.includes('view.emails.skechers.com')) || '';
   fs.writeFileSync(path.join(dir, 'urls.txt'), urls.join('\n'), 'utf8');
   fs.writeFileSync(path.join(dir, 'webview-url.txt'), webview, 'utf8');
-  return { dir, slug, webview };
+  return { dir, slug: path.basename(dir), webview };
 }
 
 async function renderWebview(artifacts) {
@@ -387,18 +327,6 @@ function buildQaSummaryForPrompt(qaReport) {
   return lines.join('\n');
 }
 
-async function generatePdf(artifacts, reviewText, qaReportPath) {
-  const reviewPath = path.join(artifacts.dir, 'review.txt');
-  fs.writeFileSync(reviewPath, reviewText, 'utf8');
-  const outPdf = path.join(REPORTS_DIR, `${artifacts.slug}-review.pdf`);
-  const args = [PDF_SCRIPT, reviewPath, artifacts.dir, outPdf];
-  if (qaReportPath && fs.existsSync(qaReportPath)) {
-    args.push('--qa-report', qaReportPath);
-  }
-  await execFileAsync('python3', args, { maxBuffer: 1024 * 1024 * 20 });
-  return outPdf;
-}
-
 function updatePublishedManifest(entry) {
   const existing = fs.existsSync(SITE_MANIFEST) ? JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8')) : [];
   const filtered = existing.filter((x) => x.messageId !== entry.messageId);
@@ -414,7 +342,6 @@ async function publishSite() {
   const repoRoot = path.dirname(__dirname);
   const siteContent = path.join(repoRoot, 'site', 'content', 'audits');
   const siteImages = path.join(repoRoot, 'site', 'public', 'images', 'audits');
-  const sitePdfs = path.join(repoRoot, 'site', 'public', 'pdfs');
   const manifest = JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8'));
 
   for (const entry of manifest) {
@@ -438,11 +365,6 @@ async function publishSite() {
       fs.copyFileSync(srcPng, path.join(destImgDir, 'render.png'));
     }
 
-    // Copy PDF
-    if (entry.pdfPath && fs.existsSync(entry.pdfPath)) {
-      fs.mkdirSync(sitePdfs, { recursive: true });
-      fs.copyFileSync(entry.pdfPath, path.join(sitePdfs, `${slug}-review.pdf`));
-    }
   }
 
   // Build index.json for the Next.js site
@@ -467,42 +389,36 @@ async function publishSite() {
     .sort((a, b) => (b.timestamp_iso || '').localeCompare(a.timestamp_iso || ''));
   fs.writeFileSync(path.join(siteContent, 'index.json'), JSON.stringify(indexEntries, null, 2));
 
-  // Phase 3: Git push (triggers both gh-pages legacy + Vercel deploy on main)
+  // Phase 3: Git push to main (triggers Vercel deploy)
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
 
-  // Push site/ content to main (triggers Vercel)
-  const pushMain = `cd "${repoRoot}" && git add site/content site/public/images/audits site/public/pdfs && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
+  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/images/audits site/public/pdfs && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
-
-  // Legacy gh-pages publish
-  const tmpRepo = '/tmp/email-audit';
-  const repoUrl = `https://x-access-token:${ghToken}@github.com/alondigitized/email-audit.git`;
-  const pushGhPages = `set -e
-if [ ! -d ${tmpRepo}/.git ]; then
-  git clone --branch gh-pages ${repoUrl} ${tmpRepo} 2>/dev/null || {
-    git clone ${repoUrl} ${tmpRepo}
-    cd ${tmpRepo}
-    git checkout --orphan gh-pages
-    git rm -rf . 2>/dev/null || true
-    git commit --allow-empty -m "Initialize gh-pages"
-    git push origin gh-pages
-  }
-fi
-cd ${tmpRepo}
-git checkout gh-pages
-git pull origin gh-pages --ff-only 2>/dev/null || true
-find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-rsync -a --exclude=generate_site.py --exclude=published-audits.json ${SITE_DIR}/ ${tmpRepo}/
-git add .
-if git diff --cached --quiet; then echo NO_CHANGES; exit 0; fi
-git commit -m "Publish latest Skechers email audit"
-git push origin gh-pages`;
-  await execFileAsync('/bin/zsh', ['-lc', pushGhPages], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 
-async function fetchMessages(client, limit = STARTUP_LOOKBACK) {
-  const response = await client.inboxes.messages.list(INBOX_ID, { limit });
+async function fetchAllMessages(client, state) {
+  const all = [];
+  let pageToken;
+  do {
+    const response = await client.inboxes.messages.list(INBOX_ID, { limit: 50, pageToken });
+    const messages = response.messages || [];
+    all.push(...messages);
+    // Stop paginating once every message on this page is already known
+    const allKnown = messages.length > 0 && messages.every((m) => {
+      const id = m.messageId || m.message_id;
+      return seen(state, id) || failed(state, id);
+    });
+    if (allKnown) break;
+    pageToken = response.nextPageToken;
+  } while (pageToken);
+  return all;
+}
+
+async function fetchNewMessages(client, after) {
+  const opts = { limit: 50 };
+  if (after) opts.after = new Date(after);
+  const response = await client.inboxes.messages.list(INBOX_ID, opts);
   return response.messages || [];
 }
 
@@ -521,8 +437,13 @@ async function processMessage(client, state, message, source = 'unknown') {
     return;
   }
   if (failed(state, id)) {
-    log('failed previously; skipping automatic retry', { id, source });
-    return;
+    const retryCount = (state.retryCounts || {})[id] || 0;
+    if (retryCount >= MAX_RETRIES) {
+      log('max retries exceeded; skipping', { id, source, retries: retryCount });
+      return;
+    }
+    state.failedMessageIds = (state.failedMessageIds || []).filter((x) => x !== id);
+    log('retrying previously failed message', { id, source, attempt: retryCount + 1 });
   }
   if (inFlight(state, id)) {
     log('already in flight; skipping duplicate work', { id, source });
@@ -582,7 +503,6 @@ async function processMessage(client, state, message, source = 'unknown') {
       messageId: id,
       subject: fullMessage.subject,
       artifactDir: artifacts.dir,
-      pdfPath: '',
       slug: artifacts.slug,
     });
     let published = false;
@@ -593,24 +513,22 @@ async function processMessage(client, state, message, source = 'unknown') {
       log('site publish failed (non-fatal)', { id, error: String(err).slice(0, 500) });
     }
 
-    // Send Telegram notification with link to detail page
-    const detailUrl = `${SITE_BASE_URL}/audits/${artifacts.slug}`;
-    try {
-      await sendTelegramText(`New review: ${fullMessage.subject}\n${detailUrl}`);
-    } catch (err) {
-      log('telegram notification failed (non-fatal)', { id, error: String(err).slice(0, 500) });
-    }
     markSeen(state, id);
     log('message completed', { id, source, slug: artifacts.slug, rendered: !!rendered, published });
   } catch (err) {
+    state.retryCounts = state.retryCounts || {};
+    state.retryCounts[id] = (state.retryCounts[id] || 0) + 1;
     markFailed(state, id);
-    log('message failed; marked failed and will not auto-retry', { id, source, error: String(err) });
-    throw err;
+    log('message failed', { id, source, attempt: state.retryCounts[id], maxRetries: MAX_RETRIES, error: String(err) });
   }
 }
 
 async function pollOnce(client, state, reason = 'poll') {
-  const messages = await fetchMessages(client, STARTUP_LOOKBACK);
+  // Startup: paginate all messages to catch anything missed during downtime
+  // Interval: only fetch messages newer than last success
+  const messages = reason === 'startup'
+    ? await fetchAllMessages(client, state)
+    : await fetchNewMessages(client, state.lastSuccessAt);
   const ordered = [...messages].sort((a, b) => new Date(a.created_at || a.timestamp || 0) - new Date(b.created_at || b.timestamp || 0));
   for (const msg of ordered) {
     await processMessage(client, state, msg, reason);
@@ -640,6 +558,13 @@ async function main() {
       pollInFlight = false;
     }
   };
+
+  // Clear stale in-flight messages from previous run
+  if (state.inFlightMessageIds.length > 0) {
+    log('clearing stale in-flight messages from previous run', { count: state.inFlightMessageIds.length });
+    state.inFlightMessageIds = [];
+    saveState(state);
+  }
 
   log('monitor mode', { mode: 'polling', intervalMs: POLL_INTERVAL_MS, inbox: INBOX_ID });
   await safePoll('startup');

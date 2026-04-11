@@ -23,3 +23,7 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Logs (may contain credentials/tokens)
+email-monitor/logs/
+*.log

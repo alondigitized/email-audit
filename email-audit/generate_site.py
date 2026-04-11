@@ -13,7 +13,7 @@ import os
 import re
 import shutil
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = os.path.join(SCRIPT_DIR, "published-audits.json")
@@ -29,7 +29,7 @@ SITE_DESCRIPTION = (
     "Each review scores creative quality, technical health, accessibility, and deliverability, "
     "with actionable recommendations and automated QA results."
 )
-CSS_VERSION = "5"
+CSS_VERSION = "6"
 
 GATE_HTML = """\
 <div id="gate" style="display:none;position:fixed;inset:0;z-index:9999;background:#faf8f5;align-items:center;justify-content:center;flex-direction:column;font-family:Inter,Arial,sans-serif">
@@ -459,6 +459,87 @@ def build_audit_page(audit_data):
     return page
 
 
+def build_activity_chart(all_audit_data, days=30):
+    """Build an inline SVG bar chart of audits processed per day for the last `days` days."""
+    today = datetime.now(timezone.utc).date()
+    start = today - timedelta(days=days - 1)
+
+    counts = {start + timedelta(days=i): 0 for i in range(days)}
+    for ad in all_audit_data:
+        ts = ad["email"].get("timestamp_iso")
+        if not ts:
+            continue
+        try:
+            dt = datetime.fromisoformat(ts)
+        except Exception:
+            continue
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        d = dt.astimezone(timezone.utc).date()
+        if d in counts:
+            counts[d] += 1
+
+    total = sum(counts.values())
+    max_count = max(counts.values()) if counts else 0
+
+    bar_width = 14
+    bar_gap = 6
+    bar_step = bar_width + bar_gap
+    chart_height = 120
+    chart_top = 16
+    chart_bottom = chart_top + chart_height
+    width = days * bar_step
+    height = chart_bottom + 24
+
+    sorted_days = sorted(counts.items())
+
+    bars = []
+    for i, (d, c) in enumerate(sorted_days):
+        x = i * bar_step
+        h = (c / max_count) * chart_height if max_count else 0
+        y = chart_bottom - h
+        title = f"{d.isoformat()}: {c} email{'s' if c != 1 else ''}"
+        bars.append(
+            f'<rect x="{x}" y="{y:.1f}" width="{bar_width}" height="{h:.1f}" '
+            f'rx="3" fill="#111827"><title>{esc(title)}</title></rect>'
+        )
+
+    label_indices = [0, days // 2, days - 1]
+    labels = []
+    for idx in label_indices:
+        d = sorted_days[idx][0]
+        x = idx * bar_step + bar_width / 2
+        labels.append(
+            f'<text x="{x:.1f}" y="{chart_bottom + 16}" text-anchor="middle" '
+            f'font-size="11" fill="#6b7280">{d.strftime("%b %-d")}</text>'
+        )
+
+    baseline = (
+        f'<line x1="0" y1="{chart_bottom}" x2="{width}" y2="{chart_bottom}" '
+        f'stroke="#e5e7eb" stroke-width="1"/>'
+    )
+
+    svg = (
+        f'<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg" '
+        f'preserveAspectRatio="xMidYMid meet" '
+        f'style="width:100%;height:auto;display:block;overflow:visible">'
+        f'{baseline}{"".join(bars)}{"".join(labels)}'
+        f"</svg>"
+    )
+
+    meta = f"{total} emails &middot; last {days} days &middot; peak {max_count}/day"
+
+    return (
+        f'<div class="activity-chart">'
+        f'<div class="activity-head">'
+        f"<h2>Email activity</h2>"
+        f'<div class="muted activity-meta">{meta}</div>'
+        f"</div>"
+        f"{svg}"
+        f"</div>"
+    )
+
+
 def build_index(all_audit_data):
     """Build the index.html page with audit cards."""
     cards = []
@@ -494,6 +575,7 @@ def build_index(all_audit_data):
         )
 
     cards_html = "".join(cards)
+    chart_html = build_activity_chart(all_audit_data)
 
     page = (
         f'<!doctype html><html><head><meta charset="utf-8">'
@@ -504,7 +586,9 @@ def build_index(all_audit_data):
         f'<main><div class="hero"><div class="muted">{SITE_BRAND}</div>'
         f"<h1>{SITE_TITLE}</h1>"
         f'<p class="hero-desc">{SITE_DESCRIPTION}</p>'
-        f'</div><div class="audit-list">'
+        f"</div>"
+        f"{chart_html}"
+        f'<div class="audit-list">'
         f"{cards_html}"
         f"</div></main>"
         f"{GATE_SCRIPT}</body></html>"
