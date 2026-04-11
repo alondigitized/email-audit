@@ -1589,6 +1589,22 @@
     "persona": "walker"
   },
   {
+    "slug": "2026-04-11-spain-fifa-world-cup-26-away-jersey",
+    "subject": "Spain FIFA World Cup 26™ Away Jersey",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-01T02:06:54+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": null
+  },
+  {
     "slug": "2026-03-31-test-mkg-us-na-u-new-wide-en-04022026your-favorites-fit-for-your-feet",
     "subject": "[Test]: MKG_US_NA_U_NEW_WIDE_EN_04022026Your Favorites, Fit for Your Feet",
     "from_display_name": "SKECHERS",
