@@ -13,11 +13,27 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 const API_KEY = process.env.AGENTMAIL_API_KEY;
-const INBOX_ID = process.env.INBOX_ID || 'walker@agentmail.to';
 const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS || 15000);
 const STATE_PATH = path.join(__dirname, 'state.json');
+const INBOXES_CONFIG_PATH = path.join(__dirname, 'inboxes.json');
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_PATH = path.join(LOG_DIR, 'monitor.log');
+
+// Multi-inbox config. Prefer inboxes.json (array of { inbox, persona }).
+// Fall back to legacy INBOX_ID env var for single-inbox deployments.
+function loadInboxes() {
+  if (fs.existsSync(INBOXES_CONFIG_PATH)) {
+    try {
+      const cfg = JSON.parse(fs.readFileSync(INBOXES_CONFIG_PATH, 'utf8'));
+      if (Array.isArray(cfg) && cfg.length > 0) return cfg;
+    } catch {
+      /* fall through */
+    }
+  }
+  const single = process.env.INBOX_ID || 'walker@agentmail.to';
+  return [{ inbox: single, persona: process.env.PERSONA || 'walker' }];
+}
+const INBOXES = loadInboxes();
 const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
 const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
 const SITE_MANIFEST = path.join(PIPELINE_DIR, 'published-audits.json');
@@ -61,64 +77,106 @@ function log(message, extra) {
   fs.appendFileSync(LOG_PATH, line + '\n');
 }
 
+function emptyInboxState() {
+  return {
+    processedMessageIds: [],
+    inFlightMessageIds: [],
+    failedMessageIds: [],
+    retryCounts: {},
+    lastPollAt: null,
+    lastSuccessAt: null,
+  };
+}
+
+// Load multi-inbox state, migrating the legacy flat schema if needed.
 function loadState() {
+  let parsed;
   try {
-    const parsed = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
-    return {
-      processedMessageIds: Array.isArray(parsed.processedMessageIds) ? parsed.processedMessageIds : [],
-      inFlightMessageIds: Array.isArray(parsed.inFlightMessageIds) ? parsed.inFlightMessageIds : [],
-      failedMessageIds: Array.isArray(parsed.failedMessageIds) ? parsed.failedMessageIds : [],
-      retryCounts: parsed.retryCounts && typeof parsed.retryCounts === 'object' ? parsed.retryCounts : {},
-      lastPollAt: parsed.lastPollAt || null,
-      lastSuccessAt: parsed.lastSuccessAt || null,
-    };
+    parsed = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
   } catch {
-    return { processedMessageIds: [], inFlightMessageIds: [], failedMessageIds: [], retryCounts: {}, lastPollAt: null, lastSuccessAt: null };
+    return { inboxes: {} };
   }
+
+  // Already multi-inbox?
+  if (parsed && typeof parsed.inboxes === 'object' && parsed.inboxes !== null) {
+    return parsed;
+  }
+
+  // Legacy flat schema — wrap under the first configured inbox.
+  if (parsed && Array.isArray(parsed.processedMessageIds)) {
+    const firstInbox = INBOXES[0]?.inbox || 'walker@agentmail.to';
+    return {
+      inboxes: {
+        [firstInbox]: {
+          processedMessageIds: parsed.processedMessageIds,
+          inFlightMessageIds: parsed.inFlightMessageIds || [],
+          failedMessageIds: parsed.failedMessageIds || [],
+          retryCounts: parsed.retryCounts || {},
+          lastPollAt: parsed.lastPollAt || null,
+          lastSuccessAt: parsed.lastSuccessAt || null,
+        },
+      },
+    };
+  }
+
+  return { inboxes: {} };
 }
 
 function saveState(state) {
-  const trimmed = {
-    processedMessageIds: Array.from(new Set(state.processedMessageIds)).slice(-1000),
-    inFlightMessageIds: Array.from(new Set(state.inFlightMessageIds || [])).slice(-1000),
-    failedMessageIds: Array.from(new Set(state.failedMessageIds || [])).slice(-1000),
-    retryCounts: state.retryCounts || {},
-    lastPollAt: state.lastPollAt || null,
-    lastSuccessAt: state.lastSuccessAt || null,
-  };
+  const trimmed = { inboxes: {} };
+  for (const [inboxId, s] of Object.entries(state.inboxes || {})) {
+    trimmed.inboxes[inboxId] = {
+      processedMessageIds: Array.from(new Set(s.processedMessageIds || [])).slice(-1000),
+      inFlightMessageIds: Array.from(new Set(s.inFlightMessageIds || [])).slice(-1000),
+      failedMessageIds: Array.from(new Set(s.failedMessageIds || [])).slice(-1000),
+      retryCounts: s.retryCounts || {},
+      lastPollAt: s.lastPollAt || null,
+      lastSuccessAt: s.lastSuccessAt || null,
+    };
+  }
   fs.writeFileSync(STATE_PATH, JSON.stringify(trimmed, null, 2));
 }
 
-function seen(state, id) {
-  return state.processedMessageIds.includes(id);
+// Returns the mutable per-inbox state slice, creating it if missing.
+function inboxStateFor(state, inboxId) {
+  state.inboxes = state.inboxes || {};
+  if (!state.inboxes[inboxId]) state.inboxes[inboxId] = emptyInboxState();
+  return state.inboxes[inboxId];
 }
 
-function failed(state, id) {
-  return (state.failedMessageIds || []).includes(id);
+function seen(inboxState, id) {
+  return inboxState.processedMessageIds.includes(id);
 }
 
-function markFailed(state, id) {
-  state.failedMessageIds = [...(state.failedMessageIds || []), id];
-  state.inFlightMessageIds = (state.inFlightMessageIds || []).filter((x) => x !== id);
+function failed(inboxState, id) {
+  return (inboxState.failedMessageIds || []).includes(id);
+}
+
+function markFailed(state, inboxId, id) {
+  const s = inboxStateFor(state, inboxId);
+  s.failedMessageIds = [...(s.failedMessageIds || []), id];
+  s.inFlightMessageIds = (s.inFlightMessageIds || []).filter((x) => x !== id);
   saveState(state);
 }
 
-function markSeen(state, id) {
-  if (!seen(state, id)) {
-    state.processedMessageIds.push(id);
-    state.inFlightMessageIds = (state.inFlightMessageIds || []).filter((x) => x !== id);
-    state.lastSuccessAt = new Date().toISOString();
+function markSeen(state, inboxId, id) {
+  const s = inboxStateFor(state, inboxId);
+  if (!seen(s, id)) {
+    s.processedMessageIds.push(id);
+    s.inFlightMessageIds = (s.inFlightMessageIds || []).filter((x) => x !== id);
+    s.lastSuccessAt = new Date().toISOString();
     saveState(state);
   }
 }
 
-function inFlight(state, id) {
-  return (state.inFlightMessageIds || []).includes(id);
+function inFlight(inboxState, id) {
+  return (inboxState.inFlightMessageIds || []).includes(id);
 }
 
-function markInFlight(state, id) {
-  if (!inFlight(state, id)) {
-    state.inFlightMessageIds = [...(state.inFlightMessageIds || []), id];
+function markInFlight(state, inboxId, id) {
+  const s = inboxStateFor(state, inboxId);
+  if (!inFlight(s, id)) {
+    s.inFlightMessageIds = [...(s.inFlightMessageIds || []), id];
     saveState(state);
   }
 }
@@ -356,6 +414,28 @@ function updatePublishedManifest(entry) {
   fs.writeFileSync(SITE_MANIFEST, JSON.stringify(filtered, null, 2));
 }
 
+function buildIndexEntriesFromManifest(manifest, siteContent, siteImages) {
+  return manifest
+    .map((entry) => {
+      const auditPath = path.join(siteContent, entry.slug, 'audit.json');
+      if (!fs.existsSync(auditPath)) return null;
+      const ad = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
+      return {
+        slug: ad.slug,
+        subject: ad.email.subject,
+        from_display_name: ad.email.from_display_name,
+        timestamp_iso: ad.email.timestamp_iso,
+        score: ad.review.score,
+        qa_summary: ad.qa?.summary || null,
+        has_image: fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
+        type: ad.type || 'email',
+        persona: ad.persona || entry.persona || null,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.timestamp_iso || '').localeCompare(a.timestamp_iso || ''));
+}
+
 async function publishSite() {
   // Phase 1: Extract audit-data.json from raw artifacts
   await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
@@ -390,25 +470,7 @@ async function publishSite() {
   }
 
   // Build index.json for the Next.js site
-  const indexEntries = manifest
-    .map((entry) => {
-      const auditPath = path.join(siteContent, entry.slug, 'audit.json');
-      if (!fs.existsSync(auditPath)) return null;
-      const ad = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
-      return {
-        slug: ad.slug,
-        subject: ad.email.subject,
-        from_display_name: ad.email.from_display_name,
-        timestamp_iso: ad.email.timestamp_iso,
-        score: ad.review.score,
-        qa_summary: ad.qa?.summary || null,
-        has_image: fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
-        type: ad.type || 'email',
-        persona: ad.persona || null,
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => (b.timestamp_iso || '').localeCompare(a.timestamp_iso || ''));
+  const indexEntries = buildIndexEntriesFromManifest(manifest, siteContent, siteImages);
   fs.writeFileSync(path.join(siteContent, 'index.json'), JSON.stringify(indexEntries, null, 2));
 
   // Phase 3: Git push to main (triggers Vercel deploy)
@@ -419,17 +481,17 @@ async function publishSite() {
   await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 
-async function fetchAllMessages(client, state) {
+async function fetchAllMessages(client, inboxId, inboxState) {
   const all = [];
   let pageToken;
   do {
-    const response = await client.inboxes.messages.list(INBOX_ID, { limit: 50, pageToken });
+    const response = await client.inboxes.messages.list(inboxId, { limit: 50, pageToken });
     const messages = response.messages || [];
     all.push(...messages);
     // Stop paginating once every message on this page is already known
     const allKnown = messages.length > 0 && messages.every((m) => {
       const id = m.messageId || m.message_id;
-      return seen(state, id) || failed(state, id);
+      return seen(inboxState, id) || failed(inboxState, id);
     });
     if (allKnown) break;
     pageToken = response.nextPageToken;
@@ -437,53 +499,56 @@ async function fetchAllMessages(client, state) {
   return all;
 }
 
-async function fetchNewMessages(client, after) {
+async function fetchNewMessages(client, inboxId, after) {
   const opts = { limit: 50 };
   if (after) opts.after = new Date(after);
-  const response = await client.inboxes.messages.list(INBOX_ID, opts);
+  const response = await client.inboxes.messages.list(inboxId, opts);
   return response.messages || [];
 }
 
-async function fetchMessage(client, messageId) {
-  return client.inboxes.messages.get(INBOX_ID, messageId);
+async function fetchMessage(client, inboxId, messageId) {
+  return client.inboxes.messages.get(inboxId, messageId);
 }
 
-async function processMessage(client, state, message, source = 'unknown') {
+async function processMessage(client, state, inboxId, persona, message, source = 'unknown') {
+  const inboxState = inboxStateFor(state, inboxId);
   const id = message.messageId || message.message_id;
   if (!id) {
-    log('skipping message without id', { source });
+    log('skipping message without id', { inbox: inboxId, source });
     return;
   }
-  if (seen(state, id)) {
-    log('duplicate skipped', { id, source });
+  if (seen(inboxState, id)) {
+    log('duplicate skipped', { id, inbox: inboxId, source });
     return;
   }
-  if (failed(state, id)) {
-    const retryCount = (state.retryCounts || {})[id] || 0;
+  if (failed(inboxState, id)) {
+    const retryCount = (inboxState.retryCounts || {})[id] || 0;
     if (retryCount >= MAX_RETRIES) {
-      log('max retries exceeded; skipping', { id, source, retries: retryCount });
+      log('max retries exceeded; skipping', { id, inbox: inboxId, source, retries: retryCount });
       return;
     }
-    state.failedMessageIds = (state.failedMessageIds || []).filter((x) => x !== id);
-    log('retrying previously failed message', { id, source, attempt: retryCount + 1 });
+    inboxState.failedMessageIds = (inboxState.failedMessageIds || []).filter((x) => x !== id);
+    log('retrying previously failed message', { id, inbox: inboxId, source, attempt: retryCount + 1 });
   }
-  if (inFlight(state, id)) {
-    log('already in flight; skipping duplicate work', { id, source });
+  if (inFlight(inboxState, id)) {
+    log('already in flight; skipping duplicate work', { id, inbox: inboxId, source });
     return;
   }
 
-  markInFlight(state, id);
+  markInFlight(state, inboxId, id);
 
   try {
     let fullMessage = message;
     try {
-      fullMessage = await fetchMessage(client, id);
+      fullMessage = await fetchMessage(client, inboxId, id);
     } catch (err) {
-      log('failed to hydrate full message; using event/list payload', { id, source, error: String(err) });
+      log('failed to hydrate full message; using event/list payload', { id, inbox: inboxId, source, error: String(err) });
     }
 
     log('processing message', {
       id,
+      inbox: inboxId,
+      persona,
       source,
       from: fullMessage.from_ || fullMessage.from,
       subject: fullMessage.subject,
@@ -526,38 +591,50 @@ async function processMessage(client, state, message, source = 'unknown') {
       subject: fullMessage.subject,
       artifactDir: artifacts.dir,
       slug: artifacts.slug,
+      persona,
     });
     let published = false;
     try {
       await publishSite();
       published = true;
     } catch (err) {
-      log('site publish failed (non-fatal)', { id, error: String(err).slice(0, 500) });
+      log('site publish failed (non-fatal)', { id, inbox: inboxId, error: String(err).slice(0, 500) });
     }
 
-    markSeen(state, id);
-    log('message completed', { id, source, slug: artifacts.slug, rendered: !!rendered, published });
+    markSeen(state, inboxId, id);
+    log('message completed', { id, inbox: inboxId, persona, source, slug: artifacts.slug, rendered: !!rendered, published });
   } catch (err) {
-    state.retryCounts = state.retryCounts || {};
-    state.retryCounts[id] = (state.retryCounts[id] || 0) + 1;
-    markFailed(state, id);
-    log('message failed', { id, source, attempt: state.retryCounts[id], maxRetries: MAX_RETRIES, error: String(err) });
+    inboxState.retryCounts = inboxState.retryCounts || {};
+    inboxState.retryCounts[id] = (inboxState.retryCounts[id] || 0) + 1;
+    markFailed(state, inboxId, id);
+    log('message failed', { id, inbox: inboxId, persona, source, attempt: inboxState.retryCounts[id], maxRetries: MAX_RETRIES, error: String(err) });
   }
 }
 
-async function pollOnce(client, state, reason = 'poll') {
+async function pollInbox(client, state, inboxId, persona, reason = 'poll') {
+  const inboxState = inboxStateFor(state, inboxId);
   // Startup: paginate all messages to catch anything missed during downtime
   // Interval: only fetch messages newer than last success
   const messages = reason === 'startup'
-    ? await fetchAllMessages(client, state)
-    : await fetchNewMessages(client, state.lastSuccessAt);
+    ? await fetchAllMessages(client, inboxId, inboxState)
+    : await fetchNewMessages(client, inboxId, inboxState.lastSuccessAt);
   const ordered = [...messages].sort((a, b) => new Date(a.created_at || a.timestamp || 0) - new Date(b.created_at || b.timestamp || 0));
   for (const msg of ordered) {
-    await processMessage(client, state, msg, reason);
+    await processMessage(client, state, inboxId, persona, msg, reason);
   }
-  state.lastPollAt = new Date().toISOString();
+  inboxState.lastPollAt = new Date().toISOString();
   saveState(state);
-  log('poll complete', { reason, scanned: ordered.length, lastPollAt: state.lastPollAt });
+  log('poll complete', { inbox: inboxId, persona, reason, scanned: ordered.length, lastPollAt: inboxState.lastPollAt });
+}
+
+async function pollOnce(client, state, reason = 'poll') {
+  for (const { inbox, persona } of INBOXES) {
+    try {
+      await pollInbox(client, state, inbox, persona, reason);
+    } catch (err) {
+      log('inbox poll failed', { inbox, persona, reason, error: String(err), stack: err?.stack });
+    }
+  }
 }
 
 async function main() {
@@ -581,14 +658,21 @@ async function main() {
     }
   };
 
-  // Clear stale in-flight messages from previous run
-  if (state.inFlightMessageIds.length > 0) {
-    log('clearing stale in-flight messages from previous run', { count: state.inFlightMessageIds.length });
-    state.inFlightMessageIds = [];
+  // Clear stale in-flight messages from previous run — per inbox
+  let cleared = 0;
+  for (const { inbox } of INBOXES) {
+    const s = inboxStateFor(state, inbox);
+    if (s.inFlightMessageIds.length > 0) {
+      cleared += s.inFlightMessageIds.length;
+      s.inFlightMessageIds = [];
+    }
+  }
+  if (cleared > 0) {
+    log('cleared stale in-flight messages from previous run', { count: cleared });
     saveState(state);
   }
 
-  log('monitor mode', { mode: 'polling', intervalMs: POLL_INTERVAL_MS, inbox: INBOX_ID });
+  log('monitor mode', { mode: 'polling', intervalMs: POLL_INTERVAL_MS, inboxes: INBOXES.map((i) => i.inbox) });
   await safePoll('startup');
 
   pollTimer = setInterval(() => {

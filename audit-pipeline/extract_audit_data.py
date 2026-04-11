@@ -137,6 +137,8 @@ def build_audit_data(entry, msg, review_text, qa_report, slug):
     return {
         "schema_version": 1,
         "slug": slug,
+        "type": "email",
+        "persona": entry.get("persona"),
         "email": {
             "subject": msg.get("subject", "Untitled"),
             "from": from_addr,
