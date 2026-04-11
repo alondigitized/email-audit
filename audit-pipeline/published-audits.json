@@ -1213,5 +1213,11 @@
     "subject": "Welcome to Shoe Carnival!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-welcome-to-shoe-carnival",
     "slug": "2026-04-11-welcome-to-shoe-carnival"
+  },
+  {
+    "messageId": "<NJC-nKnBQo2n_5MaRvp-AQ@geopod-ismtpd-19>",
+    "subject": "Welcome to Famous: Your 15% offer is inside.",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-welcome-to-famous-your-15-offer-is-inside",
+    "slug": "2026-04-11-welcome-to-famous-your-15-offer-is-inside"
   }
 ]
