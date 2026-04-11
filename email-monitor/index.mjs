@@ -33,8 +33,30 @@ if (!API_KEY) throw new Error('Missing AGENTMAIL_API_KEY');
 
 fs.mkdirSync(LOG_DIR, { recursive: true });
 
+// Strip secrets from any string before it hits stdout or the log file.
+// Belt-and-suspenders: redact known env-var values AND known token shapes.
+const SECRET_ENV_VARS = ['GH_TOKEN', 'AGENTMAIL_API_KEY', 'ANTHROPIC_API_KEY', 'CLAUDE_API_KEY'];
+const SECRET_PATTERNS = [
+  [/gh[poursb]_[A-Za-z0-9_]{20,}/g, '<GH_TOKEN_REDACTED>'],
+  [/github_pat_[A-Za-z0-9_]{20,}/g, '<GH_PAT_REDACTED>'],
+  [/sk-ant-[A-Za-z0-9_-]{20,}/g, '<ANTHROPIC_KEY_REDACTED>'],
+  [/(https?:\/\/)[^/\s:@]+:[^/\s@]+@/g, '$1<credentials_redacted>@'],
+];
+
+function sanitize(s) {
+  if (typeof s !== 'string') return s;
+  let out = s;
+  for (const k of SECRET_ENV_VARS) {
+    const v = process.env[k];
+    if (v && v.length >= 8) out = out.split(v).join(`<${k}_REDACTED>`);
+  }
+  for (const [re, sub] of SECRET_PATTERNS) out = out.replace(re, sub);
+  return out;
+}
+
 function log(message, extra) {
-  const line = `[${new Date().toISOString()}] ${message}${extra ? ` ${JSON.stringify(extra)}` : ''}`;
+  const raw = `[${new Date().toISOString()}] ${message}${extra ? ` ${JSON.stringify(extra)}` : ''}`;
+  const line = sanitize(raw);
   console.log(line);
   fs.appendFileSync(LOG_PATH, line + '\n');
 }
