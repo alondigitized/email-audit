@@ -15,15 +15,14 @@ import type { AuditSummary } from "@/lib/types";
 
 const DAYS = 14;
 
-// Tableau 10 palette — the standard for categorical data viz.
-// Designed for distinctive, balanced, readable categorical colors.
+// Observable 10 palette — used by Observable Plot and modern D3.
 const SENDER_COLORS = {
-  Skechers: "#4e79a7",
-  adidas: "#f28e2c",
-  "Famous Footwear": "#e15759",
-  "Shoe Carnival": "#edc949",
-  DSW: "#af7aa1",
-  Other: "#bab0ab",
+  Skechers: "#4269d0",
+  adidas: "#efb118",
+  "Famous Footwear": "#ff725c",
+  "Shoe Carnival": "#3ca951",
+  DSW: "#a463f2",
+  Other: "#9498a0",
 } as const;
 
 type SenderBucket = keyof typeof SENDER_COLORS;
