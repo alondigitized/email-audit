@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import type { AuditSummary } from "@/lib/types";
+import { localDateKey } from "@/lib/dates";
 import { AuditCard } from "./AuditCard";
 
-/** Group audits by date string (YYYY-MM-DD), preserving sort order. */
+/** Group audits by local YYYY-MM-DD, preserving sort order. */
 function groupByDate(audits: AuditSummary[]) {
   const groups: { date: string; label: string; audits: AuditSummary[] }[] = [];
   const seen = new Map<string, number>();
 
   for (const audit of audits) {
     const iso = audit.timestamp_iso;
-    const dateKey = iso ? iso.slice(0, 10) : "unknown";
-    const label = iso
-      ? new Date(iso).toLocaleDateString("en-US", {
+    const d = iso ? new Date(iso) : null;
+    const dateKey = d ? localDateKey(d) : "unknown";
+    const label = d
+      ? d.toLocaleDateString("en-US", {
           weekday: "long",
           month: "long",
           day: "numeric",
@@ -43,7 +45,10 @@ interface AuditListProps {
 
 export function AuditList({ audits, filterDate, onClearFilter }: AuditListProps) {
   const visibleAudits = filterDate
-    ? audits.filter((a) => (a.timestamp_iso || "").slice(0, 10) === filterDate)
+    ? audits.filter((a) => {
+        if (!a.timestamp_iso) return false;
+        return localDateKey(new Date(a.timestamp_iso)) === filterDate;
+      })
     : audits;
   const allGroups = groupByDate(visibleAudits);
   const [page, setPage] = useState(0);

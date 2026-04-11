@@ -12,6 +12,7 @@ import {
   YAxis,
 } from "recharts";
 import type { AuditSummary } from "@/lib/types";
+import { localDateKey, startOfLocalDay } from "@/lib/dates";
 
 const DAYS = 14;
 
@@ -40,10 +41,6 @@ type DayBucket = {
   label: string;
 } & Record<SenderBucket, number>;
 
-function startOfUtcDay(d: Date): Date {
-  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
-}
-
 function bucketSender(name: string): SenderBucket {
   const n = (name || "").toLowerCase();
   if (n.includes("skechers")) return "Skechers";
@@ -55,23 +52,25 @@ function bucketSender(name: string): SenderBucket {
 }
 
 function buildData(audits: AuditSummary[]): DayBucket[] {
-  const today = startOfUtcDay(new Date());
+  const today = startOfLocalDay(new Date());
   const start = new Date(today);
-  start.setUTCDate(start.getUTCDate() - (DAYS - 1));
+  start.setDate(start.getDate() - (DAYS - 1));
 
+  const indexByKey = new Map<string, number>();
   const out: DayBucket[] = [];
   for (let i = 0; i < DAYS; i++) {
     const d = new Date(start);
-    d.setUTCDate(d.getUTCDate() + i);
+    d.setDate(d.getDate() + i);
+    const key = localDateKey(d);
     const row = {
-      date: d.toISOString().slice(0, 10),
+      date: key,
       label: d.toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
-        timeZone: "UTC",
       }),
     } as DayBucket;
     for (const s of SENDER_ORDER) row[s] = 0;
+    indexByKey.set(key, out.length);
     out.push(row);
   }
 
@@ -80,11 +79,8 @@ function buildData(audits: AuditSummary[]): DayBucket[] {
     if (!a.timestamp_iso) continue;
     const ts = new Date(a.timestamp_iso);
     if (Number.isNaN(ts.getTime())) continue;
-    const day = startOfUtcDay(ts);
-    const idx = Math.round(
-      (day.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)
-    );
-    if (idx < 0 || idx >= DAYS) continue;
+    const idx = indexByKey.get(localDateKey(ts));
+    if (idx === undefined) continue;
     out[idx][bucketSender(a.from_display_name)] += 1;
   }
 
