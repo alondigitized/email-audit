@@ -1244,5 +1244,11 @@
     "subject": "Your Items Are Waiting!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-your-items-are-waiting-q0komijtt6mars70xax5eq-g",
     "slug": "2026-04-11-your-items-are-waiting-q0komijtt6mars70xax5eq-g"
+  },
+  {
+    "messageId": "<y1WBJITYThGbZZGhoYf2zQ@geopod-ismtpd-90>",
+    "subject": "Your cart expires soon!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-your-cart-expires-soon-y1wbjitythgbzzghoyf2zq-g",
+    "slug": "2026-04-11-your-cart-expires-soon-y1wbjitythgbzzghoyf2zq-g"
   }
 ]
