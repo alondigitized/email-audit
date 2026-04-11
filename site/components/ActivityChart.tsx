@@ -16,7 +16,7 @@ const DAYS = 30;
 
 const SENDER_COLORS = {
   Skechers: "#003594",
-  adidas: "#111827",
+  adidas: "#f97316",
   Other: "#9ca3af",
 } as const;
 
