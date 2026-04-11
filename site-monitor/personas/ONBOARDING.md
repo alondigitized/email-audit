@@ -21,7 +21,7 @@ File: `site-monitor/personas/{slug}.json`. Already exists for Martha. Tells the 
 
 Create a new inbox in the AgentMail console: **`{slug}@agentmail.to`**.
 
-- Martha's target: `martha@agentmail.to`
+- Martha's target: `martha.stroll@agentmail.to`
 - Log in to the AgentMail dashboard
 - Create inbox, note the address
 - No forwarding rules needed — email-monitor polls via API
@@ -31,7 +31,7 @@ Create a new inbox in the AgentMail console: **`{slug}@agentmail.to`**.
 For each brand you want the persona to shop, create a real account on the brand's site using the persona's AgentMail address as the signup email.
 
 - Martha's primary brand: Skechers
-- Go to skechers.com, create account, email = `martha@agentmail.to`
+- Go to skechers.com, create account, email = `martha.stroll@agentmail.to`
 - Use a strong generated password and save it (you'll paste it into `.env` next)
 - Confirm the email (verification link lands in Martha's AgentMail inbox)
 
@@ -42,7 +42,7 @@ For each brand you want the persona to shop, create a real account on the brand'
 Add to `site-monitor/.env`:
 
 ```
-SKECHERS_MARTHA_EMAIL=martha@agentmail.to
+SKECHERS_MARTHA_EMAIL=martha.stroll@agentmail.to
 SKECHERS_MARTHA_PASSWORD=<generated-password>
 ```
 
@@ -55,7 +55,7 @@ Add the new inbox to `email-monitor/inboxes.json`:
 ```json
 [
   { "inbox": "walker@agentmail.to", "persona": "walker" },
-  { "inbox": "martha@agentmail.to", "persona": "martha" }
+  { "inbox": "martha.stroll@agentmail.to", "persona": "martha" }
 ]
 ```
 
@@ -79,7 +79,7 @@ This launches your real Chrome with a fresh profile. Log in as Martha on skecher
 
 ### 7. Subscribe Martha to brand email lists (manual, 5–10 min)
 
-Visit each brand's footer signup form (or popup) and subscribe using `martha@agentmail.to`:
+Visit each brand's footer signup form (or popup) and subscribe using `martha.stroll@agentmail.to`:
 
 - skechers.com
 - adidas.com

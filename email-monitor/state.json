@@ -219,8 +219,16 @@
         "<134ef945-71d4-4fc0-8c34-ec6df50717e0@dfw1s10mta515.xt.local>": 3,
         "<cbf50734-f8f2-4519-8d18-6c2a1064a0a4@dfw1s10mta248.xt.local>": 3
       },
-      "lastPollAt": "2026-04-11T17:56:18.789Z",
+      "lastPollAt": "2026-04-11T19:00:20.868Z",
       "lastSuccessAt": "2026-04-11T17:40:22.873Z"
+    },
+    "martha.stroll@agentmail.to": {
+      "processedMessageIds": [],
+      "inFlightMessageIds": [],
+      "failedMessageIds": [],
+      "retryCounts": {},
+      "lastPollAt": "2026-04-11T19:00:21.092Z",
+      "lastSuccessAt": null
     }
   }
 }
