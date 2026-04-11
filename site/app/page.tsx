@@ -1,6 +1,5 @@
 import { getAuditIndex } from "@/lib/audits";
-import { AuditList } from "@/components/AuditList";
-import { ActivityChart } from "@/components/ActivityChart";
+import { HomeContent } from "@/components/HomeContent";
 
 export default function Home() {
   const audits = getAuditIndex();
@@ -17,8 +16,7 @@ export default function Home() {
           automated QA results.
         </p>
       </div>
-      <ActivityChart audits={audits} />
-      <AuditList audits={audits} />
+      <HomeContent audits={audits} />
     </>
   );
 }

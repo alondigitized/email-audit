@@ -4,6 +4,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -12,7 +13,7 @@ import {
 } from "recharts";
 import type { AuditSummary } from "@/lib/types";
 
-const DAYS = 30;
+const DAYS = 14;
 
 const SENDER_COLORS = {
   Skechers: "#003594",
@@ -79,7 +80,13 @@ function buildData(audits: AuditSummary[]): DayBucket[] {
   return out;
 }
 
-export function ActivityChart({ audits }: { audits: AuditSummary[] }) {
+interface Props {
+  audits: AuditSummary[];
+  selectedDate: string | null;
+  onSelectDate: (date: string | null) => void;
+}
+
+export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
   const data = buildData(audits);
   const total = data.reduce(
     (s, d) => s + d.Skechers + d.adidas + d.Other,
@@ -95,6 +102,19 @@ export function ActivityChart({ audits }: { audits: AuditSummary[] }) {
     Other: data.reduce((s, d) => s + d.Other, 0),
   };
 
+  function handleChartClick(state: unknown) {
+    const payload = (state as { activePayload?: { payload?: { date?: string } }[] } | null)
+      ?.activePayload?.[0]?.payload;
+    const clicked = payload?.date;
+    if (!clicked) return;
+    onSelectDate(clicked === selectedDate ? null : clicked);
+  }
+
+  function fillForBar(date: string, base: string): string {
+    if (!selectedDate) return base;
+    return date === selectedDate ? base : `${base}55`;
+  }
+
   return (
     <div className="bg-white border border-[var(--color-line)] rounded-2xl p-6 mb-5 shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex justify-between items-baseline gap-3 flex-wrap mb-3">
@@ -108,6 +128,7 @@ export function ActivityChart({ audits }: { audits: AuditSummary[] }) {
           <BarChart
             data={data}
             margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
+            onClick={handleChartClick}
           >
             <CartesianGrid
               strokeDasharray="3 3"
@@ -119,7 +140,7 @@ export function ActivityChart({ audits }: { audits: AuditSummary[] }) {
               tick={{ fontSize: 11, fill: "#6b7280" }}
               tickLine={false}
               axisLine={{ stroke: "#e5e7eb" }}
-              interval={4}
+              interval={1}
             />
             <YAxis
               tick={{ fontSize: 11, fill: "#6b7280" }}
@@ -145,24 +166,21 @@ export function ActivityChart({ audits }: { audits: AuditSummary[] }) {
                 return `${value} (${n})`;
               }}
             />
-            <Bar
-              dataKey="Skechers"
-              stackId="a"
-              fill={SENDER_COLORS.Skechers}
-              radius={[0, 0, 0, 0]}
-            />
-            <Bar
-              dataKey="adidas"
-              stackId="a"
-              fill={SENDER_COLORS.adidas}
-              radius={[0, 0, 0, 0]}
-            />
-            <Bar
-              dataKey="Other"
-              stackId="a"
-              fill={SENDER_COLORS.Other}
-              radius={[3, 3, 0, 0]}
-            />
+            <Bar dataKey="Skechers" stackId="a" cursor="pointer">
+              {data.map((d) => (
+                <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.Skechers)} />
+              ))}
+            </Bar>
+            <Bar dataKey="adidas" stackId="a" cursor="pointer">
+              {data.map((d) => (
+                <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.adidas)} />
+              ))}
+            </Bar>
+            <Bar dataKey="Other" stackId="a" radius={[3, 3, 0, 0]} cursor="pointer">
+              {data.map((d) => (
+                <Cell key={d.date} fill={fillForBar(d.date, SENDER_COLORS.Other)} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
