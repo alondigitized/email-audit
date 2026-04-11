@@ -1225,5 +1225,11 @@
     "subject": "Hey there, come back and shop our best sellers!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-hey-there-come-back-and-shop-our-best-sellers",
     "slug": "2026-04-11-hey-there-come-back-and-shop-our-best-sellers"
+  },
+  {
+    "messageId": "<ZlTUVZoWQ9KPzMpmmkfhJA@geopod-ismtpd-14>",
+    "subject": "You absolutely need these.",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-you-absolutely-need-these",
+    "slug": "2026-04-11-you-absolutely-need-these"
   }
 ]
