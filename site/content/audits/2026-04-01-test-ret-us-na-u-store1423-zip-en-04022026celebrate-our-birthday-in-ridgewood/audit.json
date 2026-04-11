@@ -286,5 +286,7 @@
     "render_image": "2026-04-01-test-ret-us-na-u-store1423-zip-en-04022026celebrate-our-birthday-in-ridgewood-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=2BCQW4LDEVOUPLHXTERSLNOGEI.100217"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

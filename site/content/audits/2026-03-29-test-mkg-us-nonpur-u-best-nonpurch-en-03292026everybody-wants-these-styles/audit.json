@@ -303,5 +303,7 @@
     "render_image": "2026-03-29-test-mkg-us-nonpur-u-best-nonpurch-en-03292026everybody-wants-these-styles-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=MFA7OPYGA7JEXHGNFA22EQUWNA.100216"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

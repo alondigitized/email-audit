@@ -305,5 +305,7 @@
     "render_image": "2026-04-11-test-pro-us-na-u-sitebundle-full-en-04052026spring-fling-sale-double-the-style-s-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=EYP4NGT6RDVUBEAVNONZWLAMRU.100216"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

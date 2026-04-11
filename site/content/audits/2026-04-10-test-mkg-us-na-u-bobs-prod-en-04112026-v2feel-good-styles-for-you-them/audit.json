@@ -370,5 +370,7 @@
     "render_image": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026-v2feel-good-styles-for-you-them-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=Y6VEP6TGUXZULFQGYHZOBYDGBI.100219"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

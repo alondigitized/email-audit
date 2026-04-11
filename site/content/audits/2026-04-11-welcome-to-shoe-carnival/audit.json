@@ -131,5 +131,7 @@
     "render_image": "2026-04-11-welcome-to-shoe-carnival-email-webview-render.png",
     "pdf": null,
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

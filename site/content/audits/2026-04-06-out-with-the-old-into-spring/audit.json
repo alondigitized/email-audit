@@ -279,5 +279,7 @@
     "render_image": "2026-04-06-out-with-the-old-into-spring-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=EJ6HK2LUDBVE3OIDJUOCJGKOJU.100215"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

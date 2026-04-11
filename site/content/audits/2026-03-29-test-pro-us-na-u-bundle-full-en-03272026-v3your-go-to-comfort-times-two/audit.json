@@ -333,5 +333,7 @@
     "render_image": "2026-03-29-test-pro-us-na-u-bundle-full-en-03272026-v3your-go-to-comfort-times-two-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=OH4DWXYONJVU5EVRSAEOA6KV24.100218"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

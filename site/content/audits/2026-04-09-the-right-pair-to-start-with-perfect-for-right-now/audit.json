@@ -281,5 +281,7 @@
     "render_image": "2026-04-09-the-right-pair-to-start-with-perfect-for-right-now-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=RQYKPWB2XHPURICXMAPLDI46BU.100214"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

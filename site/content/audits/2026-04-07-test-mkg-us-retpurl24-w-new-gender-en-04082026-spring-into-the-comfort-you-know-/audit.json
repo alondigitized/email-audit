@@ -311,5 +311,7 @@
     "render_image": "2026-04-07-test-mkg-us-retpurl24-w-new-gender-en-04082026-spring-into-the-comfort-you-know--email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=HW2OIP4RSFHELAFFDVPR4TGJYY.100217"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

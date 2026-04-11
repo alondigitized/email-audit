@@ -292,5 +292,7 @@
     "render_image": "2026-04-11-test-mkg-us-retpuropen-u-slipin-retail-en-04132026the-season-to-slip-in-to-sanda-fd7dd727-62db-407b-a13d--email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=YK5JFZQ4EQKELCWDEG2PYYHG5I.100221"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

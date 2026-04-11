@@ -103,5 +103,7 @@
     "render_image": "2026-04-11-hey-there-come-back-and-shop-our-best-sellers-email-webview-render.png",
     "pdf": null,
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

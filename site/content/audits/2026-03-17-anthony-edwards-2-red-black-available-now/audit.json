@@ -414,5 +414,7 @@
     "render_image": "2026-03-17-anthony-edwards-2-red-black-available-now-email-webview-render.png",
     "pdf": "2026-03-17-anthony-edwards-2-red-black-available-now-review.pdf",
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

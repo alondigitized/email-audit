@@ -309,5 +309,7 @@
     "render_image": "2026-04-07-test-mkg-us-na-u-golf-perf-en-04082026find-the-right-shoe-for-your-game-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=UIDGNLEX2KUEBITCIJPYVXBRAQ.100217"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -285,5 +285,7 @@
     "render_image": "2026-03-31-why-start-with-one-pair-when-you-can-save-with-two-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=3XMNWRX4CJUURFQLVAY2VPBS2Y.100220"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

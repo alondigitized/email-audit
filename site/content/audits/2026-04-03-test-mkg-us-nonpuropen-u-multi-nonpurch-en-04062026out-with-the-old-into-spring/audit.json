@@ -315,5 +315,7 @@
     "render_image": "2026-04-03-test-mkg-us-nonpuropen-u-multi-nonpurch-en-04062026out-with-the-old-into-spring-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=6FFZS7IOP57EPDCZ6OKCNWJONU.100221"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

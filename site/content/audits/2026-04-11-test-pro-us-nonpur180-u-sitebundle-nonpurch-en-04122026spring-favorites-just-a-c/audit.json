@@ -254,5 +254,7 @@
     "render_image": "2026-04-11-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04122026spring-favorites-just-a-c-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=SJ4U4AAKG6KUPIFSLE6FRDTGOU.100217"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

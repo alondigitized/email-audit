@@ -320,5 +320,7 @@
     "render_image": "2026-04-08-test-pro-us-retpuropen-u-sitebundle-retail-en-04092026the-right-pair-right-now-w-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=LK3WS4ENIZTENAAUAZ73YEBGSA.100216"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

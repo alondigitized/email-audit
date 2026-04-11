@@ -292,5 +292,7 @@
     "render_image": "2026-03-31-test-mkg-us-ecmpur-u-trend-ecom-en-04012026get-ahead-of-this-season-s-trends-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=IRCKGXTFQ3RENG2RXDV3HPGJHA.100220"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

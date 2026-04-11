@@ -287,5 +287,7 @@
     "render_image": "2026-04-01-test-ret-us-na-u-store1569-zip-en-04022026sale-ending-soon-celebrate-our-birthda-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=F22XBABEYUEUNCIALKBUEPKXCQ.100214"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

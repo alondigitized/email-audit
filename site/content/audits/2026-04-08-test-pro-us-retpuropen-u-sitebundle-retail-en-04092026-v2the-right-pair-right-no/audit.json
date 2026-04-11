@@ -299,5 +299,7 @@
     "render_image": "2026-04-08-test-pro-us-retpuropen-u-sitebundle-retail-en-04092026-v2the-right-pair-right-no-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=B76EDSH3YK6EDGF37OLJZ6QFGE.100218"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

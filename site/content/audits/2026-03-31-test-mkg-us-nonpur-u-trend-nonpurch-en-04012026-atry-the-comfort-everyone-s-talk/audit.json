@@ -295,5 +295,7 @@
     "render_image": "2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026-atry-the-comfort-everyone-s-talk-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=P4XSRVHS72REPJMJ6PW67MHBHU.100214"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

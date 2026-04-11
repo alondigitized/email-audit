@@ -306,5 +306,7 @@
     "render_image": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-b-v2one-pair-of-sandals-won-t-cut-it-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=H2N4F3OT2OJUXL5LEGJYCSPX5Y.100215"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

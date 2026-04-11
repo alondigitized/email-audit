@@ -302,5 +302,7 @@
     "render_image": "2026-04-01-test-mkg-us-retpur-u-trend-retail-en-04012026-byour-next-spring-favorites-are-wa-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=WHCVIOPZZXLUPHO4B4QQ65LKRA.100218"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

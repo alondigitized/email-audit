@@ -266,5 +266,7 @@
     "render_image": "2026-04-07-shop-adizero-evo-sl-running-shoes-email-webview-render.png",
     "pdf": null,
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

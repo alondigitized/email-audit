@@ -320,5 +320,7 @@
     "render_image": "2026-04-08-spring-into-comfort-like-you-ve-never-felt-before-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=2YVP2W2ORVMEXEAY64JTT5G6FM.100214"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -490,5 +490,7 @@
     "render_image": "2026-03-17-unlock-more-rewards-with-the-adidas-app-email-webview-render.png",
     "pdf": "2026-03-17-unlock-more-rewards-with-the-adidas-app-review.pdf",
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

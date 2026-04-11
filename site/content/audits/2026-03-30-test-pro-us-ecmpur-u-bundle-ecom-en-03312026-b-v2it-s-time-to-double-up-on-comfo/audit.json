@@ -303,5 +303,7 @@
     "render_image": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-b-v2it-s-time-to-double-up-on-comfo-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=OX7GK7K4APUEVMRNBJBOXAT4NQ.100220"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

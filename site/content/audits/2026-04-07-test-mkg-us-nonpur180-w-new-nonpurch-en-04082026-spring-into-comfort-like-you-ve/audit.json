@@ -312,5 +312,7 @@
     "render_image": "2026-04-07-test-mkg-us-nonpur180-w-new-nonpurch-en-04082026-spring-into-comfort-like-you-ve-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=CYO5XOWZKQJENODJ7ZY3AD62VE.100218"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -112,5 +112,7 @@
     "render_image": "2026-04-04-your-cart-expires-soon-email-webview-render.png",
     "pdf": null,
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -297,5 +297,7 @@
     "render_image": "2026-04-07-you-ll-love-starting-spring-in-skechers-sandals-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=HOZJXA57SO2E7H2QMTAOGNS4TI.100220"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

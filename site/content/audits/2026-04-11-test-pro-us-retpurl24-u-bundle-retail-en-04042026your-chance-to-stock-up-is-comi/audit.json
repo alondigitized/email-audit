@@ -310,5 +310,7 @@
     "render_image": "2026-04-11-test-pro-us-retpurl24-u-bundle-retail-en-04042026your-chance-to-stock-up-is-comi-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=DEQ4F5JXPO7UZB3B33YTZ4PX7U.100221"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -297,5 +297,7 @@
     "render_image": "2026-04-09-test-mkg-us-na-u-best-wide-en-04102026-v2say-bye-to-tight-hello-to-just-right-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=HGZOEE6MPKPELNF4K5DC7SQUWU.100218"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

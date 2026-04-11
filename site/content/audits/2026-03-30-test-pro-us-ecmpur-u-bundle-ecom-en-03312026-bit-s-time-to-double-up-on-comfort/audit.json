@@ -284,5 +284,7 @@
     "render_image": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-bit-s-time-to-double-up-on-comfort-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=EM56SUONFLVEVFMTDBK7K5VACQ.100220"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -287,5 +287,7 @@
     "render_image": "2026-04-10-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04122026styles-made-for-spring-weeken-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=T5SXFSEEDACUVC33CPQDXUECK4.100216"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

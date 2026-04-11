@@ -286,5 +286,7 @@
     "render_image": "2026-03-31-test-mkg-us-na-u-new-wide-en-04022026your-favorites-fit-for-your-feet-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=6QZXMRHM6G6URLASJF3QFF2CFY.100217"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -297,5 +297,7 @@
     "render_image": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-bthe-arcades-you-love-now-in-online-exc-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=RD2ZOHJVD4XELPS7JKQQYQK5HQ.100220"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

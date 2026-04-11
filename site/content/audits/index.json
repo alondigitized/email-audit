@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-11-welcome-to-skechers",
+    "subject": "Welcome to Skechers!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-11T19:04:06+00:00",
+    "score": "6/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "martha"
+  },
+  {
     "slug": "2026-04-11-earn-50-points-for-completing-your-profile",
     "subject": "Earn 50 points for completing your profile",
     "from_display_name": "adidas",
@@ -13,7 +29,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-more-sun-more-savings",
@@ -29,7 +45,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-your-cart-expires-soon-y1wbjitythgbzzghoyf2zq-g",
@@ -40,7 +56,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-your-items-are-waiting-q0komijtt6mars70xax5eq-g",
@@ -51,7 +67,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-site-journey-walker",
@@ -78,7 +94,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-hey-there-come-back-and-shop-our-best-sellers",
@@ -89,7 +105,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-welcome-to-famous-your-15-offer-is-inside",
@@ -100,7 +116,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-welcome-to-shoe-carnival",
@@ -111,7 +127,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-welcome-to-the-email-list",
@@ -122,7 +138,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-test-mkg-us-retpuropen-u-slipin-retail-en-04132026the-season-to-slip-in-to-sanda-fd7dd727-62db-407b-a13d-",
@@ -138,7 +154,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-ecmpurl24-u-slipin-ecom-en-04132026from-sneakers-to-sandals-it-s-sli",
@@ -154,7 +170,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-nonpurclick-u-slipin-nonpurch-en-04132026-v2from-sneakers-to-sandals",
@@ -170,7 +186,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-nonpurclick-u-slipin-nonpurch-en-04132026-v2from-sneakers-to-sandals-83471cbb-44ae-48e7-827d-",
@@ -186,7 +202,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-nonpur180-u-slipin-nonpurch-en-04132026from-sneakers-to-sandals-it-s",
@@ -202,7 +218,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-pro-us-retpuropen-u-sitebundle-retail-en-04122026spring-favorites-just-a-cl",
@@ -218,7 +234,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04122026spring-favorites-just-a-c",
@@ -234,7 +250,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04122026styles-made-for-spring-weeken",
@@ -250,7 +266,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-pro-us-na-u-sitebundle-full-en-04122026-v3styles-made-for-spring-weekends",
@@ -266,7 +282,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-w-seasonal-gender-en-04112026-v5the-perfect-pair-or-2-for-her",
@@ -282,7 +298,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026-v4feel-good-styles-for-you-them",
@@ -298,7 +314,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-test-mkg-us-na-w-seasonal-gender-en-04112026-v4the-perfect-pair-or-2-for-her",
@@ -314,7 +330,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026-v3feel-good-styles-for-you-them",
@@ -330,7 +346,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026-v2feel-good-styles-for-you-them",
@@ -346,7 +362,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-pro-us-na-u-sitebundle-full-en-04122026-v2styles-made-for-spring-weekends",
@@ -362,7 +378,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-pro-us-na-u-sitebundle-full-en-04122026styles-made-for-spring-weekends",
@@ -378,7 +394,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-w-seasonal-gender-en-04112026-v3the-perfect-pair-or-2-for-her",
@@ -394,7 +410,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-seasonal-gender-en-04112026-v2the-perfect-pair-or-2-for-her",
@@ -410,7 +426,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-seasonal-gender-en-04112026the-perfect-pair-or-2-for-her",
@@ -426,7 +442,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-adiclub-days-are-coming",
@@ -442,7 +458,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026feel-good-styles-for-you-them",
@@ -458,7 +474,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-test-ret-us-na-u-store1423-zip-en-04102026-v2sale-ends-soon-celebrate-our-birthd",
@@ -474,7 +490,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-your-perfect-first-pair-is-here",
@@ -490,7 +506,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-your-cart-expires-soon",
@@ -501,7 +517,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-your-items-are-waiting",
@@ -512,7 +528,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-did-you-forget-something",
@@ -523,7 +539,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-10-site-journey-walker",
@@ -555,7 +571,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-bthe-arcades-you-love-now-in-online-exc",
@@ -571,7 +587,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-test-mkg-us-nonpur180-w-arch-nonpurch-en-04102026your-perfect-first-pair-is-here",
@@ -587,7 +603,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-a-v2the-arcades-you-know-love-in-colors",
@@ -603,7 +619,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-athe-arcades-you-know-love-in-colors-yo",
@@ -619,7 +635,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-test-mkg-us-na-u-best-wide-en-04102026-v2say-bye-to-tight-hello-to-just-right",
@@ -635,7 +651,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-test-mkg-us-na-u-best-wide-en-04102026say-bye-to-tight-hello-to-just-right",
@@ -651,7 +667,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-the-right-pair-to-start-with-perfect-for-right-now",
@@ -667,7 +683,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-did-you-forget-something",
@@ -678,7 +694,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-09-site-journey-walker",
@@ -710,7 +726,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-test-ret-us-na-u-store1423-zip-en-04102026sale-ends-soon-celebrate-our-birthday--fdbb6dc3-9794-4c04-b04c-",
@@ -726,7 +742,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-test-ret-us-na-u-store1423-zip-en-04102026sale-ends-soon-celebrate-our-birthday-",
@@ -742,7 +758,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-test-pro-us-na-u-sitebundle-full-en-04092026step-into-the-right-shoes-for-right-",
@@ -758,7 +774,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04092026step-into-the-right-shoes-for",
@@ -774,7 +790,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04092026the-right-pair-to-start-w",
@@ -790,7 +806,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-test-pro-us-retpuropen-u-sitebundle-retail-en-04092026-v3the-right-pair-right-no",
@@ -806,7 +822,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-test-pro-us-retpuropen-u-sitebundle-retail-en-04092026-v2the-right-pair-right-no",
@@ -822,7 +838,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-test-pro-us-retpuropen-u-sitebundle-retail-en-04092026the-right-pair-right-now-w",
@@ -838,7 +854,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-spring-into-comfort-like-you-ve-never-felt-before",
@@ -854,7 +870,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-your-cart-expires-soon-rzgoegk0t-k-ndansihenw-g",
@@ -865,7 +881,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-your-items-are-waiting",
@@ -876,7 +892,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-08-site-journey-walker",
@@ -908,7 +924,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-retpurl24-w-new-gender-en-04082026-v2-spring-into-the-comfort-you-kn",
@@ -924,7 +940,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-retpurl24-w-new-gender-en-04082026-spring-into-the-comfort-you-know-",
@@ -940,7 +956,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-ecmpurl24-w-new-gender-en-04082026-spring-into-a-new-level-of-comfor-349dcf97-9d57-4d45-a450-",
@@ -956,7 +972,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-ecmpurl24-w-new-gender-en-04082026-spring-into-a-new-level-of-comfor",
@@ -972,7 +988,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-nonpur180-w-new-nonpurch-en-04082026-v2-spring-into-comfort-like-you",
@@ -988,7 +1004,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-nonpur180-w-new-nonpurch-en-04082026-spring-into-comfort-like-you-ve",
@@ -1004,7 +1020,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-na-u-golf-perf-en-04082026-v2find-the-right-shoe-for-your-game",
@@ -1020,7 +1036,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-na-u-golf-perf-en-04082026find-the-right-shoe-for-your-game",
@@ -1036,7 +1052,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-ret-us-na-u-store1408-zip-en-04092026celebrate-our-birthday-in-buffalo",
@@ -1052,7 +1068,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-you-ll-love-starting-spring-in-skechers-sandals",
@@ -1068,7 +1084,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-what-s-that-comin-down-the-track",
@@ -1084,7 +1100,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-your-items-are-waiting",
@@ -1095,7 +1111,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-did-you-forget-something",
@@ -1106,7 +1122,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-07-site-journey-walker",
@@ -1138,7 +1154,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-b-v3one-pair-of-sandals-won-t-cut-it",
@@ -1154,7 +1170,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-b-v2one-pair-of-sandals-won-t-cut-it",
@@ -1170,7 +1186,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-bone-pair-of-sandals-won-t-cut-it",
@@ -1186,7 +1202,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-06-out-with-the-old-into-spring",
@@ -1202,7 +1218,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-06-your-cart-expires-soon",
@@ -1213,7 +1229,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-06-did-you-forget-something",
@@ -1224,7 +1240,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-06-site-journey-walker",
@@ -1256,7 +1272,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-05-take-your-pick-during-the-spring-fling-sale",
@@ -1272,7 +1288,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-05-your-items-are-waiting",
@@ -1283,7 +1299,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-05-site-journey-walker",
@@ -1315,7 +1331,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-04-your-cart-expires-soon",
@@ -1326,7 +1342,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-04-start-with-one-get-the-second-for-less",
@@ -1342,7 +1358,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-your-items-are-waiting",
@@ -1353,7 +1369,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-04-did-you-forget-something",
@@ -1364,7 +1380,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-04-site-journey-walker",
@@ -1396,7 +1412,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-test-mkg-us-nonpuropen-u-multi-nonpurch-en-04062026out-with-the-old-into-spring",
@@ -1412,7 +1428,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-bout-with-the-old-into-spring",
@@ -1428,7 +1444,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-a-v2give-your-work-shoes-a-glow-up",
@@ -1444,7 +1460,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-agive-your-work-shoes-a-glow-up",
@@ -1460,7 +1476,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-test-pro-us-na-u-sitebundle-full-en-04052026spring-fling-sale-double-the-style-s",
@@ -1476,7 +1492,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-test-pro-us-retpurl24-u-sitebundle-retail-en-04052026two-ways-to-save-during-the",
@@ -1492,7 +1508,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04052026spring-fling-sale-double-the-",
@@ -1508,7 +1524,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04052026take-your-pick-during-the",
@@ -1524,7 +1540,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-discover-the-support-you-ve-been-looking-for",
@@ -1540,7 +1556,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-did-you-forget-something",
@@ -1551,7 +1567,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-03-site-journey-walker",
@@ -1583,7 +1599,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-11-test-pro-us-retpurl24-u-bundle-retail-en-04042026your-chance-to-stock-up-is-comi",
@@ -1599,7 +1615,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-02-test-pro-us-ecmpurl24-u-bundle-ecom-en-04042026this-is-a-get-two-kind-of-sale",
@@ -1615,7 +1631,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-02-bold-brave-new",
@@ -1631,7 +1647,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-02-your-items-are-waiting",
@@ -1642,7 +1658,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-02-site-journey-walker",
@@ -1674,7 +1690,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-ecmpur-u-arch-ecom-en-04032026-ayour-go-to-arch-fit-upgraded",
@@ -1690,7 +1706,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-ret-us-na-u-store1569-zip-en-04022026sale-ending-soon-celebrate-our-birthda",
@@ -1706,7 +1722,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-your-skechers-plus-monthly-summary-is-here",
@@ -1722,7 +1738,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-bmake-walking-a-breeze-with-go-walk",
@@ -1738,7 +1754,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-a-v3make-walking-a-breeze-with-go-walk",
@@ -1754,7 +1770,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-a-v2-make-walking-a-breeze-with-go-wal",
@@ -1770,7 +1786,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-a-v2make-walking-a-breeze-this-nationa",
@@ -1786,7 +1802,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-amake-walking-a-breeze-this-national-w",
@@ -1802,7 +1818,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-just-restocked-real-madrid-bring-back-jerseys-0102019d49964fe3-7b88df2",
@@ -1818,7 +1834,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-try-the-comfort-everyone-s-talking-about",
@@ -1834,7 +1850,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-did-you-forget-something",
@@ -1845,7 +1861,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-site-journey-walker",
@@ -1877,7 +1893,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-na-u-new-wide-en-04022026your-favorites-fit-for-your-feet",
@@ -1893,7 +1909,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-retpur-u-trend-retail-en-04012026-byour-next-spring-favorites-are-wa",
@@ -1909,7 +1925,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-retpur-u-trend-retail-en-04012026-ayour-next-spring-favorites-are-wa",
@@ -1925,7 +1941,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-ecmpur-u-trend-ecom-en-04012026-byou-deserve-comfort-this-spring",
@@ -1941,7 +1957,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-ecmpur-u-trend-ecom-en-04012026-ayou-deserve-comfort-this-spring",
@@ -1957,7 +1973,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026-btry-the-comfort-everyone-s-talk",
@@ -1973,7 +1989,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026-atry-the-comfort-everyone-s-talk",
@@ -1989,7 +2005,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-na-u-trend-gender-en-04012026-v2you-deserve-comfort-this-spring",
@@ -2005,7 +2021,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-na-u-trend-gender-en-04012026get-ahead-of-this-season-s-trends",
@@ -2021,7 +2037,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-retpur-u-trend-retail-en-04012026new-season-new-styles",
@@ -2037,7 +2053,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-ecmpur-u-trend-ecom-en-04012026get-ahead-of-this-season-s-trends",
@@ -2053,7 +2069,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026-v2try-the-comfort-everyone-s-tal",
@@ -2069,7 +2085,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026try-the-comfort-everyone-s-talkin",
@@ -2085,7 +2101,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-why-start-with-one-pair-when-you-can-save-with-two",
@@ -2101,7 +2117,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-your-items-are-waiting",
@@ -2112,7 +2128,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-31-site-journey-walker",
@@ -2144,7 +2160,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-test-pro-us-na-u-bundle-full-en-03312026everything-s-better-in-pairs",
@@ -2160,7 +2176,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-pro-us-retpur-u-bundle-retail-en-03312026-bget-more-pairs-for-less",
@@ -2176,7 +2192,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-04-01-test-pro-us-retpur-u-bundle-retail-en-03312026-aget-more-pairs-for-less",
@@ -2192,7 +2208,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-test-pro-us-nonpur-u-bundle-nonpurch-en-03312026why-start-with-one-pair-when-you",
@@ -2208,7 +2224,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-b-v2it-s-time-to-double-up-on-comfo",
@@ -2224,7 +2240,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-ait-s-time-to-double-up-on-comfort",
@@ -2240,7 +2256,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-test-pro-us-ecmpur-u-bundle-ecom-en-03312026-bit-s-time-to-double-up-on-comfort",
@@ -2256,7 +2272,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-add-a-pop-of-color-to-your-closet",
@@ -2272,7 +2288,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-did-you-forget-something",
@@ -2283,7 +2299,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-30-site-journey-walker",
@@ -2315,7 +2331,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-your-items-are-waiting",
@@ -2326,7 +2342,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-everybody-wants-these-styles",
@@ -2342,7 +2358,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-site-journey-walker",
@@ -2369,7 +2385,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-back-to-the-70s-with-handball-spezial",
@@ -2385,7 +2401,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-the-messi-collection",
@@ -2401,7 +2417,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for",
@@ -2417,7 +2433,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-nonpur-u-best-nonpurch-en-03292026everybody-wants-these-styles",
@@ -2433,7 +2449,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-athe-styles-everyone-s-searching-for",
@@ -2449,7 +2465,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-retpur-u-best-retail-en-03292026check-out-what-s-trending-online",
@@ -2465,7 +2481,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-na-w-multi-gender-en-03282026-bskechers-exclusives-the-shoes-you-can",
@@ -2481,7 +2497,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-na-w-multi-gender-en-03282026-a-v3fresh-spring-styles-to-step-up-you",
@@ -2497,7 +2513,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba",
@@ -2513,7 +2529,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-b-v2the-styles-everyone-s-searching-f",
@@ -2529,7 +2545,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-bthe-styles-everyone-s-searching-for",
@@ -2545,7 +2561,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-this-style-has-limited-availability",
@@ -2556,7 +2572,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-na-w-multi-gender-en-03282026-a-v2fresh-spring-styles-to-step-up-you",
@@ -2572,7 +2588,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-an-easy-way-to-try-the-comfort-everyone-talks-about",
@@ -2588,7 +2604,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-meet-the-supernova-rise-3-adaptive",
@@ -2604,7 +2620,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-mkg-us-na-m-cozy-gender-en-03282026get-excited-to-step-into-pillow-like-com",
@@ -2620,7 +2636,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-pro-us-nonpur-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-e",
@@ -2636,7 +2652,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every",
@@ -2652,7 +2668,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-pro-us-na-u-bundle-retail-en-03272026easy-on-price-big-on-comfort",
@@ -2668,7 +2684,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-test-pro-us-na-u-bundle-full-en-03272026-v3your-go-to-comfort-times-two",
@@ -2684,7 +2700,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-this-is-perfect-for-you",
@@ -2695,7 +2711,7 @@
     "qa_summary": null,
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-fwd-welcome-to-skechers",
@@ -2711,7 +2727,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-your-first-pair-starts-here-try-our-best-sellers-at-bogo-50-off",
@@ -2727,7 +2743,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-it-s-back-in-stock-at-skechers-com",
@@ -2743,7 +2759,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on",
@@ -2759,7 +2775,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-check-out-this-month-s-adiclub-benefits-here-is-your-march-newsletter",
@@ -2775,7 +2791,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-last-day-to-redeem-your-voucher",
@@ -2791,7 +2807,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off",
@@ -2807,7 +2823,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-29-disney-s-goofy-soccermania",
@@ -2823,7 +2839,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-22-take-your-first-step-into-comfort",
@@ -2839,7 +2855,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-20-newest-drop-this-is-only-the-start",
@@ -2855,7 +2871,7 @@
     },
     "has_image": false,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-20-more-skechers-plus-benefits-are-waiting",
@@ -2871,7 +2887,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-19-complete-your-profile-to-earn-50-adiclub-points",
@@ -2887,7 +2903,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-19-made-for-match-days-and-fans-everywhere-jamaica-home-away-jerseys",
@@ -2903,7 +2919,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-19-last-call-to-use-your-20-off-welcome-offer",
@@ -2919,7 +2935,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-19-we-re-taking-00s-running-style-to-the-streets",
@@ -2935,7 +2951,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-18-most-iconic-jerseys-from-the-past-decades",
@@ -2951,7 +2967,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-17-unlock-more-rewards-with-the-adidas-app",
@@ -2967,7 +2983,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-17-anthony-edwards-2-red-black-available-now",
@@ -2983,7 +2999,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-16-tell-us-more-about-you",
@@ -2999,7 +3015,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-16-earn-adiclub-points-to-unlock-more-rewards",
@@ -3015,7 +3031,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-16-your-skechers-plus-cheat-sheet",
@@ -3031,7 +3047,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-16-your-20-off-welcome-offer-is-waiting",
@@ -3047,7 +3063,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-16-it-s-back-in-stock-at-skechers-com",
@@ -3063,7 +3079,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-16-you-ve-still-got-20-off",
@@ -3079,7 +3095,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh",
@@ -3095,7 +3111,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun",
@@ -3111,7 +3127,7 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   },
   {
     "slug": "2026-03-12-welcome-to-skechers-fresh",
@@ -3127,6 +3143,6 @@
     },
     "has_image": true,
     "type": "email",
-    "persona": null
+    "persona": "walker"
   }
 ]

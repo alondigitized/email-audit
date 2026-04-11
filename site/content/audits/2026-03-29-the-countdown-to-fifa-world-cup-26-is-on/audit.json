@@ -255,5 +255,7 @@
     "render_image": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on-email-webview-render.png",
     "pdf": null,
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

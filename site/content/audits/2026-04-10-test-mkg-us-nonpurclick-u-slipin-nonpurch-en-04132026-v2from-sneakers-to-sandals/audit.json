@@ -287,5 +287,7 @@
     "render_image": "2026-04-10-test-mkg-us-nonpurclick-u-slipin-nonpurch-en-04132026-v2from-sneakers-to-sandals-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=LHMW3WRRJAAEZMHNPBAEWD2FVQ.100216"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

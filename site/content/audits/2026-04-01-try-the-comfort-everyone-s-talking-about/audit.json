@@ -290,5 +290,7 @@
     "render_image": "2026-04-01-try-the-comfort-everyone-s-talking-about-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=SWYTRN472TUEBDJCHNBYBQDSN4.100218"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

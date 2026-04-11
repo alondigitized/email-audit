@@ -302,5 +302,7 @@
     "render_image": "2026-04-03-discover-the-support-you-ve-been-looking-for-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=YJSBB6BUUI6UXPDGEMU4XVGLQI.100218"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

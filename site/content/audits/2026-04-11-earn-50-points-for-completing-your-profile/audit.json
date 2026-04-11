@@ -333,5 +333,7 @@
     "render_image": "2026-04-11-earn-50-points-for-completing-your-profile-email-webview-render.png",
     "pdf": null,
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

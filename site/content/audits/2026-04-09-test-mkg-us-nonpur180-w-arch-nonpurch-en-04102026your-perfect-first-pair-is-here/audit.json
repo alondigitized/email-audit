@@ -321,5 +321,7 @@
     "render_image": "2026-04-09-test-mkg-us-nonpur180-w-arch-nonpurch-en-04102026your-perfect-first-pair-is-here-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=PP4WYB62LUHEFJK7JHS54O6EPY.100215"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

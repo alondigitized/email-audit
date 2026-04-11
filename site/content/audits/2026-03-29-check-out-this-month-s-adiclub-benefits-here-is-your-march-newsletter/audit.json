@@ -263,5 +263,7 @@
     "render_image": "2026-03-29-check-out-this-month-s-adiclub-benefits-here-is-your-march-newsletter-email-webview-render.png",
     "pdf": null,
     "webview_url": null
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

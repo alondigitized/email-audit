@@ -286,5 +286,7 @@
     "render_image": "2026-04-11-test-mkg-us-na-w-seasonal-gender-en-04112026-v4the-perfect-pair-or-2-for-her-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=GD4R34G32EGUTP7VXMKSOERPHI.100217"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

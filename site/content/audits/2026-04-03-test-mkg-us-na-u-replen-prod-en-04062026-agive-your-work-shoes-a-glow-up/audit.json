@@ -290,5 +290,7 @@
     "render_image": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-agive-your-work-shoes-a-glow-up-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=63XMCYLTZWIUNKS6JYRTUF5DSE.100214"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

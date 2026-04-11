@@ -282,5 +282,7 @@
     "render_image": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-a-v2make-walking-a-breeze-this-nationa-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=LX3AVGUTBQ3EZN4VK4EDRCHNBE.100215"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

@@ -270,5 +270,7 @@
     "render_image": "2026-04-10-test-pro-us-retpuropen-u-sitebundle-retail-en-04122026spring-favorites-just-a-cl-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=PUT5VFDL33QE5LLFZNGLEZF4HQ.100219"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

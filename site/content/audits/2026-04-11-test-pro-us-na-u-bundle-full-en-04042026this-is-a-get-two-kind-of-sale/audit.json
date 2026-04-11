@@ -317,5 +317,7 @@
     "render_image": "2026-04-11-test-pro-us-na-u-bundle-full-en-04042026this-is-a-get-two-kind-of-sale-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=XOKVWH5PKASUPIOEISZWCEXOI4.100219"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

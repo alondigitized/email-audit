@@ -314,5 +314,7 @@
     "render_image": "2026-04-01-test-mkg-us-ecmpur-u-trend-ecom-en-04012026-ayou-deserve-comfort-this-spring-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=W6JZRETUSEYUZK52IHUX4EYXOM.100217"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }

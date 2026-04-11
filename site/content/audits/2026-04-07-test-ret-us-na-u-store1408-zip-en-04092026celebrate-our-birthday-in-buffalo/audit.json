@@ -264,5 +264,7 @@
     "render_image": "2026-04-07-test-ret-us-na-u-store1408-zip-en-04092026celebrate-our-birthday-in-buffalo-email-webview-render.png",
     "pdf": null,
     "webview_url": "https://view.emails.skechers.com/?vawpToken=AF6SHZFFWFKUZADJP3NPJZ75F4.100219"
-  }
+  },
+  "persona": "walker",
+  "type": "email"
 }
