@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-11-more-sun-more-savings",
+  "email": {
+    "subject": "More Sun, More Savings!",
+    "from": "Shoe Carnival <shoecarnival@email.shoecarnival.com>",
+    "from_display_name": "Shoe Carnival",
+    "timestamp_iso": "2026-04-11T15:32:11+00:00",
+    "date_formatted": "2026-04-11 15:32 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "\n## 2. Business Impact Score: 6/10\n\nSolid deal communication, weak brand elevation. High discount visibility will drive clicks from existing loyalists; does little to attract or impress anyone else.\n\n---\n\n## 3. What's Working\n\n- **BOGO Free is loud and legible.** The teal/turquoise block with bold white type is the email's visual centerpiece — the most scannable thing here. Women's & Kids' sandals is clearly scoped.\n- **$29.98 entry price is prominent.** The opening offer establishes an accessible price floor immediately, which is good for hesitant buyers.\n- **Product grid is present.** Multiple sandal styles shown below the hero give the recipient something to browse. Good for consideration-stage shoppers.\n- **Dual offer coupon block ($10/$25 off) at the bottom** captures in-store intent and provides a reason to visit physically — useful for a brick-and-mortar chain.\n\n---\n\n## 4. What's Weak\n\n- **Hero image is small and dark.** The lifestyle shot at the top is cropped tightly and competes poorly against the high-contrast offer blocks immediately below it. It doesn't sell a seasonal feeling — it just takes up vertical space.\n- **\"Sandal Season!\" headline is generic.** No urgency, no qualifier (limited time, ends Sunday, members only). This is filler copy that does no work.\n- **Product grid is low-resolution/small.** Individual product images are thumbnail-sized. Style names and prices are barely readable at email scale.\n- **Shoe Perks loyalty block is sandwiched awkwardly** between the product grid and the coupon — it reads as an interrupt, not a natural escalation. The placement deflates both sections around it.\n- **Coupon module feels bolted on.** The barcode/coupon design looks like a flyer insert, not a branded email component. The $10/$25 tiered structure is smart, but the visual execution doesn't reinforce that this is a reward or exclusive offer.\n- **Preview text is a raw URL.** The inbox preview shows a raw tracking link instead of copy. This is a missed first-impression opportunity — many recipients will see that link before they open the email.\n\n---\n\n## 5. Recommendations\n\n1. **Fix the preview text immediately.** Replace the raw URL with something like \"BOGO Free sandals + up to $25 off — this weekend only.\" This is low-effort, high-impact.\n2. **Elevate the hero.** Use a wider, brighter lifestyle shot that sells the season emotionally before the deals land. The current crop looks like a stock image placeholder.\n3. **Add urgency to \"Sandal Season!\"** — a deadline (\"Ends Sunday\"), a quantity signal (\"While supplies last\"), or a membership exclusive (\"Perks members: early access\") makes the generic headline do real work.\n4. **Increase product tile size or reduce count.** Show 4 tiles cleanly instead of 6-8 small ones. Legible pricing and style names will drive more clicks than a dense grid.\n5. **Reposition Shoe Perks.** Move it either directly under the hero (to set context before the deals) or to the footer — not mid-scroll where it breaks deal momentum.\n6. **Give the coupon module a branded frame.** Add a headline like \"Your In-Store Bonus\" with a member-reward framing to make the coupon feel earned, not generic.\n\n---\n\n## 6. Bottom Line\n\nThis email delivers its deals clearly enough to generate clicks from customers already in-market for sandals. But the raw-URL preview text, weak hero, and cluttered lower half leave significant conversion on the table. The BOGO offer is strong — let it breathe. Tighten the structure to: hero → BOGO → product grid → coupon, and this becomes a notably more effective send.\n\n---\n\n## 7. Evidence\n\n**Overall purpose:** Spring/summer sandal promotion driving both e-commerce clicks (BOGO, $29.98 offer, product grid) and in-store visits (barcode coupon).\n\n**Hero / primary value proposition:** Small lifestyle image of woman in sandals followed immediately by a \"$29.98 and up\" sandal offer. Functional but undersized.\n\n**Membership / benefits section:** Shoe Perks loyalty program block appears mid-email with a branded badge. Brief and easy to skip — not clearly tied to the surrounding offer.\n\n**Product discoverability / recommendation modules:** A horizontal sandal product grid shows multiple styles (appears to be 4–6 SKUs) with thumbnail images. Individual item details are hard to read at this size.\n\n**Utility / secondary modules:** Tiered coupon block ($10 off $50 / $25 off $100) with barcode at bottom. Functional for in-store; visually disconnected from the rest of the email.\n\n**Bugs / friction / clarity issues:** Preview text renders as a raw tracking URL — visible in inbox before open. No other broken images or overlapping text visible in the render.\n\n---\n\n## Technical Audit\n\n## Technical Audit — Shoe Carnival \"More Sun, More Savings!\"\n\n---\n\n### 1. Technical Summary\n\nWell-structured legacy HTML email (4.01 Transitional doctype) with comprehensive multi-client CSS hacks. Two confirmed deliverability/merge-token defects require immediate attention before any future send; 8 accessibility violations present across the build.\n\n---\n\n### 2. Link & Tracking Issues\n\n**Unresolved merge token in open-pixel URL**\nThe open/read-tracking pixel contains a literal `[UNIQUE]` placeholder that was not substituted at send time:\n```\nhttps://0di86k1v.emltrk.com/v2/0di86k1v?d=[UNIQUE]\n```\nThis means unique-open attribution for every recipient resolves to the same record. Open-rate data from this send is unreliable.\n\n**Suspected zero-width character in UTM campaign value**\nThe impression-pixel URL contains what appears to be a trailing non-printing character (likely U+200B ZERO WIDTH SPACE) after the campaign token:\n```\nutm_campaign=SCA_20260411_comfort_bogof_sandals_AM​\n```\nIf this character is present, analytics will split traffic across two campaign strings (`...AM` vs `...AM​`), silently fragmenting attribution.\n\n**28 click-redirect tracking links — not probed**\nAll 28 CTA links route through a click-redirect domain and were skipped by the HTTP prober. Broken destination URLs cannot be ruled out from this data set alone.\n\n---\n\n### 3. Rendering & Accessibility\n\n**8 images missing `alt` text** (WCAG 2.1 §1.1.1, screen reader failure):\n\n| Image | Source |\n|---|---|\n| Product image ×4 | `i8.amplience.net/s/scvl/186534_…`, `186576_…`, `106172_…`, `186537_…` |\n| Content image ×2 | `image.email.shoecarnival.com/lib/fe3311…/d29c1532…png`, `51373ebc…png` |\n| Impression pixel | `ieezzy5m.emltrk.com/v2/ieezzy5m?…` |\n| Open pixel | `0di86k1v.emltrk.com/v2/0di86k1v?…` |\n\nTracking pixels should carry `alt=\"\"` (empty string, not absent attribute) to suppress screen-reader announcement. Product and content images require descriptive alt text.\n\n**Three overlapping responsive breakpoints** (`max-width: 600px`, `660px`, `450px`) defined across separate `<style>` blocks. Not a rendering defect per se, but the 600px and 660px blocks target the same devices with conflicting `font-size` overrides (`.responsive-text: 12px` vs no override), which is fragile.\n\n**HTML 4.01 Transitional doctype** declared alongside `xmlns` and `<meta name=\"viewport\">` — technically inconsistent but common practice for Outlook compatibility. No rendering defect confirmed.\n\n---\n\n### 4. Personalization & Merge Tokens\n\n**`[UNIQUE]` not resolved** — covered above in §2. This is the only merge token visible in the provided source. No other unsubstituted tokens (e.g., `{{first_name}}`, `%%FIRSTNAME%%`) were detected in the truncated HTML.\n\n---\n\n### 5. Compliance\n\n**SPF/DKIM status unknown**\nThe `Authentication-Results` header was not present in the captured data. The send routes through `email.shoecarnival.com` via AgentMail relay; SPF/DKIM pass status cannot be confirmed from this audit. A failed or missing DKIM signature increases spam-folder placement risk and breaks DMARC alignment.\n\n**CAN-SPAM / physical address / unsubscribe**\nThe HTML source provided is truncated; a physical mailing address and functional unsubscribe link were not visible in the excerpt. These must be present in the full render. Flagged for manual verification — cannot confirm or deny from available data.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**UTM parameters are present** in the impression pixel (`utm_campaign=SCA_20260411_comfort_bogof_sandals_AM`), indicating a UTM strategy is in place. However:\n- The suspected zero-width character in that value (§2) would corrupt campaign grouping in GA4/UA.\n- Because all 28 click links were skipped by the prober, it is unconfirmed whether UTM parameters survive the click-redirect chain and land correctly on destination pages.\n- No `utm_source`, `utm_medium`, or `utm_content` values were visible in the extracted pixel URL — confirm these are appended on the click-redirect destinations.\n\n---\n\n### 7. Recommendations\n\n| Priority | Action |\n|---|---|\n| P0 | **Fix `[UNIQUE]` token** in open-pixel URL before next send — open-rate data is corrupted for this deployment |\n| P0 | **Audit UTM campaign string** for zero-width or non-ASCII characters; strip and re-verify in both the pixel URL and all 28 CTA destinations |\n| P1 | **Confirm SPF/DKIM/DMARC pass** via header inspection on a seed-address send; engage ESP to verify AgentMail relay is aligned with `email.shoecarnival.com` DMARC policy |\n| P1 | **Add `alt` attributes** to all 8 flagged images; tracking pixels should use `alt=\"\"`, product images require descriptive text |\n| P2 | **Probe click-redirect chain** on all 28 CTA links to confirm destinations are live and UTM params are preserved end-to-end |\n| P2 | **Consolidate responsive breakpoints** — the 600px and 660px blocks are redundant; merging them reduces specificity conflicts and bundle size |\n| P2 | **Manually verify** physical address and unsubscribe link are present and functional in full HTML render (truncated source prevents confirmation) |",
+    "sections": {
+      "executive_summary": [
+        "Solid deal communication, weak brand elevation. High discount visibility will drive clicks from existing loyalists; does little to attract or impress anyone else."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **BOGO Free is loud and legible.** The teal/turquoise block with bold white type is the email's visual centerpiece — the most scannable thing here. Women's & Kids' sandals is clearly scoped.",
+        "- **$29.98 entry price is prominent.** The opening offer establishes an accessible price floor immediately, which is good for hesitant buyers.",
+        "- **Product grid is present.** Multiple sandal styles shown below the hero give the recipient something to browse. Good for consideration-stage shoppers.",
+        "- **Dual offer coupon block ($10/$25 off) at the bottom** captures in-store intent and provides a reason to visit physically — useful for a brick-and-mortar chain."
+      ],
+      "whats_weak": [
+        "- **Hero image is small and dark.** The lifestyle shot at the top is cropped tightly and competes poorly against the high-contrast offer blocks immediately below it. It doesn't sell a seasonal feeling — it just takes up vertical space.",
+        "- **\"Sandal Season!\" headline is generic.** No urgency, no qualifier (limited time, ends Sunday, members only). This is filler copy that does no work.",
+        "- **Product grid is low-resolution/small.** Individual product images are thumbnail-sized. Style names and prices are barely readable at email scale.",
+        "- **Shoe Perks loyalty block is sandwiched awkwardly** between the product grid and the coupon — it reads as an interrupt, not a natural escalation. The placement deflates both sections around it.",
+        "- **Coupon module feels bolted on.** The barcode/coupon design looks like a flyer insert, not a branded email component. The $10/$25 tiered structure is smart, but the visual execution doesn't reinforce that this is a reward or exclusive offer.",
+        "- **Preview text is a raw URL.** The inbox preview shows a raw tracking link instead of copy. This is a missed first-impression opportunity — many recipients will see that link before they open the email."
+      ],
+      "recommendations": [
+        "1. **Fix the preview text immediately.** Replace the raw URL with something like \"BOGO Free sandals + up to $25 off — this weekend only.\" This is low-effort, high-impact.",
+        "2. **Elevate the hero.** Use a wider, brighter lifestyle shot that sells the season emotionally before the deals land. The current crop looks like a stock image placeholder.",
+        "3. **Add urgency to \"Sandal Season!\"** — a deadline (\"Ends Sunday\"), a quantity signal (\"While supplies last\"), or a membership exclusive (\"Perks members: early access\") makes the generic headline do real work.",
+        "4. **Increase product tile size or reduce count.** Show 4 tiles cleanly instead of 6-8 small ones. Legible pricing and style names will drive more clicks than a dense grid.",
+        "5. **Reposition Shoe Perks.** Move it either directly under the hero (to set context before the deals) or to the footer — not mid-scroll where it breaks deal momentum.",
+        "6. **Give the coupon module a branded frame.** Add a headline like \"Your In-Store Bonus\" with a member-reward framing to make the coupon feel earned, not generic.",
+        "| Priority | Action |",
+        "|---|---|",
+        "| P0 | **Fix `[UNIQUE]` token** in open-pixel URL before next send — open-rate data is corrupted for this deployment |",
+        "| P0 | **Audit UTM campaign string** for zero-width or non-ASCII characters; strip and re-verify in both the pixel URL and all 28 CTA destinations |",
+        "| P1 | **Confirm SPF/DKIM/DMARC pass** via header inspection on a seed-address send; engage ESP to verify AgentMail relay is aligned with `email.shoecarnival.com` DMARC policy |",
+        "| P1 | **Add `alt` attributes** to all 8 flagged images; tracking pixels should use `alt=\"\"`, product images require descriptive text |",
+        "| P2 | **Probe click-redirect chain** on all 28 CTA links to confirm destinations are live and UTM params are preserved end-to-end |",
+        "| P2 | **Consolidate responsive breakpoints** — the 600px and 660px blocks are redundant; merging them reduces specificity conflicts and bundle size |",
+        "| P2 | **Manually verify** physical address and unsubscribe link are present and functional in full HTML render (truncated source prevents confirmation) |"
+      ],
+      "bottom_line": [
+        "This email delivers its deals clearly enough to generate clicks from customers already in-market for sandals. But the raw-URL preview text, weak hero, and cluttered lower half leave significant conversion on the table. The BOGO offer is strong — let it breathe. Tighten the structure to: hero → BOGO → product grid → coupon, and this becomes a notably more effective send."
+      ],
+      "evidence": [
+        "**Overall purpose:** Spring/summer sandal promotion driving both e-commerce clicks (BOGO, $29.98 offer, product grid) and in-store visits (barcode coupon).",
+        "**Hero / primary value proposition:** Small lifestyle image of woman in sandals followed immediately by a \"$29.98 and up\" sandal offer. Functional but undersized.",
+        "**Membership / benefits section:** Shoe Perks loyalty program block appears mid-email with a branded badge. Brief and easy to skip — not clearly tied to the surrounding offer.",
+        "**Product discoverability / recommendation modules:** A horizontal sandal product grid shows multiple styles (appears to be 4–6 SKUs) with thumbnail images. Individual item details are hard to read at this size.",
+        "**Utility / secondary modules:** Tiered coupon block ($10 off $50 / $25 off $100) with barcode at bottom. Functional for in-store; visually disconnected from the rest of the email.",
+        "**Bugs / friction / clarity issues:** Preview text renders as a raw tracking URL — visible in inbox before open. No other broken images or overlapping text visible in the render.",
+        "Well-structured legacy HTML email (4.01 Transitional doctype) with comprehensive multi-client CSS hacks. Two confirmed deliverability/merge-token defects require immediate attention before any future send; 8 accessibility violations present across the build.",
+        "**Unresolved merge token in open-pixel URL**",
+        "The open/read-tracking pixel contains a literal `[UNIQUE]` placeholder that was not substituted at send time:",
+        "```",
+        "https://0di86k1v.emltrk.com/v2/0di86k1v?d=[UNIQUE]",
+        "```",
+        "This means unique-open attribution for every recipient resolves to the same record. Open-rate data from this send is unreliable.",
+        "**Suspected zero-width character in UTM campaign value**",
+        "The impression-pixel URL contains what appears to be a trailing non-printing character (likely U+200B ZERO WIDTH SPACE) after the campaign token:",
+        "```",
+        "utm_campaign=SCA_20260411_comfort_bogof_sandals_AM​",
+        "```",
+        "If this character is present, analytics will split traffic across two campaign strings (`...AM` vs `...AM​`), silently fragmenting attribution.",
+        "**28 click-redirect tracking links — not probed**",
+        "All 28 CTA links route through a click-redirect domain and were skipped by the HTTP prober. Broken destination URLs cannot be ruled out from this data set alone.",
+        "**8 images missing `alt` text** (WCAG 2.1 §1.1.1, screen reader failure):",
+        "| Image | Source |",
+        "|---|---|",
+        "| Product image ×4 | `i8.amplience.net/s/scvl/186534_…`, `186576_…`, `106172_…`, `186537_…` |",
+        "| Content image ×2 | `image.email.shoecarnival.com/lib/fe3311…/d29c1532…png`, `51373ebc…png` |",
+        "| Impression pixel | `ieezzy5m.emltrk.com/v2/ieezzy5m?…` |",
+        "| Open pixel | `0di86k1v.emltrk.com/v2/0di86k1v?…` |",
+        "Tracking pixels should carry `alt=\"\"` (empty string, not absent attribute) to suppress screen-reader announcement. Product and content images require descriptive alt text.",
+        "**Three overlapping responsive breakpoints** (`max-width: 600px`, `660px`, `450px`) defined across separate `<style>` blocks. Not a rendering defect per se, but the 600px and 660px blocks target the same devices with conflicting `font-size` overrides (`.responsive-text: 12px` vs no override), which is fragile.",
+        "**HTML 4.01 Transitional doctype** declared alongside `xmlns` and `<meta name=\"viewport\">` — technically inconsistent but common practice for Outlook compatibility. No rendering defect confirmed.",
+        "**`[UNIQUE]` not resolved** — covered above in §2. This is the only merge token visible in the provided source. No other unsubstituted tokens (e.g., `{{first_name}}`, `%%FIRSTNAME%%`) were detected in the truncated HTML.",
+        "**SPF/DKIM status unknown**",
+        "The `Authentication-Results` header was not present in the captured data. The send routes through `email.shoecarnival.com` via AgentMail relay; SPF/DKIM pass status cannot be confirmed from this audit. A failed or missing DKIM signature increases spam-folder placement risk and breaks DMARC alignment.",
+        "**CAN-SPAM / physical address / unsubscribe**",
+        "The HTML source provided is truncated; a physical mailing address and functional unsubscribe link were not visible in the excerpt. These must be present in the full render. Flagged for manual verification — cannot confirm or deny from available data.",
+        "**UTM parameters are present** in the impression pixel (`utm_campaign=SCA_20260411_comfort_bogof_sandals_AM`), indicating a UTM strategy is in place. However:",
+        "- The suspected zero-width character in that value (§2) would corrupt campaign grouping in GA4/UA.",
+        "- Because all 28 click links were skipped by the prober, it is unconfirmed whether UTM parameters survive the click-redirect chain and land correctly on destination pages.",
+        "- No `utm_source`, `utm_medium`, or `utm_content` values were visible in the extracted pixel URL — confirm these are appended on the click-redirect destinations."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.email.shoecarnival.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiI1MzQwMDA1NDciLCJzIjoiNzIxODA1ODkiLCJsaWQiOiIxNCIsImoiOiIyODM2NSIsImpiIjoiNzk2MiIsImQi"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 2,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "text_mostly_urls",
+            "status": "warn",
+            "label": "Plain-text is >70% URLs",
+            "detail": "11929/15153 chars are URLs"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 8,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "28 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 1",
+            "detail": "src: https://i8.amplience.net/s/scvl/186534_415639_SET/1?fmt=auto&$webPdpProduct$"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 1",
+            "detail": "src: https://i8.amplience.net/s/scvl/186576_415732_SET/1?fmt=auto&$webPdpProduct$"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 1",
+            "detail": "src: https://i8.amplience.net/s/scvl/106172_212324_SET/1?fmt=auto&$webPdpProduct$"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 1",
+            "detail": "src: https://i8.amplience.net/s/scvl/186537_415643_SET/1?fmt=auto&$webPdpProduct$"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: d29c1532-2df6-4064-bf36-ff265c357af5.png",
+            "detail": "src: https://image.email.shoecarnival.com/lib/fe3311737164047d701077/m/1/d29c1532-2df6-4064-bf36-ff265c357af5.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 51373ebc-3ecf-4c5a-a6e2-ff3c944f881a.png",
+            "detail": "src: https://image.email.shoecarnival.com/lib/fe3311737164047d701077/m/1/51373ebc-3ecf-4c5a-a6e2-ff3c944f881a.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: ieezzy5m",
+            "detail": "src: https://ieezzy5m.emltrk.com/v2/ieezzy5m?i=72180589&t=utm_campaign=SCA_20260411_comfort_bogof_sandals_AM​"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 0di86k1v",
+            "detail": "src: https://0di86k1v.emltrk.com/v2/0di86k1v?d=[UNIQUE]"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-11-more-sun-more-savings-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}

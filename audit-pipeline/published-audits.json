@@ -1250,5 +1250,11 @@
     "subject": "Your cart expires soon!",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-your-cart-expires-soon-y1wbjitythgbzzghoyf2zq-g",
     "slug": "2026-04-11-your-cart-expires-soon-y1wbjitythgbzzghoyf2zq-g"
+  },
+  {
+    "messageId": "<32bc4cc4-b6cf-4bec-97a0-4ea19d076ad2@iad4s12mta993.xt.local>",
+    "subject": "More Sun, More Savings!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-more-sun-more-savings",
+    "slug": "2026-04-11-more-sun-more-savings"
   }
 ]
