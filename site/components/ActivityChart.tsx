@@ -15,8 +15,8 @@ import type { AuditSummary } from "@/lib/types";
 const DAYS = 30;
 
 const SENDER_COLORS = {
-  Skechers: "#c8102e",
-  adidas: "#1e40af",
+  Skechers: "#003594",
+  adidas: "#111827",
   Other: "#9ca3af",
 } as const;
 
