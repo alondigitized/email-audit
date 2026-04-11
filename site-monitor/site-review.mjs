@@ -40,9 +40,9 @@ const PERSONA_NAME = process.argv.includes('--persona')
   ? process.argv[process.argv.indexOf('--persona') + 1]
   : 'walker';
 
-const SITE_DIR = path.join(path.dirname(__dirname), 'email-audit');
-const SITE_MANIFEST = path.join(SITE_DIR, 'published-audits.json');
-const SITE_GENERATOR = path.join(SITE_DIR, 'generate_site.py');
+const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
+const SITE_MANIFEST = path.join(PIPELINE_DIR, 'published-audits.json');
+const EXTRACT_SCRIPT = path.join(PIPELINE_DIR, 'extract_audit_data.py');
 const ARTIFACTS_BASE = path.join(path.dirname(__dirname), 'reports', 'site-artifacts');
 const HISTORY_DIR = path.join(__dirname, 'history');
 const LOG_DIR = path.join(__dirname, 'logs');
@@ -688,8 +688,8 @@ function updatePublishedManifest(entry) {
 }
 
 async function publishSite(slug, artifactDir) {
-  // Phase 1: Run generator (produces audit-data.json for email entries + this one)
-  await execFileAsync('python3', [SITE_GENERATOR], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+  // Phase 1: Re-extract audit-data.json for email entries (skips site entries — those built in JS above)
+  await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
 
   // Phase 2: Sync this audit to Next.js site
   const repoRoot = path.dirname(__dirname);
@@ -744,7 +744,7 @@ async function publishSite(slug, artifactDir) {
 
   // Phase 3: Git push
   if (!GH_TOKEN) { log('No GH_TOKEN — skipping git push'); return; }
-  const pushCmd = `cd "${repoRoot}" && git add site/content site/public/images/audits && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
+  const pushCmd = `cd "${repoRoot}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushCmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN } });
 }
 

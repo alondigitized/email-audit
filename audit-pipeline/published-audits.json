@@ -1135,5 +1135,35 @@
     "subject": "[Test]: MKG_US_ECMPURL24_U_SLIPIN_ECOM_EN_04132026From Sneakers to Sandals it's Slip-In Season 🤩",
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-10-test-mkg-us-ecmpurl24-u-slipin-ecom-en-04132026from-sneakers-to-sandals-it-s-sli",
     "slug": "2026-04-10-test-mkg-us-ecmpurl24-u-slipin-ecom-en-04132026from-sneakers-to-sandals-it-s-sli"
+  },
+  {
+    "messageId": "<0102019d46cb2fb1-9a0b9191-8d31-497b-968f-066aea23f59b-000000@eu-west-1.amazonses.com>",
+    "subject": "Spain FIFA World Cup 26™ Away Jersey",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-spain-fifa-world-cup-26-away-jersey",
+    "slug": "2026-04-11-spain-fifa-world-cup-26-away-jersey"
+  },
+  {
+    "messageId": "<894291e1-b955-41c6-916f-bfe3523982c9@dfw1s10mta893.xt.local>",
+    "subject": "[Test]: PRO_US_RETPURL24_U_BUNDLE_RETAIL_EN_04042026Your Chance to Stock Up is Coming to an End!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-test-pro-us-retpurl24-u-bundle-retail-en-04042026your-chance-to-stock-up-is-comi",
+    "slug": "2026-04-11-test-pro-us-retpurl24-u-bundle-retail-en-04042026your-chance-to-stock-up-is-comi"
+  },
+  {
+    "messageId": "<cadcb28c-651f-4e2d-9d8c-78e3dc4b6776@dfw1s10mta889.xt.local>",
+    "subject": "[Test]: PRO_US_NA_U_BUNDLE_FULL_EN_04042026This is a Get Two Kind of Sale",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-test-pro-us-na-u-bundle-full-en-04042026this-is-a-get-two-kind-of-sale",
+    "slug": "2026-04-11-test-pro-us-na-u-bundle-full-en-04042026this-is-a-get-two-kind-of-sale"
+  },
+  {
+    "messageId": "<a04acb5a-7650-4756-94df-97b7427af71e@dfw1s10mta515.xt.local>",
+    "subject": "[Test]: PRO_US_NA_U_SITEBUNDLE_FULL_EN_04052026Spring Fling Sale = Double the Style & Savings",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-test-pro-us-na-u-sitebundle-full-en-04052026spring-fling-sale-double-the-style-s",
+    "slug": "2026-04-11-test-pro-us-na-u-sitebundle-full-en-04052026spring-fling-sale-double-the-style-s"
+  },
+  {
+    "messageId": "<e8315fcd-69b8-4d43-92b5-4cc65b0b3a77@dfw1s10mta141.xt.local>",
+    "subject": "[Test]: PRO_US_RETPURL24_U_SITEBUNDLE_RETAIL_EN_04052026Two Ways to Save During the Spring Fling Sale",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-test-pro-us-retpurl24-u-sitebundle-retail-en-04052026two-ways-to-save-during-the",
+    "slug": "2026-04-11-test-pro-us-retpurl24-u-sitebundle-retail-en-04052026two-ways-to-save-during-the"
   }
 ]

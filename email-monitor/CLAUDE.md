@@ -17,9 +17,10 @@ AgentMail inbox (walker@agentmail.to)
   -> Screenshot (Swift) + QA checks (Python) [parallel]
   -> Content review (Claude, from screenshot) + Technical review (Claude, from HTML+QA) [parallel]
   -> Merge reviews into review.txt
-  -> Update published-audits.json manifest
-  -> Run generate_site.py (produces HTML + audit-data.json)
-  -> Sync to site/ directory, git push main (triggers Vercel)
+  -> Update audit-pipeline/published-audits.json manifest
+  -> Run audit-pipeline/extract_audit_data.py (produces audit-data.json per artifact)
+  -> Sync audit-data.json + render.png to site/content/audits/{slug}/
+  -> git push main (triggers Vercel deploy of site/)
   -> Mark as processed in state.json
 ```
 
@@ -83,9 +84,13 @@ Each processed email gets a directory in `reports/email-artifacts/{date}-{slug}/
 
 ## Publishing
 
-1. `generate_site.py` reads `published-audits.json`, parses `review.txt` into `audit-data.json`, generates HTML pages in `email-audit/audits/`
-2. `publishSite()` syncs `audit-data.json` + images to `site/content/audits/` and `site/public/images/audits/`
-3. Git push to `main` triggers Vercel deploy of the Next.js site at `email-audit-weld.vercel.app`
+The live site is the Next.js app in `site/` (deployed to Vercel at `email-audit-weld.vercel.app`). Publishing flow:
+
+1. `audit-pipeline/extract_audit_data.py` reads `audit-pipeline/published-audits.json`, parses each entry's `review.txt` + `qa-report.json`, and writes `audit-data.json` into the artifact directory.
+2. `publishSite()` in `index.mjs` copies each `audit-data.json` → `site/content/audits/{slug}/audit.json` and `email-webview-render.png` → `site/public/images/audits/{slug}/render.png`, then rebuilds `site/content/audits/index.json`.
+3. Git push to `main` triggers a Vercel deploy. The site reads only from `site/content/audits/` and `site/public/images/audits/` — no other state.
+
+**Shared with site-monitor:** the manifest and extractor in `audit-pipeline/` are also used by `site-monitor/site-review.mjs`. Site-journey entries skip the Python extractor (site-monitor builds its own `audit-data.json` directly in JS).
 
 ## Debugging
 

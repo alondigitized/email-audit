@@ -18,8 +18,8 @@ const CLAUDE_EFFORT = process.env.CLAUDE_EFFORT || 'high';
 const CLAUDE_BIN = process.env.CLAUDE_BIN || '/Users/alontsang/.local/bin/claude';
 const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
 const PDF_SCRIPT = path.join(__dirname, 'generate_review_pdf.py');
-const SITE_DIR = path.join(path.dirname(__dirname), 'email-audit');
-const SITE_GENERATOR = path.join(SITE_DIR, 'generate_site.py');
+const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
+const EXTRACT_SCRIPT = path.join(PIPELINE_DIR, 'extract_audit_data.py');
 
 function shorten(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
 
@@ -166,7 +166,7 @@ async function rerunAudit(artifactDir, slug) {
   await execFileAsync('python3', pdfArgs, { maxBuffer: 1024 * 1024 * 20 });
   console.log(`  Regenerated PDF: ${pdfPath}`);
 
-  // Delete stale audit-data.json so generate_site.py re-extracts
+  // Delete stale audit-data.json so the extractor rebuilds it
   const auditDataPath = path.join(artifactDir, 'audit-data.json');
   if (fs.existsSync(auditDataPath)) fs.unlinkSync(auditDataPath);
 
@@ -189,7 +189,7 @@ for (const a of audits) {
   await rerunAudit(a.dir, a.slug);
 }
 
-// Regenerate site (re-extracts audit-data.json + HTML pages)
-console.log('\nRegenerating site...');
-await execFileAsync('python3', [SITE_GENERATOR], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+// Re-extract audit-data.json from refreshed artifacts
+console.log('\nRe-extracting audit data...');
+await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
 console.log('Done.');

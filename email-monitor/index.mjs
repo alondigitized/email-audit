@@ -19,9 +19,9 @@ const STATE_PATH = path.join(__dirname, 'state.json');
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_PATH = path.join(LOG_DIR, 'monitor.log');
 const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
-const SITE_DIR = path.join(path.dirname(__dirname), 'email-audit');
-const SITE_MANIFEST = path.join(SITE_DIR, 'published-audits.json');
-const SITE_GENERATOR = path.join(SITE_DIR, 'generate_site.py');
+const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
+const SITE_MANIFEST = path.join(PIPELINE_DIR, 'published-audits.json');
+const EXTRACT_SCRIPT = path.join(PIPELINE_DIR, 'extract_audit_data.py');
 const ARTIFACTS_DIR = path.join(REPORTS_DIR, 'email-artifacts');
 const RENDER_SWIFT = path.join(path.dirname(__dirname), 'scripts', 'render_web_url.swift');
 const QA_SCRIPT = path.join(__dirname, 'qa_checks.py');
@@ -335,8 +335,8 @@ function updatePublishedManifest(entry) {
 }
 
 async function publishSite() {
-  // Phase 1: Run legacy generator (produces audit-data.json + gh-pages site)
-  await execFileAsync('python3', [SITE_GENERATOR], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+  // Phase 1: Extract audit-data.json from raw artifacts
+  await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
 
   // Phase 2: Sync content to Next.js site directory for Vercel deploy
   const repoRoot = path.dirname(__dirname);
@@ -393,7 +393,7 @@ async function publishSite() {
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
 
-  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/images/audits site/public/pdfs && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
+  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/images/audits site/public/pdfs audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 

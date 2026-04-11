@@ -19,8 +19,8 @@ const INBOX_ID = process.env.INBOX_ID || 'walker@agentmail.to';
 const STATE_PATH = path.join(__dirname, 'state.json');
 const SITE_URL = process.env.SITE_BASE_URL || 'https://email-audit-weld.vercel.app';
 const REPO_ROOT = path.dirname(__dirname);
-const SITE_MANIFEST = path.join(REPO_ROOT, 'email-audit', 'published-audits.json');
-const SITE_GENERATOR = path.join(REPO_ROOT, 'email-audit', 'generate_site.py');
+const SITE_MANIFEST = path.join(REPO_ROOT, 'audit-pipeline', 'published-audits.json');
+const EXTRACT_SCRIPT = path.join(REPO_ROOT, 'audit-pipeline', 'extract_audit_data.py');
 const SITE_CONTENT = path.join(REPO_ROOT, 'site', 'content', 'audits');
 const SITE_IMAGES = path.join(REPO_ROOT, 'site', 'public', 'images', 'audits');
 
@@ -120,12 +120,8 @@ async function cleanup(slug, messageId) {
   if (fs.existsSync(contentDir)) fs.rmSync(contentDir, { recursive: true });
   if (fs.existsSync(imageDir)) fs.rmSync(imageDir, { recursive: true });
 
-  // Remove audit HTML page
-  const auditHtml = path.join(REPO_ROOT, 'email-audit', 'audits', `${slug}.html`);
-  if (fs.existsSync(auditHtml)) fs.unlinkSync(auditHtml);
-
-  // Regenerate site (rebuilds index.html and index.json)
-  await execFileAsync('python3', [SITE_GENERATOR], { cwd: REPO_ROOT, maxBuffer: 1024 * 1024 * 20 });
+  // Re-extract audit-data.json (idempotent — picks up manifest changes)
+  await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: REPO_ROOT, maxBuffer: 1024 * 1024 * 20 });
 
   // Rebuild index.json for Next.js
   const siteIdx = JSON.parse(fs.readFileSync(path.join(SITE_CONTENT, 'index.json'), 'utf8'));
@@ -135,7 +131,7 @@ async function cleanup(slug, messageId) {
   // Git push cleanup
   const ghToken = process.env.GH_TOKEN || '';
   if (ghToken) {
-    const cmd = `cd "${REPO_ROOT}" && git add site/content site/public/images/audits email-audit/published-audits.json email-audit/index.html email-audit/audits/ && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
+    const cmd = `cd "${REPO_ROOT}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
     await execFileAsync('/bin/zsh', ['-lc', cmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
   }
 
