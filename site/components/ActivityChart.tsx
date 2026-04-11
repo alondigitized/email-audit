@@ -15,13 +15,15 @@ import type { AuditSummary } from "@/lib/types";
 
 const DAYS = 14;
 
+// Tableau 10 palette — the standard for categorical data viz.
+// Designed for distinctive, balanced, readable categorical colors.
 const SENDER_COLORS = {
-  Skechers: "#003594",
-  adidas: "#f97316",
-  "Famous Footwear": "#dc2626",
-  "Shoe Carnival": "#eab308",
-  DSW: "#db2777",
-  Other: "#9ca3af",
+  Skechers: "#4e79a7",
+  adidas: "#f28e2c",
+  "Famous Footwear": "#e15759",
+  "Shoe Carnival": "#edc949",
+  DSW: "#af7aa1",
+  Other: "#bab0ab",
 } as const;
 
 type SenderBucket = keyof typeof SENDER_COLORS;
@@ -180,6 +182,7 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
                 key={sender}
                 dataKey={sender}
                 stackId="a"
+                fill={SENDER_COLORS[sender]}
                 cursor="pointer"
                 onClick={handleBarClick}
                 radius={i === SENDER_ORDER.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
