@@ -1495,5 +1495,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-did-you-forget-something",
     "slug": "2026-04-12-did-you-forget-something",
     "persona": "walker"
+  },
+  {
+    "messageId": "<b87e7c57-904b-4a16-a62d-d5925746f3c3@dfw1s10mta703.xt.local>",
+    "subject": "Spring Favorites - Just a Click Away & BOGO 50% off",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-spring-favorites-just-a-click-away-bogo-50-off",
+    "slug": "2026-04-12-spring-favorites-just-a-click-away-bogo-50-off",
+    "persona": "walker"
   }
 ]
