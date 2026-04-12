@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-12-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-12T13:04:04.919Z",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-12-f-tbol-y-familia",
     "subject": "Fútbol y familia",
     "from_display_name": "adidas",

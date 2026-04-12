@@ -1481,5 +1481,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-f-tbol-y-familia",
     "slug": "2026-04-12-f-tbol-y-familia",
     "persona": "walker"
+  },
+  {
+    "messageId": "2026-04-12-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-12-site-journey-walker",
+    "pdfPath": "",
+    "slug": "2026-04-12-site-journey-walker"
   }
 ]
