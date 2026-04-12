@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-12-f-tbol-y-familia",
+    "subject": "Fútbol y familia",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-12T01:06:41+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-11-welcome-to-skechers",
     "subject": "Welcome to Skechers!",
     "from_display_name": "SKECHERS",

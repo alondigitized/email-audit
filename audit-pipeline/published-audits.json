@@ -1474,5 +1474,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-11-welcome-to-skechers",
     "slug": "2026-04-11-welcome-to-skechers",
     "persona": "martha"
+  },
+  {
+    "messageId": "<0102019d7f3a025f-4fc6a05a-df06-4eb0-8955-7d0e05eca2cd-000000@eu-west-1.amazonses.com>",
+    "subject": "Fútbol y familia",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-f-tbol-y-familia",
+    "slug": "2026-04-12-f-tbol-y-familia",
+    "persona": "walker"
   }
 ]

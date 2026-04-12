@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-12-f-tbol-y-familia",
+  "type": "email",
+  "persona": "walker",
+  "email": {
+    "subject": "Fútbol y familia",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-12T01:06:41+00:00",
+    "date_formatted": "2026-04-12 01:06 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "\n## 2. Business Impact Score: 5/10\n\nStrong individual assets (Messi, a product with clear visual identity) are undermined by a fractured narrative, a subject-to-body mismatch, and a sweepstakes module that pulls focus from product purchase.\n\n---\n\n## 3. What's Working\n\n- **Samba Messi module** is the visual standout — the teal/coral colorway pops and the shoe is immediately identifiable. Product photography earns its real estate.\n- **\"Built for Greatness\" hero** sets an aspirational tone and the Messi Collection framing provides a coherent entry point.\n- **Harden sweepstakes** has genuine value as an incentive for members, and the Superstar silhouette is iconic enough to carry weight.\n- Banner strip at top (\"Explore the latest adidas best sellers\" + SHOP NOW) gives immediate escape hatch for transactional readers.\n\n---\n\n## 4. What's Weak\n\n- **Subject line-to-body disconnect is severe.** \"Fútbol y familia\" promises a culturally resonant, family-oriented soccer story. The body delivers two soccer modules and then a Harden sweepstakes with zero family angle anywhere.\n- **The Harden module doesn't belong here.** Basketball and \"Win an Icon\" sweepstakes land in a completely different register than the Messi Collection lifestyle narrative. It reads like two separate emails were merged.\n- **No Spanish in the body.** The subject sets a Spanish-language expectation that is immediately abandoned. For Latino audience targeting this is a trust-breaking mismatch.\n- **\"Familia\" theme is invisible.** There's no product, copy, or imagery in the body that references family. The subject line promises something the email never delivers.\n- **Single CTA per module is fine, but CTAs are hard to read** at render size — they appear light/small against the module backgrounds.\n- **Copy density is low.** The email is short, which isn't inherently bad, but the Messi narrative (\"Channel his vibe going confidence…\") reads as incomplete and slightly awkward.\n\n---\n\n## 5. Recommendations\n\n1. **Separate the campaigns.** Messi Collection and Harden sweepstakes should be different sends. Mixing them dilutes both.\n2. **Honor the subject line.** If you're going to use \"Fútbol y familia,\" show families — kids in Sambas, Messi with his sons, generational soccer themes. Or drop the Spanish hook entirely.\n3. **Localize the body copy** if the subject line is in Spanish. Either go bilingual or stay English — the current split feels unintentional.\n4. **Strengthen CTAs.** Every module needs a high-contrast, clearly labeled button. The member sweepstakes CTA in particular should be unmissable.\n5. **Tighten the Messi narrative.** Pick one angle — heritage, performance, or style — and commit. The Samba module copy trailing off undercuts the storytelling.\n\n---\n\n## 6. Bottom Line\n\nGood bones, bad assembly. The Messi Collection assets are strong and the Samba product photography is compelling. But the email tries to do two things at once (product campaign + sweepstakes), breaks its own cultural promise (Spanish subject, English body, no \"familia\"), and leaves the reader without a clear reason to act. A focused Messi-only email with a genuine cultural throughline would be measurably more effective.\n\n---\n\n## 7. Subject Line Analysis\n\n- **Subject:** `Fútbol y familia`\n- **Length:** 16 characters\n- **Scores (1-10):** Clarity `5`, Curiosity `6`, Personalization `6`, Urgency `2`, Specificity `3`\n- **Strengths:**\n  - Culturally coded — signals Latino/Hispanic targeting with emotional resonance\n  - Short and punchy; stands out in an English-language inbox\n- **Weaknesses:**\n  - Zero specificity — no product, no offer, no hook beyond a vibe\n  - Urgency is nonexistent; no time pressure or reason to open now\n- **Alt A:** `Messi + Samba: Built for the Beautiful Game`\n- **Alt B:** `El Fútbol Corre en Familia — Messi Collection`\n\n---\n\n## 8. Evidence\n\n- **Overall purpose:** Promote the adidas Messi Collection (lifestyle/performance crossover) with a secondary sweepstakes mechanic for members.\n- **Hero / primary value proposition:** \"Built for Greatness\" — aspirational Messi Collection branding with atmospheric athlete photography. Value prop is identity/lifestyle, not a specific offer.\n- **Membership / benefits section:** Harden sweepstakes module explicitly calls out adidas membership as the entry mechanism — the one place membership is made visible.\n- **Product discoverability / recommendation modules:** One product module (Samba Messi, teal/coral colorway). No additional product grid or recommendation rail — missed opportunity for cross-sell.\n- **Utility / secondary modules:** Top banner serves as a navigational escape valve. Footer contains standard account/legal links.\n- **Bugs / friction / clarity issues:** No broken images or rendering failures visible. Copy in the Samba module appears to have an incomplete or awkward phrase (\"Channel his vibe going confidence\") — may be a copywriting issue rather than a render bug.\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas \"Fútbol y familia\"\n\n**From:** adidas@us-news.comms.adidas.com\n**Date:** 2026-04-11\n\n---\n\n### 1. Technical Summary\n\nThe email has two blocking issues: a malformed redirect URL producing a broken click experience, and a missing plain-text MIME alternative that will trigger spam filters and fail accessibility requirements. Several non-HTTPS image assets compound deliverability and rendering risk.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken redirect URL — broken click experience**\n\nThe QA probe flagged an unresolvable URL type in one tracked link:\n\n```\nunknown url type: '/g/589c406e-574b-418b-ac89-ff562183681f?txn=1846da00-...'\n```\n\nThe raw destination path begins with `/g/` (a relative path), but the outer wrapper resolves to:\n```\nhttps://dv.adidas.com/o/589c406e-574b-418b-ac89-ff562183681f?cp_tp=v3.eJx1z79...\n```\n\nThe click redirect appears to be encoding a relative path as the destination rather than an absolute URL. Any recipient clicking this link lands on a broken page. This is the single highest-priority fix.\n\n**[WARN] 31 tracking links skipped** — all click-redirect links pass through `click.comms.adidas.com`. QA could not probe destinations; no additional broken links confirmed, but the `/g/` pattern above may affect other links in the same campaign template.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] HTTP image assets — may be blocked**\n\nSix instances of the same arrow image are served over HTTP:\n```\nhttp://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nModern email clients (Gmail, Outlook.com, Apple Mail) block mixed-content HTTP images. This asset will render as a broken image icon in most environments.\n\nAdditionally, the tracking pixel/open pixel is served over HTTP:\n```\nhttp://click.comms.adidas.com/CI0/0102019d7f3a025f-4fc6a05a-df06-4eb0-8955-7d0e05eca2cd-000000/...\n```\nHTTP tracking pixels are routinely stripped by clients and proxies, degrading open-rate measurement accuracy.\n\n**[WARN] Missing `alt` text on two images**\n\n- `589c406e-574b-418b-ac89-ff562183681f` (content image, no `alt` attribute)\n- `G2a3bUVHgNphlTI9zcVJXpaSH...` (tracking pixel, no `alt=\"\"`)\n\nContent images without `alt` text fail WCAG 2.1 SC 1.1.1 and render blank in image-off environments. Decorative/tracking images must have `alt=\"\"` explicitly set.\n\n**Font declarations duplicated across two `<style>` blocks** — `AdihausDIN` and `AdineuePRO` `@font-face` rules appear in both the first and third `<style>` blocks with slightly differing fallback lists. This is benign in most clients but adds unnecessary payload and indicates template hygiene issues.\n\n**DOCTYPE is HTML 4.01 Transitional** — acceptable for email, no defect, noted for record.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unrendered merge tokens (e.g., `{{first_name}}`, `%FNAME%`) visible in the truncated source. Cannot fully verify without complete HTML; no issues confirmed.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text MIME alternative missing**\n\n```\nText version is 0 chars\n```\n\nCAN-SPAM does not mandate a plain-text part, but its absence:\n- Raises spam scores across most MTAs (SpamAssassin `MISSING_MIMEOLE`, Barracuda rules)\n- Fails RFC 2822 best-practice for multipart/alternative\n- Breaks accessibility for screen-reader-only mail clients\n\nA minimum viable plain-text part with unsubscribe URL and physical address is required.\n\n**[WARN] Authentication-Results header not present**\n\nSPF/DKIM status could not be verified via the AgentMail relay. The sending domain `us-news.comms.adidas.com` should be covered by adidas's ESP DKIM signing; this should be confirmed against raw headers in the delivered copy. DMARC alignment (SPF or DKIM) is a prerequisite for inbox placement at major providers.\n\n**CAN-SPAM physical address and unsubscribe** — present in footer per standard adidas template (not flagged by QA); no issues confirmed.\n\n---\n\n### 6. Email-to-Site Continuity\n\nThe broken `/g/` redirect (§2) means at least one CTA does not successfully reach a landing page — UTM parameter analysis is moot for that link until the URL is fixed.\n\nThe 31 remaining tracked links pass through `click.comms.adidas.com` with encoded payloads (`cp_tp`, `cp_cid`, `mi_cid`, `mi_mid` parameters visible in the one inspectable URL). Destination UTM coverage cannot be confirmed without decoding the redirect targets. If the broken-link pattern is template-wide, additional CTAs may carry the same `/g/`-path defect.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|----------|-------|--------|\n| P0 | Broken `/g/` redirect on at least one CTA | Audit all encoded redirect destinations for relative-path encoding; rebuild affected links with absolute URLs |\n| P0 | Plain-text MIME part is empty | Generate and attach a plain-text alternative with all key links and required footer content |\n| P1 | Six HTTP arrow images | Update `image.link.adidas.com` asset URLs to HTTPS; confirm CDN supports TLS |\n| P1 | HTTP tracking pixel | Migrate open-tracking beacon to HTTPS endpoint |\n| P2 | Missing `alt` on content image | Add descriptive `alt` text to `589c406e-...` image |\n| P2 | `alt=\"\"` on tracking pixel | Set `alt=\"\"` explicitly on the tracking beacon `<img>` |\n| P3 | Duplicate `@font-face` blocks | Consolidate into single `<style>` block to reduce payload |\n| P3 | Authentication-Results verification | Confirm DKIM signature on delivered headers; validate DMARC alignment for `us-news.comms.adidas.com` |",
+    "sections": {
+      "executive_summary": [
+        "Strong individual assets (Messi, a product with clear visual identity) are undermined by a fractured narrative, a subject-to-body mismatch, and a sweepstakes module that pulls focus from product purchase."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Samba Messi module** is the visual standout — the teal/coral colorway pops and the shoe is immediately identifiable. Product photography earns its real estate.",
+        "- **\"Built for Greatness\" hero** sets an aspirational tone and the Messi Collection framing provides a coherent entry point.",
+        "- **Harden sweepstakes** has genuine value as an incentive for members, and the Superstar silhouette is iconic enough to carry weight.",
+        "- Banner strip at top (\"Explore the latest adidas best sellers\" + SHOP NOW) gives immediate escape hatch for transactional readers."
+      ],
+      "whats_weak": [
+        "- **Subject line-to-body disconnect is severe.** \"Fútbol y familia\" promises a culturally resonant, family-oriented soccer story. The body delivers two soccer modules and then a Harden sweepstakes with zero family angle anywhere.",
+        "- **The Harden module doesn't belong here.** Basketball and \"Win an Icon\" sweepstakes land in a completely different register than the Messi Collection lifestyle narrative. It reads like two separate emails were merged.",
+        "- **No Spanish in the body.** The subject sets a Spanish-language expectation that is immediately abandoned. For Latino audience targeting this is a trust-breaking mismatch.",
+        "- **\"Familia\" theme is invisible.** There's no product, copy, or imagery in the body that references family. The subject line promises something the email never delivers.",
+        "- **Single CTA per module is fine, but CTAs are hard to read** at render size — they appear light/small against the module backgrounds.",
+        "- **Copy density is low.** The email is short, which isn't inherently bad, but the Messi narrative (\"Channel his vibe going confidence…\") reads as incomplete and slightly awkward."
+      ],
+      "recommendations": [
+        "1. **Separate the campaigns.** Messi Collection and Harden sweepstakes should be different sends. Mixing them dilutes both.",
+        "2. **Honor the subject line.** If you're going to use \"Fútbol y familia,\" show families — kids in Sambas, Messi with his sons, generational soccer themes. Or drop the Spanish hook entirely.",
+        "3. **Localize the body copy** if the subject line is in Spanish. Either go bilingual or stay English — the current split feels unintentional.",
+        "4. **Strengthen CTAs.** Every module needs a high-contrast, clearly labeled button. The member sweepstakes CTA in particular should be unmissable.",
+        "5. **Tighten the Messi narrative.** Pick one angle — heritage, performance, or style — and commit. The Samba module copy trailing off undercuts the storytelling.",
+        "| Priority | Issue | Action |",
+        "|----------|-------|--------|",
+        "| P0 | Broken `/g/` redirect on at least one CTA | Audit all encoded redirect destinations for relative-path encoding; rebuild affected links with absolute URLs |",
+        "| P0 | Plain-text MIME part is empty | Generate and attach a plain-text alternative with all key links and required footer content |",
+        "| P1 | Six HTTP arrow images | Update `image.link.adidas.com` asset URLs to HTTPS; confirm CDN supports TLS |",
+        "| P1 | HTTP tracking pixel | Migrate open-tracking beacon to HTTPS endpoint |",
+        "| P2 | Missing `alt` on content image | Add descriptive `alt` text to `589c406e-...` image |",
+        "| P2 | `alt=\"\"` on tracking pixel | Set `alt=\"\"` explicitly on the tracking beacon `<img>` |",
+        "| P3 | Duplicate `@font-face` blocks | Consolidate into single `<style>` block to reduce payload |",
+        "| P3 | Authentication-Results verification | Confirm DKIM signature on delivered headers; validate DMARC alignment for `us-news.comms.adidas.com` |"
+      ],
+      "bottom_line": [
+        "Good bones, bad assembly. The Messi Collection assets are strong and the Samba product photography is compelling. But the email tries to do two things at once (product campaign + sweepstakes), breaks its own cultural promise (Spanish subject, English body, no \"familia\"), and leaves the reader without a clear reason to act. A focused Messi-only email with a genuine cultural throughline would be measurably more effective."
+      ],
+      "subject_line": [
+        "- **Subject:** `Fútbol y familia`",
+        "- **Length:** 16 characters",
+        "- **Scores (1-10):** Clarity `5`, Curiosity `6`, Personalization `6`, Urgency `2`, Specificity `3`",
+        "- **Strengths:**",
+        "- Culturally coded — signals Latino/Hispanic targeting with emotional resonance",
+        "- Short and punchy; stands out in an English-language inbox",
+        "- **Weaknesses:**",
+        "- Zero specificity — no product, no offer, no hook beyond a vibe",
+        "- Urgency is nonexistent; no time pressure or reason to open now",
+        "- **Alt A:** `Messi + Samba: Built for the Beautiful Game`",
+        "- **Alt B:** `El Fútbol Corre en Familia — Messi Collection`"
+      ],
+      "evidence": [
+        "- **Overall purpose:** Promote the adidas Messi Collection (lifestyle/performance crossover) with a secondary sweepstakes mechanic for members.",
+        "- **Hero / primary value proposition:** \"Built for Greatness\" — aspirational Messi Collection branding with atmospheric athlete photography. Value prop is identity/lifestyle, not a specific offer.",
+        "- **Membership / benefits section:** Harden sweepstakes module explicitly calls out adidas membership as the entry mechanism — the one place membership is made visible.",
+        "- **Product discoverability / recommendation modules:** One product module (Samba Messi, teal/coral colorway). No additional product grid or recommendation rail — missed opportunity for cross-sell.",
+        "- **Utility / secondary modules:** Top banner serves as a navigational escape valve. Footer contains standard account/legal links.",
+        "- **Bugs / friction / clarity issues:** No broken images or rendering failures visible. Copy in the Samba module appears to have an incomplete or awkward phrase (\"Channel his vibe going confidence\") — may be a copywriting issue rather than a render bug.",
+        "**From:** adidas@us-news.comms.adidas.com",
+        "**Date:** 2026-04-11",
+        "The email has two blocking issues: a malformed redirect URL producing a broken click experience, and a missing plain-text MIME alternative that will trigger spam filters and fail accessibility requirements. Several non-HTTPS image assets compound deliverability and rendering risk.",
+        "**[FAIL] Broken redirect URL — broken click experience**",
+        "The QA probe flagged an unresolvable URL type in one tracked link:",
+        "```",
+        "unknown url type: '/g/589c406e-574b-418b-ac89-ff562183681f?txn=1846da00-...'",
+        "```",
+        "The raw destination path begins with `/g/` (a relative path), but the outer wrapper resolves to:",
+        "```",
+        "https://dv.adidas.com/o/589c406e-574b-418b-ac89-ff562183681f?cp_tp=v3.eJx1z79...",
+        "```",
+        "The click redirect appears to be encoding a relative path as the destination rather than an absolute URL. Any recipient clicking this link lands on a broken page. This is the single highest-priority fix.",
+        "**[WARN] 31 tracking links skipped** — all click-redirect links pass through `click.comms.adidas.com`. QA could not probe destinations; no additional broken links confirmed, but the `/g/` pattern above may affect other links in the same campaign template.",
+        "**[WARN] HTTP image assets — may be blocked**",
+        "Six instances of the same arrow image are served over HTTP:",
+        "```",
+        "http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Modern email clients (Gmail, Outlook.com, Apple Mail) block mixed-content HTTP images. This asset will render as a broken image icon in most environments.",
+        "Additionally, the tracking pixel/open pixel is served over HTTP:",
+        "```",
+        "http://click.comms.adidas.com/CI0/0102019d7f3a025f-4fc6a05a-df06-4eb0-8955-7d0e05eca2cd-000000/...",
+        "```",
+        "HTTP tracking pixels are routinely stripped by clients and proxies, degrading open-rate measurement accuracy.",
+        "**[WARN] Missing `alt` text on two images**",
+        "- `589c406e-574b-418b-ac89-ff562183681f` (content image, no `alt` attribute)",
+        "- `G2a3bUVHgNphlTI9zcVJXpaSH...` (tracking pixel, no `alt=\"\"`)",
+        "Content images without `alt` text fail WCAG 2.1 SC 1.1.1 and render blank in image-off environments. Decorative/tracking images must have `alt=\"\"` explicitly set.",
+        "**Font declarations duplicated across two `<style>` blocks** — `AdihausDIN` and `AdineuePRO` `@font-face` rules appear in both the first and third `<style>` blocks with slightly differing fallback lists. This is benign in most clients but adds unnecessary payload and indicates template hygiene issues.",
+        "**DOCTYPE is HTML 4.01 Transitional** — acceptable for email, no defect, noted for record.",
+        "No unrendered merge tokens (e.g., `{{first_name}}`, `%FNAME%`) visible in the truncated source. Cannot fully verify without complete HTML; no issues confirmed.",
+        "**[FAIL] Plain-text MIME alternative missing**",
+        "```",
+        "Text version is 0 chars",
+        "```",
+        "CAN-SPAM does not mandate a plain-text part, but its absence:",
+        "- Raises spam scores across most MTAs (SpamAssassin `MISSING_MIMEOLE`, Barracuda rules)",
+        "- Fails RFC 2822 best-practice for multipart/alternative",
+        "- Breaks accessibility for screen-reader-only mail clients",
+        "A minimum viable plain-text part with unsubscribe URL and physical address is required.",
+        "**[WARN] Authentication-Results header not present**",
+        "SPF/DKIM status could not be verified via the AgentMail relay. The sending domain `us-news.comms.adidas.com` should be covered by adidas's ESP DKIM signing; this should be confirmed against raw headers in the delivered copy. DMARC alignment (SPF or DKIM) is a prerequisite for inbox placement at major providers.",
+        "**CAN-SPAM physical address and unsubscribe** — present in footer per standard adidas template (not flagged by QA); no issues confirmed.",
+        "The broken `/g/` redirect (§2) means at least one CTA does not successfully reach a landing page — UTM parameter analysis is moot for that link until the URL is fixed.",
+        "The 31 remaining tracked links pass through `click.comms.adidas.com` with encoded payloads (`cp_tp`, `cp_cid`, `mi_cid`, `mi_mid` parameters visible in the one inspectable URL). Destination UTM coverage cannot be confirmed without decoding the redirect targets. If the broken-link pattern is template-wide, additional CTAs may carry the same `/g/`-path defect."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/589c406e-574b-418b-ac89-ff562183681f?txn=1846da00-360c-11f1-80ab-8668c83b363d'",
+            "url": "https://dv.adidas.com/o/589c406e-574b-418b-ac89-ff562183681f?cp_tp=v3.eJx1z79LQlEUB_Due8_n1xfq5Yb4uDg8nB4todBiDebg4FhLuOiW0J-QmxTRb6OlLaMhaIzGhoZoER0K6hFqFNEPC6L26DwrELPl8uF-z7nnHkPBlAAOy_c1navSj9K8Ibx4DnLNHIyGUXdm6VrHRqNd06O_wfCRQk3VgxBnphbdV0QIlYjNMhoYZ5Odc9rIG2IID5IzW-0ORBhPkis91bl8joKFCFf7PBPDu6SxzGK2kjLwWA6YH4Z1g4zhlsjv8i4XkmIEb5J7fhrOTgLmhW61PP82qDT8VXK9Z3g8H6dgL8K9fZdrSw5b61nuRXLf32pzR7dOlTjQ8EdV3E6QSgFSNUU6DpIqadK5Kyed8OB6VA4kgLotVSzPJHxoJemvm9uM2HS51mE9TXR2WZJlgcuYUPE5R7pytVgkOa5WilkftsaEhuYqIy6NE-_WWYF9AQekXF8=&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d7fa1-bf80-7000-950c-cbaf5bbfc0bd"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=CNzzGTah6k+CMXCxbftehCi8Kv/xFjwHhKa1X3NF6hdmjPm2KPdhk949Kyxddk5kkwD4JJPwxjv9dhyN5F6zJbzEyGpoF/rZi8ekDSRHC7GJ7DpU2RYA"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 9,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "31 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 589c406e-574b-418b-ac89-ff562183681f",
+            "detail": "src: https://dv.adidas.com/o/589c406e-574b-418b-ac89-ff562183681f?cp_tp=v3.eJx1z79LQlEUB_Due8_n1xfq5Yb4uDg8nB4todBiDebg4FhLuO"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: G2a3bUVHgNphlTI9zcVJXpaSHWsvU_MH5WpGtvorkMI=452",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d7f3a025f-4fc6a05a-df06-4eb0-8955-7d0e05eca2cd-000000/G2a3bUVHgNphlTI9zcVJXpaSH"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: G2a3bUVHgNphlTI9zcVJXpaSHWsvU_MH5WpGtvorkMI=452",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d7f3a025f-4fc6a05a-df06-4eb0-8955-7d0e05eca2cd-000000/G2a3bUVHgNphlTI9zcVJXpaSH"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-12-f-tbol-y-familia-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
