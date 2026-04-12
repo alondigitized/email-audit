@@ -1502,5 +1502,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-spring-favorites-just-a-click-away-bogo-50-off",
     "slug": "2026-04-12-spring-favorites-just-a-click-away-bogo-50-off",
     "persona": "walker"
+  },
+  {
+    "messageId": "<0102019d82a49f11-58092534-99d0-44b8-a5ea-3ed3d6b66678-000000@eu-west-1.amazonses.com>",
+    "subject": "Go bold in Adistar",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-go-bold-in-adistar",
+    "slug": "2026-04-12-go-bold-in-adistar",
+    "persona": "walker"
   }
 ]
