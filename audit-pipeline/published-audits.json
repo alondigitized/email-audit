@@ -1488,5 +1488,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-12-site-journey-walker",
     "pdfPath": "",
     "slug": "2026-04-12-site-journey-walker"
+  },
+  {
+    "messageId": "<aw4UzZUXRoKRi8ZIQCkl5g@geopod-ismtpd-81>",
+    "subject": "Did you forget something?",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-did-you-forget-something",
+    "slug": "2026-04-12-did-you-forget-something",
+    "persona": "walker"
   }
 ]
