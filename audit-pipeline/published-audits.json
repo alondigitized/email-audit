@@ -1509,5 +1509,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-go-bold-in-adistar",
     "slug": "2026-04-12-go-bold-in-adistar",
     "persona": "walker"
+  },
+  {
+    "messageId": "<fb8770d0-7220-47a7-9a34-dd693e57f2ce@dfw1s10mta514.xt.local>",
+    "subject": "You've still got 20% off!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-you-ve-still-got-20-off",
+    "slug": "2026-04-12-you-ve-still-got-20-off",
+    "persona": "martha"
   }
 ]
