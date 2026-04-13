@@ -1537,5 +1537,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-your-cart-expires-soon",
     "slug": "2026-04-13-your-cart-expires-soon",
     "persona": "walker"
+  },
+  {
+    "messageId": "<78d37a09-fb9d-4380-be1c-81ddb2a3df84@iad4s12mta993.xt.local>",
+    "subject": "Save on Nike Styles for the Whole Crew",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-save-on-nike-styles-for-the-whole-crew",
+    "slug": "2026-04-13-save-on-nike-styles-for-the-whole-crew",
+    "persona": "walker"
   }
 ]

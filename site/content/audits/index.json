@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-13-save-on-nike-styles-for-the-whole-crew",
+    "subject": "Save on Nike Styles for the Whole Crew",
+    "from_display_name": "Shoe Carnival",
+    "timestamp_iso": "2026-04-13T13:42:36+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "38%",
+      "total_checks": 13,
+      "total_issues": 6,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-13-your-cart-expires-soon",
     "subject": "Your cart expires soon!",
     "from_display_name": "SKECHERS",
