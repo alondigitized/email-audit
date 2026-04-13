@@ -1523,5 +1523,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-13-site-journey-walker",
     "pdfPath": "",
     "slug": "2026-04-13-site-journey-walker"
+  },
+  {
+    "messageId": "<1fygRmIYQneAgGJx7cV0og@geopod-ismtpd-30>",
+    "subject": "Your Items Are Waiting!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-your-items-are-waiting",
+    "slug": "2026-04-13-your-items-are-waiting",
+    "persona": "walker"
   }
 ]
