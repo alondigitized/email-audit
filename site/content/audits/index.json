@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-13-from-sneakers-to-sandals-it-s-slip-in-season",
+    "subject": "From Sneakers to Sandals it's Slip-In Season 🤩",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-13T17:05:43+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-13-put-that-10-off-to-good-use",
     "subject": "Put that 10% off to good use!",
     "from_display_name": "DSW",

@@ -1,0 +1,309 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-13-from-sneakers-to-sandals-it-s-slip-in-season",
+  "type": "email",
+  "persona": "walker",
+  "email": {
+    "subject": "From Sneakers to Sandals it's Slip-In Season 🤩",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-13T17:05:43+00:00",
+    "date_formatted": "2026-04-13 17:05 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "\n## 2. Business Impact Score: **5 / 10**\n\nSolid offer, coherent seasonal narrative, acceptable creative — dragged down significantly by the preview text bug, generic hero copy, and undersized CTAs.\n\n---\n\n## 3. What's Working\n\n- **Discount banner is front and center.** The 20% off single pair offer is the first thing visible below the logo, giving recipients an immediate reason to engage.\n- **Three-module product architecture is coherent.** Cozy Fit → Max Cushioning → Sandals maps neatly onto \"Slip-In Season\" and gives three distinct entry points for different shopper intents.\n- **Visual hierarchy is clear.** Dark lifestyle headers with bold category labels make scanning effortless. Each module has its own \"SHOP\" CTA.\n- **Footer navigation is thorough.** WOMEN / MEN / KIDS / CLOTHING / NEW ARRIVALS / SALE covers the full catalog without cluttering the body.\n\n---\n\n## 4. What's Weak\n\n- **Preview text is catastrophically broken.** Instead of a readable teaser, recipients see raw JSON-LD schema markup (`[{ \"@context\": \"http://schema.org/\"...`). This is visible to every recipient in every inbox client before they open. It reads as spam, erodes trust, and wastes one of the highest-leverage real estate slots in email.\n- **Hero headline is generic.** \"NEW STYLE DROP\" says nothing distinctive. It could apply to any brand, any season. The seasonal hook (\"Slip-In Season\") is already in the subject line — the hero should reinforce and deepen it, not reset to a generic fallback.\n- **CTAs are small and low-contrast.** The \"SHOP COZY FIT / MAX CUSHIONING / SANDALS\" buttons are narrow and modest. On mobile they'd require precision tapping. A wider, bolder button treatment would improve click-through.\n- **Cozy Fit imagery reads slightly cluttered.** The Cozy Fit section shows multiple overlapping shoe angles that feel denser and less premium than the other two modules.\n- **No urgency on the offer.** The 20% off banner shows no expiration date or code visibility that's legible at this render size. Time-limited framing significantly improves conversion.\n\n---\n\n## 5. Recommendations\n\n1. **Fix the preview text immediately.** This is a blocking issue. The JSON-LD schema block should never reach the preview slot. Audit the template and deploy a fix before the next send.\n2. **Rewrite the hero headline** to echo the subject line's seasonal energy. Something like \"Your Slip-In Season Starts Here\" connects the open to the landing and reduces dissonance.\n3. **Widen CTAs** to full-module width or close to it. Small centered buttons underperform on mobile.\n4. **Add an offer deadline** to the 20% banner — even \"This week only\" increases urgency and clicks without requiring a hard date.\n5. **Clean up the Cozy Fit image composition.** The other two modules look more editorial; Cozy Fit should match that register.\n\n---\n\n## 6. Bottom Line\n\nSKECHERS has a solid seasonal structure and a real offer, but the broken preview text is the story here. Until that's fixed, this email is actively damaging sender reputation and subscriber trust on every open. Everything else is iteration — the preview bug is a rollback-or-hotfix situation.\n\n---\n\n## 7. Subject Line Analysis\n\n- **Subject:** `From Sneakers to Sandals it's Slip-In Season 🤩`\n- **Length:** 45 characters\n- **Scores (1-10):** Clarity `7`, Curiosity `5`, Personalization `2`, Urgency `3`, Specificity `5`\n- **Strengths:**\n  - Seasonal narrative (\"Sneakers to Sandals\") creates a clear journey arc that implies relevance and timeliness\n  - Readable and punchy at mobile inbox truncation lengths\n- **Weaknesses:**\n  - No hook tied to the actual offer (20% off) — curiosity gap is thin, open is driven by brand recognition alone\n  - Emoji choice (🤩) reads excitable but insubstantial; doesn't amplify the message\n- **Alt A:** `Slip into Spring: 20% Off One Pair — Shop the New Drop`\n- **Alt B:** `New Sandals, Cozy Fits & Max Cushioning — 20% Off This Week`\n\n---\n\n## 8. Evidence\n\n- **Overall purpose:** Seasonal transition email promoting SKECHERS' spring/slip-on lineup (Cozy Fit, Max Cushioning, Sandals) with a 20% off single pair incentive.\n- **Hero / primary value prop:** \"NEW STYLE DROP\" over a lifestyle shot of two people walking in casual footwear. Functional but generic — the seasonal promise from the subject line is not reinforced.\n- **Membership / benefits section:** Not present. No loyalty program callout, no member-exclusive framing on the discount.\n- **Product discoverability / recommendation modules:** Three clearly labeled modules — Cozy Fit, Max Cushioning, Sandals — each with category imagery and a dedicated \"SHOP\" CTA. Good separation of intent. No personalized or \"recommended for you\" logic visible.\n- **Utility / secondary modules:** Footer includes full category nav (WOMEN, MEN, KIDS, CLOTHING, NEW ARRIVALS, SALE) plus app download badges and social icons. Well-organized utility layer that doesn't intrude on the main experience.\n- **Bugs / friction / clarity issues:**\n  - **Preview text exposes raw JSON-LD schema markup** — visible to all recipients before open. Confirmed visible in the email metadata provided. This is the most serious issue in the email.\n  - CTA buttons are small relative to module width — friction for mobile users.\n  - Offer terms/expiry not legible at render size in the discount banner.\n\n---\n\n## Technical Audit\n\n## Technical Audit — SKECHERS \"Slip-In Season\" (2026-04-13)\n\n---\n\n### 1. Technical Summary\n\nThe email has one confirmed broken personalization token (empty name field) and a systemic HTTP/HTTPS mixed-content problem across all hosted images. Authentication headers were not captured through the relay, leaving deliverability posture unverifiable.\n\n---\n\n### 2. Link & Tracking Issues\n\n**27 click-redirect links unverifiable**\nAll CTA links route through `click.emails.skechers.com` (Salesforce Marketing Cloud click-tracking). Destination URLs and UTM parameter integrity could not be confirmed — flagged for manual spot-check.\n\n**Returnpath pixel has no protocol prefix (broken relative URL)**\n```html\n<img src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\" />\n```\nMissing `https://` means this resolves as a relative path and will 404. Inbox placement monitoring via Return Path/Validity will silently fail for this send.\n\n**ink1000 open-tracking pixel uses HTTP**\n```\nsrc: http://www.ink1000.com/p/up/.../o.gif\n```\nHTTP pixel will be blocked by Gmail, Outlook.com, and Apple Mail image proxies, corrupting open-rate data for this secondary tracker.\n\n---\n\n### 3. Rendering & Accessibility\n\n**11 images served over HTTP — blocking risk**\nAll `image.emails.skechers.com` assets use `http://`:\n```\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png  (logo)\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-...png\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-...png  (App Store)\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-...png  (Google Play)\n... (7 additional footer images)\n```\nModern clients proxy all images over HTTPS. HTTP sources that don't redirect will break; clients that enforce mixed-content blocking will suppress the images entirely.\n\n**2 images missing `alt` text**\n- `o.gif` (`http://www.ink1000.com/...`) — tracking pixel, `alt=\"\"` is acceptable but missing entirely\n- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — non-tracking image with no alt; content unknown without full source\n\n**`maximum-scale=1` in viewport meta**\n```html\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\" />\n```\nPrevents user-initiated zoom on mobile. Fails WCAG 1.4.4 (Resize Text).\n\n**`-webkit-text-size-adjust: none` applied globally**\n```css\n* { -webkit-text-size-adjust: none; }\n```\nDisables iOS automatic text-size adjustment for all elements. Combined with `maximum-scale=1`, users with low vision cannot enlarge text.\n\n**Malformed `<meta>` tags**\nBoth `<meta content=\"text/html; charset=utf-8\" />` and `<meta content=\"IE=Edge\" />` are missing required `http-equiv` attributes. Correct forms:\n```html\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\n```\nWithout `http-equiv`, these tags are inert.\n\n**Duplicate media query blocks**\n`max-width: 375px` and `max-width: 640px` blocks contain identical rule sets. No functional breakage, but increases payload size and maintenance surface.\n\n---\n\n### 4. Personalization & Merge Tokens\n\n**[FAIL] Empty name in greeting**\nQA confirmed the name merge token resolved to an empty string, producing output like `\"Hi ,\"`. The token (likely `%%=v(@FirstName)=%%` or equivalent AMPscript) either had no fallback default or the subscriber record has a null `FirstName` field. A fallback (e.g., `\"there\"`) is absent.\n\n---\n\n### 5. Compliance\n\n**Authentication-Results header not captured**\nSPF and DKIM pass/fail status is unknown — the email was received via AgentMail relay without forwarding the original `Authentication-Results` header. Cannot confirm DMARC alignment. This is a data-collection gap, not a confirmed failure, but should be resolved at the relay level.\n\n**beacon.krxd.net pixels present**\n```\nhttps://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_...&partner_uid=9153f33fe5cdf59baf088bb835d3b39ef90f188bd8540a4faba92899227ced00\nhttps://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_...&partner_uid=121173391\n```\nThese are third-party identity-resolution pixels (Salesforce DMP / Krux). The `partner_uid` in the second pixel (`121173391`) appears to be a plaintext subscriber ID. The first pixel includes a SHA-256 hashed email. Depending on jurisdiction, cross-device tracking pixels may require explicit consent disclosure — not evaluated here as a legal matter, but flagged for compliance review.\n\n**CAN-SPAM / unsubscribe** — Unsubscribe link and physical address presence cannot be confirmed from the truncated source. No issues detected in the visible portion.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**UTM parameters unverifiable through click redirects**\nAll 27 links are wrapped in `click.emails.skechers.com` redirects. The campaign token visible in tracking pixels is consistent:\n```\nMKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132026\n```\nManual verification is required to confirm UTM parameters are appended post-redirect and match this campaign ID pattern.\n\n**No issues found** with landing page domain alignment based on available data.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **P0** | Empty name merge token | Add AMPscript/Liquid fallback: `IF @FirstName == \"\" THEN \"there\"` |\n| **P0** | Returnpath pixel broken (missing protocol) | Prefix with `https://` → `https://pixel.app.returnpath.net/...` |\n| **P1** | All `image.emails.skechers.com` assets over HTTP | Update CDN or template to serve `https://image.emails.skechers.com/...` |\n| **P1** | `ink1000.com` open pixel over HTTP | Switch to HTTPS or remove if redundant with SFMC open pixel |\n| **P1** | Fix `<meta>` tags missing `http-equiv` | Add `http-equiv=\"Content-Type\"` and `http-equiv=\"X-UA-Compatible\"` |\n| **P2** | `maximum-scale=1` + `text-size-adjust: none` | Remove `maximum-scale=1`; change `text-size-adjust` to `100%` |\n| **P2** | Missing `alt` on `49468f73-...png` | Add descriptive alt text |\n| **P2** | Authentication-Results not captured | Configure AgentMail relay to preserve original auth headers |\n| **P3** | Duplicate media query blocks | Consolidate `375px` and `640px` blocks; keep one or differentiate breakpoints |\n| **P3** | `plaintext partner_uid` in Krux pixel | Confirm this is an internal ID, not a customer-facing identifier |",
+    "sections": {
+      "executive_summary": [
+        "Solid offer, coherent seasonal narrative, acceptable creative — dragged down significantly by the preview text bug, generic hero copy, and undersized CTAs."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Discount banner is front and center.** The 20% off single pair offer is the first thing visible below the logo, giving recipients an immediate reason to engage.",
+        "- **Three-module product architecture is coherent.** Cozy Fit → Max Cushioning → Sandals maps neatly onto \"Slip-In Season\" and gives three distinct entry points for different shopper intents.",
+        "- **Visual hierarchy is clear.** Dark lifestyle headers with bold category labels make scanning effortless. Each module has its own \"SHOP\" CTA.",
+        "- **Footer navigation is thorough.** WOMEN / MEN / KIDS / CLOTHING / NEW ARRIVALS / SALE covers the full catalog without cluttering the body."
+      ],
+      "whats_weak": [
+        "- **Preview text is catastrophically broken.** Instead of a readable teaser, recipients see raw JSON-LD schema markup (`[{ \"@context\": \"http://schema.org/\"...`). This is visible to every recipient in every inbox client before they open. It reads as spam, erodes trust, and wastes one of the highest-leverage real estate slots in email.",
+        "- **Hero headline is generic.** \"NEW STYLE DROP\" says nothing distinctive. It could apply to any brand, any season. The seasonal hook (\"Slip-In Season\") is already in the subject line — the hero should reinforce and deepen it, not reset to a generic fallback.",
+        "- **CTAs are small and low-contrast.** The \"SHOP COZY FIT / MAX CUSHIONING / SANDALS\" buttons are narrow and modest. On mobile they'd require precision tapping. A wider, bolder button treatment would improve click-through.",
+        "- **Cozy Fit imagery reads slightly cluttered.** The Cozy Fit section shows multiple overlapping shoe angles that feel denser and less premium than the other two modules.",
+        "- **No urgency on the offer.** The 20% off banner shows no expiration date or code visibility that's legible at this render size. Time-limited framing significantly improves conversion."
+      ],
+      "recommendations": [
+        "1. **Fix the preview text immediately.** This is a blocking issue. The JSON-LD schema block should never reach the preview slot. Audit the template and deploy a fix before the next send.",
+        "2. **Rewrite the hero headline** to echo the subject line's seasonal energy. Something like \"Your Slip-In Season Starts Here\" connects the open to the landing and reduces dissonance.",
+        "3. **Widen CTAs** to full-module width or close to it. Small centered buttons underperform on mobile.",
+        "4. **Add an offer deadline** to the 20% banner — even \"This week only\" increases urgency and clicks without requiring a hard date.",
+        "5. **Clean up the Cozy Fit image composition.** The other two modules look more editorial; Cozy Fit should match that register.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **P0** | Empty name merge token | Add AMPscript/Liquid fallback: `IF @FirstName == \"\" THEN \"there\"` |",
+        "| **P0** | Returnpath pixel broken (missing protocol) | Prefix with `https://` → `https://pixel.app.returnpath.net/...` |",
+        "| **P1** | All `image.emails.skechers.com` assets over HTTP | Update CDN or template to serve `https://image.emails.skechers.com/...` |",
+        "| **P1** | `ink1000.com` open pixel over HTTP | Switch to HTTPS or remove if redundant with SFMC open pixel |",
+        "| **P1** | Fix `<meta>` tags missing `http-equiv` | Add `http-equiv=\"Content-Type\"` and `http-equiv=\"X-UA-Compatible\"` |",
+        "| **P2** | `maximum-scale=1` + `text-size-adjust: none` | Remove `maximum-scale=1`; change `text-size-adjust` to `100%` |",
+        "| **P2** | Missing `alt` on `49468f73-...png` | Add descriptive alt text |",
+        "| **P2** | Authentication-Results not captured | Configure AgentMail relay to preserve original auth headers |",
+        "| **P3** | Duplicate media query blocks | Consolidate `375px` and `640px` blocks; keep one or differentiate breakpoints |",
+        "| **P3** | `plaintext partner_uid` in Krux pixel | Confirm this is an internal ID, not a customer-facing identifier |"
+      ],
+      "bottom_line": [
+        "SKECHERS has a solid seasonal structure and a real offer, but the broken preview text is the story here. Until that's fixed, this email is actively damaging sender reputation and subscriber trust on every open. Everything else is iteration — the preview bug is a rollback-or-hotfix situation."
+      ],
+      "subject_line": [
+        "- **Subject:** `From Sneakers to Sandals it's Slip-In Season 🤩`",
+        "- **Length:** 45 characters",
+        "- **Scores (1-10):** Clarity `7`, Curiosity `5`, Personalization `2`, Urgency `3`, Specificity `5`",
+        "- **Strengths:**",
+        "- Seasonal narrative (\"Sneakers to Sandals\") creates a clear journey arc that implies relevance and timeliness",
+        "- Readable and punchy at mobile inbox truncation lengths",
+        "- **Weaknesses:**",
+        "- No hook tied to the actual offer (20% off) — curiosity gap is thin, open is driven by brand recognition alone",
+        "- Emoji choice (🤩) reads excitable but insubstantial; doesn't amplify the message",
+        "- **Alt A:** `Slip into Spring: 20% Off One Pair — Shop the New Drop`",
+        "- **Alt B:** `New Sandals, Cozy Fits & Max Cushioning — 20% Off This Week`"
+      ],
+      "evidence": [
+        "- **Overall purpose:** Seasonal transition email promoting SKECHERS' spring/slip-on lineup (Cozy Fit, Max Cushioning, Sandals) with a 20% off single pair incentive.",
+        "- **Hero / primary value prop:** \"NEW STYLE DROP\" over a lifestyle shot of two people walking in casual footwear. Functional but generic — the seasonal promise from the subject line is not reinforced.",
+        "- **Membership / benefits section:** Not present. No loyalty program callout, no member-exclusive framing on the discount.",
+        "- **Product discoverability / recommendation modules:** Three clearly labeled modules — Cozy Fit, Max Cushioning, Sandals — each with category imagery and a dedicated \"SHOP\" CTA. Good separation of intent. No personalized or \"recommended for you\" logic visible.",
+        "- **Utility / secondary modules:** Footer includes full category nav (WOMEN, MEN, KIDS, CLOTHING, NEW ARRIVALS, SALE) plus app download badges and social icons. Well-organized utility layer that doesn't intrude on the main experience.",
+        "- **Bugs / friction / clarity issues:**",
+        "- **Preview text exposes raw JSON-LD schema markup** — visible to all recipients before open. Confirmed visible in the email metadata provided. This is the most serious issue in the email.",
+        "- CTA buttons are small relative to module width — friction for mobile users.",
+        "- Offer terms/expiry not legible at render size in the discount banner.",
+        "The email has one confirmed broken personalization token (empty name field) and a systemic HTTP/HTTPS mixed-content problem across all hosted images. Authentication headers were not captured through the relay, leaving deliverability posture unverifiable.",
+        "**27 click-redirect links unverifiable**",
+        "All CTA links route through `click.emails.skechers.com` (Salesforce Marketing Cloud click-tracking). Destination URLs and UTM parameter integrity could not be confirmed — flagged for manual spot-check.",
+        "**Returnpath pixel has no protocol prefix (broken relative URL)**",
+        "```html",
+        "<img src=\"pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499\" />",
+        "```",
+        "Missing `https://` means this resolves as a relative path and will 404. Inbox placement monitoring via Return Path/Validity will silently fail for this send.",
+        "**ink1000 open-tracking pixel uses HTTP**",
+        "```",
+        "src: http://www.ink1000.com/p/up/.../o.gif",
+        "```",
+        "HTTP pixel will be blocked by Gmail, Outlook.com, and Apple Mail image proxies, corrupting open-rate data for this secondary tracker.",
+        "**11 images served over HTTP — blocking risk**",
+        "All `image.emails.skechers.com` assets use `http://`:",
+        "```",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-...png  (logo)",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-...png",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-...png  (App Store)",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-...png  (Google Play)",
+        "... (7 additional footer images)",
+        "```",
+        "Modern clients proxy all images over HTTPS. HTTP sources that don't redirect will break; clients that enforce mixed-content blocking will suppress the images entirely.",
+        "**2 images missing `alt` text**",
+        "- `o.gif` (`http://www.ink1000.com/...`) — tracking pixel, `alt=\"\"` is acceptable but missing entirely",
+        "- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — non-tracking image with no alt; content unknown without full source",
+        "**`maximum-scale=1` in viewport meta**",
+        "```html",
+        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\" />",
+        "```",
+        "Prevents user-initiated zoom on mobile. Fails WCAG 1.4.4 (Resize Text).",
+        "**`-webkit-text-size-adjust: none` applied globally**",
+        "```css",
+        "* { -webkit-text-size-adjust: none; }",
+        "```",
+        "Disables iOS automatic text-size adjustment for all elements. Combined with `maximum-scale=1`, users with low vision cannot enlarge text.",
+        "**Malformed `<meta>` tags**",
+        "Both `<meta content=\"text/html; charset=utf-8\" />` and `<meta content=\"IE=Edge\" />` are missing required `http-equiv` attributes. Correct forms:",
+        "```html",
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
+        "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />",
+        "```",
+        "Without `http-equiv`, these tags are inert.",
+        "**Duplicate media query blocks**",
+        "`max-width: 375px` and `max-width: 640px` blocks contain identical rule sets. No functional breakage, but increases payload size and maintenance surface.",
+        "**[FAIL] Empty name in greeting**",
+        "QA confirmed the name merge token resolved to an empty string, producing output like `\"Hi ,\"`. The token (likely `%%=v(@FirstName)=%%` or equivalent AMPscript) either had no fallback default or the subscriber record has a null `FirstName` field. A fallback (e.g., `\"there\"`) is absent.",
+        "**Authentication-Results header not captured**",
+        "SPF and DKIM pass/fail status is unknown — the email was received via AgentMail relay without forwarding the original `Authentication-Results` header. Cannot confirm DMARC alignment. This is a data-collection gap, not a confirmed failure, but should be resolved at the relay level.",
+        "**beacon.krxd.net pixels present**",
+        "```",
+        "https://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_...&partner_uid=9153f33fe5cdf59baf088bb835d3b39ef90f188bd8540a4faba92899227ced00",
+        "https://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_...&partner_uid=121173391",
+        "```",
+        "These are third-party identity-resolution pixels (Salesforce DMP / Krux). The `partner_uid` in the second pixel (`121173391`) appears to be a plaintext subscriber ID. The first pixel includes a SHA-256 hashed email. Depending on jurisdiction, cross-device tracking pixels may require explicit consent disclosure — not evaluated here as a legal matter, but flagged for compliance review.",
+        "**CAN-SPAM / unsubscribe** — Unsubscribe link and physical address presence cannot be confirmed from the truncated source. No issues detected in the visible portion.",
+        "**UTM parameters unverifiable through click redirects**",
+        "All 27 links are wrapped in `click.emails.skechers.com` redirects. The campaign token visible in tracking pixels is consistent:",
+        "```",
+        "MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132026",
+        "```",
+        "Manual verification is required to confirm UTM parameters are appended post-redirect and match this campaign ID pattern.",
+        "**No issues found** with landing page domain alignment based on available data."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "merge_empty_greeting",
+            "status": "fail",
+            "label": "Empty greeting slot",
+            "detail": "Greeting has empty name field (e.g. \"Hi ,\")"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIxMTczMzkxIiwibGlkIjoiMjUiLCJqIjoiMTg1NzE5IiwiamIiOiI3MDI4IiwiZCI"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 13,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "27 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Curbside Pickup\" (00100b23-0afa-4715-a8cd-23bb46f9d2b2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Find A Store\" (fc08601a-fcce-4c96-8b90-39e5a55d6c05.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-13-from-sneakers-to-sandals-it-s-slip-in-season-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=BVXT3B6S3T4UBKHEVND7A7WCBA.100217"
+  }
+}
