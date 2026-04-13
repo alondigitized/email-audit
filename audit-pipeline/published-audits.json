@@ -1544,5 +1544,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-save-on-nike-styles-for-the-whole-crew",
     "slug": "2026-04-13-save-on-nike-styles-for-the-whole-crew",
     "persona": "walker"
+  },
+  {
+    "messageId": "<5A.D2.27957.8F40DD96@i-08c148afb0a3dc7e6.mta1vrest.sd.prd.sparkpost>",
+    "subject": "Put that 10% off to good use!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-put-that-10-off-to-good-use",
+    "slug": "2026-04-13-put-that-10-off-to-good-use",
+    "persona": "walker"
   }
 ]
