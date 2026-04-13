@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-13-test-mkg-us-na-u-glide-gender-en-04142026family-comfort-unlocked-bogo-50-off",
+    "subject": "[Test]: MKG_US_NA_U_GLIDE_GENDER_EN_04142026Family Comfort = Unlocked & BOGO 50% off",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-13T17:48:37+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-13-from-sneakers-to-sandals-it-s-slip-in-season",
     "subject": "From Sneakers to Sandals it's Slip-In Season 🤩",
     "from_display_name": "SKECHERS",
