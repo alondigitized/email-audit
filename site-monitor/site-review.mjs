@@ -823,8 +823,12 @@ async function main() {
   // Idempotency check
   const manifest = fs.existsSync(SITE_MANIFEST) ? JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8')) : [];
   if (manifest.some(e => e.slug === slug)) {
-    log('Journey already published today — skipping', { slug });
-    return;
+    if (process.env.FORCE) {
+      log('Journey already published today — re-running anyway (FORCE=1)', { slug });
+    } else {
+      log('Journey already published today — skipping', { slug });
+      return;
+    }
   }
 
   fs.mkdirSync(artifactDir, { recursive: true });
