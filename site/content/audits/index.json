@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-13-test-mkg-us-nonpurclick-u-glide-nonpurch-en-04142026-v2more-comfort-less-effort-",
+    "subject": "[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026_V2More Comfort, Less Effort with 20% off Your 1st Pair",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-13T22:17:33+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-13-test-mkg-us-nonpurclick-u-glide-nonpurch-en-04142026more-comfort-and-a-little-ex",
     "subject": "[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026More Comfort and a Little Extra 20% off Your 1st Pair",
     "from_display_name": "SKECHERS",
