@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-13-your-20-off-welcome-offer-is-waiting",
+    "subject": "Your 20% Off Welcome Offer is waiting!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-13T19:06:10+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "57%",
+      "total_checks": 7,
+      "total_issues": 1,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "martha"
+  },
+  {
     "slug": "2026-04-13-test-mkg-us-na-u-glide-gender-en-04142026family-comfort-unlocked-bogo-50-off",
     "subject": "[Test]: MKG_US_NA_U_GLIDE_GENDER_EN_04142026Family Comfort = Unlocked & BOGO 50% off",
     "from_display_name": "SKECHERS",

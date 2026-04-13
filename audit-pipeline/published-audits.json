@@ -1565,5 +1565,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-test-mkg-us-na-u-glide-gender-en-04142026family-comfort-unlocked-bogo-50-off",
     "slug": "2026-04-13-test-mkg-us-na-u-glide-gender-en-04142026family-comfort-unlocked-bogo-50-off",
     "persona": "walker"
+  },
+  {
+    "messageId": "<a949a65a-3a65-4475-bbcd-4f3e35c051aa@dfw1s10mta889.xt.local>",
+    "subject": "Your 20% Off Welcome Offer is waiting!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-your-20-off-welcome-offer-is-waiting",
+    "slug": "2026-04-13-your-20-off-welcome-offer-is-waiting",
+    "persona": "martha"
   }
 ]
