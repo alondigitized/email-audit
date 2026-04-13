@@ -135,6 +135,10 @@ async function delay(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
+function randomInt(nExclusive) {
+  return Math.floor(Math.random() * nExclusive);
+}
+
 async function captureStep(page, stepNum, stepId, artifactDir) {
   const prefix = `step-${String(stepNum).padStart(2, '0')}-${stepId}`;
   // Viewport screenshot (what user sees)
@@ -360,12 +364,46 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'first_product': {
-          // Skechers V2 product tiles
-          const productLink = page.locator('a.c-product-tile-V2__title, a.c-product-tile-V2__body-elements-anchor-wrapper, a.c-product-tile__title').first();
-          await productLink.click({ timeout: 10000 });
-          await page.waitForLoadState('domcontentloaded');
-          await delay(2000);
-          await dismissPopups(page);
+          // Skechers V2 product tiles — pick a random one from the top 24
+          // (one mobile scroll's worth) so the daily journey covers varied
+          // products instead of always viewing the top-merchandised one.
+          const productTiles = page.locator('a.c-product-tile-V2__title, a.c-product-tile-V2__body-elements-anchor-wrapper, a.c-product-tile__title');
+          const count = await productTiles.count();
+          const pool = Math.min(count, 24);
+
+          if (pool === 0) {
+            throw new Error('No product tiles found on category page');
+          }
+
+          // Retry up to 3 times with different random products if PDP load fails
+          let lastErr = null;
+          const triedIndexes = new Set();
+          for (let attempt = 0; attempt < 3; attempt++) {
+            let idx = randomInt(pool);
+            // Avoid re-picking the same index on retry
+            let guard = 0;
+            while (triedIndexes.has(idx) && guard < 10 && triedIndexes.size < pool) {
+              idx = randomInt(pool);
+              guard++;
+            }
+            triedIndexes.add(idx);
+            log(`Selecting product`, { idx, poolSize: pool, attempt: attempt + 1 });
+            try {
+              await productTiles.nth(idx).click({ timeout: 10000 });
+              await page.waitForLoadState('domcontentloaded');
+              await delay(2000);
+              await dismissPopups(page);
+              lastErr = null;
+              break;
+            } catch (err) {
+              lastErr = err;
+              log(`Product index failed, retrying with different product`, { idx, error: String(err).slice(0, 200) });
+              // Navigate back to the category list for the next attempt
+              await page.goBack({ waitUntil: 'domcontentloaded', timeout: 10000 }).catch(() => {});
+              await delay(1000);
+            }
+          }
+          if (lastErr) throw lastErr;
           break;
         }
 
