@@ -6,8 +6,8 @@
     <string>ai.openclaw.walker.site-review</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/node</string>
-        <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/site-review.mjs</string>
+        <string>/bin/bash</string>
+        <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/scripts/site-review-wrapper.sh</string>
         <string>--persona</string>
         <string>walker</string>
     </array>

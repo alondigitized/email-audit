@@ -487,8 +487,10 @@ async function runJourney(persona, credentials, artifactDir) {
     }
 
     steps.push(stepResult);
-    // Human-like delay between steps
-    await delay(1000 + Math.random() * 1000);
+    // Human-like delay between steps — wider range (1.5-4.5s) so the
+    // journey reads as a thoughtful person browsing, not a script pacing
+    // through a checklist. Reduces bot-detection signals as well.
+    await delay(1500 + Math.random() * 3000);
   }
 
   await browser.close();
