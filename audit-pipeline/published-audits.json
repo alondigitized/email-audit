@@ -1572,5 +1572,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-your-20-off-welcome-offer-is-waiting",
     "slug": "2026-04-13-your-20-off-welcome-offer-is-waiting",
     "persona": "martha"
+  },
+  {
+    "messageId": "<8c8153d2-e327-4437-9185-f20a63f027ad@dfw1s10mta491.xt.local>",
+    "subject": "[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026More Comfort and a Little Extra 20% off Your 1st Pair",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-13-test-mkg-us-nonpurclick-u-glide-nonpurch-en-04142026more-comfort-and-a-little-ex",
+    "slug": "2026-04-13-test-mkg-us-nonpurclick-u-glide-nonpurch-en-04142026more-comfort-and-a-little-ex",
+    "persona": "walker"
   }
 ]
