@@ -1516,5 +1516,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-12-you-ve-still-got-20-off",
     "slug": "2026-04-12-you-ve-still-got-20-off",
     "persona": "martha"
+  },
+  {
+    "messageId": "2026-04-13-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-13-site-journey-walker",
+    "pdfPath": "",
+    "slug": "2026-04-13-site-journey-walker"
   }
 ]

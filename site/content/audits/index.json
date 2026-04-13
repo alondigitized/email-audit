@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-13-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-13T13:03:53.088Z",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-12-you-ve-still-got-20-off",
     "subject": "You've still got 20% off!",
     "from_display_name": "SKECHERS",
