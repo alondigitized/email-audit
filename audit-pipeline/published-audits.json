@@ -1663,5 +1663,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04152026spring-styles-bogo-50-off-the",
     "slug": "2026-04-14-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04152026spring-styles-bogo-50-off-the",
     "persona": "walker"
+  },
+  {
+    "messageId": "<a4366514-ccf3-469c-80cb-a50ee773b67c@dfw1s10mta1588.xt.local>",
+    "subject": "[Test]: PRO_US_NONPURCLICK_U_SITEBUNDLE_NONPURCH_EN_04152026Spring Styles + 20% Off = The Perfect Pair",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-test-pro-us-nonpurclick-u-sitebundle-nonpurch-en-04152026spring-styles-20-off-th",
+    "slug": "2026-04-14-test-pro-us-nonpurclick-u-sitebundle-nonpurch-en-04152026spring-styles-20-off-th",
+    "persona": "walker"
   }
 ]

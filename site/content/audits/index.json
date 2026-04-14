@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-14-test-pro-us-nonpurclick-u-sitebundle-nonpurch-en-04152026spring-styles-20-off-th",
+    "subject": "[Test]: PRO_US_NONPURCLICK_U_SITEBUNDLE_NONPURCH_EN_04152026Spring Styles + 20% Off = The Perfect Pair",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-14T21:55:34+00:00",
+    "score": "4/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-14-test-pro-us-retpuropen-u-sitebundle-retail-en-04152026your-perfect-pair-bogo-50-",
     "subject": "[Test]: PRO_US_RETPUROPEN_U_SITEBUNDLE_RETAIL_EN_04152026Your Perfect Pair + BOGO 50% Off = Perfect Spring",
     "from_display_name": "SKECHERS",
