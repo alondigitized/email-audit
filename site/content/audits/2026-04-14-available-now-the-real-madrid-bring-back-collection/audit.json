@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-14-available-now-the-real-madrid-bring-back-collection",
+  "type": "email",
+  "persona": "walker",
+  "email": {
+    "subject": "Available now - The Real Madrid Bring Back Collection",
+    "from": "adidas <adidas@us-news.comms.adidas.com>",
+    "from_display_name": "adidas",
+    "timestamp_iso": "2026-04-14T04:10:48+00:00",
+    "date_formatted": "2026-04-14 04:10 UTC"
+  },
+  "review": {
+    "score": "5/10",
+    "raw_markdown": "\n## 2. Business Impact Score: 5/10\n\nStrong brand equity and storytelling undercut by a missing CTA on the hero and a bifurcated message.\n\n---\n\n## 3. What's Working\n\n- **Hero image is arresting.** The Real Madrid visual with player and crowd energy communicates heritage and scale instantly.\n- **Copy earns its length.** The 96/00 Champions League season backstory is specific and emotionally resonant — this isn't generic nostalgia, it names the year and the Final.\n- **adiClub/Spotify tie-in is a smart loyalty integration** and a genuine reason to engage beyond purchase intent.\n- **Top banner** (\"Explore the latest adidas best sellers / SHOP NOW\") provides a universal fallback entry point.\n\n---\n\n## 4. What's Weak\n\n- **No CTA on the hero block.** After the headline and body copy for the Real Madrid collection, there is no button. The primary story has nowhere to go. This is the biggest problem in the email.\n- **Split narrative hurts both stories.** Asking one email to sell a heritage football kit *and* a Spotify premium redemption is too much. Neither gets the focus it needs.\n- **\"Stories, Styles and Sportswear\" block at the bottom is empty.** A section header appears with no content beneath it — looks like a module that failed to populate, not a deliberate design choice.\n- **Copy typo visible in hero.** \"the hallowed tuff of the Bernabéu\" — \"tuff\" should be \"turf.\" Minor but visible.\n\n---\n\n## 5. Recommendations\n\n1. **Add a CTA button below the Real Madrid body copy immediately.** \"Shop the Collection\" or \"Get the Kit\" — anything. This is table stakes.\n2. **Separate the Spotify story into its own send or push it to a secondary slot below a full product grid.** As the second primary module, it competes with the hero instead of supporting it.\n3. **Audit the footer \"Stories, Styles and Sportswear\" module** — it renders as a header with no content. Either populate it or remove it. As-is it looks broken.\n4. **Fix the typo** (\"tuff\" → \"turf\") before the next send of this template.\n5. **Add product thumbnails** between the hero copy and the adiClub module — even 3 product cards with prices would give the collection real visual weight and a second conversion surface.\n\n---\n\n## 6. Bottom Line\n\nThe bones are good: the brand, the story, and the nostalgia hook all work. But a hero block without a CTA is a funnel with no bottom. Fix the CTA and the empty module, consider splitting the Spotify promotion, and this email performs significantly better.\n\n---\n\n## 7. Subject Line Analysis\n\n- **Subject:** `Available now - The Real Madrid Bring Back Collection`\n- **Length:** 52 characters\n- **Scores (1-10):** Clarity `8`, Curiosity `4`, Personalization `2`, Urgency `4`, Specificity `7`\n- **Strengths:**\n  - \"Available now\" telegraphs a drop moment — concise and functional\n  - \"Bring Back Collection\" names the product clearly, no guesswork\n- **Weaknesses:**\n  - Zero emotional pull — reads like a product alert, not an invitation\n  - No tie to the 96/00 Champions League heritage story that makes the email actually compelling\n- **Alt A:** `The kit that won the 2000 Champions League is back`\n- **Alt B:** `Legendary. Iconic. Available now — Real Madrid Bring Back`\n\n---\n\n## 8. Evidence\n\n- **Overall purpose:** Drive purchase of the Real Madrid Bring Back Collection (heritage kit revival) with a secondary loyalty promotion (adiClub × Spotify Premium redemption).\n- **Hero / primary value proposition:** Full-width Real Madrid image with \"LEGENDARY STYLE - ICONIC VIBES\" headline and body copy anchoring the 96/00 UCL Final. Emotionally well-framed. No CTA button visible.\n- **Membership / benefits section:** adiClub × Spotify Premium module — clear points redemption offer with a lifestyle image of a woman running. Headline and copy are readable; CTA not visible in the render but the module is structurally complete.\n- **Product discoverability / recommendation modules:** None visible. No product grid, no thumbnail carousel, no pricing — the collection is described but never shown.\n- **Utility / secondary modules:** Top banner with \"Explore the latest adidas best sellers / SHOP NOW\" provides a generic fallback. Footer has account, privacy, support, unsubscribe, and adidas status links — standard and functional.\n- **Bugs / friction / clarity issues:**\n  - Missing CTA button in the hero section (visible gap after body copy)\n  - \"Stories, Styles and Sportswear at Adidas. Since 1949\" renders as an isolated header with no content below it — module appears unpopulated\n  - Visible typo: \"tuff of the Bernabéu\"\n\n---\n\n## Technical Audit\n\n## Technical Audit — adidas Real Madrid Bring Back Collection\n\n---\n\n### 1. Technical Summary\n\nOne CTA link is definitively broken via a bad redirect resolution, and the email has no plain-text fallback (0 chars). Several images are served over HTTP and are missing alt text, and authentication headers were not observed through the relay.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Broken redirect — `/g/` path type unresolved**\nQA probe on the click-tracking URL resolves to an unknown internal path type `/g/`:\n```\nunknown url type: '/g/acbaf227-32b5-49c9-bc11-a0e23815f724'\nTracking URL: https://dv.adidas.com/o/acbaf227-32b5-49c9-bc11-a0e23815f724?cp_tp=v3...\n```\nThe outer redirect (`/o/`) resolves, but the inner destination path (`/g/`) is unrecognized. At least one CTA in this email is non-functional.\n\n**[WARN] 24 tracking links unvalidated**\nAll click-redirect domains were skipped by the HTTP prober. Full destination-URL validation is incomplete for this send.\n\n**[WARN] `no-referrer` meta tag conflicts with server-side attribution**\n`<meta name=\"referrer\" content=\"no-referrer\" />` suppresses the HTTP `Referer` header on all click-throughs. UTM params embedded in redirect URLs will still reach GA, but any server-side referrer-based attribution will receive no data.\n\n---\n\n### 3. Rendering & Accessibility\n\n**[WARN] Hero image missing alt text**\n```\nsrc: https://dv.adidas.com/o/acbaf227-32b5-49c9-bc11-a0e23815f724?cp_tp=v3...\nalt: (absent)\n```\nRenders as a blank space in image-blocked clients; fails WCAG 2.1 §1.1.1.\n\n**[WARN] Tracking pixel missing alt text**\n```\nsrc: http://click.comms.adidas.com/CI0/0102019d8a2f4d0c-7ec239a0-4d02-4642-bacd-f69332afeaa3-000000/l9SzGQYm-UKezSrEUbKNbR10q...\nalt: (absent)\n```\nShould carry `alt=\"\"` to suppress screen-reader announcement.\n\n**[WARN] Four image instances served over HTTP**\nArrow graphic `b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` is embedded four times via plain HTTP:\n```\nsrc: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg\n```\nOutlook and Gmail both block mixed-content HTTP images by default. All four instances will render as broken images in clients with strict security policies.\n\n**[WARN] Tracking pixel also served over HTTP**\n```\nsrc: http://click.comms.adidas.com/CI0/...\n```\nOpen-tracking will fail silently in clients that block HTTP resources.\n\n**[INFO] Duplicate `@font-face` declarations**\n`AdihausDIN` (weights 400, 700) and `AdineuePRO` (weights 400, 600) are each declared twice across two separate `<style>` blocks — once with three fallbacks (`Arial, Helvetica, Calibri, Sans Serif`) and once with two (`Arial, Helvetica`). The second declaration wins in cascade order, making the first block dead weight. No rendering breakage, but it inflates email size unnecessarily.\n\n**[INFO] Malformed charset meta tag**\n```html\n<meta content=\"text/html; charset=UTF-8\" />\n```\nMissing the required `http-equiv=\"Content-Type\"` attribute. The correct form is:\n```html\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n```\nMost clients parse charset from the MIME headers anyway, but this tag as written is non-conformant and ignored.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unresolved merge tokens (`{{`, `%%`, `*|`) visible in the provided HTML. Cannot fully audit the truncated portion.\n\n---\n\n### 5. Compliance\n\n**[FAIL] Plain-text fallback absent**\nQA reports `Text version is 0 chars`. A multipart/alternative message with no text/plain body is a CAN-SPAM risk and will be flagged or clipped by certain corporate spam filters that require readable plain-text parts.\n\n**[WARN] Authentication-Results header not observed**\nSPF and DKIM pass/fail status for `us-news.comms.adidas.com` is unknown — the AgentMail relay did not surface an `Authentication-Results` header. If DKIM is not signing for this subdomain, DMARC alignment against the `adidas.com` organizational domain will fail, degrading deliverability to stricter receivers (Yahoo, Gmail enforcement).\n\nUnsubscribe link: not auditable from the truncated source; cannot confirm CAN-SPAM §5(a)(3) compliance.\n\n---\n\n### 6. Email-to-Site Continuity\n\n**[FAIL] Broken CTA breaks funnel entirely**\nThe `/g/` redirect failure (see §2) means the destination landing page is unreachable for that CTA. UTM attribution is moot for unreachable links.\n\n**[WARN] `no-referrer` policy breaks referrer-based attribution**\nLanding pages relying on `document.referrer` or server-side `Referer` headers (e.g., for A/B segmentation or channel attribution outside GA) will see null referrer for all clicks from this email.\n\n---\n\n### 7. Recommendations\n\n| Priority | Action |\n|---|---|\n| P0 | Debug the `dv.adidas.com/o/ → /g/` redirect chain — confirm the destination asset exists and the redirect type is supported |\n| P0 | Add a plain-text `multipart/alternative` body (minimum: subject + unsubscribe URL + destination URLs) |\n| P1 | Upgrade all four arrow image `src` values and the tracking pixel from `http://` to `https://` |\n| P1 | Confirm DKIM signing is active for `us-news.comms.adidas.com`; retrieve a live `Authentication-Results` header via a test send |\n| P2 | Add `alt=\"\"` to the tracking pixel and a descriptive `alt` to the hero image |\n| P3 | Remove the duplicate `@font-face` block (keep the two-fallback version; remove the three-fallback version that is overridden) |\n| P3 | Fix the charset meta tag: add `http-equiv=\"Content-Type\"` |",
+    "sections": {
+      "executive_summary": [
+        "Strong brand equity and storytelling undercut by a missing CTA on the hero and a bifurcated message."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero image is arresting.** The Real Madrid visual with player and crowd energy communicates heritage and scale instantly.",
+        "- **Copy earns its length.** The 96/00 Champions League season backstory is specific and emotionally resonant — this isn't generic nostalgia, it names the year and the Final.",
+        "- **adiClub/Spotify tie-in is a smart loyalty integration** and a genuine reason to engage beyond purchase intent.",
+        "- **Top banner** (\"Explore the latest adidas best sellers / SHOP NOW\") provides a universal fallback entry point."
+      ],
+      "whats_weak": [
+        "- **No CTA on the hero block.** After the headline and body copy for the Real Madrid collection, there is no button. The primary story has nowhere to go. This is the biggest problem in the email.",
+        "- **Split narrative hurts both stories.** Asking one email to sell a heritage football kit *and* a Spotify premium redemption is too much. Neither gets the focus it needs.",
+        "- **\"Stories, Styles and Sportswear\" block at the bottom is empty.** A section header appears with no content beneath it — looks like a module that failed to populate, not a deliberate design choice.",
+        "- **Copy typo visible in hero.** \"the hallowed tuff of the Bernabéu\" — \"tuff\" should be \"turf.\" Minor but visible."
+      ],
+      "recommendations": [
+        "1. **Add a CTA button below the Real Madrid body copy immediately.** \"Shop the Collection\" or \"Get the Kit\" — anything. This is table stakes.",
+        "2. **Separate the Spotify story into its own send or push it to a secondary slot below a full product grid.** As the second primary module, it competes with the hero instead of supporting it.",
+        "3. **Audit the footer \"Stories, Styles and Sportswear\" module** — it renders as a header with no content. Either populate it or remove it. As-is it looks broken.",
+        "4. **Fix the typo** (\"tuff\" → \"turf\") before the next send of this template.",
+        "5. **Add product thumbnails** between the hero copy and the adiClub module — even 3 product cards with prices would give the collection real visual weight and a second conversion surface.",
+        "| Priority | Action |",
+        "|---|---|",
+        "| P0 | Debug the `dv.adidas.com/o/ → /g/` redirect chain — confirm the destination asset exists and the redirect type is supported |",
+        "| P0 | Add a plain-text `multipart/alternative` body (minimum: subject + unsubscribe URL + destination URLs) |",
+        "| P1 | Upgrade all four arrow image `src` values and the tracking pixel from `http://` to `https://` |",
+        "| P1 | Confirm DKIM signing is active for `us-news.comms.adidas.com`; retrieve a live `Authentication-Results` header via a test send |",
+        "| P2 | Add `alt=\"\"` to the tracking pixel and a descriptive `alt` to the hero image |",
+        "| P3 | Remove the duplicate `@font-face` block (keep the two-fallback version; remove the three-fallback version that is overridden) |",
+        "| P3 | Fix the charset meta tag: add `http-equiv=\"Content-Type\"` |"
+      ],
+      "bottom_line": [
+        "The bones are good: the brand, the story, and the nostalgia hook all work. But a hero block without a CTA is a funnel with no bottom. Fix the CTA and the empty module, consider splitting the Spotify promotion, and this email performs significantly better."
+      ],
+      "subject_line": [
+        "- **Subject:** `Available now - The Real Madrid Bring Back Collection`",
+        "- **Length:** 52 characters",
+        "- **Scores (1-10):** Clarity `8`, Curiosity `4`, Personalization `2`, Urgency `4`, Specificity `7`",
+        "- **Strengths:**",
+        "- \"Available now\" telegraphs a drop moment — concise and functional",
+        "- \"Bring Back Collection\" names the product clearly, no guesswork",
+        "- **Weaknesses:**",
+        "- Zero emotional pull — reads like a product alert, not an invitation",
+        "- No tie to the 96/00 Champions League heritage story that makes the email actually compelling",
+        "- **Alt A:** `The kit that won the 2000 Champions League is back`",
+        "- **Alt B:** `Legendary. Iconic. Available now — Real Madrid Bring Back`"
+      ],
+      "evidence": [
+        "- **Overall purpose:** Drive purchase of the Real Madrid Bring Back Collection (heritage kit revival) with a secondary loyalty promotion (adiClub × Spotify Premium redemption).",
+        "- **Hero / primary value proposition:** Full-width Real Madrid image with \"LEGENDARY STYLE - ICONIC VIBES\" headline and body copy anchoring the 96/00 UCL Final. Emotionally well-framed. No CTA button visible.",
+        "- **Membership / benefits section:** adiClub × Spotify Premium module — clear points redemption offer with a lifestyle image of a woman running. Headline and copy are readable; CTA not visible in the render but the module is structurally complete.",
+        "- **Product discoverability / recommendation modules:** None visible. No product grid, no thumbnail carousel, no pricing — the collection is described but never shown.",
+        "- **Utility / secondary modules:** Top banner with \"Explore the latest adidas best sellers / SHOP NOW\" provides a generic fallback. Footer has account, privacy, support, unsubscribe, and adidas status links — standard and functional.",
+        "- **Bugs / friction / clarity issues:**",
+        "- Missing CTA button in the hero section (visible gap after body copy)",
+        "- \"Stories, Styles and Sportswear at Adidas. Since 1949\" renders as an isolated header with no content below it — module appears unpopulated",
+        "- Visible typo: \"tuff of the Bernabéu\"",
+        "One CTA link is definitively broken via a bad redirect resolution, and the email has no plain-text fallback (0 chars). Several images are served over HTTP and are missing alt text, and authentication headers were not observed through the relay.",
+        "**[FAIL] Broken redirect — `/g/` path type unresolved**",
+        "QA probe on the click-tracking URL resolves to an unknown internal path type `/g/`:",
+        "```",
+        "unknown url type: '/g/acbaf227-32b5-49c9-bc11-a0e23815f724'",
+        "Tracking URL: https://dv.adidas.com/o/acbaf227-32b5-49c9-bc11-a0e23815f724?cp_tp=v3...",
+        "```",
+        "The outer redirect (`/o/`) resolves, but the inner destination path (`/g/`) is unrecognized. At least one CTA in this email is non-functional.",
+        "**[WARN] 24 tracking links unvalidated**",
+        "All click-redirect domains were skipped by the HTTP prober. Full destination-URL validation is incomplete for this send.",
+        "**[WARN] `no-referrer` meta tag conflicts with server-side attribution**",
+        "`<meta name=\"referrer\" content=\"no-referrer\" />` suppresses the HTTP `Referer` header on all click-throughs. UTM params embedded in redirect URLs will still reach GA, but any server-side referrer-based attribution will receive no data.",
+        "**[WARN] Hero image missing alt text**",
+        "```",
+        "src: https://dv.adidas.com/o/acbaf227-32b5-49c9-bc11-a0e23815f724?cp_tp=v3...",
+        "alt: (absent)",
+        "```",
+        "Renders as a blank space in image-blocked clients; fails WCAG 2.1 §1.1.1.",
+        "**[WARN] Tracking pixel missing alt text**",
+        "```",
+        "src: http://click.comms.adidas.com/CI0/0102019d8a2f4d0c-7ec239a0-4d02-4642-bacd-f69332afeaa3-000000/l9SzGQYm-UKezSrEUbKNbR10q...",
+        "alt: (absent)",
+        "```",
+        "Should carry `alt=\"\"` to suppress screen-reader announcement.",
+        "**[WARN] Four image instances served over HTTP**",
+        "Arrow graphic `b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` is embedded four times via plain HTTP:",
+        "```",
+        "src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg",
+        "```",
+        "Outlook and Gmail both block mixed-content HTTP images by default. All four instances will render as broken images in clients with strict security policies.",
+        "**[WARN] Tracking pixel also served over HTTP**",
+        "```",
+        "src: http://click.comms.adidas.com/CI0/...",
+        "```",
+        "Open-tracking will fail silently in clients that block HTTP resources.",
+        "**[INFO] Duplicate `@font-face` declarations**",
+        "`AdihausDIN` (weights 400, 700) and `AdineuePRO` (weights 400, 600) are each declared twice across two separate `<style>` blocks — once with three fallbacks (`Arial, Helvetica, Calibri, Sans Serif`) and once with two (`Arial, Helvetica`). The second declaration wins in cascade order, making the first block dead weight. No rendering breakage, but it inflates email size unnecessarily.",
+        "**[INFO] Malformed charset meta tag**",
+        "```html",
+        "<meta content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Missing the required `http-equiv=\"Content-Type\"` attribute. The correct form is:",
+        "```html",
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />",
+        "```",
+        "Most clients parse charset from the MIME headers anyway, but this tag as written is non-conformant and ignored.",
+        "No unresolved merge tokens (`{{`, `%%`, `*|`) visible in the provided HTML. Cannot fully audit the truncated portion.",
+        "**[FAIL] Plain-text fallback absent**",
+        "QA reports `Text version is 0 chars`. A multipart/alternative message with no text/plain body is a CAN-SPAM risk and will be flagged or clipped by certain corporate spam filters that require readable plain-text parts.",
+        "**[WARN] Authentication-Results header not observed**",
+        "SPF and DKIM pass/fail status for `us-news.comms.adidas.com` is unknown — the AgentMail relay did not surface an `Authentication-Results` header. If DKIM is not signing for this subdomain, DMARC alignment against the `adidas.com` organizational domain will fail, degrading deliverability to stricter receivers (Yahoo, Gmail enforcement).",
+        "Unsubscribe link: not auditable from the truncated source; cannot confirm CAN-SPAM §5(a)(3) compliance.",
+        "**[FAIL] Broken CTA breaks funnel entirely**",
+        "The `/g/` redirect failure (see §2) means the destination landing page is unreachable for that CTA. UTM attribution is moot for unreachable links.",
+        "**[WARN] `no-referrer` policy breaks referrer-based attribution**",
+        "Landing pages relying on `document.referrer` or server-side `Referer` headers (e.g., for A/B segmentation or channel attribution outside GA) will see null referrer for all clicks from this email."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "link_error",
+            "status": "fail",
+            "label": "Link error",
+            "detail": "unknown url type: '/g/acbaf227-32b5-49c9-bc11-a0e23815f724?txn=ff7b2780-37b7-11f1-a2a1-8668c83b363d'",
+            "url": "https://dv.adidas.com/o/acbaf227-32b5-49c9-bc11-a0e23815f724?cp_tp=v3.eJzjYuIIFuLgOHL9_Tk2AWYpXo6prVxC7Byv-AVYJHiVxDmO3c4GCrNxHPj-7RybEkxCaysTUFPrXhEBRgkWpRVMQqIcC2U0GL1YOBgFGIPAZARXApeQMMdzKQFGDWZkCSFxjpdSAkxoquMT4oESbTICzFiMMeT4JAW0llGBUYPJiYtj1yNeiW-sCjPZvLhASqQgypHYGfZC-hwfpARYoRpOH-CTaGJXOItbAwvQ8rdSAmxolhslGAEllsgIsGP13GspAQ4NFjTPvZES4MRULbGATeEokxEHx11eJWaOR45AVjMfkHXGCcjayw9kLXQDsi6DWDfdrFg5bptKMVhxcJzXkGLm6E634uS47wB066SZjEDmPRCzD8w87wZk3lzE6MAYxcFx3VCImeNfNZB1A8TqqAGyboJYPTVRnBxTrIVYOO71MgKZXTZA5uN-xgxGAIXkXGY=&amp;cp_cid=d63aafc3fa4b9098&amp;mi_cid=6739ca39099b72c7&amp;mi_mid=019d8d94-4e00-7000-9230-79cb2ac65cc7"
+          },
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://acquisitionpublic.adidas.com/acq-api/consumer/marketing-email/optout?token=OvGDNDNVpmvhIPPM5GeggFrExjIuNfhjsjYuDcV3gCqQbdZoqH2lmtBy2t2IncginLHZ0ZtjTyrZoy6EHJCyRsl5rbHUKjs3AUDYxFilSKsrg1R2xeqf"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "text_fallback_empty",
+            "status": "fail",
+            "label": "Plain-text fallback missing or too short",
+            "detail": "Text version is 0 chars"
+          },
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 7,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "24 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: acbaf227-32b5-49c9-bc11-a0e23815f724",
+            "detail": "src: https://dv.adidas.com/o/acbaf227-32b5-49c9-bc11-a0e23815f724?cp_tp=v3.eJzjYuIIFuLgOHL9_Tk2AWYpXo6prVxC7Byv-AVYJHiVxDmO3c"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"arrow\" (b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: l9SzGQYm-UKezSrEUbKNbR10quYxxNYySCk8ygeGpEs=452",
+            "detail": "src: http://click.comms.adidas.com/CI0/0102019d8a2f4d0c-7ec239a0-4d02-4642-bacd-f69332afeaa3-000000/l9SzGQYm-UKezSrEUbKNbR10q"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: l9SzGQYm-UKezSrEUbKNbR10quYxxNYySCk8ygeGpEs=452",
+            "detail": "Non-HTTPS source may be blocked — src: http://click.comms.adidas.com/CI0/0102019d8a2f4d0c-7ec239a0-4d02-4642-bacd-f69332afeaa3-000000/l9SzGQYm-UKezSrEUbKNbR10q"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "62%",
+      "total_checks": 8,
+      "total_issues": 2,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-14-available-now-the-real-madrid-bring-back-collection-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}

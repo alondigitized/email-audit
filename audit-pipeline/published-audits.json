@@ -1593,5 +1593,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-did-you-forget-something",
     "slug": "2026-04-14-did-you-forget-something",
     "persona": "walker"
+  },
+  {
+    "messageId": "<0102019d8a2f4d0c-7ec239a0-4d02-4642-bacd-f69332afeaa3-000000@eu-west-1.amazonses.com>",
+    "subject": "Available now - The Real Madrid Bring Back Collection",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-available-now-the-real-madrid-bring-back-collection",
+    "slug": "2026-04-14-available-now-the-real-madrid-bring-back-collection",
+    "persona": "walker"
   }
 ]
