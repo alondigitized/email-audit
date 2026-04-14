@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-14-more-comfort-less-effort-with-20-off-your-1st-pair",
+    "subject": "More Comfort, Less Effort with 20% off Your 1st Pair",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-14T15:08:08+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-14-put-your-feet-first-with-29-98-comfort-sandals",
     "subject": "Put Your Feet First with $29.98 Comfort Sandals",
     "from_display_name": "Shoe Carnival",
