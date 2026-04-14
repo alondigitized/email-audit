@@ -1656,5 +1656,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-test-pro-us-retpuropen-u-sitebundle-retail-en-04152026your-perfect-pair-bogo-50-",
     "slug": "2026-04-14-test-pro-us-retpuropen-u-sitebundle-retail-en-04152026your-perfect-pair-bogo-50-",
     "persona": "walker"
+  },
+  {
+    "messageId": "<69df2d7f-f186-431e-b3d2-61a84bfd0a71@dfw1s10mta1595.xt.local>",
+    "subject": "[Test]: PRO_US_ECMPURL24_U_SITEBUNDLE_ECOM_EN_04152026Spring Styles + BOGO 50% Off = The Perfect Pair",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04152026spring-styles-bogo-50-off-the",
+    "slug": "2026-04-14-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04152026spring-styles-bogo-50-off-the",
+    "persona": "walker"
   }
 ]
