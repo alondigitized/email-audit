@@ -1614,5 +1614,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-your-cart-expires-soon",
     "slug": "2026-04-14-your-cart-expires-soon",
     "persona": "walker"
+  },
+  {
+    "messageId": "<43cbfe92-4a14-4ae8-8289-78e3a1542dbb@iad4s12mta995.xt.local>",
+    "subject": "Put Your Feet First with $29.98 Comfort Sandals",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-put-your-feet-first-with-29-98-comfort-sandals",
+    "slug": "2026-04-14-put-your-feet-first-with-29-98-comfort-sandals",
+    "persona": "walker"
   }
 ]
