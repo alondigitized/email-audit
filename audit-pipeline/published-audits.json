@@ -1635,5 +1635,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-famous-for-the-styles-your-family-loves",
     "slug": "2026-04-14-famous-for-the-styles-your-family-loves",
     "persona": "walker"
+  },
+  {
+    "messageId": "<079a49d6-c810-488f-80b1-56de53a07b25@dfw1s10mta1595.xt.local>",
+    "subject": "[Test]: PRO_US_NA_U_SITEBUNDLE_FULL_EN_04152026Spring Styles + BOGO 50% Off = The Perfect Pair",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-test-pro-us-na-u-sitebundle-full-en-04152026spring-styles-bogo-50-off-the-perfec",
+    "slug": "2026-04-14-test-pro-us-na-u-sitebundle-full-en-04152026spring-styles-bogo-50-off-the-perfec",
+    "persona": "walker"
   }
 ]
