@@ -1740,5 +1740,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-mkg-us-na-u-multi-full-en-04162026loved-reviewed-and-ready-for-your-closet",
     "slug": "2026-04-15-test-mkg-us-na-u-multi-full-en-04162026loved-reviewed-and-ready-for-your-closet",
     "persona": "walker"
+  },
+  {
+    "messageId": "<a0490aea-5996-403f-9552-6356d827f117@dfw1s10mta1588.xt.local>",
+    "subject": "[Test]: MKG_US_NA_U_BEST_FULL_EN_04162026Loved, Reviewed, and Ready for Your Closet",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-mkg-us-na-u-best-full-en-04162026loved-reviewed-and-ready-for-your-closet",
+    "slug": "2026-04-15-test-mkg-us-na-u-best-full-en-04162026loved-reviewed-and-ready-for-your-closet",
+    "persona": "walker"
   }
 ]
