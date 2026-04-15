@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-15-test-mkg-us-na-u-best-full-en-04162026-v2loved-reviewed-and-ready-for-your-close",
+    "subject": "[Test]: MKG_US_NA_U_BEST_FULL_EN_04162026_V2Loved, Reviewed, and Ready for Your Closet",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-15T21:14:39+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-15-test-mkg-us-na-u-best-full-en-04162026loved-reviewed-and-ready-for-your-closet",
     "subject": "[Test]: MKG_US_NA_U_BEST_FULL_EN_04162026Loved, Reviewed, and Ready for Your Closet",
     "from_display_name": "SKECHERS",
