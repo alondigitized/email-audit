@@ -1691,5 +1691,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-did-you-forget-something",
     "slug": "2026-04-15-did-you-forget-something",
     "persona": "walker"
+  },
+  {
+    "messageId": "<b7b6c477-6635-4de6-a1d8-56d1ff3b5076@iad4s12mta991.xt.local>",
+    "subject": "Double Up on Sandals w/ BOGO FREE",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-double-up-on-sandals-w-bogo-free",
+    "slug": "2026-04-15-double-up-on-sandals-w-bogo-free",
+    "persona": "walker"
   }
 ]
