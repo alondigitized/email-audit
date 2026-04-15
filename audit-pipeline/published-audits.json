@@ -1775,5 +1775,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v2our-new-store-in-plaza-at-sunset-hi",
     "slug": "2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v2our-new-store-in-plaza-at-sunset-hi",
     "persona": "walker"
+  },
+  {
+    "messageId": "<ee227f3e-ed94-4a3f-a532-b03d1a5ba62b@dfw1s10mta889.xt.local>",
+    "subject": "[Test]: RET_US_NA_U_STORE1678_ZIP_EN_04162026_V3Our New Store In Sunset Plaza Is Opening Tomorrow!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-in-sunset-plaza-is-op",
+    "slug": "2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-in-sunset-plaza-is-op",
+    "persona": "walker"
   }
 ]
