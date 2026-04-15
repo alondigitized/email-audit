@@ -1698,5 +1698,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-double-up-on-sandals-w-bogo-free",
     "slug": "2026-04-15-double-up-on-sandals-w-bogo-free",
     "persona": "walker"
+  },
+  {
+    "messageId": "<7F.07.38011.DB8AFD96@i-06f4d79a3595cbf14.mta1vrest.sd.prd.sparkpost>",
+    "subject": "There’s still time, but not much…",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-there-s-still-time-but-not-much",
+    "slug": "2026-04-15-there-s-still-time-but-not-much",
+    "persona": "walker"
   }
 ]
