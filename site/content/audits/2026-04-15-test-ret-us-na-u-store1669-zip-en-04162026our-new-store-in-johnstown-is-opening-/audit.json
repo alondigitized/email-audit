@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening-",
+  "type": "email",
+  "persona": "walker",
+  "email": {
+    "subject": "[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store In Johnstown Is Opening Tomorrow!",
+    "from": "SKECHERS STORES <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS STORES",
+    "timestamp_iso": "2026-04-15T22:13:33+00:00",
+    "date_formatted": "2026-04-15 22:13 UTC"
+  },
+  "review": {
+    "score": "3/10",
+    "raw_markdown": "## Skechers Johnstown Store Opening — Email Review\n\n---\n\n### 1. Executive Summary\n\nThis is a store-opening announcement for the new Johnstown, CO location, and the body of the email is solid — clear headline, strong opening offer, and a well-structured category grid. But the email should never have reached any inbox in this state. The subject line contains an exposed internal campaign code and a `[Test]` prefix, and the preview text renders as raw JSON-LD schema markup. These are production-level QA failures that undermine brand credibility before the email is even opened.\n\n---\n\n### 2. Business Impact Score: **3 / 10**\n\nThe creative itself would score a 7. The QA failures drag it to a 3. A recipient who sees \"[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026...\" in their inbox either deletes immediately or loses confidence in the brand. The revenue opportunity of a grand-opening email is entirely wasted.\n\n---\n\n### 3. What's Working\n\n- **Hero is impossible to miss.** \"OPENING TOMORROW\" in large bold type with the full address is exactly what this moment needs. Clear, urgent, actionable.\n- **Double incentive structure is smart.** Buy 2, Get 3rd Free is a strong traffic driver; the free tote bag (no purchase necessary) lowers the barrier to walk in. Layering both in one email maximizes foot traffic potential.\n- **Category grid is well-executed.** Women / Men / Girls / Boys each have a lifestyle photo and a Shop Now CTA. The layout is clean and efficient.\n- **Utility section is complete.** App download, Curbside Pickup, BNPL logos (Afterpay, Klarna), and Find a Store are all present without overwhelming the layout.\n\n---\n\n### 4. What's Weak\n\n- **Subject line is a QA escape.** `[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store In Johnstown Is Opening Tomorrow!` — internal campaign code and test prefix are fully visible to recipients.\n- **Preview text is broken.** The preheader renders as raw JSON-LD structured data (`{ \"@context\": \"http://schema.org/\", \"@type\": \"Organization\"...`). This is the first text after the subject line in any inbox preview pane — it reads as gibberish and signals a broken send.\n- **\"GET DIRECTIONS\" CTA appears twice.** Once under the opening announcement and once under the Buy 2 Get 3rd Free offer. The second instance is confusing — directions aren't the natural next action after a promo.\n- **Offer dates are small.** The promotional date range for the Buy 2 / Get 3rd Free deal is easy to miss. Urgency framing is an asset here that isn't being maximized.\n- **Text link section is redundant.** The \"Shop Additional Styles\" text links (Women, Men, Kids, Clothing, New Arrivals, Sale) duplicate the visual category modules above without adding value.\n\n---\n\n### 5. Recommendations\n\n1. **Halt and re-send.** If this went to a live list, issue a corrected send. The `[Test]` tag and JSON preheader are disqualifying.\n2. **Fix the preheader.** The preview text should read something like: *\"Free tote bag + Buy 2, Get 3rd Free — visit us tomorrow at Johnstown Plaza.\"* This is premium real estate.\n3. **Replace the second \"GET DIRECTIONS\" with a primary offer CTA.** Something like \"CLAIM YOUR FREE PAIR\" or \"SHOP THE OPENING EVENT\" is more conversion-oriented under a promo block.\n4. **Surface the offer dates more prominently.** Increase font size or add a countdown-style visual callout — limited-time framing drives urgency.\n5. **Remove the redundant text link section** or collapse it into the footer. The visual category modules above do the job.\n\n---\n\n### 6. Bottom Line\n\nGreat creative trapped inside a broken send. The opening event had real momentum — strong offer, clean design, good incentive stack — but it arrived in inboxes with test artifacts in plain view. Fix the QA process so deployment checks strip internal codes and validate preheader content before any send reaches a live list.\n\n---\n\n### 7. Subject Line Analysis\n\n- **Subject:** `[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store In Johnstown Is Opening Tomorrow!`\n- **Length:** 87 characters\n- **Scores (1-10):** Clarity `2`, Curiosity `1`, Personalization `3`, Urgency `5`, Specificity `4`\n- **Strengths:**\n  - The tail end (\"Our New Store In Johnstown Is Opening Tomorrow!\") is genuinely clear and location-specific\n  - \"Tomorrow\" creates inherent urgency\n- **Weaknesses:**\n  - Internal campaign code and `[Test]` prefix render this unsendable in its current form\n  - No offer mention — the Buy 2 Get 3rd Free and free tote bag are stronger hooks than a location announcement alone\n- **Alt A:** `Johnstown: We Open Tomorrow — Buy 2, Get 3rd Pair Free`\n- **Alt B:** `Your New Skechers Is Opening Tomorrow + Free Tote Bag (No Purchase Needed)`\n\n---\n\n### 8. Evidence\n\n- **Overall purpose:** Grand opening announcement for the Skechers store at Johnstown Plaza, 4910 Thompson Parkway, Johnstown, CO 80534.\n- **Hero / primary value proposition:** Full-width \"OPENING TOMORROW\" banner with address and Get Directions CTA. Strong visual hierarchy.\n- **Membership / benefits section:** None present. No loyalty program mention.\n- **Product discoverability / recommendation modules:** Four category tiles (Women, Men, Girls, Boys) each with a lifestyle photo and Shop Now CTA. Effective and proportional.\n- **Utility / secondary modules:** App download (App Store + Google Play), Curbside Pickup, BNPL (Afterpay, Klarna), Find a Store, social follow icons. All functional.\n- **Bugs / friction / clarity issues:**\n  - `[Test]` prefix and internal campaign code visible in subject line\n  - Preview/preheader text renders as raw JSON schema markup — confirmed visible in the email metadata shown\n  - Second \"GET DIRECTIONS\" CTA beneath the promo module feels misplaced\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers Store Opening Email\n\n**From:** `no-reply@emails.skechers.com` | **Campaign:** `RET_US_NA_U_STORE1669_ZIP_EN_04162026`\n\n---\n\n### 1. Technical Summary\n\nThirteen content images are served over HTTP rather than HTTPS, creating a systemic mixed-content risk that will trigger security warnings or image suppression in most modern email clients. A protocol-less Return Path pixel URL and an unstripped `[Test]:` subject prefix are additional blocking issues for production send.\n\n---\n\n### 2. Link & Tracking Issues\n\n| Severity | Issue | Evidence |\n|---|---|---|\n| HIGH | Return Path pixel missing protocol entirely — will resolve as relative path and silently fail | `src=\"pixel.app.returnpath.net/pixel.gif?r=964ce...\"` (no `http://` or `https://`) |\n| WARN | ink1000 open-tracking pixel served over HTTP | `src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?...\"` |\n| INFO | 26 click-redirect links via `click.emails.skechers.com` could not be probed | QA finding — destination URLs and UTM parameters unverified |\n\nThe Krxd user-match beacons (`beacon.krxd.net`) are served over HTTPS and structurally valid, though their presence should be confirmed against current consent/data-sharing agreements.\n\n---\n\n### 3. Rendering & Accessibility\n\n**HTTP image sources (will be blocked or trigger warnings in Gmail, Apple Mail, Outlook):**\n\nAll 12 content images are hosted on `http://image.emails.skechers.com` — no HTTPS. Affected images include navigational and transactional assets:\n\n- Skechers logo: `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png`\n- App Store badge, Google Play badge, Curbside Pickup, AfterPay, Find A Store, Instagram, Facebook, YouTube icons — all same HTTP host\n\n**Missing `alt` text (2 images):**\n- `o.gif` — ink1000 tracking pixel (`src: http://www.ink1000.com/...`)\n- `49468f73-4651-4af3-bae2-61d1ae5db486.png` — unlabeled content image\n\n**Meta tag defects:**\n- `<meta content=\"text/html; charset=utf-8\" />` — missing required `http-equiv=\"Content-Type\"` attribute; charset declaration may be ignored\n- `<meta content=\"IE=Edge\" />` — missing `http-equiv=\"X-UA-Compatible\"`; IE conditional rendering hint will not apply\n\n**Accessibility flag:**\n- `-webkit-text-size-adjust: none` applied globally suppresses user font-size scaling on iOS — violates WCAG 1.4.4 (Resize Text)\n\n---\n\n### 4. Personalization & Merge Tokens\n\n| Severity | Issue | Evidence |\n|---|---|---|\n| HIGH | `[Test]:` prefix present in subject line — must be stripped before production deploy | `Subject: [Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store...` |\n| HIGH | Raw campaign ID concatenated directly into subject with no delimiter or space | `RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store...` — appears to be a merge failure; campaign ID bled into display subject |\n| INFO | Campaign ID correctly propagated to Krxd beacon and ink1000 pixel | `campaignid=RET_US_NA_U_STORE1669_ZIP_EN_04162026` — consistent |\n\nThe subject line concatenation strongly suggests the campaign ID was not properly scoped away from the display subject field, not merely a test-mode label.\n\n---\n\n### 5. Compliance\n\n| Area | Finding |\n|---|---|\n| SPF/DKIM | `Authentication-Results` header not present via AgentMail relay — SPF and DKIM pass/fail status unverifiable from this sample |\n| Unsubscribe | HTML source is truncated; presence of a CAN-SPAM-compliant unsubscribe mechanism and physical mailing address cannot be confirmed from the provided excerpt |\n| Reply-To | Sender is `no-reply@emails.skechers.com` — CAN-SPAM requires a functioning opt-out mechanism; ensure the unsubscribe path in the body is operational if no reply-to is set |\n\n**Action required:** Obtain full HTML and verify footer contains: (1) one-click unsubscribe or clear opt-out instructions, and (2) valid physical postal address.\n\n---\n\n### 6. Email-to-Site Continuity\n\nCannot fully audit — all 26 outbound links route through `click.emails.skechers.com` redirect and were not probed. UTM parameter presence on final landing URLs is unconfirmed.\n\n**Risk:** If the click-redirect strips or drops UTM parameters, store-opening campaign traffic will be unattributable in analytics. Recommend probing a sample of redirect chains from the rendered email before send.\n\n---\n\n### 7. Recommendations\n\n**Block on production send:**\n1. **Fix subject line** — remove `[Test]:` prefix and resolve the campaign ID concatenation into the display subject; these are two separate defects\n2. **Fix Return Path pixel URL** — add `https://` protocol to `pixel.app.returnpath.net/pixel.gif?r=...`\n3. **Verify authentication** — confirm SPF and DKIM are passing via the sending relay before deployment; a failed auth header at this volume risks inbox placement\n\n**Fix before send:**\n4. **Migrate all image URLs to HTTPS** — `image.emails.skechers.com` and `ink1000.com` open pixel must use HTTPS; 13 assets affected\n5. **Add `alt` text** to `49468f73...png` (content image) and `o.gif` (can be `alt=\"\"` for decorative/tracking)\n6. **Fix `<meta>` tags** — add `http-equiv=\"Content-Type\"` and `http-equiv=\"X-UA-Compatible\"` to their respective meta elements\n\n**Fix post-send (next version):**\n7. **Probe click redirects** — validate UTM parameters survive the `click.emails.skechers.com` redirect chain on a representative sample of links\n8. **Remove `-webkit-text-size-adjust: none`** or scope it narrowly — global suppression blocks user accessibility controls",
+    "sections": {
+      "executive_summary": [
+        "This is a store-opening announcement for the new Johnstown, CO location, and the body of the email is solid — clear headline, strong opening offer, and a well-structured category grid. But the email should never have reached any inbox in this state. The subject line contains an exposed internal campaign code and a `[Test]` prefix, and the preview text renders as raw JSON-LD schema markup. These are production-level QA failures that undermine brand credibility before the email is even opened.",
+        "The creative itself would score a 7. The QA failures drag it to a 3. A recipient who sees \"[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026...\" in their inbox either deletes immediately or loses confidence in the brand. The revenue opportunity of a grand-opening email is entirely wasted."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero is impossible to miss.** \"OPENING TOMORROW\" in large bold type with the full address is exactly what this moment needs. Clear, urgent, actionable.",
+        "- **Double incentive structure is smart.** Buy 2, Get 3rd Free is a strong traffic driver; the free tote bag (no purchase necessary) lowers the barrier to walk in. Layering both in one email maximizes foot traffic potential.",
+        "- **Category grid is well-executed.** Women / Men / Girls / Boys each have a lifestyle photo and a Shop Now CTA. The layout is clean and efficient.",
+        "- **Utility section is complete.** App download, Curbside Pickup, BNPL logos (Afterpay, Klarna), and Find a Store are all present without overwhelming the layout."
+      ],
+      "whats_weak": [
+        "- **Subject line is a QA escape.** `[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store In Johnstown Is Opening Tomorrow!` — internal campaign code and test prefix are fully visible to recipients.",
+        "- **Preview text is broken.** The preheader renders as raw JSON-LD structured data (`{ \"@context\": \"http://schema.org/\", \"@type\": \"Organization\"...`). This is the first text after the subject line in any inbox preview pane — it reads as gibberish and signals a broken send.",
+        "- **\"GET DIRECTIONS\" CTA appears twice.** Once under the opening announcement and once under the Buy 2 Get 3rd Free offer. The second instance is confusing — directions aren't the natural next action after a promo.",
+        "- **Offer dates are small.** The promotional date range for the Buy 2 / Get 3rd Free deal is easy to miss. Urgency framing is an asset here that isn't being maximized.",
+        "- **Text link section is redundant.** The \"Shop Additional Styles\" text links (Women, Men, Kids, Clothing, New Arrivals, Sale) duplicate the visual category modules above without adding value."
+      ],
+      "recommendations": [
+        "1. **Halt and re-send.** If this went to a live list, issue a corrected send. The `[Test]` tag and JSON preheader are disqualifying.",
+        "2. **Fix the preheader.** The preview text should read something like: *\"Free tote bag + Buy 2, Get 3rd Free — visit us tomorrow at Johnstown Plaza.\"* This is premium real estate.",
+        "3. **Replace the second \"GET DIRECTIONS\" with a primary offer CTA.** Something like \"CLAIM YOUR FREE PAIR\" or \"SHOP THE OPENING EVENT\" is more conversion-oriented under a promo block.",
+        "4. **Surface the offer dates more prominently.** Increase font size or add a countdown-style visual callout — limited-time framing drives urgency.",
+        "5. **Remove the redundant text link section** or collapse it into the footer. The visual category modules above do the job.",
+        "**Block on production send:**",
+        "1. **Fix subject line** — remove `[Test]:` prefix and resolve the campaign ID concatenation into the display subject; these are two separate defects",
+        "2. **Fix Return Path pixel URL** — add `https://` protocol to `pixel.app.returnpath.net/pixel.gif?r=...`",
+        "3. **Verify authentication** — confirm SPF and DKIM are passing via the sending relay before deployment; a failed auth header at this volume risks inbox placement",
+        "**Fix before send:**",
+        "4. **Migrate all image URLs to HTTPS** — `image.emails.skechers.com` and `ink1000.com` open pixel must use HTTPS; 13 assets affected",
+        "5. **Add `alt` text** to `49468f73...png` (content image) and `o.gif` (can be `alt=\"\"` for decorative/tracking)",
+        "6. **Fix `<meta>` tags** — add `http-equiv=\"Content-Type\"` and `http-equiv=\"X-UA-Compatible\"` to their respective meta elements",
+        "**Fix post-send (next version):**",
+        "7. **Probe click redirects** — validate UTM parameters survive the `click.emails.skechers.com` redirect chain on a representative sample of links",
+        "8. **Remove `-webkit-text-size-adjust: none`** or scope it narrowly — global suppression blocks user accessibility controls"
+      ],
+      "bottom_line": [
+        "Great creative trapped inside a broken send. The opening event had real momentum — strong offer, clean design, good incentive stack — but it arrived in inboxes with test artifacts in plain view. Fix the QA process so deployment checks strip internal codes and validate preheader content before any send reaches a live list."
+      ],
+      "subject_line": [
+        "- **Subject:** `[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store In Johnstown Is Opening Tomorrow!`",
+        "- **Length:** 87 characters",
+        "- **Scores (1-10):** Clarity `2`, Curiosity `1`, Personalization `3`, Urgency `5`, Specificity `4`",
+        "- **Strengths:**",
+        "- The tail end (\"Our New Store In Johnstown Is Opening Tomorrow!\") is genuinely clear and location-specific",
+        "- \"Tomorrow\" creates inherent urgency",
+        "- **Weaknesses:**",
+        "- Internal campaign code and `[Test]` prefix render this unsendable in its current form",
+        "- No offer mention — the Buy 2 Get 3rd Free and free tote bag are stronger hooks than a location announcement alone",
+        "- **Alt A:** `Johnstown: We Open Tomorrow — Buy 2, Get 3rd Pair Free`",
+        "- **Alt B:** `Your New Skechers Is Opening Tomorrow + Free Tote Bag (No Purchase Needed)`"
+      ],
+      "evidence": [
+        "- **Overall purpose:** Grand opening announcement for the Skechers store at Johnstown Plaza, 4910 Thompson Parkway, Johnstown, CO 80534.",
+        "- **Hero / primary value proposition:** Full-width \"OPENING TOMORROW\" banner with address and Get Directions CTA. Strong visual hierarchy.",
+        "- **Membership / benefits section:** None present. No loyalty program mention.",
+        "- **Product discoverability / recommendation modules:** Four category tiles (Women, Men, Girls, Boys) each with a lifestyle photo and Shop Now CTA. Effective and proportional.",
+        "- **Utility / secondary modules:** App download (App Store + Google Play), Curbside Pickup, BNPL (Afterpay, Klarna), Find a Store, social follow icons. All functional.",
+        "- **Bugs / friction / clarity issues:**",
+        "- `[Test]` prefix and internal campaign code visible in subject line",
+        "- Preview/preheader text renders as raw JSON schema markup — confirmed visible in the email metadata shown",
+        "- Second \"GET DIRECTIONS\" CTA beneath the promo module feels misplaced",
+        "**From:** `no-reply@emails.skechers.com` | **Campaign:** `RET_US_NA_U_STORE1669_ZIP_EN_04162026`",
+        "Thirteen content images are served over HTTP rather than HTTPS, creating a systemic mixed-content risk that will trigger security warnings or image suppression in most modern email clients. A protocol-less Return Path pixel URL and an unstripped `[Test]:` subject prefix are additional blocking issues for production send.",
+        "| Severity | Issue | Evidence |",
+        "|---|---|---|",
+        "| HIGH | Return Path pixel missing protocol entirely — will resolve as relative path and silently fail | `src=\"pixel.app.returnpath.net/pixel.gif?r=964ce...\"` (no `http://` or `https://`) |",
+        "| WARN | ink1000 open-tracking pixel served over HTTP | `src=\"http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?...\"` |",
+        "| INFO | 26 click-redirect links via `click.emails.skechers.com` could not be probed | QA finding — destination URLs and UTM parameters unverified |",
+        "The Krxd user-match beacons (`beacon.krxd.net`) are served over HTTPS and structurally valid, though their presence should be confirmed against current consent/data-sharing agreements.",
+        "**HTTP image sources (will be blocked or trigger warnings in Gmail, Apple Mail, Outlook):**",
+        "All 12 content images are hosted on `http://image.emails.skechers.com` — no HTTPS. Affected images include navigational and transactional assets:",
+        "- Skechers logo: `http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png`",
+        "- App Store badge, Google Play badge, Curbside Pickup, AfterPay, Find A Store, Instagram, Facebook, YouTube icons — all same HTTP host",
+        "**Missing `alt` text (2 images):**",
+        "- `o.gif` — ink1000 tracking pixel (`src: http://www.ink1000.com/...`)",
+        "- `49468f73-4651-4af3-bae2-61d1ae5db486.png` — unlabeled content image",
+        "**Meta tag defects:**",
+        "- `<meta content=\"text/html; charset=utf-8\" />` — missing required `http-equiv=\"Content-Type\"` attribute; charset declaration may be ignored",
+        "- `<meta content=\"IE=Edge\" />` — missing `http-equiv=\"X-UA-Compatible\"`; IE conditional rendering hint will not apply",
+        "**Accessibility flag:**",
+        "- `-webkit-text-size-adjust: none` applied globally suppresses user font-size scaling on iOS — violates WCAG 1.4.4 (Resize Text)",
+        "| Severity | Issue | Evidence |",
+        "|---|---|---|",
+        "| HIGH | `[Test]:` prefix present in subject line — must be stripped before production deploy | `Subject: [Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store...` |",
+        "| HIGH | Raw campaign ID concatenated directly into subject with no delimiter or space | `RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store...` — appears to be a merge failure; campaign ID bled into display subject |",
+        "| INFO | Campaign ID correctly propagated to Krxd beacon and ink1000 pixel | `campaignid=RET_US_NA_U_STORE1669_ZIP_EN_04162026` — consistent |",
+        "The subject line concatenation strongly suggests the campaign ID was not properly scoped away from the display subject field, not merely a test-mode label.",
+        "| Area | Finding |",
+        "|---|---|",
+        "| SPF/DKIM | `Authentication-Results` header not present via AgentMail relay — SPF and DKIM pass/fail status unverifiable from this sample |",
+        "| Unsubscribe | HTML source is truncated; presence of a CAN-SPAM-compliant unsubscribe mechanism and physical mailing address cannot be confirmed from the provided excerpt |",
+        "| Reply-To | Sender is `no-reply@emails.skechers.com` — CAN-SPAM requires a functioning opt-out mechanism; ensure the unsubscribe path in the body is operational if no reply-to is set |",
+        "**Action required:** Obtain full HTML and verify footer contains: (1) one-click unsubscribe or clear opt-out instructions, and (2) valid physical postal address.",
+        "Cannot fully audit — all 26 outbound links route through `click.emails.skechers.com` redirect and were not probed. UTM parameter presence on final landing URLs is unconfirmed.",
+        "**Risk:** If the click-redirect strips or drops UTM parameters, store-opening campaign traffic will be unattributable in analytics. Recommend probing a sample of redirect chains from the rendered email before send."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 1,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "personalization_ok",
+            "status": "pass",
+            "label": "No merge issues",
+            "detail": "No raw tokens or empty slots"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMzI4ODQzNTciLCJsaWQiOiIyNSIsImoiOiIxODU4NTYiLCJqYiI6IjEiLCJkIjoiMTA"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 13,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "26 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8004129222&mi_ecmp=RET_US_NA_U_STORE1669_ZIP_EN_04162026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8004129222&mi_ecmp=RET_US_NA_U_STORE1669_ZIP_EN_04162026"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Curbside Pickup\" (00100b23-0afa-4715-a8cd-23bb46f9d2b2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Find A Store\" (fc08601a-fcce-4c96-8b90-39e5a55d6c05.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening--email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=673FAUMIT5PURDBZQZRG3ZMNLY.100217"
+  }
+}

@@ -1754,5 +1754,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-mkg-us-na-u-best-full-en-04162026-v2loved-reviewed-and-ready-for-your-close",
     "slug": "2026-04-15-test-mkg-us-na-u-best-full-en-04162026-v2loved-reviewed-and-ready-for-your-close",
     "persona": "walker"
+  },
+  {
+    "messageId": "<c9992557-ef75-482a-b75a-557551fcf08b@dfw1s10mta141.xt.local>",
+    "subject": "[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026Our New Store In Johnstown Is Opening Tomorrow!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening-",
+    "slug": "2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening-",
+    "persona": "walker"
   }
 ]
