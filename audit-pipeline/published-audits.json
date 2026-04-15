@@ -1670,5 +1670,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-14-test-pro-us-nonpurclick-u-sitebundle-nonpurch-en-04152026spring-styles-20-off-th",
     "slug": "2026-04-14-test-pro-us-nonpurclick-u-sitebundle-nonpurch-en-04152026spring-styles-20-off-th",
     "persona": "walker"
+  },
+  {
+    "messageId": "<AvSI9Hw0TACxi8_hh4apIQ@geopod-ismtpd-99>",
+    "subject": "Your Items Are Waiting!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-your-items-are-waiting",
+    "slug": "2026-04-15-your-items-are-waiting",
+    "persona": "walker"
   }
 ]
