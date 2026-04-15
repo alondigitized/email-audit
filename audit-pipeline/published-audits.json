@@ -1712,5 +1712,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-membership-has-its-perks",
     "slug": "2026-04-15-membership-has-its-perks",
     "persona": "walker"
+  },
+  {
+    "messageId": "<aa51b666-5c64-4325-ac19-1f3290f5cb30@dfw1s10mta141.xt.local>",
+    "subject": "Spring Styles + 20% Off = The Perfect Pair",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-spring-styles-20-off-the-perfect-pair",
+    "slug": "2026-04-15-spring-styles-20-off-the-perfect-pair",
+    "persona": "walker"
   }
 ]
