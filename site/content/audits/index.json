@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v2our-new-store-in-plaza-at-sunset-hi",
+    "subject": "[Test]: RET_US_NA_U_STORE1678_ZIP_EN_04162026_V2Our New Store In Plaza at Sunset Hills Is Opening Tomorrow!",
+    "from_display_name": "SKECHERS STORES",
+    "timestamp_iso": "2026-04-15T22:57:34+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "83%",
+      "total_checks": 6,
+      "total_issues": 0,
+      "total_warnings": 1
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026our-new-store-in-plaza-at-sunset-hills",
     "subject": "[Test]: RET_US_NA_U_STORE1678_ZIP_EN_04162026Our New Store In Plaza at Sunset Hills Is Opening Tomorrow!",
     "from_display_name": "SKECHERS STORES",
