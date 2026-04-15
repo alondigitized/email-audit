@@ -1761,5 +1761,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening-",
     "slug": "2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening-",
     "persona": "walker"
+  },
+  {
+    "messageId": "<bbf5732f-423d-4d8c-9a9c-35468d708e43@dfw1s10mta1595.xt.local>",
+    "subject": "[Test]: RET_US_NA_U_STORE1678_ZIP_EN_04162026Our New Store In Plaza at Sunset Hills Is Opening Tomorrow!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026our-new-store-in-plaza-at-sunset-hills",
+    "slug": "2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026our-new-store-in-plaza-at-sunset-hills",
+    "persona": "walker"
   }
 ]
