@@ -1810,5 +1810,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday-",
     "slug": "2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday-",
     "persona": "walker"
+  },
+  {
+    "messageId": "2026-04-16-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-16-site-journey-walker",
+    "pdfPath": "",
+    "slug": "2026-04-16-site-journey-walker"
   }
 ]
