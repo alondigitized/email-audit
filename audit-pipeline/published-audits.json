@@ -1852,5 +1852,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-your-15-off-is-waiting",
     "slug": "2026-04-16-your-15-off-is-waiting",
     "persona": "walker"
+  },
+  {
+    "messageId": "<2b77f8fc-0fe8-4748-911d-07f3273c33d6@dfw1s10mta492.xt.local>",
+    "subject": "Loved, Reviewed, and Ready for Your Closet",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-loved-reviewed-and-ready-for-your-closet",
+    "slug": "2026-04-16-loved-reviewed-and-ready-for-your-closet",
+    "persona": "walker"
   }
 ]
