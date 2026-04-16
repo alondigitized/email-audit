@@ -16,6 +16,17 @@
     "persona": "walker"
   },
   {
+    "slug": "2026-04-16-your-cart-expires-soon",
+    "subject": "Your cart expires soon!",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-16T13:21:06+00:00",
+    "score": "5/10",
+    "qa_summary": null,
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday-",
     "subject": "[Test]: RET_US_NA_U_STORE1408_ZIP_EN_04172026SALE Ends Soon! Celebrate our Birthday in Buffalo",
     "from_display_name": "SKECHERS STORES",
