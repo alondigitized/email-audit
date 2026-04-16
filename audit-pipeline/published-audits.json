@@ -1845,5 +1845,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-59-98-skechers-yes-please",
     "slug": "2026-04-16-59-98-skechers-yes-please",
     "persona": "walker"
+  },
+  {
+    "messageId": "<6fe8f83b-3911-4008-8e55-950f7187a8b1@atl1s07mta0139.xt.local>",
+    "subject": "Your 15% OFF is waiting.",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-your-15-off-is-waiting",
+    "slug": "2026-04-16-your-15-off-is-waiting",
+    "persona": "walker"
   }
 ]
