@@ -1,5 +1,16 @@
 [
   {
+    "slug": "2026-04-16-59-98-skechers-yes-please",
+    "subject": "$59.98 Skechers? Yes, Please",
+    "from_display_name": "Shoe Carnival",
+    "timestamp_iso": "2026-04-16T14:49:41+00:00",
+    "score": "6/10",
+    "qa_summary": null,
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-16-did-you-forget-something",
     "subject": "Did you forget something?",
     "from_display_name": "SKECHERS",
