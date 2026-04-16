@@ -1789,5 +1789,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-at-cottman-ave-is-ope",
     "slug": "2026-04-16-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-at-cottman-ave-is-ope",
     "persona": "walker"
+  },
+  {
+    "messageId": "<7c90c870-5e26-4922-ac5e-649dc66e2683@dfw1s10mta699.xt.local>",
+    "subject": "[Test]: RET_US_NA_U_STORE1669_ZIP_EN_04162026_V3Our New Store In Johnstown Is Opening Tomorrow!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1669-zip-en-04162026-v3our-new-store-in-johnstown-is-openi",
+    "slug": "2026-04-16-test-ret-us-na-u-store1669-zip-en-04162026-v3our-new-store-in-johnstown-is-openi",
+    "persona": "walker"
   }
 ]
