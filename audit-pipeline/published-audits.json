@@ -1824,5 +1824,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-your-cart-expires-soon",
     "slug": "2026-04-16-your-cart-expires-soon",
     "persona": "walker"
+  },
+  {
+    "messageId": "<-YzVmiZlQj-YVSxrwJH9vA@geopod-ismtpd-1>",
+    "subject": "Your Items Are Waiting!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-your-items-are-waiting",
+    "slug": "2026-04-16-your-items-are-waiting",
+    "persona": "walker"
   }
 ]
