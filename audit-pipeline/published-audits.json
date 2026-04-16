@@ -1782,5 +1782,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-in-sunset-plaza-is-op",
     "slug": "2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-in-sunset-plaza-is-op",
     "persona": "walker"
+  },
+  {
+    "messageId": "<4908c4be-cd3a-4a1d-b0b4-59f876d6cb51@dfw1s10mta703.xt.local>",
+    "subject": "[Test]: RET_US_NA_U_STORE1678_ZIP_EN_04162026_V3Our New Store At Cottman Ave Is Opening Tomorrow!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-at-cottman-ave-is-ope",
+    "slug": "2026-04-16-test-ret-us-na-u-store1678-zip-en-04162026-v3our-new-store-at-cottman-ave-is-ope",
+    "persona": "walker"
   }
 ]
