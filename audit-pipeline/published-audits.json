@@ -1796,5 +1796,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1669-zip-en-04162026-v3our-new-store-in-johnstown-is-openi",
     "slug": "2026-04-16-test-ret-us-na-u-store1669-zip-en-04162026-v3our-new-store-in-johnstown-is-openi",
     "persona": "walker"
+  },
+  {
+    "messageId": "<5722a618-5dc5-4eb2-8841-3f1ac28ea53f@dfw1s10mta888.xt.local>",
+    "subject": "[Test]: RET_US_NA_U_STORE1173_ZIP_EN_04162026_V3Our New Store In Corona Hills Plaza Is Opening Tomorrow!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1173-zip-en-04162026-v3our-new-store-in-corona-hills-plaza",
+    "slug": "2026-04-16-test-ret-us-na-u-store1173-zip-en-04162026-v3our-new-store-in-corona-hills-plaza",
+    "persona": "walker"
   }
 ]
