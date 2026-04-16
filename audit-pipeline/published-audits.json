@@ -1803,5 +1803,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1173-zip-en-04162026-v3our-new-store-in-corona-hills-plaza",
     "slug": "2026-04-16-test-ret-us-na-u-store1173-zip-en-04162026-v3our-new-store-in-corona-hills-plaza",
     "persona": "walker"
+  },
+  {
+    "messageId": "<ed78e052-f480-4a6e-9649-9b9b535bbdc1@dfw1s10mta892.xt.local>",
+    "subject": "[Test]: RET_US_NA_U_STORE1408_ZIP_EN_04172026SALE Ends Soon! Celebrate our Birthday in Buffalo",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday-",
+    "slug": "2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday-",
+    "persona": "walker"
   }
 ]
