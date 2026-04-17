@@ -1873,5 +1873,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-17-site-journey-walker",
     "pdfPath": "",
     "slug": "2026-04-17-site-journey-walker"
+  },
+  {
+    "messageId": "<GJxnRaxJRFOxbA6Hd9XThg@geopod-ismtpd-42>",
+    "subject": "Your cart expires soon!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-17-your-cart-expires-soon",
+    "slug": "2026-04-17-your-cart-expires-soon",
+    "persona": "walker"
   }
 ]
