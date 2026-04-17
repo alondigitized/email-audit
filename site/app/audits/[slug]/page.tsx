@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getAuditBySlug, getAllSlugs } from "@/lib/audits";
+import { getAuditBySlugForUser } from "@/lib/audits";
+import { requireUser } from "@/lib/dal";
 import { splitReview } from "@/lib/types";
 import type { JourneyStep, PerfStep } from "@/lib/types";
 import { ReviewContent } from "@/components/ReviewContent";
@@ -9,9 +10,8 @@ import { QaCard } from "@/components/QaCard";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { TabNav } from "@/components/TabNav";
 
-export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
-}
+// S7: per-user filtering means we can't statically pre-render slugs.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -19,7 +19,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const audit = getAuditBySlug(slug);
+  const user = await requireUser();
+  const audit = getAuditBySlugForUser(slug, user.personas);
   return { title: audit?.email.subject ?? "Audit" };
 }
 
@@ -142,7 +143,8 @@ export default async function AuditPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const audit = getAuditBySlug(slug);
+  const user = await requireUser();
+  const audit = getAuditBySlugForUser(slug, user.personas);
   if (!audit) notFound();
 
   const { email, review, qa, assets } = audit;

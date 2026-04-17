@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { getPersonaSlugsForUser } from "./personas-db";
 
 export type CurrentUser = {
   id: string;
   email: string;
   name: string | null;
-  // Populated in Phase 2; empty array until user_personas exists/is seeded.
   personas: string[];
 };
 
@@ -16,21 +16,23 @@ export async function requireUser(): Promise<CurrentUser> {
   if (!session?.user?.id || !session.user.email) {
     redirect("/login");
   }
+  const personas = await getPersonaSlugsForUser(session.user.id);
   return {
     id: session.user.id,
     email: session.user.email,
     name: session.user.name ?? null,
-    personas: [], // Phase 2 will hydrate from user_personas
+    personas,
   };
 }
 
 export async function currentUser(): Promise<CurrentUser | null> {
   const session = await auth();
   if (!session?.user?.id || !session.user.email) return null;
+  const personas = await getPersonaSlugsForUser(session.user.id);
   return {
     id: session.user.id,
     email: session.user.email,
     name: session.user.name ?? null,
-    personas: [],
+    personas,
   };
 }

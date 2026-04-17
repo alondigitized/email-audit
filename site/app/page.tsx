@@ -1,8 +1,12 @@
-import { getAuditIndex } from "@/lib/audits";
+import { getAuditIndexForUser } from "@/lib/audits";
+import { requireUser } from "@/lib/dal";
 import { HomeContent } from "@/components/HomeContent";
 
-export default function Home() {
-  const audits = getAuditIndex();
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const user = await requireUser();
+  const audits = getAuditIndexForUser(user.personas);
 
   return (
     <>
