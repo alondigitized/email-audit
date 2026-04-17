@@ -43,6 +43,7 @@ export async function requestMagicLink(
     await signIn("resend", {
       email,
       redirect: false,
+      redirectTo: "/",
     });
     logSigninAttempt({ emailHash, ip, outcome: "sent" });
   } catch (err) {

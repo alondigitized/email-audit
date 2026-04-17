@@ -1,4 +1,6 @@
+import { redirect } from "next/navigation";
 import LoginForm from "./LoginForm";
+import { currentUser } from "@/lib/dal";
 
 type Search = { [key: string]: string | string[] | undefined };
 
@@ -9,6 +11,10 @@ export default async function LoginPage({
 }) {
   const sp = await searchParams;
   const sent = sp?.sent === "1";
+
+  // If already signed in, don't show the login form — punt to the app.
+  const user = await currentUser();
+  if (user) redirect("/");
 
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
