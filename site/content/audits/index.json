@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-17-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-17T13:12:05.370Z",
+    "score": "3/10",
+    "qa_summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "has_image": true,
+    "type": "site",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-16-loved-reviewed-and-ready-for-your-closet-abc03e52-37dd-4270-8885-",
     "subject": "Loved, Reviewed, and Ready for Your Closet",
     "from_display_name": "SKECHERS",

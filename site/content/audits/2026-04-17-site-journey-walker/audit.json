@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-17-site-journey-walker",
+  "type": "site",
+  "persona": "walker",
+  "email": {
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "from": "https://www.skechers.com",
+    "from_display_name": "www.skechers.com",
+    "timestamp_iso": "2026-04-17T13:12:05.370Z",
+    "date_formatted": "2026-04-17 13:12:05 UTC"
+  },
+  "review": {
+    "score": "3/10",
+    "raw_markdown": "---\n\n# Walker Miles — Skechers.com Mobile Journey Review\n**Date:** April 17, 2026 | **Yesterday's Score: 4/10**\n\n---\n\n## 1. Executive Summary\n\nI'm Walker Miles, 62, Skechers Plus member, shopping on my phone for Hands-Free Slip-ins. I went through the whole journey today — homepage to cart — and hit a wall that would've sent me straight to my local shoe store. The homepage ignored me entirely, the login left no trace it worked, and when I finally got a shoe I liked into the cart... the cart page was a blank white screen. Nothing. Couldn't have bought those shoes if I tried. That's a broken checkout, and for a loyal member like me, that stings.\n\n---\n\n## 2. Business Impact Score: **3/10** *(Down from 4/10 yesterday — regression)*\n\nThe blank cart is a critical regression. Revenue cannot flow through a white screen. Everything else was mixed, but that one failure alone tanks the score.\n\n---\n\n## 3. What's Working\n\n- **Men's menu is clean and well-organized.** Large text, generous tap targets, and — this is the key thing — \"Hands Free Slip-ins\" is right there in the menu without me having to dig. That's exactly right.\n- **BOGO 50% OFF is impossible to miss.** The banner is pinned to the top of every screen. I noticed it immediately and it kept me interested.\n- **Product page is readable and honest.** The Max Cushioning Glide-Step page had a big clear name, star rating, price, and the BOGO deal called out again. The Slip-ins badge gave me confidence I was in the right product category.\n- **\"ADD TO CART\" button is large and blue.** Easy to tap, no confusion about what to do next.\n- **Fit filters on the category page are relevant.** Wide Fit and Extra Wide Fit buttons front and center on the Hands Free Slip-ins listing page — that matters to guys my age.\n\n---\n\n## 4. What's Weak\n\n- **Homepage is a women's store.** The entire hero is the Pink Pack Collection — mom, daughter, pink shoes. The tab row below shows \"Women's\" and \"Girls'.\" I am a 62-year-old man who just logged in. There is zero acknowledgment that I exist. No \"Welcome back, Walker.\" No Men's content. No Slip-ins. Nothing.\n- **Login left no visible confirmation.** The screenshot after login looks identical to before — same hero, same \"Get Mom a Gift She'll Love!\" banner, cart still shows 0. I have no idea if I'm logged in. That's disorienting.\n- **Cart page is completely blank.** Step 8 is a white screen. No cart items, no error message, nothing. This is a critical failure. A purchase cannot be completed.\n- **Size grid has a puzzling gap.** The size selector shows 7.0, 7.5, 8.0 — then jumps to 10.5. Sizes 9.0, 9.5, and 10.0 are nowhere. No explanation. Are they sold out? Not carried? I'd be scratching my head wondering if the page broke.\n- **Search results lead with Women's shoes.** I searched \"slip in\" and the first two visible products are both tagged \"Women's.\" With 1,003 results and no Men's filter applied by default, I'd have to do extra work to find my shoes.\n- **265 results on the category page is overwhelming.** No default sorting by bestsellers or relevance for my profile. Too much to scroll through on a phone.\n- **No Skechers Plus personalization anywhere.** I'm a member. I see one small mention of Plus on the product page, but it's a recruitment pitch — \"join for free\" — as if I'm not already a member.\n\n---\n\n## 5. Recommendations\n\n1. **Fix the cart page immediately.** This is a P0 bug. A blank cart means zero conversions. Investigate and resolve before anything else.\n2. **Personalize the homepage for logged-in members.** If I'm signed in as a male Slip-ins buyer, the hero should reflect that — or at least show Men's content in the featured tabs.\n3. **Show a clear logged-in confirmation.** A simple \"Welcome back, Walker\" in the header goes a long way for trust and orientation.\n4. **Explain the missing sizes.** If 9.0–10.0 are sold out, say \"Sold Out\" with grayed boxes. The sudden jump from 8.0 to 10.5 looks like a page error.\n5. **Filter search results by gender when the user is logged in.** A male member searching \"slip in\" should see Men's products first by default.\n6. **Surface Skechers Plus member benefits.** Don't pitch me on joining — show me my benefits in action. \"Your Plus free shipping is applied\" on the cart would create loyalty.\n\n---\n\n## 6. Bottom Line\n\nYesterday was a 4. Today is a **3** — it went backward. The Men's navigation is genuinely good work and the product page is solid, but the blank cart is a showstopper. I cannot buy shoes I can't put in a working cart. Fix that first, then fix the homepage so it doesn't greet a 62-year-old male loyalist with pink flowers and Mother's Day messaging.\n\n---\n\n## 7. Evidence\n\n### Step 1 — Homepage\n**What I saw:** The full-screen hero is the \"Pink Pack Collection\" — a woman and young girl in pink shoes. Below the hero, the tab row shows \"Women's\" and \"Girls'\" categories. A banner reads \"Get Mom a Gift She'll Love!\" The BOGO 50% OFF bar is pinned at the very top.\n\n**Phone usability:** The layout renders cleanly on mobile. Text is readable. But all content is aimed at women.\n\n**Friction:** Immediate mismatch. I came to buy men's slip-ins. Nothing here speaks to me. No Men's tab visible. No Slip-ins featured.\n\n**Personalization:** None. No indication the site knows who I am.\n\n---\n\n### Step 2 — Dismiss Popups\n**What I saw:** Nearly identical to the homepage. The sub-banner changed from \"Get Mom a Gift She'll Love!\" to \"Free Shipping with Skechers Plus — Join Now for free.\" The Pink Pack hero remains. Women's/Girls' tabs still at bottom.\n\n**Phone usability:** Clean, no disruptive popups blocking content — that's good.\n\n**Friction:** \"Join Now for free\" — I'm already a Plus member. This is tone-deaf to my loyalty status.\n\n**Personalization:** None.\n\n---\n\n### Step 3 — Log In\n**What I saw:** The screenshot looks identical to the homepage. Same Pink Pack hero, same Women's/Girls' tabs, same \"Get Mom a Gift She'll Love!\" banner. Cart icon still shows 0.\n\n**Phone usability:** N/A — can't evaluate a login form that didn't appear in frame.\n\n**Friction:** I have no visual confirmation I'm logged in. No name, no welcome, no account state change visible. This would make me tap the account icon again to check.\n\n**Personalization:** None detected post-login.\n\n---\n\n### Step 4 — Men's Category (Navigation Menu)\n**What I saw:** A clean full-screen mobile menu showing MEN at the top, then: Shoes, Shop by Activity, Comfort Technologies, Collections, Collaborations, Clothing & Accessories (each with a > arrow). Below those, flat text links: Hands Free Slip-ins, Wide Fit, Extra Wide Fit.\n\n**Phone usability:** Excellent. Large text, generous row height, easy tapping. The X button to close is in the corner, Back button is top-left — both standard and expected.\n\n**Friction:** None. This was the smoothest step in the entire journey.\n\n**Personalization:** \"Hands Free Slip-ins\" as a featured shortcut is exactly right for someone like me. This felt like it was built with my use case in mind.\n\n---\n\n### Step 5 — Men's Shoes (Hands Free Slip-ins Category Page)\n**What I saw:** Breadcrumb \"Men > Shoes.\" Big heading: \"Hands Free Slip-ins.\" A short paragraph explaining the Heel Pillow technology. Fit filter buttons: Wide Fit, Extra Wide Fit, Medium Fit (partially cut off). \"265 Results\" with a Free Pickup toggle. Filter and Sort by controls. Two product thumbnails starting to appear at the bottom.\n\n**Phone usability:** Good layout. Text is readable, buttons are tappable.\n\n**Friction:** 265 results with no intelligent default sort is a lot to scroll through on a phone. No \"Best for You\" or \"Most Popular\" applied by default. Also: \"Medium Fit\" is cut off on the right edge — I might not know to scroll that row.\n\n**Personalization:** Fit filters are relevant. But no pre-selection based on my history.\n\n---\n\n### Step 6 — View Product (Max Cushioning Glide-Step – Sapphire)\n**What I saw:** \"MEN'S\" label. Product name in large bold text. 4.5 stars, 65 reviews, Add to Wishlist. Price: $115.00. \"Buy 1, Get 1 50% OFF! Applied at Cart\" with a tag icon. Skechers Hands-Free Slip-ins badge. A clean product image of the shoe with left/right swipe arrows.\n\n**Phone usability:** Very good. All text readable without zooming. Price and deal are prominent. Stars are a familiar trust signal.\n\n**Friction:** Minor — the BOGO deal language (\"Applied at Cart\") requires me to trust a promise I can't verify until checkout. At 62, I want to see it confirmed.\n\n**Personalization:** The product is exactly in my category, which feels right. No \"you might also like\" or member price callout.\n\n---\n\n### Step 7 — Add to Cart (Size Selection)\n**What I saw:** Size selector with boxes: 7.0, 7.5, 8.0 — then jumps to 10.5, 11.0, 11.5, 12.0, 13.0, 14.0. A red warning triangle: \"Please select a size.\" QTY dropdown set to 1. Ship It and Check In-Store Availability options. A Skechers Plus pitch at the bottom. Large blue \"ADD TO CART\" button.\n\n**Phone usability:** The size boxes are a reasonable tap size. The ADD TO CART button is large and clear.\n\n**Friction:** The gap from 8.0 to 10.5 is alarming — sizes 9.0, 9.5, and 10.0 are just absent. No \"sold out\" label. I'd wonder if the page loaded wrong. This would create hesitation and possibly cart abandonment.\n\n**Personalization:** The Plus section reads like a recruitment pitch — \"Join for Free Shipping, Free Returns & Earn a...\" — I'm already a member. This should say \"Your Plus benefits are active.\"\n\n---\n\n### Step 8 — View Cart\n**What I saw:** A completely blank white screen. Nothing rendered. No cart items, no subtotal, no error message, no \"your cart is empty\" notice, no navigation. Pure white.\n\n**Phone usability:** Not applicable — the page is broken.\n\n**Friction:** Maximum. This is a total failure. I cannot proceed to checkout. I cannot see what's in my cart. I cannot buy anything. If this happened to me in real life, I'd close the browser and either call the store or go to a competitor.\n\n**Personalization:** N/A — nothing rendered.\n\n---\n\n### Step 9 — Search (\"slip in\")\n**What I saw:** \"SLIP IN\" as the search heading. \"(1003)\" results count. Filter and Sort by options. Two products visible: \"Skechers Slip-ins: Arch Fit Arcade – See Ya There\" (Women's, Also in Wide) and \"Skechers Slip-ins: Glide-Step Altus\" (Women's, Also in Wide). Color swatches shown under each. Prices partially cropped.\n\n**Phone usability:** Clean search results layout. Two-column grid works on mobile.\n\n**Friction:** Both visible products are Women's. As a male shopper, I'd assume the search is broken or my gender preference isn't being honored. With 1,003 results and Women's first, I'd have to manually filter to Men's — extra work I shouldn't need.\n\n**Personalization:** None. The search engine has no apparent awareness of my gender or purchase history despite being logged in (or attempting to be).\n\n---\n\n*Reviewed by Walker Miles, Skechers Plus Member | April 17, 2026*\n\n---\n\n## Technical Audit\n\n## Technical Summary\n\nSkechers.com runs on Salesforce Commerce Cloud (SFCC), evidenced by `on/demandware.static/Sites-USSkechers-Site/` asset paths. The mobile journey carries an extremely heavy third-party script payload, has 32 axe accessibility violations (4 critical), active Kasada bot-protection rate-limiting against the audit runner, and a broken Stylitics widget due to CORS misconfiguration. LCP and CLS were not captured for any step — a data collection gap that must be remedied for a complete Core Web Vitals picture.\n\n---\n\n## Accessibility\n\n**32 violations total. 4 critical.**\n\n| Severity | Count | Key Issues |\n|---|---|---|\n| Critical | 4 | `aria-required-parent` (Homepage), `aria-required-children`, `aria-valid-attr-value`, `button-name` (View Product) |\n| Serious | 5+ | `link-name` (Homepage), `link-in-text-block` (Men's Shoes), `aria-dialog-name`, `aria-input-field-name`, `color-contrast` (View Product) |\n| Moderate | 10+ | Duplicate `<main>` landmarks, nested `<aside>` not top-level, broken heading order, content outside landmarks |\n| Minor | 2 | Invalid `role` attribute values |\n\n**Critical issues require immediate remediation under WCAG 2.1 AA:**\n\n- **`button-name` (View Product):** Buttons with no discernible text are completely opaque to screen readers. Likely icon-only buttons (size selectors, close buttons on modals) missing `aria-label`.\n- **`aria-required-parent` / `aria-required-children`:** ARIA roles used in isolation without required parent/child context — likely carousel or tab widget markup errors. Breaks AT navigation tree entirely.\n- **`aria-valid-attr-value` (View Product):** At least one ARIA attribute is set to an invalid value (e.g., `aria-expanded=\"undefined\"`), which causes unpredictable behavior in screen readers.\n- **`aria-dialog-name` (View Product):** Modal dialogs have no accessible name — screen reader users get no announcement when a modal opens.\n\n**Structural issues across all pages:**\n- `landmark-no-duplicate-main` and `landmark-main-is-top-level` on Homepage indicate either injected content (Monetate, TrustArc) is inserting extra `<main>` elements, or a layout template bug renders multiple `role=\"main\"` regions.\n- `heading-order` violation (Homepage) indicates `<h3>` or lower appearing before an `<h2>` — common in CMS-driven slot content.\n\n---\n\n## SEO\n\n- `lang=\"en\"` present on `<html>`. Correct.\n- Pages are SFCC-rendered HTML (not client-side SPA), so crawlability is not structurally blocked.\n- **Heading order violations** (axe: `heading-order`) will impair crawler outline extraction and may affect featured snippet eligibility.\n- **`link-name` violations** (serious, Homepage): Links with no discernible text produce anchor tags that crawlers cannot interpret — likely icon links or image links missing `alt` or `aria-label`. These register as low-quality links.\n- No structured data (Product, BreadcrumbList, Organization) is visible in the truncated HTML samples. Absence of `application/ld+json` blocks is a missed rich-result opportunity for product pages.\n- The `--vh` inline style and `wf-loading` class on `<html>` are benign for SEO.\n\n---\n\n## Performance\n\n**TTFB (available data):**\n\n| Step | TTFB | Assessment |\n|---|---|---|\n| Homepage | 36ms | Excellent — likely CDN edge hit |\n| Men's Shoes | 31ms | Excellent |\n| View Product | 50ms | Good |\n| Add to Cart | 50ms | Good |\n| Search | 47ms | Good |\n| Log In | 158ms | Elevated — possible origin hit or session init overhead |\n| Men's Category | 158ms | Elevated — same pattern as Log In |\n| View Cart | 143ms | Elevated — cart state requires session/origin |\n\n**LCP and CLS: not captured.** These are the two Core Web Vitals with direct Google ranking impact and must be instrumented. LCP on a shoe retail PDP is almost certainly image-driven (hero product shot); CLS is a known risk given the number of async scripts and late-loading widgets.\n\n**Third-party script bloat (observed in `<head>`):**\n\nThe HTML reveals an exceptionally large number of concurrently loaded third-party scripts. Identified unique domains:\n\n`analytics.tiktok.com`, `bat.bing.com`, `s.yimg.com` ×2, `www.redditstatic.com`, `cdn.quantummetric.com`, `utt.impactcdn.com`, `tags.creativecdn.com` ×2, `cdns.brsrvr.com`, `www.googletagmanager.com` (4+ destinations), `s.pinimg.com`, `se.monetate.net` ×2, `js.pulseinsights.com`, `js.go2sdk.com`, `tr.snapchat.com`, `stapecdn.com`, `connect.facebook.net`, `sc-static.net`, `ads.nextdoor.com`, `cdn.taboola.com`, `cdnjs.cloudflare.com`, `consent.trustarc.com`\n\n**Two scripts are loaded twice:**\n- `tags.creativecdn.com/dhGobFICKSkk6J9nvQPw.js` — duplicate on Men's Category page\n- `s.yimg.com/wi/ytc.js` — duplicate on every sampled page\n\nDuplicate script loads waste bandwidth and can cause double-firing of tracking events (inflated analytics, double ad attribution costs).\n\n**TrustArc injects three inline `<style>` blocks as the first children of `<head>`.** This is render-blocking and delays the browser's first paint on every page load.\n\n**WebFontLoader** (`cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js`) is present. The `wf-loading` class on `<html>` during initial parse indicates it adds a FOIT/FOUT window. Mulish (5 weights: n3–n7) is loaded this way — a `font-display: swap` + `<link rel=\"preload\">` approach would eliminate the flash.\n\n---\n\n## Mobile Optimization\n\n- **Viewport height calculation:** `--vh: 6.640000000000001px` is set via JS as a mobile viewport workaround (standard fix for iOS Safari 100vh bug). The floating-point imprecision (`6.640000000000001` vs `6.64`) is cosmetically harmless but suggests the value is not being `toFixed()`-rounded before assignment — minor code quality issue.\n- **`vice-managed-src` attributes:** The consent management layer (TrustArc) defers script execution by swapping `vice-managed-src` → `src` post-consent. This is correct behavior for GDPR compliance but adds a JavaScript-dependent loading step that can slow widget initialization on slow mobile connections.\n- No `<meta name=\"viewport\">` tag is visible in the truncated samples. This must be present — its absence would cause desktop rendering on mobile. It is likely in the truncated portion but should be verified.\n- The `--vh` JS approach implies the site uses a custom `100vh` substitute in CSS for full-screen mobile layouts. If any layout relies on the native `100dvh` unit (supported in all modern mobile browsers as of 2023), that would be preferable and eliminate the JS dependency.\n\n---\n\n## Console & Network Errors\n\n**429 Rate Limiting — Kasada Bot Protection (5 of 6 network errors):**\n\n```\n429 https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/\n         2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.308\n```\n\nThis UUID-path endpoint is the **Kasada KapSolve bot fingerprinting SDK** (`x-kpsdk-v=j-1.2.308`). The repeated 429s indicate the audit browser session was fingerprinted as non-human and is being rate-limited by the bot protection layer. This is functioning as designed — but means any automated monitoring (synthetic tests, uptime checks) will produce false 429s unless the monitoring IPs/user-agents are whitelisted in the Kasada configuration. Cart page also returned 429 (`/cart/`), which can block legitimate add-to-cart flows if bot scoring thresholds are misconfigured.\n\n**CORS Failure — Stylitics Widget (2 console errors + 2 network errors):**\n\n```\nAccess to CSS stylesheet at 'https://web-assets.stylitics.com/style.css?...' \nfrom origin 'https://www.skechers.com' has been blocked by CORS policy: \nNo 'Access-Control-Allow-Origin' header is present\n```\n\nThe Stylitics outfit widget is broken. Both a CSS `<link>` load and an XHR request to `web-assets.stylitics.com` are being rejected with CORS errors. Root cause is likely one of:\n1. The Stylitics CDN is not returning `Access-Control-Allow-Origin: https://www.skechers.com` (Stylitics config issue — ticket their support)\n2. A CSP header on skechers.com is blocking the cross-origin stylesheet load\n3. The widget version hash (`63ae28fe52`) points to a stale/misconfigured build\n\nThe widget silently fails — users on View Product/PDP lose the \"Complete the Look\" / outfit recommendation feature without any error state.\n\n---\n\n## Recommendations\n\n**P0 — Fix immediately:**\n\n1. **Kasada allowlist for synthetic monitoring:** Add monitoring tool IPs/UAs to Kasada allowlist. Current state means cart 429s will fire against uptime monitors and may also affect real users on shared IPs flagged by the bot scorer.\n2. **`button-name` and `aria-required-*` violations (View Product):** Add `aria-label` to all icon-only buttons; audit carousel/tab ARIA markup for correct parent-child role structure. These are WCAG 2.1 Level A failures — legal exposure in US (ADA Title III) and EU (EAA 2025).\n3. **Stylitics CORS:** Coordinate with Stylitics to ensure `Access-Control-Allow-Origin` is set correctly, or pin to a working widget version.\n\n**P1 — High priority:**\n\n4. **Instrument LCP and CLS** for all 8 steps. Without these, Core Web Vitals compliance cannot be assessed and Google ranking impact is unknown.\n5. **Remove duplicate script loads:** `tags.creativecdn.com` and `s.yimg.com/wi/ytc.js` are each loaded twice. Audit GTM container and tag firing rules to eliminate duplicates.\n6. **`aria-dialog-name`, `aria-input-field-name`, `color-contrast`:** Modal dialogs need `aria-labelledby` or `aria-label`; all input fields need associated labels; contrast failures on View Product must meet 4.5:1 ratio.\n\n**P2 — Medium priority:**\n\n7. **Fix duplicate `<main>` landmark:** Audit Monetate and TrustArc slot injection points — third-party scripts injecting structural HTML into the page body are likely the cause.\n8. **Heading order:** Audit homepage CMS slots for `<h3>`/`<h4>` appearing before `<h2>`.\n9. **Replace WebFontLoader with `<link rel=\"preload\">` + `font-display: swap`:** Eliminates FOIT window and removes a third-party JS dependency from the critical path.\n10. **Add Product + BreadcrumbList structured data** to PDPs and category pages for Google rich results eligibility.\n11. **Round `--vh` value:** `(window.innerHeight / 100).toFixed(4)` before assigning to `--vh` eliminates the floating-point noise.",
+    "sections": {}
+  },
+  "qa": {
+    "summary": {
+      "overall_pass_rate": "0%",
+      "total_checks": 36,
+      "total_issues": 4,
+      "total_warnings": 32
+    },
+    "categories": {
+      "broken_experience": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.308"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.308"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.308"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.308"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/cart/"
+          },
+          {
+            "check_id": "network_429",
+            "status": "warn",
+            "label": "HTTP 429",
+            "detail": "Failed request",
+            "url": "https://www.skechers.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/fp?x-kpsdk-v=j-1.2.308"
+          }
+        ]
+      },
+      "accessibility": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "axe_aria-allowed-role",
+            "status": "warn",
+            "label": "aria-allowed-role",
+            "detail": "Ensure role attribute has an appropriate value for the element (Homepage)"
+          },
+          {
+            "check_id": "axe_aria-required-parent",
+            "status": "fail",
+            "label": "aria-required-parent",
+            "detail": "Ensure elements with an ARIA role that require parent roles are contained by them (Homepage)"
+          },
+          {
+            "check_id": "axe_heading-order",
+            "status": "warn",
+            "label": "heading-order",
+            "detail": "Ensure the order of headings is semantically correct (Homepage)"
+          },
+          {
+            "check_id": "axe_landmark-complementary-is-top-level",
+            "status": "warn",
+            "label": "landmark-complementary-is-top-level",
+            "detail": "Ensure the complementary landmark or aside is at top level (Homepage)"
+          },
+          {
+            "check_id": "axe_landmark-main-is-top-level",
+            "status": "warn",
+            "label": "landmark-main-is-top-level",
+            "detail": "Ensure the main landmark is at top level (Homepage)"
+          },
+          {
+            "check_id": "axe_landmark-no-duplicate-main",
+            "status": "warn",
+            "label": "landmark-no-duplicate-main",
+            "detail": "Ensure the document has at most one main landmark (Homepage)"
+          },
+          {
+            "check_id": "axe_landmark-unique",
+            "status": "warn",
+            "label": "landmark-unique",
+            "detail": "Ensure landmarks are unique (Homepage)"
+          },
+          {
+            "check_id": "axe_link-name",
+            "status": "warn",
+            "label": "link-name",
+            "detail": "Ensure links have discernible text (Homepage)"
+          },
+          {
+            "check_id": "axe_region",
+            "status": "warn",
+            "label": "region",
+            "detail": "Ensure all page content is contained by landmarks (Homepage)"
+          },
+          {
+            "check_id": "axe_aria-allowed-role",
+            "status": "warn",
+            "label": "aria-allowed-role",
+            "detail": "Ensure role attribute has an appropriate value for the element (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_landmark-complementary-is-top-level",
+            "status": "warn",
+            "label": "landmark-complementary-is-top-level",
+            "detail": "Ensure the complementary landmark or aside is at top level (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_landmark-unique",
+            "status": "warn",
+            "label": "landmark-unique",
+            "detail": "Ensure landmarks are unique (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_link-in-text-block",
+            "status": "warn",
+            "label": "link-in-text-block",
+            "detail": "Ensure links are distinguished from surrounding text in a way that does not rely on color (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_region",
+            "status": "warn",
+            "label": "region",
+            "detail": "Ensure all page content is contained by landmarks (Men's Shoes)"
+          },
+          {
+            "check_id": "axe_aria-dialog-name",
+            "status": "warn",
+            "label": "aria-dialog-name",
+            "detail": "Ensure every ARIA dialog and alertdialog node has an accessible name (View Product)"
+          },
+          {
+            "check_id": "axe_aria-input-field-name",
+            "status": "warn",
+            "label": "aria-input-field-name",
+            "detail": "Ensure every ARIA input field has an accessible name (View Product)"
+          },
+          {
+            "check_id": "axe_aria-required-children",
+            "status": "fail",
+            "label": "aria-required-children",
+            "detail": "Ensure elements with an ARIA role that require child roles contain them (View Product)"
+          },
+          {
+            "check_id": "axe_aria-valid-attr-value",
+            "status": "fail",
+            "label": "aria-valid-attr-value",
+            "detail": "Ensure all ARIA attributes have valid values (View Product)"
+          },
+          {
+            "check_id": "axe_button-name",
+            "status": "fail",
+            "label": "button-name",
+            "detail": "Ensure buttons have discernible text (View Product)"
+          },
+          {
+            "check_id": "axe_color-contrast",
+            "status": "warn",
+            "label": "color-contrast",
+            "detail": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds (View Product)"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/men/shoes/hands-free-slip-ins/"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Access to CSS stylesheet at 'https://web-assets.stylitics.com/style.css?base=hotspots&theme=skechers&version=63ae28fe52' from origin 'https://www.skechers.com' has been blocked by CORS policy: No 'Acc",
+            "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: net::ERR_FAILED",
+            "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Access to XMLHttpRequest at 'https://web-assets.stylitics.com/style.css?base=hotspots&theme=skechers&version=63ae28fe52' from origin 'https://www.skechers.com' has been blocked by CORS policy: No 'Acc",
+            "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: net::ERR_FAILED",
+            "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/cart/"
+          },
+          {
+            "check_id": "console_error",
+            "status": "warn",
+            "label": "Console error",
+            "detail": "Failed to load resource: the server responded with a status of 429 ()",
+            "url": "https://www.skechers.com/search/?q=slip%20in"
+          }
+        ]
+      }
+    }
+  },
+  "assets": {
+    "render_image": "step-01-homepage-viewport.png",
+    "pdf": null,
+    "webview_url": "https://www.skechers.com",
+    "journey_steps": [
+      {
+        "step": 1,
+        "label": "Homepage",
+        "viewport_screenshot": "step-01-homepage-viewport.png",
+        "fullpage_screenshot": "step-01-homepage-fullpage.png",
+        "url": "https://www.skechers.com/",
+        "status": "ok"
+      },
+      {
+        "step": 2,
+        "label": "Dismiss Popups",
+        "viewport_screenshot": "step-02-popups-viewport.png",
+        "fullpage_screenshot": "step-02-popups-fullpage.png",
+        "url": "https://www.skechers.com/",
+        "status": "ok"
+      },
+      {
+        "step": 3,
+        "label": "Log In",
+        "viewport_screenshot": "step-03-login-viewport.png",
+        "fullpage_screenshot": "step-03-login-fullpage.png",
+        "url": "https://www.skechers.com/",
+        "status": "ok"
+      },
+      {
+        "step": 4,
+        "label": "Men's Category",
+        "viewport_screenshot": "step-04-mens-category-viewport.png",
+        "fullpage_screenshot": "step-04-mens-category-fullpage.png",
+        "url": "https://www.skechers.com/",
+        "status": "ok"
+      },
+      {
+        "step": 5,
+        "label": "Men's Shoes",
+        "viewport_screenshot": "step-05-mens-shoes-viewport.png",
+        "fullpage_screenshot": "step-05-mens-shoes-fullpage.png",
+        "url": "https://www.skechers.com/men/shoes/hands-free-slip-ins/",
+        "status": "ok"
+      },
+      {
+        "step": 6,
+        "label": "View Product",
+        "viewport_screenshot": "step-06-product-viewport.png",
+        "fullpage_screenshot": "step-06-product-fullpage.png",
+        "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html",
+        "status": "ok"
+      },
+      {
+        "step": 7,
+        "label": "Add to Cart",
+        "viewport_screenshot": "step-07-add-to-cart-viewport.png",
+        "fullpage_screenshot": "step-07-add-to-cart-fullpage.png",
+        "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html",
+        "status": "ok"
+      },
+      {
+        "step": 8,
+        "label": "View Cart",
+        "viewport_screenshot": "step-08-cart-viewport.png",
+        "fullpage_screenshot": "step-08-cart-fullpage.png",
+        "url": "https://www.skechers.com/cart/",
+        "status": "ok"
+      },
+      {
+        "step": 9,
+        "label": "Search",
+        "viewport_screenshot": "step-09-search-viewport.png",
+        "fullpage_screenshot": "step-09-search-fullpage.png",
+        "url": "https://www.skechers.com/search/?q=slip%20in",
+        "status": "ok"
+      }
+    ]
+  },
+  "performance": {
+    "steps": [
+      {
+        "step": 1,
+        "label": "Homepage",
+        "url": "https://www.skechers.com/",
+        "ttfb_ms": 36,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 3,
+        "label": "Log In",
+        "url": "https://www.skechers.com/",
+        "ttfb_ms": 158,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 4,
+        "label": "Men's Category",
+        "url": "https://www.skechers.com/",
+        "ttfb_ms": 158,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 5,
+        "label": "Men's Shoes",
+        "url": "https://www.skechers.com/men/shoes/hands-free-slip-ins/",
+        "ttfb_ms": 31,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 6,
+        "label": "View Product",
+        "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html",
+        "ttfb_ms": 50,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 7,
+        "label": "Add to Cart",
+        "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html",
+        "ttfb_ms": 50,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 8,
+        "label": "View Cart",
+        "url": "https://www.skechers.com/cart/",
+        "ttfb_ms": 143,
+        "lcp_ms": null,
+        "cls": null
+      },
+      {
+        "step": 9,
+        "label": "Search",
+        "url": "https://www.skechers.com/search/?q=slip%20in",
+        "ttfb_ms": 47,
+        "lcp_ms": null,
+        "cls": null
+      }
+    ]
+  }
+}
