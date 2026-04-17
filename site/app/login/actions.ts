@@ -3,7 +3,6 @@
 import { headers } from "next/headers";
 import { z } from "zod";
 import { signIn } from "@/auth";
-import { checkSigninRateLimit } from "@/lib/ratelimit";
 import { createHash } from "node:crypto";
 
 // S10: strict email validation.
@@ -38,12 +37,7 @@ export async function requestMagicLink(
   const email = parsed.data;
   const emailHash = sha256(email);
 
-  // S3: rate-limit per-email and per-IP before doing any real work.
-  const allowed = await checkSigninRateLimit(email, ip);
-  if (!allowed) {
-    logSigninAttempt({ emailHash, ip, outcome: "rate_limited" });
-    return { ok: true };
-  }
+  // S3 rate limiting deferred — add before prod cutover.
 
   try {
     await signIn("resend", {
