@@ -1894,5 +1894,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-17-fresh-friday-deals-inside",
     "slug": "2026-04-17-fresh-friday-deals-inside",
     "persona": "walker"
+  },
+  {
+    "messageId": "<53.EC.38209.C1C42E96@i-0ffddd46c2750c65c.mta1vrest.sd.prd.sparkpost>",
+    "subject": "Use it or lose it: 10% OFF.",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-17-use-it-or-lose-it-10-off",
+    "slug": "2026-04-17-use-it-or-lose-it-10-off",
+    "persona": "walker"
   }
 ]

@@ -1,5 +1,16 @@
 [
   {
+    "slug": "2026-04-17-use-it-or-lose-it-10-off",
+    "subject": "Use it or lose it: 10% OFF.",
+    "from_display_name": "DSW",
+    "timestamp_iso": "2026-04-17T15:05:00+00:00",
+    "score": "5/10",
+    "qa_summary": null,
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-17-fresh-friday-deals-inside",
     "subject": "Fresh Friday Deals Inside📣",
     "from_display_name": "Shoe Carnival",
