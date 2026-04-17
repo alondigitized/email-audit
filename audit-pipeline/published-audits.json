@@ -1887,5 +1887,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-17-your-items-are-waiting",
     "slug": "2026-04-17-your-items-are-waiting",
     "persona": "walker"
+  },
+  {
+    "messageId": "<35f813c6-50d0-48bd-8b92-66862d696cf9@iad4s12mta325.xt.local>",
+    "subject": "Fresh Friday Deals Inside📣",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-17-fresh-friday-deals-inside",
+    "slug": "2026-04-17-fresh-friday-deals-inside",
+    "persona": "walker"
   }
 ]
