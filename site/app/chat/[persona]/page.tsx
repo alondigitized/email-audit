@@ -75,6 +75,10 @@ export default async function ChatPage({
         }))}
       />
       <ChatClient
+        // Remount when the active thread changes so useChat picks up the
+        // new initialMessages — without this, navigating between threads
+        // leaves the chat pane showing the first thread's state forever.
+        key={threadId ?? "new"}
         personaSlug={personaSlug}
         personaName={meta.name}
         auditCount={auditCount}
