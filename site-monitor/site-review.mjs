@@ -756,7 +756,7 @@ async function publishSite(slug, artifactDir) {
   // Phase 2: Sync this audit to Next.js site
   const repoRoot = path.dirname(__dirname);
   const siteContent = path.join(repoRoot, 'site', 'content', 'audits');
-  const siteImages = path.join(repoRoot, 'site', 'public', 'images', 'audits');
+  const siteImages = path.join(repoRoot, 'site', 'private-content', 'audits');
 
   // Copy audit.json
   const srcAudit = path.join(artifactDir, 'audit-data.json');
@@ -806,7 +806,7 @@ async function publishSite(slug, artifactDir) {
 
   // Phase 3: Git push
   if (!GH_TOKEN) { log('No GH_TOKEN — skipping git push'); return; }
-  const pushCmd = `cd "${repoRoot}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
+  const pushCmd = `cd "${repoRoot}" && git add site/content site/private-content/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushCmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN } });
 }
 

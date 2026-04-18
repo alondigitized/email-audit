@@ -22,7 +22,7 @@ const REPO_ROOT = path.dirname(__dirname);
 const SITE_MANIFEST = path.join(REPO_ROOT, 'audit-pipeline', 'published-audits.json');
 const EXTRACT_SCRIPT = path.join(REPO_ROOT, 'audit-pipeline', 'extract_audit_data.py');
 const SITE_CONTENT = path.join(REPO_ROOT, 'site', 'content', 'audits');
-const SITE_IMAGES = path.join(REPO_ROOT, 'site', 'public', 'images', 'audits');
+const SITE_IMAGES = path.join(REPO_ROOT, 'site', 'private-content', 'audits');
 
 const PROCESS_TIMEOUT_MS = 10 * 60 * 1000; // 10 min
 const PROCESS_POLL_MS = 15_000;             // 15s
@@ -131,7 +131,7 @@ async function cleanup(slug, messageId) {
   // Git push cleanup
   const ghToken = process.env.GH_TOKEN || '';
   if (ghToken) {
-    const cmd = `cd "${REPO_ROOT}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
+    const cmd = `cd "${REPO_ROOT}" && git add site/content site/private-content/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
     await execFileAsync('/bin/zsh', ['-lc', cmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
   }
 
