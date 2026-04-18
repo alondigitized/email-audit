@@ -5,6 +5,7 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { createHash } from "node:crypto";
 import { eq } from "drizzle-orm";
 import { db, users, accounts, sessions, verificationTokens } from "@/lib/db/client";
+import { sendMagicLinkEmail } from "@/lib/email-magic-link";
 
 // S1: hash verification tokens at rest. The raw token is what we email;
 // the DB only ever stores its SHA-256 hash. On callback, we hash the incoming
@@ -57,6 +58,15 @@ export const config: NextAuthConfig = {
       from: process.env.AUTH_EMAIL_FROM ?? "onboarding@resend.dev",
       // S1: 10-minute TTL (Auth.js default is 24h).
       maxAge: 10 * 60,
+      async sendVerificationRequest({ identifier, url, provider }) {
+        await sendMagicLinkEmail({
+          to: identifier,
+          url,
+          expiresInMinutes: 10,
+          from: provider.from ?? "onboarding@resend.dev",
+          apiKey: provider.apiKey as string,
+        });
+      },
     }),
   ],
   session: {
