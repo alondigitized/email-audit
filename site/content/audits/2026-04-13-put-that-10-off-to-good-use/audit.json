@@ -134,6 +134,7 @@
   "assets": {
     "render_image": "2026-04-13-put-that-10-off-to-good-use-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-13-put-that-10-off-to-good-use/render.png"
   }
 }

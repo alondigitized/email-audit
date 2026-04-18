@@ -296,7 +296,8 @@
   "assets": {
     "render_image": "2026-04-05-take-your-pick-during-the-spring-fling-sale-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=2DL4DHP7YD4EBKN65SQJW7CVG4.100220"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=2DL4DHP7YD4EBKN65SQJW7CVG4.100220",
+    "render_image_key": "audits/2026-04-05-take-your-pick-during-the-spring-fling-sale/render.png"
   },
   "persona": "walker",
   "type": "email"

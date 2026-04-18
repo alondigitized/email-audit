@@ -133,6 +133,7 @@
   "assets": {
     "render_image": "2026-04-15-membership-has-its-perks-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-15-membership-has-its-perks/render.png"
   }
 }

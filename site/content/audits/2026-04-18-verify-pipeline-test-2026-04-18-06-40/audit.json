@@ -162,6 +162,7 @@
   "assets": {
     "render_image": "2026-04-18-verify-pipeline-test-2026-04-18-06-40-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-18-verify-pipeline-test-2026-04-18-06-40/render.png"
   }
 }

@@ -307,6 +307,7 @@
   "assets": {
     "render_image": "2026-04-14-test-pro-us-retpuropen-u-sitebundle-retail-en-04152026your-perfect-pair-bogo-50--email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=NRSV7AIEJL5ETBFSZDQPVLUDIY.100218"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=NRSV7AIEJL5ETBFSZDQPVLUDIY.100218",
+    "render_image_key": "audits/2026-04-14-test-pro-us-retpuropen-u-sitebundle-retail-en-04152026your-perfect-pair-bogo-50-/render.png"
   }
 }

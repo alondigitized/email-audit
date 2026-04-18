@@ -107,7 +107,8 @@
   "assets": {
     "render_image": "2026-04-08-your-items-are-waiting-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-08-your-items-are-waiting/render.png"
   },
   "persona": "walker",
   "type": "email"

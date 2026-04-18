@@ -27,6 +27,7 @@ import AxeBuilder from '@axe-core/playwright';
 chromium.use(StealthPlugin());
 import dotenv from 'dotenv';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
+import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -759,27 +760,56 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
   const siteContent = path.join(repoRoot, 'site', 'content', 'audits');
   const siteImages = path.join(repoRoot, 'site', 'public', 'images', 'audits');
 
-  // Copy audit.json
+  // Upload all step screenshots to R2, track the keys so we can stamp
+  // them into audit.json. Falls through gracefully if R2 isn't configured.
+  const r2Enabled = mediaConfigured();
+  const stepKeys = {}; // viewport_screenshot filename -> R2 key
+  let renderImageKey = null;
+  const pngFiles = r2Enabled
+    ? fs.readdirSync(artifactDir).filter((f) => f.endsWith('.png'))
+    : [];
+  for (const f of pngFiles) {
+    try {
+      const key = await putMedia({
+        filePath: path.join(artifactDir, f),
+        key: auditMediaKey(slug, f),
+        contentType: 'image/png',
+      });
+      stepKeys[f] = key;
+      if (f.includes('step-01') && f.includes('viewport')) {
+        // The hero render that the index card uses — upload once more under
+        // the canonical 'render.png' key so cross-links match email audits.
+        renderImageKey = await putMedia({
+          filePath: path.join(artifactDir, f),
+          key: auditMediaKey(slug, 'render.png'),
+          contentType: 'image/png',
+        });
+      }
+    } catch (err) {
+      log('R2 upload failed (non-fatal)', { file: f, error: String(err).slice(0, 200) });
+    }
+  }
+
+  // Copy audit.json — injecting the R2 keys per step + hero before we write.
   const srcAudit = path.join(artifactDir, 'audit-data.json');
   if (fs.existsSync(srcAudit)) {
     const destDir = path.join(siteContent, slug);
     fs.mkdirSync(destDir, { recursive: true });
-    fs.copyFileSync(srcAudit, path.join(destDir, 'audit.json'));
-  }
-
-  // Copy primary render image
-  const primaryImg = fs.readdirSync(artifactDir).find(f => f.includes('step-01') && f.includes('viewport'));
-  if (primaryImg) {
-    const destImgDir = path.join(siteImages, slug);
-    fs.mkdirSync(destImgDir, { recursive: true });
-    fs.copyFileSync(path.join(artifactDir, primaryImg), path.join(destImgDir, 'render.png'));
-  }
-
-  // Copy all step screenshots
-  for (const f of fs.readdirSync(artifactDir).filter(f => f.endsWith('.png'))) {
-    const destImgDir = path.join(siteImages, slug);
-    fs.mkdirSync(destImgDir, { recursive: true });
-    fs.copyFileSync(path.join(artifactDir, f), path.join(destImgDir, f));
+    const data = JSON.parse(fs.readFileSync(srcAudit, 'utf8'));
+    data.assets = data.assets ?? {};
+    if (renderImageKey) data.assets.render_image_key = renderImageKey;
+    if (Array.isArray(data.assets.journey_steps)) {
+      for (const step of data.assets.journey_steps) {
+        if (step.viewport_screenshot && stepKeys[step.viewport_screenshot]) {
+          step.viewport_screenshot_key = stepKeys[step.viewport_screenshot];
+        }
+        if (step.fullpage_screenshot && stepKeys[step.fullpage_screenshot]) {
+          step.fullpage_screenshot_key = stepKeys[step.fullpage_screenshot];
+        }
+      }
+    }
+    fs.writeFileSync(path.join(destDir, 'audit.json'), JSON.stringify(data, null, 2));
+    fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
   }
 
   // Rebuild index.json
@@ -796,7 +826,7 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
         timestamp_iso: ad.email.timestamp_iso,
         score: ad.review.score,
         qa_summary: ad.qa?.summary || null,
-        has_image: fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
+        has_image: !!(ad.assets?.render_image_key) || fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
         type: ad.type || 'email',
         persona: ad.persona || null,
       };
@@ -826,7 +856,8 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
 
   // Phase 3: Git push
   if (!GH_TOKEN) { log('No GH_TOKEN — skipping git push'); return; }
-  const pushCmd = `cd "${repoRoot}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
+  // Images live in R2 now — only text goes to git.
+  const pushCmd = `cd "${repoRoot}" && git add site/content audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushCmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN } });
 }
 

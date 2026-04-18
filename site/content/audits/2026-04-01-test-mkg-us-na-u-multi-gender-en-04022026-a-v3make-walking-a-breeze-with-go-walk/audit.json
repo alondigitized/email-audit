@@ -304,7 +304,8 @@
   "assets": {
     "render_image": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-a-v3make-walking-a-breeze-with-go-walk-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=BZKRYSMRU2XEZJ4L5W3GWKGH5U.100221"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=BZKRYSMRU2XEZJ4L5W3GWKGH5U.100221",
+    "render_image_key": "audits/2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-a-v3make-walking-a-breeze-with-go-walk/render.png"
   },
   "persona": "walker",
   "type": "email"

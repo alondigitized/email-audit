@@ -309,7 +309,8 @@
   "assets": {
     "render_image": "2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-b-v2the-styles-everyone-s-searching-f-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=KDGRXPBVOJXUJKCRKFXXCL5PDM.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=KDGRXPBVOJXUJKCRKFXXCL5PDM.100214",
+    "render_image_key": "audits/2026-03-29-test-mkg-us-ecmpur-u-best-ecom-en-03292026-b-v2the-styles-everyone-s-searching-f/render.png"
   },
   "persona": "walker",
   "type": "email"

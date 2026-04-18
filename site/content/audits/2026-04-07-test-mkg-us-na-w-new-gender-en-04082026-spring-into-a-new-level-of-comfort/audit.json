@@ -309,7 +309,8 @@
   "assets": {
     "render_image": "2026-04-07-test-mkg-us-na-w-new-gender-en-04082026-spring-into-a-new-level-of-comfort-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=UIHEMSGK25TEVDDDHAQC4XYKWE.100217"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=UIHEMSGK25TEVDDDHAQC4XYKWE.100217",
+    "render_image_key": "audits/2026-04-07-test-mkg-us-na-w-new-gender-en-04082026-spring-into-a-new-level-of-comfort/render.png"
   },
   "persona": "walker",
   "type": "email"

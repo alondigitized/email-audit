@@ -305,7 +305,8 @@
   "assets": {
     "render_image": "2026-04-11-test-pro-us-retpurl24-u-sitebundle-retail-en-04052026two-ways-to-save-during-the-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=IUV6E5LPF7UEPED7CX25GNV77Q.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=IUV6E5LPF7UEPED7CX25GNV77Q.100214",
+    "render_image_key": "audits/2026-04-11-test-pro-us-retpurl24-u-sitebundle-retail-en-04052026two-ways-to-save-during-the/render.png"
   },
   "persona": "walker",
   "type": "email"

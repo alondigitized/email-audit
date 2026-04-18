@@ -289,6 +289,7 @@
   "assets": {
     "render_image": "2026-04-15-test-mkg-us-na-u-best-full-en-04162026-v2loved-reviewed-and-ready-for-your-close-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=RKV3OZRLJXSEXMJVYEM5CYG4PY.100215"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=RKV3OZRLJXSEXMJVYEM5CYG4PY.100215",
+    "render_image_key": "audits/2026-04-15-test-mkg-us-na-u-best-full-en-04162026-v2loved-reviewed-and-ready-for-your-close/render.png"
   }
 }

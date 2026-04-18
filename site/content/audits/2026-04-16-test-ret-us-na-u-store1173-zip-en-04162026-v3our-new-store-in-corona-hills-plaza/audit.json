@@ -296,6 +296,7 @@
   "assets": {
     "render_image": "2026-04-16-test-ret-us-na-u-store1173-zip-en-04162026-v3our-new-store-in-corona-hills-plaza-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=B3K56FG2IPYERD6JLIK3J43ZFE.100218"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=B3K56FG2IPYERD6JLIK3J43ZFE.100218",
+    "render_image_key": "audits/2026-04-16-test-ret-us-na-u-store1173-zip-en-04162026-v3our-new-store-in-corona-hills-plaza/render.png"
   }
 }

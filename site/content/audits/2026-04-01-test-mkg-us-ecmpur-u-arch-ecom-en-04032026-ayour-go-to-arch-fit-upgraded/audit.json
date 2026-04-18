@@ -315,7 +315,8 @@
   "assets": {
     "render_image": "2026-04-01-test-mkg-us-ecmpur-u-arch-ecom-en-04032026-ayour-go-to-arch-fit-upgraded-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=SIADM6RO5RGUVONFVANY5QSS6A.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=SIADM6RO5RGUVONFVANY5QSS6A.100214",
+    "render_image_key": "audits/2026-04-01-test-mkg-us-ecmpur-u-arch-ecom-en-04032026-ayour-go-to-arch-fit-upgraded/render.png"
   },
   "persona": "walker",
   "type": "email"

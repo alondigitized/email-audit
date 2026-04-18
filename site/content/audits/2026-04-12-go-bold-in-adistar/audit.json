@@ -245,6 +245,7 @@
   "assets": {
     "render_image": "2026-04-12-go-bold-in-adistar-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-12-go-bold-in-adistar/render.png"
   }
 }

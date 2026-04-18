@@ -282,6 +282,7 @@
   "assets": {
     "render_image": "2026-04-16-test-ret-us-na-u-store1669-zip-en-04162026-v3our-new-store-in-johnstown-is-openi-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=TKVP7DHCZ55EDHBUGN2E67HY4I.100220"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=TKVP7DHCZ55EDHBUGN2E67HY4I.100220",
+    "render_image_key": "audits/2026-04-16-test-ret-us-na-u-store1669-zip-en-04162026-v3our-new-store-in-johnstown-is-openi/render.png"
   }
 }

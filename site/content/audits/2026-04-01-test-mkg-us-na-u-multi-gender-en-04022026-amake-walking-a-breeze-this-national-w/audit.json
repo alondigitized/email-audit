@@ -293,7 +293,8 @@
   "assets": {
     "render_image": "2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-amake-walking-a-breeze-this-national-w-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=H434A2M3T3VE3M57YZCXHVJFDI.100217"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=H434A2M3T3VE3M57YZCXHVJFDI.100217",
+    "render_image_key": "audits/2026-04-01-test-mkg-us-na-u-multi-gender-en-04022026-amake-walking-a-breeze-this-national-w/render.png"
   },
   "persona": "walker",
   "type": "email"

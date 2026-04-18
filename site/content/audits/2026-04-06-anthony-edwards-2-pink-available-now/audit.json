@@ -245,7 +245,8 @@
   "assets": {
     "render_image": "2026-04-06-anthony-edwards-2-pink-available-now-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-06-anthony-edwards-2-pink-available-now/render.png"
   },
   "persona": "walker",
   "type": "email"

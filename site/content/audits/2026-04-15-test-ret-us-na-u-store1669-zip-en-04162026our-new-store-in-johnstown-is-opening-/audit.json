@@ -275,6 +275,7 @@
   "assets": {
     "render_image": "2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening--email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=673FAUMIT5PURDBZQZRG3ZMNLY.100217"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=673FAUMIT5PURDBZQZRG3ZMNLY.100217",
+    "render_image_key": "audits/2026-04-15-test-ret-us-na-u-store1669-zip-en-04162026our-new-store-in-johnstown-is-opening-/render.png"
   }
 }

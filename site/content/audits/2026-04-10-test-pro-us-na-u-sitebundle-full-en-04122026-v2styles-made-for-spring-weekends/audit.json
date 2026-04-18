@@ -351,7 +351,8 @@
   "assets": {
     "render_image": "2026-04-10-test-pro-us-na-u-sitebundle-full-en-04122026-v2styles-made-for-spring-weekends-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=IECOQRFZEYHURG6LX22LMKAY6Y.100216"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=IECOQRFZEYHURG6LX22LMKAY6Y.100216",
+    "render_image_key": "audits/2026-04-10-test-pro-us-na-u-sitebundle-full-en-04122026-v2styles-made-for-spring-weekends/render.png"
   },
   "persona": "walker",
   "type": "email"

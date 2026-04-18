@@ -315,6 +315,7 @@
   "assets": {
     "render_image": "2026-04-15-test-mkg-us-na-u-multi-gender-en-04162026loved-reviewed-and-ready-for-your-close-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=JF3ARL6SBICEHA4NGONSZALATQ.100221"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=JF3ARL6SBICEHA4NGONSZALATQ.100221",
+    "render_image_key": "audits/2026-04-15-test-mkg-us-na-u-multi-gender-en-04162026loved-reviewed-and-ready-for-your-close/render.png"
   }
 }

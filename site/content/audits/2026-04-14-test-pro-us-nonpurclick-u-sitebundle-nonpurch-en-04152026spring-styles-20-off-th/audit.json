@@ -302,6 +302,7 @@
   "assets": {
     "render_image": "2026-04-14-test-pro-us-nonpurclick-u-sitebundle-nonpurch-en-04152026spring-styles-20-off-th-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=ESUGOQ3F4CFUHCE5TDG4SET4GQ.100217"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=ESUGOQ3F4CFUHCE5TDG4SET4GQ.100217",
+    "render_image_key": "audits/2026-04-14-test-pro-us-nonpurclick-u-sitebundle-nonpurch-en-04152026spring-styles-20-off-th/render.png"
   }
 }

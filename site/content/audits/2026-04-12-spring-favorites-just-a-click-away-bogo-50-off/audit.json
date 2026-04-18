@@ -263,6 +263,7 @@
   "assets": {
     "render_image": "2026-04-12-spring-favorites-just-a-click-away-bogo-50-off-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=JAFTLCABFRKERHKCSSC6QSMWXA.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=JAFTLCABFRKERHKCSSC6QSMWXA.100214",
+    "render_image_key": "audits/2026-04-12-spring-favorites-just-a-click-away-bogo-50-off/render.png"
   }
 }

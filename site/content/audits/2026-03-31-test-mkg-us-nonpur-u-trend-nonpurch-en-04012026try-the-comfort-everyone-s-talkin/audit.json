@@ -307,7 +307,8 @@
   "assets": {
     "render_image": "2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026try-the-comfort-everyone-s-talkin-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=HQ33P32LQ7DUZIXDBZD3HS5ZL4.100216"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=HQ33P32LQ7DUZIXDBZD3HS5ZL4.100216",
+    "render_image_key": "audits/2026-03-31-test-mkg-us-nonpur-u-trend-nonpurch-en-04012026try-the-comfort-everyone-s-talkin/render.png"
   },
   "persona": "walker",
   "type": "email"

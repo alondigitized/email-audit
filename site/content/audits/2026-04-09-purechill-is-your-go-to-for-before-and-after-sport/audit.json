@@ -244,7 +244,8 @@
   "assets": {
     "render_image": "2026-04-09-purechill-is-your-go-to-for-before-and-after-sport-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-09-purechill-is-your-go-to-for-before-and-after-sport/render.png"
   },
   "persona": "walker",
   "type": "email"

@@ -284,6 +284,7 @@
   "assets": {
     "render_image": "2026-04-15-spring-styles-20-off-the-perfect-pair-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=VQU4FQKPPMBEZEYPL3H45UWMMQ.100219"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=VQU4FQKPPMBEZEYPL3H45UWMMQ.100219",
+    "render_image_key": "audits/2026-04-15-spring-styles-20-off-the-perfect-pair/render.png"
   }
 }

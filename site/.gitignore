@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# audit screenshots — now served from R2
+/public/images/audits/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -243,7 +243,8 @@
   "assets": {
     "render_image": "2026-04-02-bold-brave-new-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-02-bold-brave-new/render.png"
   },
   "persona": "walker",
   "type": "email"

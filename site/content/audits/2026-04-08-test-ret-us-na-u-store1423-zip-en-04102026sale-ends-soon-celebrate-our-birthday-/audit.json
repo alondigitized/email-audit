@@ -275,7 +275,8 @@
   "assets": {
     "render_image": "2026-04-08-test-ret-us-na-u-store1423-zip-en-04102026sale-ends-soon-celebrate-our-birthday--email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=EMGDS7B4MWOUFATY2BDEV2HLCI.100218"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=EMGDS7B4MWOUFATY2BDEV2HLCI.100218",
+    "render_image_key": "audits/2026-04-08-test-ret-us-na-u-store1423-zip-en-04102026sale-ends-soon-celebrate-our-birthday-/render.png"
   },
   "persona": "walker",
   "type": "email"

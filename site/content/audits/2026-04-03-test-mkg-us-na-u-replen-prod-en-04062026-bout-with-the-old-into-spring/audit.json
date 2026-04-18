@@ -303,7 +303,8 @@
   "assets": {
     "render_image": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-bout-with-the-old-into-spring-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=MOZBUOVGIXXUTISS74YSYSWJE4.100216"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=MOZBUOVGIXXUTISS74YSYSWJE4.100216",
+    "render_image_key": "audits/2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-bout-with-the-old-into-spring/render.png"
   },
   "persona": "walker",
   "type": "email"
