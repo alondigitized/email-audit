@@ -48,8 +48,7 @@ function renderHtml({
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:#ffffff;border:1px solid ${line};border-radius:16px;overflow:hidden;">
             <tr>
               <td style="padding:32px 32px 8px 32px;">
-                <div style="font-size:12px;letter-spacing:0.08em;color:${muted};text-transform:uppercase;">Skechers Digital</div>
-                <div style="font-size:22px;font-weight:700;margin-top:4px;color:${brand};">Experience Review</div>
+                <div style="font-size:22px;font-weight:700;color:${brand};">Experience Review</div>
               </td>
             </tr>
             <tr>
