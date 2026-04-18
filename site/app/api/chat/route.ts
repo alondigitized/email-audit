@@ -18,7 +18,9 @@ import {
 } from "@/lib/chat/threads";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+// 300s ceiling (Vercel Pro) — covers cold starts on larger local models
+// (14B+) where first-token + generation + tunneling can exceed 60s.
+export const maxDuration = 300;
 
 const BodySchema = z.object({
   personaSlug: z.string().regex(/^[a-z0-9-]+$/).max(64),
