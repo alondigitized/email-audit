@@ -7,7 +7,6 @@ export default function AnalysisIndex() {
   return (
     <>
       <div className="mb-5 py-6">
-        <div className="text-muted text-sm">Skechers Digital</div>
         <h1 className="text-2xl font-bold mt-1 mb-2">Ad-hoc Analysis</h1>
         <p className="text-muted text-sm max-w-xl">
           Standalone analyses that go beyond per-email scoring — comparative studies,

@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getAuditBySlug, getAllSlugs } from "@/lib/audits";
+import { getAuditBySlugForUser } from "@/lib/audits";
+import { requireUser } from "@/lib/dal";
+import { recordPageView } from "@/lib/analytics";
 import { splitReview } from "@/lib/types";
 import type { JourneyStep, PerfStep } from "@/lib/types";
 import { ReviewContent } from "@/components/ReviewContent";
@@ -9,9 +11,8 @@ import { QaCard } from "@/components/QaCard";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { TabNav } from "@/components/TabNav";
 
-export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
-}
+// S7: per-user filtering means we can't statically pre-render slugs.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -19,7 +20,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const audit = getAuditBySlug(slug);
+  const user = await requireUser();
+  const audit = getAuditBySlugForUser(slug, user.personas);
   return { title: audit?.email.subject ?? "Audit" };
 }
 
@@ -142,8 +144,15 @@ export default async function AuditPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const audit = getAuditBySlug(slug);
+  const user = await requireUser();
+  const audit = getAuditBySlugForUser(slug, user.personas);
   if (!audit) notFound();
+  await recordPageView({
+    userId: user.id,
+    isAdmin: user.isAdmin,
+    kind: "audit",
+    path: `/audits/${slug}`,
+  });
 
   const { email, review, qa, assets } = audit;
   const isSiteJourney = audit.type === "site";
@@ -154,7 +163,7 @@ export default async function AuditPage({
 
   const heroLabel = isSiteJourney
     ? `${email.from_display_name} Site Journey`
-    : "Skechers Experience Review";
+    : "Email Experience Review";
   const fromLabel = isSiteJourney ? "Site" : "From";
 
   return (
