@@ -12,37 +12,30 @@ import {
   signInEvents,
 } from "@/lib/db/client";
 
-// Thirty-day session, matching auth.ts config.
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
-const hashToken = (raw: string) =>
+
+// Mimic Auth.js v5 Email provider's token hashing exactly: the raw token
+// is concatenated with AUTH_SECRET and SHA-256 hashed before DB storage.
+// Our server action bypasses the Auth.js callback so we must match its
+// algorithm here, otherwise the lookup misses.
+function authjsTokenHash(raw: string): string {
+  const secret = process.env.AUTH_SECRET ?? "";
+  return createHash("sha256").update(`${raw}${secret}`).digest("hex");
+}
+const sha256 = (raw: string) =>
   createHash("sha256").update(raw).digest("hex");
 
-// Server action invoked by the /auth/verify page's POST button. Does what
-// Auth.js's /api/auth/callback/resend would have done, but gated on a real
-// user-initiated POST — so enterprise link scanners that prefetch the GET
-// URL in the email can't burn the token.
 export async function completeSignIn(formData: FormData) {
   const rawToken = formData.get("token");
   const identifierRaw = formData.get("email");
-  console.log(
-    JSON.stringify({
-      evt: "completeSignIn:start",
-      tokenPrefix:
-        typeof rawToken === "string" ? rawToken.slice(0, 6) : null,
-      identifier:
-        typeof identifierRaw === "string"
-          ? identifierRaw.toLowerCase().trim()
-          : null,
-    })
-  );
   if (typeof rawToken !== "string" || typeof identifierRaw !== "string") {
     redirect("/login?error=Verification");
   }
   const identifier = identifierRaw.toLowerCase().trim();
 
-  // Consume the verification token atomically (lookup by hashed form,
-  // then delete). Using a transaction-like pattern via delete-returning.
-  const hashed = hashToken(rawToken);
+  // Delete-returning matches Auth.js's hashing so we consume the same row
+  // Auth.js would have consumed if we'd gone through /api/auth/callback/resend.
+  const hashed = authjsTokenHash(rawToken);
   const rows = await db
     .delete(verificationTokens)
     .where(eq(verificationTokens.token, hashed))
@@ -63,17 +56,9 @@ export async function completeSignIn(formData: FormData) {
     redirect("/login?error=Verification");
   }
   if (row.expires.getTime() < Date.now()) {
-    console.log(
-      JSON.stringify({
-        evt: "completeSignIn:expired",
-        expires: row.expires.toISOString(),
-        now: new Date().toISOString(),
-      })
-    );
     redirect("/login?error=Verification");
   }
 
-  // Fetch the user — must exist (S2: no auto-creation).
   const userRow = await db.query.users.findFirst({
     where: eq(users.email, identifier),
     columns: { id: true },
@@ -83,14 +68,11 @@ export async function completeSignIn(formData: FormData) {
   }
 
   const now = new Date();
-
-  // Mark email verified if not already, for parity with Auth.js's flow.
   await db
     .update(users)
     .set({ emailVerified: now, lastSignInAt: now })
     .where(eq(users.id, userRow.id));
 
-  // Log the sign-in event (S13: hashed IP only).
   let ipHash: string | null = null;
   try {
     const h = await headers();
@@ -98,11 +80,10 @@ export async function completeSignIn(formData: FormData) {
       h.get("x-forwarded-for")?.split(",")[0]?.trim() ??
       h.get("x-real-ip") ??
       null;
-    ipHash = ip ? hashToken(ip) : null;
+    ipHash = ip ? sha256(ip) : null;
   } catch {}
   await db.insert(signInEvents).values({ userId: userRow.id, ipHash });
 
-  // Create a session row + set the Auth.js-compatible session cookie.
   const sessionToken = randomUUID();
   const expires = new Date(Date.now() + SESSION_TTL_MS);
   await db.insert(sessions).values({
@@ -122,15 +103,6 @@ export async function completeSignIn(formData: FormData) {
     expires,
     path: "/",
   });
-  console.log(
-    JSON.stringify({
-      evt: "completeSignIn:done",
-      cookieName,
-      sessionTokenPrefix: sessionToken.slice(0, 6),
-      expires: expires.toISOString(),
-      userId: userRow.id,
-    })
-  );
 
   redirect("/");
 }
