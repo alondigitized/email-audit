@@ -34,19 +34,40 @@ const adapter: typeof baseAdapter = {
     if (!baseAdapter.createVerificationToken) {
       throw new Error("adapter.createVerificationToken missing");
     }
+    const raw = token.token;
+    const hashed = hashToken(raw);
+    console.log(
+      JSON.stringify({
+        evt: "createVerificationToken",
+        identifier: token.identifier,
+        rawPrefix: raw.slice(0, 6),
+        hashedPrefix: hashed.slice(0, 6),
+        expires: token.expires,
+      })
+    );
     return baseAdapter.createVerificationToken({
       ...token,
-      token: hashToken(token.token),
+      token: hashed,
     });
   },
   async useVerificationToken(params) {
     if (!baseAdapter.useVerificationToken) {
       throw new Error("adapter.useVerificationToken missing");
     }
+    const hashed = hashToken(params.token);
     const row = await baseAdapter.useVerificationToken({
       identifier: params.identifier,
-      token: hashToken(params.token),
+      token: hashed,
     });
+    console.log(
+      JSON.stringify({
+        evt: "useVerificationToken",
+        identifier: params.identifier,
+        rawPrefix: params.token.slice(0, 6),
+        hashedPrefix: hashed.slice(0, 6),
+        found: !!row,
+      })
+    );
     if (!row) return null;
     // Return the raw token to Auth.js so downstream identity-matching works;
     // the DB row (which had the hash) has already been consumed.
