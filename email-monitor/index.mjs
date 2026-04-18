@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import { AgentMailClient } from 'agentmail';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
+import { auditDataSchema } from '../audit-pipeline/audit-schema.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -585,6 +586,18 @@ async function publishSite() {
         } catch {
           /* ignore merge errors — fall through to plain write */
         }
+      }
+      // Validate before writing. Producer-side parse throws on shape
+      // drift — better to fail one audit loudly than ship a malformed
+      // record that the site silently drops downstream.
+      try {
+        auditDataSchema.parse(data);
+      } catch (err) {
+        log('audit.json schema drift — skipping publish', {
+          slug,
+          issues: (err?.issues || []).slice(0, 5),
+        });
+        continue;
       }
       fs.writeFileSync(destPath, JSON.stringify(data, null, 2));
       // Also write the updated shape back to the artifact so rerun-audit works
