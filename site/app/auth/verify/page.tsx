@@ -18,7 +18,7 @@ export default async function VerifyPage({
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <div className="bg-white border border-gray-200 rounded-[20px] p-10 max-w-[380px] w-[90%] text-center shadow-sm">
-        <h2 className="mt-0 mb-2 text-ink">Experience Review</h2>
+        <h2 className="mt-0 mb-2 text-ink">Experience Intelligence</h2>
         {valid ? (
           <>
             <p className="text-muted text-sm mb-5">

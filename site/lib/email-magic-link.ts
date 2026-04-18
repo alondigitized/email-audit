@@ -14,7 +14,7 @@ export async function sendMagicLinkEmail(args: Args): Promise<void> {
   const { error } = await resend.emails.send({
     from,
     to,
-    subject: "Your Experience Review sign-in link",
+    subject: "Your Experience Intelligence sign-in link",
     html: renderHtml({ url, expiresInMinutes }),
     text: renderText({ url, expiresInMinutes }),
     headers: {
@@ -48,7 +48,7 @@ function renderHtml({
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:#ffffff;border:1px solid ${line};border-radius:16px;overflow:hidden;">
             <tr>
               <td style="padding:32px 32px 8px 32px;">
-                <div style="font-size:22px;font-weight:700;color:${brand};">Experience Review</div>
+                <div style="font-size:22px;font-weight:700;color:${brand};">Experience Intelligence</div>
               </td>
             </tr>
             <tr>
@@ -59,7 +59,7 @@ function renderHtml({
             <tr>
               <td style="padding:24px 32px;">
                 <a href="${url}" style="display:inline-block;background:${accent};color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 20px;border-radius:10px;">
-                  Sign in to Experience Review
+                  Sign in to Experience Intelligence
                 </a>
               </td>
             </tr>
@@ -76,7 +76,7 @@ function renderHtml({
             </tr>
           </table>
           <div style="margin-top:16px;font-size:12px;color:${muted};">
-            Experience Review · AI reviews of brand experiences
+            Experience Intelligence · AI reviews of brand experiences
           </div>
         </td>
       </tr>
@@ -93,7 +93,7 @@ function renderText({
   expiresInMinutes: number;
 }): string {
   return [
-    "Experience Review — sign-in link",
+    "Experience Intelligence — sign-in link",
     "",
     `Click to sign in (expires in ${expiresInMinutes} minutes, single use):`,
     url,
