@@ -8,6 +8,8 @@ import {
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
+import { boolean } from "drizzle-orm/pg-core";
+
 export const users = pgTable("user", {
   id: text("id")
     .primaryKey()
@@ -17,6 +19,8 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  isAdmin: boolean("isAdmin").default(false).notNull(),
+  lastSignInAt: timestamp("lastSignInAt", { mode: "date" }),
 });
 
 export const accounts = pgTable(
@@ -86,3 +90,12 @@ export const userPersonas = pgTable(
     pk: primaryKey({ columns: [up.userId, up.personaId] }),
   })
 );
+
+export const signInEvents = pgTable("signInEvent", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  ts: timestamp("ts", { mode: "date" }).defaultNow().notNull(),
+  ipHash: text("ipHash"),
+});

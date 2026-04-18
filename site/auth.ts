@@ -4,7 +4,15 @@ import Resend from "next-auth/providers/resend";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { createHash } from "node:crypto";
 import { eq } from "drizzle-orm";
-import { db, users, accounts, sessions, verificationTokens } from "@/lib/db/client";
+import { headers } from "next/headers";
+import {
+  db,
+  users,
+  accounts,
+  sessions,
+  verificationTokens,
+  signInEvents,
+} from "@/lib/db/client";
 import { sendMagicLinkEmail } from "@/lib/email-magic-link";
 
 // S1: hash verification tokens at rest. The raw token is what we email;
@@ -100,6 +108,28 @@ export const config: NextAuthConfig = {
     async session({ session, user }) {
       session.user.id = user.id;
       return session;
+    },
+  },
+  events: {
+    // S13: one row per successful sign-in. ipHash only, never raw IP.
+    async signIn({ user }) {
+      if (!user?.id) return;
+      let ipHash: string | null = null;
+      try {
+        const h = await headers();
+        const ip =
+          h.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+          h.get("x-real-ip") ??
+          null;
+        ipHash = ip ? createHash("sha256").update(ip).digest("hex") : null;
+      } catch {
+        // headers() unavailable outside of a request context — best effort.
+      }
+      await db.insert(signInEvents).values({ userId: user.id, ipHash });
+      await db
+        .update(users)
+        .set({ lastSignInAt: new Date() })
+        .where(eq(users.id, user.id));
     },
   },
 };

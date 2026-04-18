@@ -9,25 +9,24 @@ const TABS = [
   { href: "/analysis", label: "Analysis" },
 ];
 
-export function TopNav() {
+export function TopNav({ isAdmin = false }: { isAdmin?: boolean }) {
   const pathname = usePathname() || "/";
 
   if (pathname.startsWith("/login")) return null;
 
   function isActive(href: string): boolean {
     if (href === "/") {
-      return (
-        pathname === "/" ||
-        pathname.startsWith("/audits")
-      );
+      return pathname === "/" || pathname.startsWith("/audits");
     }
     return pathname === href || pathname.startsWith(href + "/");
   }
 
+  const tabs = isAdmin ? [...TABS, { href: "/admin", label: "Admin" }] : TABS;
+
   return (
     <nav className="flex items-center justify-between mb-6">
       <div className="flex gap-1">
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const active = isActive(tab.href);
           return (
             <Link
