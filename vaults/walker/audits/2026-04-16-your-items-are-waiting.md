@@ -1,0 +1,252 @@
+---
+slug: 2026-04-16-your-items-are-waiting
+type: email
+date: 2026-04-16
+persona: walker
+score: "5/10"
+sender: SKECHERS
+subject: Your Items Are Waiting!
+tags: [email, score-5, sender/skechers]
+---
+# Your Items Are Waiting!
+**Score:** 5/10 · **Type:** Email audit · **2026-04-16**
+## Executive summary
+
+- A standard abandoned-cart recovery email that checks the functional boxes but executes them with little conviction. The hero product is identified, the reminder message is present, a discount is surfaced, and there's a navigation footer for browsing. None of it is bad — it's just flat. The headline leans generic ("We Noticed You Noticing Us…"), the discount module feels disconnected from the cart recovery story, and the product recommendations are visually undersized and cluttered. This email will recover some carts purely on timing, not on persuasion.
+- Functional but forgettable. Leaves significant conversion lift on the table.
+
+## What's working
+
+- **Cart product is shown.** The hero image of the Skechers Slip-Ins: Arch Fit Glide-Step - Larzo is clearly rendered with the product name below it — the recipient can immediately confirm what was left behind.
+- **Single primary CTA.** "Complete Your Order" button is prominent and unambiguous.
+- **20% off module exists.** A discount offer is present and visually distinct (dark banner). For a cold conversion, this is the right tool.
+- **SMS opt-in + utility links.** "Let's Get Texting" prompt, app download badges, Curbside Pickup, BNPL options (Afterpay, Klarna), and Find a Store are all present — covering secondary intent signals.
+
+## What's weak
+
+- **Headline wastes the moment.** "We Noticed You Noticing Us… / Your Cart Is Still Waiting…" is coy and indirect. An abandoned-cart email is not the place for brand wit — the recipient already knows the product. Cut the wordplay and lead with urgency or social proof.
+- **Hero image is undersized and off-center.** The product photo is small relative to the email width. For a shoe brand, the product *is* the pitch — it should be full-bleed or at minimum much larger.
+- **The 20% off offer is unanchored.** It says "A Single Pair" but gives no expiry, no minimum, and no direct tie to the cart item. It reads like a generic campaign module pasted in rather than a targeted incentive to complete *this* purchase.
+- **Product recommendations are too small.** The "Here's Some More Great Options We Think You'll Love" section packs 4–5 products into tiny thumbnails. The product names are barely legible at render size. This section adds noise, not persuasion.
+- **Navigation category list is passive.** Women / Men / Kids / Clothing / New Arrivals / Sale as plain text links buried in the lower third is boilerplate. It dilutes the single-action goal of recovering the cart.
+- **Spring Fling Sale fine print is longer than most sections.** A wall of disclaimer text at the bottom undermines the clean close and likely buries key offer conditions.
+
+## Recommendations
+
+- 1. **Rewrite the headline.** Try: *"You left something behind — and it's going fast."* or *"Your Arch Fit Glide-Step is one tap away."* Name the product in the headline.
+- 2. **Make the hero image full-width.** Show the shoe at proper scale — ideally a lifestyle shot alongside the product-white.
+- 3. **Tie the discount directly to the cart item.** "Take 20% off your Glide-Step today — offer expires in 48 hours" converts better than a floating promo.
+- 4. **Add urgency or social proof.** Low-stock signal, review count, or a simple "X people are viewing this now" line near the CTA.
+- 5. **Collapse or remove the recommendation grid.** If kept, show 2 products max at a larger size. The current 5-up grid is too small to inspire clicks.
+- 6. **Trim the category nav list.** It belongs in a footer, not mid-email — it pulls focus from the cart recovery goal.
+- | Priority | Issue | Action |
+- |----------|-------|--------|
+- | High | All tracked links use HTTP | Update Attentive subdomain click-tracking to enforce HTTPS redirects |
+- | High | Image CDN uses HTTP | Update `image.emails.skechers.com` asset URLs to HTTPS |
+- | High | Unsubscribe / physical address unconfirmed | Verify footer in full source before send |
+- | Medium | Empty `<title>` | Set a descriptive title: `Your cart is waiting — SKECHERS` |
+- | Medium | `<img>` alt text unverifiable | Audit all product image `alt` attributes in full source |
+- | Medium | Preheader uses `U+034F` spacers | Replace with `&zwnj;` to avoid spam filter hits |
+- | Low | Global `text-decoration:none` on links | Scope rule more narrowly or restore underline for body copy links |
+- | Low | UTM parameter verification | Resolve redirect chain in staging and confirm `utm_source=email&utm_medium=cart_abandonment` (or equivalent) on all CTAs |
+
+## Full review
+## Skechers — "Your Items Are Waiting!" Abandoned Cart Email Review
+
+---
+
+### 1. Executive Summary
+
+A standard abandoned-cart recovery email that checks the functional boxes but executes them with little conviction. The hero product is identified, the reminder message is present, a discount is surfaced, and there's a navigation footer for browsing. None of it is bad — it's just flat. The headline leans generic ("We Noticed You Noticing Us…"), the discount module feels disconnected from the cart recovery story, and the product recommendations are visually undersized and cluttered. This email will recover some carts purely on timing, not on persuasion.
+
+---
+
+### 2. Business Impact Score: **5/10**
+
+Functional but forgettable. Leaves significant conversion lift on the table.
+
+---
+
+### 3. What's Working
+
+- **Cart product is shown.** The hero image of the Skechers Slip-Ins: Arch Fit Glide-Step - Larzo is clearly rendered with the product name below it — the recipient can immediately confirm what was left behind.
+- **Single primary CTA.** "Complete Your Order" button is prominent and unambiguous.
+- **20% off module exists.** A discount offer is present and visually distinct (dark banner). For a cold conversion, this is the right tool.
+- **SMS opt-in + utility links.** "Let's Get Texting" prompt, app download badges, Curbside Pickup, BNPL options (Afterpay, Klarna), and Find a Store are all present — covering secondary intent signals.
+
+---
+
+### 4. What's Weak
+
+- **Headline wastes the moment.** "We Noticed You Noticing Us… / Your Cart Is Still Waiting…" is coy and indirect. An abandoned-cart email is not the place for brand wit — the recipient already knows the product. Cut the wordplay and lead with urgency or social proof.
+- **Hero image is undersized and off-center.** The product photo is small relative to the email width. For a shoe brand, the product *is* the pitch — it should be full-bleed or at minimum much larger.
+- **The 20% off offer is unanchored.** It says "A Single Pair" but gives no expiry, no minimum, and no direct tie to the cart item. It reads like a generic campaign module pasted in rather than a targeted incentive to complete *this* purchase.
+- **Product recommendations are too small.** The "Here's Some More Great Options We Think You'll Love" section packs 4–5 products into tiny thumbnails. The product names are barely legible at render size. This section adds noise, not persuasion.
+- **Navigation category list is passive.** Women / Men / Kids / Clothing / New Arrivals / Sale as plain text links buried in the lower third is boilerplate. It dilutes the single-action goal of recovering the cart.
+- **Spring Fling Sale fine print is longer than most sections.** A wall of disclaimer text at the bottom undermines the clean close and likely buries key offer conditions.
+
+---
+
+### 5. Recommendations
+
+1. **Rewrite the headline.** Try: *"You left something behind — and it's going fast."* or *"Your Arch Fit Glide-Step is one tap away."* Name the product in the headline.
+2. **Make the hero image full-width.** Show the shoe at proper scale — ideally a lifestyle shot alongside the product-white.
+3. **Tie the discount directly to the cart item.** "Take 20% off your Glide-Step today — offer expires in 48 hours" converts better than a floating promo.
+4. **Add urgency or social proof.** Low-stock signal, review count, or a simple "X people are viewing this now" line near the CTA.
+5. **Collapse or remove the recommendation grid.** If kept, show 2 products max at a larger size. The current 5-up grid is too small to inspire clicks.
+6. **Trim the category nav list.** It belongs in a footer, not mid-email — it pulls focus from the cart recovery goal.
+
+---
+
+### 6. Bottom Line
+
+Skechers is running a competent abandoned-cart flow with all the right ingredients assembled in the wrong proportions. The product is shown, the CTA is clear, a discount is present — but none of it coheres into a persuasive recovery arc. Fixing the headline, enlarging the hero, and anchoring the 20% offer to the specific cart item would move this from a 5 to a 7+ with minimal engineering effort.
+
+---
+
+### 7. Subject Line Analysis
+
+- **Subject:** `Your Items Are Waiting!`
+- **Length:** 23 characters
+- **Scores (1-10):** Clarity `7`, Curiosity `4`, Personalization `3`, Urgency `5`, Specificity `3`
+- **Strengths:**
+  - Short and clean — renders fully on mobile
+  - Clear cart-recovery intent; no ambiguity about the email's purpose
+- **Weaknesses:**
+  - "Items" is generic — doesn't name the product or brand, loses personalization lift
+  - No urgency mechanism (no timer, no scarcity, no expiry signal)
+- **Alt A:** `Your Skechers Arch Fit is still in your cart`
+- **Alt B:** `20% off if you come back today — your cart is waiting`
+
+---
+
+### 8. Evidence
+
+- **Overall purpose:** Abandoned cart recovery for a single identifiable product (Skechers Slip-Ins Arch Fit Glide-Step - Larzo).
+- **Hero / primary value prop:** Product image + name + "Complete Your Order" CTA. Functional but visually modest.
+- **Membership / benefits section:** None present. No loyalty points, rewards balance, or member-only framing.
+- **Product recommendation module:** 4–5 small shoe thumbnails under "Here's Some More Great Options We Think You'll Love." Labels are barely readable; images are thumbnail-scale.
+- **Utility / secondary modules:** Shop All Best Sellers CTA (dark bar), 20% Off banner, category text nav (Women/Men/Kids/Clothing/New Arrivals/Sale), SMS opt-in, App download (App Store + Google Play), Curbside Pickup, Shop Now Pay Later (Afterpay + Klarna), Find a Store, social follow icons (Instagram, Facebook, YouTube/TikTok).
+- **Bugs / friction / clarity issues:** No visible broken images or overlapping text. Product recommendation thumbnails are small enough that shoe details and product names are nearly illegible at standard inbox rendering size.
+
+---
+
+## Technical Audit
+
+## Technical Audit — SKECHERS "Your Items Are Waiting!" Cart Abandonment Email
+
+---
+
+### 1. Technical Summary
+
+Cart abandonment email sent via Attentive (`msgs.skechers.com` / `attentivemail.com`). The HTML is table-based, BEE-builder generated, and generally well-structured, but several HTTP-vs-HTTPS, accessibility, and compliance issues are confirmed in the source.
+
+---
+
+### 2. Link & Tracking Issues
+
+**HTTP redirect domain (confirmed)**
+All tracked links use `http://` — not `https://`:
+```
+http://skechers.attentivemail.com/ls/click?upn=u001.LNc6Vor...
+```
+This applies to both the web-version link and the logo/CTA links visible in the source. Modern email clients (Gmail, Outlook 365) flag HTTP redirects; some mark them as insecure.
+
+**Image CDN also HTTP (confirmed)**
+```html
+<img src="http://image.emails.skechers.com/…
+```
+The image host is HTTP, not HTTPS. Gmail and iOS Mail proxy all images over HTTPS — this forces a double-proxy hop and breaks cache headers. Recipient clients that do not proxy will trigger a mixed-content warning.
+
+**Opaque click tokens**
+All destination URLs are encoded inside `upn=` base64-like parameters. The actual landing URL cannot be verified from the source alone — UTM parameter presence/correctness cannot be confirmed without resolving the redirect chain (see Section 6).
+
+---
+
+### 3. Rendering & Accessibility
+
+**Empty `<title>` tag (confirmed)**
+```html
+<title></title>
+```
+Some email clients (Samsung Mail, some desktop clients) render the `<title>` value in tab/window chrome. An empty title is also a minor WCAG 2.4.2 failure.
+
+**Global link text-decoration reset (confirmed)**
+```css
+#MessageViewBody a { color: inherit; text-decoration: none }
+```
+This removes all visual link differentiation for screen-reader-adjacent users who rely on underlines. The in-line link color is `#434343` on `#ffffff` — contrast ratio is approximately 7:1 (passes AA), but removing underlines removes a non-color cue required by WCAG 1.4.1.
+
+**Truncated `<img>` — alt text unverifiable**
+The image tag is cut off before the `alt` attribute. Cannot confirm or deny alt text presence. If omitted, screen readers will announce the full encoded URL as link text — high severity for a product-image-heavy abandonment email.
+
+**Preheader padding technique**
+The preheader uses `U+00AD` (soft hyphens) and `U+034F` (combining grapheme joiner) as invisible spacers:
+```
+͏ ͏ ͏ … ­ ­ ­ …
+```
+This is functional but `U+034F` is flagged as suspicious by some spam filters (SpamAssassin `INVISIBLE_CHARACTERS` rule). Safer alternatives: `&zwnj;` or standard `&nbsp;` with `font-size:0`.
+
+---
+
+### 4. Personalization & Merge Tokens
+
+**No tokens visible in preheader or header rows (confirmed in source)**
+The preheader reads as a static string:
+```
+You left something in your cart, get it before it's gone! Join Skechers Plus today for free shipping!
+```
+No recipient name, no cart item name, no SKU. For a triggered cart abandonment, this is a missed merge point — though the cart content rows may be dynamic further down the (truncated) template, this cannot be confirmed.
+
+**No unrendered/broken tokens visible**
+No exposed `{{token}}`, `%TOKEN%`, or `[TOKEN]` syntax found in the visible source. No evidence of failed token substitution.
+
+---
+
+### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
+
+**Unsubscribe link — not visible in truncated source**
+CAN-SPAM §7(a)(3) requires a functioning opt-out mechanism. The footer is cut off; presence cannot be confirmed. Must verify in full source.
+
+**Physical mailing address — not visible in truncated source**
+CAN-SPAM §7(a)(5) requires a valid physical postal address. Not visible in the truncated portion; must verify in full source.
+
+**Sending domain authentication**
+- Envelope sender: `msgs.skechers.com`
+- From display: `hello@msgs.skechers.com`
+- `msgs.skechers.com` is an Attentive-managed subdomain. SPF/DKIM/DMARC alignment cannot be confirmed from HTML source alone — requires header inspection. Attentive standard setup does provide DKIM signing on customer subdomains, but this should be verified via `Authentication-Results` headers.
+
+---
+
+### 6. Email-to-Site Continuity (UTM Params, Landing Page Alignment)
+
+**UTM parameters unverifiable without redirect resolution**
+All outbound links pass through `skechers.attentivemail.com/ls/click` with encoded `upn=` values. The decoded destination URLs are not exposed in the HTML. To confirm UTM tagging (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`) the redirect chain must be followed — e.g.:
+```
+curl -IL "http://skechers.attentivemail.com/ls/click?upn=<token>"
+```
+If UTM params are absent on the resolved destination, cart recovery sessions will be attributed to direct in analytics.
+
+**Subject-to-CTA alignment**
+Subject line references cart items; preheader references Skechers Plus free shipping — two separate messages. If the landing page does not surface the cart immediately (e.g., drops to homepage or a Skechers Plus signup page), there is a continuity break. Cannot confirm without resolving the redirect.
+
+---
+
+### 7. Recommendations
+
+| Priority | Issue | Action |
+|----------|-------|--------|
+| High | All tracked links use HTTP | Update Attentive subdomain click-tracking to enforce HTTPS redirects |
+| High | Image CDN uses HTTP | Update `image.emails.skechers.com` asset URLs to HTTPS |
+| High | Unsubscribe / physical address unconfirmed | Verify footer in full source before send |
+| Medium | Empty `<title>` | Set a descriptive title: `Your cart is waiting — SKECHERS` |
+| Medium | `<img>` alt text unverifiable | Audit all product image `alt` attributes in full source |
+| Medium | Preheader uses `U+034F` spacers | Replace with `&zwnj;` to avoid spam filter hits |
+| Low | Global `text-decoration:none` on links | Scope rule more narrowly or restore underline for body copy links |
+| Low | UTM parameter verification | Resolve redirect chain in staging and confirm `utm_source=email&utm_medium=cart_abandonment` (or equivalent) on all CTAs |
+## Recent history
+
+- [[2026-04-16-your-cart-expires-soon]] — 5/10 (2026-04-16)
+- [[2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday-]] — 5/10 (2026-04-16)
+- [[2026-04-16-test-ret-us-na-u-store1173-zip-en-04162026-v3our-new-store-in-corona-hills-plaza]] — 5/10 (2026-04-16)
+

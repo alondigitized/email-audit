@@ -1,0 +1,243 @@
+---
+slug: 2026-04-10-test-mkg-us-na-u-seasonal-gender-en-04112026the-perfect-pair-or-2-for-her
+type: email
+date: 2026-04-10
+persona: walker
+score: "6.5/10"
+sender: SKECHERS
+subject: "[Test]: MKG_US_NA_U_SEASONAL_GENDER_EN_04112026The Perfect Pair (or 2) for Her"
+tags: [email, score-7, sender/skechers]
+---
+# [Test]: MKG_US_NA_U_SEASONAL_GENDER_EN_04112026The Perfect Pair (or 2) for Her
+**Score:** 6.5/10 · **Type:** Email audit · **2026-04-10**
+## Executive summary
+
+- A well-timed Mother's Day gift guide email with a strong promotional hook (BOGO 50% off) and clear category segmentation. The layout is clean and seasonal, but the email is heavily compressed — product imagery is small, copy is minimal, and the bottom utility section is cluttered. The "Mommy & Me" angle is a solid insight, but it competes with too many category rows for attention. Solid execution, not inspired.
+
+## What's working
+
+- **Promo banner is prominent and immediate.** "BUY ONE, GET ONE 50% OFF" sits at the top in high-contrast black with a clear CTA. No ambiguity on the offer.
+- **Mother's Day framing is seasonal and relevant.** "Mother's Day Gift Guide" with floral aesthetics fits the timing and audience well.
+- **Category logic is sensible.** Mommy & Me → Sandals → Spring Colors → Best Sellers is a coherent narrative arc — aspirational to practical.
+- **Best Sellers anchor at the bottom** is a reliable safety net for undecided shoppers.
+- **Floral design accents** reinforce the seasonal theme without overwhelming the products.
+
+## What's weak
+
+- **Product images are too small.** Each module fits a product in roughly a quarter of the email width — shoe detail is lost, emotional appeal is muted.
+- **"Mommy & Me" module undersells itself.** It's the most emotionally resonant concept in the email, but it gets the same real estate as every other row. It deserves the hero slot.
+- **Spring Colors module is vague.** There's no specific product callout — just a color palette impression and a CTA. Low conversion utility.
+- **Navigation bar (Women / Men / Kids / Clothing / New Arrivals / Sale) is redundant.** In a gender-targeted email, surfacing Men feels like a leaky experience. This bar dilutes focus.
+- **Bottom utility block (App download, Curbside Pickup, Shop Now Pay Later, Find a Store) is visually noisy.** Four competing utility actions fight for attention after the product content ends. None have visual hierarchy.
+- **Subject line leaked test metadata.** The subject begins with "[Test]: MKG_US_NA_U_SEASONAL_GENDER_EN_04112026" — a significant quality issue if this reached any real recipients.
+
+## Recommendations
+
+- 1. **Make "Mommy & Me" the hero.** Move it above the fold with a full-width lifestyle image and larger product pairs. This is the emotional core of the email.
+- 2. **Consolidate the utility strip.** Pick the top two secondary actions (App + Find a Store) and drop the rest to reduce noise. Or move this block to a collapsed footer.
+- 3. **Enlarge product images.** Each category row should show fewer products at larger size — one hero product per row, not three thumbnails.
+- 4. **Drop Men from the nav bar.** This is a women/gifting-targeted send. Keep it Women, Kids, New Arrivals, Sale.
+- 5. **Add a deadline to the promo.** "BOGO 50% OFF" without an expiration lacks urgency. Even "This Weekend Only" would sharpen the CTA.
+- 6. **Fix subject line before any real send.** The test metadata prefix must be stripped.
+- | Priority | Issue | Action |
+- |---|---|---|
+- | P0 | HTTP images (17 sources) | Change all `http://image.emails.skechers.com` to `https://` in the template |
+- | P0 | Test subject in production | Strip `[Test]:` prefix; fix template whitespace between campaign ID variable and subject copy |
+- | P1 | Return Path pixel — no protocol | Add `https://` to `pixel.app.returnpath.net/pixel.gif` src |
+- | P1 | ink1000 HTTP pixel | Upgrade `http://www.ink1000.com` src to HTTPS |
+- | P1 | SPF/DKIM unverified | Confirm DKIM signing and SPF alignment for `emails.skechers.com` via ESP logs |
+- | P1 | Static `mi_u` / `partner_uid` | Verify these are dynamic merge fields; replace hardcoded test values |
+- | P2 | Missing alt text (3 images) | Add descriptive `alt` attributes to `49468f73`, `00100b23`, `fc08601a` images |
+- | P2 | UTM parameters unverified | Resolve a sample of the 26 click URLs to confirm UTM params are present and correct |
+- | P3 | Malformed `<meta>` tag | Add `http-equiv="X-UA-Compatible"` to IE edge directive |
+
+## Full review
+## 1. Executive Summary
+
+A well-timed Mother's Day gift guide email with a strong promotional hook (BOGO 50% off) and clear category segmentation. The layout is clean and seasonal, but the email is heavily compressed — product imagery is small, copy is minimal, and the bottom utility section is cluttered. The "Mommy & Me" angle is a solid insight, but it competes with too many category rows for attention. Solid execution, not inspired.
+
+---
+
+## 2. Business Impact Score: **6.5 / 10**
+
+---
+
+## 3. What's Working
+
+- **Promo banner is prominent and immediate.** "BUY ONE, GET ONE 50% OFF" sits at the top in high-contrast black with a clear CTA. No ambiguity on the offer.
+- **Mother's Day framing is seasonal and relevant.** "Mother's Day Gift Guide" with floral aesthetics fits the timing and audience well.
+- **Category logic is sensible.** Mommy & Me → Sandals → Spring Colors → Best Sellers is a coherent narrative arc — aspirational to practical.
+- **Best Sellers anchor at the bottom** is a reliable safety net for undecided shoppers.
+- **Floral design accents** reinforce the seasonal theme without overwhelming the products.
+
+---
+
+## 4. What's Weak
+
+- **Product images are too small.** Each module fits a product in roughly a quarter of the email width — shoe detail is lost, emotional appeal is muted.
+- **"Mommy & Me" module undersells itself.** It's the most emotionally resonant concept in the email, but it gets the same real estate as every other row. It deserves the hero slot.
+- **Spring Colors module is vague.** There's no specific product callout — just a color palette impression and a CTA. Low conversion utility.
+- **Navigation bar (Women / Men / Kids / Clothing / New Arrivals / Sale) is redundant.** In a gender-targeted email, surfacing Men feels like a leaky experience. This bar dilutes focus.
+- **Bottom utility block (App download, Curbside Pickup, Shop Now Pay Later, Find a Store) is visually noisy.** Four competing utility actions fight for attention after the product content ends. None have visual hierarchy.
+- **Subject line leaked test metadata.** The subject begins with "[Test]: MKG_US_NA_U_SEASONAL_GENDER_EN_04112026" — a significant quality issue if this reached any real recipients.
+
+---
+
+## 5. Recommendations
+
+1. **Make "Mommy & Me" the hero.** Move it above the fold with a full-width lifestyle image and larger product pairs. This is the emotional core of the email.
+2. **Consolidate the utility strip.** Pick the top two secondary actions (App + Find a Store) and drop the rest to reduce noise. Or move this block to a collapsed footer.
+3. **Enlarge product images.** Each category row should show fewer products at larger size — one hero product per row, not three thumbnails.
+4. **Drop Men from the nav bar.** This is a women/gifting-targeted send. Keep it Women, Kids, New Arrivals, Sale.
+5. **Add a deadline to the promo.** "BOGO 50% OFF" without an expiration lacks urgency. Even "This Weekend Only" would sharpen the CTA.
+6. **Fix subject line before any real send.** The test metadata prefix must be stripped.
+
+---
+
+## 6. Bottom Line
+
+This email has the right ingredients — seasonal hook, strong promo, relatable gifting concept — but executes them at the same visual weight across the board. The "Mommy & Me" angle is wasted in a middle row. Tighten the hierarchy, enlarge the products, and cut the utility clutter, and this is a solid 8.
+
+---
+
+## 7. Evidence
+
+**Overall purpose:** Mother's Day gifting drive, anchored by a BOGO 50% off promotion. Target audience is women shopping for themselves or gifting to/from moms.
+
+**Hero / primary value proposition:** BOGO 50% off banner is the clearest element in the email — black background, white text, high contrast. CTA button ("SHOP NOW") is present but small. No expiration date visible.
+
+**Membership / benefits section:** None visible. No loyalty points, no adiclub-style benefit callout.
+
+**Product discoverability / recommendation modules:**
+- *Mommy & Me* — sandals/sneakers shown in adult + child pairs. Emotionally strong concept, underpowered execution.
+- *Sandals* — two or three sandal styles shown at small scale with a SHOP NOW CTA.
+- *Spring Colors* — pastel/seasonal product thumbnails with no specific product names visible.
+- *Best Sellers* — product grid in the lower body; acts as a fallback discovery layer.
+
+**Utility / secondary modules:**
+- Navigation bar: Women / Men / Kids / Clothing / New Arrivals / Sale — full nav, feels generic.
+- App download, Curbside Pickup, Shop Now Pay Later, Find a Store icons — bottom utility strip, visually crowded.
+- Social follow icons (Facebook, Instagram, etc.) in footer.
+- Standard legal/unsubscribe footer text visible.
+
+**Bugs / friction / clarity issues:**
+- Subject line contains test metadata ("[Test]: MKG_US_...") — visible quality issue at the send level.
+- Preview text exposed raw URL strings rather than meaningful copy — inbox first impression is broken.
+- No visible price points or product names on any module — anonymous product presentation.
+
+---
+
+## Technical Audit
+
+## Technical Audit — Skechers Seasonal Gender Email (04/11/2026)
+
+---
+
+### 1. Technical Summary
+
+A Salesforce Marketing Cloud send with 17 HTTP (non-HTTPS) image sources that will break rendering across major clients, a protocol-less Return Path pixel that will silently fail, and a subject line that concatenates the campaign ID directly against the subject copy — indicating a test-send artifact in production state. SPF/DKIM authentication cannot be confirmed through the relay.
+
+---
+
+### 2. Link & Tracking Issues
+
+**Return Path pixel — missing protocol (broken)**
+```
+src="pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499"
+```
+No `http://` or `https://` prefix. Email clients do not resolve protocol-relative URLs like browsers do; this pixel will fail to fire in all clients, silently breaking inbox-placement reporting.
+
+**ink1000 tracking pixel — HTTP**
+```
+src="http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8021648903&mi_ecmp=MKG_US_NA_U_SEASONAL_GENDER_EN_04112026"
+```
+HTTP-only source. Will be blocked or proxied-to-failure by Gmail Image Proxy and Apple Mail Privacy Protection.
+
+**26 click-tracking links — unresolved**
+All clicks route through `click.emails.skechers.com` with encrypted QS payloads. Destination URLs and UTM parameters cannot be verified without redirect resolution; QA prober skipped all 26. See Section 6.
+
+---
+
+### 3. Rendering & Accessibility
+
+**HTTP image sources — 17 instances (HIGH)**
+All content and footer images are served from `http://image.emails.skechers.com`. Examples:
+```
+src="http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"  (Skechers logo)
+src="http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"  (App Store badge)
+src="http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"  (Google Play badge)
+```
+Gmail Image Proxy, Apple Mail Privacy Protection, and Outlook 365 all require HTTPS. These images will fail to load for a significant portion of recipients.
+
+**Missing alt text — 3 content images**
+```
+49468f73-4651-4af3-bea2-61d1ae5db486.png
+00100b23-0afa-4715-a8cd-23bb46f9d2b2.png
+fc08601a-fcce-4c96-8b90-39e5a55d6c05.png
+```
+Fails WCAG 2.1 SC 1.1.1; also degrades text-mode rendering in clients with images disabled.
+
+**Malformed meta tag**
+```html
+<meta content="IE=Edge" />
+```
+Missing `http-equiv` attribute. Correct form: `<meta http-equiv="X-UA-Compatible" content="IE=edge" />`. Without it, the directive is ignored by IE/legacy Outlook rendering engines.
+
+---
+
+### 4. Personalization & Merge Tokens
+
+**Static subscriber ID in ink1000 pixel**
+```
+mi_u=8021648903
+```
+This value is hardcoded (not a merge token). If `mi_u` is intended to carry a per-subscriber identifier for open attribution, all recipients share the same value, making individual-level tracking non-functional.
+
+**Static Krux subid beacon**
+```
+src="https://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_100007688_subid&partner_uid=75909571"
+```
+`partner_uid=75909571` is a static integer. If this should be subscriber-level, it is broken. The SHA256 `partner_uid` in the usermatch beacon (`c30973d6f4e31a55c5dcae7d3c3df0d73fcb04747ff44220a92abd05cee475c2`) appears to be from a seed/test record.
+
+---
+
+### 5. Compliance
+
+**Test subject prefix in apparent production send**
+```
+Subject: [Test]: MKG_US_NA_U_SEASONAL_GENDER_EN_04112026The Perfect Pair (or 2) for Her
+```
+Two issues: (1) `[Test]:` prefix was not stripped before send; (2) the campaign ID is concatenated directly to the subject copy with no space or separator — `EN_04112026The Perfect Pair...` — indicating a template variable or whitespace token was dropped during rendering.
+
+**SPF/DKIM authentication — unverified**
+`Authentication-Results` header was not present via the AgentMail relay. Cannot confirm DKIM signing by `emails.skechers.com` or SPF pass. DMARC alignment status unknown.
+
+**Unsubscribe and physical address** — not visible in the truncated source provided; assumed present but not confirmed by this audit.
+
+---
+
+### 6. Email-to-Site Continuity
+
+All 26 links route through `click.emails.skechers.com` with base64-encoded encrypted payloads. UTM campaign/source/medium parameters are embedded in the redirect targets and cannot be verified without resolving the redirects. QA prober skipped all 26 links. Destination URL alignment with the `MKG_US_NA_U_SEASONAL_GENDER_EN_04112026` campaign ID is unconfirmed.
+
+---
+
+### 7. Recommendations
+
+| Priority | Issue | Action |
+|---|---|---|
+| P0 | HTTP images (17 sources) | Change all `http://image.emails.skechers.com` to `https://` in the template |
+| P0 | Test subject in production | Strip `[Test]:` prefix; fix template whitespace between campaign ID variable and subject copy |
+| P1 | Return Path pixel — no protocol | Add `https://` to `pixel.app.returnpath.net/pixel.gif` src |
+| P1 | ink1000 HTTP pixel | Upgrade `http://www.ink1000.com` src to HTTPS |
+| P1 | SPF/DKIM unverified | Confirm DKIM signing and SPF alignment for `emails.skechers.com` via ESP logs |
+| P1 | Static `mi_u` / `partner_uid` | Verify these are dynamic merge fields; replace hardcoded test values |
+| P2 | Missing alt text (3 images) | Add descriptive `alt` attributes to `49468f73`, `00100b23`, `fc08601a` images |
+| P2 | UTM parameters unverified | Resolve a sample of the 26 click URLs to confirm UTM params are present and correct |
+| P3 | Malformed `<meta>` tag | Add `http-equiv="X-UA-Compatible"` to IE edge directive |
+## Recent history
+
+- [[2026-04-10-adiclub-days-are-coming]] — 6/10 (2026-04-10)
+- [[2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026feel-good-styles-for-you-them]] — 5/10 (2026-04-10)
+- [[2026-04-10-test-ret-us-na-u-store1423-zip-en-04102026-v2sale-ends-soon-celebrate-our-birthd]] — 6/10 (2026-04-10)
+

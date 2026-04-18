@@ -6,6 +6,7 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import dotenv from 'dotenv';
 import { AgentMailClient } from 'agentmail';
+import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -483,11 +484,32 @@ async function publishSite() {
   const indexEntries = buildIndexEntriesFromManifest(manifest, siteContent, siteImages);
   fs.writeFileSync(path.join(siteContent, 'index.json'), JSON.stringify(indexEntries, null, 2));
 
+  // Phase 2b: Write each audit's markdown note into the persona brain vault.
+  // Wraps in try/catch because vault writes must never block the site publish —
+  // the user-facing product is the Vercel site, the vault is a back-office artifact.
+  for (const entry of manifest) {
+    const auditPath = path.join(siteContent, entry.slug, 'audit.json');
+    if (!fs.existsSync(auditPath)) continue;
+    const persona = entry.persona;
+    if (!persona) continue;
+    try {
+      const auditData = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
+      writeVaultNote({
+        auditData,
+        personaSlug: persona,
+        repoRoot,
+        siteIndex: indexEntries,
+      });
+    } catch (err) {
+      console.warn(`vault write failed for ${entry.slug}:`, err.message);
+    }
+  }
+
   // Phase 3: Git push to main (triggers Vercel deploy)
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
 
-  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/images/audits site/public/pdfs audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
+  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/images/audits site/public/pdfs audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 

@@ -120,6 +120,15 @@ async function cleanup(slug, messageId) {
   if (fs.existsSync(contentDir)) fs.rmSync(contentDir, { recursive: true });
   if (fs.existsSync(imageDir)) fs.rmSync(imageDir, { recursive: true });
 
+  // Remove vault note (written by email-monitor's publishSite under whatever persona the inbox is tagged for).
+  const vaultsRoot = path.join(REPO_ROOT, 'vaults');
+  if (fs.existsSync(vaultsRoot)) {
+    for (const persona of fs.readdirSync(vaultsRoot)) {
+      const p = path.join(vaultsRoot, persona, 'audits', `${slug}.md`);
+      if (fs.existsSync(p)) fs.unlinkSync(p);
+    }
+  }
+
   // Re-extract audit-data.json (idempotent — picks up manifest changes)
   await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: REPO_ROOT, maxBuffer: 1024 * 1024 * 20 });
 
@@ -131,7 +140,7 @@ async function cleanup(slug, messageId) {
   // Git push cleanup
   const ghToken = process.env.GH_TOKEN || '';
   if (ghToken) {
-    const cmd = `cd "${REPO_ROOT}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
+    const cmd = `cd "${REPO_ROOT}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
     await execFileAsync('/bin/zsh', ['-lc', cmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
   }
 

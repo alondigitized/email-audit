@@ -26,6 +26,7 @@ import AxeBuilder from '@axe-core/playwright';
 // Apply stealth patches — makes Playwright look like a real Chrome browser
 chromium.use(StealthPlugin());
 import dotenv from 'dotenv';
+import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -749,7 +750,7 @@ function updatePublishedManifest(entry) {
   fs.writeFileSync(SITE_MANIFEST, JSON.stringify(filtered, null, 2));
 }
 
-async function publishSite(slug, artifactDir) {
+async function publishSite(slug, artifactDir, previousSummary = null) {
   // Phase 1: Re-extract audit-data.json for email entries (skips site entries — those built in JS above)
   await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
 
@@ -804,9 +805,28 @@ async function publishSite(slug, artifactDir) {
     .sort((a, b) => (b.timestamp_iso || '').localeCompare(a.timestamp_iso || ''));
   fs.writeFileSync(path.join(siteContent, 'index.json'), JSON.stringify(indexEntries, null, 2));
 
+  // Phase 2b: Write the audit's markdown note into the persona brain vault.
+  try {
+    const auditPath = path.join(siteContent, slug, 'audit.json');
+    if (fs.existsSync(auditPath)) {
+      const auditData = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
+      if (auditData.persona) {
+        writeVaultNote({
+          auditData,
+          personaSlug: auditData.persona,
+          repoRoot,
+          previousScore: previousSummary?.score ?? null,
+          siteIndex: indexEntries,
+        });
+      }
+    }
+  } catch (err) {
+    log('Vault write failed (non-fatal)', { error: String(err).slice(0, 300) });
+  }
+
   // Phase 3: Git push
   if (!GH_TOKEN) { log('No GH_TOKEN — skipping git push'); return; }
-  const pushCmd = `cd "${repoRoot}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
+  const pushCmd = `cd "${repoRoot}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushCmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN } });
 }
 
@@ -879,7 +899,7 @@ async function main() {
 
   let published = false;
   try {
-    await publishSite(slug, artifactDir);
+    await publishSite(slug, artifactDir, previousSummary);
     published = true;
   } catch (err) {
     log('Site publish failed (non-fatal)', { error: String(err).slice(0, 500) });
