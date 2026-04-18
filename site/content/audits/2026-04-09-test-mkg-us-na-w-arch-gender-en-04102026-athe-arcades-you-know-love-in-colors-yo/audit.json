@@ -305,7 +305,8 @@
   "assets": {
     "render_image": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-athe-arcades-you-know-love-in-colors-yo-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=GGUG2QOMDYVUBMCI76JKJXKVEI.100220"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=GGUG2QOMDYVUBMCI76JKJXKVEI.100220",
+    "render_image_key": "audits/2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-athe-arcades-you-know-love-in-colors-yo/render.png"
   },
   "persona": "walker",
   "type": "email"

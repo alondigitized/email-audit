@@ -289,7 +289,8 @@
   "assets": {
     "render_image": "2026-04-03-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04052026spring-fling-sale-double-the--email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=JUBOYD5GUV7EXBBBLBEVR6XO4M.100218"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=JUBOYD5GUV7EXBBBLBEVR6XO4M.100218",
+    "render_image_key": "audits/2026-04-03-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04052026spring-fling-sale-double-the-/render.png"
   },
   "persona": "walker",
   "type": "email"

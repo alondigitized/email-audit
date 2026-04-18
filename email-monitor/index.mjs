@@ -7,6 +7,7 @@ import { promisify } from 'util';
 import dotenv from 'dotenv';
 import { AgentMailClient } from 'agentmail';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
+import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -497,7 +498,9 @@ function buildIndexEntriesFromManifest(manifest, siteContent, siteImages) {
         timestamp_iso: ad.email.timestamp_iso,
         score: ad.review.score,
         qa_summary: ad.qa?.summary || null,
-        has_image: fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
+        has_image:
+          !!ad.assets?.render_image_key ||
+          fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
         type: ad.type || 'email',
         persona: ad.persona || entry.persona || null,
       };
@@ -521,22 +524,38 @@ async function publishSite() {
     const artifactDir = entry.artifactDir;
     if (!artifactDir || !fs.existsSync(artifactDir)) continue;
 
-    // Copy audit.json
+    // Upload render.png to R2 first so we can embed the key in audit.json.
+    // Falls through gracefully when R2 isn't configured (local dev without
+    // keys) — site still renders via the legacy /images/audits/ path.
+    const srcPng = path.join(artifactDir, 'email-webview-render.png');
+    let renderKey = null;
+    if (fs.existsSync(srcPng) && mediaConfigured()) {
+      try {
+        renderKey = await putMedia({
+          filePath: srcPng,
+          key: auditMediaKey(slug, 'render.png'),
+          contentType: 'image/png',
+        });
+      } catch (err) {
+        console.warn(`R2 upload failed for ${slug}/render.png:`, err.message);
+      }
+    }
+
+    // Copy audit.json — after injecting the render_image_key so the file we
+    // publish reflects where the image actually lives.
     const srcAudit = path.join(artifactDir, 'audit-data.json');
     if (fs.existsSync(srcAudit)) {
       const destDir = path.join(siteContent, slug);
       fs.mkdirSync(destDir, { recursive: true });
-      fs.copyFileSync(srcAudit, path.join(destDir, 'audit.json'));
+      const data = JSON.parse(fs.readFileSync(srcAudit, 'utf8'));
+      if (renderKey) {
+        data.assets = data.assets ?? {};
+        data.assets.render_image_key = renderKey;
+      }
+      fs.writeFileSync(path.join(destDir, 'audit.json'), JSON.stringify(data, null, 2));
+      // Also write the updated shape back to the artifact so rerun-audit works.
+      fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
     }
-
-    // Copy render.png
-    const srcPng = path.join(artifactDir, 'email-webview-render.png');
-    if (fs.existsSync(srcPng)) {
-      const destImgDir = path.join(siteImages, slug);
-      fs.mkdirSync(destImgDir, { recursive: true });
-      fs.copyFileSync(srcPng, path.join(destImgDir, 'render.png'));
-    }
-
   }
 
   // Build index.json for the Next.js site
@@ -568,7 +587,9 @@ async function publishSite() {
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
 
-  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/images/audits site/public/pdfs audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
+  // Images no longer published via git — they live in R2 now. Only text
+  // content (audit.json, manifest, vaults) needs to be committed.
+  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/pdfs audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 

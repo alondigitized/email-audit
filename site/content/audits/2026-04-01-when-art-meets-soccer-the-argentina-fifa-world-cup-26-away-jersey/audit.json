@@ -254,7 +254,8 @@
   "assets": {
     "render_image": "2026-04-01-when-art-meets-soccer-the-argentina-fifa-world-cup-26-away-jersey-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-01-when-art-meets-soccer-the-argentina-fifa-world-cup-26-away-jersey/render.png"
   },
   "persona": "walker",
   "type": "email"

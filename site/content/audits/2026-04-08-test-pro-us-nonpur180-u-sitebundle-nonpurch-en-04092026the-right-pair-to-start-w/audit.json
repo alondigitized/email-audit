@@ -307,7 +307,8 @@
   "assets": {
     "render_image": "2026-04-08-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04092026the-right-pair-to-start-w-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=OINZLO52VJEELB7P47A2CE54RQ.100215"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=OINZLO52VJEELB7P47A2CE54RQ.100215",
+    "render_image_key": "audits/2026-04-08-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04092026the-right-pair-to-start-w/render.png"
   },
   "persona": "walker",
   "type": "email"

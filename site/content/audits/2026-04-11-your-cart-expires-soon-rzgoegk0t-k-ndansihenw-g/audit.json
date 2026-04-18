@@ -108,7 +108,8 @@
   "assets": {
     "render_image": "2026-04-11-your-cart-expires-soon-rzgoegk0t-k-ndansihenw-g-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-11-your-cart-expires-soon-rzgoegk0t-k-ndansihenw-g/render.png"
   },
   "persona": "walker",
   "type": "email"

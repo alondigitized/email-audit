@@ -135,6 +135,7 @@
   "assets": {
     "render_image": "2026-04-15-there-s-still-time-but-not-much-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-15-there-s-still-time-but-not-much/render.png"
   }
 }

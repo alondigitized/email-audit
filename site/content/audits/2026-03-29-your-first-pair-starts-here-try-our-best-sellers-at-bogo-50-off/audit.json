@@ -282,7 +282,8 @@
   "assets": {
     "render_image": "2026-03-29-your-first-pair-starts-here-try-our-best-sellers-at-bogo-50-off-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=U7ZGXSF25H7UXM2CGXMDMYS7PU.100216"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=U7ZGXSF25H7UXM2CGXMDMYS7PU.100216",
+    "render_image_key": "audits/2026-03-29-your-first-pair-starts-here-try-our-best-sellers-at-bogo-50-off/render.png"
   },
   "persona": "walker",
   "type": "email"

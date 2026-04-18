@@ -241,7 +241,8 @@
   "assets": {
     "render_image": "2026-04-01-just-restocked-real-madrid-bring-back-jerseys-0102019d49964fe3-7b88df2-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-01-just-restocked-real-madrid-bring-back-jerseys-0102019d49964fe3-7b88df2/render.png"
   },
   "persona": "walker",
   "type": "email"

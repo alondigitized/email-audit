@@ -305,7 +305,8 @@
   "assets": {
     "render_image": "2026-03-29-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=4G52SLHVSK3ENESZAS3G5T2ECY.100221"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=4G52SLHVSK3ENESZAS3G5T2ECY.100221",
+    "render_image_key": "audits/2026-03-29-test-pro-us-na-u-bundle-nonpurch-en-03272026an-easy-way-to-try-the-comfort-every/render.png"
   },
   "persona": "walker",
   "type": "email"

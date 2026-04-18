@@ -308,6 +308,7 @@
   "assets": {
     "render_image": "2026-04-13-test-mkg-us-na-u-glide-gender-en-04142026family-comfort-unlocked-bogo-50-off-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=UR47QLHW43XE5BSDZL5RNJZVNA.100220"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=UR47QLHW43XE5BSDZL5RNJZVNA.100220",
+    "render_image_key": "audits/2026-04-13-test-mkg-us-na-u-glide-gender-en-04142026family-comfort-unlocked-bogo-50-off/render.png"
   }
 }

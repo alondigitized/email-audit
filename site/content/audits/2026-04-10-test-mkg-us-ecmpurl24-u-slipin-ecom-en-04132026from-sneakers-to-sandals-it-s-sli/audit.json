@@ -279,7 +279,8 @@
   "assets": {
     "render_image": "2026-04-10-test-mkg-us-ecmpurl24-u-slipin-ecom-en-04132026from-sneakers-to-sandals-it-s-sli-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=OYXNDN5DB6SU7G7MO4GCZHBVJM.100221"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=OYXNDN5DB6SU7G7MO4GCZHBVJM.100221",
+    "render_image_key": "audits/2026-04-10-test-mkg-us-ecmpurl24-u-slipin-ecom-en-04132026from-sneakers-to-sandals-it-s-sli/render.png"
   },
   "persona": "walker",
   "type": "email"

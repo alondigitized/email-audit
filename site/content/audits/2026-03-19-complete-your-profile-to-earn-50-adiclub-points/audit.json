@@ -431,7 +431,8 @@
   "assets": {
     "render_image": "2026-03-19-complete-your-profile-to-earn-50-adiclub-points-email-webview-render.png",
     "pdf": "2026-03-19-complete-your-profile-to-earn-50-adiclub-points-review.pdf",
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-03-19-complete-your-profile-to-earn-50-adiclub-points/render.png"
   },
   "persona": "walker",
   "type": "email"

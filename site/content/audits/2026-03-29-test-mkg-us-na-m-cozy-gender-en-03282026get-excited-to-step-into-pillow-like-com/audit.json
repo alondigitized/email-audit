@@ -293,7 +293,8 @@
   "assets": {
     "render_image": "2026-03-29-test-mkg-us-na-m-cozy-gender-en-03282026get-excited-to-step-into-pillow-like-com-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=U72E3SC2BJSEJDYUAZLKJWQXEY.100217"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=U72E3SC2BJSEJDYUAZLKJWQXEY.100217",
+    "render_image_key": "audits/2026-03-29-test-mkg-us-na-m-cozy-gender-en-03282026get-excited-to-step-into-pillow-like-com/render.png"
   },
   "persona": "walker",
   "type": "email"

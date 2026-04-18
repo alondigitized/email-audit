@@ -297,7 +297,8 @@
   "assets": {
     "render_image": "2026-03-31-test-mkg-us-na-u-trend-gender-en-04012026-v2you-deserve-comfort-this-spring-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=LHLNA7KLVAOEDCOKVABYYCTF2I.100215"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=LHLNA7KLVAOEDCOKVABYYCTF2I.100215",
+    "render_image_key": "audits/2026-03-31-test-mkg-us-na-u-trend-gender-en-04012026-v2you-deserve-comfort-this-spring/render.png"
   },
   "persona": "walker",
   "type": "email"

@@ -301,7 +301,8 @@
   "assets": {
     "render_image": "2026-04-03-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04052026take-your-pick-during-the-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=BO6527HCUWTUHJRSRGZ3QK6L3Y.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=BO6527HCUWTUHJRSRGZ3QK6L3Y.100214",
+    "render_image_key": "audits/2026-04-03-test-pro-us-nonpur180-u-sitebundle-nonpurch-en-04052026take-your-pick-during-the/render.png"
   },
   "persona": "walker",
   "type": "email"

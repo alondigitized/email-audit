@@ -351,6 +351,7 @@
   "assets": {
     "render_image": "2026-04-14-test-pro-us-na-u-sitebundle-full-en-04152026spring-styles-bogo-50-off-the-perfec-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=HDLNVUPX6XVUZGQQDMG7F5NNPQ.100220"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=HDLNVUPX6XVUZGQQDMG7F5NNPQ.100220",
+    "render_image_key": "audits/2026-04-14-test-pro-us-na-u-sitebundle-full-en-04152026spring-styles-bogo-50-off-the-perfec/render.png"
   }
 }

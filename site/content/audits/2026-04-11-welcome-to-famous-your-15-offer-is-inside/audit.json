@@ -99,7 +99,8 @@
   "assets": {
     "render_image": "2026-04-11-welcome-to-famous-your-15-offer-is-inside-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-11-welcome-to-famous-your-15-offer-is-inside/render.png"
   },
   "persona": "walker",
   "type": "email"

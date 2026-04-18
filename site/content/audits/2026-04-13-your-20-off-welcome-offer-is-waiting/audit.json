@@ -321,6 +321,7 @@
   "assets": {
     "render_image": "2026-04-13-your-20-off-welcome-offer-is-waiting-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=2A4RTR5V2ZTEDEJP5LLSY3FMJA.100218"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=2A4RTR5V2ZTEDEJP5LLSY3FMJA.100218",
+    "render_image_key": "audits/2026-04-13-your-20-off-welcome-offer-is-waiting/render.png"
   }
 }

@@ -5,11 +5,12 @@ import { getAuditBySlugForUser } from "@/lib/audits";
 import { requireUser } from "@/lib/dal";
 import { recordPageView } from "@/lib/analytics";
 import { splitReview } from "@/lib/types";
-import type { JourneyStep, PerfStep } from "@/lib/types";
+import type { JourneyStep, PerfStep, AuditData } from "@/lib/types";
 import { ReviewContent } from "@/components/ReviewContent";
 import { QaCard } from "@/components/QaCard";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { TabNav } from "@/components/TabNav";
+import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
 
 // S7: per-user filtering means we can't statically pre-render slugs.
 export const dynamic = "force-dynamic";
@@ -48,12 +49,55 @@ function TwoColLayout({
   );
 }
 
-function EmailImage({ slug, webviewUrl }: { slug: string; webviewUrl?: string | null }) {
+/**
+ * Resolve an audit's image to a URL. Prefers an R2 signed URL when a key
+ * is present on the audit; otherwise falls back to the legacy
+ * /images/audits/{slug}/... path still served from the repo. The proxy
+ * gate on that path will keep working during the migration window.
+ */
+async function resolveImageUrl(
+  slug: string,
+  r2Key: string | null | undefined,
+  legacyFilename: string | null | undefined,
+): Promise<string | null> {
+  if (r2Key && r2IsConfigured()) {
+    try {
+      return await signGetUrl(r2Key, 900);
+    } catch {
+      // Fall through to legacy.
+    }
+  }
+  if (legacyFilename) {
+    return `/images/audits/${slug}/${legacyFilename}`;
+  }
+  return null;
+}
+
+async function resolveAllImageUrls(audit: AuditData) {
+  const heroKey = audit.assets.render_image_key ?? null;
+  const heroLegacy = audit.assets.render_image ? "render.png" : null;
+  const heroUrl = await resolveImageUrl(audit.slug, heroKey, heroLegacy);
+  const stepUrls: Record<number, string | null> = {};
+  const steps = audit.assets.journey_steps ?? [];
+  await Promise.all(
+    steps.map(async (s) => {
+      stepUrls[s.step] = await resolveImageUrl(
+        audit.slug,
+        s.viewport_screenshot_key,
+        s.viewport_screenshot,
+      );
+    }),
+  );
+  return { heroUrl, stepUrls };
+}
+
+function EmailImage({ imageUrl, webviewUrl }: { imageUrl: string | null; webviewUrl?: string | null }) {
+  if (!imageUrl) return null;
   return (
     <div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`/images/audits/${slug}/render.png`}
+        src={imageUrl}
         alt="Email webview render"
         className="w-full border border-gray-200 rounded-2xl"
       />
@@ -71,38 +115,50 @@ function EmailImage({ slug, webviewUrl }: { slug: string; webviewUrl?: string | 
   );
 }
 
-function JourneyGallery({ slug, steps }: { slug: string; steps: JourneyStep[] }) {
+function JourneyGallery({
+  steps,
+  stepUrls,
+}: {
+  steps: JourneyStep[];
+  stepUrls: Record<number, string | null>;
+}) {
   return (
     <div className="flex flex-col gap-6">
-      {steps.filter(s => s.viewport_screenshot).map((step) => (
-        <div key={step.step} className="bg-white border border-gray-200 rounded-[20px] p-4 shadow-sm overflow-hidden">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-100 text-xs font-bold text-muted shrink-0">
-              {step.step}
-            </span>
-            <span className="font-semibold text-sm">{step.label}</span>
-            {step.status === "failed" && (
-              <span className="text-xs text-red-600 font-semibold">Failed</span>
-            )}
-          </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`/images/audits/${slug}/${step.viewport_screenshot}`}
-            alt={`Step ${step.step}: ${step.label}`}
-            className="w-full border border-gray-200 rounded-xl"
-          />
-          {step.url && (
-            <a
-              href={step.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-xs text-muted mt-2 hover:text-ink transition-colors truncate"
-            >
-              {step.url}
-            </a>
-          )}
-        </div>
-      ))}
+      {steps
+        .filter((s) => s.viewport_screenshot || s.viewport_screenshot_key)
+        .map((step) => {
+          const url = stepUrls[step.step];
+          if (!url) return null;
+          return (
+            <div key={step.step} className="bg-white border border-gray-200 rounded-[20px] p-4 shadow-sm overflow-hidden">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-100 text-xs font-bold text-muted shrink-0">
+                  {step.step}
+                </span>
+                <span className="font-semibold text-sm">{step.label}</span>
+                {step.status === "failed" && (
+                  <span className="text-xs text-red-600 font-semibold">Failed</span>
+                )}
+              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={url}
+                alt={`Step ${step.step}: ${step.label}`}
+                className="w-full border border-gray-200 rounded-xl"
+              />
+              {step.url && (
+                <a
+                  href={step.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs text-muted mt-2 hover:text-ink transition-colors truncate"
+                >
+                  {step.url}
+                </a>
+              )}
+            </div>
+          );
+        })}
     </div>
   );
 }
@@ -156,10 +212,14 @@ export default async function AuditPage({
 
   const { email, review, qa, assets } = audit;
   const isSiteJourney = audit.type === "site";
-  const hasImage = !!assets.render_image;
+  const hasImage = !!(assets.render_image || assets.render_image_key);
   const journeySteps = assets.journey_steps || [];
   const perfSteps = audit.performance?.steps || [];
   const { content, technical } = splitReview(review.raw_markdown);
+
+  // Resolve R2 signed URLs for every image on this page in one pass. If R2
+  // isn't configured (local dev without keys), falls through to legacy paths.
+  const { heroUrl, stepUrls } = await resolveAllImageUrls(audit);
 
   const heroLabel = isSiteJourney
     ? `${email.from_display_name} Site Journey`
@@ -217,7 +277,7 @@ export default async function AuditPage({
                 <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
                   <ReviewContent markdown={content} />
                 </div>
-                <JourneyGallery slug={slug} steps={journeySteps} />
+                <JourneyGallery steps={journeySteps} stepUrls={stepUrls} />
               </div>
             ) : (
               <TwoColLayout
@@ -227,7 +287,7 @@ export default async function AuditPage({
                     <ReviewContent markdown={content} />
                   </div>
                 }
-                right={<EmailImage slug={slug} webviewUrl={assets.webview_url} />}
+                right={<EmailImage imageUrl={heroUrl} webviewUrl={assets.webview_url} />}
               />
             ),
           },
@@ -245,7 +305,7 @@ export default async function AuditPage({
                     ) : (
                       <div />
                     )}
-                    <JourneyGallery slug={slug} steps={journeySteps} />
+                    <JourneyGallery steps={journeySteps} stepUrls={stepUrls} />
                   </div>
                 ) : (
                   <TwoColLayout
@@ -259,7 +319,7 @@ export default async function AuditPage({
                         <div />
                       )
                     }
-                    right={<EmailImage slug={slug} webviewUrl={assets.webview_url} />}
+                    right={<EmailImage imageUrl={heroUrl} webviewUrl={assets.webview_url} />}
                   />
                 )}
                 {perfSteps.length > 0 && <PerfTable steps={perfSteps} />}

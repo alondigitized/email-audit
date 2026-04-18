@@ -276,6 +276,7 @@
   "assets": {
     "render_image": "2026-04-18-bogo-50-off-your-go-to-spring-picks-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=VDVPMLKSAXFETAYSIVJ5G4QPPM.100216"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=VDVPMLKSAXFETAYSIVJ5G4QPPM.100216",
+    "render_image_key": "audits/2026-04-18-bogo-50-off-your-go-to-spring-picks/render.png"
   }
 }

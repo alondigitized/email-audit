@@ -292,7 +292,8 @@
   "assets": {
     "render_image": "2026-04-01-test-pro-us-retpur-u-bundle-retail-en-03312026-aget-more-pairs-for-less-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=FSBXHXXTN55E5GO5VJH2CT2WCI.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=FSBXHXXTN55E5GO5VJH2CT2WCI.100214",
+    "render_image_key": "audits/2026-04-01-test-pro-us-retpur-u-bundle-retail-en-03312026-aget-more-pairs-for-less/render.png"
   },
   "persona": "walker",
   "type": "email"

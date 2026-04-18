@@ -285,7 +285,8 @@
   "assets": {
     "render_image": "2026-03-23-your-first-pair-just-became-2-bogo-50-off-email-webview-render.png",
     "pdf": "2026-03-23-your-first-pair-just-became-2-bogo-50-off-review.pdf",
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=U5G4BHVU2IFUJN7RTOZ2ZCCYGY.100215"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=U5G4BHVU2IFUJN7RTOZ2ZCCYGY.100215",
+    "render_image_key": "audits/2026-03-23-your-first-pair-just-became-2-bogo-50-off/render.png"
   },
   "persona": "walker",
   "type": "email"

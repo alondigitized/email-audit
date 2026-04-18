@@ -308,7 +308,8 @@
   "assets": {
     "render_image": "2026-04-11-test-pro-us-na-u-sitebundle-full-en-04092026step-into-the-right-shoes-for-right--email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=63INY467WD4UVONKT47P7NG2NI.100219"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=63INY467WD4UVONKT47P7NG2NI.100219",
+    "render_image_key": "audits/2026-04-11-test-pro-us-na-u-sitebundle-full-en-04092026step-into-the-right-shoes-for-right-/render.png"
   },
   "persona": "walker",
   "type": "email"

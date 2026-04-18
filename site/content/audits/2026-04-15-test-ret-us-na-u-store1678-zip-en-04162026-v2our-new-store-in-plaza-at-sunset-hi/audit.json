@@ -320,6 +320,7 @@
   "assets": {
     "render_image": "2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v2our-new-store-in-plaza-at-sunset-hi-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=3ASA5MGV74JUBH26NKMI2Z34IA.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=3ASA5MGV74JUBH26NKMI2Z34IA.100214",
+    "render_image_key": "audits/2026-04-15-test-ret-us-na-u-store1678-zip-en-04162026-v2our-new-store-in-plaza-at-sunset-hi/render.png"
   }
 }

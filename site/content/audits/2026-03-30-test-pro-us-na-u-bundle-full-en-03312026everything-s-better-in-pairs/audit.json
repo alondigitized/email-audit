@@ -309,7 +309,8 @@
   "assets": {
     "render_image": "2026-03-30-test-pro-us-na-u-bundle-full-en-03312026everything-s-better-in-pairs-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=VIUTXJKJ7ZAEJENKFRKRL2HSKU.100217"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=VIUTXJKJ7ZAEJENKFRKRL2HSKU.100217",
+    "render_image_key": "audits/2026-03-30-test-pro-us-na-u-bundle-full-en-03312026everything-s-better-in-pairs/render.png"
   },
   "persona": "walker",
   "type": "email"

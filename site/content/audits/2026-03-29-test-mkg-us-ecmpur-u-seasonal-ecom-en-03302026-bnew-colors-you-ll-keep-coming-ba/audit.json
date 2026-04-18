@@ -280,7 +280,8 @@
   "assets": {
     "render_image": "2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=B3B2BZNBP6KUNNEOCEXPZJFABA.100218"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=B3B2BZNBP6KUNNEOCEXPZJFABA.100218",
+    "render_image_key": "audits/2026-03-29-test-mkg-us-ecmpur-u-seasonal-ecom-en-03302026-bnew-colors-you-ll-keep-coming-ba/render.png"
   },
   "persona": "walker",
   "type": "email"

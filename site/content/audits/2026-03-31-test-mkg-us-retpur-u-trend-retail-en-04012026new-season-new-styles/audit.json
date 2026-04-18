@@ -320,7 +320,8 @@
   "assets": {
     "render_image": "2026-03-31-test-mkg-us-retpur-u-trend-retail-en-04012026new-season-new-styles-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=MKNQ7JV7IUQEJPJG5ULIOJKAVQ.100214"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=MKNQ7JV7IUQEJPJG5ULIOJKAVQ.100214",
+    "render_image_key": "audits/2026-03-31-test-mkg-us-retpur-u-trend-retail-en-04012026new-season-new-styles/render.png"
   },
   "persona": "walker",
   "type": "email"

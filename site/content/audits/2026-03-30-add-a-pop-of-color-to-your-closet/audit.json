@@ -284,7 +284,8 @@
   "assets": {
     "render_image": "2026-03-30-add-a-pop-of-color-to-your-closet-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=G332ARUNPWHETHB5HUAA7GCGYI.100217"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=G332ARUNPWHETHB5HUAA7GCGYI.100217",
+    "render_image_key": "audits/2026-03-30-add-a-pop-of-color-to-your-closet/render.png"
   },
   "persona": "walker",
   "type": "email"

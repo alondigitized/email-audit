@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Shared pipeline modules used by email-monitor and site-monitor daemons.",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1032.0",
     "@neondatabase/serverless": "^0.10.0"
   }
 }

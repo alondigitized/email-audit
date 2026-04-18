@@ -286,7 +286,8 @@
   "assets": {
     "render_image": "2026-04-10-your-perfect-first-pair-is-here-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=EQWADWB4NSOEDIJBMA5HOEIRNE.100221"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=EQWADWB4NSOEDIJBMA5HOEIRNE.100221",
+    "render_image_key": "audits/2026-04-10-your-perfect-first-pair-is-here/render.png"
   },
   "persona": "walker",
   "type": "email"

@@ -308,7 +308,8 @@
   "assets": {
     "render_image": "2026-04-08-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04092026step-into-the-right-shoes-for-email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=M2GQD5NLA34EDADXDHGRU5TEKA.100220"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=M2GQD5NLA34EDADXDHGRU5TEKA.100220",
+    "render_image_key": "audits/2026-04-08-test-pro-us-ecmpurl24-u-sitebundle-ecom-en-04092026step-into-the-right-shoes-for/render.png"
   },
   "persona": "walker",
   "type": "email"

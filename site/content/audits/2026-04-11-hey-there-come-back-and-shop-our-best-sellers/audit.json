@@ -102,7 +102,8 @@
   "assets": {
     "render_image": "2026-04-11-hey-there-come-back-and-shop-our-best-sellers-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-11-hey-there-come-back-and-shop-our-best-sellers/render.png"
   },
   "persona": "walker",
   "type": "email"

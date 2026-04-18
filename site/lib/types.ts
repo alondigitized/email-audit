@@ -2,7 +2,12 @@ export interface JourneyStep {
   step: number;
   label: string;
   viewport_screenshot: string | null;
+  // R2 object key, set by site-monitor's publishSite after migration. During
+  // backfill the site falls back to the legacy `viewport_screenshot` path if
+  // this is missing.
+  viewport_screenshot_key?: string | null;
   fullpage_screenshot: string | null;
+  fullpage_screenshot_key?: string | null;
   url: string;
   status?: string;
 }
@@ -36,6 +41,9 @@ export interface AuditData {
   qa: QaReport | null;
   assets: {
     render_image: string | null;
+    // R2 object key for the primary render (email audit or journey step-1
+    // hero). Falls back to `render_image` path during migration.
+    render_image_key?: string | null;
     pdf: string | null;
     webview_url: string | null;
     journey_steps?: JourneyStep[];

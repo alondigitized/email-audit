@@ -289,6 +289,7 @@
   "assets": {
     "render_image": "2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday--email-webview-render.png",
     "pdf": null,
-    "webview_url": "https://view.emails.skechers.com/?vawpToken=I2HNFFEH5QFUXCP6O53HN2HBJE.100220"
+    "webview_url": "https://view.emails.skechers.com/?vawpToken=I2HNFFEH5QFUXCP6O53HN2HBJE.100220",
+    "render_image_key": "audits/2026-04-16-test-ret-us-na-u-store1408-zip-en-04172026sale-ends-soon-celebrate-our-birthday-/render.png"
   }
 }

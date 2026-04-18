@@ -132,6 +132,7 @@
   "assets": {
     "render_image": "2026-04-18-see-how-we-make-shopping-famously-easy-for-you-email-webview-render.png",
     "pdf": null,
-    "webview_url": null
+    "webview_url": null,
+    "render_image_key": "audits/2026-04-18-see-how-we-make-shopping-famously-easy-for-you/render.png"
   }
 }
