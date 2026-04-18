@@ -52,7 +52,7 @@ function EmailImage({ slug, webviewUrl }: { slug: string; webviewUrl?: string | 
     <div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`/api/audits/${slug}/image/render.png`}
+        src={`/images/audits/${slug}/render.png`}
         alt="Email webview render"
         className="w-full border border-gray-200 rounded-2xl"
       />
@@ -86,7 +86,7 @@ function JourneyGallery({ slug, steps }: { slug: string; steps: JourneyStep[] })
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`/api/audits/${slug}/image/${step.viewport_screenshot}`}
+            src={`/images/audits/${slug}/${step.viewport_screenshot}`}
             alt={`Step ${step.step}: ${step.label}`}
             className="w-full border border-gray-200 rounded-xl"
           />

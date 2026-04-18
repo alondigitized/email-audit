@@ -453,7 +453,7 @@ async function publishSite() {
   // Phase 2: Sync content to Next.js site directory for Vercel deploy
   const repoRoot = path.dirname(__dirname);
   const siteContent = path.join(repoRoot, 'site', 'content', 'audits');
-  const siteImages = path.join(repoRoot, 'site', 'private-content', 'audits');
+  const siteImages = path.join(repoRoot, 'site', 'public', 'images', 'audits');
   const manifest = JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8'));
 
   for (const entry of manifest) {
@@ -487,7 +487,7 @@ async function publishSite() {
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
 
-  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/private-content/audits site/public/pdfs audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
+  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/images/audits site/public/pdfs audit-pipeline/published-audits.json && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
 }
 
