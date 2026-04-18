@@ -2,11 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getAnalysisBySlug, getAllAnalysisSlugs } from "@/lib/analysis";
+import { getAnalysisBySlug } from "@/lib/analysis";
+import { requireUser } from "@/lib/dal";
+import { recordPageView } from "@/lib/analytics";
 
-export function generateStaticParams() {
-  return getAllAnalysisSlugs().map((slug) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function AnalysisDetail({
   params,
@@ -14,8 +14,15 @@ export default async function AnalysisDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const user = await requireUser();
   const report = getAnalysisBySlug(slug);
   if (!report) notFound();
+  await recordPageView({
+    userId: user.id,
+    isAdmin: user.isAdmin,
+    kind: "analysis",
+    path: `/analysis/${slug}`,
+  });
 
   return (
     <>

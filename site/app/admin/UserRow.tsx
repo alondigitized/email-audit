@@ -14,9 +14,18 @@ type Row = {
   verified: boolean;
   lastSignInAt: string;
   signInCount30d: number;
+  viewCount30d: number;
+  timeToVerifyHours: number | null;
   personas: string[];
   isAdmin: boolean;
 };
+
+function fmtTtv(hours: number | null): string {
+  if (hours === null) return "—";
+  if (hours < 1) return "<1h";
+  if (hours < 48) return `${hours}h`;
+  return `${Math.round(hours / 24)}d`;
+}
 
 export function UserRow({
   row,
@@ -47,10 +56,14 @@ export function UserRow({
           <span className="text-muted">pending</span>
         )}
       </td>
+      <td className="py-3 text-xs text-muted tabular-nums whitespace-nowrap">
+        {fmtTtv(row.timeToVerifyHours)}
+      </td>
       <td className="py-3 text-xs text-muted whitespace-nowrap">
         {row.lastSignInAt}
       </td>
       <td className="py-3 text-xs tabular-nums">{row.signInCount30d}</td>
+      <td className="py-3 text-xs tabular-nums">{row.viewCount30d}</td>
       <td className="py-3 text-xs">
         <div className="flex flex-wrap gap-1 items-center">
           {row.personas.map((p) => (

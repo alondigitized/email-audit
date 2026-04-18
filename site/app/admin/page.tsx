@@ -45,17 +45,38 @@ export default async function AdminPage() {
         </p>
       </div>
 
-      {/* Adoption summary */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+      {/* Adoption — who's in */}
+      <SectionLabel>Adoption</SectionLabel>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
         <Stat label="Invited" value={summary.totalInvited} />
         <Stat
           label="Verified"
           value={summary.totalVerified}
           hint={`${verifiedPct}%`}
         />
+        <Stat
+          label="Dormant invites"
+          value={summary.dormantInvites}
+          hint="invited >7d ago, never verified"
+        />
+        <Stat
+          label="Admins"
+          value={rows.filter((r) => r.isAdmin).length}
+        />
+      </div>
+
+      {/* Activity — who's using it */}
+      <SectionLabel>Activity (last 30 days)</SectionLabel>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         <Stat label="Active 7d" value={summary.activeLast7d} />
         <Stat label="Active 30d" value={summary.activeLast30d} />
-        <Stat label="Sign-ins 30d" value={summary.totalSignIns30d} />
+        <Stat
+          label="Sign-ins"
+          value={summary.totalSignIns30d}
+          hint={`${summary.avgSignInsPerActive30d}/user avg`}
+        />
+        <Stat label="Audit views" value={summary.audits30d} />
+        <Stat label="Analysis views" value={summary.analyses30d} />
       </div>
 
       {/* Invite form */}
@@ -79,8 +100,10 @@ export default async function AdminPage() {
                 <th className="px-5 py-3">Email</th>
                 <th className="py-3">Added</th>
                 <th className="py-3">Verified</th>
+                <th className="py-3" title="Hours between invite and first sign-in">TTV</th>
                 <th className="py-3">Last sign-in</th>
-                <th className="py-3">30d</th>
+                <th className="py-3" title="Sign-ins in the last 30 days">Sign-ins 30d</th>
+                <th className="py-3" title="Content views in the last 30 days">Views 30d</th>
                 <th className="py-3">Personas</th>
                 <th className="py-3 pr-5"></th>
               </tr>
@@ -96,6 +119,8 @@ export default async function AdminPage() {
                     verified: !!u.emailVerified,
                     lastSignInAt: fmtDate(u.lastSignInAt),
                     signInCount30d: u.signInCount30d,
+                    viewCount30d: u.viewCount30d,
+                    timeToVerifyHours: u.timeToVerifyHours,
                     personas: u.personas,
                     isAdmin: u.isAdmin,
                   }}
@@ -124,6 +149,14 @@ function Stat({
       <div className="text-xs uppercase tracking-wide text-muted">{label}</div>
       <div className="text-2xl font-bold mt-1">{value}</div>
       {hint && <div className="text-xs text-muted mt-0.5">{hint}</div>}
+    </div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-xs uppercase tracking-wide text-muted font-semibold mb-2">
+      {children}
     </div>
   );
 }

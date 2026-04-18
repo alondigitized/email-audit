@@ -15,6 +15,13 @@
       "when": 1776475452356,
       "tag": "0001_purple_donald_blake",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776475953670,
+      "tag": "0002_marvelous_korg",
+      "breakpoints": true
     }
   ]
 }

@@ -99,3 +99,16 @@ export const signInEvents = pgTable("signInEvent", {
   ts: timestamp("ts", { mode: "date" }).defaultNow().notNull(),
   ipHash: text("ipHash"),
 });
+
+// Engagement: one row per detail-page view by an authenticated user.
+// Captures /audits/{slug} and /analysis/{slug}. Path is stored for later
+// per-content breakdowns; kind is a cheap rollup dimension.
+export const pageViews = pgTable("pageView", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  kind: text("kind").notNull(), // "audit" | "analysis"
+  path: text("path").notNull(), // full pathname, e.g. "/audits/<slug>"
+  ts: timestamp("ts", { mode: "date" }).defaultNow().notNull(),
+});

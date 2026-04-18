@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getAuditBySlugForUser } from "@/lib/audits";
 import { requireUser } from "@/lib/dal";
+import { recordPageView } from "@/lib/analytics";
 import { splitReview } from "@/lib/types";
 import type { JourneyStep, PerfStep } from "@/lib/types";
 import { ReviewContent } from "@/components/ReviewContent";
@@ -146,6 +147,12 @@ export default async function AuditPage({
   const user = await requireUser();
   const audit = getAuditBySlugForUser(slug, user.personas);
   if (!audit) notFound();
+  await recordPageView({
+    userId: user.id,
+    isAdmin: user.isAdmin,
+    kind: "audit",
+    path: `/audits/${slug}`,
+  });
 
   const { email, review, qa, assets } = audit;
   const isSiteJourney = audit.type === "site";
