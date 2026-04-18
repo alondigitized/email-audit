@@ -24,6 +24,17 @@ const hashToken = (raw: string) =>
 export async function completeSignIn(formData: FormData) {
   const rawToken = formData.get("token");
   const identifierRaw = formData.get("email");
+  console.log(
+    JSON.stringify({
+      evt: "completeSignIn:start",
+      tokenPrefix:
+        typeof rawToken === "string" ? rawToken.slice(0, 6) : null,
+      identifier:
+        typeof identifierRaw === "string"
+          ? identifierRaw.toLowerCase().trim()
+          : null,
+    })
+  );
   if (typeof rawToken !== "string" || typeof identifierRaw !== "string") {
     redirect("/login?error=Verification");
   }
@@ -40,10 +51,25 @@ export async function completeSignIn(formData: FormData) {
       expires: verificationTokens.expires,
     });
   const row = rows.find((r) => r.identifier === identifier);
+  console.log(
+    JSON.stringify({
+      evt: "completeSignIn:tokenLookup",
+      hashedPrefix: hashed.slice(0, 6),
+      rowsDeleted: rows.length,
+      matched: !!row,
+    })
+  );
   if (!row) {
     redirect("/login?error=Verification");
   }
   if (row.expires.getTime() < Date.now()) {
+    console.log(
+      JSON.stringify({
+        evt: "completeSignIn:expired",
+        expires: row.expires.toISOString(),
+        now: new Date().toISOString(),
+      })
+    );
     redirect("/login?error=Verification");
   }
 
@@ -96,6 +122,15 @@ export async function completeSignIn(formData: FormData) {
     expires,
     path: "/",
   });
+  console.log(
+    JSON.stringify({
+      evt: "completeSignIn:done",
+      cookieName,
+      sessionTokenPrefix: sessionToken.slice(0, 6),
+      expires: expires.toISOString(),
+      userId: userRow.id,
+    })
+  );
 
   redirect("/");
 }
