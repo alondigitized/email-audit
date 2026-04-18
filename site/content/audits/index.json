@@ -1,5 +1,21 @@
 [
   {
+    "slug": "2026-04-18-29-98-sandals-for-a-full-spring-ahead",
+    "subject": "$29.98 Sandals for a Full Spring Ahead",
+    "from_display_name": "Shoe Carnival",
+    "timestamp_iso": "2026-04-18T15:29:28+00:00",
+    "score": "5/10",
+    "qa_summary": {
+      "overall_pass_rate": "71%",
+      "total_checks": 7,
+      "total_issues": 0,
+      "total_warnings": 2
+    },
+    "has_image": true,
+    "type": "email",
+    "persona": "walker"
+  },
+  {
     "slug": "2026-04-18-did-you-forget-something",
     "subject": "Did you forget something?",
     "from_display_name": "SKECHERS",
