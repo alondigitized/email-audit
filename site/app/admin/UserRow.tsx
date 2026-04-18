@@ -5,6 +5,7 @@ import {
   grantPersonaAction,
   revokePersonaAction,
   removeUserAction,
+  toggleUserAppAccessAction,
 } from "./actions";
 
 type Row = {
@@ -17,8 +18,12 @@ type Row = {
   viewCount30d: number;
   timeToVerifyHours: number | null;
   personas: string[];
+  apps: string[];
   isAdmin: boolean;
 };
+
+const APP_LABELS: Record<string, string> = { chat: "Chat" };
+const ALL_APP_KEYS = ["chat"] as const;
 
 function fmtTtv(hours: number | null): string {
   if (hours === null) return "—";
@@ -124,6 +129,52 @@ export function UserRow({
               )}
             </form>
           )}
+        </div>
+      </td>
+      <td className="py-3 text-xs">
+        <div className="flex flex-wrap gap-1 items-center">
+          {ALL_APP_KEYS.map((k) => {
+            const granted = row.isAdmin || row.apps.includes(k);
+            const nextEnable = row.apps.includes(k) ? "0" : "1";
+            return (
+              <form
+                key={k}
+                action={(fd) => {
+                  startTransition(() => {
+                    toggleUserAppAccessAction(fd);
+                  });
+                }}
+                className="inline-flex"
+              >
+                <input type="hidden" name="userId" value={row.id} />
+                <input type="hidden" name="appKey" value={k} />
+                <input type="hidden" name="enable" value={nextEnable} />
+                <button
+                  type="submit"
+                  disabled={isPending || row.isAdmin}
+                  title={
+                    row.isAdmin
+                      ? "Admins always have access"
+                      : granted
+                        ? `Revoke ${APP_LABELS[k] ?? k}`
+                        : `Grant ${APP_LABELS[k] ?? k}`
+                  }
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] ring-1 ring-inset ${
+                    granted
+                      ? row.isAdmin
+                        ? "bg-gray-900 text-white ring-gray-900 opacity-70 cursor-not-allowed"
+                        : "bg-sky-50 text-sky-800 ring-sky-200 hover:bg-red-50 hover:text-red-700 hover:ring-red-200"
+                      : "bg-white text-gray-500 ring-gray-200 hover:bg-gray-900 hover:text-white hover:ring-gray-900"
+                  }`}
+                >
+                  {APP_LABELS[k] ?? k}
+                  {granted && !row.isAdmin && (
+                    <span className="opacity-60">×</span>
+                  )}
+                </button>
+              </form>
+            );
+          })}
         </div>
       </td>
       <td className="py-3 pr-5 text-right whitespace-nowrap">

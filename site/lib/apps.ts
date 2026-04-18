@@ -70,16 +70,24 @@ export async function isAppEnabled(key: AppKey): Promise<boolean> {
 }
 
 /**
- * Gate a route or API handler on an app flag. Returns notFound() when the
- * app is disabled, matching requireAdmin semantics — we don't leak app
- * existence to non-admins. Admin override: bypass the flag check so admins
- * can always validate a disabled app before flipping the public switch.
+ * Gate a route or API handler on an app flag + per-user grant. Returns
+ * notFound() when the app is disabled globally OR the user doesn't have
+ * access. Admins bypass both checks — matches the rest of the admin pattern.
+ *
+ * Call with { isAdmin, userApps } from requireUser() for full enforcement:
+ *   const user = await requireUser();
+ *   await requireAppEnabled("chat", { isAdmin: user.isAdmin, userApps: user.apps });
  */
 export async function requireAppEnabled(
   key: AppKey,
-  opts: { isAdmin?: boolean } = {}
+  opts: { isAdmin?: boolean; userApps?: string[] } = {}
 ): Promise<void> {
   if (opts.isAdmin) return;
   const on = await isAppEnabled(key);
   if (!on) notFound();
+  // If userApps is passed, enforce per-user grant too. Omitting it keeps
+  // backwards compatibility for callers that only want the global check.
+  if (opts.userApps !== undefined && !opts.userApps.includes(key)) {
+    notFound();
+  }
 }

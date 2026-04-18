@@ -170,3 +170,20 @@ export const appFlag = pgTable("app_flag", {
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
   updatedBy: text("updated_by").references(() => users.id),
 });
+
+// Per-user access to apps. Row present = user has access to that app
+// (in addition to the global app_flag being on). Admins bypass both gates.
+export const userAppAccess = pgTable(
+  "user_app_access",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    appKey: text("app_key").notNull(),
+    grantedAt: timestamp("granted_at", { mode: "date" }).defaultNow().notNull(),
+    grantedBy: text("granted_by").references(() => users.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.appKey] }),
+  })
+);

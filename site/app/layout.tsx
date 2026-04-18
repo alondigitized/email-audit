@@ -21,7 +21,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await currentUser();
-  const chatEnabled = user ? await isAppEnabled("chat") : false;
+  const chatGloballyEnabled = user ? await isAppEnabled("chat") : false;
+  // The Chat tab shows only when: app is on globally AND user has been
+  // granted access. Admins see it regardless.
+  const chatVisible = user
+    ? user.isAdmin ||
+      (chatGloballyEnabled && user.apps.includes("chat"))
+    : false;
   const hasPersonas = user
     ? user.isAdmin || user.personas.length > 0
     : false;
@@ -31,7 +37,7 @@ export default async function RootLayout({
         <main className="max-w-[980px] mx-auto px-5 pt-8 pb-16 overflow-hidden">
           <TopNav
             isAdmin={user?.isAdmin ?? false}
-            chatEnabled={chatEnabled}
+            chatEnabled={chatVisible}
             hasPersonas={hasPersonas}
           />
           {children}

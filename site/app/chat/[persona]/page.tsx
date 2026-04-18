@@ -20,7 +20,10 @@ export default async function ChatPage({
 }) {
   const { persona: personaSlug } = await params;
   const user = await requireUser();
-  await requireAppEnabled("chat", { isAdmin: user.isAdmin });
+  await requireAppEnabled("chat", {
+    isAdmin: user.isAdmin,
+    userApps: user.apps,
+  });
 
   if (!user.isAdmin && !user.personas.includes(personaSlug)) {
     notFound();
@@ -76,6 +79,7 @@ export default async function ChatPage({
         personaName={meta.name}
         auditCount={auditCount}
         threadId={threadId}
+        threadTitle={threadId ? (threads.find((t) => t.id === threadId)?.title ?? null) : null}
         initialMessages={initialMessages}
       />
     </div>
