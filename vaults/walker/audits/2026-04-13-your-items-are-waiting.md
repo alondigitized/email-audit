@@ -1,0 +1,223 @@
+---
+slug: 2026-04-13-your-items-are-waiting
+type: email
+date: 2026-04-13
+persona: walker
+score: "5/10"
+sender: SKECHERS
+subject: Your Items Are Waiting!
+tags: [email, score-5, sender/skechers]
+---
+# Your Items Are Waiting!
+**Score:** 5/10 · **Type:** Email audit · **2026-04-13**
+## Executive summary
+
+- A competent but low-energy cart abandonment email. The "WE NOTICED YOU NOTICING US…" headline is the standout — charming and self-aware. But everything below it is generic. The actual abandoned cart item appears briefly but gets buried under a best-sellers module, a blanket discount banner, and a wall of navigation links. The email lacks urgency, doesn't lean into the cart item visually, and ends with an overwhelming utility section that dilutes focus. A shopper who bounced once gets no compelling reason to return now versus later.
+- It checks the functional boxes but squanders the conversion opportunity. The hook is there; the follow-through isn't.
+
+## What's working
+
+- **The headline copy** — "WE NOTICED YOU NOTICING US… YOUR CART IS STILL WAITING…" is witty and appropriately playful for the brand. It earns attention without being pushy.
+- **The cart item is surfaced** — The abandoned shoe (Members Big Max - Max Cushioning Arch Fit 2.0) is shown with image, name, and a clear CTA button ("COMPLETE YOUR ORDER"). The core recovery mechanic is present.
+- **The 20% off banner** — A discount is offered, which is the most effective lever for cart recovery. It's visually prominent enough to notice.
+- **App download prompt** — Including the App Store / Google Play nudge with a text-opt-in is smart placement in an already-engaged abandonment flow.
+
+## What's weak
+
+- **The cart item is tiny.** The shoe rendering is small and low-impact relative to the page. A shopper who was browsing should feel reminded of something they wanted — this feels more like a footnote than a hero.
+- **No price shown on the cart item.** The product name is there but no price/size/color is visible. Personalization is thin — this looks like it could be a generic email with a product swapped in.
+- **The 20% off has no visible expiration or condition.** No "today only," no minimum order note. The urgency that a discount should generate is completely absent.
+- **The "Here's Some More Great Options We Think You'll Love" section** appears immediately after the cart item, undercutting the singular focus on recovering the specific cart. Three alternative shoes are shown — this introduces decision paralysis right when the goal is to close the original sale.
+- **The footer navigation is excessive.** WOMEN / MEN / KIDS / CLOTHING / NEW ARRIVALS / SALE as text links, followed by ShopPay, curbside pickup, app icons, social icons, and dense legal copy — this section is long and visually noisy. It doesn't add to conversion; it adds to scroll fatigue.
+- **No social proof** on the cart item. No "bestseller," "low stock," or star rating to reinforce the original intent to buy.
+
+## Recommendations
+
+- 1. **Make the cart item the hero.** Double the product image size, show price, and if available, surface a "low stock" or "X people are viewing this" signal.
+- 2. **Give the discount a deadline.** "20% off — tonight only" or "expires in 24 hours" converts meaningfully better than an open-ended offer.
+- 3. **Cut the cross-sell module or move it below the CTA.** Let the primary CTA ("Complete Your Order") breathe before introducing alternatives.
+- 4. **Add a secondary CTA tied to the discount.** Something like "Use code CART20 at checkout" makes the offer feel more concrete and trackable.
+- 5. **Trim the footer navigation.** This email doesn't need to be a full-site directory. One or two relevant utility links (Find a Store, Contact Us) is enough.
+- | Priority | Issue | Action |
+- |---|---|---|
+- | High | HTTP tracking/image links | Migrate `skechers.attentivemail.com` and image CDN to HTTPS |
+- | High | UTM parameters unconfirmed | Decode a live link and verify UTM params reach the landing page |
+- | High | CAN-SPAM footer unverified | Confirm physical address + unsubscribe present in full source |
+- | Medium | Malformed charset meta | Add `http-equiv="Content-Type"` attribute |
+- | Medium | Image alt text unverified | Confirm all `<img>` tags carry descriptive `alt` attributes |
+- | Low | Preheader Unicode padding | Replace U+034F/U+00AD runs with CSS-hidden `&nbsp;` spacer span |
+- | Low | Empty `<title>` | Set a descriptive title (e.g., `Skechers — Cart Reminder`) |
+
+## Full review
+### 1. Executive Summary
+
+A competent but low-energy cart abandonment email. The "WE NOTICED YOU NOTICING US…" headline is the standout — charming and self-aware. But everything below it is generic. The actual abandoned cart item appears briefly but gets buried under a best-sellers module, a blanket discount banner, and a wall of navigation links. The email lacks urgency, doesn't lean into the cart item visually, and ends with an overwhelming utility section that dilutes focus. A shopper who bounced once gets no compelling reason to return now versus later.
+
+---
+
+### 2. Business Impact Score: **5 / 10**
+
+It checks the functional boxes but squanders the conversion opportunity. The hook is there; the follow-through isn't.
+
+---
+
+### 3. What's Working
+
+- **The headline copy** — "WE NOTICED YOU NOTICING US… YOUR CART IS STILL WAITING…" is witty and appropriately playful for the brand. It earns attention without being pushy.
+- **The cart item is surfaced** — The abandoned shoe (Members Big Max - Max Cushioning Arch Fit 2.0) is shown with image, name, and a clear CTA button ("COMPLETE YOUR ORDER"). The core recovery mechanic is present.
+- **The 20% off banner** — A discount is offered, which is the most effective lever for cart recovery. It's visually prominent enough to notice.
+- **App download prompt** — Including the App Store / Google Play nudge with a text-opt-in is smart placement in an already-engaged abandonment flow.
+
+---
+
+### 4. What's Weak
+
+- **The cart item is tiny.** The shoe rendering is small and low-impact relative to the page. A shopper who was browsing should feel reminded of something they wanted — this feels more like a footnote than a hero.
+- **No price shown on the cart item.** The product name is there but no price/size/color is visible. Personalization is thin — this looks like it could be a generic email with a product swapped in.
+- **The 20% off has no visible expiration or condition.** No "today only," no minimum order note. The urgency that a discount should generate is completely absent.
+- **The "Here's Some More Great Options We Think You'll Love" section** appears immediately after the cart item, undercutting the singular focus on recovering the specific cart. Three alternative shoes are shown — this introduces decision paralysis right when the goal is to close the original sale.
+- **The footer navigation is excessive.** WOMEN / MEN / KIDS / CLOTHING / NEW ARRIVALS / SALE as text links, followed by ShopPay, curbside pickup, app icons, social icons, and dense legal copy — this section is long and visually noisy. It doesn't add to conversion; it adds to scroll fatigue.
+- **No social proof** on the cart item. No "bestseller," "low stock," or star rating to reinforce the original intent to buy.
+
+---
+
+### 5. Recommendations
+
+1. **Make the cart item the hero.** Double the product image size, show price, and if available, surface a "low stock" or "X people are viewing this" signal.
+2. **Give the discount a deadline.** "20% off — tonight only" or "expires in 24 hours" converts meaningfully better than an open-ended offer.
+3. **Cut the cross-sell module or move it below the CTA.** Let the primary CTA ("Complete Your Order") breathe before introducing alternatives.
+4. **Add a secondary CTA tied to the discount.** Something like "Use code CART20 at checkout" makes the offer feel more concrete and trackable.
+5. **Trim the footer navigation.** This email doesn't need to be a full-site directory. One or two relevant utility links (Find a Store, Contact Us) is enough.
+
+---
+
+### 6. Bottom Line
+
+The email opens strong and then steps on its own feet. The headline earns trust; the product module squanders it. The discount offer is the right tool but is deployed without any urgency mechanism. This email would benefit most from a tighter single-product focus — bigger hero, price shown, timed offer, no cross-sells before the CTA.
+
+---
+
+### 7. Subject Line Analysis
+
+- **Subject:** `Your Items Are Waiting!`
+- **Length:** 22 characters
+- **Scores (1-10):** Clarity `8`, Curiosity `4`, Personalization `3`, Urgency `5`, Specificity `3`
+- **Strengths:**
+  - Clean and legible; no inbox truncation risk
+  - Action-implied framing ("waiting") creates mild pull
+- **Weaknesses:**
+  - Generic — could belong to any retailer's cart abandonment template
+  - No reference to the specific product, discount, or time pressure; misses alignment with the in-email offer
+- **Alt A:** `Your Max Cushioning Sneakers Are Still in Your Cart`
+- **Alt B:** `20% Off If You Come Back — Your Cart's Waiting`
+
+---
+
+### 8. Evidence
+
+- **Overall purpose:** Cart abandonment recovery with a discount incentive
+- **Hero / primary value proposition:** Recover the specific cart item (Members Big Max - Max Cushioning Arch Fit 2.0) via "Complete Your Order" CTA; supported by a 20% off offer
+- **Membership / benefits section:** None visible — no loyalty points, member-tier callout, or benefit reminder
+- **Product discoverability / recommendation modules:** "Here's Some More Great Options We Think You'll Love" — 3 alternative shoes shown with product images and names (no prices visible); "Shop All Best Sellers" CTA bar below
+- **Utility / secondary modules:** App download (App Store / Google Play), text opt-in prompt, curbside pickup, ShopNow pay later, Find a Store, social follow icons (Facebook, Instagram, Twitter/X, Pinterest, YouTube, TikTok)
+- **Bugs / friction / clarity issues:** No visible broken images or rendering errors; all modules appear to load correctly; text is legible throughout
+
+---
+
+## Technical Audit
+
+## Technical Audit — SKECHERS "Your Items Are Waiting!" (Attentive, cart abandonment)
+
+---
+
+### 1. Technical Summary
+
+Email is sent via Attentive (ESP domain `skechers.attentivemail.com`) using a table-based layout. Primary technical risks are plain-HTTP tracking links, a malformed charset meta tag, and CAN-SPAM compliance elements not visible in the provided truncation.
+
+---
+
+### 2. Link & Tracking Issues
+
+**HTTP tracking domain (high)**
+All click-tracking and image URLs use plain HTTP, not HTTPS:
+```
+http://skechers.attentivemail.com/ls/click?upn=...
+http://image.emails.skechers.…
+```
+HTTP links are flagged by Gmail, Outlook, and many ISP spam filters as insecure. Mixed-content warnings also appear if the recipient's client enforces HTTPS. These should be `https://`.
+
+**UTM parameters unverifiable**
+Destination URLs are fully opaque inside the Attentive tracking wrapper. Cannot confirm UTM params are appended before redirect. Requires server-side verification (see §6).
+
+---
+
+### 3. Rendering & Accessibility
+
+**Malformed charset meta tag**
+```html
+<meta content="text/html; charset=utf-8" />
+```
+Missing `http-equiv="Content-Type"`. Without it, some older Outlook/Windows Mail clients may not honor the charset declaration, risking mojibake on non-ASCII characters. Correct form:
+```html
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+```
+
+**Empty `<title>` tag**
+```html
+<title></title>
+```
+Benign in most clients but renders as a blank tab title in webmail preview and can confuse screen readers.
+
+**Image `alt` text — unverified**
+The `<img>` tag is truncated in the provided source (`http://image.emails.skechers.…`). Alt attributes could not be confirmed present. Images must carry descriptive `alt` text for image-blocking clients and screen readers.
+
+**Preheader padding technique**
+The preheader uses a mix of U+034F (COMBINING GRAPHEME JOINER `͏`) and U+00AD (SOFT HYPHEN `­`) characters for invisible padding. This is a known hack to control inbox preview length. Some aggressive spam filters treat dense runs of non-printing Unicode as obfuscation. Consider replacing with a CSS-hidden `&nbsp;` spacer `<span>` instead.
+
+---
+
+### 4. Personalization & Merge Tokens
+
+No unresolved merge tokens are visible in the header, preheader, or subject line (`Your Items Are Waiting!`). The preheader reads "You left something in your cart" with no first-name token. Whether product-level dynamic content (cart items, images, prices) is correctly populated cannot be assessed from the truncated source — this must be verified in a live test send.
+
+---
+
+### 5. Compliance (CAN-SPAM / Unsubscribe)
+
+**Physical mailing address and unsubscribe link — not visible in truncated HTML**
+CAN-SPAM §5(a)(5)–(6) requires a valid postal address and a functional one-click opt-out link in every commercial email. These are typically in the footer, which was cut off. Both elements must be confirmed present in the full source.
+
+**Sender domain authentication — partially verifiable**
+Sending domain is `msgs.skechers.com` (subdomain). SPF, DKIM, and DMARC alignment for this subdomain should be verified via DNS. Cannot confirm from HTML alone.
+
+---
+
+### 6. Email-to-Site Continuity (UTM / Landing Page)
+
+All CTAs route through:
+```
+http://skechers.attentivemail.com/ls/click?upn=<encoded-payload>
+```
+The encoded payload obscures the final destination URL. **UTM parameter presence cannot be confirmed from the HTML source.** Without `utm_source`, `utm_medium`, `utm_campaign` on the final landing URL, cart-recovery attribution will be lost in Google Analytics / any analytics platform. This requires:
+1. Decoding one live link in a browser to inspect the redirect target.
+2. Confirming `utm_source=email&utm_medium=attentive&utm_campaign=cart_abandonment` (or equivalent) is appended.
+
+---
+
+### 7. Recommendations
+
+| Priority | Issue | Action |
+|---|---|---|
+| High | HTTP tracking/image links | Migrate `skechers.attentivemail.com` and image CDN to HTTPS |
+| High | UTM parameters unconfirmed | Decode a live link and verify UTM params reach the landing page |
+| High | CAN-SPAM footer unverified | Confirm physical address + unsubscribe present in full source |
+| Medium | Malformed charset meta | Add `http-equiv="Content-Type"` attribute |
+| Medium | Image alt text unverified | Confirm all `<img>` tags carry descriptive `alt` attributes |
+| Low | Preheader Unicode padding | Replace U+034F/U+00AD runs with CSS-hidden `&nbsp;` spacer span |
+| Low | Empty `<title>` | Set a descriptive title (e.g., `Skechers — Cart Reminder`) |
+## Recent history
+
+- [[2026-04-12-go-bold-in-adistar]] — 5/10 (2026-04-12)
+- [[2026-04-12-spring-favorites-just-a-click-away-bogo-50-off]] — 5/10 (2026-04-12)
+- [[2026-04-12-did-you-forget-something]] — 5/10 (2026-04-12)
+

@@ -1,0 +1,244 @@
+---
+slug: 2026-04-13-test-mkg-us-nonpurclick-u-glide-nonpurch-en-04142026more-comfort-and-a-little-ex
+type: email
+date: 2026-04-13
+persona: walker
+score: "4/10"
+sender: SKECHERS
+subject: "[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026More Comfort and a Little Extra 20% off Your 1st Pair"
+tags: [email, score-4, sender/skechers]
+---
+# [Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026More Comfort and a Little Extra 20% off Your 1st Pair
+**Score:** 4/10 · **Type:** Email audit · **2026-04-13**
+## Executive summary
+
+- Docked heavily for the subject/preview text disaster. The in-body execution scores a 6 on its own merits.
+
+## What's working
+
+- **Clear offer placement.** The 20% banner sits at the very top, directly below the logo — no hunting required.
+- **Logical gender segmentation.** Women / Men / Kids sections are clearly delineated with "Shop Now" CTAs under each, lowering friction for the browsing intent this email is trying to capture.
+- **"Spring Favorites" module.** The seasonal hook is well-placed and breaks up what would otherwise be a pure grid of product tiles.
+- **Utility footer.** Download app, currency selector, store finder, social links — all present and legible. Covers the basics.
+- **Visual consistency.** Shoes are photographed consistently (light backgrounds, similar angles), making the grid feel premium rather than cluttered.
+
+## What's weak
+
+- **Subject line is an internal test string.** `[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026` is fully visible to recipients. This is a deployment error, not a cosmetic issue.
+- **Preview text is raw JSON-LD.** The schema markup (`{ "@context": "http://schema.org/"...`) is rendering as visible preview text in the inbox. Recipients see machine code, not a human-readable hook.
+- **"Fresh Drop" label does nothing.** "Fresh Drop — Glide-Step" as a section header is weak framing. There's no indication of what makes it fresh, how many styles, or any scarcity signal.
+- **No personalization signal.** This is flagged as a non-purchaser flow, but nothing in the visible email acknowledges the recipient's status or creates a reason this offer applies to them specifically.
+- **Product names are not visible.** Tiles show images and a CTA but no visible product names or prices — useful for a pure browsing email but limiting for driving intent toward specific hero SKUs.
+
+## Recommendations
+
+- 1. **Fix the subject line before any future send.** Strip the internal test prefix and campaign code entirely. This should never surface to recipients.
+- 2. **Suppress or replace the JSON-LD preview text.** Add a proper preheader text node above the schema block, or move the schema block post-preheader. Something like "Discover the shoe that moves with you — 20% off your first pair" would outperform raw markup.
+- 3. **Add a deadline to the 20% banner.** "20% off a single pair" with no expiry creates zero urgency. Add "Ends Sunday" or "This week only."
+- 4. **Add a one-line hero callout.** Under "Glide-Step," one sentence about why this shoe (cushioning, tech, use case) would do more work than the current blank-slate product grid.
+- 5. **Surface at least one product name + price** in the Women's or Men's hero tile to anchor value.
+- | Priority | Issue | Action |
+- |---|---|---|
+- | **P0** | Empty greeting merge token | Add non-empty fallback string; block send until resolved |
+- | **P0** | `[Test]:` + campaign ID leaking into subject line | Strip test flag and fix subject template concatenation before production |
+- | **P1** | All `image.emails.skechers.com` URLs over HTTP | Update CDN or template to serve `https://` — affects entire image layer |
+- | **P1** | ink1000.com pixel over HTTP | Change to `https://` or confirm Movable Ink supports protocol-relative URL |
+- | **P1** | Return Path pixel missing protocol | Prepend `https://` to fix seed-list monitoring |
+- | **P2** | Missing `alt` text on `49468f73-...png` | Add descriptive alt text for accessibility and image-blocked fallback |
+- | **P2** | `-webkit-text-size-adjust: none` | Change to `100%` to preserve user text scaling on iOS |
+- | **P2** | SPF/DKIM status unverified | Re-run authentication header check against a delivered copy, not relay-intercepted |
+- | **P3** | Krux SHA-256 hashed PII in pixel URL | Confirm DMP data-sharing agreement covers this parameter in transit |
+
+## Full review
+## 2. Business Impact Score: **4/10**
+
+Docked heavily for the subject/preview text disaster. The in-body execution scores a 6 on its own merits.
+
+---
+
+## 3. What's Working
+
+- **Clear offer placement.** The 20% banner sits at the very top, directly below the logo — no hunting required.
+- **Logical gender segmentation.** Women / Men / Kids sections are clearly delineated with "Shop Now" CTAs under each, lowering friction for the browsing intent this email is trying to capture.
+- **"Spring Favorites" module.** The seasonal hook is well-placed and breaks up what would otherwise be a pure grid of product tiles.
+- **Utility footer.** Download app, currency selector, store finder, social links — all present and legible. Covers the basics.
+- **Visual consistency.** Shoes are photographed consistently (light backgrounds, similar angles), making the grid feel premium rather than cluttered.
+
+---
+
+## 4. What's Weak
+
+- **Subject line is an internal test string.** `[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026` is fully visible to recipients. This is a deployment error, not a cosmetic issue.
+- **Preview text is raw JSON-LD.** The schema markup (`{ "@context": "http://schema.org/"...`) is rendering as visible preview text in the inbox. Recipients see machine code, not a human-readable hook.
+- **"Fresh Drop" label does nothing.** "Fresh Drop — Glide-Step" as a section header is weak framing. There's no indication of what makes it fresh, how many styles, or any scarcity signal.
+- **No personalization signal.** This is flagged as a non-purchaser flow, but nothing in the visible email acknowledges the recipient's status or creates a reason this offer applies to them specifically.
+- **Product names are not visible.** Tiles show images and a CTA but no visible product names or prices — useful for a pure browsing email but limiting for driving intent toward specific hero SKUs.
+
+---
+
+## 5. Recommendations
+
+1. **Fix the subject line before any future send.** Strip the internal test prefix and campaign code entirely. This should never surface to recipients.
+2. **Suppress or replace the JSON-LD preview text.** Add a proper preheader text node above the schema block, or move the schema block post-preheader. Something like "Discover the shoe that moves with you — 20% off your first pair" would outperform raw markup.
+3. **Add a deadline to the 20% banner.** "20% off a single pair" with no expiry creates zero urgency. Add "Ends Sunday" or "This week only."
+4. **Add a one-line hero callout.** Under "Glide-Step," one sentence about why this shoe (cushioning, tech, use case) would do more work than the current blank-slate product grid.
+5. **Surface at least one product name + price** in the Women's or Men's hero tile to anchor value.
+
+---
+
+## 6. Bottom Line
+
+The in-email execution is serviceable — structured, segmented, visually clean. But the subject line and preview text failures are disqualifying for a production send. Even if this is a QA/test render, the pipeline is exposing internal metadata to the recipient layer, which is a real deliverability and brand risk. Fix the send infrastructure first; optimize the creative second.
+
+---
+
+## 7. Subject Line Analysis
+
+- **Subject:** `[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026More Comfort and a Little Extra 20% off Your 1st Pair`
+- **Length:** 104 characters
+- **Scores (1-10):** Clarity `3`, Curiosity `3`, Personalization `4`, Urgency `4`, Specificity `5`
+- **Strengths:**
+  - The tail end ("More Comfort and a Little Extra 20% off Your 1st Pair") has a functional benefit + offer structure
+  - "1st Pair" implies personalization for non-purchasers
+- **Weaknesses:**
+  - Internal test prefix and campaign code completely override the actual subject line — this is what recipients read first
+  - Even stripped of the test string, at 104 chars the line is too long and front-loads no hook
+- **Alt A:** `Your first Skechers pair: 20% off + all-day comfort`
+- **Alt B:** `Walk in comfort — 20% off your first pair`
+
+---
+
+## 8. Evidence
+
+- **Overall purpose:** Non-purchaser reactivation/acquisition email promoting the Glide-Step collection with a first-purchase discount.
+- **Hero / primary value proposition:** "20% Off a Single Pair" banner + "Fresh Drop Glide-Step" headline. Offer is clear; product story is thin.
+- **Membership / benefits section:** Not present. No loyalty program call-out visible.
+- **Product discoverability / recommendation modules:** Three gender-segmented grid modules (Women, Men, Kids) each with a "Shop Now" CTA. A "Spring Favorites" banner module also present with its own CTA.
+- **Utility / secondary modules:** Footer includes app download badges (App Store / Google Play), currency selector, store finder link, social icons (Facebook, Twitter, Instagram, YouTube, Pinterest, TikTok), and a standard unsubscribe/legal block.
+- **Bugs / friction / clarity issues:**
+  - Subject line displays internal campaign identifier `[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026` — visible to all recipients
+  - Preview text renders raw JSON-LD schema markup rather than a human-readable preheader — visible in all inbox clients that show preview snippets
+
+---
+
+## Technical Audit
+
+## Technical Audit — SKECHERS MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026
+
+---
+
+### 1. Technical Summary
+
+This is a test-flagged send with three blocking production issues: a broken personalization merge token, a full content image domain serving over HTTP rather than HTTPS, and a campaign ID leaking into the rendered subject line. Authentication status is unverified via the relay.
+
+---
+
+### 2. Link & Tracking Issues
+
+**Return Path pixel — missing protocol (broken)**
+```
+pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499
+```
+No `https://` prefix. Email clients treat this as a relative URL, making the seed-list monitoring pixel non-functional.
+
+**ink1000.com tracking pixel — HTTP**
+```
+http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8008532836&...
+```
+Served over plain HTTP. Gmail and Outlook.com will proxy or block this; the Movable Ink `mi_u` parameter (subscriber ID `8008532836`) will not fire reliably.
+
+**27 click-tracking links** through `click.emails.skechers.com` were not probed (expected). No breakage confirmed, but all redirect-chain destinations are unverified.
+
+**Krux DMP user-match pixels (3 present)**
+The `partner_uid` for the SHA-25 beacon contains what appears to be a SHA-256 hashed email address passed in clear text via a pixel URL. Confirm this is intentional and compliant with your DMP data-sharing terms.
+
+---
+
+### 3. Rendering & Accessibility
+
+**All content images served over HTTP — will be blocked in major clients**
+
+Every image from `image.emails.skechers.com` uses `http://`:
+```
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png  (logo)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-...png
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-...png  (App Store badge)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-...png  (Google Play badge)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-...png  (Curbside Pickup)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-...png  (AfterPay)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-...png  (Find A Store)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-...png  (Instagram)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-...png  (Facebook)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-...png  (YouTube)
+```
+Gmail proxies HTTP images but strips query strings; Outlook 2016/2019 blocks them by default. The entire email will render as a broken image grid for a significant share of recipients.
+
+**Missing `alt` text on content image**
+```
+src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png
+```
+No `alt` attribute. If images are blocked, this image slot is invisible with no fallback text — likely a product or hero image given its path depth.
+
+**`-webkit-text-size-adjust: none` applied globally**
+```css
+* { -webkit-text-size-adjust: none; }
+```
+The `none` value (rather than `100%`) disables user-initiated text scaling on iOS, which is both an accessibility regression and a violation of WCAG 1.4.4 (Resize Text). Should be `100%`.
+
+---
+
+### 4. Personalization & Merge Tokens
+
+**[FAIL] Empty greeting — broken merge tag**
+
+The automated QA confirms: `"Hi ,"` — the subscriber first name field is empty. The fallback value for the name token is either null or an empty string. This is a broken experience for all recipients who did not have a first name in the contact record, or it indicates the token itself failed to resolve.
+
+The specific merge field is not visible in the truncated HTML, but the QA finding is definitive. This must be blocked from production send until a fallback (e.g., `Hi there,`) is in place.
+
+---
+
+### 5. Compliance
+
+**SPF/DKIM status unverified**
+
+`Authentication-Results` header was not captured via the AgentMail relay. SPF and DKIM pass/fail status is unknown. Cannot confirm deliverability posture for this send.
+
+**[Test] subject prefix present**
+
+Subject: `[Test]: MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026More Comfort and a Little Extra 20% off Your 1st Pair`
+
+The `[Test]:` flag confirms this is a test send. Additionally, the campaign ID `MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026` is concatenated directly into the subject with no space separator before the display subject line — this is a templating defect, not just a test artifact. If this template is promoted to production, the campaign ID will appear verbatim in recipient inboxes.
+
+**Unsubscribe / CAN-SPAM footer**: Not visible in the truncated HTML portion provided. Cannot confirm presence or absence — should be verified against the full source.
+
+---
+
+### 6. Email-to-Site Continuity
+
+**Campaign ID present in tracking pixels**
+
+`campaignid=MKG_US_NONPURCLICK_U_GLIDE_NONPURCH_EN_04142026` appears in the Krux ad impression pixel, and `mi_ecmp` in the ink1000 pixel carries the same value. Campaign attribution is wired.
+
+**UTM parameters**: With 27 click-tracking links unprobed, UTM consistency on destination URLs cannot be confirmed. The destination landing page alignment (offer validity, product availability for the promoted SKU) is out of scope for this technical audit.
+
+---
+
+### 7. Recommendations
+
+| Priority | Issue | Action |
+|---|---|---|
+| **P0** | Empty greeting merge token | Add non-empty fallback string; block send until resolved |
+| **P0** | `[Test]:` + campaign ID leaking into subject line | Strip test flag and fix subject template concatenation before production |
+| **P1** | All `image.emails.skechers.com` URLs over HTTP | Update CDN or template to serve `https://` — affects entire image layer |
+| **P1** | ink1000.com pixel over HTTP | Change to `https://` or confirm Movable Ink supports protocol-relative URL |
+| **P1** | Return Path pixel missing protocol | Prepend `https://` to fix seed-list monitoring |
+| **P2** | Missing `alt` text on `49468f73-...png` | Add descriptive alt text for accessibility and image-blocked fallback |
+| **P2** | `-webkit-text-size-adjust: none` | Change to `100%` to preserve user text scaling on iOS |
+| **P2** | SPF/DKIM status unverified | Re-run authentication header check against a delivered copy, not relay-intercepted |
+| **P3** | Krux SHA-256 hashed PII in pixel URL | Confirm DMP data-sharing agreement covers this parameter in transit |
+## Recent history
+
+- [[2026-04-13-test-mkg-us-na-u-glide-gender-en-04142026family-comfort-unlocked-bogo-50-off]] — 4/10 (2026-04-13)
+- [[2026-04-13-from-sneakers-to-sandals-it-s-slip-in-season]] — 5/10 (2026-04-13)
+- [[2026-04-13-put-that-10-off-to-good-use]] — 5/10 (2026-04-13)
+

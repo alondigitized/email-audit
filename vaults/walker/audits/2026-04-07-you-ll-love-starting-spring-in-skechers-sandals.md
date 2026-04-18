@@ -1,0 +1,233 @@
+---
+slug: 2026-04-07-you-ll-love-starting-spring-in-skechers-sandals
+type: email
+date: 2026-04-07
+persona: walker
+score: "6.5/10"
+sender: SKECHERS
+subject: "You'll Love Starting Spring in Skechers Sandals"
+tags: [email, score-7, sender/skechers]
+---
+# You'll Love Starting Spring in Skechers Sandals
+**Score:** 6.5/10 · **Type:** Email audit · **2026-04-07**
+## Executive summary
+
+- A clean, well-structured seasonal push for Skechers' sandal lineup. The email does its job: it establishes a sale offer, segments by gender/age, and gives clear CTAs. Execution is competent but not memorable — imagery is small and product shots feel generic. The 20% off offer is the engine here, and it's prominent enough to drive clicks, but the editorial voice is flat and the product modules don't do enough to earn desire before asking for the click.
+- Solid mechanics, weak emotion. Will convert loyalists; unlikely to excite lapsed or prospective buyers.
+
+## What's working
+
+- **Offer clarity**: "TAKE 20% OFF" is in the hero immediately, paired with a "SHOP NOW" CTA — no hunting required.
+- **Sandal Season headline**: Bold, seasonal, and correctly branded. Sets the thematic frame instantly.
+- **Gender/age segmentation**: Women → Men → Kids flow is logical and covers the full family purchase occasion — smart for a spring-fling send.
+- **Walking in Style module**: The tonal shift to lifestyle (slip-on, relaxed vibe) adds category depth and gives non-sandal buyers a reason to stay.
+- **50% Off secondary offer**: A second, deeper discount below the fold rewards scroll behavior and creates a value escalation that works well structurally.
+- **Footer utility**: Download app, curbside pickup, free stores, and free returns are all present — strong friction-reducers for conversion.
+
+## What's weak
+
+- **Hero imagery is small and crowded**: Three lifestyle figures with sandals, rendered at a narrow width, read more like a stock photo thumbnail than an aspirational fashion moment. The spring mood is muted.
+- **Product shots are tiny**: Each gender module shows sandal pairs at very small scale — you can't read style details or material. These could convert better with larger, cleaner hero product renders.
+- **Sub-headline is forgettable**: "Outfit the entire family in our cool & spring comfort" is functional but bland. No personality, no urgency beyond the discount.
+- **No featured products called out by name**: There's no "meet the Arch Fit Sandal" moment — the email is category-led, not product-led. Opportunity to build product equity is missed.
+- **Walking in Style module feels disconnected**: The lifestyle photo (slip-ons, not sandals) breaks the sandal narrative just enough to feel like a separate email inserted mid-scroll.
+- **Shop Additional Styles text links (Women, Men, Dog, Clothing, New Arrivals, Sale)** are very small and low-contrast — they will be missed by most readers.
+
+## Recommendations
+
+- 1. **Enlarge the hero image** — use a single, full-width aspirational lifestyle shot instead of a small multi-figure crop. Spring energy should be felt, not inferred.
+- 2. **Feature 2–3 named products** in each gender module with a product name and price — gives the email reason to exist beyond "sandals exist."
+- 3. **Sharpen the sub-headline** — something like "Sandals for every step this spring" over the committee-written current copy.
+- 4. **Move or rename the Walking in Style block** — either tie it explicitly to sandals ("Walk in Style, All Spring Long") or give it its own send.
+- 5. **Increase font size and contrast** on the "Shop Additional Styles" link row — currently near-invisible.
+- 6. **Test a single deeper offer** instead of two stacked offers (20% + 50%) — the escalation is structurally smart but may create confusion about which deal applies to what.
+- | Priority | Issue | Fix |
+- |---|---|---|
+- | **High** | All `image.emails.skechers.com` assets on HTTP | Change all `src` attributes from `http://image.emails.skechers.com/...` to `https://`. If the CDN doesn't support HTTPS, migrate assets. |
+- | **High** | ReturnPath pixel missing protocol | Prepend `https://` to `pixel.app.returnpath.net/pixel.gif?...` |
+- | **High** | SPF/DKIM status unconfirmed | Verify DMARC alignment in sending infrastructure; confirm `Authentication-Results` passes for the `emails.skechers.com` domain |
+- | **Medium** | ink1000 open pixel on HTTP | Change to `https://` or replace with ESP-native open tracking |
+- | **Medium** | Missing `alt` text on 3 content images | Add descriptive `alt` values; use `alt=""` only for purely decorative images |
+- | **Medium** | Malformed `<meta>` tags | Add `http-equiv="Content-Type"` and `http-equiv="X-UA-Compatible"` attributes |
+- | **Low** | UTM params unverifiable through encrypted redirects | Manual spot-check: follow 2–3 CTAs to confirm UTM params on landing pages |
+
+## Full review
+## Skechers — "You'll Love Starting Spring in Skechers Sandals"
+
+---
+
+### 1. Executive Summary
+
+A clean, well-structured seasonal push for Skechers' sandal lineup. The email does its job: it establishes a sale offer, segments by gender/age, and gives clear CTAs. Execution is competent but not memorable — imagery is small and product shots feel generic. The 20% off offer is the engine here, and it's prominent enough to drive clicks, but the editorial voice is flat and the product modules don't do enough to earn desire before asking for the click.
+
+---
+
+### 2. Business Impact Score: **6.5 / 10**
+
+Solid mechanics, weak emotion. Will convert loyalists; unlikely to excite lapsed or prospective buyers.
+
+---
+
+### 3. What's Working
+
+- **Offer clarity**: "TAKE 20% OFF" is in the hero immediately, paired with a "SHOP NOW" CTA — no hunting required.
+- **Sandal Season headline**: Bold, seasonal, and correctly branded. Sets the thematic frame instantly.
+- **Gender/age segmentation**: Women → Men → Kids flow is logical and covers the full family purchase occasion — smart for a spring-fling send.
+- **Walking in Style module**: The tonal shift to lifestyle (slip-on, relaxed vibe) adds category depth and gives non-sandal buyers a reason to stay.
+- **50% Off secondary offer**: A second, deeper discount below the fold rewards scroll behavior and creates a value escalation that works well structurally.
+- **Footer utility**: Download app, curbside pickup, free stores, and free returns are all present — strong friction-reducers for conversion.
+
+---
+
+### 4. What's Weak
+
+- **Hero imagery is small and crowded**: Three lifestyle figures with sandals, rendered at a narrow width, read more like a stock photo thumbnail than an aspirational fashion moment. The spring mood is muted.
+- **Product shots are tiny**: Each gender module shows sandal pairs at very small scale — you can't read style details or material. These could convert better with larger, cleaner hero product renders.
+- **Sub-headline is forgettable**: "Outfit the entire family in our cool & spring comfort" is functional but bland. No personality, no urgency beyond the discount.
+- **No featured products called out by name**: There's no "meet the Arch Fit Sandal" moment — the email is category-led, not product-led. Opportunity to build product equity is missed.
+- **Walking in Style module feels disconnected**: The lifestyle photo (slip-ons, not sandals) breaks the sandal narrative just enough to feel like a separate email inserted mid-scroll.
+- **Shop Additional Styles text links (Women, Men, Dog, Clothing, New Arrivals, Sale)** are very small and low-contrast — they will be missed by most readers.
+
+---
+
+### 5. Recommendations
+
+1. **Enlarge the hero image** — use a single, full-width aspirational lifestyle shot instead of a small multi-figure crop. Spring energy should be felt, not inferred.
+2. **Feature 2–3 named products** in each gender module with a product name and price — gives the email reason to exist beyond "sandals exist."
+3. **Sharpen the sub-headline** — something like "Sandals for every step this spring" over the committee-written current copy.
+4. **Move or rename the Walking in Style block** — either tie it explicitly to sandals ("Walk in Style, All Spring Long") or give it its own send.
+5. **Increase font size and contrast** on the "Shop Additional Styles" link row — currently near-invisible.
+6. **Test a single deeper offer** instead of two stacked offers (20% + 50%) — the escalation is structurally smart but may create confusion about which deal applies to what.
+
+---
+
+### 6. Bottom Line
+
+This is a well-built promotional email that will deliver baseline results for sandal season. The segmentation by gender and the dual-offer structure are sound. What it lacks is the creative lift to make someone stop and want something specific. Upgrade the imagery, name your products, and sharpen the copy — the skeleton is already there.
+
+---
+
+### 7. Evidence
+
+| Module | Observation |
+|---|---|
+| **Overall purpose** | Seasonal sandal sale push, 20% off offer, family audience |
+| **Hero / primary value prop** | "Sandal Season" headline + 20% off offer + lifestyle trio image — prominent but visually small |
+| **Membership / benefits** | None visible — no loyalty/rewards callout |
+| **Product discoverability** | Three gender modules (Women, Men, Kids) with small product image grids and "Shop [X] Sandals" CTAs |
+| **Utility / secondary modules** | Walking in Style lifestyle module with 50% off; Shop Additional Styles text links; app download, curbside pickup, free returns, store locator in footer |
+| **Bugs / friction** | No visible broken images or rendering errors; "Shop Additional Styles" link row is very low contrast and easy to miss |
+
+---
+
+## Technical Audit
+
+## Technical Audit — Skechers "You'll Love Starting Spring in Skechers Sandals"
+**From:** no-reply@emails.skechers.com | **Date:** 2026-04-07
+
+---
+
+### 1. Technical Summary
+
+The email has a structural HTTP/HTTPS mixed-content problem affecting nearly all hosted images, a broken inbox-placement pixel due to a missing protocol prefix, and two malformed `<meta>` tags. No merge token bleed-through or CAN-SPAM violations detected.
+
+---
+
+### 2. Link & Tracking Issues
+
+**Broken ReturnPath inbox-placement pixel — missing protocol**
+```html
+<img src="pixel.app.returnpath.net/pixel.gif?r=964ce1dbf0dcef79cbad82c12fe25342701e4499" />
+```
+The `src` value has no protocol (`http://` or `https://`). Browsers/email clients will interpret this as a relative path, silently dropping the pixel. Inbox-placement data for this send is unreliable.
+
+**ink1000.com open-tracking pixel on HTTP**
+```
+http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8107766165&mi_ecmp=MKG_US_NONPURCLICK_U_SAND_NONPURCH_EN_04072026
+```
+Plain HTTP. Will be blocked or upgraded silently in most modern clients (Gmail, Apple Mail). Open tracking via this vendor is effectively non-functional.
+
+**26 click-redirect links — UTM payload unverifiable**
+All outbound links pass through `click.emails.skechers.com/?qs=<encrypted-blob>`. The encrypted payload means destination URLs and UTM parameters cannot be inspected without following redirects. QA automated checks skipped all 26. See section 6.
+
+---
+
+### 3. Rendering & Accessibility
+
+**14 images served over HTTP from `image.emails.skechers.com`**
+
+Every image hosted on Skechers' own CDN uses `http://`, not `https://`. Gmail strips HTTP images by default; Apple Mail on iOS 15+ upgrades or blocks them. Affected assets include the logo, product images, social icons, AfterPay badge, and app store badges. Example:
+```
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png  (Skechers logo)
+http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png
+```
+(Full list of 14 in QA findings above.)
+
+**4 images missing `alt` text**
+- `o.gif` — ink1000 tracking pixel (expected to be empty, but attribute is absent entirely vs. `alt=""`)
+- `49468f73-...png` — unknown content image, no alt
+- `00100b23-...png` — unknown content image, no alt
+- `fc08601a-...png` — unknown content image, no alt
+
+Screen readers will announce raw filenames for the content images.
+
+**Malformed `<meta>` tags — missing `http-equiv` attribute**
+
+Both IE/Edge compatibility and charset declarations are broken:
+```html
+<!-- Missing http-equiv="Content-Type" -->
+<meta content="text/html; charset=utf-8" />
+
+<!-- Missing http-equiv="X-UA-Compatible" -->
+<meta content="IE=Edge" />
+```
+Without `http-equiv`, these are no-ops. The charset declaration in particular should be `<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />`.
+
+---
+
+### 4. Personalization & Merge Tokens
+
+No unresolved merge tokens detected in the visible HTML (no `%%token%%`, `{{field}}`, or `[FIRST_NAME]`-style bleed-through).
+
+The Krux DMP beacons carry what appear to be resolved subscriber identifiers (`partner_uid=9153f33f...` SHA-256 hash; `partner_uid=121173391` subscriber ID) — these look intentionally populated for the recipient, not hardcoded test values.
+
+No issues found.
+
+---
+
+### 5. Compliance
+
+**SPF/DKIM authentication status unknown**
+
+QA reports: `Authentication-Results header not found — Expected via AgentMail relay`. This means the audit pipeline could not confirm whether the message passed SPF and DKIM checks. If either fails, deliverability to major ISPs (Gmail, Yahoo, Outlook) is at risk under current DMARC enforcement standards (Google/Yahoo 2024 bulk sender requirements).
+
+**CAN-SPAM / unsubscribe**
+The HTML is truncated in the provided source, so the footer could not be fully inspected. Based on the available fragment, no unsubscribe link or physical mailing address is visible in the audited portion. These elements are present in the footer (outside the truncation boundary) and should be confirmed against the full source.
+
+---
+
+### 6. Email-to-Site Continuity
+
+All 26 outbound links are encrypted via `click.emails.skechers.com/?qs=<JWT-style blob>`. The campaign identifier `MKG_US_NONPURCLICK_U_SAND_NONPURCH_EN_04072026` appears correctly in three tracking beacons (open pixel, ink1000, Krux impression). However, whether this campaign ID or corresponding UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`) are appended to destination landing page URLs cannot be verified without decrypting or following the redirect chain.
+
+**Action required:** Spot-check 2–3 CTAs through the redirect chain to confirm UTM params survive to the final `skechers.com` URL.
+
+---
+
+### 7. Recommendations
+
+| Priority | Issue | Fix |
+|---|---|---|
+| **High** | All `image.emails.skechers.com` assets on HTTP | Change all `src` attributes from `http://image.emails.skechers.com/...` to `https://`. If the CDN doesn't support HTTPS, migrate assets. |
+| **High** | ReturnPath pixel missing protocol | Prepend `https://` to `pixel.app.returnpath.net/pixel.gif?...` |
+| **High** | SPF/DKIM status unconfirmed | Verify DMARC alignment in sending infrastructure; confirm `Authentication-Results` passes for the `emails.skechers.com` domain |
+| **Medium** | ink1000 open pixel on HTTP | Change to `https://` or replace with ESP-native open tracking |
+| **Medium** | Missing `alt` text on 3 content images | Add descriptive `alt` values; use `alt=""` only for purely decorative images |
+| **Medium** | Malformed `<meta>` tags | Add `http-equiv="Content-Type"` and `http-equiv="X-UA-Compatible"` attributes |
+| **Low** | UTM params unverifiable through encrypted redirects | Manual spot-check: follow 2–3 CTAs to confirm UTM params on landing pages |
+## Recent history
+
+- [[2026-04-07-what-s-that-comin-down-the-track]] — 6/10 (2026-04-07)
+- [[2026-04-07-your-items-are-waiting]] — 5.5/10 (2026-04-07)
+- [[2026-04-07-did-you-forget-something]] — 6/10 (2026-04-07)
+

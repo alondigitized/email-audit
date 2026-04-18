@@ -1,0 +1,231 @@
+---
+slug: 2026-04-14-your-cart-expires-soon
+type: email
+date: 2026-04-14
+persona: walker
+score: "6/10"
+sender: SKECHERS
+subject: Your cart expires soon!
+tags: [email, score-6, sender/skechers]
+---
+# Your cart expires soon!
+**Score:** 6/10 · **Type:** Email audit · **2026-04-14**
+## Executive summary
+
+- Functional cart recovery email that loses effectiveness by not doubling down on urgency and diluting the experience with retention/utility content more suited to a newsletter.
+
+## What's working
+
+- **Headline is strong.** "YOU LIKED THESE AND YOU WEREN'T WRONG." is confident, playful, and validation-forward — it reduces buyer hesitation without feeling pushy.
+- **Hero product image is large and clean.** The white/blue Slix-ins sneaker is well-staged; product is immediately identifiable.
+- **"COMPLETE YOUR ORDER" CTA is unambiguous.** Verb-first, action-oriented, placed directly under the hero product.
+- **20% off module is a real recovery incentive.** Discounting to close an abandoned cart is textbook, and it's prominent enough to notice.
+- **Product recommendation row** below the hero gives alternatives if the shopper had hesitation about that specific item.
+
+## What's weak
+
+- **"LET'S GET TESTING"** is either a visible test artifact or a poorly labeled module. Either way, it reads as unfinished or internal-facing — a credibility hit for a consumer-facing send.
+- **Utility block overload.** App download, curbside pickup, pay later (Afterpay/Klarna), and find-a-store are all stacked below the fold. These belong in a newsletter, not a cart recovery email. They fragment attention at the moment you need a single conversion path.
+- **Category navigation links** (Women's, Men, Kids, Clothing, New Arrivals, Sale) add more dilution. A shopper who abandoned a specific cart doesn't need a browse menu.
+- **Subject line urgency isn't visually reinforced.** "Your cart expires soon!" implies a deadline, but the email body never states when the cart actually expires — no timestamp, no countdown, no "expires at midnight" callout. The urgency promise goes unfulfilled.
+- **20% off arrives late.** The incentive is buried mid-email after the product row and best sellers banner. It should be elevated, ideally paired with the primary CTA.
+
+## Recommendations
+
+- 1. **Show the expiry deadline explicitly.** If the cart truly expires, say when: "Your cart expires at 11:59 PM tonight." Vague urgency is weak urgency.
+- 2. **Surface the 20% off in the hero.** Move the discount callout adjacent to the primary CTA — "Complete your order and save 20%" — so the incentive and the action are one decision, not two separate reads.
+- 3. **Strip or shrink the utility stack.** Cut or collapse the app/curbside/pay-later/find-a-store block for this email type. Reserve that real estate for a second, tighter CTA ("Still deciding? Shop All Best Sellers").
+- 4. **Remove the category nav links.** Sending an abandoner to browse Women's or Kids undermines the entire cart recovery objective.
+- 5. **Investigate and fix "LET'S GET TESTING."** This should not be visible to consumers in any form.
+- | Priority | Action |
+- |---|---|
+- | High | Update all Attentive click-tracking base URLs to `https://` in account settings |
+- | Medium | Add `http-equiv="Content-Type"` to the charset `<meta>` tag |
+- | Medium | Verify footer contains unsubscribe link and physical postal address before send |
+- | Low | Populate `<title>` with a descriptive string |
+- | Low | Confirm all `<img>` tags have non-empty `alt` attributes |
+- | Info | Validate DKIM signing on `msgs.skechers.com` and DMARC alignment |
+- | Info | Decode and audit final-destination URLs for UTM parameter coverage |
+
+## Full review
+## 2. Business Impact Score: 6/10
+
+Functional cart recovery email that loses effectiveness by not doubling down on urgency and diluting the experience with retention/utility content more suited to a newsletter.
+
+---
+
+## 3. What's Working
+
+- **Headline is strong.** "YOU LIKED THESE AND YOU WEREN'T WRONG." is confident, playful, and validation-forward — it reduces buyer hesitation without feeling pushy.
+- **Hero product image is large and clean.** The white/blue Slix-ins sneaker is well-staged; product is immediately identifiable.
+- **"COMPLETE YOUR ORDER" CTA is unambiguous.** Verb-first, action-oriented, placed directly under the hero product.
+- **20% off module is a real recovery incentive.** Discounting to close an abandoned cart is textbook, and it's prominent enough to notice.
+- **Product recommendation row** below the hero gives alternatives if the shopper had hesitation about that specific item.
+
+---
+
+## 4. What's Weak
+
+- **"LET'S GET TESTING"** is either a visible test artifact or a poorly labeled module. Either way, it reads as unfinished or internal-facing — a credibility hit for a consumer-facing send.
+- **Utility block overload.** App download, curbside pickup, pay later (Afterpay/Klarna), and find-a-store are all stacked below the fold. These belong in a newsletter, not a cart recovery email. They fragment attention at the moment you need a single conversion path.
+- **Category navigation links** (Women's, Men, Kids, Clothing, New Arrivals, Sale) add more dilution. A shopper who abandoned a specific cart doesn't need a browse menu.
+- **Subject line urgency isn't visually reinforced.** "Your cart expires soon!" implies a deadline, but the email body never states when the cart actually expires — no timestamp, no countdown, no "expires at midnight" callout. The urgency promise goes unfulfilled.
+- **20% off arrives late.** The incentive is buried mid-email after the product row and best sellers banner. It should be elevated, ideally paired with the primary CTA.
+
+---
+
+## 5. Recommendations
+
+1. **Show the expiry deadline explicitly.** If the cart truly expires, say when: "Your cart expires at 11:59 PM tonight." Vague urgency is weak urgency.
+2. **Surface the 20% off in the hero.** Move the discount callout adjacent to the primary CTA — "Complete your order and save 20%" — so the incentive and the action are one decision, not two separate reads.
+3. **Strip or shrink the utility stack.** Cut or collapse the app/curbside/pay-later/find-a-store block for this email type. Reserve that real estate for a second, tighter CTA ("Still deciding? Shop All Best Sellers").
+4. **Remove the category nav links.** Sending an abandoner to browse Women's or Kids undermines the entire cart recovery objective.
+5. **Investigate and fix "LET'S GET TESTING."** This should not be visible to consumers in any form.
+
+---
+
+## 6. Bottom Line
+
+The top third of this email does its job. The bottom two-thirds actively work against conversion by pulling the shopper out of purchase mode and into exploration mode. Tightening the layout around a single CTA with the discount baked in would meaningfully improve recovery rate.
+
+---
+
+## 7. Subject Line Analysis
+
+- **Subject:** `Your cart expires soon!`
+- **Length:** 22 characters
+- **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `2`, Urgency `6`, Specificity `3`
+- **Strengths:**
+  - Immediately communicates the cart abandonment context — no ambiguity about email type
+  - "Expires" framing creates mild loss aversion
+- **Weaknesses:**
+  - "Soon" is vague — a specific time window ("expires tonight") would double the urgency
+  - Zero personalization: no product name, no recipient name, no discount teaser
+- **Alt A:** `Your Slix-ins are still waiting — 20% off if you finish checkout`
+- **Alt B:** `Your cart expires at midnight — here's 20% off to change your mind`
+
+---
+
+## 8. Evidence
+
+- **Overall purpose:** Cart abandonment recovery — retrieve a shopper who added to cart but did not purchase
+- **Hero / primary value prop:** "YOU LIKED THESE AND YOU WEREN'T WRONG." headline paired with hero product shot (Skechers Slix-ins Max Cushioning Arch Fit 2.0 - Savant) and "COMPLETE YOUR ORDER" CTA in a dark button
+- **Membership / benefits section:** A module labeled "LET'S GET TESTING" with apparent SKECHERS+ reference — unclear messaging, possibly a test artifact visible in render
+- **Product discoverability / recommendation modules:** A 4-item horizontal product row below the hero; a "SHOP ALL BEST SELLERS" dark banner; category text links (Women's, Men, Kids, Clothing, New Arrivals, Sale)
+- **Utility / secondary modules:** 20% off discount module with "SHOP NOW" CTA; App Store + Google Play download CTAs; Curbside Pickup callout; Afterpay + Klarna logos under "SHOP NOW, PAY LATER"; "FIND A STORE" module; social follow links (Facebook, Instagram)
+- **Bugs / friction / clarity issues:** "LET'S GET TESTING" label is visible and appears to be either a test artifact or a misconfigured module heading — should not appear in a consumer-facing send
+
+---
+
+## Technical Audit
+
+## Technical Audit — SKECHERS Cart Abandonment Email
+
+**From:** `hello@msgs.skechers.com` | **ESP:** Attentive (`skechers.attentivemail.com`)
+
+---
+
+### 1. Technical Summary
+
+Table-based layout built in Beefree/Attentive, sent via `msgs.skechers.com`. Two confirmed infrastructure issues: click-tracking links use plaintext HTTP, and the `<meta charset>` tag is missing its `http-equiv` attribute. Full compliance and personalization review is limited by truncated source.
+
+---
+
+### 2. Link & Tracking Issues
+
+**[HIGH] Click-tracking links use HTTP, not HTTPS**
+
+Every `<a href>` in the provided source resolves through:
+```
+http://skechers.attentivemail.com/ls/click?upn=...
+```
+This is `http://`, not `https://`. Modern clients (Gmail, iOS Mail) may display a security warning or strip the link. The redirect target is likely HTTPS, but the initial hop is unencrypted. All click-tracking links should use `https://skechers.attentivemail.com/ls/click?...`.
+
+**[LOW] Cannot verify final-destination UTM parameters**
+
+The `upn=` tokens in Attentive's tracking URLs are opaque encoded blobs. With a truncated source and no decoded redirect targets, UTM coverage on the landing page cannot be confirmed. See section 6.
+
+---
+
+### 3. Rendering & Accessibility
+
+**[MEDIUM] `<meta charset>` missing `http-equiv` attribute**
+
+```html
+<meta content="text/html; charset=utf-8" />
+```
+This is non-standard. Without `http-equiv="Content-Type"`, some email clients (notably older Outlook) may not honor the charset declaration, potentially causing character-encoding corruption. Correct form:
+```html
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+```
+
+**[LOW] `<title>` is empty**
+
+```html
+<title></title>
+```
+Not rendered in inbox, but screen readers and some accessibility tooling parse the document title. A descriptive value (e.g., "Your Skechers cart is expiring") costs nothing.
+
+**[INFO] `#MessageViewBody a` CSS reset**
+
+```css
+#MessageViewBody a { color: inherit; text-decoration: none }
+```
+This Gmail-targeting override suppresses link styling globally. Any links that rely on their own inline `color` or `text-decoration` for visibility inside Gmail webmail will render correctly only if those inline styles have higher specificity. Verify that CTA buttons override this rule via their own inline styles.
+
+**[INFO] Image alt text — unverifiable**
+
+Source is truncated before `<img>` tags. Alt attributes on product and hero images must be present for screen readers and image-blocked clients. Confirm all `<img>` elements carry meaningful `alt` values.
+
+---
+
+### 4. Personalization & Merge Tokens
+
+No unresolved merge tokens (e.g., `{{first_name}}`, `[FIRST_NAME]`, `%FIRST_NAME%`) are visible in the provided HTML fragment. Source truncation prevents full verification of cart-item personalization blocks, which are the highest-risk tokens in a cart-abandonment send. These should be validated against Attentive's send preview with a seeded test record before deployment.
+
+---
+
+### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
+
+**[CRITICAL — unverifiable] Unsubscribe link and physical address**
+
+The HTML is truncated and the footer is not included in the provided source. CAN-SPAM requires:
+- A functioning one-click (or clearly labeled) unsubscribe mechanism
+- A valid physical postal address
+
+These must be confirmed present in the full source. Attentive typically injects both, but template-level overrides can suppress them.
+
+**[INFO] Authentication headers not provided**
+
+SPF/DKIM/DMARC posture cannot be assessed from HTML alone. `msgs.skechers.com` is a dedicated sending domain — confirm DKIM signing is active for that subdomain and that DMARC policy on `skechers.com` does not cause alignment failures for mail sent from `msgs.skechers.com`.
+
+---
+
+### 6. Email-to-Site Continuity (UTM Params, Landing Page Alignment)
+
+Cannot decode `upn=` redirect targets from the provided source. To verify:
+
+1. Click each tracked link in a browser and inspect the final URL for UTM parameters.
+2. Expected parameters for a cart abandonment send: `utm_source=email`, `utm_medium=email`, `utm_campaign=cart_abandonment` (or equivalent), `utm_content=<CTA identifier>`.
+
+If Attentive is configured to append UTMs at redirect time, confirm the parameters are not being stripped by the destination site (e.g., via a redirect chain or a Content Security Policy that rewrites URLs).
+
+---
+
+### 7. Recommendations
+
+| Priority | Action |
+|---|---|
+| High | Update all Attentive click-tracking base URLs to `https://` in account settings |
+| Medium | Add `http-equiv="Content-Type"` to the charset `<meta>` tag |
+| Medium | Verify footer contains unsubscribe link and physical postal address before send |
+| Low | Populate `<title>` with a descriptive string |
+| Low | Confirm all `<img>` tags have non-empty `alt` attributes |
+| Info | Validate DKIM signing on `msgs.skechers.com` and DMARC alignment |
+| Info | Decode and audit final-destination URLs for UTM parameter coverage |
+## Recent history
+
+- [[2026-04-14-available-now-the-real-madrid-bring-back-collection]] — 5/10 (2026-04-14)
+- [[2026-04-14-did-you-forget-something]] — 5/10 (2026-04-14)
+- [[2026-04-13-test-mkg-us-nonpurclick-u-glide-nonpurch-en-04142026-v2more-comfort-less-effort-]] — 5/10 (2026-04-13)
+
