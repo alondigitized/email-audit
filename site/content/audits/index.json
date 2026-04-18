@@ -1,21 +1,5 @@
 [
   {
-    "slug": "2026-04-18-verify-pipeline-test-2026-04-18-22-43",
-    "subject": "[Verify] Pipeline Test 2026-04-18 22:43",
-    "from_display_name": "Walker Miles",
-    "timestamp_iso": "2026-04-18T22:43:45+00:00",
-    "score": "1/10",
-    "qa_summary": {
-      "overall_pass_rate": "38%",
-      "total_checks": 8,
-      "total_issues": 1,
-      "total_warnings": 4
-    },
-    "has_image": true,
-    "type": "email",
-    "persona": "walker"
-  },
-  {
     "slug": "2026-04-18-last-call-to-use-your-20-off-welcome-offer",
     "subject": "Last Call to use your 20% Off Welcome Offer!",
     "from_display_name": "SKECHERS",
@@ -113,7 +97,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -124,22 +108,6 @@
     "timestamp_iso": "2026-04-18T11:53:03+00:00",
     "score": "6/10",
     "qa_summary": null,
-    "has_image": true,
-    "type": "email",
-    "persona": "walker"
-  },
-  {
-    "slug": "2026-04-18-verify-pipeline-test-2026-04-18-06-40",
-    "subject": "[Verify] Pipeline Test 2026-04-18 06:40",
-    "from_display_name": "Walker Miles",
-    "timestamp_iso": "2026-04-18T06:40:29+00:00",
-    "score": "1/10",
-    "qa_summary": {
-      "overall_pass_rate": "25%",
-      "total_checks": 8,
-      "total_issues": 1,
-      "total_warnings": 5
-    },
     "has_image": true,
     "type": "email",
     "persona": "walker"
@@ -173,7 +141,7 @@
   },
   {
     "slug": "2026-04-17-fresh-friday-deals-inside",
-    "subject": "Fresh Friday Deals Inside📣",
+    "subject": "Fresh Friday Deals Inside\ud83d\udce3",
     "from_display_name": "Shoe Carnival",
     "timestamp_iso": "2026-04-17T14:42:27+00:00",
     "score": "5/10",
@@ -221,7 +189,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -313,7 +281,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -554,7 +522,7 @@
   },
   {
     "slug": "2026-04-15-membership-has-its-perks",
-    "subject": "Membership has its perks🌟",
+    "subject": "Membership has its perks\ud83c\udf1f",
     "from_display_name": "Famous Footwear",
     "timestamp_iso": "2026-04-15T15:36:54+00:00",
     "score": "6/10",
@@ -565,7 +533,7 @@
   },
   {
     "slug": "2026-04-15-there-s-still-time-but-not-much",
-    "subject": "There’s still time, but not much…",
+    "subject": "There\u2019s still time, but not much\u2026",
     "from_display_name": "DSW",
     "timestamp_iso": "2026-04-15T15:03:25+00:00",
     "score": "5/10",
@@ -608,7 +576,7 @@
       "total_issues": 3,
       "total_warnings": 33
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -764,7 +732,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -807,7 +775,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -877,7 +845,7 @@
   },
   {
     "slug": "2026-04-13-from-sneakers-to-sandals-it-s-slip-in-season",
-    "subject": "From Sneakers to Sandals it's Slip-In Season 🤩",
+    "subject": "From Sneakers to Sandals it's Slip-In Season \ud83e\udd29",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-13T17:05:43+00:00",
     "score": "5/10",
@@ -1011,13 +979,13 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
   {
     "slug": "2026-04-12-f-tbol-y-familia",
-    "subject": "Fútbol y familia",
+    "subject": "F\u00fatbol y familia",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-04-12T01:06:41+00:00",
     "score": "5/10",
@@ -1113,7 +1081,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -1163,7 +1131,7 @@
   },
   {
     "slug": "2026-04-11-welcome-to-the-email-list",
-    "subject": "Welcome to the (email) list 🎉",
+    "subject": "Welcome to the (email) list \ud83c\udf89",
     "from_display_name": "DSW",
     "timestamp_iso": "2026-04-11T01:57:57+00:00",
     "score": "7/10",
@@ -1174,7 +1142,7 @@
   },
   {
     "slug": "2026-04-11-test-mkg-us-retpuropen-u-slipin-retail-en-04132026the-season-to-slip-in-to-sanda-fd7dd727-62db-407b-a13d-",
-    "subject": "[Test]: MKG_US_RETPUROPEN_U_SLIPIN_RETAIL_EN_04132026The Season to Slip-In to Sandals & Sneakers 🤩",
+    "subject": "[Test]: MKG_US_RETPUROPEN_U_SLIPIN_RETAIL_EN_04132026The Season to Slip-In to Sandals & Sneakers \ud83e\udd29",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T23:14:34+00:00",
     "score": "5/10",
@@ -1190,7 +1158,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-ecmpurl24-u-slipin-ecom-en-04132026from-sneakers-to-sandals-it-s-sli",
-    "subject": "[Test]: MKG_US_ECMPURL24_U_SLIPIN_ECOM_EN_04132026From Sneakers to Sandals it's Slip-In Season 🤩",
+    "subject": "[Test]: MKG_US_ECMPURL24_U_SLIPIN_ECOM_EN_04132026From Sneakers to Sandals it's Slip-In Season \ud83e\udd29",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T23:12:34+00:00",
     "score": "4/10",
@@ -1206,7 +1174,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-nonpurclick-u-slipin-nonpurch-en-04132026-v2from-sneakers-to-sandals",
-    "subject": "[Test]: MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132026_V2From Sneakers to Sandals it's Slip-In Season 🤩",
+    "subject": "[Test]: MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132026_V2From Sneakers to Sandals it's Slip-In Season \ud83e\udd29",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T22:58:36+00:00",
     "score": "5/10",
@@ -1222,7 +1190,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-nonpurclick-u-slipin-nonpurch-en-04132026-v2from-sneakers-to-sandals-83471cbb-44ae-48e7-827d-",
-    "subject": "[Test]: MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132026_V2From Sneakers to Sandals it's Slip-In Season 🤩",
+    "subject": "[Test]: MKG_US_NONPURCLICK_U_SLIPIN_NONPURCH_EN_04132026_V2From Sneakers to Sandals it's Slip-In Season \ud83e\udd29",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T22:58:36+00:00",
     "score": "5.5/10",
@@ -1238,7 +1206,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-nonpur180-u-slipin-nonpurch-en-04132026from-sneakers-to-sandals-it-s",
-    "subject": "[Test]: MKG_US_NONPUR180_U_SLIPIN_NONPURCH_EN_04132026From Sneakers to Sandals it's Slip-In Season 🤩",
+    "subject": "[Test]: MKG_US_NONPUR180_U_SLIPIN_NONPURCH_EN_04132026From Sneakers to Sandals it's Slip-In Season \ud83e\udd29",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T22:34:34+00:00",
     "score": "5/10",
@@ -1334,7 +1302,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026-v4feel-good-styles-for-you-them",
-    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026_V4Feel-Good Styles for You & Them 🐾",
+    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026_V4Feel-Good Styles for You & Them \ud83d\udc3e",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T21:44:34+00:00",
     "score": "5/10",
@@ -1366,7 +1334,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026-v3feel-good-styles-for-you-them",
-    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026_V3Feel-Good Styles for You & Them 🐾",
+    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026_V3Feel-Good Styles for You & Them \ud83d\udc3e",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T21:25:34+00:00",
     "score": "5/10",
@@ -1382,7 +1350,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026-v2feel-good-styles-for-you-them",
-    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026_V2Feel-Good Styles for You & Them 🐾",
+    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026_V2Feel-Good Styles for You & Them \ud83d\udc3e",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T21:16:33+00:00",
     "score": "6.5/10",
@@ -1494,7 +1462,7 @@
   },
   {
     "slug": "2026-04-10-test-mkg-us-na-u-bobs-prod-en-04112026feel-good-styles-for-you-them",
-    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026Feel-Good Styles for You & Them 🐾",
+    "subject": "[Test]: MKG_US_NA_U_BOBS_PROD_EN_04112026Feel-Good Styles for You & Them \ud83d\udc3e",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-10T17:38:33+00:00",
     "score": "5/10",
@@ -1585,7 +1553,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -1639,7 +1607,7 @@
   },
   {
     "slug": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-a-v2the-arcades-you-know-love-in-colors",
-    "subject": "[Test]: MKG_US_NA_W_ARCH_GENDER_EN_04102026_A_V2The Arcades You Know & Love in Colors You’ll Adore",
+    "subject": "[Test]: MKG_US_NA_W_ARCH_GENDER_EN_04102026_A_V2The Arcades You Know & Love in Colors You\u2019ll Adore",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-09T22:44:33+00:00",
     "score": "5/10",
@@ -1655,7 +1623,7 @@
   },
   {
     "slug": "2026-04-09-test-mkg-us-na-w-arch-gender-en-04102026-athe-arcades-you-know-love-in-colors-yo",
-    "subject": "[Test]: MKG_US_NA_W_ARCH_GENDER_EN_04102026_AThe Arcades You Know & Love in Colors You’ll Adore",
+    "subject": "[Test]: MKG_US_NA_W_ARCH_GENDER_EN_04102026_AThe Arcades You Know & Love in Colors You\u2019ll Adore",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-09T21:01:33+00:00",
     "score": "5/10",
@@ -1740,7 +1708,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -1890,7 +1858,7 @@
   },
   {
     "slug": "2026-04-08-spring-into-comfort-like-you-ve-never-felt-before",
-    "subject": "🌱 Spring into comfort like you've never felt before!",
+    "subject": "\ud83c\udf31 Spring into comfort like you've never felt before!",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-08T16:07:41+00:00",
     "score": "5.5/10",
@@ -1938,13 +1906,13 @@
       "total_issues": 4,
       "total_warnings": 30
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
   {
     "slug": "2026-04-07-test-mkg-us-na-w-new-gender-en-04082026-spring-into-a-new-level-of-comfort",
-    "subject": "[Test]: MKG_US_NA_W_NEW_GENDER_EN_04082026🌱 Spring into a new level of comfort",
+    "subject": "[Test]: MKG_US_NA_W_NEW_GENDER_EN_04082026\ud83c\udf31 Spring into a new level of comfort",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-07T23:34:37+00:00",
     "score": "5/10",
@@ -1960,7 +1928,7 @@
   },
   {
     "slug": "2026-04-07-test-mkg-us-retpurl24-w-new-gender-en-04082026-v2-spring-into-the-comfort-you-kn",
-    "subject": "[Test]: MKG_US_RETPURL24_W_NEW_GENDER_EN_04082026_V2🌱 Spring into the comfort you know and love",
+    "subject": "[Test]: MKG_US_RETPURL24_W_NEW_GENDER_EN_04082026_V2\ud83c\udf31 Spring into the comfort you know and love",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-07T23:13:33+00:00",
     "score": "5.5/10",
@@ -1976,7 +1944,7 @@
   },
   {
     "slug": "2026-04-07-test-mkg-us-retpurl24-w-new-gender-en-04082026-spring-into-the-comfort-you-know-",
-    "subject": "[Test]: MKG_US_RETPURL24_W_NEW_GENDER_EN_04082026🌱 Spring into the comfort you know and love",
+    "subject": "[Test]: MKG_US_RETPURL24_W_NEW_GENDER_EN_04082026\ud83c\udf31 Spring into the comfort you know and love",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-07T22:57:33+00:00",
     "score": "5/10",
@@ -1992,7 +1960,7 @@
   },
   {
     "slug": "2026-04-07-test-mkg-us-ecmpurl24-w-new-gender-en-04082026-spring-into-a-new-level-of-comfor-349dcf97-9d57-4d45-a450-",
-    "subject": "[Test]: MKG_US_ECMPURL24_W_NEW_GENDER_EN_04082026🌱 Spring into a new level of comfort",
+    "subject": "[Test]: MKG_US_ECMPURL24_W_NEW_GENDER_EN_04082026\ud83c\udf31 Spring into a new level of comfort",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-07T22:36:34+00:00",
     "score": "5.5/10",
@@ -2008,7 +1976,7 @@
   },
   {
     "slug": "2026-04-07-test-mkg-us-ecmpurl24-w-new-gender-en-04082026-spring-into-a-new-level-of-comfor",
-    "subject": "[Test]: MKG_US_ECMPURL24_W_NEW_GENDER_EN_04082026🌱 Spring into a new level of comfort",
+    "subject": "[Test]: MKG_US_ECMPURL24_W_NEW_GENDER_EN_04082026\ud83c\udf31 Spring into a new level of comfort",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-07T22:35:34+00:00",
     "score": "5/10",
@@ -2024,7 +1992,7 @@
   },
   {
     "slug": "2026-04-07-test-mkg-us-nonpur180-w-new-nonpurch-en-04082026-v2-spring-into-comfort-like-you",
-    "subject": "[Test]: MKG_US_NONPUR180_W_NEW_NONPURCH_EN_04082026_V2🌱 Spring into comfort like you've never felt before!",
+    "subject": "[Test]: MKG_US_NONPUR180_W_NEW_NONPURCH_EN_04082026_V2\ud83c\udf31 Spring into comfort like you've never felt before!",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-07T22:01:39+00:00",
     "score": "5/10",
@@ -2040,7 +2008,7 @@
   },
   {
     "slug": "2026-04-07-test-mkg-us-nonpur180-w-new-nonpurch-en-04082026-spring-into-comfort-like-you-ve",
-    "subject": "[Test]: MKG_US_NONPUR180_W_NEW_NONPURCH_EN_04082026🌱 Spring into comfort like you've never felt before!",
+    "subject": "[Test]: MKG_US_NONPUR180_W_NEW_NONPURCH_EN_04082026\ud83c\udf31 Spring into comfort like you've never felt before!",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-07T21:11:36+00:00",
     "score": "5/10",
@@ -2120,7 +2088,7 @@
   },
   {
     "slug": "2026-04-07-what-s-that-comin-down-the-track",
-    "subject": "What’s that comin' down the track? 🏀",
+    "subject": "What\u2019s that comin' down the track? \ud83c\udfc0",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-04-07T15:03:09+00:00",
     "score": "6/10",
@@ -2168,7 +2136,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -2190,7 +2158,7 @@
   },
   {
     "slug": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-b-v3one-pair-of-sandals-won-t-cut-it",
-    "subject": "[Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V3One Pair of Sandals Won’t Cut It",
+    "subject": "[Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V3One Pair of Sandals Won\u2019t Cut It",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-06T22:47:33+00:00",
     "score": "6.5/10",
@@ -2206,7 +2174,7 @@
   },
   {
     "slug": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-b-v2one-pair-of-sandals-won-t-cut-it",
-    "subject": "[Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V2One Pair of Sandals Won’t Cut It",
+    "subject": "[Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_B_V2One Pair of Sandals Won\u2019t Cut It",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-06T21:58:34+00:00",
     "score": "6.5/10",
@@ -2222,7 +2190,7 @@
   },
   {
     "slug": "2026-04-06-test-mkg-us-na-u-sand-gender-en-04072026-bone-pair-of-sandals-won-t-cut-it",
-    "subject": "[Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_BOne Pair of Sandals Won’t Cut It",
+    "subject": "[Test]: MKG_US_NA_U_SAND_GENDER_EN_04072026_BOne Pair of Sandals Won\u2019t Cut It",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-06T21:39:33+00:00",
     "score": "6.5/10",
@@ -2286,7 +2254,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -2345,7 +2313,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -2426,13 +2394,13 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
   {
     "slug": "2026-04-03-test-mkg-us-nonpuropen-u-new-nonpurch-en-04062026out-with-the-old-into-spring",
-    "subject": "[Test]: MKG_US_NONPUROPEN_U_NEW_NONPURCH_EN_04062026Out with the Old & Into Spring 🌸",
+    "subject": "[Test]: MKG_US_NONPUROPEN_U_NEW_NONPURCH_EN_04062026Out with the Old & Into Spring \ud83c\udf38",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-03T21:48:33+00:00",
     "score": "5/10",
@@ -2448,7 +2416,7 @@
   },
   {
     "slug": "2026-04-03-test-mkg-us-nonpuropen-u-multi-nonpurch-en-04062026out-with-the-old-into-spring",
-    "subject": "[Test]: MKG_US_NONPUROPEN_U_MULTI_NONPURCH_EN_04062026Out with the Old & Into Spring 🌸",
+    "subject": "[Test]: MKG_US_NONPUROPEN_U_MULTI_NONPURCH_EN_04062026Out with the Old & Into Spring \ud83c\udf38",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-03T21:21:37+00:00",
     "score": "5/10",
@@ -2464,7 +2432,7 @@
   },
   {
     "slug": "2026-04-03-test-mkg-us-na-u-replen-prod-en-04062026-bout-with-the-old-into-spring",
-    "subject": "[Test]: MKG_US_NA_U_REPLEN_PROD_EN_04062026_BOut with the Old & Into Spring 🌸",
+    "subject": "[Test]: MKG_US_NA_U_REPLEN_PROD_EN_04062026_BOut with the Old & Into Spring \ud83c\udf38",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-04-03T20:28:35+00:00",
     "score": "6/10",
@@ -2613,7 +2581,7 @@
       "total_issues": 4,
       "total_warnings": 30
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -2704,7 +2672,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -2907,13 +2875,13 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
   {
     "slug": "2026-04-11-spain-fifa-world-cup-26-away-jersey",
-    "subject": "Spain FIFA World Cup 26™ Away Jersey",
+    "subject": "Spain FIFA World Cup 26\u2122 Away Jersey",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-04-01T02:06:54+00:00",
     "score": "5/10",
@@ -3174,7 +3142,7 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -3345,13 +3313,13 @@
       "total_issues": 4,
       "total_warnings": 32
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
   {
     "slug": "2026-04-01-when-art-meets-soccer-the-argentina-fifa-world-cup-26-away-jersey",
-    "subject": "When art meets soccer, the Argentina FIFA World Cup 26™ Away Jersey",
+    "subject": "When art meets soccer, the Argentina FIFA World Cup 26\u2122 Away Jersey",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-29T23:06:27+00:00",
     "score": "6/10",
@@ -3404,7 +3372,7 @@
       "total_issues": 4,
       "total_warnings": 22
     },
-    "has_image": false,
+    "has_image": true,
     "type": "site",
     "persona": "walker"
   },
@@ -3421,7 +3389,7 @@
   },
   {
     "slug": "2026-03-29-back-to-the-70s-with-handball-spezial",
-    "subject": "Back to the ’70s with Handball Spezial",
+    "subject": "Back to the \u201970s with Handball Spezial",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-28T19:04:41+00:00",
     "score": "4/10",
@@ -3795,7 +3763,7 @@
   },
   {
     "slug": "2026-03-29-the-countdown-to-fifa-world-cup-26-is-on",
-    "subject": "The countdown to FIFA World Cup 26™ is on",
+    "subject": "The countdown to FIFA World Cup 26\u2122 is on",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-25T18:07:23+00:00",
     "score": "3/10",
@@ -3827,7 +3795,7 @@
   },
   {
     "slug": "2026-03-29-last-day-to-redeem-your-voucher",
-    "subject": "⏳ Last day to redeem your voucher",
+    "subject": "\u23f3 Last day to redeem your voucher",
     "from_display_name": "adidas",
     "timestamp_iso": "2026-03-23T16:43:15+00:00",
     "score": "5/10",
@@ -3843,7 +3811,7 @@
   },
   {
     "slug": "2026-03-23-your-first-pair-just-became-2-bogo-50-off",
-    "subject": "Your First Pair Just Became 2 — BOGO 50% Off!",
+    "subject": "Your First Pair Just Became 2 \u2014 BOGO 50% Off!",
     "from_display_name": "SKECHERS",
     "timestamp_iso": "2026-03-23T15:13:13+00:00",
     "score": "5/10",
