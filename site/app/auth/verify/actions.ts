@@ -44,14 +44,6 @@ export async function completeSignIn(formData: FormData) {
       expires: verificationTokens.expires,
     });
   const row = rows.find((r) => r.identifier === identifier);
-  console.log(
-    JSON.stringify({
-      evt: "completeSignIn:tokenLookup",
-      hashedPrefix: hashed.slice(0, 6),
-      rowsDeleted: rows.length,
-      matched: !!row,
-    })
-  );
   if (!row) {
     redirect("/login?error=Verification");
   }
