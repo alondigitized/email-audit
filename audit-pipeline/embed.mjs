@@ -67,10 +67,14 @@ export function buildIndexedText(audit, personaSlug) {
     0;
   if (!hasSections && review.raw_markdown) {
     parts.push('\nReview:');
-    parts.push(String(review.raw_markdown).slice(0, 1400));
+    parts.push(String(review.raw_markdown).slice(0, 800));
   }
 
-  return parts.join('\n').slice(0, 8000);
+  // mxbai-embed-large has a 512-token context (~1800-2000 chars). Stay well
+  // below to keep a margin for the framing header. Other embedding models
+  // accept more; bump this cap if you swap to a longer-context model.
+  const MAX_CHARS = 1800;
+  return parts.join('\n').slice(0, MAX_CHARS);
 }
 
 /**
