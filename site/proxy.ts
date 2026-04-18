@@ -16,6 +16,7 @@ import { getPersonaSlugsForUser } from "@/lib/personas-db";
 
 const PUBLIC_PREFIXES = [
   "/login",
+  "/auth/verify", // two-step magic-link confirm page
   "/api/auth/", // Auth.js catch-all
   "/_next/static",
   "/_next/image",

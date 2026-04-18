@@ -67,9 +67,17 @@ export const config: NextAuthConfig = {
       // S1: 10-minute TTL (Auth.js default is 24h).
       maxAge: 10 * 60,
       async sendVerificationRequest({ identifier, url, provider }) {
+        // url is the Auth.js callback: ...//api/auth/callback/resend?token=X&...
+        // Rewrite to our two-step verify page so link scanners that prefetch
+        // URLs in emails can't burn the token before the user clicks.
+        const parsed = new URL(url);
+        const token = parsed.searchParams.get("token") ?? "";
+        const verifyUrl = new URL("/auth/verify", parsed.origin);
+        verifyUrl.searchParams.set("token", token);
+        verifyUrl.searchParams.set("email", identifier);
         await sendMagicLinkEmail({
           to: identifier,
-          url,
+          url: verifyUrl.toString(),
           expiresInMinutes: 10,
           from: provider.from ?? "onboarding@resend.dev",
           apiKey: provider.apiKey as string,
