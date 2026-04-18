@@ -247,15 +247,70 @@ async function generateReview(message, { images = [], label = 'review' } = {}) {
   }
 }
 
-function buildContentPrompt(msg, screenshotPath) {
+// Cache persona identity JSONs from site-monitor/personas/ so each email
+// review is written in that specific persona's voice. Falls back to a
+// generic reviewer prompt if the persona file can't be loaded.
+const PERSONA_CACHE = new Map();
+function loadPersona(slug) {
+  if (!slug) return null;
+  if (PERSONA_CACHE.has(slug)) return PERSONA_CACHE.get(slug);
+  try {
+    const p = path.join(
+      path.dirname(__dirname),
+      'site-monitor',
+      'personas',
+      `${slug}.json`,
+    );
+    const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+    PERSONA_CACHE.set(slug, data);
+    return data;
+  } catch {
+    PERSONA_CACHE.set(slug, null);
+    return null;
+  }
+}
+
+function buildContentPrompt(msg, screenshotPath, persona = null) {
   const from = msg.from_ || msg.from || '';
   const subject = msg.subject || '(no subject)';
   const preview = msg.preview || '';
+
+  // Persona preamble — matches site-monitor's style so the review is written
+  // from a specific person's perspective, not a generic reviewer's.
+  const personaPreamble = persona
+    ? [
+        `You are ${persona.name}, a ${persona.age}-year-old ${persona.generation} ${String(persona.gender || '').toLowerCase()}.`,
+        `${persona.style}. ${persona.shopping_habits}. ${persona.tech_comfort}.`,
+        '',
+        'You just opened this marketing email in your personal inbox. Review it from YOUR perspective — your voice, your priorities, your buying habits. Write in first person. What caught your eye? What felt irrelevant or annoying? Would you click? Would you forward it to a friend?',
+        '',
+        'The attached image is a screenshot of the email exactly as it rendered in your inbox. Base your review on what you SEE in the rendered image — not on HTML source code.',
+        '',
+      ]
+    : [
+        'You are reviewing a marketing email as it appears to the recipient.',
+        'The attached image is a screenshot of the fully rendered email exactly as it would appear in an inbox.',
+        'Base your entire review on what you SEE in the rendered image — not on HTML source code.',
+        '',
+      ];
+
+  const personaLens = persona
+    ? [
+        '',
+        'Evaluate from your persona perspective:',
+        `- Does this feel targeted at someone like you (${persona.age}, ${persona.generation}, ${String(persona.gender || '').toLowerCase()})?`,
+        Array.isArray(persona.focus_areas) && persona.focus_areas.length
+          ? `- Is ${persona.focus_areas.join(', ')} content present or missing?`
+          : null,
+        `- Is text readable without zooming? Are tap targets reasonable for you on a phone?`,
+        '- Does the offer or call-to-action match how you actually shop?',
+        '- Did the sender treat you like a known customer, or a stranger?',
+        '',
+      ].filter(Boolean)
+    : [];
+
   const parts = [
-    'You are reviewing a marketing email as it appears to the recipient.',
-    'The attached image is a screenshot of the fully rendered email exactly as it would appear in an inbox.',
-    'Base your entire review on what you SEE in the rendered image — not on HTML source code.',
-    '',
+    ...personaPreamble,
     'Use this exact review structure:',
     '1. Executive Summary',
     '2. Business Impact Score (1-10)',
@@ -284,13 +339,17 @@ function buildContentPrompt(msg, screenshotPath) {
     'Style requirements:',
     '- Medium length',
     '- Executive summary first, evidence after',
-    '- Direct and objective',
-    '- Opinionated with substance',
+    persona
+      ? '- Write in first person ("I", "me") — this is YOUR reaction'
+      : '- Direct and objective',
+    persona
+      ? '- Your voice should match your persona\'s age, generation, and shopping habits — a 34-year-old mom does not sound like a 62-year-old retiree'
+      : '- Opinionated with substance',
     '- Recommendations over root-cause theory',
     '- Cover the visible structure of the email, including what major modules are present and whether they help or dilute the experience',
     '- Only flag visual bugs you can actually see in the screenshot (broken images, overlapping text, empty fields, etc.)',
     '- Do NOT speculate about HTML issues, merge tokens, or code-level problems you cannot see',
-    '',
+    ...personaLens,
     `From: ${from}`,
     `Subject: ${subject}`,
     preview ? `Preview: ${shorten(preview, 500)}` : '',
@@ -599,9 +658,11 @@ async function processMessage(client, state, inboxId, persona, message, source =
     // Step 2: Run content + technical reviews in parallel
     let contentReview, technicalReview;
     if (rendered) {
-      // Both agents run concurrently: content reviews the screenshot, technical reviews HTML
+      // Both agents run concurrently: content reviews the screenshot, technical reviews HTML.
+      // Content review gets the persona identity so the voice matches the inbox's owner.
+      const personaIdentity = loadPersona(persona);
       [contentReview, technicalReview] = await Promise.all([
-        generateReview(buildContentPrompt(fullMessage, rendered), { images: [rendered], label: 'content-review' }),
+        generateReview(buildContentPrompt(fullMessage, rendered, personaIdentity), { images: [rendered], label: 'content-review' }),
         generateReview(buildTechnicalPrompt(fullMessage, qaContext), { label: 'technical-review' }),
       ]);
     } else {
