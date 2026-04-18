@@ -163,7 +163,7 @@ export default async function AuditPage({
 
   const heroLabel = isSiteJourney
     ? `${email.from_display_name} Site Journey`
-    : "Email Experience Review";
+    : "Email Experience Intelligence";
   const fromLabel = isSiteJourney ? "Site" : "From";
 
   return (

@@ -10,7 +10,7 @@ import { UserRow } from "./UserRow";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Admin · Experience Review",
+  title: "Admin · Experience Intelligence",
 };
 
 function fmtDate(d: Date | null): string {
