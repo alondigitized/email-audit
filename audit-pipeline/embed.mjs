@@ -2,15 +2,28 @@
 // audit_embedding table (pgvector column, 1024 dims). Used by the chat API
 // to retrieve relevant past experiences for a persona at reply time.
 //
-// Uses Voyage AI's voyage-3-large model (Anthropic's recommended retrieval
-// partner). Small, pure module — imported by vault-writer.mjs (live path)
-// and backfill-embeddings.mjs (one-shot).
+// Talks to any OpenAI-compatible embeddings endpoint via env:
+//   LLM_BASE_URL     — e.g. http://localhost:11434/v1 for Ollama
+//   LLM_API_KEY      — Ollama ignores this; set a dummy like "ollama"
+//   LLM_EMBED_MODEL  — e.g. mxbai-embed-large (1024 dims)
+//
+// Default model outputs 1024 dims to match the schema. If you swap to a
+// different-dim model, you MUST also alter audit_embedding.embedding and
+// re-run the backfill.
 
 import { neon } from '@neondatabase/serverless';
 
-const VOYAGE_URL = 'https://api.voyageai.com/v1/embeddings';
-const VOYAGE_MODEL = 'voyage-3-large';
-const VOYAGE_DIMS = 1024;
+const DEFAULT_BASE_URL = 'http://localhost:11434/v1';
+const DEFAULT_MODEL = 'mxbai-embed-large';
+const EXPECTED_DIMS = 1024;
+
+function cfg() {
+  return {
+    baseUrl: process.env.LLM_BASE_URL ?? DEFAULT_BASE_URL,
+    apiKey: process.env.LLM_API_KEY ?? 'ollama',
+    model: process.env.LLM_EMBED_MODEL ?? DEFAULT_MODEL,
+  };
+}
 
 /**
  * Assemble a compact "indexed text" from an audit.json for embedding.
@@ -47,7 +60,6 @@ export function buildIndexedText(audit, personaSlug) {
   pushBlock("What's weak", sections.whats_weak);
   pushBlock('Recommendations', sections.recommendations);
 
-  // If sections are empty (site journeys mostly), fall back to the raw review head.
   const hasSections =
     (sections.executive_summary?.length ?? 0) +
       (sections.whats_weak?.length ?? 0) +
@@ -58,64 +70,38 @@ export function buildIndexedText(audit, personaSlug) {
     parts.push(String(review.raw_markdown).slice(0, 1400));
   }
 
-  return parts.join('\n').slice(0, 8000); // hard cap to control token cost
+  return parts.join('\n').slice(0, 8000);
 }
 
 /**
- * Embed a single text via Voyage. Returns a 1024-length Float32Array.
- * Throws if VOYAGE_API_KEY isn't set or the API returns non-200.
+ * Embed text via the configured OpenAI-compatible endpoint. Returns a
+ * number[] of EXPECTED_DIMS length. Throws on protocol failure.
  */
 export async function embed(text) {
-  const apiKey = process.env.VOYAGE_API_KEY;
-  if (!apiKey) throw new Error('VOYAGE_API_KEY is not set');
-  const res = await fetch(VOYAGE_URL, {
+  const { baseUrl, apiKey, model } = cfg();
+  const res = await fetch(`${baseUrl}/embeddings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
     },
-    body: JSON.stringify({
-      input: [text],
-      model: VOYAGE_MODEL,
-      input_type: 'document',
-    }),
+    body: JSON.stringify({ model, input: text }),
   });
   if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Voyage ${res.status}: ${body.slice(0, 300)}`);
+    const body = await res.text().catch(() => '');
+    throw new Error(`embeddings ${res.status}: ${body.slice(0, 300)}`);
   }
   const data = await res.json();
   const vec = data?.data?.[0]?.embedding;
-  if (!Array.isArray(vec) || vec.length !== VOYAGE_DIMS) {
-    throw new Error(`Voyage returned unexpected shape (len=${vec?.length ?? '?'})`);
+  if (!Array.isArray(vec)) {
+    throw new Error('embeddings endpoint returned unexpected shape');
+  }
+  if (vec.length !== EXPECTED_DIMS) {
+    throw new Error(
+      `embedding dim ${vec.length} != schema ${EXPECTED_DIMS} (model ${model}). Alter audit_embedding.embedding or switch model.`,
+    );
   }
   return vec;
-}
-
-/**
- * Embed query text for retrieval (uses input_type=query). Same shape.
- */
-export async function embedQuery(text) {
-  const apiKey = process.env.VOYAGE_API_KEY;
-  if (!apiKey) throw new Error('VOYAGE_API_KEY is not set');
-  const res = await fetch(VOYAGE_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      input: [text],
-      model: VOYAGE_MODEL,
-      input_type: 'query',
-    }),
-  });
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Voyage ${res.status}: ${body.slice(0, 300)}`);
-  }
-  const data = await res.json();
-  return data.data[0].embedding;
 }
 
 /**
@@ -130,7 +116,6 @@ export async function upsertAuditEmbedding({
   const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
   if (!url) throw new Error('DATABASE_URL_UNPOOLED or DATABASE_URL required');
   const sql = neon(url);
-  // pgvector accepts the literal string `[0.1,0.2,...]`
   const literal = `[${embedding.join(',')}]`;
   await sql`
     INSERT INTO audit_embedding (audit_slug, persona, indexed_text, embedding)
@@ -144,29 +129,26 @@ export async function upsertAuditEmbedding({
 }
 
 /**
- * End-to-end: build indexed text from audit json, embed via Voyage, upsert.
- * Returns { embedded: true } on success, { embedded: false, reason } on
- * graceful skip (missing key). Throws on hard errors.
+ * End-to-end: build indexed text, embed, upsert. Returns gracefully if the
+ * endpoint isn't reachable (e.g. Ollama not running) so the pipeline keeps
+ * publishing audits even when the local model is down.
  */
 export async function embedAndStoreAudit({ audit, personaSlug }) {
-  if (!process.env.VOYAGE_API_KEY) {
-    return { embedded: false, reason: 'no_voyage_key' };
+  try {
+    const text = buildIndexedText(audit, personaSlug);
+    const vec = await embed(text);
+    await upsertAuditEmbedding({
+      auditSlug: audit.slug,
+      persona: personaSlug,
+      indexedText: text,
+      embedding: vec,
+    });
+    return { embedded: true };
+  } catch (err) {
+    return { embedded: false, reason: err instanceof Error ? err.message : String(err) };
   }
-  const text = buildIndexedText(audit, personaSlug);
-  const vec = await embed(text);
-  await upsertAuditEmbedding({
-    auditSlug: audit.slug,
-    persona: personaSlug,
-    indexedText: text,
-    embedding: vec,
-  });
-  return { embedded: true };
 }
 
-/**
- * Delete the embedding for a slug (used by verify-pipeline cleanup and
- * future audit-revocation flows).
- */
 export async function deleteAuditEmbedding(auditSlug) {
   const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
   if (!url) return;

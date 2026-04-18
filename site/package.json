@@ -15,7 +15,7 @@
     "invite": "tsx --env-file=.env.local scripts/invite.ts"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^2.0.0",
+    "@ai-sdk/openai-compatible": "^1.0.0",
     "@ai-sdk/react": "^2.0.0",
     "@auth/drizzle-adapter": "^1.7.0",
     "@neondatabase/serverless": "^0.10.0",

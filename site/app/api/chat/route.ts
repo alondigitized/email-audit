@@ -1,5 +1,4 @@
 import { streamText, convertToModelMessages, type UIMessage } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
 import { z } from "zod";
 import { requireUser } from "@/lib/dal";
 import { requireAppEnabled } from "@/lib/apps";
@@ -8,6 +7,7 @@ import {
   loadPersonaIdentity,
 } from "@/lib/chat/retrieve";
 import { buildSystemPrompt, buildTitlePrompt } from "@/lib/chat/prompt";
+import { chatModel, titleModel } from "@/lib/chat/provider";
 import {
   createThread,
   getThread,
@@ -19,9 +19,6 @@ import {
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
-
-const MODEL = "claude-sonnet-4-5-20250929";
-const TITLE_MODEL = "claude-haiku-4-5-20251001";
 
 const BodySchema = z.object({
   personaSlug: z.string().regex(/^[a-z0-9-]+$/).max(64),
@@ -110,9 +107,9 @@ export async function POST(req: Request) {
     content: query,
   });
 
-  // Stream with Anthropic via the AI SDK.
+  // Stream via the configured OpenAI-compatible provider (Ollama by default).
   const result = await streamText({
-    model: anthropic(MODEL),
+    model: chatModel(),
     system,
     messages: convertToModelMessages(messages as UIMessage[]),
     onFinish: async ({ text }) => {
@@ -128,7 +125,6 @@ export async function POST(req: Request) {
       if (existingMessages.length === 2) {
         try {
           const { text: title } = await streamTextSimple(
-            TITLE_MODEL,
             buildTitlePrompt(query)
           );
           const clean = title.trim().replace(/^["'`]+|["'`]+$/g, "").slice(0, 80);
@@ -148,12 +144,9 @@ export async function POST(req: Request) {
 
 // Thin wrapper for the background title call. streamText returns a stream;
 // we collect the full text before returning.
-async function streamTextSimple(
-  model: string,
-  prompt: string
-): Promise<{ text: string }> {
+async function streamTextSimple(prompt: string): Promise<{ text: string }> {
   const result = await streamText({
-    model: anthropic(model),
+    model: titleModel(),
     prompt,
   });
   let text = "";

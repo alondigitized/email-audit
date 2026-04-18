@@ -1,10 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
+import { embed } from "ai";
 import { neon } from "@neondatabase/serverless";
+import { embeddingModel } from "./provider";
 
-// How many audits we retrieve per turn. Tuned for Sonnet's context budget —
-// 8 × ~800 tokens = ~6.5K tokens of retrieved memory, leaving plenty of room
-// for identity card + conversation history + response.
+// How many audits we retrieve per turn. 8 × ~800 tokens = ~6.5K tokens of
+// retrieved memory, plenty of headroom for identity + conversation + reply.
 export const RETRIEVAL_K = 8;
 
 export type RetrievedAudit = {
@@ -13,29 +14,12 @@ export type RetrievedAudit = {
   score: number; // cosine distance; lower is more similar
 };
 
-const VOYAGE_URL = "https://api.voyageai.com/v1/embeddings";
-const VOYAGE_MODEL = "voyage-3-large";
-
 async function embedQuery(text: string): Promise<number[]> {
-  const key = process.env.VOYAGE_API_KEY;
-  if (!key) throw new Error("VOYAGE_API_KEY not set");
-  const res = await fetch(VOYAGE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-    },
-    body: JSON.stringify({
-      input: [text],
-      model: VOYAGE_MODEL,
-      input_type: "query",
-    }),
+  const { embedding } = await embed({
+    model: embeddingModel(),
+    value: text,
   });
-  if (!res.ok) {
-    throw new Error(`Voyage query embed failed: ${res.status}`);
-  }
-  const data = await res.json();
-  return data.data[0].embedding;
+  return embedding;
 }
 
 /**

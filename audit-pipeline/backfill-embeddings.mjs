@@ -14,20 +14,19 @@ const REPO = path.resolve(__dirname, '..');
 const CONTENT = path.join(REPO, 'site', 'content', 'audits');
 const INDEX_PATH = path.join(CONTENT, 'index.json');
 
-// Voyage free tier: 300 RPM. Stay well under to be safe.
-const DELAY_MS = 250;
+// Local Ollama has no rate limit, but spacing avoids saturating the GPU and
+// keeps the laptop usable. Set to 0 if you want to hammer it.
+const DELAY_MS = Number(process.env.EMBED_DELAY_MS ?? 50);
 
 async function main() {
-  if (!process.env.VOYAGE_API_KEY) {
-    console.error('VOYAGE_API_KEY not set; aborting.');
-    process.exit(1);
-  }
   const dbUrl = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
   if (!dbUrl) {
     console.error('DATABASE_URL_UNPOOLED or DATABASE_URL required; aborting.');
     process.exit(1);
   }
   const sql = neon(dbUrl);
+  console.log(`Using embeddings endpoint: ${process.env.LLM_BASE_URL ?? 'http://localhost:11434/v1'}`);
+  console.log(`Using model: ${process.env.LLM_EMBED_MODEL ?? 'mxbai-embed-large'}`);
 
   const existing = await sql`SELECT audit_slug, indexed_text FROM audit_embedding`;
   const existingMap = new Map(existing.map((r) => [r.audit_slug, r.indexed_text]));
