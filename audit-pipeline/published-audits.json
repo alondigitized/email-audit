@@ -1964,5 +1964,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-verify-pipeline-test-2026-04-18-06-40",
     "slug": "2026-04-18-verify-pipeline-test-2026-04-18-06-40",
     "persona": "walker"
+  },
+  {
+    "messageId": "<fafc1990-d60c-44c4-9e34-3dc82b714314@dfw1s10mta1592.xt.local>",
+    "subject": "Last Call to use your 20% Off Welcome Offer!",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-last-call-to-use-your-20-off-welcome-offer",
+    "slug": "2026-04-18-last-call-to-use-your-20-off-welcome-offer",
+    "persona": "martha"
   }
 ]
