@@ -1943,5 +1943,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-see-how-we-make-shopping-famously-easy-for-you",
     "slug": "2026-04-18-see-how-we-make-shopping-famously-easy-for-you",
     "persona": "walker"
+  },
+  {
+    "messageId": "<218ed464-7783-48aa-96c2-97577ce267dd@dfw1s10mta699.xt.local>",
+    "subject": "BOGO 50% Off Your Go-To Spring Picks",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-bogo-50-off-your-go-to-spring-picks",
+    "slug": "2026-04-18-bogo-50-off-your-go-to-spring-picks",
+    "persona": "walker"
   }
 ]
