@@ -34,18 +34,23 @@ const adapter: typeof baseAdapter = {
     if (!baseAdapter.createVerificationToken) {
       throw new Error("adapter.createVerificationToken missing");
     }
-    // Invalidate any prior pending tokens for this identifier so that only
-    // the most recent magic-link email is usable. Without this, a user
-    // who submits /login multiple times can click an older email and hit
-    // a "link already used or expired" error even though the URL looks
-    // valid — the mismatch between inbox state and DB state is the real
-    // bug. One submit = one live link.
     await db
       .delete(verificationTokens)
       .where(eq(verificationTokens.identifier, token.identifier));
+    const raw = token.token;
+    const hashed = hashToken(raw);
+    console.log(
+      JSON.stringify({
+        evt: "createVerificationToken",
+        identifier: token.identifier,
+        rawPrefix: raw.slice(0, 6),
+        hashedPrefix: hashed.slice(0, 6),
+        expires: token.expires,
+      })
+    );
     return baseAdapter.createVerificationToken({
       ...token,
-      token: hashToken(token.token),
+      token: hashed,
     });
   },
   async useVerificationToken(params) {
