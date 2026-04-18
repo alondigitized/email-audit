@@ -1908,5 +1908,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-tennis-sporting-codes-meet-parisian-style",
     "slug": "2026-04-18-tennis-sporting-codes-meet-parisian-style",
     "persona": "walker"
+  },
+  {
+    "messageId": "<B3.58.28013.F9073E96@i-05c1afefca25dc230.mta1vrest.sd.prd.sparkpost>",
+    "subject": "20% OFF ENDS (!)TOMORROW(!)",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-20-off-ends-tomorrow",
+    "slug": "2026-04-18-20-off-ends-tomorrow",
+    "persona": "walker"
   }
 ]

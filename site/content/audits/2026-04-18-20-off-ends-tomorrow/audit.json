@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-18-20-off-ends-tomorrow",
+  "type": "email",
+  "persona": "walker",
+  "email": {
+    "subject": "20% OFF ENDS (!)TOMORROW(!)",
+    "from": "DSW <dsw@e.dsw.com>",
+    "from_display_name": "DSW",
+    "timestamp_iso": "2026-04-18T11:53:03+00:00",
+    "date_formatted": "2026-04-18 11:53 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nDSW is running a limited-time 20% off promotion anchored to a coastal/summer sandal push, with a secondary sneaker discount and a sweepstakes overlay. The email leads with clear urgency and a lifestyle-driven creative direction, but the render is visually dense and the hierarchy between three competing offers (20% off, 30% off sneakers, $50 win) dilutes the urgency that the subject line promises. The \"MAKE WAVES\" concept is cohesive; the execution underneath it is cluttered.\n\n---\n\n### 2. Business Impact Score: **6 / 10**\n\nSolid promotional mechanics, weakened by offer fragmentation and a reward module that competes for attention with the primary CTA.\n\n---\n\n### 3. What's Working\n\n- **Hero clarity.** \"20% OFF*\" renders large and immediately legible at the top of the fold — the discount is unmistakable.\n- **Seasonal storytelling.** \"MAKE WAVES\" with the beach-inspired model and sandal product shots creates a coherent seasonal identity. The lifestyle image is appealing and on-brand for spring/summer.\n- **Price anchor in preview text.** \"Coastal-inspired sandals starting at $44.99\" in the preheader sets a concrete value expectation before the open — good practice.\n- **Shop By Size module.** A practical utility block that reduces friction for browsers who know their size. A genuine shortcut that other retailers neglect.\n\n---\n\n### 4. What's Weak\n\n- **Three offers, one email.** 20% off, up to 30% off sneakers, and a sweepstakes for up to $50 are stacked in rapid succession. Each one weakens the urgency of the others. The subject line says \"ENDS TOMORROW\" but the reader is now deciding between three things — that's not urgency, that's friction.\n- **The sweepstakes/reward module lands in a confusing position.** The \"WIN UP TO $50 OFF\" block sits mid-email and visually interrupts the product discovery flow. It reads like a separate campaign dropped in. The promotion mechanics aren't immediately clear from what's visible.\n- **CTAs are understated.** The green action buttons below the sandal section are present but small relative to the lifestyle creative above them. The visual weight is inverted — imagery dominates, action recedes.\n- **Subject line formatting is awkward.** The `(!)TOMORROW(!)` exclamation punctuation in the subject line looks like a broken emoji or failed markup attempt, and undercuts an otherwise strong urgency message.\n- **Render is vertically long.** The email requires significant scrolling to reach the sneakers offer and Shop By Size module. Engagement will decay before those modules are seen by most recipients.\n\n---\n\n### 5. Recommendations\n\n1. **Pick the primary offer and protect it.** If 20% off is the hero, push the sneaker deal and sweepstakes to a separate send or drop them to brief tertiary mentions. Don't let secondary offers dilute the deadline pressure.\n2. **Move the sweepstakes above the fold or cut it.** A \"WIN $50\" message buried mid-scroll gets wasted impressions. If it's worth including, it earns its own email or a top-banner placement.\n3. **Enlarge the CTAs.** The action buttons should be the widest, most visually prominent elements below the hero — not afterthoughts beneath the product imagery.\n4. **Fix the subject line punctuation.** `(!)TOMORROW(!)` appears as literal characters rather than emphasis. Use a standard `!` or an actual emoji if the template supports it.\n5. **Consider truncating the email at sneakers** and letting a second email (timed the morning of deadline day) drive the final-hours urgency. One tight email beats one crowded one.\n\n---\n\n### 6. Bottom Line\n\nThe bones are good — seasonal creative, clear discount, real urgency, and useful Shop By Size module. The email talks itself out of its own momentum by stacking three offers and burying the sweepstakes in an awkward mid-email interrupt. Strip back to the single strongest offer and this becomes a tight, effective promotional send.\n\n---\n\n### 7. Subject Line Analysis\n\n- **Subject:** `20% OFF ENDS (!)TOMORROW(!)`\n- **Length:** 25 characters\n- **Scores (1-10):** Clarity `7`, Curiosity `3`, Personalization `1`, Urgency `7`, Specificity `6`\n- **Strengths:**\n  - Discount percentage and deadline are front-loaded and immediately scannable\n  - Short length clears cleanly on mobile without truncation\n- **Weaknesses:**\n  - `(!)TOMORROW(!)` renders as literal parentheses + exclamation marks — looks like broken formatting, not emphasis\n  - Zero personalization or category signal; no reason to open beyond the generic discount\n- **Alt A:** `Your 20% off expires tomorrow — sandals from $44.99`\n- **Alt B:** `Last day: 20% off your next pair + up to 30% off sneakers`\n\n---\n\n### 8. Evidence\n\n- **Overall purpose:** Deadline-driven promotional email driving sandal and sneaker purchases with a 20% off discount expiring the next day.\n- **Hero / primary value proposition:** \"20% OFF*\" in large type above a \"MAKE WAVES\" coastal lifestyle image with a model and summer sandal/bag styling. Price anchor in the preheader (\"starting at $44.99\") reinforces the value.\n- **Membership / benefits section:** Not visible as a distinct module. No loyalty tier callout, VIP note, or DSW Rewards framing is visible in this render.\n- **Product discoverability / recommendation modules:** Sandal product shots with visible color variants are shown beneath the lifestyle hero. A secondary \"UP TO 30% OFF SNEAKERS*\" block appears further down with its own product imagery.\n- **Utility / secondary modules:** \"SHOP BY SIZE\" grid (shoe sizes as clickable tiles) and a \"WIN UP TO $50 OFF\" sweepstakes block are both present in the lower half of the email. The size module is high-utility; the sweepstakes module is hard to parse at a glance.\n- **Bugs / friction / clarity issues:**\n  - The `(!)TOMORROW(!)` in the subject renders as literal characters — appears to be an attempt at an emoji or special formatting that did not resolve correctly.\n  - The sweepstakes module's mechanics are not immediately legible at email width — the key details (how to enter, what qualifies) are not scannable without zooming.\n  - Heavy padding and vertical length on the overall layout will cause most recipients to never reach the sneakers section or Shop By Size module on mobile without deliberate scrolling.\n\n---\n\n## Technical Audit\n\n## Technical Audit — DSW \"20% OFF ENDS TOMORROW\" Email\n\n---\n\n### 1. Technical Summary\n\nEmail is sent via Braze, uses XHTML 1.0 Transitional with table-based layout and custom web fonts hosted on `braze-images.com`. HTML source is truncated, so link/compliance sections reflect only what is visible; a full-source scan is required to close open items.\n\n---\n\n### 2. Link & Tracking Issues\n\n**Cannot fully assess — source truncated before anchor tags appear.** Findings are deferred pending full HTML.\n\n**Flagged from visible source:**\n- No click-tracking wrapper URLs visible in the font asset references, which is expected — but the pattern of Braze-hosted assets confirms Braze Click Tracking should be applied to CTA links. Verify in full source.\n\n---\n\n### 3. Rendering & Accessibility\n\n**Malformed meta tags (two instances):**\n\n```html\n<!-- Missing http-equiv attribute -->\n<meta content=\"text/html; charset=utf-8\" />\n<meta content=\"IE=Edge\" />\n```\n\nBoth should be:\n```html\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\n```\nWithout `http-equiv`, these directives are ignored by some parsers. The charset declaration in particular may cause encoding fallback behavior in older Outlook versions.\n\n**Invalid CSS property casing in all `@font-face` blocks:**\n\n```css\nSrc: url(\"https://braze-images.com/...\") format('woff');\n```\n\nCSS property names are case-sensitive per spec. `Src:` should be `src:`. Most modern parsers are forgiving, but this will silently fail in strict environments and is a lint error.\n\n**Font format coverage gaps:**\n- Futura PT: only `.woff` declared — no `woff2` fallback. WOFF2 compresses ~30% smaller.\n- HelveticaNow: only `.ttf` declared — no `woff` or `woff2`. TTF is the largest format; web clients that support web fonts also support WOFF2.\n\n**Intentional near-black workaround confirmed (not a bug):**\n- `.dm-font-black { color: #000001 }` and `border-top: 1px #000001 solid` — standard hack to prevent Apple Mail auto-linking pure `#000000` text. This is correct technique.\n\n**Dark mode implementation:** Properly uses both `color-scheme` meta and `@media (prefers-color-scheme: dark)`. No issues with the approach.\n\n**`<title>` tag:** Set to `\"DSW\"` — acceptable, but some clients (Gmail web) display this in tab/preview UI. Low priority.\n\n---\n\n### 4. Personalization & Merge Tokens\n\n**Subject line anomaly:**\n\n```\nSubject: 20% OFF ENDS (!)TOMORROW(!)\n```\n\n`(!)` is not standard Braze Liquid syntax (`{{ }}` or `{%- -%}`). This either:\n- Is a raw template tag from a non-Braze layer that failed to render, or\n- Was entered as literal characters in the subject field (intentional stylization)\n\nIf intentional, it is unusual and may trigger spam scoring rules due to special character density. If it's an unrendered token, this is a **production defect** — the raw syntax is being delivered to recipients. **Verify against the Braze campaign subject field.**\n\nNo other merge tokens visible in the truncated source. Full assessment requires complete HTML.\n\n---\n\n### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)\n\n**Cannot confirm from truncated source:**\n- Physical mailing address (CAN-SPAM §5(a)(5)) — not visible in provided excerpt\n- Unsubscribe link (CAN-SPAM §5(a)(3)) — not visible in provided excerpt\n- `List-Unsubscribe` header — requires raw email headers, not provided\n\n**Authentication:** Sending domain is `e.dsw.com` (Braze subdomain). SPF/DKIM/DMARC alignment should be verified against DSW's DNS records for `e.dsw.com`. Common Braze deployment; typically correctly configured but should be confirmed via `dig TXT e.dsw.com` or a mail-tester run.\n\n**Action required:** Provide full HTML source and raw email headers to close compliance items.\n\n---\n\n### 6. Email-to-Site Continuity (UTM Params, Landing Page Alignment)\n\n**Cannot assess — no anchor tags visible in truncated source.**\n\nStandard check to run on full source:\n- All CTAs should carry `utm_source=email&utm_medium=email&utm_campaign=<campaign_id>&utm_content=<block_id>`\n- Verify Braze click-tracking wrapper is applied (links should resolve through `click.e.dsw.com` or equivalent)\n- Confirm landing page discount state matches \"20% OFF\" claim and that the promo code/session is active at send time\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Action |\n|---|---|---|\n| **High** | `(!)TOMORROW(!)` in subject — possible unrendered token | Verify Braze subject field; confirm intentional or fix before next send |\n| **Medium** | `<meta content=\"...\">` missing `http-equiv` (×2) | Add `http-equiv` attribute to both meta tags |\n| **Medium** | `Src:` capitalization in all `@font-face` blocks | Lowercase to `src:` across all 10 font declarations |\n| **Low** | Font format gaps (WOFF2 missing for all faces, TTF-only for HelveticaNow) | Add `woff2` format variants to improve load performance in supported clients |\n| **Deferred** | Compliance items (physical address, unsubscribe, DMARC) | Re-audit with full HTML source and raw headers |\n| **Deferred** | UTM parameter and click-tracking coverage | Re-audit with full HTML source |",
+    "sections": {
+      "executive_summary": [
+        "DSW is running a limited-time 20% off promotion anchored to a coastal/summer sandal push, with a secondary sneaker discount and a sweepstakes overlay. The email leads with clear urgency and a lifestyle-driven creative direction, but the render is visually dense and the hierarchy between three competing offers (20% off, 30% off sneakers, $50 win) dilutes the urgency that the subject line promises. The \"MAKE WAVES\" concept is cohesive; the execution underneath it is cluttered.",
+        "Solid promotional mechanics, weakened by offer fragmentation and a reward module that competes for attention with the primary CTA."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **Hero clarity.** \"20% OFF*\" renders large and immediately legible at the top of the fold — the discount is unmistakable.",
+        "- **Seasonal storytelling.** \"MAKE WAVES\" with the beach-inspired model and sandal product shots creates a coherent seasonal identity. The lifestyle image is appealing and on-brand for spring/summer.",
+        "- **Price anchor in preview text.** \"Coastal-inspired sandals starting at $44.99\" in the preheader sets a concrete value expectation before the open — good practice.",
+        "- **Shop By Size module.** A practical utility block that reduces friction for browsers who know their size. A genuine shortcut that other retailers neglect."
+      ],
+      "whats_weak": [
+        "- **Three offers, one email.** 20% off, up to 30% off sneakers, and a sweepstakes for up to $50 are stacked in rapid succession. Each one weakens the urgency of the others. The subject line says \"ENDS TOMORROW\" but the reader is now deciding between three things — that's not urgency, that's friction.",
+        "- **The sweepstakes/reward module lands in a confusing position.** The \"WIN UP TO $50 OFF\" block sits mid-email and visually interrupts the product discovery flow. It reads like a separate campaign dropped in. The promotion mechanics aren't immediately clear from what's visible.",
+        "- **CTAs are understated.** The green action buttons below the sandal section are present but small relative to the lifestyle creative above them. The visual weight is inverted — imagery dominates, action recedes.",
+        "- **Subject line formatting is awkward.** The `(!)TOMORROW(!)` exclamation punctuation in the subject line looks like a broken emoji or failed markup attempt, and undercuts an otherwise strong urgency message.",
+        "- **Render is vertically long.** The email requires significant scrolling to reach the sneakers offer and Shop By Size module. Engagement will decay before those modules are seen by most recipients."
+      ],
+      "recommendations": [
+        "1. **Pick the primary offer and protect it.** If 20% off is the hero, push the sneaker deal and sweepstakes to a separate send or drop them to brief tertiary mentions. Don't let secondary offers dilute the deadline pressure.",
+        "2. **Move the sweepstakes above the fold or cut it.** A \"WIN $50\" message buried mid-scroll gets wasted impressions. If it's worth including, it earns its own email or a top-banner placement.",
+        "3. **Enlarge the CTAs.** The action buttons should be the widest, most visually prominent elements below the hero — not afterthoughts beneath the product imagery.",
+        "4. **Fix the subject line punctuation.** `(!)TOMORROW(!)` appears as literal characters rather than emphasis. Use a standard `!` or an actual emoji if the template supports it.",
+        "5. **Consider truncating the email at sneakers** and letting a second email (timed the morning of deadline day) drive the final-hours urgency. One tight email beats one crowded one.",
+        "| Priority | Issue | Action |",
+        "|---|---|---|",
+        "| **High** | `(!)TOMORROW(!)` in subject — possible unrendered token | Verify Braze subject field; confirm intentional or fix before next send |",
+        "| **Medium** | `<meta content=\"...\">` missing `http-equiv` (×2) | Add `http-equiv` attribute to both meta tags |",
+        "| **Medium** | `Src:` capitalization in all `@font-face` blocks | Lowercase to `src:` across all 10 font declarations |",
+        "| **Low** | Font format gaps (WOFF2 missing for all faces, TTF-only for HelveticaNow) | Add `woff2` format variants to improve load performance in supported clients |",
+        "| **Deferred** | Compliance items (physical address, unsubscribe, DMARC) | Re-audit with full HTML source and raw headers |",
+        "| **Deferred** | UTM parameter and click-tracking coverage | Re-audit with full HTML source |"
+      ],
+      "bottom_line": [
+        "The bones are good — seasonal creative, clear discount, real urgency, and useful Shop By Size module. The email talks itself out of its own momentum by stacking three offers and burying the sweepstakes in an awkward mid-email interrupt. Strip back to the single strongest offer and this becomes a tight, effective promotional send."
+      ],
+      "subject_line": [
+        "- **Subject:** `20% OFF ENDS (!)TOMORROW(!)`",
+        "- **Length:** 25 characters",
+        "- **Scores (1-10):** Clarity `7`, Curiosity `3`, Personalization `1`, Urgency `7`, Specificity `6`",
+        "- **Strengths:**",
+        "- Discount percentage and deadline are front-loaded and immediately scannable",
+        "- Short length clears cleanly on mobile without truncation",
+        "- **Weaknesses:**",
+        "- `(!)TOMORROW(!)` renders as literal parentheses + exclamation marks — looks like broken formatting, not emphasis",
+        "- Zero personalization or category signal; no reason to open beyond the generic discount",
+        "- **Alt A:** `Your 20% off expires tomorrow — sandals from $44.99`",
+        "- **Alt B:** `Last day: 20% off your next pair + up to 30% off sneakers`"
+      ],
+      "evidence": [
+        "- **Overall purpose:** Deadline-driven promotional email driving sandal and sneaker purchases with a 20% off discount expiring the next day.",
+        "- **Hero / primary value proposition:** \"20% OFF*\" in large type above a \"MAKE WAVES\" coastal lifestyle image with a model and summer sandal/bag styling. Price anchor in the preheader (\"starting at $44.99\") reinforces the value.",
+        "- **Membership / benefits section:** Not visible as a distinct module. No loyalty tier callout, VIP note, or DSW Rewards framing is visible in this render.",
+        "- **Product discoverability / recommendation modules:** Sandal product shots with visible color variants are shown beneath the lifestyle hero. A secondary \"UP TO 30% OFF SNEAKERS*\" block appears further down with its own product imagery.",
+        "- **Utility / secondary modules:** \"SHOP BY SIZE\" grid (shoe sizes as clickable tiles) and a \"WIN UP TO $50 OFF\" sweepstakes block are both present in the lower half of the email. The size module is high-utility; the sweepstakes module is hard to parse at a glance.",
+        "- **Bugs / friction / clarity issues:**",
+        "- The `(!)TOMORROW(!)` in the subject renders as literal characters — appears to be an attempt at an emoji or special formatting that did not resolve correctly.",
+        "- The sweepstakes module's mechanics are not immediately legible at email width — the key details (how to enter, what qualifies) are not scannable without zooming.",
+        "- Heavy padding and vertical length on the overall layout will cause most recipients to never reach the sneakers section or Shop By Size module on mobile without deliberate scrolling.",
+        "Email is sent via Braze, uses XHTML 1.0 Transitional with table-based layout and custom web fonts hosted on `braze-images.com`. HTML source is truncated, so link/compliance sections reflect only what is visible; a full-source scan is required to close open items.",
+        "**Cannot fully assess — source truncated before anchor tags appear.** Findings are deferred pending full HTML.",
+        "**Flagged from visible source:**",
+        "- No click-tracking wrapper URLs visible in the font asset references, which is expected — but the pattern of Braze-hosted assets confirms Braze Click Tracking should be applied to CTA links. Verify in full source.",
+        "**Malformed meta tags (two instances):**",
+        "```html",
+        "<!-- Missing http-equiv attribute -->",
+        "<meta content=\"text/html; charset=utf-8\" />",
+        "<meta content=\"IE=Edge\" />",
+        "```",
+        "Both should be:",
+        "```html",
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />",
+        "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />",
+        "```",
+        "Without `http-equiv`, these directives are ignored by some parsers. The charset declaration in particular may cause encoding fallback behavior in older Outlook versions.",
+        "**Invalid CSS property casing in all `@font-face` blocks:**",
+        "```css",
+        "Src: url(\"https://braze-images.com/...\") format('woff');",
+        "```",
+        "CSS property names are case-sensitive per spec. `Src:` should be `src:`. Most modern parsers are forgiving, but this will silently fail in strict environments and is a lint error.",
+        "**Font format coverage gaps:**",
+        "- Futura PT: only `.woff` declared — no `woff2` fallback. WOFF2 compresses ~30% smaller.",
+        "- HelveticaNow: only `.ttf` declared — no `woff` or `woff2`. TTF is the largest format; web clients that support web fonts also support WOFF2.",
+        "**Intentional near-black workaround confirmed (not a bug):**",
+        "- `.dm-font-black { color: #000001 }` and `border-top: 1px #000001 solid` — standard hack to prevent Apple Mail auto-linking pure `#000000` text. This is correct technique.",
+        "**Dark mode implementation:** Properly uses both `color-scheme` meta and `@media (prefers-color-scheme: dark)`. No issues with the approach.",
+        "**`<title>` tag:** Set to `\"DSW\"` — acceptable, but some clients (Gmail web) display this in tab/preview UI. Low priority.",
+        "**Subject line anomaly:**",
+        "```",
+        "Subject: 20% OFF ENDS (!)TOMORROW(!)",
+        "```",
+        "`(!)` is not standard Braze Liquid syntax (`{{ }}` or `{%- -%}`). This either:",
+        "- Is a raw template tag from a non-Braze layer that failed to render, or",
+        "- Was entered as literal characters in the subject field (intentional stylization)",
+        "If intentional, it is unusual and may trigger spam scoring rules due to special character density. If it's an unrendered token, this is a **production defect** — the raw syntax is being delivered to recipients. **Verify against the Braze campaign subject field.**",
+        "No other merge tokens visible in the truncated source. Full assessment requires complete HTML.",
+        "**Cannot confirm from truncated source:**",
+        "- Physical mailing address (CAN-SPAM §5(a)(5)) — not visible in provided excerpt",
+        "- Unsubscribe link (CAN-SPAM §5(a)(3)) — not visible in provided excerpt",
+        "- `List-Unsubscribe` header — requires raw email headers, not provided",
+        "**Authentication:** Sending domain is `e.dsw.com` (Braze subdomain). SPF/DKIM/DMARC alignment should be verified against DSW's DNS records for `e.dsw.com`. Common Braze deployment; typically correctly configured but should be confirmed via `dig TXT e.dsw.com` or a mail-tester run.",
+        "**Action required:** Provide full HTML source and raw email headers to close compliance items.",
+        "**Cannot assess — no anchor tags visible in truncated source.**",
+        "Standard check to run on full source:",
+        "- All CTAs should carry `utm_source=email&utm_medium=email&utm_campaign=<campaign_id>&utm_content=<block_id>`",
+        "- Verify Braze click-tracking wrapper is applied (links should resolve through `click.e.dsw.com` or equivalent)",
+        "- Confirm landing page discount state matches \"20% OFF\" claim and that the promo code/session is active at send time"
+      ]
+    }
+  },
+  "qa": null,
+  "assets": {
+    "render_image": "2026-04-18-20-off-ends-tomorrow-email-webview-render.png",
+    "pdf": null,
+    "webview_url": null
+  }
+}
