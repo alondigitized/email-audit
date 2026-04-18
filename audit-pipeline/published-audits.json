@@ -1915,5 +1915,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-20-off-ends-tomorrow",
     "slug": "2026-04-18-20-off-ends-tomorrow",
     "persona": "walker"
+  },
+  {
+    "messageId": "2026-04-18-site-journey-walker",
+    "subject": "Daily Journey: Walker Miles on www.skechers.com",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/site-artifacts/2026-04-18-site-journey-walker",
+    "pdfPath": "",
+    "slug": "2026-04-18-site-journey-walker"
   }
 ]
