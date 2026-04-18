@@ -1,4 +1,5 @@
 import { requireAdmin } from "@/lib/dal";
+import { getAppFlags } from "@/lib/apps";
 import {
   getAdoptionSummary,
   getAdminUserRows,
@@ -6,6 +7,7 @@ import {
 } from "./queries";
 import { InviteForm } from "./InviteForm";
 import { UserRow } from "./UserRow";
+import { AppsSection } from "./AppsSection";
 
 export const dynamic = "force-dynamic";
 
@@ -24,11 +26,20 @@ function fmtDate(d: Date | null): string {
 
 export default async function AdminPage() {
   await requireAdmin();
-  const [summary, rows, personaSlugs] = await Promise.all([
+  const [summary, rows, personaSlugs, flags] = await Promise.all([
     getAdoptionSummary(),
     getAdminUserRows(),
     getAllPersonaSlugs(),
+    getAppFlags(),
   ]);
+  const flagViews = flags.map((f) => ({
+    key: f.key,
+    name: f.def.name,
+    description: f.def.description,
+    enabled: f.enabled,
+    updatedAt: f.updatedAt ? fmtDate(f.updatedAt) : "—",
+    updatedByEmail: f.updatedByEmail,
+  }));
 
   const verifiedPct =
     summary.totalInvited > 0
@@ -83,6 +94,11 @@ export default async function AdminPage() {
       <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm mb-6">
         <h2 className="text-base font-semibold mb-3">Invite a user</h2>
         <InviteForm personaSlugs={personaSlugs} />
+      </div>
+
+      {/* Apps */}
+      <div className="mb-6">
+        <AppsSection flags={flagViews} />
       </div>
 
       {/* Users */}

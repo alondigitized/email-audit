@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "slug": "2026-04-18-last-call-to-use-your-20-off-welcome-offer",
+  "type": "email",
+  "persona": "martha",
+  "email": {
+    "subject": "Last Call to use your 20% Off Welcome Offer!",
+    "from": "SKECHERS <no-reply@emails.skechers.com>",
+    "from_display_name": "SKECHERS",
+    "timestamp_iso": "2026-04-18T19:07:10+00:00",
+    "date_formatted": "2026-04-18 19:07 UTC"
+  },
+  "review": {
+    "score": "6/10",
+    "raw_markdown": "\n### 1. Executive Summary\n\nThis is a clean, functional welcome-series email that leads hard with a 20% off code and a visible CTA — which honestly, as someone who nearly forgot I even signed up, got my attention. But once I scroll past that hero, it loses me fast. Every product image is adult athletic wear, there's zero kids' content despite me shopping for two little ones, and the whole thing feels like it was blasted to a hundred thousand people with no idea who I am. The offer is good. The targeting is lazy.\n\n---\n\n### 2. Business Impact Score: **6/10**\n\nThe discount alone will drive some clicks, but it's leaving money on the table by ignoring the family/kids angle and doing zero personalization.\n\n---\n\n### 3. What's Working\n\n- **The hero is doing its job.** \"Last Call! 20% OFF\" in big bold text with the actual code (`WEL20-ZLS2L7QDPW`) right there and a clear SHOP NOW button — no hunting for the deal. On mobile this scans instantly.\n- **Buy Now, Pay Later options.** Afterpay and Klarna in the footer? Yes. As a mom watching her budget, that matters. I noticed it.\n- **Skechers Plus pitch is tidy.** The three-icon membership block (member-only offers, free shipping + 90-day returns, birthday surprises) is visually digestible and speaks directly to how I shop — I'm a rewards program person.\n- **No broken elements.** Everything renders cleanly. Images load, text is legible, no obvious display bugs.\n\n---\n\n### 4. What's Weak\n\n- **Zero kids' content in the product grid.** I literally shop KIDS more than any other category and the six product thumbnails are all adult slip-ons and walking shoes. The nav says KIDS — prove it. Show me something.\n- **Product thumbnails are tiny.** Six shoes crammed into two rows — on a phone screen I genuinely cannot tell what I'm looking at without squinting. These need to breathe.\n- **\"Welcome Offer\" is impersonal.** They know my name (I signed up with my email), but they opened with a generic greeting and a generic code. A 34-year-old millennial who's been conditioned by Amazon and Target knows what good personalization feels like. This isn't it.\n- **The lifestyle section (\"Best Sellers / New Arrivals\") shows adults running and walking.** Cool for them, irrelevant for me. Not one image of a kid, a family, or anything that signals Skechers knows I'm shopping for more than myself.\n- **Fine print is dense and tiny.** Asterisks everywhere on the 20% offer but the explanation is buried at the very bottom in micro-text. What's excluded? I shouldn't have to reach for my reading glasses to find out.\n\n---\n\n### 5. Recommendations\n\n1. **Add a kids' product row.** Even a single \"Shop Kids' Styles\" banner with one or two cute kid shoes would make this feel relevant to me. Bundle it — \"Grab one for you, one for the kids.\"\n2. **Lead with my name or a personal hook.** \"Martha, your 20% is about to expire\" hits differently than \"Last Call.\"\n3. **Simplify the product grid.** Four larger tiles instead of six tiny ones. Let me see what the shoe actually looks like.\n4. **Make the exclusions scannable.** One bolded line near the CTA: \"Excludes X, Y, Z.\" I'll trust you more, not less.\n5. **Promote the Plus membership higher.** Free shipping + 90-day returns is genuinely compelling for a repeat buyer — put it closer to the hero, not buried below the fold.\n\n---\n\n### 6. Bottom Line\n\nI'd probably click the SHOP NOW button because 20% off is legitimately good and I've been meaning to grab myself a pair of slip-ons for daycare pickup. But I wouldn't forward this to anyone, I wouldn't screenshot it, and I wouldn't remember it tomorrow. It got the functional job done. It missed the relational one.\n\n---\n\n### 7. Subject Line Analysis\n\n- **Subject:** `Last Call to use your 20% Off Welcome Offer!`\n- **Length:** 43 characters\n- **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `2`, Urgency `7`, Specificity `7`\n- **Strengths:**\n  - Clear offer value (20%) and scarcity signal (\"Last Call\") in one line\n  - Short enough to render fully on mobile without truncation\n- **Weaknesses:**\n  - Zero personalization — \"Welcome Offer\" is the most generic framing possible\n  - No curiosity gap; tells me exactly what it is with no reason to want more\n- **Alt A:** `Martha, your 20% expires soon — don't leave it`\n- **Alt B:** `Last chance: 20% off everything (including kids' styles)`\n\n---\n\n### 8. Evidence\n\n- **Overall purpose:** Welcome series email with a time-limited 20% off first-purchase code to drive conversion from email signup to first order.\n- **Hero / primary value proposition:** Large \"Last Call! 20% OFF YOUR FIRST PURCHASE*\" block with promo code and a \"SHOP NOW\" button. Visually dominant and clear.\n- **Membership / benefits section:** Skechers Plus block below the product grid with three iconographic benefits (member deals, free shipping/90-day returns, birthday surprises) and a \"JOIN NOW\" CTA. Well-designed but positioned too far down.\n- **Product discoverability / recommendation modules:** Two rows of ~6 small product thumbnails (adult slip-ons and sneakers) with product names beneath. \"Best Sellers\" and \"New Arrivals\" labeled with lifestyle photos of adults. No kids' products anywhere in the visual flow despite KIDS appearing in the category nav.\n- **Utility / secondary modules:** Text opt-in (SKECHERS to 83928), app download badges, curbside pickup, AfterPay/Klarna callout, Find a Store, and social icons. Functional but the lower third gets cluttered.\n- **Bugs / friction / clarity issues:** No visible render bugs. Fine print is very small and dense — the offer exclusions are functionally unreadable at standard mobile zoom.\n\n---\n\n## Technical Audit\n\n## Technical Audit — Skechers \"Last Call: 20% Off Welcome Offer\"\n\n**From:** no-reply@emails.skechers.com | **Date:** 2026-04-18\n\n---\n\n### 1. Technical Summary\n\nThe email has one broken-experience bug (doubled-domain URL) and a systemic HTTP image-serving problem affecting ~13 assets. Deliverability authentication could not be verified through the relay.\n\n---\n\n### 2. Link & Tracking Issues\n\n**[FAIL] Doubled-domain merge error**\n- URL: `http://www.skechers.com/www.Skechers.com`\n- A template merge variable resolved into the base URL instead of a path, producing a broken destination. Any CTA pointing here will 404.\n- **Action required:** Identify the source template block and correct the merge tag (likely `%%=RedirectTo(CloudPagesURL(...))=%%` or equivalent SFMC syntax).\n\n**25 tracking links skipped** — click-redirect domains (`click.emails.skechers.com`) not probed; assumed functional but unverified in this pass.\n\n---\n\n### 3. Rendering & Accessibility\n\n**HTTP image sources (13 assets)** — the following asset base path is served over HTTP, not HTTPS:\n```\nhttp://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/\n```\nAffected images include the Skechers logo, app store badges, AfterPay logo, social icons, and several content images. iOS Mail and Chrome-based clients with mixed-content blocking will silently suppress these images.\n\n**Missing `alt` text on 4 images:**\n- `bcc16007...jpg` — likely a hero/product image; missing alt leaves screen readers with no context\n- `49468f73...png`, `00100b23...png`, `fc08601a...png` — footer/content images, also missing alt\n\n**HTTP tracking pixel:**\n```\nhttp://www.ink1000.com/p/up/7076d8b15a776085/o.gif\n```\nMixed-content; will be blocked in secure mail clients. This breaks open-rate measurement for a segment of recipients.\n\n**Open-pixel missing alt:** `o.gif` has no `alt=\"\"` — should be explicitly empty for accessibility compliance.\n\n**`<meta http-equiv>` malformed:** `<meta content=\"text/html; charset=utf-8\" />` is missing the required `http-equiv=\"Content-Type\"` attribute. Most clients tolerate this but it is invalid XHTML 1.0 Transitional per the declared doctype.\n\n---\n\n### 4. Personalization & Merge Tokens\n\nNo unrendered merge tokens (e.g. `%%FIRST_NAME%%`, `{{{token}}}`) visible in the truncated source. The doubled-domain URL (section 2) is consistent with a merge variable that resolved to a full URL string instead of a relative path — the root cause is a personalization/template error, not a hardcoded typo.\n\n---\n\n### 5. Compliance\n\n**CAN-SPAM:** Physical address and unsubscribe mechanism not visible in the truncated source — assumed present in footer (standard Skechers template); cannot confirm from available HTML.\n\n**Authentication:**\n- `Authentication-Results` header not found via AgentMail relay — SPF/DKIM pass/fail status unknown for this capture.\n- Sending domain is `emails.skechers.com`; DMARC alignment requires SPF or DKIM to align to this subdomain or `skechers.com`. Cannot confirm without header data.\n- **Recommended:** Re-capture with full headers or verify via MX Toolbox against `emails.skechers.com`.\n\n**Krux/Salesforce DMP pixel:**\n```\nhttps://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_100007688_sha25&partner_uid=adf27fee...\n```\nThe `partner_uid` value appears to be a SHA-256 hashed email. Under GDPR/CCPA this constitutes cross-site identity syncing — confirm consent basis is captured before send to EU/CA recipients.\n\n---\n\n### 6. Email-to-Site Continuity\n\nNo UTM parameters observed on CTA links in the visible HTML. Links route through `click.emails.skechers.com` (click-redirect), which may append UTMs server-side — unverifiable without resolving the redirect chain. If UTMs are not appended at redirect resolution, campaign attribution in GA4/Adobe will be lost and traffic will appear as direct.\n\nThe broken-domain URL (section 2) represents a complete continuity failure for whichever CTA it backs.\n\n---\n\n### 7. Recommendations\n\n| Priority | Issue | Fix |\n|---|---|---|\n| P0 | Doubled-domain URL `skechers.com/www.Skechers.com` | Fix merge tag in SFMC template before next send |\n| P1 | 13 images served over HTTP | Update CDN/image library base URL to `https://image.emails.skechers.com` |\n| P1 | Open-tracking pixel over HTTP (`ink1000.com`) | Migrate to HTTPS endpoint or switch to ESP-native open tracking |\n| P2 | 4 images missing `alt` text | Add descriptive alt to product/hero images; `alt=\"\"` on decorative ones |\n| P2 | SPF/DKIM unverified | Capture raw headers on next seed send and confirm DMARC alignment |\n| P3 | UTM attribution unconfirmed | Resolve one click-redirect URL and verify UTM params are appended |\n| P3 | Krux identity sync pixel | Confirm GDPR/CCPA consent scope covers cross-site DMP sync |",
+    "sections": {
+      "executive_summary": [
+        "This is a clean, functional welcome-series email that leads hard with a 20% off code and a visible CTA — which honestly, as someone who nearly forgot I even signed up, got my attention. But once I scroll past that hero, it loses me fast. Every product image is adult athletic wear, there's zero kids' content despite me shopping for two little ones, and the whole thing feels like it was blasted to a hundred thousand people with no idea who I am. The offer is good. The targeting is lazy.",
+        "The discount alone will drive some clicks, but it's leaving money on the table by ignoring the family/kids angle and doing zero personalization."
+      ],
+      "business_impact_score": [],
+      "whats_working": [
+        "- **The hero is doing its job.** \"Last Call! 20% OFF\" in big bold text with the actual code (`WEL20-ZLS2L7QDPW`) right there and a clear SHOP NOW button — no hunting for the deal. On mobile this scans instantly.",
+        "- **Buy Now, Pay Later options.** Afterpay and Klarna in the footer? Yes. As a mom watching her budget, that matters. I noticed it.",
+        "- **Skechers Plus pitch is tidy.** The three-icon membership block (member-only offers, free shipping + 90-day returns, birthday surprises) is visually digestible and speaks directly to how I shop — I'm a rewards program person.",
+        "- **No broken elements.** Everything renders cleanly. Images load, text is legible, no obvious display bugs."
+      ],
+      "whats_weak": [
+        "- **Zero kids' content in the product grid.** I literally shop KIDS more than any other category and the six product thumbnails are all adult slip-ons and walking shoes. The nav says KIDS — prove it. Show me something.",
+        "- **Product thumbnails are tiny.** Six shoes crammed into two rows — on a phone screen I genuinely cannot tell what I'm looking at without squinting. These need to breathe.",
+        "- **\"Welcome Offer\" is impersonal.** They know my name (I signed up with my email), but they opened with a generic greeting and a generic code. A 34-year-old millennial who's been conditioned by Amazon and Target knows what good personalization feels like. This isn't it.",
+        "- **The lifestyle section (\"Best Sellers / New Arrivals\") shows adults running and walking.** Cool for them, irrelevant for me. Not one image of a kid, a family, or anything that signals Skechers knows I'm shopping for more than myself.",
+        "- **Fine print is dense and tiny.** Asterisks everywhere on the 20% offer but the explanation is buried at the very bottom in micro-text. What's excluded? I shouldn't have to reach for my reading glasses to find out."
+      ],
+      "recommendations": [
+        "1. **Add a kids' product row.** Even a single \"Shop Kids' Styles\" banner with one or two cute kid shoes would make this feel relevant to me. Bundle it — \"Grab one for you, one for the kids.\"",
+        "2. **Lead with my name or a personal hook.** \"Martha, your 20% is about to expire\" hits differently than \"Last Call.\"",
+        "3. **Simplify the product grid.** Four larger tiles instead of six tiny ones. Let me see what the shoe actually looks like.",
+        "4. **Make the exclusions scannable.** One bolded line near the CTA: \"Excludes X, Y, Z.\" I'll trust you more, not less.",
+        "5. **Promote the Plus membership higher.** Free shipping + 90-day returns is genuinely compelling for a repeat buyer — put it closer to the hero, not buried below the fold.",
+        "| Priority | Issue | Fix |",
+        "|---|---|---|",
+        "| P0 | Doubled-domain URL `skechers.com/www.Skechers.com` | Fix merge tag in SFMC template before next send |",
+        "| P1 | 13 images served over HTTP | Update CDN/image library base URL to `https://image.emails.skechers.com` |",
+        "| P1 | Open-tracking pixel over HTTP (`ink1000.com`) | Migrate to HTTPS endpoint or switch to ESP-native open tracking |",
+        "| P2 | 4 images missing `alt` text | Add descriptive alt to product/hero images; `alt=\"\"` on decorative ones |",
+        "| P2 | SPF/DKIM unverified | Capture raw headers on next seed send and confirm DMARC alignment |",
+        "| P3 | UTM attribution unconfirmed | Resolve one click-redirect URL and verify UTM params are appended |",
+        "| P3 | Krux identity sync pixel | Confirm GDPR/CCPA consent scope covers cross-site DMP sync |"
+      ],
+      "bottom_line": [
+        "I'd probably click the SHOP NOW button because 20% off is legitimately good and I've been meaning to grab myself a pair of slip-ons for daycare pickup. But I wouldn't forward this to anyone, I wouldn't screenshot it, and I wouldn't remember it tomorrow. It got the functional job done. It missed the relational one."
+      ],
+      "subject_line": [
+        "- **Subject:** `Last Call to use your 20% Off Welcome Offer!`",
+        "- **Length:** 43 characters",
+        "- **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `2`, Urgency `7`, Specificity `7`",
+        "- **Strengths:**",
+        "- Clear offer value (20%) and scarcity signal (\"Last Call\") in one line",
+        "- Short enough to render fully on mobile without truncation",
+        "- **Weaknesses:**",
+        "- Zero personalization — \"Welcome Offer\" is the most generic framing possible",
+        "- No curiosity gap; tells me exactly what it is with no reason to want more",
+        "- **Alt A:** `Martha, your 20% expires soon — don't leave it`",
+        "- **Alt B:** `Last chance: 20% off everything (including kids' styles)`"
+      ],
+      "evidence": [
+        "- **Overall purpose:** Welcome series email with a time-limited 20% off first-purchase code to drive conversion from email signup to first order.",
+        "- **Hero / primary value proposition:** Large \"Last Call! 20% OFF YOUR FIRST PURCHASE*\" block with promo code and a \"SHOP NOW\" button. Visually dominant and clear.",
+        "- **Membership / benefits section:** Skechers Plus block below the product grid with three iconographic benefits (member deals, free shipping/90-day returns, birthday surprises) and a \"JOIN NOW\" CTA. Well-designed but positioned too far down.",
+        "- **Product discoverability / recommendation modules:** Two rows of ~6 small product thumbnails (adult slip-ons and sneakers) with product names beneath. \"Best Sellers\" and \"New Arrivals\" labeled with lifestyle photos of adults. No kids' products anywhere in the visual flow despite KIDS appearing in the category nav.",
+        "- **Utility / secondary modules:** Text opt-in (SKECHERS to 83928), app download badges, curbside pickup, AfterPay/Klarna callout, Find a Store, and social icons. Functional but the lower third gets cluttered.",
+        "- **Bugs / friction / clarity issues:** No visible render bugs. Fine print is very small and dense — the offer exclusions are functionally unreadable at standard mobile zoom.",
+        "**From:** no-reply@emails.skechers.com | **Date:** 2026-04-18",
+        "The email has one broken-experience bug (doubled-domain URL) and a systemic HTTP image-serving problem affecting ~13 assets. Deliverability authentication could not be verified through the relay.",
+        "**[FAIL] Doubled-domain merge error**",
+        "- URL: `http://www.skechers.com/www.Skechers.com`",
+        "- A template merge variable resolved into the base URL instead of a path, producing a broken destination. Any CTA pointing here will 404.",
+        "- **Action required:** Identify the source template block and correct the merge tag (likely `%%=RedirectTo(CloudPagesURL(...))=%%` or equivalent SFMC syntax).",
+        "**25 tracking links skipped** — click-redirect domains (`click.emails.skechers.com`) not probed; assumed functional but unverified in this pass.",
+        "**HTTP image sources (13 assets)** — the following asset base path is served over HTTP, not HTTPS:",
+        "```",
+        "http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/",
+        "```",
+        "Affected images include the Skechers logo, app store badges, AfterPay logo, social icons, and several content images. iOS Mail and Chrome-based clients with mixed-content blocking will silently suppress these images.",
+        "**Missing `alt` text on 4 images:**",
+        "- `bcc16007...jpg` — likely a hero/product image; missing alt leaves screen readers with no context",
+        "- `49468f73...png`, `00100b23...png`, `fc08601a...png` — footer/content images, also missing alt",
+        "**HTTP tracking pixel:**",
+        "```",
+        "http://www.ink1000.com/p/up/7076d8b15a776085/o.gif",
+        "```",
+        "Mixed-content; will be blocked in secure mail clients. This breaks open-rate measurement for a segment of recipients.",
+        "**Open-pixel missing alt:** `o.gif` has no `alt=\"\"` — should be explicitly empty for accessibility compliance.",
+        "**`<meta http-equiv>` malformed:** `<meta content=\"text/html; charset=utf-8\" />` is missing the required `http-equiv=\"Content-Type\"` attribute. Most clients tolerate this but it is invalid XHTML 1.0 Transitional per the declared doctype.",
+        "No unrendered merge tokens (e.g. `%%FIRST_NAME%%`, `{{{token}}}`) visible in the truncated source. The doubled-domain URL (section 2) is consistent with a merge variable that resolved to a full URL string instead of a relative path — the root cause is a personalization/template error, not a hardcoded typo.",
+        "**CAN-SPAM:** Physical address and unsubscribe mechanism not visible in the truncated source — assumed present in footer (standard Skechers template); cannot confirm from available HTML.",
+        "**Authentication:**",
+        "- `Authentication-Results` header not found via AgentMail relay — SPF/DKIM pass/fail status unknown for this capture.",
+        "- Sending domain is `emails.skechers.com`; DMARC alignment requires SPF or DKIM to align to this subdomain or `skechers.com`. Cannot confirm without header data.",
+        "- **Recommended:** Re-capture with full headers or verify via MX Toolbox against `emails.skechers.com`.",
+        "**Krux/Salesforce DMP pixel:**",
+        "```",
+        "https://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_100007688_sha25&partner_uid=adf27fee...",
+        "```",
+        "The `partner_uid` value appears to be a SHA-256 hashed email. Under GDPR/CCPA this constitutes cross-site identity syncing — confirm consent basis is captured before send to EU/CA recipients.",
+        "No UTM parameters observed on CTA links in the visible HTML. Links route through `click.emails.skechers.com` (click-redirect), which may append UTMs server-side — unverifiable without resolving the redirect chain. If UTMs are not appended at redirect resolution, campaign attribution in GA4/Adobe will be lost and traffic will appear as direct.",
+        "The broken-domain URL (section 2) represents a complete continuity failure for whichever CTA it backs."
+      ]
+    }
+  },
+  "qa": {
+    "categories": {
+      "broken_experience": {
+        "passed": 0,
+        "warned": 0,
+        "failed": 1,
+        "checks": [
+          {
+            "check_id": "merge_doubled_domain",
+            "status": "fail",
+            "label": "Doubled-domain merge error in URL",
+            "detail": "URL contains a repeated domain",
+            "url": "http://www.skechers.com/www.Skechers.com"
+          }
+        ]
+      },
+      "compliance": {
+        "passed": 4,
+        "warned": 0,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "header_list_unsub",
+            "status": "pass",
+            "label": "List-Unsubscribe header present",
+            "detail": "<https://click.emails.skechers.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiIxMDAwMDc2ODgiLCJzIjoiMTIyMjc3MTk5IiwibGlkIjoiMjUiLCJqIjoiMTgwODU2IiwiamIiOiIxMTcxMDgiLCJ"
+          },
+          {
+            "check_id": "header_one_click",
+            "status": "pass",
+            "label": "One-click unsubscribe header present",
+            "detail": "List-Unsubscribe=One-Click"
+          },
+          {
+            "check_id": "canspam_address",
+            "status": "pass",
+            "label": "Physical address found in body",
+            "detail": ""
+          },
+          {
+            "check_id": "body_unsub_link",
+            "status": "pass",
+            "label": "Unsubscribe link found in body",
+            "detail": ""
+          }
+        ]
+      },
+      "deliverability": {
+        "passed": 0,
+        "warned": 1,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "auth_results_missing",
+            "status": "warn",
+            "label": "Authentication-Results header not found",
+            "detail": "Expected via AgentMail relay — SPF/DKIM status unknown"
+          }
+        ]
+      },
+      "info": {
+        "passed": 0,
+        "warned": 16,
+        "failed": 0,
+        "checks": [
+          {
+            "check_id": "link_tracking_skipped",
+            "status": "info",
+            "label": "25 tracking link(s) skipped",
+            "detail": "Tracking/click-redirect domains — skipped HTTP probe"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: o.gif",
+            "detail": "src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8108404282&mi_ecmp=TRG_US_EN_NONMEMWELCOME_4_12022025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: o.gif",
+            "detail": "Non-HTTPS source may be blocked — src: http://www.ink1000.com/p/up/7076d8b15a776085/o.gif?mi_u=8108404282&mi_ecmp=TRG_US_EN_NONMEMWELCOME_4_12022025"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Skechers\" (dde00662-169f-447d-b0e2-fc65f6c2290c.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/dde00662-169f-447d-b0e2-fc65f6c2290c.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: bcc16007-f391-423b-868f-cb0ad4f03490.jpg",
+            "detail": "src: https://image.emails.skechers.com/lib/fe3115707564047a731c78/m/1/bcc16007-f391-423b-868f-cb0ad4f03490.jpg"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 49468f73-4651-4af3-bea2-61d1ae5db486.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/49468f73-4651-4af3-bea2-61d1ae5db486.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Available on the App Store\" (0ec56c9f-eec2-471a-898d-0ca1cea7e115.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/0ec56c9f-eec2-471a-898d-0ca1cea7e115.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Android App on Google Play\" (9bb508d0-4b38-483d-8459-cf54186a0b9f.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/9bb508d0-4b38-483d-8459-cf54186a0b9f.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: 00100b23-0afa-4715-a8cd-23bb46f9d2b2.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/00100b23-0afa-4715-a8cd-23bb46f9d2b2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"AfterPay\" (07cb60b5-512b-494d-892d-67dc067289b7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/07cb60b5-512b-494d-892d-67dc067289b7.png"
+          },
+          {
+            "check_id": "img_missing_alt",
+            "status": "warn",
+            "label": "Image missing alt text: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: fc08601a-fcce-4c96-8b90-39e5a55d6c05.png",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/fc08601a-fcce-4c96-8b90-39e5a55d6c05.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Instagram\" (b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-782c-4fb6-967b-d1dfa5ecbfdc.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"Facebook\" (a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-7aed-467a-a3ae-b290eea2a4a2.png"
+          },
+          {
+            "check_id": "img_http",
+            "status": "warn",
+            "label": "Image uses http://: \"YouTube\" (8c5738fc-7644-4cbf-8fab-b04355a320a7.png)",
+            "detail": "Non-HTTPS source may be blocked — src: http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-7644-4cbf-8fab-b04355a320a7.png"
+          }
+        ],
+        "info": 1
+      }
+    },
+    "summary": {
+      "overall_pass_rate": "67%",
+      "total_checks": 6,
+      "total_issues": 1,
+      "total_warnings": 1
+    }
+  },
+  "assets": {
+    "render_image": "2026-04-18-last-call-to-use-your-20-off-welcome-offer-email-webview-render.png",
+    "pdf": null,
+    "webview_url": "https://view.emails.skechers.com/?qs=ABB7InYiOjEsImQiOjQ4NTB9AAoAAAAAABiLOJCGVzfd0yEX8DOyeGSUGH8xOguo7UPBhBCKdKqBJmQXYCDv-18sS3O8Uw4VDiPp2HfuWHjwI6gAIafD0jZm5fX-iSyQVxJHeZsaIqJvXL3oxaHxC4IDOs7EfZPgoW2gJH0"
+  }
+}

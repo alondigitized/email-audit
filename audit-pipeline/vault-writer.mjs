@@ -8,6 +8,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { embedAndStoreAudit } from './embed.mjs';
 
 /**
  * @param {object} args
@@ -42,6 +43,15 @@ export function writeVaultNote({
   const md = buildMarkdown(auditData, personaSlug, previousScore, recentHistory);
   const dest = path.join(vaultDir, `${auditData.slug}.md`);
   fs.writeFileSync(dest, md);
+
+  // Best-effort embedding for semantic retrieval in the chat API. Never
+  // blocks the vault write — a missing VOYAGE_API_KEY, network blip, or DB
+  // hiccup just leaves the row unwritten; it can be backfilled later.
+  embedAndStoreAudit({ audit: auditData, personaSlug }).catch((err) => {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`embed skipped for ${auditData.slug}: ${msg.slice(0, 200)}`);
+  });
+
   return dest;
 }
 

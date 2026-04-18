@@ -1,0 +1,83 @@
+import { notFound } from "next/navigation";
+import { requireUser } from "@/lib/dal";
+import { requireAppEnabled } from "@/lib/apps";
+import { PERSONA_BY_SLUG } from "@/lib/personas";
+import { listThreads, getThread, listMessages } from "@/lib/chat/threads";
+import { getAuditMemoryCount } from "@/lib/chat/retrieve";
+import { ChatClient } from "./ChatClient";
+import { ThreadList } from "./ThreadList";
+
+export const dynamic = "force-dynamic";
+
+type Search = { [key: string]: string | string[] | undefined };
+
+export default async function ChatPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ persona: string }>;
+  searchParams: Promise<Search>;
+}) {
+  const { persona: personaSlug } = await params;
+  const user = await requireUser();
+  await requireAppEnabled("chat", { isAdmin: user.isAdmin });
+
+  if (!user.isAdmin && !user.personas.includes(personaSlug)) {
+    notFound();
+  }
+  const meta = PERSONA_BY_SLUG[personaSlug];
+  if (!meta) notFound();
+
+  const sp = await searchParams;
+  const rawThreadId = typeof sp.thread === "string" ? sp.thread : null;
+
+  const [threads, auditCount] = await Promise.all([
+    listThreads(user.id, personaSlug),
+    getAuditMemoryCount(personaSlug),
+  ]);
+
+  // Resolve thread: requested or none (start a fresh conversation).
+  let threadId: string | null = null;
+  let initialMessages: {
+    id: string;
+    role: "user" | "assistant";
+    content: string;
+    retrievedSlugs: string[] | null;
+  }[] = [];
+  if (rawThreadId) {
+    const t = await getThread(rawThreadId, user.id);
+    if (t && t.personaSlug === personaSlug) {
+      threadId = t.id;
+      const msgs = await listMessages(t.id);
+      initialMessages = msgs
+        .filter((m) => m.role === "user" || m.role === "assistant")
+        .map((m) => ({
+          id: m.id,
+          role: m.role as "user" | "assistant",
+          content: m.content,
+          retrievedSlugs: m.retrievedSlugs,
+        }));
+    }
+  }
+
+  return (
+    <div className="grid grid-cols-[260px_1fr] gap-4 h-[calc(100vh-120px)]">
+      <ThreadList
+        personaSlug={personaSlug}
+        activeThreadId={threadId}
+        threads={threads.map((t) => ({
+          id: t.id,
+          title: t.title,
+          updatedAt: t.updatedAt.toISOString(),
+        }))}
+      />
+      <ChatClient
+        personaSlug={personaSlug}
+        personaName={meta.name}
+        auditCount={auditCount}
+        threadId={threadId}
+        initialMessages={initialMessages}
+      />
+    </div>
+  );
+}

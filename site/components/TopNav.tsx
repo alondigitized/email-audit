@@ -4,12 +4,22 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignOutButton } from "./SignOutButton";
 
-const TABS = [
+type Tab = { href: string; label: string; suffix?: string };
+
+const BASE_TABS: Tab[] = [
   { href: "/", label: "Audits" },
   { href: "/analysis", label: "Analysis" },
 ];
 
-export function TopNav({ isAdmin = false }: { isAdmin?: boolean }) {
+export function TopNav({
+  isAdmin = false,
+  chatEnabled = false,
+  hasPersonas = false,
+}: {
+  isAdmin?: boolean;
+  chatEnabled?: boolean;
+  hasPersonas?: boolean;
+}) {
   const pathname = usePathname() || "/";
 
   if (pathname.startsWith("/login")) return null;
@@ -21,7 +31,16 @@ export function TopNav({ isAdmin = false }: { isAdmin?: boolean }) {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
-  const tabs = isAdmin ? [...TABS, { href: "/admin", label: "Admin" }] : TABS;
+  const tabs: Tab[] = [...BASE_TABS];
+  // Chat tab: shown to non-admins only when the app flag is on AND they own
+  // a persona. Shown to admins regardless, with an "(off)" suffix when the
+  // flag is off so they can still validate before flipping the public switch.
+  if (chatEnabled && hasPersonas) {
+    tabs.push({ href: "/chat", label: "Chat" });
+  } else if (isAdmin && hasPersonas) {
+    tabs.push({ href: "/chat", label: "Chat", suffix: "(off)" });
+  }
+  if (isAdmin) tabs.push({ href: "/admin", label: "Admin" });
 
   return (
     <nav className="flex items-center justify-between mb-6">
@@ -39,6 +58,11 @@ export function TopNav({ isAdmin = false }: { isAdmin?: boolean }) {
               }`}
             >
               {tab.label}
+              {tab.suffix && (
+                <span className="ml-1 text-[10px] font-normal opacity-70">
+                  {tab.suffix}
+                </span>
+              )}
             </Link>
           );
         })}

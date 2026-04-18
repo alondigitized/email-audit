@@ -1,0 +1,10 @@
+{
+  "name": "audit-pipeline",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared pipeline modules used by email-monitor and site-monitor daemons.",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.0"
+  }
+}
