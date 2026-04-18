@@ -15,10 +15,9 @@ import {
 } from "@/lib/db/client";
 import { sendMagicLinkEmail } from "@/lib/email-magic-link";
 
-// S1: hash verification tokens at rest. The raw token is what we email;
-// the DB only ever stores its SHA-256 hash. On callback, we hash the incoming
-// token and look it up. DB leak -> tokens cannot be replayed.
-const hashToken = (raw: string) =>
+// Legacy helper retained for signInEvent IP hashing only. Auth.js handles
+// verification-token hashing internally using AUTH_SECRET.
+const sha256 = (raw: string) =>
   createHash("sha256").update(raw).digest("hex");
 
 const baseAdapter = DrizzleAdapter(db, {
@@ -30,6 +29,11 @@ const baseAdapter = DrizzleAdapter(db, {
 
 const adapter: typeof baseAdapter = {
   ...baseAdapter,
+  // Invalidate any prior pending tokens for this identifier so that only
+  // the most recent magic-link email is usable. Auth.js already hashes
+  // the raw token with AUTH_SECRET before calling this adapter — do NOT
+  // double-hash on top of that (doing so would desync what the Auth.js
+  // callback computes on click, breaking verification).
   async createVerificationToken(token) {
     if (!baseAdapter.createVerificationToken) {
       throw new Error("adapter.createVerificationToken missing");
@@ -37,34 +41,7 @@ const adapter: typeof baseAdapter = {
     await db
       .delete(verificationTokens)
       .where(eq(verificationTokens.identifier, token.identifier));
-    const raw = token.token;
-    const hashed = hashToken(raw);
-    console.log(
-      JSON.stringify({
-        evt: "createVerificationToken",
-        identifier: token.identifier,
-        rawPrefix: raw.slice(0, 6),
-        hashedPrefix: hashed.slice(0, 6),
-        expires: token.expires,
-      })
-    );
-    return baseAdapter.createVerificationToken({
-      ...token,
-      token: hashed,
-    });
-  },
-  async useVerificationToken(params) {
-    if (!baseAdapter.useVerificationToken) {
-      throw new Error("adapter.useVerificationToken missing");
-    }
-    const row = await baseAdapter.useVerificationToken({
-      identifier: params.identifier,
-      token: hashToken(params.token),
-    });
-    if (!row) return null;
-    // Return the raw token to Auth.js so downstream identity-matching works;
-    // the DB row (which had the hash) has already been consumed.
-    return { ...row, token: params.token };
+    return baseAdapter.createVerificationToken(token);
   },
   // S2: block auto-creation of users. Only pre-seeded allowlist rows exist.
   async createUser() {
@@ -143,7 +120,7 @@ export const config: NextAuthConfig = {
           h.get("x-forwarded-for")?.split(",")[0]?.trim() ??
           h.get("x-real-ip") ??
           null;
-        ipHash = ip ? createHash("sha256").update(ip).digest("hex") : null;
+        ipHash = ip ? sha256(ip) : null;
       } catch {
         // headers() unavailable outside of a request context — best effort.
       }
