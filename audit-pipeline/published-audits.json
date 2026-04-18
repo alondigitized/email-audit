@@ -1971,5 +1971,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-last-call-to-use-your-20-off-welcome-offer",
     "slug": "2026-04-18-last-call-to-use-your-20-off-welcome-offer",
     "persona": "martha"
+  },
+  {
+    "messageId": "<0100019da2c3aa9b-3c0f016d-f9cf-4faa-8612-7791c76cbde2-000000@email.amazonses.com>",
+    "subject": "[Verify] Pipeline Test 2026-04-18 22:43",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-verify-pipeline-test-2026-04-18-22-43",
+    "slug": "2026-04-18-verify-pipeline-test-2026-04-18-22-43",
+    "persona": "walker"
   }
 ]

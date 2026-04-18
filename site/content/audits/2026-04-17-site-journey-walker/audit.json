@@ -289,9 +289,7 @@
         "viewport_screenshot": "step-01-homepage-viewport.png",
         "fullpage_screenshot": "step-01-homepage-fullpage.png",
         "url": "https://www.skechers.com/",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-01-homepage-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-01-homepage-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 2,
@@ -299,9 +297,7 @@
         "viewport_screenshot": "step-02-popups-viewport.png",
         "fullpage_screenshot": "step-02-popups-fullpage.png",
         "url": "https://www.skechers.com/",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-02-popups-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-02-popups-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 3,
@@ -309,9 +305,7 @@
         "viewport_screenshot": "step-03-login-viewport.png",
         "fullpage_screenshot": "step-03-login-fullpage.png",
         "url": "https://www.skechers.com/",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-03-login-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-03-login-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 4,
@@ -319,9 +313,7 @@
         "viewport_screenshot": "step-04-mens-category-viewport.png",
         "fullpage_screenshot": "step-04-mens-category-fullpage.png",
         "url": "https://www.skechers.com/",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-04-mens-category-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-04-mens-category-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 5,
@@ -329,9 +321,7 @@
         "viewport_screenshot": "step-05-mens-shoes-viewport.png",
         "fullpage_screenshot": "step-05-mens-shoes-fullpage.png",
         "url": "https://www.skechers.com/men/shoes/hands-free-slip-ins/",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-05-mens-shoes-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-05-mens-shoes-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 6,
@@ -339,9 +329,7 @@
         "viewport_screenshot": "step-06-product-viewport.png",
         "fullpage_screenshot": "step-06-product-fullpage.png",
         "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-06-product-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-06-product-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 7,
@@ -349,9 +337,7 @@
         "viewport_screenshot": "step-07-add-to-cart-viewport.png",
         "fullpage_screenshot": "step-07-add-to-cart-fullpage.png",
         "url": "https://www.skechers.com/skechers-slip-ins-max-cushioning-glide-step---sapphire/220425_WGR.html",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-07-add-to-cart-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-07-add-to-cart-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 8,
@@ -359,9 +345,7 @@
         "viewport_screenshot": "step-08-cart-viewport.png",
         "fullpage_screenshot": "step-08-cart-fullpage.png",
         "url": "https://www.skechers.com/cart/",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-08-cart-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-08-cart-fullpage.png"
+        "status": "ok"
       },
       {
         "step": 9,
@@ -369,12 +353,9 @@
         "viewport_screenshot": "step-09-search-viewport.png",
         "fullpage_screenshot": "step-09-search-fullpage.png",
         "url": "https://www.skechers.com/search/?q=slip%20in",
-        "status": "ok",
-        "viewport_screenshot_key": "audits/2026-04-17-site-journey-walker/step-09-search-viewport.png",
-        "fullpage_screenshot_key": "audits/2026-04-17-site-journey-walker/step-09-search-fullpage.png"
+        "status": "ok"
       }
-    ],
-    "render_image_key": "audits/2026-04-17-site-journey-walker/render.png"
+    ]
   },
   "performance": {
     "steps": [
