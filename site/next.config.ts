@@ -14,14 +14,18 @@ const securityHeaders = [
     value: "camera=(), microphone=(), geolocation=()",
   },
   {
-    // Starts strict. If Next.js inlines dynamic scripts that break under
-    // this policy, switch to Content-Security-Policy-Report-Only while tuning.
+    // Next.js ships inline bootstrap scripts and client-component chunks that
+    // need 'unsafe-inline' under App Router unless we wire per-request nonces
+    // via Proxy. Accept that tradeoff for now — XSS surface is still bounded
+    // by Next's built-in escaping and the rest of this policy.
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "img-src 'self' data:",
+      "img-src 'self' data: blob:",
       "style-src 'self' 'unsafe-inline'",
-      "script-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "font-src 'self' data:",
+      "connect-src 'self'",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
