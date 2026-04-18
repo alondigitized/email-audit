@@ -29,6 +29,7 @@ import dotenv from 'dotenv';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 import { auditDataSchema } from '../audit-pipeline/audit-schema.mjs';
+import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -823,6 +824,19 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
     }
     fs.writeFileSync(path.join(destDir, 'audit.json'), JSON.stringify(data, null, 2));
     fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
+
+    // Dual-write to Postgres (Phase 2 of the foundation refactor). Non-
+    // fatal — the filesystem copy is still consumer-facing until Phase 3.
+    if (dbConfigured()) {
+      try {
+        await upsertAuditRow({ slug, data });
+      } catch (err) {
+        log('db upsert failed (non-fatal dual-write)', {
+          slug,
+          error: String(err).slice(0, 300),
+        });
+      }
+    }
   }
 
   // Rebuild index.json

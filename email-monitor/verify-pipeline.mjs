@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { AgentMailClient } from 'agentmail';
 import { deleteMedia, mediaConfigured } from '../audit-pipeline/media.mjs';
+import { deleteAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -140,6 +141,12 @@ async function cleanup(slug, messageId) {
       try { await deleteMedia(key); }
       catch (err) { console.warn(`[warn] failed to delete R2 ${key}: ${err.message}`); }
     }
+  }
+
+  // Delete the DB row (dual-write landed in Phase 2 of the refactor).
+  if (dbConfigured()) {
+    try { await deleteAuditRow(slug); }
+    catch (err) { console.warn(`[warn] failed to delete DB row ${slug}: ${err.message}`); }
   }
 
   // Remove vault note (written by email-monitor's publishSite under whatever persona the inbox is tagged for).

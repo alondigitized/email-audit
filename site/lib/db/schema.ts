@@ -8,8 +8,11 @@ import {
   boolean,
   vector,
   index,
+  numeric,
+  jsonb,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+import type { AuditData } from "@/lib/schema/audit";
 
 export const users = pgTable("user", {
   id: text("id")
@@ -170,6 +173,34 @@ export const appFlag = pgTable("app_flag", {
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
   updatedBy: text("updated_by").references(() => users.id),
 });
+
+// One row per audit. Replaces the filesystem-based content/audits/{slug}/
+// audit.json + index.json pair. Producer daemons INSERT/UPSERT; the site
+// reads through lib/audits.ts. The full audit payload lives in `data` as
+// JSONB (zod-validated at the producer boundary); the typed columns
+// exist for query planning (filter by persona, sort by timestamp).
+//
+// No FK on persona yet — persona slugs are referenced by name in several
+// tables (auditEmbedding, chatThread) without a FK either. Phase 6 will
+// consolidate that.
+export const audits = pgTable(
+  "audit",
+  {
+    slug: text("slug").primaryKey(),
+    persona: text("persona").notNull(),
+    type: text("type").notNull(), // 'email' | 'site'
+    timestamp: timestamp("timestamp", { mode: "date", withTimezone: true }).notNull(),
+    score: numeric("score", { precision: 5, scale: 2 }),
+    data: jsonb("data").$type<AuditData>().notNull(),
+    mediaKeys: jsonb("media_keys").default({}),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    personaTsIdx: index("audit_persona_ts_idx").on(t.persona, t.timestamp),
+    typeTsIdx: index("audit_type_ts_idx").on(t.type, t.timestamp),
+  })
+);
 
 // Per-user access to apps. Row present = user has access to that app
 // (in addition to the global app_flag being on). Admins bypass both gates.

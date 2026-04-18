@@ -9,6 +9,7 @@ import { AgentMailClient } from 'agentmail';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 import { auditDataSchema } from '../audit-pipeline/audit-schema.mjs';
+import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -603,6 +604,21 @@ async function publishSite() {
       // Also write the updated shape back to the artifact so rerun-audit works
       // and subsequent publishSite passes don't need to re-merge.
       fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
+
+      // Dual-write to Postgres (Phase 2 of the foundation refactor). The
+      // filesystem copy above is still the consumer-facing source of truth
+      // until Phase 3 flips the site. DB upsert is non-fatal here — if it
+      // fails (no creds, network blip), the filesystem write is still good.
+      if (dbConfigured()) {
+        try {
+          await upsertAuditRow({ slug, data });
+        } catch (err) {
+          log('db upsert failed (non-fatal dual-write)', {
+            slug,
+            error: String(err).slice(0, 300),
+          });
+        }
+      }
     }
   }
 
