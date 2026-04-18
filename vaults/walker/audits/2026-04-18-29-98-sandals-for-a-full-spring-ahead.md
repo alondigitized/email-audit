@@ -210,5 +210,5 @@ Consistent with send date. Campaign attribution should resolve correctly in anal
 
 - [[2026-04-18-did-you-forget-something]] — 5/10 (2026-04-18)
 - [[2026-04-18-20-off-ends-tomorrow]] — 6/10 (2026-04-18)
-- [[2026-04-18-tennis-sporting-codes-meet-parisian-style]] — 4/10 (2026-04-18)
+- [[2026-04-18-verify-pipeline-test-2026-04-18-06-40]] — 1/10 (2026-04-18)
 

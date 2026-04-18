@@ -1957,5 +1957,12 @@
     "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-bogo-50-off-your-go-to-spring-picks-e06a33d8-2c35-4cb3-87c8-",
     "slug": "2026-04-18-bogo-50-off-your-go-to-spring-picks-e06a33d8-2c35-4cb3-87c8-",
     "persona": "martha"
+  },
+  {
+    "messageId": "<0100019d9f51c4a2-1ba0c03b-f9af-4e70-a3f7-1042bc126785-000000@email.amazonses.com>",
+    "subject": "[Verify] Pipeline Test 2026-04-18 06:40",
+    "artifactDir": "/Users/alontsang/.openclaw-walker/workspace/reports/email-artifacts/2026-04-18-verify-pipeline-test-2026-04-18-06-40",
+    "slug": "2026-04-18-verify-pipeline-test-2026-04-18-06-40",
+    "persona": "walker"
   }
 ]
