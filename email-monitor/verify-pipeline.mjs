@@ -10,6 +10,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { AgentMailClient } from 'agentmail';
+import { deleteMedia, mediaConfigured } from '../audit-pipeline/media.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -114,11 +115,32 @@ async function cleanup(slug, messageId) {
   const filtered = manifest.filter((e) => e.slug !== slug);
   fs.writeFileSync(SITE_MANIFEST, JSON.stringify(filtered, null, 2));
 
-  // Remove site content and images
+  // Collect R2 keys from the audit.json before we delete the content dir.
   const contentDir = path.join(SITE_CONTENT, slug);
   const imageDir = path.join(SITE_IMAGES, slug);
+  const r2Keys = [];
+  const auditJsonPath = path.join(contentDir, 'audit.json');
+  if (fs.existsSync(auditJsonPath)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(auditJsonPath, 'utf8'));
+      if (data.assets?.render_image_key) r2Keys.push(data.assets.render_image_key);
+      for (const step of data.assets?.journey_steps ?? []) {
+        if (step.viewport_screenshot_key) r2Keys.push(step.viewport_screenshot_key);
+        if (step.fullpage_screenshot_key) r2Keys.push(step.fullpage_screenshot_key);
+      }
+    } catch { /* ignore parse errors */ }
+  }
+
   if (fs.existsSync(contentDir)) fs.rmSync(contentDir, { recursive: true });
   if (fs.existsSync(imageDir)) fs.rmSync(imageDir, { recursive: true });
+
+  // Delete any R2 objects this mock audit uploaded.
+  if (mediaConfigured() && r2Keys.length) {
+    for (const key of r2Keys) {
+      try { await deleteMedia(key); }
+      catch (err) { console.warn(`[warn] failed to delete R2 ${key}: ${err.message}`); }
+    }
+  }
 
   // Remove vault note (written by email-monitor's publishSite under whatever persona the inbox is tagged for).
   const vaultsRoot = path.join(REPO_ROOT, 'vaults');

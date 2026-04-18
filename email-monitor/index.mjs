@@ -552,8 +552,43 @@ async function publishSite() {
         data.assets = data.assets ?? {};
         data.assets.render_image_key = renderKey;
       }
-      fs.writeFileSync(path.join(destDir, 'audit.json'), JSON.stringify(data, null, 2));
-      // Also write the updated shape back to the artifact so rerun-audit works.
+      // Historic site-journey audits have R2 keys only in the dest audit.json
+      // (backfilled once). Their artifact audit-data.json predates the R2
+      // schema, so without this merge every publishSite pass would strip
+      // the keys again.
+      const destPath = path.join(destDir, 'audit.json');
+      if (fs.existsSync(destPath)) {
+        try {
+          const existing = JSON.parse(fs.readFileSync(destPath, 'utf8'));
+          data.assets = data.assets ?? {};
+          if (!data.assets.render_image_key && existing.assets?.render_image_key) {
+            data.assets.render_image_key = existing.assets.render_image_key;
+          }
+          if (
+            Array.isArray(existing.assets?.journey_steps) &&
+            Array.isArray(data.assets.journey_steps)
+          ) {
+            const prevByStep = new Map(
+              existing.assets.journey_steps.map((s) => [s.step, s]),
+            );
+            for (const step of data.assets.journey_steps) {
+              const prev = prevByStep.get(step.step);
+              if (!prev) continue;
+              if (!step.viewport_screenshot_key && prev.viewport_screenshot_key) {
+                step.viewport_screenshot_key = prev.viewport_screenshot_key;
+              }
+              if (!step.fullpage_screenshot_key && prev.fullpage_screenshot_key) {
+                step.fullpage_screenshot_key = prev.fullpage_screenshot_key;
+              }
+            }
+          }
+        } catch {
+          /* ignore merge errors — fall through to plain write */
+        }
+      }
+      fs.writeFileSync(destPath, JSON.stringify(data, null, 2));
+      // Also write the updated shape back to the artifact so rerun-audit works
+      // and subsequent publishSite passes don't need to re-merge.
       fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
     }
   }
