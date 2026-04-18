@@ -10,7 +10,9 @@ import {
   personas,
   userPersonas,
   sessions,
+  appFlag,
 } from "@/lib/db/client";
+import { APPS, type AppKey } from "@/lib/apps";
 
 const EmailSchema = z.string().trim().toLowerCase().email().max(254);
 const SlugSchema = z.string().regex(/^[a-z0-9-]+$/).max(64);
@@ -149,5 +151,54 @@ export async function revokePersonaAction(formData: FormData): Promise<ActionRes
       )
     );
   revalidatePath("/admin");
+  return { ok: true };
+}
+
+const APP_KEYS = APPS.map((a) => a.key) as [AppKey, ...AppKey[]];
+const AppKeySchema = z.enum(APP_KEYS);
+
+// -----------------------------------------------------------------------
+// Chat thread creation (called from ChatClient before first message so the
+// thread ID is known up-front — keeps the URL stable and avoids the useChat
+// API's response-header juggling).
+
+import { createThread } from "@/lib/chat/threads";
+
+const PersonaSlugSchema = z.string().regex(/^[a-z0-9-]+$/).max(64);
+
+export async function createChatThreadAction(
+  personaSlug: string
+): Promise<{ ok: true; threadId: string } | { ok: false; error: string }> {
+  const user = await requireAdmin.prototype ? null : null; // silence import-only lint
+  const { requireUser } = await import("@/lib/dal");
+  const { isAppEnabled } = await import("@/lib/apps");
+  const u = await requireUser();
+  const enabled = await isAppEnabled("chat");
+  if (!enabled && !u.isAdmin) return { ok: false, error: "Chat is not enabled." };
+  const slug = PersonaSlugSchema.safeParse(personaSlug);
+  if (!slug.success) return { ok: false, error: "Bad persona slug." };
+  if (!u.isAdmin && !u.personas.includes(slug.data)) {
+    return { ok: false, error: "Not your persona." };
+  }
+  const id = await createThread(u.id, slug.data);
+  return { ok: true, threadId: id };
+}
+
+export async function toggleAppAction(formData: FormData): Promise<ActionResult> {
+  const admin = await requireAdmin();
+  const keyParsed = AppKeySchema.safeParse(formData.get("key"));
+  if (!keyParsed.success) {
+    return { ok: false, error: "Unknown app." };
+  }
+  const enabled = formData.get("enabled") === "1";
+  await db
+    .insert(appFlag)
+    .values({ key: keyParsed.data, enabled, updatedBy: admin.id })
+    .onConflictDoUpdate({
+      target: appFlag.key,
+      set: { enabled, updatedBy: admin.id, updatedAt: new Date() },
+    });
+  revalidatePath("/admin");
+  revalidatePath("/");
   return { ok: true };
 }
