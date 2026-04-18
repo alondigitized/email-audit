@@ -11,7 +11,10 @@ export const metadata = {
 
 export default async function ChatIndex() {
   const user = await requireUser();
-  await requireAppEnabled("chat", { isAdmin: user.isAdmin });
+  await requireAppEnabled("chat", {
+    isAdmin: user.isAdmin,
+    userApps: user.apps,
+  });
 
   // Admins see all personas; users see only their own.
   const slugs = user.isAdmin

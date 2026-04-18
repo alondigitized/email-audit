@@ -53,7 +53,10 @@ function extractText(m: { parts?: { type: string; text?: string }[]; content?: s
 
 export async function POST(req: Request) {
   const user = await requireUser();
-  await requireAppEnabled("chat", { isAdmin: user.isAdmin });
+  await requireAppEnabled("chat", {
+    isAdmin: user.isAdmin,
+    userApps: user.apps,
+  });
 
   const json = await req.json().catch(() => ({}));
   const parsed = BodySchema.safeParse(json);

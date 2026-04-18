@@ -11,6 +11,7 @@ import {
   userPersonas,
   sessions,
   appFlag,
+  userAppAccess,
 } from "@/lib/db/client";
 import { APPS, type AppKey } from "@/lib/apps";
 
@@ -157,32 +158,8 @@ export async function revokePersonaAction(formData: FormData): Promise<ActionRes
 const APP_KEYS = APPS.map((a) => a.key) as [AppKey, ...AppKey[]];
 const AppKeySchema = z.enum(APP_KEYS);
 
-// -----------------------------------------------------------------------
-// Chat thread creation (called from ChatClient before first message so the
-// thread ID is known up-front — keeps the URL stable and avoids the useChat
-// API's response-header juggling).
-
-import { createThread } from "@/lib/chat/threads";
-
-const PersonaSlugSchema = z.string().regex(/^[a-z0-9-]+$/).max(64);
-
-export async function createChatThreadAction(
-  personaSlug: string
-): Promise<{ ok: true; threadId: string } | { ok: false; error: string }> {
-  const user = await requireAdmin.prototype ? null : null; // silence import-only lint
-  const { requireUser } = await import("@/lib/dal");
-  const { isAppEnabled } = await import("@/lib/apps");
-  const u = await requireUser();
-  const enabled = await isAppEnabled("chat");
-  if (!enabled && !u.isAdmin) return { ok: false, error: "Chat is not enabled." };
-  const slug = PersonaSlugSchema.safeParse(personaSlug);
-  if (!slug.success) return { ok: false, error: "Bad persona slug." };
-  if (!u.isAdmin && !u.personas.includes(slug.data)) {
-    return { ok: false, error: "Not your persona." };
-  }
-  const id = await createThread(u.id, slug.data);
-  return { ok: true, threadId: id };
-}
+// Chat thread actions moved to site/app/chat/actions.ts to keep chat
+// concerns co-located with the chat routes.
 
 export async function toggleAppAction(formData: FormData): Promise<ActionResult> {
   const admin = await requireAdmin();
@@ -198,6 +175,37 @@ export async function toggleAppAction(formData: FormData): Promise<ActionResult>
       target: appFlag.key,
       set: { enabled, updatedBy: admin.id, updatedAt: new Date() },
     });
+  revalidatePath("/admin");
+  revalidatePath("/");
+  return { ok: true };
+}
+
+// Grant or revoke per-user access to an app.
+export async function toggleUserAppAccessAction(
+  formData: FormData
+): Promise<ActionResult> {
+  const admin = await requireAdmin();
+  const keyParsed = AppKeySchema.safeParse(formData.get("appKey"));
+  const userId = formData.get("userId");
+  const enable = formData.get("enable") === "1";
+  if (!keyParsed.success || typeof userId !== "string" || !userId) {
+    return { ok: false, error: "Bad input." };
+  }
+  if (enable) {
+    await db
+      .insert(userAppAccess)
+      .values({ userId, appKey: keyParsed.data, grantedBy: admin.id })
+      .onConflictDoNothing();
+  } else {
+    await db
+      .delete(userAppAccess)
+      .where(
+        and(
+          eq(userAppAccess.userId, userId),
+          eq(userAppAccess.appKey, keyParsed.data)
+        )
+      );
+  }
   revalidatePath("/admin");
   revalidatePath("/");
   return { ok: true };

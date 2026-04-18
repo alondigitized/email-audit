@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { auth } from "@/auth";
-import { db, users } from "./db/client";
+import { db, users, userAppAccess } from "./db/client";
 import { getPersonaSlugsForUser } from "./personas-db";
 
 export type CurrentUser = {
@@ -10,6 +10,7 @@ export type CurrentUser = {
   name: string | null;
   personas: string[];
   isAdmin: boolean;
+  apps: string[]; // app keys this user has access to (admin bypasses this)
 };
 
 async function loadIsAdmin(userId: string): Promise<boolean> {
@@ -21,6 +22,14 @@ async function loadIsAdmin(userId: string): Promise<boolean> {
   return row[0]?.isAdmin ?? false;
 }
 
+async function loadAppKeys(userId: string): Promise<string[]> {
+  const rows = await db
+    .select({ appKey: userAppAccess.appKey })
+    .from(userAppAccess)
+    .where(eq(userAppAccess.userId, userId));
+  return rows.map((r) => r.appKey);
+}
+
 // S7: every route handler / server component that touches data must call this.
 // Proxy enforcement is optimistic; this is the authoritative check.
 export async function requireUser(): Promise<CurrentUser> {
@@ -28,9 +37,10 @@ export async function requireUser(): Promise<CurrentUser> {
   if (!session?.user?.id || !session.user.email) {
     redirect("/login");
   }
-  const [personas, isAdmin] = await Promise.all([
+  const [personas, isAdmin, apps] = await Promise.all([
     getPersonaSlugsForUser(session.user.id),
     loadIsAdmin(session.user.id),
+    loadAppKeys(session.user.id),
   ]);
   return {
     id: session.user.id,
@@ -38,15 +48,17 @@ export async function requireUser(): Promise<CurrentUser> {
     name: session.user.name ?? null,
     personas,
     isAdmin,
+    apps,
   };
 }
 
 export async function currentUser(): Promise<CurrentUser | null> {
   const session = await auth();
   if (!session?.user?.id || !session.user.email) return null;
-  const [personas, isAdmin] = await Promise.all([
+  const [personas, isAdmin, apps] = await Promise.all([
     getPersonaSlugsForUser(session.user.id),
     loadIsAdmin(session.user.id),
+    loadAppKeys(session.user.id),
   ]);
   return {
     id: session.user.id,
@@ -54,6 +66,7 @@ export async function currentUser(): Promise<CurrentUser | null> {
     name: session.user.name ?? null,
     personas,
     isAdmin,
+    apps,
   };
 }
 

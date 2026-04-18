@@ -6,6 +6,7 @@ import {
   userPersonas,
   signInEvents,
   pageViews,
+  userAppAccess,
 } from "@/lib/db/client";
 
 export type AdminUserRow = {
@@ -19,6 +20,7 @@ export type AdminUserRow = {
   viewCount30d: number;
   timeToVerifyHours: number | null;
   personas: string[];
+  apps: string[];
 };
 
 export type AdoptionSummary = {
@@ -110,6 +112,16 @@ export async function getAdminUserRows(): Promise<AdminUserRow[]> {
     .from(userPersonas)
     .innerJoin(personas, eq(userPersonas.personaId, personas.id));
 
+  const appGrants = await db
+    .select({ userId: userAppAccess.userId, appKey: userAppAccess.appKey })
+    .from(userAppAccess);
+  const appsByUser = new Map<string, string[]>();
+  for (const a of appGrants) {
+    const arr = appsByUser.get(a.userId) ?? [];
+    arr.push(a.appKey);
+    appsByUser.set(a.userId, arr);
+  }
+
   const byUser = new Map<string, string[]>();
   for (const g of grants) {
     const arr = byUser.get(g.userId) ?? [];
@@ -150,6 +162,7 @@ export async function getAdminUserRows(): Promise<AdminUserRow[]> {
       viewCount30d: viewCountByUser.get(u.id) ?? 0,
       timeToVerifyHours: ttv,
       personas: (byUser.get(u.id) ?? []).sort(),
+      apps: (appsByUser.get(u.id) ?? []).sort(),
     };
   });
 }

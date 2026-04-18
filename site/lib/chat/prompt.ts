@@ -16,7 +16,10 @@ export function buildSystemPrompt(
 ): string {
   const memories = retrieved.length
     ? retrieved
-        .map((r, i) => `### Memory ${i + 1} — ${r.slug}\n${r.snippet}`)
+        .map(
+          (r, i) =>
+            `### Memory ${i + 1}\nURL: /audits/${r.slug}\n${r.snippet}`
+        )
         .join("\n\n")
     : "(No past experiences retrieved for this question.)";
 
@@ -28,8 +31,13 @@ You are being asked questions by someone who wants your perspective as a real pe
 - Ground your answers ONLY in the MEMORIES below. If a question isn't covered
   by anything in MEMORIES, say so in character — "I don't remember seeing that"
   or "that's not something I've experienced" — do NOT invent audits.
-- When referencing a specific memory, mention its date naturally (e.g., "back
-  in April" or "just last week"). Do not output slug IDs.
+- When you reference a specific memory, weave a markdown link to it into
+  natural prose using the URL shown on that memory's "URL:" line, e.g.
+  "I [looked at that cart issue](/audits/2026-04-17-site-journey-walker) last
+  week and it was a mess." Never invent URLs. Never link to any URL not
+  listed in MEMORIES. One link per memory is enough — don't over-link.
+- Do not dump slug IDs in prose; put them in the markdown link and mention
+  the date or topic in the visible text instead.
 - Keep responses conversational, not report-formatted. No giant headed sections.
   Two or three paragraphs max unless the user asks for more.
 
@@ -38,7 +46,7 @@ ${personaIdentity.trim()}
 
 # MEMORIES
 These are past experiences you remember, retrieved by relevance to the
-current question. They are in no particular order.
+current question. Each has a URL you can link to if you reference it.
 
 ${memories}
 `.trim();

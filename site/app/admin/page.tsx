@@ -121,6 +121,7 @@ export default async function AdminPage() {
                 <th className="py-3" title="Sign-ins in the last 30 days">Sign-ins 30d</th>
                 <th className="py-3" title="Content views in the last 30 days">Views 30d</th>
                 <th className="py-3">Personas</th>
+                <th className="py-3">Apps</th>
                 <th className="py-3 pr-5"></th>
               </tr>
             </thead>
@@ -138,6 +139,7 @@ export default async function AdminPage() {
                     viewCount30d: u.viewCount30d,
                     timeToVerifyHours: u.timeToVerifyHours,
                     personas: u.personas,
+                    apps: u.apps,
                     isAdmin: u.isAdmin,
                   }}
                   allPersonaSlugs={personaSlugs}

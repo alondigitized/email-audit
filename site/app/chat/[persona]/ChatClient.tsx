@@ -4,9 +4,10 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { createChatThreadAction } from "@/app/admin/actions";
+import { createChatThreadAction, renameThreadAction } from "@/app/chat/actions";
 
 type InitialMessage = {
   id: string;
@@ -20,6 +21,7 @@ type Props = {
   personaName: string;
   auditCount: number;
   threadId: string | null;
+  threadTitle: string | null;
   initialMessages: InitialMessage[];
 };
 
@@ -37,12 +39,24 @@ export function ChatClient({
   personaName,
   auditCount,
   threadId: initialThreadId,
+  threadTitle: initialThreadTitle,
   initialMessages,
 }: Props) {
   const router = useRouter();
   const [threadId, setThreadId] = useState<string | null>(initialThreadId);
+  const [threadTitle, setThreadTitle] = useState<string | null>(
+    initialThreadTitle
+  );
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleDraft, setTitleDraft] = useState("");
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  // Keep local title in sync when navigating between threads.
+  useEffect(() => {
+    setThreadTitle(initialThreadTitle);
+    setEditingTitle(false);
+  }, [initialThreadId, initialThreadTitle]);
 
   // Map of message id -> retrieved slugs, populated from initialMessages and
   // from stream response headers (not currently exposed — we keep it as a
@@ -125,9 +139,62 @@ export function ChatClient({
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
       {/* Header */}
-      <div className="px-5 py-3 border-b border-gray-200 flex items-baseline justify-between">
-        <div>
-          <div className="text-base font-semibold">{personaName}</div>
+      <div className="px-5 py-3 border-b border-gray-200 flex items-center justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <span className="text-base font-semibold">{personaName}</span>
+            {threadId && (
+              <span className="text-muted">·</span>
+            )}
+            {threadId && editingTitle ? (
+              <form
+                className="flex-1 flex items-center gap-1"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const draft = titleDraft.trim();
+                  if (!draft || !threadId) {
+                    setEditingTitle(false);
+                    return;
+                  }
+                  const res = await renameThreadAction(threadId, draft);
+                  if (res.ok) {
+                    setThreadTitle(res.title);
+                    router.refresh();
+                  } else {
+                    alert(res.error);
+                  }
+                  setEditingTitle(false);
+                }}
+              >
+                <input
+                  autoFocus
+                  value={titleDraft}
+                  onChange={(e) => setTitleDraft(e.target.value)}
+                  onBlur={() => setEditingTitle(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") setEditingTitle(false);
+                  }}
+                  className="flex-1 bg-white border border-gray-300 rounded-md px-2 py-0.5 text-sm outline-none focus:border-gray-500"
+                  placeholder="Thread title"
+                  maxLength={120}
+                />
+              </form>
+            ) : (
+              threadId && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTitleDraft(threadTitle ?? "");
+                    setEditingTitle(true);
+                  }}
+                  className="text-sm text-muted hover:text-ink truncate text-left"
+                  title="Rename thread"
+                >
+                  {threadTitle ?? "Untitled"}
+                </button>
+              )
+            )}
+          </div>
           <div className="text-xs text-muted">
             Remembers {auditCount.toLocaleString()} audit
             {auditCount === 1 ? "" : "s"}
@@ -138,10 +205,13 @@ export function ChatClient({
             onClick={() => {
               setMessages([]);
               setThreadId(null);
+              setThreadTitle(null);
+              setEditingTitle(false);
+              threadIdRef.current = null;
               window.history.replaceState({}, "", `/chat/${personaSlug}`);
               router.refresh();
             }}
-            className="text-xs text-muted hover:text-ink underline"
+            className="text-xs text-muted hover:text-ink underline whitespace-nowrap"
           >
             New thread
           </button>
@@ -262,8 +332,34 @@ function MessageBubble({
         {isUser ? (
           <div className="whitespace-pre-wrap">{text}</div>
         ) : (
-          <div className="prose prose-sm max-w-none prose-p:my-2 prose-ul:my-2 prose-li:my-0.5">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+          <div className="prose prose-sm max-w-none prose-p:my-2 prose-ul:my-2 prose-li:my-0.5 prose-a:text-sky-700 prose-a:underline prose-a:decoration-sky-300 hover:prose-a:decoration-sky-600">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                // Safely render links. Internal /audits/{slug} links use
+                // Next.js routing (client-side nav, prefetch). External
+                // links are escaped to plain text — the persona should only
+                // ever surface audit URLs, so any absolute link is suspect.
+                a: ({ href, children }) => {
+                  if (typeof href !== "string") return <>{children}</>;
+                  const isAuditLink = /^\/audits\/[a-z0-9-]+\/?$/i.test(href);
+                  if (isAuditLink) {
+                    return (
+                      <Link
+                        href={href}
+                        prefetch={false}
+                        className="text-sky-700 hover:text-sky-900"
+                      >
+                        {children}
+                      </Link>
+                    );
+                  }
+                  return <>{children}</>;
+                },
+              }}
+            >
+              {text}
+            </ReactMarkdown>
           </div>
         )}
         {!isUser && sources && sources.length > 0 && (
