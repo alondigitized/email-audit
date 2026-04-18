@@ -11,10 +11,25 @@ export default async function LoginPage({
 }) {
   const sp = await searchParams;
   const sent = sp?.sent === "1";
+  const error = typeof sp?.error === "string" ? sp.error : null;
 
   // If already signed in, don't show the login form — punt to the app.
   const user = await currentUser();
   if (user) redirect("/");
+
+  // Map Auth.js error codes to friendlier copy. "Verification" is what fires
+  // when a magic link is clicked twice (single-use by design) or after it
+  // expires (10 min).
+  const errorCopy = (() => {
+    if (!error) return null;
+    if (error === "Verification") {
+      return "That sign-in link was already used or has expired. Magic links can only be clicked once. Request a new one below.";
+    }
+    if (error === "AccessDenied") {
+      return "That email isn't on the invite list. Reach out if you think that's wrong.";
+    }
+    return "Something went wrong signing you in. Try again.";
+  })();
 
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
@@ -35,6 +50,11 @@ export default async function LoginPage({
           </>
         ) : (
           <>
+            {errorCopy && (
+              <div className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 mb-4">
+                {errorCopy}
+              </div>
+            )}
             <p className="text-muted text-sm mb-5">
               Enter your email to get a sign-in link.
             </p>

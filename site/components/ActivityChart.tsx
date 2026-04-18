@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -100,6 +101,13 @@ function dayTotal(d: DayBucket): number {
 }
 
 export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
+  // Recharts' ResponsiveContainer measures its parent in a layout effect.
+  // During SSR the parent has no dimensions, which emits a width(-1)/height(-1)
+  // warning and briefly renders an empty chart. Gate the chart on hydration
+  // so the parent has a real layout before recharts tries to measure it.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const data = buildData(audits);
   const total = data.reduce((s, d) => s + dayTotal(d), 0);
   const peak = data.reduce((m, d) => Math.max(m, dayTotal(d)), 0);
@@ -131,6 +139,7 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
         </div>
       </div>
       <div style={{ width: "100%", height: 220 }}>
+        {mounted ? (
         <ResponsiveContainer>
           <BarChart
             data={data}
@@ -192,6 +201,7 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
             ))}
           </BarChart>
         </ResponsiveContainer>
+        ) : null}
       </div>
     </div>
   );
