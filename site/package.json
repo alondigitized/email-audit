@@ -11,7 +11,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx --env-file=.env.local scripts/seed-allowlist.ts",
     "db:seed-personas": "tsx --env-file=.env.local scripts/seed-personas.ts",
-    "db:grant": "tsx --env-file=.env.local scripts/grant-persona.ts"
+    "db:grant": "tsx --env-file=.env.local scripts/grant-persona.ts",
+    "invite": "tsx --env-file=.env.local scripts/invite.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.0",
