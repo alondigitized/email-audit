@@ -156,7 +156,7 @@ export default async function AuditPage({
 
   const heroLabel = isSiteJourney
     ? `${email.from_display_name} Site Journey`
-    : "Skechers Experience Review";
+    : "Email Experience Review";
   const fromLabel = isSiteJourney ? "Site" : "From";
 
   return (
