@@ -6,7 +6,7 @@
  * capturing screenshots, HTML, console/network errors, accessibility
  * violations, and performance metrics at each step. Then generates a
  * holistic Claude review from the persona's perspective and publishes
- * the result to the Experience Review site.
+ * the result to the Experience Intelligence site.
  *
  * Usage:
  *   node site-review.mjs                  # defaults to walker

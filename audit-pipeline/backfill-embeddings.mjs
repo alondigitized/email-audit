@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // One-shot: embed every existing audit into Neon's audit_embedding table.
 // Safe to re-run (upsert-based); skips embeddings that already exist and
-// match the same indexed_text. Rate-limited to be polite to Voyage.
+// match the same indexed_text. Rate-limited so we don't hammer the
+// embedding endpoint (Ollama by default — see audit-pipeline/embed.mjs).
 
 import fs from 'node:fs';
 import path from 'node:path';

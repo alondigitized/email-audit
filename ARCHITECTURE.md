@@ -7,7 +7,8 @@ external service they touch.
 ## Quick start for a new Claude session
 
 Working directory is always `~/.openclaw-walker/workspace/`. The repo deploys to
-`https://email-audit-weld.vercel.app` (gated, share secret in `USER.md`).
+**https://etell.app** (prod; also reachable at `https://email-audit-weld.vercel.app`),
+gated by Auth.js v5 magic-link — allowlist-only, no self-signup.
 
 **The live site is the Next.js app in `site/`.** Anything that should appear on
 the live site must change `site/`. Common pitfall: there is no static site
@@ -61,7 +62,7 @@ flowchart LR
     SKX["Skechers.com"]
     CLAUDE["Claude<br/>sonnet · high effort"]
     GH["GitHub<br/>origin/main"]
-    VRCL["Vercel<br/>email-audit-weld.vercel.app"]
+    VRCL["Vercel<br/>etell.app"]
     CHROME["Chrome<br/>CDP :18795<br/>profile: my-chrome"]
   end
 

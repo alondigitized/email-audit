@@ -46,8 +46,9 @@ export async function writeVaultNote({
   fs.writeFileSync(dest, md);
 
   // Best-effort embedding for semantic retrieval in the chat API. Never
-  // blocks the vault write — a missing VOYAGE_API_KEY, network blip, or DB
-  // hiccup just leaves the row unwritten; it can be backfilled later.
+  // blocks the vault write — a missing LLM endpoint (Ollama tunnel down),
+  // network blip, or DB hiccup just leaves the row unwritten; it can be
+  // backfilled later via audit-pipeline/backfill-embeddings.mjs.
   embedAndStoreAudit({ audit: auditData, personaSlug }).catch((err) => {
     const msg = err instanceof Error ? err.message : String(err);
     console.warn(`embed skipped for ${auditData.slug}: ${msg.slice(0, 200)}`);

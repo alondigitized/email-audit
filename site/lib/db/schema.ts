@@ -117,10 +117,11 @@ export const pageViews = pgTable("pageView", {
   ts: timestamp("ts", { mode: "date" }).defaultNow().notNull(),
 });
 
-// One row per audit, persona-scoped, embedded once by the pipeline using
-// Voyage voyage-3-large (1024 dims). Used by the chat API to retrieve the
-// persona's most relevant past experiences for a given user question.
-// HNSW cosine index added in the migration raw SQL.
+// One row per audit, persona-scoped, embedded once by the pipeline via
+// audit-pipeline/embed.mjs. Default embedder is Ollama mxbai-embed-large
+// (1024 dims) — swap via LLM_EMBED_MODEL. Used by the chat API to
+// retrieve the persona's most relevant past experiences for a given user
+// question. HNSW cosine index added in the migration raw SQL.
 export const auditEmbedding = pgTable(
   "audit_embedding",
   {

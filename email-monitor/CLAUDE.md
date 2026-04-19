@@ -82,7 +82,7 @@ Each processed email gets a directory in `reports/email-artifacts/{date}-{slug}/
 - `email-webview-render.png` — screenshot of rendered email
 - `qa-report.json` — automated QA results
 - `review.txt` — merged content + technical review
-- `audit-data.json` — structured data extracted by `generate_site.py`
+- `audit-data.json` — structured data extracted by `audit-pipeline/extract.mjs`
 
 ## Publishing
 

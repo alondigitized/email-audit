@@ -112,10 +112,11 @@ node site-review.mjs --persona martha
 
 Should produce:
 - New artifact directory `reports/site-artifacts/{today}-site-journey-martha/`
-- Updated `audit-pipeline/published-audits.json` with a new Martha entry
-- New `site/content/audits/{slug}/audit.json` with `persona: "martha"`
-- Git commit + push → Vercel deploy
-- The site's persona selector now shows "All / Walker / Martha"
+- Updated `audit-pipeline/published-audits.json` (daemon-local, gitignored)
+- New row in Postgres `audit` table with `persona = 'martha'`
+- R2 objects under `audits/{slug}/` (step screenshots + `render.png`)
+- Vault markdown at `vaults/martha/audits/{slug}.md`; `vaults/` git-pushed to main
+- The live site renders the new Martha audit on next request (no Vercel redeploy needed)
 
 ### 10. Wait for emails (passive, 1–3 days)
 
