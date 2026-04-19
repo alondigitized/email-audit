@@ -40,6 +40,8 @@ export const reviewSectionsSchema = z
     whats_weak: z.array(z.string()),
     recommendations: z.array(z.string()),
     bottom_line: z.array(z.string()),
+    subject_line: z.array(z.string()),
+    preview_text: z.array(z.string()),
     evidence: z.array(z.string()),
   })
   .partial();
@@ -88,6 +90,7 @@ export const auditDataSchema = z.object({
   persona: z.string().nullable().optional(),
   email: z.object({
     subject: z.string(),
+    preheader: z.string().nullable().optional(),
     from: z.string(),
     from_display_name: z.string(),
     timestamp_iso: z.string().nullable(),

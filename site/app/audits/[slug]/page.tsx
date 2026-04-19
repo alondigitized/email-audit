@@ -291,7 +291,12 @@ export default async function AuditPage({
             </span>
           )}
         </div>
-        <h1 className="text-xl font-bold mt-1 mb-3 break-words">{email.subject}</h1>
+        <h1 className="text-xl font-bold mt-1 mb-1 break-words">{email.subject}</h1>
+        {!isSiteJourney && email.preheader && (
+          <p className="text-muted text-sm mt-0 mb-3 italic break-words">
+            {email.preheader}
+          </p>
+        )}
         <div className="mt-3.5 flex flex-col gap-1 text-sm">
           <div className="flex gap-3">
             <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">{fromLabel}</span>

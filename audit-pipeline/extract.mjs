@@ -53,6 +53,49 @@ export function parseDisplayName(fromAddr) {
   return m ? m[1].trim() : fromAddr;
 }
 
+// Extract the email's preview/preheader text — what inbox clients show
+// next to the subject line. Tries two strategies:
+//   1. Dedicated hidden preheader element (display:none / font-size:0 /
+//      mso-hide:all / color:transparent) near the top of the body. This
+//      is the deliberate preheader — what the sender intended.
+//   2. Fall back to the first visible text in the body, capped at 200
+//      chars — this is what Gmail/iOS will actually render if nothing
+//      dedicated exists, i.e. the "accidental" preheader (often ugly).
+// Returns null if neither yields non-empty text.
+export function extractPreheader(html) {
+  if (!html || typeof html !== 'string') return null;
+
+  const decode = (s) =>
+    s
+      .replace(/&nbsp;|&zwnj;|&zwj;|&#8203;/gi, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  // 1. Hidden preheader span/div. Match common patterns.
+  const hiddenRe =
+    /<(div|span|td|tr|table|p)\b[^>]*style\s*=\s*["'][^"']*(display\s*:\s*none|font-size\s*:\s*0|mso-hide\s*:\s*all|color\s*:\s*transparent|max-height\s*:\s*0|opacity\s*:\s*0)[^"']*["'][^>]*>([\s\S]*?)<\/\1>/i;
+  const m = html.match(hiddenRe);
+  if (m) {
+    const text = decode(m[3].replace(/<[^>]+>/g, ''));
+    if (text && text.length <= 400) return text;
+  }
+
+  // 2. First visible text fallback.
+  const visible = decode(
+    html
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+  );
+  if (!visible) return null;
+  return visible.slice(0, 200);
+}
+
 function stripPreamble(reviewText) {
   const stripped = reviewText.replace(/^\s+/, '');
   if (!stripped) return reviewText;
@@ -90,6 +133,11 @@ const SECTION_HEADINGS = new Map([
   ['subject line analysis', 'subject_line'],
   ['subject line', 'subject_line'],
   ['subject', 'subject_line'],
+  ['preview text analysis', 'preview_text'],
+  ['preview text', 'preview_text'],
+  ['preheader analysis', 'preview_text'],
+  ['preheader', 'preview_text'],
+  ['preheader text', 'preview_text'],
   ['evidence', 'evidence'],
   ['evidence & analysis', 'evidence'],
   ['evidence and analysis', 'evidence'],
@@ -104,6 +152,7 @@ export function parseReviewSections(reviewText) {
     recommendations: [],
     bottom_line: [],
     subject_line: [],
+    preview_text: [],
     evidence: [],
   };
   let current = 'executive_summary';
@@ -162,6 +211,12 @@ export function buildAuditData({ entry, msg, reviewText, qaReport, slug }) {
   const pdfPath = entry?.pdfPath || '';
   const pdfExists = !!pdfPath && fs.existsSync(pdfPath);
   const webviewUrl = readFileSafe(path.join(artifactDir, 'webview-url.txt')).trim();
+  const htmlSource =
+    readFileSafe(path.join(artifactDir, 'message.html')) ||
+    msg?.extracted_html ||
+    msg?.html ||
+    '';
+  const preheader = extractPreheader(htmlSource);
 
   return {
     schema_version: 1,
@@ -170,6 +225,7 @@ export function buildAuditData({ entry, msg, reviewText, qaReport, slug }) {
     persona: entry?.persona ?? null,
     email: {
       subject: msg?.subject || 'Untitled',
+      preheader: preheader || null,
       from: fromAddr,
       from_display_name: parseDisplayName(fromAddr),
       timestamp_iso: dt ? toPyIsoFormat(dt) : null,
