@@ -380,11 +380,11 @@ function MessageBubble({
               {showSources ? "Hide" : "Show"} sources ({sources.length})
             </button>
             {showSources && (
-              <ul className="mt-1.5 text-xs text-muted space-y-0.5">
+              <ul className="mt-1.5 text-xs space-y-0.5">
                 {sources.map((s) => (
                   <li key={s}>
                     <a
-                      className="hover:text-ink"
+                      className="text-sky-700 hover:text-sky-900 underline decoration-sky-300 hover:decoration-sky-600 break-all"
                       href={`/audits/${s}`}
                       target="_blank"
                       rel="noreferrer"
