@@ -40,19 +40,36 @@ export function mediaConfigured() {
 }
 
 /**
- * Upload a local file to R2. Returns the stored key.
+ * Upload a local file to R2. Returns the stored key. Retries up to 3
+ * times with exponential backoff (1s → 2s → 4s) before giving up —
+ * network blips and occasional 5xxs shouldn't fail a whole publish.
+ * Foundation P8: closes the "Case B" partial-state hazard from the
+ * architecture review (R2 silently fails mid-publish, DB row ends up
+ * referencing a key that isn't there).
  */
 export async function putMedia({ filePath, key, contentType = 'image/png' }) {
   const body = fs.readFileSync(filePath);
-  await client().send(
-    new PutObjectCommand({
-      Bucket: r2Bucket(),
-      Key: key,
-      Body: body,
-      ContentType: contentType,
-    }),
-  );
-  return key;
+  const MAX_ATTEMPTS = 3;
+  let lastErr;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    try {
+      await client().send(
+        new PutObjectCommand({
+          Bucket: r2Bucket(),
+          Key: key,
+          Body: body,
+          ContentType: contentType,
+        }),
+      );
+      return key;
+    } catch (err) {
+      lastErr = err;
+      if (attempt === MAX_ATTEMPTS) break;
+      const delay = 1000 * 2 ** (attempt - 1); // 1s, 2s, 4s
+      await new Promise((r) => setTimeout(r, delay));
+    }
+  }
+  throw lastErr;
 }
 
 /**

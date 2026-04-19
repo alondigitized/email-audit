@@ -33,3 +33,6 @@ site/site/
 # daemon-local runtime state.
 site/content/audits/
 audit-pipeline/published-audits.json
+
+# Foundation P8: daemon runtime state should not live in git.
+email-monitor/state.json
