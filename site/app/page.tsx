@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const user = await requireUser();
-  const audits = getAuditIndexForUser(user.personas);
+  const audits = await getAuditIndexForUser(user.personas);
 
   return (
     <>
