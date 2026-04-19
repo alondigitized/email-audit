@@ -16,43 +16,75 @@ import type { AuditSummary } from "@/lib/types";
 import { localDateKey, startOfLocalDay } from "@/lib/dates";
 
 const DAYS = 14;
+const MAX_BRANDS = 6;
+const OTHER_BUCKET = "Other";
 
-// Observable 10 palette — used by Observable Plot and modern D3.
-const SENDER_COLORS = {
-  Skechers: "#4269d0",
-  adidas: "#efb118",
-  "Famous Footwear": "#ff725c",
-  "Shoe Carnival": "#3ca951",
-  DSW: "#a463f2",
-  Other: "#9498a0",
-} as const;
-
-type SenderBucket = keyof typeof SENDER_COLORS;
-const SENDER_ORDER: SenderBucket[] = [
-  "Skechers",
-  "adidas",
-  "Famous Footwear",
-  "Shoe Carnival",
-  "DSW",
-  "Other",
+// Observable 10 palette. First MAX_BRANDS colors go to top senders in
+// alphabetical order; "Other" always gets the neutral gray at the end so
+// tiny long-tail stacks visually fade.
+const PALETTE = [
+  "#4269d0",
+  "#efb118",
+  "#ff725c",
+  "#3ca951",
+  "#a463f2",
+  "#6cc5b0",
+  "#97bbf5",
+  "#ff8ab7",
+  "#9c6b4e",
 ];
+const OTHER_COLOR = "#9498a0";
 
 type DayBucket = {
   date: string;
   label: string;
-} & Record<SenderBucket, number>;
+  [sender: string]: string | number;
+};
 
-function bucketSender(name: string): SenderBucket {
-  const n = (name || "").toLowerCase();
-  if (n.includes("skechers")) return "Skechers";
-  if (n.includes("adidas")) return "adidas";
-  if (n.includes("famous footwear")) return "Famous Footwear";
-  if (n.includes("shoe carnival")) return "Shoe Carnival";
-  if (n.includes("dsw")) return "DSW";
-  return "Other";
+function normalizeSender(name: string | undefined | null): string {
+  return (name ?? "").trim();
 }
 
-function buildData(audits: AuditSummary[]): DayBucket[] {
+// Pick the top-N senders over the DAYS window (email audits only) and
+// return the bucket order ending with "Other". Buckets are sorted
+// alphabetically for stable color assignment across renders.
+function pickSenders(audits: AuditSummary[]): string[] {
+  const today = startOfLocalDay(new Date());
+  const start = new Date(today);
+  start.setDate(start.getDate() - (DAYS - 1));
+
+  const counts = new Map<string, number>();
+  for (const a of audits) {
+    if (a.type && a.type !== "email") continue;
+    if (!a.timestamp_iso) continue;
+    const ts = new Date(a.timestamp_iso);
+    if (Number.isNaN(ts.getTime())) continue;
+    if (ts < start) continue;
+    const key = normalizeSender(a.from_display_name);
+    if (!key) continue;
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+
+  const top = [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, MAX_BRANDS)
+    .map(([name]) => name)
+    .sort((a, b) => a.localeCompare(b));
+
+  return [...top, OTHER_BUCKET];
+}
+
+function colorFor(senderOrder: string[], sender: string): string {
+  if (sender === OTHER_BUCKET) return OTHER_COLOR;
+  const idx = senderOrder.indexOf(sender);
+  return PALETTE[idx % PALETTE.length];
+}
+
+function buildData(
+  audits: AuditSummary[],
+  senderOrder: string[]
+): DayBucket[] {
+  const topSet = new Set(senderOrder.filter((s) => s !== OTHER_BUCKET));
   const today = startOfLocalDay(new Date());
   const start = new Date(today);
   start.setDate(start.getDate() - (DAYS - 1));
@@ -63,14 +95,14 @@ function buildData(audits: AuditSummary[]): DayBucket[] {
     const d = new Date(start);
     d.setDate(d.getDate() + i);
     const key = localDateKey(d);
-    const row = {
+    const row: DayBucket = {
       date: key,
       label: d.toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
       }),
-    } as DayBucket;
-    for (const s of SENDER_ORDER) row[s] = 0;
+    };
+    for (const s of senderOrder) row[s] = 0;
     indexByKey.set(key, out.length);
     out.push(row);
   }
@@ -82,7 +114,9 @@ function buildData(audits: AuditSummary[]): DayBucket[] {
     if (Number.isNaN(ts.getTime())) continue;
     const idx = indexByKey.get(localDateKey(ts));
     if (idx === undefined) continue;
-    out[idx][bucketSender(a.from_display_name)] += 1;
+    const raw = normalizeSender(a.from_display_name);
+    const bucket = raw && topSet.has(raw) ? raw : OTHER_BUCKET;
+    out[idx][bucket] = (out[idx][bucket] as number) + 1;
   }
 
   return out;
@@ -94,9 +128,9 @@ interface Props {
   onSelectDate: (date: string | null) => void;
 }
 
-function dayTotal(d: DayBucket): number {
+function dayTotal(d: DayBucket, senderOrder: string[]): number {
   let sum = 0;
-  for (const s of SENDER_ORDER) sum += d[s];
+  for (const s of senderOrder) sum += d[s] as number;
   return sum;
 }
 
@@ -108,15 +142,19 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const data = buildData(audits);
-  const total = data.reduce((s, d) => s + dayTotal(d), 0);
-  const peak = data.reduce((m, d) => Math.max(m, dayTotal(d)), 0);
-  const totalsBySender = SENDER_ORDER.reduce(
+  const senderOrder = pickSenders(audits);
+  const data = buildData(audits, senderOrder);
+  const total = data.reduce((s, d) => s + dayTotal(d, senderOrder), 0);
+  const peak = data.reduce(
+    (m, d) => Math.max(m, dayTotal(d, senderOrder)),
+    0
+  );
+  const totalsBySender = senderOrder.reduce(
     (acc, s) => {
-      acc[s] = data.reduce((sum, d) => sum + d[s], 0);
+      acc[s] = data.reduce((sum, d) => sum + (d[s] as number), 0);
       return acc;
     },
-    {} as Record<SenderBucket, number>
+    {} as Record<string, number>
   );
 
   function handleBarClick(data: unknown) {
@@ -177,24 +215,24 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
               wrapperStyle={{ fontSize: 12, paddingTop: 4 }}
               iconType="square"
               formatter={(value: string) => {
-                const n = totalsBySender[value as SenderBucket] ?? 0;
+                const n = totalsBySender[value] ?? 0;
                 return `${value} (${n})`;
               }}
             />
-            {SENDER_ORDER.map((sender, i) => (
+            {senderOrder.map((sender, i) => (
               <Bar
                 key={sender}
                 dataKey={sender}
                 stackId="a"
-                fill={SENDER_COLORS[sender]}
+                fill={colorFor(senderOrder, sender)}
                 cursor="pointer"
                 onClick={handleBarClick}
-                radius={i === SENDER_ORDER.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
+                radius={i === senderOrder.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
               >
                 {data.map((d) => (
                   <Cell
                     key={d.date}
-                    fill={fillForBar(d.date, SENDER_COLORS[sender])}
+                    fill={fillForBar(d.date, colorFor(senderOrder, sender))}
                   />
                 ))}
               </Bar>
