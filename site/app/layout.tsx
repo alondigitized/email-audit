@@ -34,7 +34,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <main className="max-w-[980px] mx-auto px-5 pt-8 pb-16 overflow-hidden">
+        <main className="max-w-[980px] mx-auto px-5 pt-8 pb-16 overflow-x-hidden">
           <TopNav
             isAdmin={user?.isAdmin ?? false}
             chatEnabled={chatVisible}
