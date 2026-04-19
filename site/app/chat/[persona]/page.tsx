@@ -33,6 +33,7 @@ export default async function ChatPage({
 
   const sp = await searchParams;
   const rawThreadId = typeof sp.thread === "string" ? sp.thread : null;
+  const composeMode = sp.compose === "1";
 
   const [threads, auditCount] = await Promise.all([
     listThreads(user.id, personaSlug),
@@ -63,11 +64,13 @@ export default async function ChatPage({
     }
   }
 
-  // Mobile layout: show one pane at a time based on whether a thread is
-  // active — a 260px sidebar next to the chat makes the chat unreadable
-  // on phones. Desktop keeps the two-column side-by-side.
-  const listVisibilityClass = threadId ? "hidden md:block" : "block";
-  const chatVisibilityClass = threadId ? "block" : "hidden md:block";
+  // Mobile layout: show one pane at a time. Chat view wins when a thread
+  // is active OR the user tapped "+ New thread" (?compose=1) — otherwise
+  // they'd stay stuck on the thread list with no way to reach the input.
+  // Desktop keeps both panes side-by-side.
+  const inChatView = !!threadId || composeMode;
+  const listVisibilityClass = inChatView ? "hidden md:block" : "block";
+  const chatVisibilityClass = inChatView ? "block" : "hidden md:block";
 
   return (
     <div className="md:grid md:grid-cols-[260px_1fr] md:gap-4 h-[calc(100dvh-180px)] min-h-[500px]">
