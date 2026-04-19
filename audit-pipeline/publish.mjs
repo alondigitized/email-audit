@@ -92,6 +92,34 @@ export async function deleteAuditRow(slug) {
 }
 
 /**
+ * Summaries for a persona's audits, newest first. Used by the vault-writer
+ * to pick "recent history" wikilinks. Shape matches AuditSummary.
+ */
+export async function listAuditSummariesForPersona(personaSlug, limit = 100) {
+  const sql = db();
+  const rows = await sql`
+    SELECT data FROM audit
+    WHERE persona = ${personaSlug}
+    ORDER BY timestamp DESC
+    LIMIT ${limit}
+  `;
+  return rows.map((r) => {
+    const d = r.data;
+    return {
+      slug: d.slug,
+      subject: d.email?.subject ?? '',
+      from_display_name: d.email?.from_display_name ?? '',
+      timestamp_iso: d.email?.timestamp_iso ?? null,
+      score: d.review?.score ?? '',
+      qa_summary: d.qa?.summary ?? null,
+      has_image: !!d.assets?.render_image_key,
+      type: d.type ?? 'email',
+      persona: d.persona ?? null,
+    };
+  });
+}
+
+/**
  * True when DATABASE_URL is present. Callers (daemons today) use this to
  * skip DB writes gracefully in local dev without DB creds — the filesystem
  * publish path still works on its own during dual-write.

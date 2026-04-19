@@ -487,174 +487,93 @@ function updatePublishedManifest(entry) {
   fs.writeFileSync(SITE_MANIFEST, JSON.stringify(filtered, null, 2));
 }
 
-function buildIndexEntriesFromManifest(manifest, siteContent, siteImages) {
-  return manifest
-    .map((entry) => {
-      const auditPath = path.join(siteContent, entry.slug, 'audit.json');
-      if (!fs.existsSync(auditPath)) return null;
-      const ad = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
-      return {
-        slug: ad.slug,
-        subject: ad.email.subject,
-        from_display_name: ad.email.from_display_name,
-        timestamp_iso: ad.email.timestamp_iso,
-        score: ad.review.score,
-        qa_summary: ad.qa?.summary || null,
-        has_image:
-          !!ad.assets?.render_image_key ||
-          fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
-        type: ad.type || 'email',
-        persona: ad.persona || entry.persona || null,
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => (b.timestamp_iso || '').localeCompare(a.timestamp_iso || ''));
-}
+// Phase 4 of the foundation refactor: Postgres is the canonical store for
+// audit data; the site reads from it. This function publishes the single
+// audit we just processed (no manifest scan) — uploads media, upserts the
+// DB row, writes the persona vault note, and git-pushes only the vault
+// markdown. Filesystem audit.json / index.json / manifest.json are runtime
+// artifacts, gitignored.
+async function publishSite({ slug, persona, artifactDir }) {
+  if (!slug || !artifactDir) {
+    throw new Error('publishSite requires { slug, persona, artifactDir }');
+  }
 
-async function publishSite() {
-  // Phase 1: Extract audit-data.json from raw artifacts
+  // Phase 1: the Python extractor builds audit-data.json from raw artifacts
+  // (email audits only — site journeys write their own in site-monitor).
+  // This is a pipeline-internal file; no longer synced to site/content.
   await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
 
-  // Phase 2: Sync content to Next.js site directory for Vercel deploy
   const repoRoot = path.dirname(__dirname);
-  const siteContent = path.join(repoRoot, 'site', 'content', 'audits');
-  const siteImages = path.join(repoRoot, 'site', 'public', 'images', 'audits');
-  const manifest = JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8'));
 
-  for (const entry of manifest) {
-    const slug = entry.slug;
-    const artifactDir = entry.artifactDir;
-    if (!artifactDir || !fs.existsSync(artifactDir)) continue;
-
-    // Upload render.png to R2 first so we can embed the key in audit.json.
-    // Falls through gracefully when R2 isn't configured (local dev without
-    // keys) — site still renders via the legacy /images/audits/ path.
-    const srcPng = path.join(artifactDir, 'email-webview-render.png');
-    let renderKey = null;
-    if (fs.existsSync(srcPng) && mediaConfigured()) {
-      try {
-        renderKey = await putMedia({
-          filePath: srcPng,
-          key: auditMediaKey(slug, 'render.png'),
-          contentType: 'image/png',
-        });
-      } catch (err) {
-        console.warn(`R2 upload failed for ${slug}/render.png:`, err.message);
-      }
-    }
-
-    // Copy audit.json — after injecting the render_image_key so the file we
-    // publish reflects where the image actually lives.
-    const srcAudit = path.join(artifactDir, 'audit-data.json');
-    if (fs.existsSync(srcAudit)) {
-      const destDir = path.join(siteContent, slug);
-      fs.mkdirSync(destDir, { recursive: true });
-      const data = JSON.parse(fs.readFileSync(srcAudit, 'utf8'));
-      if (renderKey) {
-        data.assets = data.assets ?? {};
-        data.assets.render_image_key = renderKey;
-      }
-      // Historic site-journey audits have R2 keys only in the dest audit.json
-      // (backfilled once). Their artifact audit-data.json predates the R2
-      // schema, so without this merge every publishSite pass would strip
-      // the keys again.
-      const destPath = path.join(destDir, 'audit.json');
-      if (fs.existsSync(destPath)) {
-        try {
-          const existing = JSON.parse(fs.readFileSync(destPath, 'utf8'));
-          data.assets = data.assets ?? {};
-          if (!data.assets.render_image_key && existing.assets?.render_image_key) {
-            data.assets.render_image_key = existing.assets.render_image_key;
-          }
-          if (
-            Array.isArray(existing.assets?.journey_steps) &&
-            Array.isArray(data.assets.journey_steps)
-          ) {
-            const prevByStep = new Map(
-              existing.assets.journey_steps.map((s) => [s.step, s]),
-            );
-            for (const step of data.assets.journey_steps) {
-              const prev = prevByStep.get(step.step);
-              if (!prev) continue;
-              if (!step.viewport_screenshot_key && prev.viewport_screenshot_key) {
-                step.viewport_screenshot_key = prev.viewport_screenshot_key;
-              }
-              if (!step.fullpage_screenshot_key && prev.fullpage_screenshot_key) {
-                step.fullpage_screenshot_key = prev.fullpage_screenshot_key;
-              }
-            }
-          }
-        } catch {
-          /* ignore merge errors — fall through to plain write */
-        }
-      }
-      // Validate before writing. Producer-side parse throws on shape
-      // drift — better to fail one audit loudly than ship a malformed
-      // record that the site silently drops downstream.
-      try {
-        auditDataSchema.parse(data);
-      } catch (err) {
-        log('audit.json schema drift — skipping publish', {
-          slug,
-          issues: (err?.issues || []).slice(0, 5),
-        });
-        continue;
-      }
-      fs.writeFileSync(destPath, JSON.stringify(data, null, 2));
-      // Also write the updated shape back to the artifact so rerun-audit works
-      // and subsequent publishSite passes don't need to re-merge.
-      fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
-
-      // Dual-write to Postgres (Phase 2 of the foundation refactor). The
-      // filesystem copy above is still the consumer-facing source of truth
-      // until Phase 3 flips the site. DB upsert is non-fatal here — if it
-      // fails (no creds, network blip), the filesystem write is still good.
-      if (dbConfigured()) {
-        try {
-          await upsertAuditRow({ slug, data });
-        } catch (err) {
-          log('db upsert failed (non-fatal dual-write)', {
-            slug,
-            error: String(err).slice(0, 300),
-          });
-        }
-      }
-    }
+  if (!fs.existsSync(artifactDir)) {
+    log('publishSite: artifactDir missing, skipping', { slug, artifactDir });
+    return;
   }
 
-  // Build index.json for the Next.js site
-  const indexEntries = buildIndexEntriesFromManifest(manifest, siteContent, siteImages);
-  fs.writeFileSync(path.join(siteContent, 'index.json'), JSON.stringify(indexEntries, null, 2));
-
-  // Phase 2b: Write each audit's markdown note into the persona brain vault.
-  // Wraps in try/catch because vault writes must never block the site publish —
-  // the user-facing product is the Vercel site, the vault is a back-office artifact.
-  for (const entry of manifest) {
-    const auditPath = path.join(siteContent, entry.slug, 'audit.json');
-    if (!fs.existsSync(auditPath)) continue;
-    const persona = entry.persona;
-    if (!persona) continue;
+  // Upload render.png to R2 so we can embed its key in the audit payload.
+  const srcPng = path.join(artifactDir, 'email-webview-render.png');
+  let renderKey = null;
+  if (fs.existsSync(srcPng) && mediaConfigured()) {
     try {
-      const auditData = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
-      writeVaultNote({
-        auditData,
-        personaSlug: persona,
-        repoRoot,
-        siteIndex: indexEntries,
+      renderKey = await putMedia({
+        filePath: srcPng,
+        key: auditMediaKey(slug, 'render.png'),
+        contentType: 'image/png',
       });
     } catch (err) {
-      console.warn(`vault write failed for ${entry.slug}:`, err.message);
+      log('R2 upload failed', { slug, error: err.message });
     }
   }
 
-  // Phase 3: Git push to main (triggers Vercel deploy)
-  const ghToken = process.env.GH_TOKEN || '';
-  if (!ghToken) throw new Error('Missing GH_TOKEN for git publish');
+  const srcAudit = path.join(artifactDir, 'audit-data.json');
+  if (!fs.existsSync(srcAudit)) {
+    log('publishSite: no artifact audit-data.json', { slug });
+    return;
+  }
+  const data = JSON.parse(fs.readFileSync(srcAudit, 'utf8'));
+  if (renderKey) {
+    data.assets = data.assets ?? {};
+    data.assets.render_image_key = renderKey;
+  }
+  // Validate before persisting. Schema drift should fail one audit loudly
+  // rather than silently ship a malformed record into the DB.
+  auditDataSchema.parse(data);
 
-  // Images no longer published via git — they live in R2 now. Only text
-  // content (audit.json, manifest, vaults) needs to be committed.
-  const pushMain = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add site/content site/public/pdfs audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Update audit content" && git push origin main)`;
-  await execFileAsync('/bin/zsh', ['-lc', pushMain], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
+  // Persist the merged shape back to the artifact so rerun-audit works.
+  fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
+
+  if (!dbConfigured()) {
+    log('DATABASE_URL not set — publish finished without DB upsert', { slug });
+    return;
+  }
+  await upsertAuditRow({ slug, data });
+
+  // Phase 2: persona brain vault note + embedding. Wrapped because vault
+  // writes should never block the critical path (the DB write is what
+  // the user-facing site reads).
+  try {
+    await writeVaultNote({
+      auditData: data,
+      personaSlug: persona,
+      repoRoot,
+    });
+  } catch (err) {
+    log('vault write failed (non-fatal)', { slug, error: err.message });
+  }
+
+  // Phase 3: git push the vault markdown. Site no longer needs to redeploy
+  // because audit content is in Postgres — Vercel only rebuilds when actual
+  // code changes. Vault notes stay in git as the persona-brain audit trail.
+  const ghToken = process.env.GH_TOKEN || '';
+  if (!ghToken) {
+    log('GH_TOKEN not set — skipping vault push', { slug });
+    return;
+  }
+  const pushCmd = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "vault: update note for ${slug}" && git push origin main)`;
+  await execFileAsync('/bin/zsh', ['-lc', pushCmd], {
+    maxBuffer: 1024 * 1024 * 50,
+    env: { ...process.env, GH_TOKEN: ghToken },
+  });
 }
 
 async function fetchAllMessages(client, inboxId, inboxState) {
@@ -773,7 +692,11 @@ async function processMessage(client, state, inboxId, persona, message, source =
     });
     let published = false;
     try {
-      await publishSite();
+      await publishSite({
+        slug: artifacts.slug,
+        persona,
+        artifactDir: artifacts.dir,
+      });
       published = true;
     } catch (err) {
       log('site publish failed (non-fatal)', { id, inbox: inboxId, error: String(err).slice(0, 500) });

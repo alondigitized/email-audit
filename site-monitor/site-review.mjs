@@ -792,99 +792,57 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
     }
   }
 
-  // Copy audit.json — injecting the R2 keys per step + hero before we write.
+  // Read the artifact audit-data.json (built in JS earlier in this run),
+  // inject R2 keys, validate, then upsert to Postgres. Site reads from
+  // the DB (Phase 3 of the foundation refactor).
   const srcAudit = path.join(artifactDir, 'audit-data.json');
-  if (fs.existsSync(srcAudit)) {
-    const destDir = path.join(siteContent, slug);
-    fs.mkdirSync(destDir, { recursive: true });
-    const data = JSON.parse(fs.readFileSync(srcAudit, 'utf8'));
-    data.assets = data.assets ?? {};
-    if (renderImageKey) data.assets.render_image_key = renderImageKey;
-    if (Array.isArray(data.assets.journey_steps)) {
-      for (const step of data.assets.journey_steps) {
-        if (step.viewport_screenshot && stepKeys[step.viewport_screenshot]) {
-          step.viewport_screenshot_key = stepKeys[step.viewport_screenshot];
-        }
-        if (step.fullpage_screenshot && stepKeys[step.fullpage_screenshot]) {
-          step.fullpage_screenshot_key = stepKeys[step.fullpage_screenshot];
-        }
+  if (!fs.existsSync(srcAudit)) {
+    throw new Error(`publishSite: no audit-data.json at ${srcAudit}`);
+  }
+  const data = JSON.parse(fs.readFileSync(srcAudit, 'utf8'));
+  data.assets = data.assets ?? {};
+  if (renderImageKey) data.assets.render_image_key = renderImageKey;
+  if (Array.isArray(data.assets.journey_steps)) {
+    for (const step of data.assets.journey_steps) {
+      if (step.viewport_screenshot && stepKeys[step.viewport_screenshot]) {
+        step.viewport_screenshot_key = stepKeys[step.viewport_screenshot];
       }
-    }
-    // Validate before writing — producer-side schema parse throws on drift.
-    // We rethrow because this daemon processes one audit per run, so the
-    // whole run should fail loud rather than ship a bad audit.
-    try {
-      auditDataSchema.parse(data);
-    } catch (err) {
-      log('audit.json schema drift — aborting publish', {
-        slug,
-        issues: (err?.issues || []).slice(0, 5),
-      });
-      throw err;
-    }
-    fs.writeFileSync(path.join(destDir, 'audit.json'), JSON.stringify(data, null, 2));
-    fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
-
-    // Dual-write to Postgres (Phase 2 of the foundation refactor). Non-
-    // fatal — the filesystem copy is still consumer-facing until Phase 3.
-    if (dbConfigured()) {
-      try {
-        await upsertAuditRow({ slug, data });
-      } catch (err) {
-        log('db upsert failed (non-fatal dual-write)', {
-          slug,
-          error: String(err).slice(0, 300),
-        });
+      if (step.fullpage_screenshot && stepKeys[step.fullpage_screenshot]) {
+        step.fullpage_screenshot_key = stepKeys[step.fullpage_screenshot];
       }
     }
   }
+  // Fail loud on schema drift — one bad run beats shipping a broken audit.
+  auditDataSchema.parse(data);
 
-  // Rebuild index.json
-  const manifest = JSON.parse(fs.readFileSync(SITE_MANIFEST, 'utf8'));
-  const indexEntries = manifest
-    .map(entry => {
-      const auditPath = path.join(siteContent, entry.slug, 'audit.json');
-      if (!fs.existsSync(auditPath)) return null;
-      const ad = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
-      return {
-        slug: ad.slug,
-        subject: ad.email.subject,
-        from_display_name: ad.email.from_display_name,
-        timestamp_iso: ad.email.timestamp_iso,
-        score: ad.review.score,
-        qa_summary: ad.qa?.summary || null,
-        has_image: !!(ad.assets?.render_image_key) || fs.existsSync(path.join(siteImages, entry.slug, 'render.png')),
-        type: ad.type || 'email',
-        persona: ad.persona || null,
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => (b.timestamp_iso || '').localeCompare(a.timestamp_iso || ''));
-  fs.writeFileSync(path.join(siteContent, 'index.json'), JSON.stringify(indexEntries, null, 2));
+  // Persist the merged shape back to the artifact so rerun works later.
+  fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
 
-  // Phase 2b: Write the audit's markdown note into the persona brain vault.
+  if (!dbConfigured()) {
+    throw new Error('DATABASE_URL required — audit data has no canonical store otherwise');
+  }
+  await upsertAuditRow({ slug, data });
+
+  // Persona brain vault note + embedding. Non-fatal — the DB write above
+  // is what the user-facing site reads.
   try {
-    const auditPath = path.join(siteContent, slug, 'audit.json');
-    if (fs.existsSync(auditPath)) {
-      const auditData = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
-      if (auditData.persona) {
-        writeVaultNote({
-          auditData,
-          personaSlug: auditData.persona,
-          repoRoot,
-          previousScore: previousSummary?.score ?? null,
-          siteIndex: indexEntries,
-        });
-      }
+    if (data.persona) {
+      await writeVaultNote({
+        auditData: data,
+        personaSlug: data.persona,
+        repoRoot,
+        previousScore: previousSummary?.score ?? null,
+      });
     }
   } catch (err) {
     log('Vault write failed (non-fatal)', { error: String(err).slice(0, 300) });
   }
 
-  // Phase 3: Git push
-  if (!GH_TOKEN) { log('No GH_TOKEN — skipping git push'); return; }
-  // Images live in R2 now — only text goes to git.
-  const pushCmd = `cd "${repoRoot}" && git add site/content audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Add site journey: ${slug}" && git push origin main)`;
+  // Git push the vault markdown only. Audit content lives in Postgres, so
+  // Vercel doesn't need to redeploy when a new audit lands — it picks up
+  // the new row on the next request.
+  if (!GH_TOKEN) { log('No GH_TOKEN — skipping vault push'); return; }
+  const pushCmd = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "vault: site journey ${slug}" && git push origin main)`;
   await execFileAsync('/bin/zsh', ['-lc', pushCmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN } });
 }
 

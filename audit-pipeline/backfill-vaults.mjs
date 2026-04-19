@@ -13,7 +13,7 @@ const REPO = path.resolve(__dirname, '..');
 const CONTENT = path.join(REPO, 'site', 'content', 'audits');
 const INDEX = path.join(CONTENT, 'index.json');
 
-function main() {
+async function main() {
   if (!fs.existsSync(INDEX)) {
     console.error(`no index.json at ${INDEX}`);
     process.exit(1);
@@ -41,7 +41,7 @@ function main() {
     }
     try {
       const audit = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
-      writeVaultNote({
+      await writeVaultNote({
         auditData: audit,
         personaSlug: entry.persona,
         repoRoot: REPO,
@@ -57,4 +57,7 @@ function main() {
   console.log(`\ndone. ${wrote} written, ${skipped} skipped, ${failed} failed.`);
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

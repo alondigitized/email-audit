@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { embedAndStoreAudit } from './embed.mjs';
+import { listAuditSummariesForPersona, dbConfigured } from './publish.mjs';
 
 /**
  * @param {object} args
@@ -20,7 +21,7 @@ import { embedAndStoreAudit } from './embed.mjs';
  *                                    compute "Recent history" wikilinks. If omitted, the writer will
  *                                    read it from disk.
  */
-export function writeVaultNote({
+export async function writeVaultNote({
   auditData,
   personaSlug,
   repoRoot,
@@ -37,7 +38,7 @@ export function writeVaultNote({
   const vaultDir = path.join(repoRoot, 'vaults', personaSlug, 'audits');
   fs.mkdirSync(vaultDir, { recursive: true });
 
-  const index = siteIndex ?? readSiteIndex(repoRoot);
+  const index = siteIndex ?? (await readSiteIndex(repoRoot, personaSlug));
   const recentHistory = pickRecentHistory(index, auditData, personaSlug);
 
   const md = buildMarkdown(auditData, personaSlug, previousScore, recentHistory);
@@ -57,7 +58,18 @@ export function writeVaultNote({
 
 // ---------------------------------------------------------------------------
 
-function readSiteIndex(repoRoot) {
+// Prefers the DB as the authoritative source of the site index (Phase 3 of
+// the foundation refactor moved audits to Postgres). Falls back to the
+// legacy filesystem index for the window where a caller runs without DB
+// creds — returns [] if neither works, leaving "recent history" empty.
+async function readSiteIndex(repoRoot, personaSlug) {
+  if (dbConfigured()) {
+    try {
+      return await listAuditSummariesForPersona(personaSlug, 100);
+    } catch (err) {
+      console.warn(`readSiteIndex: DB query failed, falling back to filesystem: ${err.message}`);
+    }
+  }
   const p = path.join(repoRoot, 'site', 'content', 'audits', 'index.json');
   if (!fs.existsSync(p)) return [];
   try {

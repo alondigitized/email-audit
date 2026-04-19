@@ -161,15 +161,19 @@ async function cleanup(slug, messageId) {
   // Re-extract audit-data.json (idempotent — picks up manifest changes)
   await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: REPO_ROOT, maxBuffer: 1024 * 1024 * 20 });
 
-  // Rebuild index.json for Next.js
-  const siteIdx = JSON.parse(fs.readFileSync(path.join(SITE_CONTENT, 'index.json'), 'utf8'));
-  const cleanIdx = siteIdx.filter((e) => e.slug !== slug);
-  fs.writeFileSync(path.join(SITE_CONTENT, 'index.json'), JSON.stringify(cleanIdx, null, 2));
+  // Legacy index.json cleanup — only relevant until Phase 4 removes the file.
+  const idxPath = path.join(SITE_CONTENT, 'index.json');
+  if (fs.existsSync(idxPath)) {
+    try {
+      const siteIdx = JSON.parse(fs.readFileSync(idxPath, 'utf8'));
+      fs.writeFileSync(idxPath, JSON.stringify(siteIdx.filter((e) => e.slug !== slug), null, 2));
+    } catch { /* ignore malformed legacy file */ }
+  }
 
   // Git push cleanup
   const ghToken = process.env.GH_TOKEN || '';
   if (ghToken) {
-    const cmd = `cd "${REPO_ROOT}" && git add site/content site/public/images/audits audit-pipeline/published-audits.json vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
+    const cmd = `cd "${REPO_ROOT}" && git add vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "Clean up pipeline verification test" && git push origin main)`;
     await execFileAsync('/bin/zsh', ['-lc', cmd], { maxBuffer: 1024 * 1024 * 50, env: { ...process.env, GH_TOKEN: ghToken } });
   }
 

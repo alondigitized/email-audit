@@ -28,3 +28,8 @@ Thumbs.db
 email-monitor/logs/
 *.log
 site/site/
+
+# Foundation refactor P4: audit data lives in Postgres. These paths are
+# daemon-local runtime state.
+site/content/audits/
+audit-pipeline/published-audits.json
