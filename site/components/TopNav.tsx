@@ -45,8 +45,8 @@ export function TopNav({
 
   return (
     <>
-      <div className="mb-5 pt-2">
-        <Link href="/" className="inline-block w-full">
+      <div className="mb-5 pt-2 text-center">
+        <Link href="/" className="inline-block">
           <Wordmark />
         </Link>
       </div>
