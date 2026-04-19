@@ -6,7 +6,7 @@ import { PERSONA_BY_SLUG } from "@/lib/personas";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Chat · Experience Intelligence",
+  title: "Chat · etell",
 };
 
 export default async function ChatIndex() {

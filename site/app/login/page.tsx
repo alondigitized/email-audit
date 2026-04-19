@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import LoginForm from "./LoginForm";
 import { currentUser } from "@/lib/dal";
+import { Wordmark } from "@/components/Wordmark";
 
 type Search = { [key: string]: string | string[] | undefined };
 
@@ -34,7 +35,9 @@ export default async function LoginPage({
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <div className="bg-white border border-gray-200 rounded-[20px] p-10 max-w-[360px] w-[90%] text-center shadow-sm">
-        <h2 className="mt-0 mb-2 text-ink">Experience Intelligence</h2>
+        <div className="mb-5">
+          <Wordmark size="md" />
+        </div>
         {sent ? (
           <>
             <p className="text-muted text-sm mb-5">

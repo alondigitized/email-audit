@@ -14,7 +14,7 @@ export async function sendMagicLinkEmail(args: Args): Promise<void> {
   const { error } = await resend.emails.send({
     from,
     to,
-    subject: "Your Experience Intelligence sign-in link",
+    subject: "Your etell sign-in link",
     html: renderHtml({ url, expiresInMinutes }),
     text: renderText({ url, expiresInMinutes }),
     headers: {
@@ -38,6 +38,7 @@ function renderHtml({
   const accent = "#111827"; // near-black button
   const muted = "#6b7280";
   const line = "#e5e7eb";
+  const dot = "#0284c7"; // sky-600 brand accent
 
   return `<!doctype html>
 <html lang="en">
@@ -47,8 +48,9 @@ function renderHtml({
         <td align="center">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:#ffffff;border:1px solid ${line};border-radius:16px;overflow:hidden;">
             <tr>
-              <td style="padding:32px 32px 8px 32px;">
-                <div style="font-size:22px;font-weight:700;color:${brand};">Experience Intelligence</div>
+              <td align="center" style="padding:32px 32px 8px 32px;">
+                <div style="font-size:30px;font-weight:600;letter-spacing:-0.02em;color:${brand};line-height:1;">etell<span style="color:${dot};">.</span></div>
+                <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:${muted};margin-top:6px;">Experience Intelligence</div>
               </td>
             </tr>
             <tr>
@@ -59,7 +61,7 @@ function renderHtml({
             <tr>
               <td style="padding:24px 32px;">
                 <a href="${url}" style="display:inline-block;background:${accent};color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 20px;border-radius:10px;">
-                  Sign in to Experience Intelligence
+                  Sign in to etell
                 </a>
               </td>
             </tr>
@@ -76,7 +78,7 @@ function renderHtml({
             </tr>
           </table>
           <div style="margin-top:16px;font-size:12px;color:${muted};">
-            Experience Intelligence · AI reviews of brand experiences
+            etell · Experience Intelligence · AI reviews of brand experiences
           </div>
         </td>
       </tr>
@@ -93,7 +95,7 @@ function renderText({
   expiresInMinutes: number;
 }): string {
   return [
-    "Experience Intelligence — sign-in link",
+    "etell — sign-in link",
     "",
     `Click to sign in (expires in ${expiresInMinutes} minutes, single use):`,
     url,

@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Experience Intelligence",
+  title: "etell · Experience Intelligence",
   description: "AI-powered reviews of brand experiences",
 };
 

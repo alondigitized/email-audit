@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignOutButton } from "./SignOutButton";
+import { Wordmark } from "./Wordmark";
 
 type Tab = { href: string; label: string; suffix?: string };
 
@@ -44,14 +45,9 @@ export function TopNav({
 
   return (
     <>
-      <div className="mb-5 pt-2 text-center">
-        <Link href="/" className="inline-block">
-          <div className="text-4xl font-semibold tracking-tight leading-none">
-            etell<span className="text-sky-600">.</span>
-          </div>
-          <div className="text-muted text-[10px] uppercase tracking-[0.22em] mt-1.5">
-            Experience Intelligence
-          </div>
+      <div className="mb-5 pt-2">
+        <Link href="/" className="inline-block w-full">
+          <Wordmark />
         </Link>
       </div>
       <nav className="flex items-center justify-between mb-6">

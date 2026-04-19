@@ -13,7 +13,7 @@ import { AppsSection } from "./AppsSection";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Admin · Experience Intelligence",
+  title: "Admin · etell",
 };
 
 function fmtDate(d: Date | null): string {
