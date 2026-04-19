@@ -8,6 +8,7 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import { extractAll } from '../audit-pipeline/extract.mjs';
 
 const execFileAsync = promisify(execFile);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -18,8 +19,6 @@ const CLAUDE_EFFORT = process.env.CLAUDE_EFFORT || 'high';
 const CLAUDE_BIN = process.env.CLAUDE_BIN || '/Users/alontsang/.local/bin/claude';
 const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
 const PDF_SCRIPT = path.join(__dirname, 'generate_review_pdf.py');
-const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
-const EXTRACT_SCRIPT = path.join(PIPELINE_DIR, 'extract_audit_data.py');
 
 function shorten(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
 
@@ -191,5 +190,5 @@ for (const a of audits) {
 
 // Re-extract audit-data.json from refreshed artifacts
 console.log('\nRe-extracting audit data...');
-await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+await extractAll();
 console.log('Done.');

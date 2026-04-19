@@ -35,11 +35,12 @@ Previous day's score is embedded in the prompt for **regression detection**.
 ## Publishing
 
 Same pipeline as email-monitor (see `email-monitor/CLAUDE.md`):
-1. Build `audit-data.json` directly in JS (no Python extractor — site journeys have no `message.json`)
-2. Update `audit-pipeline/published-audits.json` manifest
-3. Run `audit-pipeline/extract_audit_data.py` — refreshes audit-data.json for any newly-processed *email* entries (skips site entries)
-4. Sync this audit's `audit-data.json` + screenshots to `site/content/audits/` and `site/public/images/audits/`
-5. Git push to `main` (triggers Vercel deploy)
+1. Build `audit-data.json` directly in JS (site journeys have no `message.json`, so the extract step is a no-op for them).
+2. Update `audit-pipeline/published-audits.json` (gitignored local state).
+3. Upload each step screenshot to R2 (`audits/{slug}/step-NN-*.png`) with 3-try backoff.
+4. Zod-validate + upsert the audit row into Postgres (`audit-pipeline/publish.mjs`).
+5. Write the persona vault note + embedding.
+6. `git push vaults/` — vault markdown only. Site reads audits from Postgres.
 
 Audits appear on the site with `type: "site"` (vs `type: "email"` for email audits).
 

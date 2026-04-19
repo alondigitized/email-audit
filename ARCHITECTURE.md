@@ -24,12 +24,16 @@ daemons produce the content:
 
 Both share `audit-pipeline/`:
 
-- `audit-pipeline/extract_audit_data.py` — converts raw artifacts → `audit-data.json` (used only by email-monitor; site-monitor builds its own in JS)
-- `audit-pipeline/published-audits.json` — unified manifest (read+written by both)
+- `audit-pipeline/extract.mjs` — converts raw artifacts → `audit-data.json` (used only by email-monitor; site-monitor builds its own in JS). Ported from Python in foundation P5.
+- `audit-pipeline/publish.mjs` — shared DB writer (`upsertAuditRow`) + media-key helpers.
+- `audit-pipeline/media.mjs` — R2 upload with retry.
+- `audit-pipeline/vault-writer.mjs` — writes per-persona vault markdown + embedding.
+- `audit-pipeline/published-audits.json` — daemon-local manifest (gitignored).
 
-After producing an `audit-data.json` per artifact, the daemons sync it to
-`site/content/audits/{slug}/audit.json` and `site/public/images/audits/{slug}/render.png`,
-then `git push origin main`. Vercel handles the deploy.
+After producing `audit-data.json`, the daemons upload media to R2, upsert the
+audit into Postgres (`audit` table), write a vault markdown note, and
+`git push vaults/` to main. The live site reads audits from Postgres on
+request — Vercel does NOT redeploy on each new audit.
 
 **To change daemon code, you must restart its LaunchAgent** — both daemons run
 in-memory until restarted. See `email-monitor/CLAUDE.md` and
@@ -118,14 +122,17 @@ flowchart LR
     end
 
     subgraph EA["audit-pipeline/ — shared by both monitors"]
-      GENSITE["extract_audit_data.py<br/>(raw artifacts → audit-data.json)"]
-      MANIFEST["published-audits.json<br/>(unified manifest, email + site)"]
+      GENSITE["extract.mjs<br/>(raw artifacts → audit-data.json)"]
+      MANIFEST["published-audits.json<br/>(daemon-local manifest, gitignored)"]
+      PUBLISH["publish.mjs<br/>upsert into Postgres audit table"]
+      MEDIA["media.mjs<br/>upload to R2"]
+      VAULT["vault-writer.mjs<br/>persona markdown + pgvector embed"]
     end
 
     REPORTS[("reports/<br/>email-artifacts/<br/>site-artifacts/")]
 
     subgraph SITE["site/ — Next.js, deployed to Vercel"]
-      NEXT["Next.js app<br/>components/Gate.tsx<br/>content/audits/{slug}/<br/>public/images/audits/{slug}/"]
+      NEXT["Next.js app<br/>lib/audits.ts reads from Neon audit table<br/>lib/storage/r2.ts signs R2 URLs at render"]
     end
   end
 
@@ -261,15 +268,16 @@ Line conventions:
 - **Media attachments** from Telegram land in `media/inbound/`. Voice notes
   already have a `.ogg.txt` transcript written alongside the audio by whatever
   transcription step runs in the ingest path.
-- **Email-monitor publishing is git-driven.** Every processed email ends with
-  a commit + push to `main`; Vercel picks it up and redeploys the Next.js site.
-  The site itself stores no state — everything comes from
-  `content/audits/{slug}/audit.json` + `public/images/audits/{slug}/`.
+- **Email-monitor publishing is Postgres-driven.** Each processed email upserts
+  into the Neon `audit` table, uploads media to R2, and writes a vault
+  markdown note. Only the vault commit goes to git; Vercel does NOT
+  redeploy on each new audit (the site reads from the DB on request).
 - **Site-monitor is idempotent per day.** It checks
-  `audit-pipeline/published-audits.json` for today's slug before running; won't
-  double-publish if relaunched.
-- **The site is gated** client-side by a SHA-256 password check in
-  `sessionStorage` (`components/Gate.tsx`).
+  `audit-pipeline/published-audits.json` (daemon-local) for today's slug before
+  running; won't double-publish if relaunched.
+- **The site is gated** server-side by Auth.js v5 magic-link in `site/auth.ts`;
+  `site/proxy.ts` enforces the session on every request. Allowlist-only (no
+  self-signup).
 
 ## Source files this was derived from
 

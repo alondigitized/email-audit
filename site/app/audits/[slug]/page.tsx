@@ -49,6 +49,53 @@ function TwoColLayout({
   );
 }
 
+// Shared layout for both tab panes. Site journeys get a 2-col grid with
+// a step gallery on the right; email audits get the TwoColLayout with
+// the hero image. `markdown === null` is the "technical tab, no extra
+// content" case — renders an empty placeholder so the grid columns stay
+// aligned.
+function ReviewPane({
+  markdown,
+  isSiteJourney,
+  hasImage,
+  heroUrl,
+  webviewUrl,
+  journeySteps,
+  stepUrls,
+}: {
+  markdown: string | null;
+  isSiteJourney: boolean;
+  hasImage: boolean;
+  heroUrl: string | null;
+  webviewUrl: string | null | undefined;
+  journeySteps: JourneyStep[];
+  stepUrls: Record<number, string | null>;
+}) {
+  const card = markdown ? (
+    <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
+      <ReviewContent markdown={markdown} />
+    </div>
+  ) : (
+    <div />
+  );
+
+  if (isSiteJourney) {
+    return (
+      <div className="grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1">
+        {card}
+        <JourneyGallery steps={journeySteps} stepUrls={stepUrls} />
+      </div>
+    );
+  }
+  return (
+    <TwoColLayout
+      hasImage={hasImage}
+      left={card}
+      right={<EmailImage imageUrl={heroUrl} webviewUrl={webviewUrl} />}
+    />
+  );
+}
+
 /**
  * Resolve an audit's image to a URL. Prefers an R2 signed URL when a key
  * is present on the audit; otherwise falls back to the legacy
@@ -272,22 +319,15 @@ export default async function AuditPage({
           {
             id: "content",
             label: "Content Review",
-            content: isSiteJourney ? (
-              <div className="grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1">
-                <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
-                  <ReviewContent markdown={content} />
-                </div>
-                <JourneyGallery steps={journeySteps} stepUrls={stepUrls} />
-              </div>
-            ) : (
-              <TwoColLayout
+            content: (
+              <ReviewPane
+                markdown={content}
+                isSiteJourney={isSiteJourney}
                 hasImage={hasImage}
-                left={
-                  <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
-                    <ReviewContent markdown={content} />
-                  </div>
-                }
-                right={<EmailImage imageUrl={heroUrl} webviewUrl={assets.webview_url} />}
+                heroUrl={heroUrl}
+                webviewUrl={assets.webview_url}
+                journeySteps={journeySteps}
+                stepUrls={stepUrls}
               />
             ),
           },
@@ -296,32 +336,15 @@ export default async function AuditPage({
             label: "Technical",
             content: (
               <div className="flex flex-col gap-5">
-                {isSiteJourney ? (
-                  <div className="grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1">
-                    {technical ? (
-                      <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
-                        <ReviewContent markdown={technical} />
-                      </div>
-                    ) : (
-                      <div />
-                    )}
-                    <JourneyGallery steps={journeySteps} stepUrls={stepUrls} />
-                  </div>
-                ) : (
-                  <TwoColLayout
-                    hasImage={hasImage}
-                    left={
-                      technical ? (
-                        <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
-                          <ReviewContent markdown={technical} />
-                        </div>
-                      ) : (
-                        <div />
-                      )
-                    }
-                    right={<EmailImage imageUrl={heroUrl} webviewUrl={assets.webview_url} />}
-                  />
-                )}
+                <ReviewPane
+                  markdown={technical}
+                  isSiteJourney={isSiteJourney}
+                  hasImage={hasImage}
+                  heroUrl={heroUrl}
+                  webviewUrl={assets.webview_url}
+                  journeySteps={journeySteps}
+                  stepUrls={stepUrls}
+                />
                 {perfSteps.length > 0 && <PerfTable steps={perfSteps} />}
                 <QaCard qa={qa} />
               </div>

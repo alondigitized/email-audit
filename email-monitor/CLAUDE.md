@@ -12,15 +12,17 @@ Autonomous daemon that polls an AgentMail inbox, generates AI reviews of marketi
 ## Pipeline (per email)
 
 ```
-AgentMail inbox (walker@agentmail.to)
+AgentMail inbox (walker@agentmail.to, martha.stroll@agentmail.to, ...)
   -> Save artifacts (HTML, text, URLs, webview URL)
-  -> Screenshot (Swift) + QA checks (Python) [parallel]
-  -> Content review (Claude, from screenshot) + Technical review (Claude, from HTML+QA) [parallel]
+  -> Screenshot (Swift) + QA checks (Python qa_checks.py) [parallel]
+  -> Content review (Claude, from screenshot) + Technical review (Claude, HTML+QA) [parallel]
   -> Merge reviews into review.txt
-  -> Update audit-pipeline/published-audits.json manifest
-  -> Run audit-pipeline/extract_audit_data.py (produces audit-data.json per artifact)
-  -> Sync audit-data.json + render.png to site/content/audits/{slug}/
-  -> git push main (triggers Vercel deploy of site/)
+  -> Update audit-pipeline/published-audits.json (gitignored runtime state)
+  -> extractAll() (audit-pipeline/extract.mjs — produces audit-data.json per artifact)
+  -> Upload render.png to R2 (audit-pipeline/media.mjs, 3-try backoff)
+  -> Upsert audit row into Postgres (audit-pipeline/publish.mjs)
+  -> Write persona vault markdown (vaults/{persona}/audits/{slug}.md)
+  -> git push vaults/ to main   (vault markdown only — site reads from DB)
   -> Mark as processed in state.json
 ```
 
@@ -84,13 +86,18 @@ Each processed email gets a directory in `reports/email-artifacts/{date}-{slug}/
 
 ## Publishing
 
-The live site is the Next.js app in `site/` (deployed to Vercel at `email-audit-weld.vercel.app`). Publishing flow:
+The live site is the Next.js app in `site/` (deployed to Vercel at `etell.app`). Publishing flow (post-foundation-refactor):
 
-1. `audit-pipeline/extract_audit_data.py` reads `audit-pipeline/published-audits.json`, parses each entry's `review.txt` + `qa-report.json`, and writes `audit-data.json` into the artifact directory.
-2. `publishSite()` in `index.mjs` copies each `audit-data.json` → `site/content/audits/{slug}/audit.json` and `email-webview-render.png` → `site/public/images/audits/{slug}/render.png`, then rebuilds `site/content/audits/index.json`.
-3. Git push to `main` triggers a Vercel deploy. The site reads only from `site/content/audits/` and `site/public/images/audits/` — no other state.
+1. `extractAll()` (audit-pipeline/extract.mjs) parses each artifact's `review.txt` + `qa-report.json` into `audit-data.json` inside the artifact dir.
+2. `publishSite({slug, persona, artifactDir})` in `index.mjs`:
+   - Uploads `render.png` to R2 (`audits/{slug}/render.png`).
+   - Validates `audit-data.json` against the shared zod schema (`site/lib/schema/audit.mjs`).
+   - Upserts the row into the Postgres `audit` table via `audit-pipeline/publish.mjs`.
+   - Writes the persona vault note (`vaults/{persona}/audits/{slug}.md`) + best-effort embedding.
+   - `git push vaults/` — vault markdown is the only thing going to git. Vercel doesn't redeploy on new audits; site reads from Postgres on request.
+3. Site reads audits via Drizzle in `site/lib/audits.ts`; R2 keys are resolved to short-lived signed URLs at render time.
 
-**Shared with site-monitor:** the manifest and extractor in `audit-pipeline/` are also used by `site-monitor/site-review.mjs`. Site-journey entries skip the Python extractor (site-monitor builds its own `audit-data.json` directly in JS).
+**Shared with site-monitor:** `audit-pipeline/{extract,publish,media,vault-writer}.mjs`. Site journeys build their own `audit-data.json` directly in JS (no extract needed).
 
 ## Debugging
 

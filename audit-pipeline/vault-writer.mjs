@@ -17,9 +17,9 @@ import { listAuditSummariesForPersona, dbConfigured } from './publish.mjs';
  * @param {string} args.personaSlug   'walker' | 'martha' | ...
  * @param {string} args.repoRoot      Absolute path to the repo root (parent of vaults/).
  * @param {string|null} [args.previousScore]  Optional, for site journeys — from site-monitor/history.
- * @param {object[]} [args.siteIndex] Optional, full site/content/audits/index.json content. Used to
- *                                    compute "Recent history" wikilinks. If omitted, the writer will
- *                                    read it from disk.
+ * @param {object[]} [args.siteIndex] Optional list of AuditSummary rows for the persona. Used to
+ *                                    compute "Recent history" wikilinks. If omitted, the writer
+ *                                    queries Postgres for the persona's audits directly.
  */
 export async function writeVaultNote({
   auditData,
@@ -58,23 +58,16 @@ export async function writeVaultNote({
 
 // ---------------------------------------------------------------------------
 
-// Prefers the DB as the authoritative source of the site index (Phase 3 of
-// the foundation refactor moved audits to Postgres). Falls back to the
-// legacy filesystem index for the window where a caller runs without DB
-// creds — returns [] if neither works, leaving "recent history" empty.
-async function readSiteIndex(repoRoot, personaSlug) {
-  if (dbConfigured()) {
-    try {
-      return await listAuditSummariesForPersona(personaSlug, 100);
-    } catch (err) {
-      console.warn(`readSiteIndex: DB query failed, falling back to filesystem: ${err.message}`);
-    }
-  }
-  const p = path.join(repoRoot, 'site', 'content', 'audits', 'index.json');
-  if (!fs.existsSync(p)) return [];
+// Audits live in Postgres (foundation P3). If DATABASE_URL isn't set —
+// local dev without creds — return [] so "Recent history" renders empty
+// rather than crashing the vault write. The filesystem fallback is gone
+// because site/content/audits/index.json isn't produced anymore.
+async function readSiteIndex(_repoRoot, personaSlug) {
+  if (!dbConfigured()) return [];
   try {
-    return JSON.parse(fs.readFileSync(p, 'utf8'));
-  } catch {
+    return await listAuditSummariesForPersona(personaSlug, 100);
+  } catch (err) {
+    console.warn(`readSiteIndex: DB query failed: ${err.message}`);
     return [];
   }
 }

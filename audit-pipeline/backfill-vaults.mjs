@@ -1,56 +1,50 @@
 #!/usr/bin/env node
-// One-shot: populate vaults/{persona}/audits/{slug}.md for every audit that
-// already lives in site/content/audits/. Safe to re-run — writeVaultNote
-// overwrites atomically.
+// One-shot: populate vaults/{persona}/audits/{slug}.md for every audit in
+// Postgres. Safe to re-run — writeVaultNote overwrites atomically.
+//
+// Source of truth is the `audit` table. Assumes DATABASE_URL is set.
+// Walks personas independently so each persona's vault gets a "Recent
+// history" index scoped to its own audits.
 
-import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { neon } from '@neondatabase/serverless';
 import { writeVaultNote } from './vault-writer.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..');
-const CONTENT = path.join(REPO, 'site', 'content', 'audits');
-const INDEX = path.join(CONTENT, 'index.json');
 
 async function main() {
-  if (!fs.existsSync(INDEX)) {
-    console.error(`no index.json at ${INDEX}`);
+  const dbUrl = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
+  if (!dbUrl) {
+    console.error('DATABASE_URL or DATABASE_URL_UNPOOLED required');
     process.exit(1);
   }
-  const index = JSON.parse(fs.readFileSync(INDEX, 'utf8'));
-  // Oldest first so each note's "Recent history" points only at already-written predecessors.
-  const sorted = [...index].sort((a, b) =>
-    (a.timestamp_iso ?? '').localeCompare(b.timestamp_iso ?? ''),
-  );
+  const sql = neon(dbUrl);
+
+  // Oldest first so each note's "Recent history" points only at already-
+  // written predecessors.
+  const rows = await sql`
+    SELECT slug, persona, data FROM audit
+    ORDER BY timestamp ASC
+  `;
+  console.log(`backfilling ${rows.length} vault notes`);
 
   let wrote = 0;
   let skipped = 0;
   let failed = 0;
-  for (const entry of sorted) {
-    if (!entry.persona) {
-      console.log(`skip   ${entry.slug} (no persona)`);
-      skipped++;
-      continue;
-    }
-    const auditPath = path.join(CONTENT, entry.slug, 'audit.json');
-    if (!fs.existsSync(auditPath)) {
-      console.log(`skip   ${entry.slug} (no audit.json)`);
-      skipped++;
-      continue;
-    }
+  for (const row of rows) {
+    if (!row.persona) { skipped++; continue; }
     try {
-      const audit = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
       await writeVaultNote({
-        auditData: audit,
-        personaSlug: entry.persona,
+        auditData: row.data,
+        personaSlug: row.persona,
         repoRoot: REPO,
-        siteIndex: index,
       });
       wrote++;
-      if (wrote % 50 === 0) console.log(`... ${wrote} written`);
+      if (wrote % 50 === 0) console.log(`... ${wrote}/${rows.length}`);
     } catch (err) {
-      console.error(`fail   ${entry.slug}: ${err.message}`);
+      console.error(`fail   ${row.slug}: ${err.message}`);
       failed++;
     }
   }
