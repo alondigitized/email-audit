@@ -1,0 +1,237 @@
+// Port of extract_audit_data.py to JS. Reads the local manifest, walks
+// each entry's artifactDir, and writes audit-data.json by parsing
+// message.json, review.txt, and qa-report.json. Consumed by daemons
+// before the DB upsert.
+//
+// Pure stdlib: fs, path, node's Date. No deps. One file, one call:
+//   import { extractAll } from './extract.mjs';
+//   await extractAll();              // uses default manifest path
+//   await extractAll({ manifest });   // pass an array directly
+//
+// qa_checks.py is still invoked as a subprocess — that port is a
+// separate, larger piece of work (HTTP + cheerio + rate limiting).
+
+import fs from 'node:fs';
+import path from 'node:path';
+import url from 'node:url';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const DEFAULT_MANIFEST = path.join(__dirname, 'published-audits.json');
+
+function loadJson(p) {
+  if (!fs.existsSync(p)) return null;
+  try { return JSON.parse(fs.readFileSync(p, 'utf8')); }
+  catch { return null; }
+}
+
+function readFileSafe(p) {
+  if (!fs.existsSync(p)) return '';
+  try { return fs.readFileSync(p, 'utf8'); }
+  catch { return ''; }
+}
+
+// Matches "**6 / 10**" or bare "6/10" — same behavior as the Python version.
+export function extractScore(reviewText) {
+  const bold = reviewText.match(/\*\*(\d+(?:\.\d+)?)\s*\/\s*10\*\*/);
+  if (bold) return `${bold[1]}/10`;
+  const plain = reviewText.match(/(\d+(?:\.\d+)?)\s*\/\s*10/);
+  if (plain) return `${plain[1]}/10`;
+  return '\u2014'; // em-dash for "no score"
+}
+
+function parseTimestamp(msg) {
+  const ts = msg?.timestamp || msg?.created_at || '';
+  if (!ts) return null;
+  // Accept "Z" suffix, which JS Date handles natively.
+  const d = new Date(ts);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+export function parseDisplayName(fromAddr) {
+  if (!fromAddr) return 'Unknown';
+  const m = fromAddr.match(/^"?([^"<]+)"?\s*</);
+  return m ? m[1].trim() : fromAddr;
+}
+
+function stripPreamble(reviewText) {
+  const stripped = reviewText.replace(/^\s+/, '');
+  if (!stripped) return reviewText;
+  if (!stripped.startsWith('**WALKER') && !stripped.startsWith('##')) {
+    const idx = reviewText.indexOf('\n---\n');
+    if (idx !== -1) return reviewText.slice(idx + 5);
+  }
+  return reviewText;
+}
+
+// Maps headings in review.txt to their canonical section key. Keys are
+// normalized (trim, lowercase, trailing colon removed, leading "#/number"
+// stripped). Supports both straight and curly apostrophes.
+const SECTION_HEADINGS = new Map([
+  ['executive summary', 'executive_summary'],
+  ['business impact score', 'business_impact_score'],
+  ['business impact', 'business_impact_score'],
+  ["what's working", 'whats_working'],
+  ['what\u2019s working', 'whats_working'],
+  ['what works', 'whats_working'],
+  ["what's weak", 'whats_weak'],
+  ['what\u2019s weak', 'whats_weak'],
+  ['what is weak', 'whats_weak'],
+  ['bottom line', 'bottom_line'],
+  ['subject line analysis', 'subject_line'],
+  ['subject line', 'subject_line'],
+  ['subject', 'subject_line'],
+  ['evidence', 'evidence'],
+  ['evidence & analysis', 'evidence'],
+  ['evidence and analysis', 'evidence'],
+]);
+
+export function parseReviewSections(reviewText) {
+  const sections = {
+    executive_summary: [],
+    business_impact_score: [],
+    whats_working: [],
+    whats_weak: [],
+    recommendations: [],
+    bottom_line: [],
+    subject_line: [],
+    evidence: [],
+  };
+  let current = 'executive_summary';
+
+  for (const raw of reviewText.split('\n')) {
+    const line = raw.trim();
+    if (!line || line === '---') continue;
+    if (line.startsWith('**WALKER AUDIT') || line.startsWith('*Received:')) continue;
+
+    const cleaned = line
+      .replace(/^#{1,3}\s*\d*\.?\s*/, '')
+      .trim()
+      .toLowerCase()
+      .replace(/:$/, '');
+
+    const mapped = SECTION_HEADINGS.get(cleaned);
+    if (mapped) { current = mapped; continue; }
+    if (cleaned.startsWith('recommendation')) { current = 'recommendations'; continue; }
+
+    // Skip bare heading lines that weren't matched above.
+    if (/^#{1,3}\s/.test(line)) continue;
+
+    sections[current].push(line);
+  }
+
+  return sections;
+}
+
+function formatDate(d) {
+  if (!d) return 'Unknown';
+  const year = d.getUTCFullYear();
+  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  const hours = String(d.getUTCHours()).padStart(2, '0');
+  const minutes = String(d.getUTCMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes} UTC`;
+}
+
+// Match Python's datetime.isoformat() — "2026-03-12T05:17:05+00:00".
+// Date.toISOString() would give ".000Z" which is semantically equivalent
+// but visibly different from historical audits; avoid the churn.
+function toPyIsoFormat(d) {
+  const pad = (n) => String(n).padStart(2, '0');
+  return (
+    `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}` +
+    `T${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}+00:00`
+  );
+}
+
+export function buildAuditData({ entry, msg, reviewText, qaReport, slug }) {
+  const fromAddr = msg?.from_ || msg?.from || 'Unknown';
+  const dt = parseTimestamp(msg);
+  const cleanedReview = stripPreamble(reviewText);
+  const artifactDir = entry?.artifactDir || '';
+  const renderExists = fs.existsSync(path.join(artifactDir, 'email-webview-render.png'));
+  const pdfPath = entry?.pdfPath || '';
+  const pdfExists = !!pdfPath && fs.existsSync(pdfPath);
+  const webviewUrl = readFileSafe(path.join(artifactDir, 'webview-url.txt')).trim();
+
+  return {
+    schema_version: 1,
+    slug,
+    type: 'email',
+    persona: entry?.persona ?? null,
+    email: {
+      subject: msg?.subject || 'Untitled',
+      from: fromAddr,
+      from_display_name: parseDisplayName(fromAddr),
+      timestamp_iso: dt ? toPyIsoFormat(dt) : null,
+      date_formatted: formatDate(dt),
+    },
+    review: {
+      score: extractScore(reviewText),
+      raw_markdown: cleanedReview,
+      sections: parseReviewSections(cleanedReview),
+    },
+    qa: qaReport,
+    assets: {
+      render_image: renderExists ? `${slug}-email-webview-render.png` : null,
+      pdf: pdfExists ? `${slug}-review.pdf` : null,
+      webview_url: webviewUrl || null,
+    },
+  };
+}
+
+function isStale(auditDataPath, artifactDir) {
+  if (!fs.existsSync(auditDataPath)) return true;
+  const adMtime = fs.statSync(auditDataPath).mtimeMs;
+  for (const name of ['message.json', 'review.txt', 'qa-report.json']) {
+    const src = path.join(artifactDir, name);
+    if (fs.existsSync(src) && fs.statSync(src).mtimeMs > adMtime) return true;
+  }
+  return false;
+}
+
+/**
+ * For each email manifest entry, produce audit-data.json from raw
+ * artifacts. Site-journey entries (no message.json) are skipped —
+ * site-monitor builds its own audit-data.json directly in JS.
+ */
+export async function extractAll({ manifest, manifestPath } = {}) {
+  const loaded = manifest ?? loadJson(manifestPath ?? DEFAULT_MANIFEST);
+  if (!loaded) {
+    throw new Error(`No manifest found at ${manifestPath ?? DEFAULT_MANIFEST}`);
+  }
+
+  let written = 0;
+  for (const entry of loaded) {
+    const slug = entry?.slug || '';
+    const artifactDir = entry?.artifactDir || '';
+    if (!artifactDir || !fs.existsSync(artifactDir)) continue;
+
+    const msgPath = path.join(artifactDir, 'message.json');
+    if (!fs.existsSync(msgPath)) continue;
+
+    const auditDataPath = path.join(artifactDir, 'audit-data.json');
+    if (!isStale(auditDataPath, artifactDir)) continue;
+
+    const msg = loadJson(msgPath) || {};
+    const reviewText = readFileSafe(path.join(artifactDir, 'review.txt'));
+    const qaReport = loadJson(path.join(artifactDir, 'qa-report.json'));
+
+    const data = buildAuditData({ entry, msg, reviewText, qaReport, slug });
+    fs.writeFileSync(auditDataPath, JSON.stringify(data, null, 2));
+    written++;
+  }
+  return { written, total: loaded.length };
+}
+
+// CLI entry point — preserves the Python version's command-line behavior.
+const isMain = import.meta.url === `file://${process.argv[1]}`;
+if (isMain) {
+  extractAll()
+    .then(({ written, total }) => {
+      console.log(`Extracted audit-data.json for ${written} entries (out of ${total} total)`);
+    })
+    .catch((err) => {
+      console.error(err.message);
+      process.exit(1);
+    });
+}

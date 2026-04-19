@@ -30,6 +30,7 @@ import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
+import { extractAll } from '../audit-pipeline/extract.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -46,7 +47,6 @@ const PERSONA_NAME = process.argv.includes('--persona')
 
 const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
 const SITE_MANIFEST = path.join(PIPELINE_DIR, 'published-audits.json');
-const EXTRACT_SCRIPT = path.join(PIPELINE_DIR, 'extract_audit_data.py');
 const ARTIFACTS_BASE = path.join(path.dirname(__dirname), 'reports', 'site-artifacts');
 const HISTORY_DIR = path.join(__dirname, 'history');
 const LOG_DIR = path.join(__dirname, 'logs');
@@ -754,13 +754,12 @@ function updatePublishedManifest(entry) {
 }
 
 async function publishSite(slug, artifactDir, previousSummary = null) {
-  // Phase 1: Re-extract audit-data.json for email entries (skips site entries — those built in JS above)
-  await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+  // Phase 1: Re-extract audit-data.json for email entries (no-op for this
+  // site-journey — the JS builder above already wrote our audit-data.json).
+  // Ported from extract_audit_data.py in P5.
+  await extractAll();
 
-  // Phase 2: Sync this audit to Next.js site
   const repoRoot = path.dirname(__dirname);
-  const siteContent = path.join(repoRoot, 'site', 'content', 'audits');
-  const siteImages = path.join(repoRoot, 'site', 'public', 'images', 'audits');
 
   // Upload all step screenshots to R2, track the keys so we can stamp
   // them into audit.json. Falls through gracefully if R2 isn't configured.

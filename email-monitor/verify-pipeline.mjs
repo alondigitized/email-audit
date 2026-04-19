@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 import { AgentMailClient } from 'agentmail';
 import { deleteMedia, mediaConfigured } from '../audit-pipeline/media.mjs';
 import { deleteAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
+import { extractAll } from '../audit-pipeline/extract.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -22,7 +23,6 @@ const STATE_PATH = path.join(__dirname, 'state.json');
 const SITE_URL = process.env.SITE_BASE_URL || 'https://email-audit-weld.vercel.app';
 const REPO_ROOT = path.dirname(__dirname);
 const SITE_MANIFEST = path.join(REPO_ROOT, 'audit-pipeline', 'published-audits.json');
-const EXTRACT_SCRIPT = path.join(REPO_ROOT, 'audit-pipeline', 'extract_audit_data.py');
 const SITE_CONTENT = path.join(REPO_ROOT, 'site', 'content', 'audits');
 const SITE_IMAGES = path.join(REPO_ROOT, 'site', 'public', 'images', 'audits');
 
@@ -159,7 +159,7 @@ async function cleanup(slug, messageId) {
   }
 
   // Re-extract audit-data.json (idempotent — picks up manifest changes)
-  await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: REPO_ROOT, maxBuffer: 1024 * 1024 * 20 });
+  await extractAll();
 
   // Legacy index.json cleanup — only relevant until Phase 4 removes the file.
   const idxPath = path.join(SITE_CONTENT, 'index.json');

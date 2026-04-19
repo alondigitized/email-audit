@@ -10,6 +10,7 @@ import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
+import { extractAll } from '../audit-pipeline/extract.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -41,7 +42,6 @@ const INBOXES = loadInboxes();
 const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
 const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
 const SITE_MANIFEST = path.join(PIPELINE_DIR, 'published-audits.json');
-const EXTRACT_SCRIPT = path.join(PIPELINE_DIR, 'extract_audit_data.py');
 const ARTIFACTS_DIR = path.join(REPORTS_DIR, 'email-artifacts');
 const RENDER_SWIFT = path.join(path.dirname(__dirname), 'scripts', 'render_web_url.swift');
 const QA_SCRIPT = path.join(__dirname, 'qa_checks.py');
@@ -498,10 +498,10 @@ async function publishSite({ slug, persona, artifactDir }) {
     throw new Error('publishSite requires { slug, persona, artifactDir }');
   }
 
-  // Phase 1: the Python extractor builds audit-data.json from raw artifacts
+  // Phase 1: Node extractor builds audit-data.json from raw artifacts
   // (email audits only — site journeys write their own in site-monitor).
-  // This is a pipeline-internal file; no longer synced to site/content.
-  await execFileAsync('python3', [EXTRACT_SCRIPT], { cwd: path.dirname(__dirname), maxBuffer: 1024 * 1024 * 20 });
+  // Ported from extract_audit_data.py in P5; byte-identical output.
+  await extractAll();
 
   const repoRoot = path.dirname(__dirname);
 
