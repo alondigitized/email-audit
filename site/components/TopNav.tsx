@@ -43,31 +43,43 @@ export function TopNav({
   if (isAdmin) tabs.push({ href: "/admin", label: "Admin" });
 
   return (
-    <nav className="flex items-center justify-between mb-6">
-      <div className="flex gap-1">
-        {tabs.map((tab) => {
-          const active = isActive(tab.href);
-          return (
-            <Link
-              key={tab.href}
-              href={tab.href}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                active
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
-            >
-              {tab.label}
-              {tab.suffix && (
-                <span className="ml-1 text-[10px] font-normal opacity-70">
-                  {tab.suffix}
-                </span>
-              )}
-            </Link>
-          );
-        })}
+    <>
+      <div className="mb-5 pt-2 text-center">
+        <Link href="/" className="inline-block">
+          <div className="text-4xl font-semibold tracking-tight leading-none">
+            etell
+          </div>
+          <div className="text-muted text-[10px] uppercase tracking-[0.22em] mt-1.5">
+            Experience Intelligence
+          </div>
+        </Link>
       </div>
-      <SignOutButton />
-    </nav>
+      <nav className="flex items-center justify-between mb-6">
+        <div className="flex gap-1">
+          {tabs.map((tab) => {
+            const active = isActive(tab.href);
+            return (
+              <Link
+                key={tab.href}
+                href={tab.href}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+                  active
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                {tab.label}
+                {tab.suffix && (
+                  <span className="ml-1 text-[10px] font-normal opacity-70">
+                    {tab.suffix}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+        <SignOutButton />
+      </nav>
+    </>
   );
 }
