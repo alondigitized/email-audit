@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NewThreadButton } from "./NewThreadButton";
 
 type Thread = {
   id: string;
@@ -44,16 +45,7 @@ export function ThreadList({
   return (
     <aside className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
       <div className="px-4 py-3 border-b border-gray-200">
-        <Link
-          href={`/chat/${personaSlug}`}
-          className={`flex items-center justify-center gap-1 w-full py-2 rounded-xl text-sm font-semibold transition-colors ${
-            !activeThreadId
-              ? "bg-gray-900 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          + New thread
-        </Link>
+        <NewThreadButton personaSlug={personaSlug} active={!activeThreadId} />
       </div>
       <div className="flex-1 overflow-y-auto px-2 py-3">
         {groups.length === 0 ? (
