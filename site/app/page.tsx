@@ -11,10 +11,12 @@ export default async function Home() {
   return (
     <>
       <div className="mb-5 py-6">
-        <h1 className="text-2xl font-bold mt-1 mb-2">
-          <span className="text-sky-700">E</span>xperience in
-          <span className="text-sky-700">TELL</span>igence
+        <h1 className="text-4xl font-semibold tracking-tight mt-1 mb-1 leading-none">
+          etell
         </h1>
+        <div className="text-muted text-xs uppercase tracking-[0.18em] mb-3">
+          Experience Intelligence
+        </div>
         <p className="text-muted text-sm max-w-xl">
           AI-powered reviews of brand experiences — from marketing emails to
           website visits. Each review scores creative quality, technical health,
