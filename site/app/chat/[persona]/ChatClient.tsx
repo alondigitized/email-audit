@@ -137,11 +137,20 @@ export function ChatClient({
   const isEmpty = messages.length === 0;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
       {/* Header */}
       <div className="px-5 py-3 border-b border-gray-200 flex items-center justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
+            {/* Mobile-only back link — on desktop the ThreadList is always
+                visible alongside, so no back button needed there. */}
+            <Link
+              href={`/chat/${personaSlug}`}
+              className="md:hidden text-muted hover:text-ink text-sm whitespace-nowrap"
+              aria-label="Back to threads"
+            >
+              &larr;
+            </Link>
             <span className="text-base font-semibold">{personaName}</span>
             {threadId && (
               <span className="text-muted">·</span>
@@ -262,7 +271,7 @@ export function ChatClient({
             placeholder={`Ask ${personaName} anything…`}
             rows={1}
             disabled={isStreaming}
-            className="flex-1 resize-none rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-gray-400 disabled:opacity-60 max-h-32"
+            className="flex-1 resize-none rounded-xl border border-gray-200 px-3 py-2 text-base md:text-sm outline-none focus:border-gray-400 disabled:opacity-60 max-h-32"
             style={{ minHeight: "40px" }}
           />
           <button

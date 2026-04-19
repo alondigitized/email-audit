@@ -42,7 +42,7 @@ export function ThreadList({
   const groups = groupThreads(threads);
 
   return (
-    <aside className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+    <aside className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
       <div className="px-4 py-3 border-b border-gray-200">
         <Link
           href={`/chat/${personaSlug}`}

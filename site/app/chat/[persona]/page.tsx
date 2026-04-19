@@ -63,29 +63,39 @@ export default async function ChatPage({
     }
   }
 
+  // Mobile layout: show one pane at a time based on whether a thread is
+  // active — a 260px sidebar next to the chat makes the chat unreadable
+  // on phones. Desktop keeps the two-column side-by-side.
+  const listVisibilityClass = threadId ? "hidden md:block" : "block";
+  const chatVisibilityClass = threadId ? "block" : "hidden md:block";
+
   return (
-    <div className="grid grid-cols-[260px_1fr] gap-4 h-[calc(100vh-120px)]">
-      <ThreadList
-        personaSlug={personaSlug}
-        activeThreadId={threadId}
-        threads={threads.map((t) => ({
-          id: t.id,
-          title: t.title,
-          updatedAt: t.updatedAt.toISOString(),
-        }))}
-      />
-      <ChatClient
-        // Remount when the active thread changes so useChat picks up the
-        // new initialMessages — without this, navigating between threads
-        // leaves the chat pane showing the first thread's state forever.
-        key={threadId ?? "new"}
-        personaSlug={personaSlug}
-        personaName={meta.name}
-        auditCount={auditCount}
-        threadId={threadId}
-        threadTitle={threadId ? (threads.find((t) => t.id === threadId)?.title ?? null) : null}
-        initialMessages={initialMessages}
-      />
+    <div className="md:grid md:grid-cols-[260px_1fr] md:gap-4 h-[calc(100dvh-120px)]">
+      <div className={`${listVisibilityClass} h-full`}>
+        <ThreadList
+          personaSlug={personaSlug}
+          activeThreadId={threadId}
+          threads={threads.map((t) => ({
+            id: t.id,
+            title: t.title,
+            updatedAt: t.updatedAt.toISOString(),
+          }))}
+        />
+      </div>
+      <div className={`${chatVisibilityClass} h-full`}>
+        <ChatClient
+          // Remount when the active thread changes so useChat picks up the
+          // new initialMessages — without this, navigating between threads
+          // leaves the chat pane showing the first thread's state forever.
+          key={threadId ?? "new"}
+          personaSlug={personaSlug}
+          personaName={meta.name}
+          auditCount={auditCount}
+          threadId={threadId}
+          threadTitle={threadId ? (threads.find((t) => t.id === threadId)?.title ?? null) : null}
+          initialMessages={initialMessages}
+        />
+      </div>
     </div>
   );
 }
