@@ -70,7 +70,7 @@ export default async function ChatPage({
   const chatVisibilityClass = threadId ? "block" : "hidden md:block";
 
   return (
-    <div className="md:grid md:grid-cols-[260px_1fr] md:gap-4 h-[calc(100dvh-120px)]">
+    <div className="md:grid md:grid-cols-[260px_1fr] md:gap-4 h-[calc(100dvh-180px)] min-h-[500px]">
       <div className={`${listVisibilityClass} h-full`}>
         <ThreadList
           personaSlug={personaSlug}

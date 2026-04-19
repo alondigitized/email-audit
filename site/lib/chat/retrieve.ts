@@ -4,9 +4,12 @@ import { embed } from "ai";
 import { neon } from "@neondatabase/serverless";
 import { embeddingModel } from "./provider";
 
-// How many audits we retrieve per turn. 8 × ~800 tokens = ~6.5K tokens of
-// retrieved memory, plenty of headroom for identity + conversation + reply.
-export const RETRIEVAL_K = 8;
+// How many audits we retrieve per turn. 6 semantic + 4 recent = up to 10
+// rows (usually fewer after dedupe) × ~800 tokens = ~8K tokens of retrieved
+// memory, plenty of headroom for identity + conversation + reply.
+export const RETRIEVAL_K_SEMANTIC = 6;
+export const RETRIEVAL_K_RECENT = 4;
+export const RETRIEVAL_K = RETRIEVAL_K_SEMANTIC + RETRIEVAL_K_RECENT;
 
 export type RetrievedAudit = {
   slug: string;
@@ -23,35 +26,58 @@ async function embedQuery(text: string): Promise<number[]> {
 }
 
 /**
- * Retrieve the top-K audits most relevant to a query, scoped to one persona.
- * Uses pgvector cosine distance. Snippets are built from the indexed_text
- * we stored at pipeline time — no filesystem reads at chat time, so the
- * API stays fast and stateless.
+ * Retrieve audits to ground the persona's reply, scoped to one persona.
+ * Hybrid: top-K by cosine similarity AND the most-recent N audits by
+ * audit.timestamp, unioned and deduped. The recency half is what makes
+ * questions like "what's the latest?" or "what did you get on April 19?"
+ * work — plain cosine similarity against 1800-char indexed_text barely
+ * weighs a date string, so new audits would otherwise lose the ranking
+ * race to older, richer text. Snippets are the pipeline-time indexed_text.
  */
 export async function retrieveRelevantAudits(
   personaSlug: string,
   query: string,
-  k = RETRIEVAL_K
+  kSemantic = RETRIEVAL_K_SEMANTIC,
+  kRecent = RETRIEVAL_K_RECENT
 ): Promise<RetrievedAudit[]> {
   const url = process.env.DATABASE_URL ?? process.env.DATABASE_URL_UNPOOLED;
   if (!url) throw new Error("DATABASE_URL not set");
   const sql = neon(url);
   const queryVec = await embedQuery(query);
   const literal = `[${queryVec.join(",")}]`;
-  const rows = (await sql`
-    SELECT audit_slug, indexed_text,
-           (embedding <=> ${literal}::vector) AS distance
-    FROM audit_embedding
-    WHERE persona = ${personaSlug}
-    ORDER BY embedding <=> ${literal}::vector
-    LIMIT ${k}
-  `) as Array<{ audit_slug: string; indexed_text: string; distance: number }>;
 
-  return rows.map((r) => ({
-    slug: r.audit_slug,
-    snippet: r.indexed_text,
-    score: Number(r.distance),
-  }));
+  const [semantic, recent] = (await Promise.all([
+    sql`
+      SELECT audit_slug, indexed_text,
+             (embedding <=> ${literal}::vector) AS distance
+      FROM audit_embedding
+      WHERE persona = ${personaSlug}
+      ORDER BY embedding <=> ${literal}::vector
+      LIMIT ${kSemantic}
+    `,
+    sql`
+      SELECT ae.audit_slug, ae.indexed_text,
+             (ae.embedding <=> ${literal}::vector) AS distance
+      FROM audit_embedding ae
+      JOIN audit a ON a.slug = ae.audit_slug
+      WHERE ae.persona = ${personaSlug}
+      ORDER BY a.timestamp DESC
+      LIMIT ${kRecent}
+    `,
+  ])) as Array<Array<{ audit_slug: string; indexed_text: string; distance: number }>>;
+
+  const seen = new Set<string>();
+  const merged: RetrievedAudit[] = [];
+  for (const r of [...semantic, ...recent]) {
+    if (seen.has(r.audit_slug)) continue;
+    seen.add(r.audit_slug);
+    merged.push({
+      slug: r.audit_slug,
+      snippet: r.indexed_text,
+      score: Number(r.distance),
+    });
+  }
+  return merged;
 }
 
 /**
