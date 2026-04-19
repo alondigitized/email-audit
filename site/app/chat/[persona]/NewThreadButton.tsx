@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
-// A Link-based "+ New thread" is a no-op when the user is already on
-// /chat/{slug} with no thread selected — same URL, nothing happens.
-// Push + refresh so the fresh-chat state re-renders unconditionally.
+// Full-page navigation instead of router.push — guaranteed to reset the
+// ChatClient's useChat state whether you were deep in a thread or already
+// on the empty state. App Router's Link/push was a no-op when the current
+// URL already equals /chat/{slug}.
 export function NewThreadButton({
   personaSlug,
   active,
@@ -12,13 +11,11 @@ export function NewThreadButton({
   personaSlug: string;
   active: boolean;
 }) {
-  const router = useRouter();
   return (
     <button
       type="button"
       onClick={() => {
-        router.push(`/chat/${personaSlug}`);
-        router.refresh();
+        window.location.href = `/chat/${personaSlug}`;
       }}
       className={`flex items-center justify-center gap-1 w-full py-2 rounded-xl text-sm font-semibold transition-colors ${
         active
