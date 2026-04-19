@@ -15,6 +15,17 @@ export function NewThreadButton({
     <button
       type="button"
       onClick={() => {
+        if (active) {
+          // Already on the empty state — navigating reloads the same URL
+          // and produces no visible change, which reads as "nothing
+          // happened." Focus the chat input instead so the user gets a
+          // clear cue the click registered and they know where to type.
+          const ta = document.querySelector<HTMLTextAreaElement>(
+            'textarea[placeholder^="Ask "]'
+          );
+          ta?.focus();
+          return;
+        }
         window.location.href = `/chat/${personaSlug}`;
       }}
       className={`flex items-center justify-center gap-1 w-full py-2 rounded-xl text-sm font-semibold transition-colors ${
