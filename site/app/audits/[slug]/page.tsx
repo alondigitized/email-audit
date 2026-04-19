@@ -22,7 +22,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const user = await requireUser();
-  const audit = getAuditBySlugForUser(slug, user.personas);
+  const audit = await getAuditBySlugForUser(slug, user.personas);
   return { title: audit?.email.subject ?? "Audit" };
 }
 
@@ -201,7 +201,7 @@ export default async function AuditPage({
 }) {
   const { slug } = await params;
   const user = await requireUser();
-  const audit = getAuditBySlugForUser(slug, user.personas);
+  const audit = await getAuditBySlugForUser(slug, user.personas);
   if (!audit) notFound();
   await recordPageView({
     userId: user.id,

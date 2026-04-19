@@ -28,6 +28,8 @@ chromium.use(StealthPlugin());
 import dotenv from 'dotenv';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
+import { auditDataSchema } from '../site/lib/schema/audit.mjs';
+import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -808,8 +810,33 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
         }
       }
     }
+    // Validate before writing — producer-side schema parse throws on drift.
+    // We rethrow because this daemon processes one audit per run, so the
+    // whole run should fail loud rather than ship a bad audit.
+    try {
+      auditDataSchema.parse(data);
+    } catch (err) {
+      log('audit.json schema drift — aborting publish', {
+        slug,
+        issues: (err?.issues || []).slice(0, 5),
+      });
+      throw err;
+    }
     fs.writeFileSync(path.join(destDir, 'audit.json'), JSON.stringify(data, null, 2));
     fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
+
+    // Dual-write to Postgres (Phase 2 of the foundation refactor). Non-
+    // fatal — the filesystem copy is still consumer-facing until Phase 3.
+    if (dbConfigured()) {
+      try {
+        await upsertAuditRow({ slug, data });
+      } catch (err) {
+        log('db upsert failed (non-fatal dual-write)', {
+          slug,
+          error: String(err).slice(0, 300),
+        });
+      }
+    }
   }
 
   // Rebuild index.json

@@ -1,0 +1,148 @@
+// Single source of truth for audit data shape. Both daemons (producers)
+// and the Next.js site (consumer) import from this file. Any change here
+// is a breaking change to the producer-consumer contract.
+//
+// Written in .mjs so the pipeline daemons can import it directly. The
+// site imports it via relative path; TypeScript derives types through
+// `z.infer<typeof schema>` in site/lib/schema/audit.ts.
+
+import { z } from 'zod';
+
+// ─── Leaf schemas ──────────────────────────────────────────────────────────
+
+export const journeyStepSchema = z.object({
+  step: z.number(),
+  label: z.string(),
+  viewport_screenshot: z.string().nullable(),
+  viewport_screenshot_key: z.string().nullable().optional(),
+  fullpage_screenshot: z.string().nullable(),
+  fullpage_screenshot_key: z.string().nullable().optional(),
+  url: z.string(),
+  status: z.string().optional(),
+});
+
+export const perfStepSchema = z.object({
+  step: z.number(),
+  label: z.string(),
+  url: z.string(),
+  ttfb_ms: z.number().nullable().optional(),
+  lcp_ms: z.number().nullable().optional(),
+  cls: z.number().nullable().optional(),
+});
+
+// Review sections can be partial (site journey audits emit {} today; email
+// audits emit all seven arrays). Kept permissive so real data parses.
+export const reviewSectionsSchema = z
+  .object({
+    executive_summary: z.array(z.string()),
+    business_impact_score: z.array(z.string()),
+    whats_working: z.array(z.string()),
+    whats_weak: z.array(z.string()),
+    recommendations: z.array(z.string()),
+    bottom_line: z.array(z.string()),
+    evidence: z.array(z.string()),
+  })
+  .partial();
+
+export const qaCheckSchema = z.object({
+  check_id: z.string(),
+  status: z.enum(['pass', 'warn', 'fail', 'info']),
+  label: z.string(),
+  detail: z.string(),
+  url: z.string().optional(),
+});
+
+// Categories carry category-level counts plus the check list. Some
+// categories (the 'info' one) expose additional aggregate counters; use
+// passthrough so unknown future keys don't fail parsing.
+export const qaCategorySchema = z
+  .object({
+    passed: z.number(),
+    warned: z.number(),
+    failed: z.number(),
+    checks: z.array(qaCheckSchema),
+    info: z.number().optional(),
+  })
+  .passthrough();
+
+export const qaSummarySchema = z.object({
+  overall_pass_rate: z.string(),
+  total_checks: z.number(),
+  total_issues: z.number(),
+  total_warnings: z.number(),
+});
+
+export const qaReportSchema = z.object({
+  summary: qaSummarySchema,
+  categories: z.record(z.string(), qaCategorySchema),
+});
+
+// ─── Root schemas ──────────────────────────────────────────────────────────
+
+export const auditTypeSchema = z.enum(['email', 'site']);
+
+export const auditDataSchema = z.object({
+  schema_version: z.number(),
+  slug: z.string(),
+  type: auditTypeSchema.optional(),
+  persona: z.string().nullable().optional(),
+  email: z.object({
+    subject: z.string(),
+    from: z.string(),
+    from_display_name: z.string(),
+    timestamp_iso: z.string().nullable(),
+    date_formatted: z.string(),
+  }),
+  review: z.object({
+    score: z.string(),
+    raw_markdown: z.string(),
+    sections: reviewSectionsSchema,
+  }),
+  qa: qaReportSchema.nullable(),
+  assets: z.object({
+    render_image: z.string().nullable(),
+    render_image_key: z.string().nullable().optional(),
+    pdf: z.string().nullable(),
+    webview_url: z.string().nullable(),
+    journey_steps: z.array(journeyStepSchema).optional(),
+  }),
+  performance: z
+    .object({
+      steps: z.array(perfStepSchema),
+    })
+    .optional(),
+});
+
+export const auditSummarySchema = z.object({
+  slug: z.string(),
+  subject: z.string(),
+  from_display_name: z.string(),
+  timestamp_iso: z.string().nullable(),
+  score: z.string(),
+  qa_summary: qaSummarySchema.nullable(),
+  has_image: z.boolean(),
+  type: auditTypeSchema.optional(),
+  persona: z.string().nullable().optional(),
+});
+
+// ─── Helpers ───────────────────────────────────────────────────────────────
+
+/**
+ * Producer-side parse. Throws with a readable error if the shape drifts —
+ * daemons should fail loudly rather than ship a malformed audit.
+ */
+export function parseAuditData(input) {
+  return auditDataSchema.parse(input);
+}
+
+/**
+ * Consumer-side parse. Returns `{ ok: true, data }` on success, or
+ * `{ ok: false, error }` with zod's issue list on failure. Callers decide
+ * whether to skip the record, surface an error boundary, or fall back.
+ */
+export function safeParseAuditData(input) {
+  const r = auditDataSchema.safeParse(input);
+  return r.success
+    ? { ok: true, data: r.data }
+    : { ok: false, error: r.error };
+}
