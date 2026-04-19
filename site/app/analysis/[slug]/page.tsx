@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getAnalysisBySlug } from "@/lib/analysis";
+import { getAnalysisBySlugForUser } from "@/lib/analysis";
 import { requireUser } from "@/lib/dal";
 import { recordPageView } from "@/lib/analytics";
 
@@ -15,7 +15,7 @@ export default async function AnalysisDetail({
 }) {
   const { slug } = await params;
   const user = await requireUser();
-  const report = getAnalysisBySlug(slug);
+  const report = getAnalysisBySlugForUser(slug, user.personas, user.isAdmin);
   if (!report) notFound();
   await recordPageView({
     userId: user.id,

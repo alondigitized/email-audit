@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { getAnalysisIndex } from "@/lib/analysis";
+import { getAnalysisIndexForUser } from "@/lib/analysis";
+import { requireUser } from "@/lib/dal";
 
-export default function AnalysisIndex() {
-  const reports = getAnalysisIndex();
+export default async function AnalysisIndex() {
+  const user = await requireUser();
+  const reports = getAnalysisIndexForUser(user.personas, user.isAdmin);
 
   return (
     <>
