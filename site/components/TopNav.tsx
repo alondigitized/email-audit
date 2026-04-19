@@ -23,7 +23,8 @@ export function TopNav({
 }) {
   const pathname = usePathname() || "/";
 
-  if (pathname.startsWith("/login")) return null;
+  if (pathname.startsWith("/login") || pathname.startsWith("/auth/"))
+    return null;
 
   function isActive(href: string): boolean {
     if (href === "/") {

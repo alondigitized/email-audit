@@ -1,5 +1,4 @@
-import { completeSignIn } from "./actions";
-import { Wordmark } from "@/components/Wordmark";
+import { AutoSignInForm } from "./AutoSignInForm";
 
 export const dynamic = "force-dynamic";
 
@@ -18,29 +17,11 @@ export default async function VerifyPage({
 
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="bg-white border border-gray-200 rounded-[20px] p-10 max-w-[380px] w-[90%] text-center shadow-sm">
-        <div className="mb-5">
-          <Wordmark size="md" />
-        </div>
+      <div className="bg-white border border-gray-200 rounded-[20px] p-8 max-w-[380px] w-[90%] text-center shadow-sm">
         {valid ? (
           <>
-            <p className="text-muted text-sm mb-5">
-              Click to finish signing in as{" "}
-              <span className="text-ink font-medium">{email}</span>.
-            </p>
-            <form action={completeSignIn}>
-              <input type="hidden" name="token" value={token} />
-              <input type="hidden" name="email" value={email} />
-              <button
-                type="submit"
-                className="w-full py-2.5 bg-accent text-white border-none rounded-xl text-[15px] cursor-pointer"
-              >
-                Sign in
-              </button>
-            </form>
-            <p className="text-xs text-muted mt-4">
-              Links expire after 10 minutes and can only be used once.
-            </p>
+            <p className="text-muted text-sm mb-4">Signing you in…</p>
+            <AutoSignInForm token={token} email={email} />
           </>
         ) : (
           <>
