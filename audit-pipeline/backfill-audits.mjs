@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import { upsertAuditRow, dbConfigured } from './publish.mjs';
-import { auditDataSchema } from './audit-schema.mjs';
+import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..');

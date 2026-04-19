@@ -1,6 +1,8 @@
 // Re-export of the shared zod schema with TypeScript types derived via
-// z.infer. The canonical schema lives in audit-pipeline/audit-schema.mjs
-// so producer daemons and this consumer share one definition.
+// z.infer. The canonical schema lives next to this file as audit.mjs so
+// Node's module resolution can find `zod` in site/node_modules both from
+// this file (consumer) and from the daemons that import the .mjs directly.
+// Producer daemons reach it via relative path `../site/lib/schema/audit.mjs`.
 //
 // Keep this file dumb: no new schemas, no validation wrappers. Anything
 // that would live here belongs alongside the canonical schema instead.
@@ -21,7 +23,7 @@ import {
   safeParseAuditData,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — resolved at runtime; tsconfig allowJs covers .mjs imports
-} from "../../../audit-pipeline/audit-schema.mjs";
+} from "./audit.mjs";
 
 export {
   auditDataSchema,

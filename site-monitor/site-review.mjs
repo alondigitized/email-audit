@@ -28,7 +28,7 @@ chromium.use(StealthPlugin());
 import dotenv from 'dotenv';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
-import { auditDataSchema } from '../audit-pipeline/audit-schema.mjs';
+import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
 
 const execFileAsync = promisify(execFile);

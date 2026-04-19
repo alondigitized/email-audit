@@ -5,7 +5,7 @@
 // filesystem copy. Until then, this is the dual-write seam.
 
 import { neon } from '@neondatabase/serverless';
-import { auditDataSchema } from './audit-schema.mjs';
+import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 
 function db() {
   const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
