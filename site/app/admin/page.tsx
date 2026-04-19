@@ -7,6 +7,7 @@ import {
 } from "./queries";
 import { InviteForm } from "./InviteForm";
 import { UserRow } from "./UserRow";
+import { UserCard } from "./UserCard";
 import { AppsSection } from "./AppsSection";
 
 export const dynamic = "force-dynamic";
@@ -110,24 +111,51 @@ export default async function AdminPage() {
         {rows.length === 0 ? (
           <div className="p-6 text-sm text-muted">No users yet.</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left text-xs uppercase tracking-wide text-muted">
-                <th className="px-5 py-3">Email</th>
-                <th className="py-3">Added</th>
-                <th className="py-3">Verified</th>
-                <th className="py-3" title="Hours between invite and first sign-in">TTV</th>
-                <th className="py-3">Last sign-in</th>
-                <th className="py-3" title="Sign-ins in the last 30 days">Sign-ins 30d</th>
-                <th className="py-3" title="Content views in the last 30 days">Views 30d</th>
-                <th className="py-3">Personas</th>
-                <th className="py-3">Apps</th>
-                <th className="py-3 pr-5"></th>
-              </tr>
-            </thead>
-            <tbody>
+          <>
+            {/* Desktop — table with all columns */}
+            <div className="hidden md:block">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-xs uppercase tracking-wide text-muted">
+                    <th className="px-5 py-3">Email</th>
+                    <th className="py-3">Added</th>
+                    <th className="py-3">Verified</th>
+                    <th className="py-3" title="Hours between invite and first sign-in">TTV</th>
+                    <th className="py-3">Last sign-in</th>
+                    <th className="py-3" title="Sign-ins in the last 30 days">Sign-ins 30d</th>
+                    <th className="py-3" title="Content views in the last 30 days">Views 30d</th>
+                    <th className="py-3">Personas</th>
+                    <th className="py-3">Apps</th>
+                    <th className="py-3 pr-5"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((u) => (
+                    <UserRow
+                      key={u.id}
+                      row={{
+                        id: u.id,
+                        email: u.email,
+                        createdAt: fmtDate(u.createdAt),
+                        verified: !!u.emailVerified,
+                        lastSignInAt: fmtDate(u.lastSignInAt),
+                        signInCount30d: u.signInCount30d,
+                        viewCount30d: u.viewCount30d,
+                        timeToVerifyHours: u.timeToVerifyHours,
+                        personas: u.personas,
+                        apps: u.apps,
+                        isAdmin: u.isAdmin,
+                      }}
+                      allPersonaSlugs={personaSlugs}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* Mobile — stacked cards */}
+            <div className="md:hidden">
               {rows.map((u) => (
-                <UserRow
+                <UserCard
                   key={u.id}
                   row={{
                     id: u.id,
@@ -145,8 +173,8 @@ export default async function AdminPage() {
                   allPersonaSlugs={personaSlugs}
                 />
               ))}
-            </tbody>
-          </table>
+            </div>
+          </>
         )}
       </div>
     </>

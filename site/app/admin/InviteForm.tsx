@@ -31,12 +31,12 @@ export function InviteForm({ personaSlugs }: { personaSlugs: string[] }) {
         placeholder="email@example.com"
         required
         autoComplete="off"
-        className="flex-1 min-w-[240px] py-2 px-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-gray-400"
+        className="flex-1 min-w-[240px] py-2 px-3 border border-gray-200 rounded-xl text-base md:text-sm outline-none focus:border-gray-400"
       />
       <select
         name="persona"
         defaultValue=""
-        className="py-2 px-3 border border-gray-200 rounded-xl text-sm bg-white"
+        className="py-2 px-3 border border-gray-200 rounded-xl text-base md:text-sm bg-white"
       >
         <option value="">No persona</option>
         {personaSlugs.map((s) => (
