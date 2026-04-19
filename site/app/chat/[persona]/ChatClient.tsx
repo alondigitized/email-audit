@@ -332,7 +332,7 @@ function MessageBubble({
       className={`flex ${isUser ? "justify-end" : "justify-start"}`}
     >
       <div
-        className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${
+        className={`max-w-[85%] min-w-0 rounded-2xl px-4 py-3 text-sm break-words [overflow-wrap:anywhere] ${
           isUser
             ? "bg-gray-900 text-white"
             : "bg-gray-100 text-ink"
@@ -341,7 +341,7 @@ function MessageBubble({
         {isUser ? (
           <div className="whitespace-pre-wrap">{text}</div>
         ) : (
-          <div className="prose prose-sm max-w-none prose-p:my-2 prose-ul:my-2 prose-li:my-0.5 prose-a:text-sky-700 prose-a:underline prose-a:decoration-sky-300 hover:prose-a:decoration-sky-600">
+          <div className="prose prose-sm max-w-none prose-p:my-2 prose-ul:my-2 prose-li:my-0.5 prose-a:text-sky-700 prose-a:underline prose-a:decoration-sky-300 hover:prose-a:decoration-sky-600 prose-pre:whitespace-pre-wrap prose-pre:break-words prose-code:break-words">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
