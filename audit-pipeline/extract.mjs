@@ -56,10 +56,20 @@ export function parseDisplayName(fromAddr) {
 function stripPreamble(reviewText) {
   const stripped = reviewText.replace(/^\s+/, '');
   if (!stripped) return reviewText;
-  if (!stripped.startsWith('**WALKER') && !stripped.startsWith('##')) {
-    const idx = reviewText.indexOf('\n---\n');
-    if (idx !== -1) return reviewText.slice(idx + 5);
+  // Already clean — starts with a heading, a WALKER tag, or a leading
+  // divider (a decoration, not tool preamble). Without the `---` check
+  // we'd eat section 1 on any review whose first line happens to be a
+  // horizontal rule — e.g. Claude's "---\n\n## 1. Executive Summary"
+  // pattern.
+  if (
+    stripped.startsWith('**WALKER') ||
+    stripped.startsWith('##') ||
+    stripped.startsWith('---')
+  ) {
+    return reviewText;
   }
+  const idx = reviewText.indexOf('\n---\n');
+  if (idx !== -1) return reviewText.slice(idx + 5);
   return reviewText;
 }
 
