@@ -47,7 +47,7 @@ export function TopNav({
       <div className="mb-5 pt-2 text-center">
         <Link href="/" className="inline-block">
           <div className="text-4xl font-semibold tracking-tight leading-none">
-            etell
+            etell<span className="text-sky-600">.</span>
           </div>
           <div className="text-muted text-[10px] uppercase tracking-[0.22em] mt-1.5">
             Experience Intelligence
