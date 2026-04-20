@@ -102,6 +102,24 @@ export const userPersonas = pgTable(
   })
 );
 
+// Rate-limit ledger for magic-link requests. One row per attempt
+// regardless of outcome. Keyed twice — once by sha256(email), once by
+// source IP — so we can throttle both burst-from-one-sender and
+// distributed-across-many-emails attacks. Pruned opportunistically
+// (old rows past the window are ignored; cleanup is a future tidy).
+export const signInRateLimit = pgTable(
+  "signInRateLimit",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    keyType: text("keyType").notNull(), // "email" | "ip"
+    keyValue: text("keyValue").notNull(),
+    ts: timestamp("ts", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    keyTsIdx: index("signInRateLimit_key_ts_idx").on(t.keyType, t.keyValue, t.ts),
+  })
+);
+
 export const signInEvents = pgTable("signInEvent", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("userId")
