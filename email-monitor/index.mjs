@@ -199,6 +199,27 @@ function slugify(text) {
     .slice(0, 80) || 'email-review';
 }
 
+// Guarantee the saved HTML declares UTF-8 before WKWebView renders it.
+// Many senders (HOKA, Crocs, …) ship a broken `<meta content="...charset=utf-8" />`
+// without `http-equiv`, which browsers ignore — the page falls back to
+// Latin-1 and every `&nbsp;` (UTF-8 bytes 0xC2 0xA0) renders as a stray
+// `Â` before the space. Injecting a valid `<meta charset="utf-8">` first in
+// <head> overrides whatever the sender shipped.
+function ensureUtf8Charset(html) {
+  if (!html) return html;
+  const metaTag = '<meta charset="utf-8">';
+  if (/<head[^>]*>/i.test(html)) {
+    return html.replace(/<head[^>]*>/i, (m) => `${m}${metaTag}`);
+  }
+  if (/<html[^>]*>/i.test(html)) {
+    return html.replace(
+      /<html[^>]*>/i,
+      (m) => `${m}<head>${metaTag}</head>`,
+    );
+  }
+  return `<!doctype html><html><head>${metaTag}</head><body>${html}</body></html>`;
+}
+
 function dateSlug(iso) {
   return String(iso || new Date().toISOString()).slice(0, 10);
 }
@@ -443,7 +464,11 @@ async function saveArtifacts(msg) {
   }
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'message.json'), JSON.stringify(msg, null, 2));
-  fs.writeFileSync(path.join(dir, 'message.html'), msg.html || msg.extracted_html || '', 'utf8');
+  fs.writeFileSync(
+    path.join(dir, 'message.html'),
+    ensureUtf8Charset(msg.html || msg.extracted_html || ''),
+    'utf8',
+  );
   fs.writeFileSync(path.join(dir, 'message.txt'), msg.text || msg.extracted_text || '', 'utf8');
   const combined = `${msg.html || msg.extracted_html || ''}\n${msg.text || msg.extracted_text || ''}`;
   const urls = Array.from(new Set((combined.match(/https?:\/\/[^\s"'<>]+/g) || [])));
