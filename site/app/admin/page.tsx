@@ -50,7 +50,15 @@ export default async function AdminPage() {
   return (
     <>
       <div className="mb-5 py-6">
-        <h1 className="text-2xl font-bold mt-1 mb-2">Admin</h1>
+        <div className="flex items-baseline justify-between gap-4 flex-wrap">
+          <h1 className="text-2xl font-bold mt-1 mb-2">Admin</h1>
+          <a
+            href="/admin/personas"
+            className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+          >
+            Manage personas →
+          </a>
+        </div>
         <p className="text-muted text-sm max-w-xl">
           Manage the invite allowlist, grant persona access, and track
           adoption.

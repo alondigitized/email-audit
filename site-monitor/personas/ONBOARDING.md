@@ -1,6 +1,8 @@
 # Persona Onboarding Runbook
 
-This file documents the steps to add a new persona to the experience-review system. Used manually for now; will be codified into `scripts/onboard-persona.mjs` once the pattern is stable.
+**Entry point: `/admin/personas` on the site.** Create personas and edit
+existing ones through the web UI; this file documents the laptop-side
+steps the UI can't automate.
 
 ## Current roster
 
@@ -9,134 +11,87 @@ This file documents the steps to add a new persona to the experience-review syst
 | `walker` | Walker Miles (62M, comfort) | ✅ active |
 | `martha` | Martha Stroll (34F, young parent) | 🚧 pending credentials |
 
-## Adding a persona: manual checklist
+Personas are stored in the Neon `persona` table with a JSONB `profile`
+column that carries the full identity card + daemon journey config +
+onboarding checklist state. Filesystem JSON (`site-monitor/personas/{slug}.json`)
+and vault README (`vaults/{slug}/README.md`) are auto-generated mirrors.
 
-The following steps are the ones **I can't automate yet** — each requires real-world action (creating accounts, logging in, etc.). Everything else is already wired in code.
+## Adding a persona — end-to-end
 
-### 1. Persona definition (automated)
+### Web (automated — `/admin/personas/new`)
 
-File: `site-monitor/personas/{slug}.json`. Already exists for Martha. Tells the site-monitor what journey to run and what persona voice to use in reviews.
+1. **Define the identity.** Fill out the form: slug, name, age, generation,
+   gender, style, shopping habits, tech comfort, focus areas.
+2. **Define the daemon journey.** Site URL, search term, category path,
+   credentials env prefix. Email-only personas can leave these blank.
+3. **Pick an accent color.** Used on audit cards and persona pills.
+4. **Click "Create persona."** Writes the DB row.
+5. **Provision the AgentMail inbox.** Checklist step 1 — clicking
+   "Provision inbox" calls the AgentMail API and stores the inbox id +
+   address on the profile. Requires `AGENTMAIL_API_KEY` on Vercel.
 
-### 2. AgentMail inbox (manual, 2 min)
+### Laptop (manual — run on the daemon host)
 
-Create a new inbox in the AgentMail console: **`{slug}@agentmail.to`**.
-
-- Martha's target: `martha.stroll@agentmail.to`
-- Log in to the AgentMail dashboard
-- Create inbox, note the address
-- No forwarding rules needed — email-monitor polls via API
-
-### 3. Retailer account(s) (manual, 2–5 min per brand)
-
-For each brand you want the persona to shop, create a real account on the brand's site using the persona's AgentMail address as the signup email.
-
-- Martha's primary brand: Skechers
-- Go to skechers.com, create account, email = `martha.stroll@agentmail.to`
-- Use a strong generated password and save it (you'll paste it into `.env` next)
-- Confirm the email (verification link lands in Martha's AgentMail inbox)
-
-*Why manual: Kasada + CAPTCHAs on brand signup flows resist automation, and automating it would violate brand ToS. This is the one hard manual step per persona.*
-
-### 4. Credentials into `.env` (manual, 30 sec)
-
-Add to `site-monitor/.env`:
+Once the web side is done, open a terminal on the laptop that runs
+email-monitor and site-review:
 
 ```
-SKECHERS_MARTHA_EMAIL=martha.stroll@agentmail.to
-SKECHERS_MARTHA_PASSWORD=<generated-password>
+cd /path/to/openclaw-walker/workspace
+node scripts/persona-bootstrap-export.mjs <slug>
 ```
 
-The env var prefix matches `credentials_env_prefix` in `martha.json` (currently `SKECHERS_MARTHA`). Add a new prefix per brand if Martha shops multiple sites.
+That generates everything the daemons still read from disk:
 
-### 5. Email-monitor config (automated, 10 sec)
+- `site-monitor/personas/{slug}.json` — legacy daemon fallback
+- `vaults/{slug}/README.md` — Obsidian identity card (auto-regenerable)
+- `site-monitor/launchd/ai.openclaw.{slug}.site-review.plist` — LaunchAgent
+- Prints the `.env` keys, cookie-capture command, LaunchAgent install,
+  and daemon-restart commands you need next
 
-Add the new inbox to `email-monitor/inboxes.json`:
+Then do the 4 genuinely-manual steps:
 
-```json
-[
-  { "inbox": "walker@agentmail.to", "persona": "walker" },
-  { "inbox": "martha.stroll@agentmail.to", "persona": "martha" }
-]
+1. **Retailer account signup** — create accounts on each brand site using
+   `{slug}@agentmail.to`. CAPTCHAs prevent automation; this stays manual.
+2. **Credentials in `.env`** — paste the two `{PREFIX}_EMAIL` / `_PASSWORD`
+   keys the script prints into `site-monitor/.env`.
+3. **Cookie capture** — `cd site-monitor && node save-cookies.mjs --persona <slug>`
+   launches Chrome for a one-time login; cookies are saved for future runs.
+4. **Subscribe to brand email lists** — visit retailer footer forms,
+   subscribe with `{slug}@agentmail.to`. Still CAPTCHA-gated.
+
+### Activate
+
 ```
+cp site-monitor/launchd/ai.openclaw.<slug>.site-review.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/ai.openclaw.<slug>.site-review.plist
 
-Then restart the daemon:
-
-```
 launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.walker.agentmail-monitor.plist
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.walker.agentmail-monitor.plist
 ```
 
-The daemon now polls both inboxes on the same interval, publishes each email with its `persona` tag, and the site UI filters by persona automatically.
+Daemon will re-read persona list from Neon, start polling the new inbox,
+and run the site-review at the staggered start time in the plist.
 
-### 6. Capture login cookies (manual, 2 min)
-
-```
-cd site-monitor
-node save-cookies.mjs --persona martha
-```
-
-This launches your real Chrome with a fresh profile. Log in as Martha on skechers.com. The script saves cookies to `site-monitor/cookies/martha-skechers.json`. You only do this once per persona per brand — cookies refresh periodically on each scheduled run.
-
-### 7. Subscribe Martha to brand email lists (manual, 5–10 min)
-
-Visit each brand's footer signup form (or popup) and subscribe using `martha.stroll@agentmail.to`:
-
-- skechers.com
-- adidas.com
-- famousfootwear.com
-- shoecarnival.com
-- dsw.com
-- (add more as interesting)
-
-Double-opt-in confirmation emails will land in Martha's AgentMail inbox and get picked up automatically on the daemon's next poll.
-
-*Why manual: subscription forms have CAPTCHAs and rate limits. Could be Playwright-automated in a future sprint — this is the top candidate for the first automation pass since it's the most repetitive.*
-
-### 8. Install the site-review LaunchAgent (automated, 30 sec)
+### Smoke test
 
 ```
-cp site-monitor/launchd/ai.openclaw.martha.site-review.plist ~/Library/LaunchAgents/
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/ai.openclaw.martha.site-review.plist
-```
-
-Martha's site-review will run daily at 06:30 UTC (Walker runs at 06:00 UTC, staggered to avoid contending for the real Chrome instance).
-
-### 9. Smoke test (automated, ~5 min)
-
-Manually trigger Martha's site-review to confirm everything works:
-
-```
-cd site-monitor
-node site-review.mjs --persona martha
+cd site-monitor && node site-review.mjs --persona <slug>
 ```
 
 Should produce:
-- New artifact directory `reports/site-artifacts/{today}-site-journey-martha/`
-- Updated `audit-pipeline/published-audits.json` (daemon-local, gitignored)
-- New row in Postgres `audit` table with `persona = 'martha'`
+- New artifact directory `reports/site-artifacts/{today}-site-journey-<slug>/`
+- New row in Postgres `audit` table with `persona = '<slug>'`
 - R2 objects under `audits/{slug}/` (step screenshots + `render.png`)
-- Vault markdown at `vaults/martha/audits/{slug}.md`; `vaults/` git-pushed to main
-- The live site renders the new Martha audit on next request (no Vercel redeploy needed)
+- Vault markdown at `vaults/<slug>/audits/{slug}.md`
+- The live site renders the new audit on next request
 
-### 10. Wait for emails (passive, 1–3 days)
+## Why some steps can't be automated from Vercel
 
-Brands typically send:
-- Welcome email within 1 hour
-- 20% off reminder within 24 hours
-- First promo within 3 days
+- **Retailer accounts + brand subscriptions** — CAPTCHAs and brand ToS.
+- **Cookie capture** — real Chrome login, needs the laptop's browser.
+- **`.env` credentials** — laptop-local file; web can print the keys but
+  can't write to the laptop's filesystem.
+- **LaunchAgent install + daemon restart** — macOS `launchctl` is laptop-local.
 
-Once Martha has her first welcome email through the full pipeline, the first cross-persona comparative analysis becomes possible: **"How does Skechers treat Walker vs. Martha?"**
-
----
-
-## Automation roadmap (what gets scripted next)
-
-Ranked by pain-per-persona:
-
-1. **Subscribe to brand email lists** (step 7) — 5-10 min of manual clicking per persona, highest ROI to automate
-2. **AgentMail inbox creation** (step 2) — 2 min but AgentMail has an API, trivial to script
-3. **Credentials prompt + env write** (step 4) — fold into the same CLI script
-4. **LaunchAgent install** (step 8) — script-assisted; already templated
-5. **Retailer account creation** (step 3) — unlikely to automate safely; the only truly manual step
-
-Target: `node scripts/onboard-persona.mjs martha` walks through all steps, pausing only for retailer signup and Chrome login.
+The bootstrap script narrows the laptop-side gap to four commands; every
+other step is now a click or two in `/admin/personas`.

@@ -1,27 +1,33 @@
 import Link from "next/link";
 import type { AuditSummary } from "@/lib/types";
-import { PERSONA_BY_SLUG } from "@/lib/personas";
 import { ScoreBadge } from "./ScoreBadge";
 import { QaBadge } from "./QaBadge";
 import { LikelihoodPill } from "./LikelihoodPill";
 
-// Per-persona pill colors. Each persona gets a distinct hue so a quick scan
-// of the list makes "whose audit is this?" obvious. Unknown personas fall
-// back to a neutral gray.
-const PERSONA_PILL: Record<string, string> = {
-  walker: "bg-sky-50 text-sky-800 ring-sky-200",
-  martha: "bg-rose-50 text-rose-800 ring-rose-200",
-};
-const PERSONA_PILL_DEFAULT = "bg-gray-100 text-gray-700 ring-gray-200";
-
-function PersonaPill({ slug }: { slug: string }) {
-  const meta = PERSONA_BY_SLUG[slug];
-  const label = meta?.short ?? slug.charAt(0).toUpperCase() + slug.slice(1);
-  const classes = PERSONA_PILL[slug] ?? PERSONA_PILL_DEFAULT;
+// Persona pill colored by the DB-resolved color (profile.color or slug-hash
+// fallback, computed in lib/audits.ts at query time). Inline styles so the
+// Tailwind build doesn't need to know every possible color.
+function PersonaPill({
+  slug,
+  label,
+  color,
+  title,
+}: {
+  slug: string;
+  label: string;
+  color: string;
+  title: string;
+}) {
   return (
     <span
-      className={`inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold ring-1 ring-inset ${classes}`}
-      title={meta?.name ?? slug}
+      className="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold ring-1 ring-inset"
+      style={{
+        color,
+        backgroundColor: `${color}14`, // ~8% alpha wash
+        boxShadow: `inset 0 0 0 1px ${color}33`,
+      }}
+      title={title}
+      data-persona={slug}
     >
       {label}
     </span>
@@ -51,7 +57,17 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
         <ScoreBadge score={audit.score} />
       </span>
       <span className="flex flex-wrap gap-2 items-center text-[13px] text-muted">
-        {audit.persona && <PersonaPill slug={audit.persona} />}
+        {audit.persona && (
+          <PersonaPill
+            slug={audit.persona}
+            label={
+              audit.persona_short ??
+              audit.persona.charAt(0).toUpperCase() + audit.persona.slice(1)
+            }
+            color={audit.persona_color ?? "#6b7280"}
+            title={audit.persona_name ?? audit.persona}
+          />
+        )}
         {audit.type === "site" && (
           <span className="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700">
             Journey

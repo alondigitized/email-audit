@@ -145,6 +145,12 @@ export const auditSummarySchema = z.object({
   has_image: z.boolean(),
   type: auditTypeSchema.optional(),
   persona: z.string().nullable().optional(),
+  // Persona display fields resolved server-side at list query time so the
+  // client/AuditCard doesn't need a separate persona registry. Optional for
+  // legacy rows where no persona match exists.
+  persona_name: z.string().nullable().optional(),
+  persona_short: z.string().nullable().optional(),
+  persona_color: z.string().nullable().optional(),
   open_likelihood: z.number().nullable().optional(),
   click_likelihood: z.number().nullable().optional(),
 });
