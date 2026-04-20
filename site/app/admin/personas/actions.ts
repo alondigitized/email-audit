@@ -10,6 +10,7 @@ import {
   personaProfileSchema,
   type PersonaProfile,
 } from "@/lib/schema/persona";
+import { provisionInbox } from "@/lib/agentmail";
 
 export type ActionResult =
   | { ok: true; slug?: string }
@@ -269,6 +270,74 @@ export async function setChecklistItemAction(
 
   revalidatePath(`/admin/personas/${slug}`);
   return { ok: true };
+}
+
+// ─── AgentMail provisioning ────────────────────────────────────────────────
+
+export async function provisionInboxAction(
+  fd: FormData
+): Promise<ActionResult> {
+  await requireAdmin();
+  const slugParsed = SlugSchema.safeParse(fd.get("slug"));
+  if (!slugParsed.success) return { ok: false, error: "Invalid slug." };
+  const slug = slugParsed.data;
+
+  const row = await db
+    .select({
+      id: personas.id,
+      name: personas.name,
+      profile: personas.profile,
+    })
+    .from(personas)
+    .where(eq(personas.slug, slug))
+    .limit(1);
+  if (row.length === 0) return { ok: false, error: "Persona not found." };
+  const current = row[0].profile;
+  if (!current) {
+    return { ok: false, error: "Persona has no profile yet — save identity first." };
+  }
+  if (current.agentmail.inbox_id) {
+    return {
+      ok: false,
+      error: `Inbox already provisioned: ${current.agentmail.inbox_address ?? current.agentmail.inbox_id}`,
+    };
+  }
+
+  let result;
+  try {
+    result = await provisionInbox({ slug, displayName: row[0].name });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { ok: false, error: `AgentMail API: ${msg.slice(0, 300)}` };
+  }
+
+  const next: PersonaProfile = {
+    ...current,
+    agentmail: {
+      inbox_id: result.inbox_id,
+      inbox_address: result.inbox_address,
+      provisioned_at: new Date().toISOString(),
+    },
+  };
+  personaProfileSchema.parse(next);
+  await db
+    .update(personas)
+    .set({ profile: next })
+    .where(eq(personas.id, row[0].id));
+
+  revalidatePath(`/admin/personas/${slug}`);
+  return { ok: true, slug };
+}
+
+export async function provisionInboxAndRefresh(fd: FormData) {
+  const res = await provisionInboxAction(fd);
+  const slug = (fd.get("slug") as string) || "";
+  if (!res.ok) {
+    redirect(
+      `/admin/personas/${slug}?error=${encodeURIComponent(res.error)}`
+    );
+  }
+  redirect(`/admin/personas/${slug}?saved=1`);
 }
 
 // ─── Convenience wrappers that redirect (for form action={...}) ───────────

@@ -1,5 +1,8 @@
 import type { PersonaOnboarding, PersonaProfile } from "@/lib/schema/persona";
-import { setChecklistItemAndRefresh } from "./actions";
+import {
+  setChecklistItemAndRefresh,
+  provisionInboxAndRefresh,
+} from "./actions";
 
 // Laptop-bound bootstrap checklist. Each item surfaces the *exact command*
 // the admin needs to run on their daemon host. State persists in
@@ -59,12 +62,26 @@ export function ChecklistSection({
       key: "agentmail_inbox",
       title: `AgentMail inbox (${inbox})`,
       automated: true,
-      body: (
+      body: profile.agentmail.inbox_id ? (
         <p className="text-sm text-muted">
-          {profile.agentmail.inbox_id
-            ? `Provisioned via AgentMail API on ${profile.agentmail.provisioned_at?.slice(0, 10) ?? "unknown date"}.`
-            : "Provision through the AgentMail button on this page (Phase 4), or create manually in the AgentMail console."}
+          Provisioned via AgentMail API on {profile.agentmail.provisioned_at?.slice(0, 10) ?? "unknown date"} ·
+          id <code className="px-1 py-0.5 bg-gray-100 rounded text-[11px]">{profile.agentmail.inbox_id}</code>
         </p>
+      ) : (
+        <div className="space-y-2">
+          <p className="text-sm text-muted">
+            Provisions <code className="px-1 py-0.5 bg-gray-100 rounded text-[12px]">{inbox}</code> via AgentMail API and stores the inbox id on this persona.
+          </p>
+          <form action={provisionInboxAndRefresh}>
+            <input type="hidden" name="slug" value={slug} />
+            <button
+              type="submit"
+              className="bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold px-3 py-1.5 rounded-xl"
+            >
+              Provision inbox
+            </button>
+          </form>
+        </div>
       ),
     },
     {
