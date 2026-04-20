@@ -145,6 +145,8 @@ export const auditSummarySchema = z.object({
   has_image: z.boolean(),
   type: auditTypeSchema.optional(),
   persona: z.string().nullable().optional(),
+  open_likelihood: z.number().nullable().optional(),
+  click_likelihood: z.number().nullable().optional(),
 });
 
 // ─── Helpers ───────────────────────────────────────────────────────────────

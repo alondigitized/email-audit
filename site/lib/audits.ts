@@ -43,6 +43,8 @@ function toSummary(data: AuditData): AuditSummary {
     has_image: !!data.assets.render_image_key || !!data.assets.render_image,
     type: data.type,
     persona: data.persona,
+    open_likelihood: data.review.predictions?.open_likelihood?.score ?? null,
+    click_likelihood: data.review.predictions?.click_likelihood?.score ?? null,
   };
 }
 

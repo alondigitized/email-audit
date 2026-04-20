@@ -13,12 +13,25 @@ export function LikelihoodPill({
   label,
   score,
   rationale,
+  compact = false,
 }: {
   label: string;
   score: number;
-  rationale: string;
+  rationale?: string;
+  compact?: boolean;
 }) {
   const rounded = Math.round(score * 10) / 10;
+  if (compact) {
+    return (
+      <span
+        title={rationale || `${label} ${rounded}/10`}
+        className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[11px] font-semibold ${colorFor(score)}`}
+      >
+        <span className="opacity-70">{label.charAt(0)}</span>
+        <span className="tabular-nums">{rounded}</span>
+      </span>
+    );
+  }
   return (
     <span
       title={rationale || undefined}

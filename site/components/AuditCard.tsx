@@ -3,6 +3,7 @@ import type { AuditSummary } from "@/lib/types";
 import { PERSONA_BY_SLUG } from "@/lib/personas";
 import { ScoreBadge } from "./ScoreBadge";
 import { QaBadge } from "./QaBadge";
+import { LikelihoodPill } from "./LikelihoodPill";
 
 // Per-persona pill colors. Each persona gets a distinct hue so a quick scan
 // of the list makes "whose audit is this?" obvious. Unknown personas fall
@@ -59,6 +60,12 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
         <span>{audit.from_display_name}</span>
         <span className="text-line">&middot;</span>
         <span>{datetime}</span>
+        {typeof audit.open_likelihood === "number" && (
+          <LikelihoodPill label="Open" score={audit.open_likelihood} compact />
+        )}
+        {typeof audit.click_likelihood === "number" && (
+          <LikelihoodPill label="Click" score={audit.click_likelihood} compact />
+        )}
         <span className="ml-auto">
           <QaBadge summary={audit.qa_summary} />
         </span>
