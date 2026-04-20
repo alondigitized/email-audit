@@ -13,6 +13,7 @@ import {
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 import type { AuditData } from "@/lib/schema/audit";
+import type { PersonaProfile } from "@/lib/schema/persona";
 
 export const users = pgTable("user", {
   id: text("id")
@@ -70,12 +71,18 @@ export const verificationTokens = pgTable(
   })
 );
 
+// Persona roster. `profile` JSONB holds the full identity card + daemon
+// journey config + AgentMail binding + onboarding checklist state;
+// zod-validated at the boundary via site/lib/schema/persona.mjs.
+// Column is optional for a clean migration — Phase 1 adds it empty, Phase 1
+// backfill populates walker/martha, Phase 2+ makes it authoritative.
 export const personas = pgTable("persona", {
   id: uuid("id").primaryKey().defaultRandom(),
   slug: text("slug").unique().notNull(),
   name: text("name").notNull(),
   short: text("short").notNull(),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  profile: jsonb("profile").$type<PersonaProfile>(),
 });
 
 export const userPersonas = pgTable(
