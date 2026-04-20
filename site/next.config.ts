@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
+  // agentmail ships a dynamic `import("@x402/fetch")` for an optional
+  // payment-gated flow we don't use. Turbopack tries to statically resolve
+  // it anyway. Marking it external tells the bundler to leave the require
+  // alone at runtime — the dynamic branch is never reached in practice.
+  serverExternalPackages: ["agentmail"],
 };
 
 export default nextConfig;
