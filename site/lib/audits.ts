@@ -5,6 +5,7 @@ import {
   type AuditData,
   type AuditSummary,
 } from "@/lib/schema/audit";
+import { getAllPersonas, personaColor, type PersonaRecord } from "@/lib/personas-db";
 
 // Phase 3 of the foundation refactor: the site reads audits from Postgres
 // instead of the filesystem. Dual-write from the daemons keeps the
@@ -31,8 +32,14 @@ function logDrift(where: string, slug: string, error: unknown) {
 }
 
 // Derive the card-sized summary from the full audit payload. Matches the
-// legacy index.json shape so downstream components stay unchanged.
-function toSummary(data: AuditData): AuditSummary {
+// legacy index.json shape so downstream components stay unchanged. Persona
+// display fields are resolved against a per-request persona map so the UI
+// doesn't need its own registry.
+function toSummary(
+  data: AuditData,
+  personaBySlug: Map<string, PersonaRecord>
+): AuditSummary {
+  const persona = data.persona ? personaBySlug.get(data.persona) : undefined;
   return {
     slug: data.slug,
     subject: data.email.subject,
@@ -43,6 +50,11 @@ function toSummary(data: AuditData): AuditSummary {
     has_image: !!data.assets.render_image_key || !!data.assets.render_image,
     type: data.type,
     persona: data.persona,
+    persona_name: persona?.name ?? null,
+    persona_short: persona?.short ?? null,
+    persona_color: data.persona
+      ? personaColor(data.persona, persona?.profile ?? null)
+      : null,
     open_likelihood: data.review.predictions?.open_likelihood?.score ?? null,
     click_likelihood: data.review.predictions?.click_likelihood?.score ?? null,
   };
@@ -52,16 +64,20 @@ export async function getAuditIndexForUser(
   personaSlugs: string[]
 ): Promise<AuditSummary[]> {
   if (personaSlugs.length === 0) return [];
-  const rows = await db
-    .select({ slug: audits.slug, data: audits.data })
-    .from(audits)
-    .where(inArray(audits.persona, personaSlugs))
-    .orderBy(desc(audits.timestamp));
+  const [rows, allPersonas] = await Promise.all([
+    db
+      .select({ slug: audits.slug, data: audits.data })
+      .from(audits)
+      .where(inArray(audits.persona, personaSlugs))
+      .orderBy(desc(audits.timestamp)),
+    getAllPersonas(),
+  ]);
+  const personaBySlug = new Map(allPersonas.map((p) => [p.slug, p]));
   const out: AuditSummary[] = [];
   for (const r of rows) {
     const parsed = auditDataSchema.safeParse(r.data);
     if (parsed.success) {
-      out.push(toSummary(parsed.data));
+      out.push(toSummary(parsed.data, personaBySlug));
     } else {
       logDrift("index", r.slug, parsed.error);
     }

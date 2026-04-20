@@ -23,6 +23,24 @@ import {
 
 const REPO = path.resolve(__dirname, "..", "..");
 const PERSONA_JSON_DIR = path.join(REPO, "site-monitor", "personas");
+const INBOXES_PATH = path.join(REPO, "email-monitor", "inboxes.json");
+
+function loadInboxMap(): Map<string, string> {
+  const out = new Map<string, string>();
+  if (!fs.existsSync(INBOXES_PATH)) return out;
+  try {
+    const raw = JSON.parse(fs.readFileSync(INBOXES_PATH, "utf8")) as Array<{
+      inbox: string;
+      persona: string;
+    }>;
+    for (const entry of raw) {
+      if (entry.persona && entry.inbox) out.set(entry.persona, entry.inbox);
+    }
+  } catch {
+    // tolerate malformed; backfill still succeeds without inbox bindings
+  }
+  return out;
+}
 
 // Deterministic color palette — stable assignment by slug at backfill time.
 // Matches the Observable 10 hues used elsewhere so the pills feel cohesive.
@@ -63,7 +81,8 @@ function loadPersonaJson(slug: string): Record<string, unknown> | null {
 function buildProfile(
   slug: string,
   json: Record<string, unknown> | null,
-  color: string
+  color: string,
+  inboxAddress: string | null
 ): PersonaProfile {
   const get = <T,>(key: string, fallback: T): T =>
     (json && (json[key] as T)) ?? fallback;
@@ -87,12 +106,13 @@ function buildProfile(
       credentials_env_prefix: (json?.credentials_env_prefix as string) ?? null,
     },
     agentmail: {
-      // Legacy address convention: {slug}.{suffix}@agentmail.to or
-      // {slug}@agentmail.to. We can't derive this reliably from JSON, so
-      // leave blank at backfill time — the admin UI fills it in later.
-      inbox_address: null,
+      // Address comes from email-monitor/inboxes.json at backfill time,
+      // so the daemon's DB-driven inbox map keeps working without any
+      // manual data entry. inbox_id (AgentMail's internal ID) remains
+      // null until the admin UI calls the AgentMail API in Phase 4.
+      inbox_address: inboxAddress,
       inbox_id: null,
-      provisioned_at: null,
+      provisioned_at: inboxAddress ? new Date().toISOString() : null,
     },
     onboarding: {},
     color,
@@ -119,6 +139,7 @@ async function main() {
   }
 
   const usedColors = new Set<string>();
+  const inboxMap = loadInboxMap();
   for (const r of rows) {
     const json = loadPersonaJson(r.slug);
     if (!json) {
@@ -126,13 +147,14 @@ async function main() {
       continue;
     }
     const color = colorForSlug(r.slug, usedColors);
-    const profile = buildProfile(r.slug, json, color);
+    const inboxAddress = inboxMap.get(r.slug) ?? null;
+    const profile = buildProfile(r.slug, json, color, inboxAddress);
     await db
       .update(personas)
       .set({ profile })
       .where(eq(personas.id, r.id));
     console.log(
-      `wrote ${r.slug.padEnd(12)} color=${color} focus_areas=${profile.identity.focus_areas.length} site=${profile.journey.site ?? "-"}`
+      `wrote ${r.slug.padEnd(12)} color=${color} focus_areas=${profile.identity.focus_areas.length} site=${profile.journey.site ?? "-"} inbox=${inboxAddress ?? "-"}`
     );
   }
 

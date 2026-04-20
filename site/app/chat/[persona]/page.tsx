@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/dal";
 import { requireAppEnabled } from "@/lib/apps";
-import { PERSONA_BY_SLUG } from "@/lib/personas";
+import { getPersonaBySlug } from "@/lib/personas-db";
 import { listThreads, getThread, listMessages } from "@/lib/chat/threads";
 import { getAuditMemoryCount } from "@/lib/chat/retrieve";
 import { ChatClient } from "./ChatClient";
@@ -28,7 +28,7 @@ export default async function ChatPage({
   if (!user.isAdmin && !user.personas.includes(personaSlug)) {
     notFound();
   }
-  const meta = PERSONA_BY_SLUG[personaSlug];
+  const meta = await getPersonaBySlug(personaSlug);
   if (!meta) notFound();
 
   const sp = await searchParams;

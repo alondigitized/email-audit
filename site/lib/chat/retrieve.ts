@@ -3,6 +3,7 @@ import path from "node:path";
 import { embed } from "ai";
 import { neon } from "@neondatabase/serverless";
 import { embeddingModel } from "./provider";
+import { getPersonaBySlug } from "@/lib/personas-db";
 
 // How many audits we retrieve per turn. 6 semantic + 4 recent = up to 10
 // rows (usually fewer after dedupe) × ~800 tokens = ~8K tokens of retrieved
@@ -95,15 +96,43 @@ export async function getAuditMemoryCount(personaSlug: string): Promise<number> 
 }
 
 /**
- * Load the persona identity card from the vault README. Falls back to the
- * site-monitor JSON profile if the vault file is missing. Cached by slug
- * because identity rarely changes mid-request.
+ * Load the persona identity card.
+ *
+ * Source-of-truth order:
+ *   1. DB `persona.profile` (admin-editable through `/admin/personas`)
+ *   2. Vault README at `vaults/{slug}/README.md` (legacy / Obsidian mirror)
+ *   3. `site-monitor/personas/{slug}.json` (original file format)
+ *   4. Minimal fallback so the chat doesn't crash on an unknown slug
+ *
+ * Returns a plain-text multi-line block suitable for concatenation into
+ * the persona's system prompt. Not cached across requests — the admin UI
+ * needs edits to reflect on the next chat turn.
  */
-const identityCache = new Map<string, string>();
-export function loadPersonaIdentity(personaSlug: string): string {
-  if (identityCache.has(personaSlug)) {
-    return identityCache.get(personaSlug)!;
+export async function loadPersonaIdentity(personaSlug: string): Promise<string> {
+  // 1. DB profile
+  try {
+    const rec = await getPersonaBySlug(personaSlug);
+    if (rec?.profile) {
+      const p = rec.profile;
+      const id = p.identity;
+      const lines = [
+        `Name: ${id.name}`,
+        `Age: ${id.age}, ${id.generation}, ${id.gender}`,
+        `Style: ${id.style}`,
+        `Shopping habits: ${id.shopping_habits}`,
+        `Tech comfort: ${id.tech_comfort}`,
+        `Focus areas: ${(id.focus_areas ?? []).join(", ")}`,
+      ];
+      if (p.notes && p.notes.trim()) {
+        lines.push("", p.notes.trim());
+      }
+      return lines.join("\n");
+    }
+  } catch (err) {
+    console.warn(`[persona-identity] DB lookup failed for ${personaSlug}:`, err);
   }
+
+  // 2–3. Filesystem fallbacks (legacy personas with no profile yet).
   const repoRoot = path.resolve(process.cwd(), "..");
   const readmePath = path.join(repoRoot, "vaults", personaSlug, "README.md");
   const jsonPath = path.join(
@@ -112,12 +141,12 @@ export function loadPersonaIdentity(personaSlug: string): string {
     "personas",
     `${personaSlug}.json`
   );
-  let identity = "";
   if (fs.existsSync(readmePath)) {
-    identity = fs.readFileSync(readmePath, "utf8");
-  } else if (fs.existsSync(jsonPath)) {
+    return fs.readFileSync(readmePath, "utf8");
+  }
+  if (fs.existsSync(jsonPath)) {
     const j = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
-    identity = [
+    return [
       `Name: ${j.name}`,
       `Age: ${j.age}, ${j.generation}, ${j.gender}`,
       `Style: ${j.style}`,
@@ -125,9 +154,6 @@ export function loadPersonaIdentity(personaSlug: string): string {
       `Tech comfort: ${j.tech_comfort}`,
       `Focus areas: ${(j.focus_areas ?? []).join(", ")}`,
     ].join("\n");
-  } else {
-    identity = `Persona slug: ${personaSlug} (identity card not found)`;
   }
-  identityCache.set(personaSlug, identity);
-  return identity;
+  return `Persona slug: ${personaSlug} (identity card not found)`;
 }

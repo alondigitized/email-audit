@@ -1,20 +1,16 @@
 "use client";
 
-import { PERSONA_BY_SLUG, PersonaMeta } from "@/lib/personas";
+import type { PersonaMeta } from "@/lib/personas";
 
 interface Props {
-  available: string[];
+  personas: PersonaMeta[];
   selected: string | null;
   onSelect: (slug: string | null) => void;
 }
 
-export function PersonaSelector({ available, selected, onSelect }: Props) {
+export function PersonaSelector({ personas: metas, selected, onSelect }: Props) {
   // Hide the selector entirely if there's 0 or 1 persona — no choice to make
-  if (available.length <= 1) return null;
-
-  const metas: PersonaMeta[] = available.map(
-    (slug) => PERSONA_BY_SLUG[slug] || { slug, name: slug, short: slug }
-  );
+  if (metas.length <= 1) return null;
 
   return (
     <div className="flex items-center gap-2 mb-4 flex-wrap">

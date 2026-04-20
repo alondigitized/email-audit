@@ -101,7 +101,15 @@ function todaySlug() {
   return new Date().toISOString().slice(0, 10);
 }
 
-function loadPersona(name) {
+async function loadPersona(name) {
+  // DB-first (authoritative after the persona-management refactor).
+  // Falls back to the legacy site-monitor/personas/{slug}.json if the
+  // DB has no profile yet or DATABASE_URL isn't set on this host.
+  const { loadPersonaProfile } = await import(
+    '../audit-pipeline/persona-profile.mjs'
+  );
+  const profile = await loadPersonaProfile(name);
+  if (profile) return profile;
   const p = path.join(__dirname, 'personas', `${name}.json`);
   if (!fs.existsSync(p)) throw new Error(`Persona not found: ${p}`);
   return JSON.parse(fs.readFileSync(p, 'utf8'));
@@ -850,7 +858,7 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
 // ---------------------------------------------------------------------------
 
 async function main() {
-  const persona = loadPersona(PERSONA_NAME);
+  const persona = await loadPersona(PERSONA_NAME);
   const credentials = getCredentials(persona);
   const slug = `${todaySlug()}-site-journey-${PERSONA_NAME}`;
   const artifactDir = path.join(ARTIFACTS_BASE, slug);

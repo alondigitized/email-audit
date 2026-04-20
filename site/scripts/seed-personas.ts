@@ -9,7 +9,15 @@ import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { eq, and } from "drizzle-orm";
 import { users, personas, userPersonas } from "../lib/db/schema";
-import { PERSONAS } from "../lib/personas";
+
+// Inline the initial roster here — this script is an idempotent bootstrap
+// for fresh environments. Ongoing persona management happens through the
+// admin UI (/admin/personas), which writes profile JSONB alongside the
+// thin metadata columns.
+const PERSONAS = [
+  { slug: "walker", name: "Walker Miles", short: "Walker" },
+  { slug: "martha", name: "Martha Stroll", short: "Martha" },
+];
 
 const ADMIN_EMAIL = "alondigitized@gmail.com";
 

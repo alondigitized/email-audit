@@ -101,7 +101,7 @@ export async function POST(req: Request) {
   const retrieved = await retrieveRelevantAudits(personaSlug, query).catch(
     () => []
   );
-  const identity = loadPersonaIdentity(personaSlug);
+  const identity = await loadPersonaIdentity(personaSlug);
   const system = buildSystemPrompt(identity, retrieved);
 
   // Persist the user's new message BEFORE streaming so a dropped response

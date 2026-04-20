@@ -24,9 +24,23 @@ const INBOXES_CONFIG_PATH = path.join(__dirname, 'inboxes.json');
 const LOG_DIR = path.join(__dirname, 'logs');
 const LOG_PATH = path.join(LOG_DIR, 'monitor.log');
 
-// Multi-inbox config. Prefer inboxes.json (array of { inbox, persona }).
-// Fall back to legacy INBOX_ID env var for single-inbox deployments.
-function loadInboxes() {
+// Multi-inbox config. Source order:
+//   1. DB — every persona with profile.agentmail.inbox_address set
+//      (authoritative after the persona-management refactor). Adding a
+//      persona in /admin/personas requires a daemon restart to pick up.
+//   2. inboxes.json file — legacy; kept as a fallback so the daemon boots
+//      when DATABASE_URL isn't set locally.
+//   3. Single-inbox env — ultimate fallback.
+async function loadInboxes() {
+  try {
+    const { loadInboxMap } = await import(
+      '../audit-pipeline/persona-profile.mjs'
+    );
+    const fromDb = await loadInboxMap();
+    if (fromDb.length > 0) return fromDb;
+  } catch (err) {
+    console.warn('loadInboxes: DB map unavailable,', String(err).slice(0, 200));
+  }
   if (fs.existsSync(INBOXES_CONFIG_PATH)) {
     try {
       const cfg = JSON.parse(fs.readFileSync(INBOXES_CONFIG_PATH, 'utf8'));
@@ -38,7 +52,7 @@ function loadInboxes() {
   const single = process.env.INBOX_ID || 'walker@agentmail.to';
   return [{ inbox: single, persona: process.env.PERSONA || 'walker' }];
 }
-const INBOXES = loadInboxes();
+const INBOXES = await loadInboxes();
 const REPORTS_DIR = path.join(path.dirname(__dirname), 'reports');
 const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
 const SITE_MANIFEST = path.join(PIPELINE_DIR, 'published-audits.json');
