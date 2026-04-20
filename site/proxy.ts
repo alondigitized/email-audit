@@ -12,7 +12,7 @@ const PUBLIC_PREFIXES = [
   "/_next/image",
 ];
 
-const PUBLIC_EXACT = new Set(["/favicon.ico", "/api/auth"]);
+const PUBLIC_EXACT = new Set(["/favicon.ico"]);
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
