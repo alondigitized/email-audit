@@ -138,6 +138,13 @@ const SECTION_HEADINGS = new Map([
   ['preheader analysis', 'preview_text'],
   ['preheader', 'preview_text'],
   ['preheader text', 'preview_text'],
+  ['open likelihood', 'open_likelihood'],
+  ['open likelihood (persona-grounded)', 'open_likelihood'],
+  ['open rate likelihood', 'open_likelihood'],
+  ['click-through likelihood', 'click_likelihood'],
+  ['click through likelihood', 'click_likelihood'],
+  ['click-through likelihood (persona-grounded)', 'click_likelihood'],
+  ['click likelihood', 'click_likelihood'],
   ['evidence', 'evidence'],
   ['evidence & analysis', 'evidence'],
   ['evidence and analysis', 'evidence'],
@@ -153,6 +160,8 @@ export function parseReviewSections(reviewText) {
     bottom_line: [],
     subject_line: [],
     preview_text: [],
+    open_likelihood: [],
+    click_likelihood: [],
     evidence: [],
   };
   let current = 'executive_summary';
@@ -179,6 +188,43 @@ export function parseReviewSections(reviewText) {
   }
 
   return sections;
+}
+
+// Parse a likelihood section's bullets into { score, rationale }. Expects
+// the reviewer to emit "**Score:** X/10" and "**Rationale:** ..." bullets,
+// but tolerates minor formatting drift (colons, backticks, whitespace).
+// Returns null when no score can be found.
+export function parsePredictionBlock(bullets) {
+  if (!Array.isArray(bullets) || bullets.length === 0) return null;
+  const joined = bullets.join(' ');
+  const scoreMatch = joined.match(/score[^0-9]*?(\d+(?:\.\d+)?)\s*\/\s*10/i);
+  if (!scoreMatch) return null;
+  const score = Number(scoreMatch[1]);
+  if (!Number.isFinite(score) || score < 1 || score > 10) return null;
+
+  // Rationale: everything after "Rationale:" up to the next bullet marker
+  // ("- " or "*") that introduces a new labelled block, or end of string.
+  // Strip markdown decoration and keep under 400 chars for tooltip fit.
+  const ratMatch = joined.match(
+    /rationale[^:]*:\s*([^]*?)(?:\s*[-*]\s+\*\*[A-Z]|$)/i
+  );
+  const rationale = (ratMatch ? ratMatch[1] : '')
+    .replace(/\*\*/g, '')
+    .replace(/`/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 400);
+  return { score, rationale };
+}
+
+export function parsePredictions(sections) {
+  const open = parsePredictionBlock(sections?.open_likelihood);
+  const click = parsePredictionBlock(sections?.click_likelihood);
+  if (!open && !click) return null;
+  const out = {};
+  if (open) out.open_likelihood = open;
+  if (click) out.click_likelihood = click;
+  return out;
 }
 
 function formatDate(d) {
@@ -231,11 +277,16 @@ export function buildAuditData({ entry, msg, reviewText, qaReport, slug }) {
       timestamp_iso: dt ? toPyIsoFormat(dt) : null,
       date_formatted: formatDate(dt),
     },
-    review: {
-      score: extractScore(reviewText),
-      raw_markdown: cleanedReview,
-      sections: parseReviewSections(cleanedReview),
-    },
+    review: (() => {
+      const sections = parseReviewSections(cleanedReview);
+      const predictions = parsePredictions(sections);
+      return {
+        score: extractScore(reviewText),
+        raw_markdown: cleanedReview,
+        sections,
+        ...(predictions ? { predictions } : {}),
+      };
+    })(),
     qa: qaReport,
     assets: {
       render_image: renderExists ? `${slug}-email-webview-render.png` : null,

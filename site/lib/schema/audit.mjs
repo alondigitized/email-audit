@@ -32,6 +32,22 @@ export const perfStepSchema = z.object({
 
 // Review sections can be partial (site journey audits emit {} today; email
 // audits emit all seven arrays). Kept permissive so real data parses.
+// Persona-grounded funnel predictions. Emitted by the email reviewer
+// alongside the qualitative critique so the UI can surface open/click
+// likelihood as pills. Both are 1-10 persona-reaction scores, NOT
+// probability percentages — frame them honestly.
+export const predictionScoreSchema = z.object({
+  score: z.number().min(1).max(10),
+  rationale: z.string(),
+});
+
+export const predictionsSchema = z
+  .object({
+    open_likelihood: predictionScoreSchema.nullable().optional(),
+    click_likelihood: predictionScoreSchema.nullable().optional(),
+  })
+  .partial();
+
 export const reviewSectionsSchema = z
   .object({
     executive_summary: z.array(z.string()),
@@ -42,6 +58,8 @@ export const reviewSectionsSchema = z
     bottom_line: z.array(z.string()),
     subject_line: z.array(z.string()),
     preview_text: z.array(z.string()),
+    open_likelihood: z.array(z.string()),
+    click_likelihood: z.array(z.string()),
     evidence: z.array(z.string()),
   })
   .partial();
@@ -100,6 +118,7 @@ export const auditDataSchema = z.object({
     score: z.string(),
     raw_markdown: z.string(),
     sections: reviewSectionsSchema,
+    predictions: predictionsSchema.nullable().optional(),
   }),
   qa: qaReportSchema.nullable(),
   assets: z.object({
