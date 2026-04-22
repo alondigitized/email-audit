@@ -147,17 +147,10 @@ function slugifyLabel(s) {
 }
 
 function buildJourneySteps(persona) {
-  const rawTargets =
+  const explicitTargets =
     Array.isArray(persona.targets) && persona.targets.length > 0
       ? persona.targets
-      : [
-          {
-            label:
-              (persona.category_path && persona.category_path[0]) || 'Shop',
-            search_term: persona.search_term,
-            category_path: persona.category_path || [],
-          },
-        ];
+      : null;
 
   const steps = [
     { id: 'homepage', label: 'Homepage',       action: 'navigate' },
@@ -165,14 +158,41 @@ function buildJourneySteps(persona) {
     { id: 'login',    label: 'Log In',         action: 'login' },
   ];
 
-  for (const t of rawTargets) {
-    const slug = slugifyLabel(t.label);
-    const top = t.category_path && t.category_path[0];
-    const sub = t.category_path && t.category_path[1];
+  if (explicitTargets) {
+    // Multi-target (persona.targets set). For each target, do a direct
+    // URL nav to the full joined category path — Skechers nests Girls
+    // and Boys under /kids/, so Martha's paths are 3 segments deep
+    // (kids/girls/shoes, kids/boys/shoes). Direct nav avoids simulating
+    // multi-level hamburger drilldown and stays robust to nav shuffles.
+    for (const t of explicitTargets) {
+      const slug = slugifyLabel(t.label);
+      const navPath = (t.category_path || [])
+        .map((s) => String(s).toLowerCase())
+        .join('/');
+      steps.push({
+        id: `${slug}-category`,
+        label: `${t.label}: /${navPath}/`,
+        action: 'nav_direct',
+        nav_path: navPath,
+      });
+      steps.push({
+        id: `${slug}-product`,
+        label: `${t.label}: product detail`,
+        action: 'first_product',
+      });
+    }
+  } else {
+    // Legacy single-target personas (Walker) keep the 2-step hamburger
+    // dance — captures menu screenshots and the category landing page
+    // as distinct artifacts for review.
+    const path = persona.category_path || [];
+    const top = path[0];
+    const sub = path[1];
+    const slug = slugifyLabel(path[0] || 'shop');
     if (top) {
       steps.push({
         id: `${slug}-category`,
-        label: `${t.label}: ${top} category`,
+        label: `${top} category`,
         action: 'nav_category',
         nav_top: top,
       });
@@ -180,7 +200,7 @@ function buildJourneySteps(persona) {
     if (sub) {
       steps.push({
         id: `${slug}-shoes`,
-        label: `${t.label}: ${top ?? ''} > ${sub}`,
+        label: `${top ?? ''} > ${sub}`,
         action: 'nav_subcategory',
         nav_top: top,
         nav_sub: sub,
@@ -188,7 +208,7 @@ function buildJourneySteps(persona) {
     }
     steps.push({
       id: `${slug}-product`,
-      label: `${t.label}: product detail`,
+      label: 'Product detail',
       action: 'first_product',
     });
   }
@@ -409,6 +429,22 @@ async function runJourney(persona, credentials, artifactDir) {
               await dismissPopups(page);
             }
           }
+          break;
+        }
+
+        case 'nav_direct': {
+          // Used by multi-target journeys — direct nav to a full joined
+          // URL path like "kids/girls/shoes" without simulating the
+          // hamburger drilldown. Robust to category-menu shuffles.
+          const p = String(step.nav_path || '').replace(/^\/+|\/+$/g, '');
+          if (!p) throw new Error('nav_direct: empty nav_path');
+          await page.goto(`${persona.site}/${p}/`, {
+            waitUntil: 'domcontentloaded',
+            timeout: 30000,
+          });
+          await page.waitForLoadState('domcontentloaded');
+          await delay(2000);
+          await dismissPopups(page);
           break;
         }
 

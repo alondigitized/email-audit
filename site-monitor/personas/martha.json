@@ -16,7 +16,7 @@
   "site": "https://www.skechers.com",
   "credentials_env_prefix": "SKECHERS_MARTHA",
   "targets": [
-    { "label": "5-year-old girl", "search_term": "girls shoes", "category_path": ["Girls", "Shoes"] },
-    { "label": "9-year-old boy",  "search_term": "boys shoes",  "category_path": ["Boys",  "Shoes"] }
+    { "label": "5-year-old girl", "search_term": "girls shoes", "category_path": ["kids", "girls", "shoes"] },
+    { "label": "9-year-old boy",  "search_term": "boys shoes",  "category_path": ["kids", "boys",  "shoes"] }
   ]
 }
