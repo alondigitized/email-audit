@@ -77,6 +77,10 @@ function buildProfileFromForm(
         s(fd, "credentials_env_prefix") ??
         existing?.journey.credentials_env_prefix ??
         null,
+      // Targets preserve through form edits (the form doesn't expose them
+      // yet — they're added directly to the DB for now, editable via the
+      // Admin UI once we add a journey-targets sub-editor).
+      targets: existing?.journey.targets ?? [],
     },
     agentmail: existing?.agentmail ?? {
       inbox_address: null,

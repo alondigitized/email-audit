@@ -25,6 +25,16 @@ export const personaIdentitySchema = z.object({
   focus_areas: z.array(z.string()).default([]),
 });
 
+// A single shopping "intent" inside a journey — e.g. Martha browsing for
+// her 5-year-old girl vs her 9-year-old boy in the same run. Optional;
+// personas that shop for one thing only (Walker, Calvin) use the
+// top-level search_term + category_path fields and leave targets empty.
+export const personaJourneyTargetSchema = z.object({
+  label: z.string().min(1),
+  search_term: z.string().nullable().optional(),
+  category_path: z.array(z.string()).default([]),
+});
+
 // Daemon-only journey config. Read by site-monitor when running site
 // reviews. Optional for personas that are email-only (no site journey).
 export const personaJourneySchema = z.object({
@@ -32,6 +42,7 @@ export const personaJourneySchema = z.object({
   search_term: z.string().nullable().optional(),
   category_path: z.array(z.string()).default([]),
   credentials_env_prefix: z.string().nullable().optional(),
+  targets: z.array(personaJourneyTargetSchema).default([]),
 });
 
 // AgentMail inbox binding. Populated at create time when the admin UI

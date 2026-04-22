@@ -131,17 +131,86 @@ function shorten(s, max = 6000) {
 // Playwright Journey
 // ---------------------------------------------------------------------------
 
-const JOURNEY_STEPS = [
-  { id: 'homepage',       label: 'Homepage',         action: 'navigate' },
-  { id: 'popups',         label: 'Dismiss Popups',   action: 'dismiss_popups' },
-  { id: 'login',          label: 'Log In',           action: 'login' },
-  { id: 'mens-category',  label: "Men's Category",   action: 'nav_category', target: 'Men' },
-  { id: 'mens-shoes',     label: "Men's Shoes",      action: 'nav_subcategory', target: 'Shoes' },
-  { id: 'product',        label: 'View Product',     action: 'first_product' },
-  { id: 'add-to-cart',    label: 'Add to Cart',      action: 'add_to_cart' },
-  { id: 'cart',           label: 'View Cart',        action: 'view_cart' },
-  { id: 'search',         label: 'Search',           action: 'search' },
-];
+// Journey is persona-driven. If persona.targets is a non-empty array,
+// each target contributes its own category → subcategory → product block
+// to the journey (Martha shopping for her 5yo girl AND 9yo boy in one
+// session is the canonical use case). Single-target personas (Walker,
+// Calvin) leave targets empty and the legacy top-level search_term +
+// category_path fields drive a single block.
+
+function slugifyLabel(s) {
+  return String(s || 'shop')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 40) || 'shop';
+}
+
+function buildJourneySteps(persona) {
+  const rawTargets =
+    Array.isArray(persona.targets) && persona.targets.length > 0
+      ? persona.targets
+      : [
+          {
+            label:
+              (persona.category_path && persona.category_path[0]) || 'Shop',
+            search_term: persona.search_term,
+            category_path: persona.category_path || [],
+          },
+        ];
+
+  const steps = [
+    { id: 'homepage', label: 'Homepage',       action: 'navigate' },
+    { id: 'popups',   label: 'Dismiss Popups', action: 'dismiss_popups' },
+    { id: 'login',    label: 'Log In',         action: 'login' },
+  ];
+
+  for (const t of rawTargets) {
+    const slug = slugifyLabel(t.label);
+    const top = t.category_path && t.category_path[0];
+    const sub = t.category_path && t.category_path[1];
+    if (top) {
+      steps.push({
+        id: `${slug}-category`,
+        label: `${t.label}: ${top} category`,
+        action: 'nav_category',
+        nav_top: top,
+      });
+    }
+    if (sub) {
+      steps.push({
+        id: `${slug}-shoes`,
+        label: `${t.label}: ${top ?? ''} > ${sub}`,
+        action: 'nav_subcategory',
+        nav_top: top,
+        nav_sub: sub,
+      });
+    }
+    steps.push({
+      id: `${slug}-product`,
+      label: `${t.label}: product detail`,
+      action: 'first_product',
+    });
+  }
+
+  // Post-target: one add-to-cart / cart / search using the first target's
+  // search term (or persona.search_term fallback). Multi-target personas
+  // still get one end-of-journey search — the LLM reviews per-step anyway.
+  const firstSearch =
+    (rawTargets[0] && rawTargets[0].search_term) ||
+    persona.search_term ||
+    '';
+  steps.push({ id: 'add-to-cart', label: 'Add to Cart', action: 'add_to_cart' });
+  steps.push({ id: 'cart',        label: 'View Cart',   action: 'view_cart' });
+  steps.push({
+    id: 'search',
+    label: `Search "${firstSearch}"`,
+    action: 'search',
+    search_term: firstSearch,
+  });
+
+  return steps;
+}
 
 async function delay(ms) {
   return new Promise(r => setTimeout(r, ms));
@@ -269,9 +338,12 @@ async function runJourney(persona, credentials, artifactDir) {
     }
   });
 
+  const journeySteps = buildJourneySteps(persona);
+  log('Journey plan', { totalSteps: journeySteps.length });
+
   let stepNum = 0;
 
-  for (const step of JOURNEY_STEPS) {
+  for (const step of journeySteps) {
     stepNum++;
     log(`Step ${stepNum}: ${step.label}`);
     const stepResult = { step: stepNum, id: step.id, label: step.label, url: '', status: 'ok', error: null, perf: null };
@@ -341,7 +413,8 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'nav_category': {
-          const catId = step.target.toLowerCase();
+          const catId = String(step.nav_top || step.target || '').toLowerCase();
+          if (!catId) throw new Error('nav_category: no target category');
           try {
             // Try interactive: hamburger menu → category link
             const hamburger = page.locator('#mobile-menu-button, button.navbar-toggler').first();
@@ -361,13 +434,19 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'nav_subcategory': {
-          // On mobile, after clicking Men, shoes might be in a submenu or we navigate directly
-          const subLink = page.locator(`a[href*="/${persona.category_path[0].toLowerCase()}/${step.target.toLowerCase()}/"]`).first();
+          // On mobile, after clicking the top category, the subcategory
+          // link might be visible or we navigate directly. Top comes from
+          // the step (so multi-target journeys can traverse different
+          // top-level categories within one run — Girls>Shoes then
+          // Boys>Shoes).
+          const top = String(step.nav_top || (persona.category_path && persona.category_path[0]) || '').toLowerCase();
+          const sub = String(step.nav_sub || step.target || '').toLowerCase();
+          if (!top || !sub) throw new Error('nav_subcategory: missing nav_top or nav_sub');
+          const subLink = page.locator(`a[href*="/${top}/${sub}/"]`).first();
           try {
             await subLink.click({ timeout: 5000 });
           } catch {
-            // Fallback: navigate directly
-            await page.goto(`${persona.site}/${persona.category_path[0].toLowerCase()}/${step.target.toLowerCase()}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+            await page.goto(`${persona.site}/${top}/${sub}/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
           }
           await page.waitForLoadState('domcontentloaded');
           await delay(2000);
@@ -453,8 +532,12 @@ async function runJourney(persona, credentials, artifactDir) {
         }
 
         case 'search': {
-          // Navigate to search results directly via URL
-          const searchUrl = `${persona.site}/search?q=${encodeURIComponent(persona.search_term)}`;
+          // Navigate to search results directly via URL. Query comes from
+          // the step (so multi-target journeys search for the first
+          // target's term) and falls back to persona.search_term.
+          const q = step.search_term || persona.search_term || '';
+          if (!q) throw new Error('search: no query term');
+          const searchUrl = `${persona.site}/search?q=${encodeURIComponent(q)}`;
           await page.goto(searchUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
           await delay(2000);
           await dismissPopups(page);
@@ -573,12 +656,24 @@ function buildContentPrompt(persona, steps, artifactDir) {
     .filter(s => s.viewportScreenshot)
     .map(s => `- Step ${s.step} (${s.label}): ${path.join(artifactDir, s.viewportScreenshot)}`);
 
+  const targets = Array.isArray(persona.targets) ? persona.targets : [];
+  const targetPreamble =
+    targets.length > 1
+      ? [
+          '',
+          'In this session you were shopping for MULTIPLE people in one visit:',
+          ...targets.map((t) => `  - ${t.label}`),
+          'The journey walks through each shopping target in order. When reviewing each step, call out WHOM that step was about (the 5yo girl, the 9yo boy, etc.) and whether the site made it easy to find the right products for that person.',
+        ]
+      : [];
+
   return [
     `You are ${persona.name}, a ${persona.age}-year-old ${persona.generation} ${persona.gender.toLowerCase()}.`,
     `${persona.style}. ${persona.shopping_habits}. ${persona.tech_comfort}.`,
     '',
     `You just walked through skechers.com on your phone. Review the ENTIRE journey from YOUR perspective.`,
     'The attached images are mobile screenshots of each step — review what you SEE, not code.',
+    ...targetPreamble,
     '',
     'Your journey steps:',
     ...steps.map(s => `  ${s.step}. ${s.label}: ${s.url || '(failed)'}${s.status === 'failed' ? ` [FAILED: ${s.error}]` : ''}`),

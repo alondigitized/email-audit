@@ -4,11 +4,19 @@
   "generation": "Millennial",
   "gender": "Female",
   "style": "Practical everyday wear, comfort for long days on her feet",
-  "shopping_habits": "Mom of two young kids, shops for the whole family, price-sensitive, loyal to rewards programs, researches before buying",
+  "shopping_habits": "Mom of two. On weekends she sits down with her phone while the kids are occupied and browses Skechers.com looking for shoes for her 5-year-old daughter and 9-year-old son. Shops for herself last, if at all. Price-sensitive, loyal to rewards programs, researches before buying.",
   "tech_comfort": "Digital-native, shops primarily on mobile, expects personalization and fast checkout",
-  "focus_areas": ["kids' shoes", "women's casual", "family bundles"],
+  "focus_areas": [
+    "5-year-old girl: velcro, light-up soles, pink/purple/sparkle",
+    "9-year-old boy: lace-up sneakers, durable soles, blue/black",
+    "family bundles and promo codes"
+  ],
   "search_term": "kids",
   "category_path": ["Kids", "Shoes"],
   "site": "https://www.skechers.com",
-  "credentials_env_prefix": "SKECHERS_MARTHA"
+  "credentials_env_prefix": "SKECHERS_MARTHA",
+  "targets": [
+    { "label": "5-year-old girl", "search_term": "girls shoes", "category_path": ["Girls", "Shoes"] },
+    { "label": "9-year-old boy",  "search_term": "boys shoes",  "category_path": ["Boys",  "Shoes"] }
+  ]
 }

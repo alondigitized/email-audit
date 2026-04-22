@@ -49,6 +49,10 @@ function profileToLegacyShape(profile) {
     category_path: j.category_path ?? [],
     site: j.site ?? '',
     credentials_env_prefix: j.credentials_env_prefix ?? '',
+    // Multi-target journey config (optional). Site-monitor reads this to
+    // build a journey with multiple shopping intents in one run — Martha
+    // shopping for her 5yo girl AND 9yo boy, for example.
+    targets: Array.isArray(j.targets) ? j.targets : [],
   };
 }
 

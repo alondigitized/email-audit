@@ -3,6 +3,7 @@ import {
   personaAgentmailSchema,
   personaIdentitySchema,
   personaJourneySchema,
+  personaJourneyTargetSchema,
   personaOnboardingSchema,
   personaProfileSchema,
   parsePersonaProfile,
@@ -15,6 +16,7 @@ export {
   personaAgentmailSchema,
   personaIdentitySchema,
   personaJourneySchema,
+  personaJourneyTargetSchema,
   personaOnboardingSchema,
   personaProfileSchema,
   parsePersonaProfile,
@@ -23,6 +25,7 @@ export {
 
 export type PersonaIdentity = z.infer<typeof personaIdentitySchema>;
 export type PersonaJourney = z.infer<typeof personaJourneySchema>;
+export type PersonaJourneyTarget = z.infer<typeof personaJourneyTargetSchema>;
 export type PersonaAgentmail = z.infer<typeof personaAgentmailSchema>;
 export type PersonaOnboarding = z.infer<typeof personaOnboardingSchema>;
 export type PersonaProfile = z.infer<typeof personaProfileSchema>;

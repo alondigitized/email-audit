@@ -104,6 +104,11 @@ function buildProfile(
       search_term: (json?.search_term as string) ?? null,
       category_path: get<string[]>("category_path", []),
       credentials_env_prefix: (json?.credentials_env_prefix as string) ?? null,
+      targets: get<unknown[]>("targets", []) as {
+        label: string;
+        search_term?: string | null;
+        category_path: string[];
+      }[],
     },
     agentmail: {
       // Address comes from email-monitor/inboxes.json at backfill time,
