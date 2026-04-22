@@ -35,18 +35,28 @@ export async function provisionInbox(opts: {
   const username = opts.username ?? opts.slug;
   const domain = opts.domain ?? "agentmail.to";
   // The SDK returns an Inbox object. Shape varies by version; the minimum
-  // we rely on is `inbox_id` and `inbox_address` — documented as top-level
-  // string fields in agentmail@0.4.x.
+  // we rely on is the inbox's identifier and email address. AgentMail
+  // 0.4.x returns these as { inboxId, email } (camelCase), with older
+  // versions using { inbox_id, inbox_address }. Accept both.
   const inbox = (await client.inboxes.create({
     username,
     domain,
     displayName: opts.displayName,
-  })) as unknown as { inbox_id?: string; inbox_address?: string; id?: string; address?: string };
+  })) as unknown as {
+    inboxId?: string;
+    inbox_id?: string;
+    email?: string;
+    inbox_address?: string;
+    address?: string;
+    id?: string;
+  };
 
-  // Be defensive about shape drift. Fall through to common alternates.
-  const inbox_id = inbox.inbox_id ?? inbox.id ?? null;
+  const inbox_id = inbox.inboxId ?? inbox.inbox_id ?? inbox.id ?? null;
   const inbox_address =
-    inbox.inbox_address ?? inbox.address ?? `${username}@${domain}`;
+    inbox.email ??
+    inbox.inbox_address ??
+    inbox.address ??
+    `${username}@${domain}`;
   if (!inbox_id) {
     throw new Error(
       `AgentMail inbox.create returned no id; got keys: ${Object.keys(inbox).join(", ")}`

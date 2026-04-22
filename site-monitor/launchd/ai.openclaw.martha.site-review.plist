@@ -2,34 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Label</key>
-    <string>ai.openclaw.martha.site-review</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/bin/bash</string>
-        <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/scripts/site-review-wrapper.sh</string>
-        <string>--persona</string>
-        <string>martha</string>
-    </array>
-    <key>StartCalendarInterval</key>
-    <dict>
-        <key>Hour</key>
-        <integer>7</integer>
-        <key>Minute</key>
-        <integer>0</integer>
-    </dict>
-    <key>WorkingDirectory</key>
-    <string>/Users/alontsang/.openclaw-walker/workspace</string>
-    <key>EnvironmentVariables</key>
-    <dict>
-        <key>PATH</key>
-        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/Users/alontsang/.local/bin</string>
-        <key>HOME</key>
-        <string>/Users/alontsang</string>
-    </dict>
-    <key>StandardOutPath</key>
-    <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/launchd.out.log</string>
-    <key>StandardErrorPath</key>
-    <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/launchd.err.log</string>
+  <key>Label</key><string>ai.openclaw.martha.site-review</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/env</string>
+    <string>bash</string>
+    <string>-c</string>
+    <string>cd /Users/alontsang/.openclaw-walker/workspace/site-monitor &amp;&amp; /opt/homebrew/bin/node site-review.mjs --persona martha &gt;&gt; logs/site-review.log 2&gt;&amp;1</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Weekday</key><integer>6</integer><key>Hour</key><integer>6</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>0</integer><key>Hour</key><integer>6</integer><key>Minute</key><integer>0</integer></dict>
+  </array>
+  <key>RunAtLoad</key><false/>
+  <key>StandardErrorPath</key><string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/martha-site-review-stderr.log</string>
+  <key>StandardOutPath</key><string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/martha-site-review-stdout.log</string>
 </dict>
 </plist>

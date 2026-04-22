@@ -1,0 +1,14 @@
+{
+  "name": "Calvin Haze",
+  "age": 36,
+  "generation": "Millennial",
+  "gender": "Male",
+  "style": "Streetwear-leaning casual. Loves clean silhouettes that slip on without bending over.",
+  "shopping_habits": "Weekend shopper alongside his wife Martha. Watches sneaker drops on social, hunts for hands-free slip-in technology for the gym, errands, and weekend coffee runs. Not a loyalty-program completionist — buys what looks good and wears-in right.",
+  "tech_comfort": "Digital-native, mobile-first, lives on Instagram and TikTok for shoe inspo. Expects the site to reflect what he saw scrolling.",
+  "focus_areas": ["hands-free slip-in technology", "street-style silhouettes", "men's new releases and collaborations"],
+  "search_term": "slip in",
+  "category_path": ["Men", "Shoes", "Slip-Ins"],
+  "site": "https://www.skechers.com",
+  "credentials_env_prefix": "SKECHERS_CALVIN"
+}
