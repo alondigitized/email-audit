@@ -49,7 +49,20 @@ function parseMaybeProfile(
 
 // All personas, ordered by slug. Cached per-request so repeat calls inside
 // one server render don't round-trip.
-export const getAllPersonas = cache(async (): Promise<PersonaRecord[]> => {
+//
+// Drafts (profile.status === 'draft') are excluded by default — wizard-in-
+// progress personas shouldn't leak into /chat/{slug} or audit filters.
+// Admin surfaces (/admin/personas list) pass `{ includeDrafts: true }`
+// to see them.
+export async function getAllPersonas(opts?: {
+  includeDrafts?: boolean;
+}): Promise<PersonaRecord[]> {
+  const all = await getAllPersonasInternal();
+  if (opts?.includeDrafts) return all;
+  return all.filter((p) => (p.profile?.status ?? "active") !== "draft");
+}
+
+const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
   const rows = await db
     .select({
       id: personas.id,

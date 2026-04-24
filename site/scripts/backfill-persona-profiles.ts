@@ -122,6 +122,7 @@ function buildProfile(
     onboarding: {},
     color,
     notes: null,
+    status: "active",
   };
 
   // Validate against zod — fails loud if a legacy JSON is malformed.

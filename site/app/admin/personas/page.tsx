@@ -40,7 +40,7 @@ function relativeLabel(d: number | null): string {
 export default async function AdminPersonasPage() {
   await requireAdmin();
   const [personas, auditCounts] = await Promise.all([
-    getAllPersonas(),
+    getAllPersonas({ includeDrafts: true }),
     getAuditCountsBySlug(),
   ]);
 
@@ -149,7 +149,14 @@ export default async function AdminPersonasPage() {
                           aria-hidden
                         />
                         <div className="min-w-0">
-                          <div className="font-semibold truncate">{p.name}</div>
+                          <div className="font-semibold truncate flex items-center gap-2">
+                            <span>{p.name}</span>
+                            {p.profile?.status === "draft" && (
+                              <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">
+                                DRAFT
+                              </span>
+                            )}
+                          </div>
                           <div className="text-xs text-muted truncate">
                             {p.slug}
                           </div>
@@ -189,10 +196,14 @@ export default async function AdminPersonasPage() {
                     </td>
                     <td className="px-4 py-3 text-right">
                       <Link
-                        href={`/admin/personas/${p.slug}`}
+                        href={
+                          p.profile?.status === "draft"
+                            ? `/admin/personas/new/${p.slug}/identity`
+                            : `/admin/personas/${p.slug}`
+                        }
                         className="text-sky-700 hover:text-sky-900 underline text-xs font-semibold"
                       >
-                        Edit
+                        {p.profile?.status === "draft" ? "Resume →" : "Edit"}
                       </Link>
                     </td>
                   </tr>

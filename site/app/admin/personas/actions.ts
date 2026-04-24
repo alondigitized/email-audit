@@ -92,6 +92,7 @@ function buildProfileFromForm(
     onboarding: existing?.onboarding ?? {},
     color: s(fd, "color") ?? existing?.color ?? null,
     notes: s(fd, "notes") ?? existing?.notes ?? null,
+    status: existing?.status ?? "active",
   };
   // Inbox address is editable too (manual entry or provisioned later).
   const inbox = s(fd, "inbox_address");

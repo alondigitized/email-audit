@@ -75,6 +75,11 @@ export const personaProfileSchema = z.object({
   // Free-form human-maintained notes. Mirrors the vault README body so
   // Obsidian readers keep a single source of truth.
   notes: z.string().nullable().optional(),
+  // Wizard-created personas start as "draft" and graduate to "active"
+  // after the handoff step completes. Drafts are hidden from chat/audits
+  // and the default /admin/personas list view. Missing status on legacy
+  // rows means active.
+  status: z.enum(["draft", "active"]).default("active"),
 });
 
 export function parsePersonaProfile(input) {
