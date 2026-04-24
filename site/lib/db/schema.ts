@@ -76,6 +76,29 @@ export const verificationTokens = pgTable(
 // zod-validated at the boundary via site/lib/schema/persona.mjs.
 // Column is optional for a clean migration — Phase 1 adds it empty, Phase 1
 // backfill populates walker/martha, Phase 2+ makes it authoritative.
+// Live operational status per persona — updated by the daemons on every
+// audit, by onboard-persona.mjs on every bootstrap step, and by the admin
+// UI on URL-validation saves. Read by /admin/personas to show green/amber/
+// red health at a glance. JSONB (not columns) so new status fields can be
+// added without migrations; consumers tolerate missing keys.
+export type PersonaLastStatus = {
+  last_audit_at?: string | null;
+  last_audit_score?: string | null;
+  last_audit_slug?: string | null;
+  last_cookies_at?: string | null;
+  last_inbox_poll_at?: string | null;
+  last_journey_status?: "ok" | "failed" | null;
+  onboarding?: Record<string, {
+    status: "pending" | "done" | "failed";
+    at: string;
+    detail?: string;
+  }>;
+  url_validation?: {
+    at: string;
+    results: Array<{ step_id: string; url: string; status: number | "error"; detail?: string }>;
+  } | null;
+};
+
 export const personas = pgTable("persona", {
   id: uuid("id").primaryKey().defaultRandom(),
   slug: text("slug").unique().notNull(),
@@ -83,6 +106,7 @@ export const personas = pgTable("persona", {
   short: text("short").notNull(),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   profile: jsonb("profile").$type<PersonaProfile>(),
+  lastStatus: jsonb("last_status").$type<PersonaLastStatus>(),
 });
 
 export const userPersonas = pgTable(

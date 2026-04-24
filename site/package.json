@@ -12,7 +12,8 @@
     "db:seed": "tsx --env-file=.env.local scripts/seed-allowlist.ts",
     "db:seed-personas": "tsx --env-file=.env.local scripts/seed-personas.ts",
     "db:grant": "tsx --env-file=.env.local scripts/grant-persona.ts",
-    "invite": "tsx --env-file=.env.local scripts/invite.ts"
+    "invite": "tsx --env-file=.env.local scripts/invite.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@ai-sdk/openai-compatible": "^1.0.0",

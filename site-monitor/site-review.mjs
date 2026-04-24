@@ -131,106 +131,14 @@ function shorten(s, max = 6000) {
 // Playwright Journey
 // ---------------------------------------------------------------------------
 
-// Journey is persona-driven. If persona.targets is a non-empty array,
-// each target contributes its own category → subcategory → product block
-// to the journey (Martha shopping for her 5yo girl AND 9yo boy in one
-// session is the canonical use case). Single-target personas (Walker,
-// Calvin) leave targets empty and the legacy top-level search_term +
-// category_path fields drive a single block.
-
-function slugifyLabel(s) {
-  return String(s || 'shop')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 40) || 'shop';
-}
-
-function buildJourneySteps(persona) {
-  const explicitTargets =
-    Array.isArray(persona.targets) && persona.targets.length > 0
-      ? persona.targets
-      : null;
-
-  const steps = [
-    { id: 'homepage', label: 'Homepage',       action: 'navigate' },
-    { id: 'popups',   label: 'Dismiss Popups', action: 'dismiss_popups' },
-    { id: 'login',    label: 'Log In',         action: 'login' },
-  ];
-
-  if (explicitTargets) {
-    // Multi-target (persona.targets set). For each target, do a direct
-    // URL nav to the full joined category path — Skechers nests Girls
-    // and Boys under /kids/, so Martha's paths are 3 segments deep
-    // (kids/girls/shoes, kids/boys/shoes). Direct nav avoids simulating
-    // multi-level hamburger drilldown and stays robust to nav shuffles.
-    for (const t of explicitTargets) {
-      const slug = slugifyLabel(t.label);
-      const navPath = (t.category_path || [])
-        .map((s) => String(s).toLowerCase())
-        .join('/');
-      steps.push({
-        id: `${slug}-category`,
-        label: `${t.label}: /${navPath}/`,
-        action: 'nav_direct',
-        nav_path: navPath,
-      });
-      steps.push({
-        id: `${slug}-product`,
-        label: `${t.label}: product detail`,
-        action: 'first_product',
-      });
-    }
-  } else {
-    // Legacy single-target personas (Walker) keep the 2-step hamburger
-    // dance — captures menu screenshots and the category landing page
-    // as distinct artifacts for review.
-    const path = persona.category_path || [];
-    const top = path[0];
-    const sub = path[1];
-    const slug = slugifyLabel(path[0] || 'shop');
-    if (top) {
-      steps.push({
-        id: `${slug}-category`,
-        label: `${top} category`,
-        action: 'nav_category',
-        nav_top: top,
-      });
-    }
-    if (sub) {
-      steps.push({
-        id: `${slug}-shoes`,
-        label: `${top ?? ''} > ${sub}`,
-        action: 'nav_subcategory',
-        nav_top: top,
-        nav_sub: sub,
-      });
-    }
-    steps.push({
-      id: `${slug}-product`,
-      label: 'Product detail',
-      action: 'first_product',
-    });
-  }
-
-  // Post-target: one add-to-cart / cart / search using the first target's
-  // search term (or persona.search_term fallback). Multi-target personas
-  // still get one end-of-journey search — the LLM reviews per-step anyway.
-  const firstSearch =
-    (explicitTargets && explicitTargets[0] && explicitTargets[0].search_term) ||
-    persona.search_term ||
-    '';
-  steps.push({ id: 'add-to-cart', label: 'Add to Cart', action: 'add_to_cart' });
-  steps.push({ id: 'cart',        label: 'View Cart',   action: 'view_cart' });
-  steps.push({
-    id: 'search',
-    label: `Search "${firstSearch}"`,
-    action: 'search',
-    search_term: firstSearch,
-  });
-
-  return steps;
-}
+// Journey step builder lives in site/lib/journey-preview.mjs as the
+// single source of truth — the admin UI preview pane and the CI smoke
+// test (scripts/verify-journey.mjs) import the same function, so we
+// can't drift between what the daemon plans and what the operator sees.
+import {
+  buildJourneySteps,
+  MUTATING_STEP_ACTIONS,
+} from '../site/lib/journey-preview.mjs';
 
 async function delay(ms) {
   return new Promise(r => setTimeout(r, ms));

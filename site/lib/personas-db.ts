@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { eq, asc } from "drizzle-orm";
 import { db, personas, userPersonas } from "./db/client";
+import type { PersonaLastStatus } from "./db/schema";
 import {
   safeParsePersonaProfile,
   type PersonaProfile,
@@ -24,6 +25,7 @@ export type PersonaRecord = {
   name: string;
   short: string;
   profile: PersonaProfile | null;
+  lastStatus: PersonaLastStatus | null;
 };
 
 function logDrift(slug: string, err: unknown) {
@@ -55,6 +57,7 @@ export const getAllPersonas = cache(async (): Promise<PersonaRecord[]> => {
       name: personas.name,
       short: personas.short,
       profile: personas.profile,
+      lastStatus: personas.lastStatus,
     })
     .from(personas)
     .orderBy(asc(personas.slug));
@@ -64,6 +67,7 @@ export const getAllPersonas = cache(async (): Promise<PersonaRecord[]> => {
     name: r.name,
     short: r.short,
     profile: parseMaybeProfile(r.slug, r.profile),
+    lastStatus: r.lastStatus ?? null,
   }));
 });
 
@@ -77,6 +81,7 @@ export const getPersonaBySlug = cache(
         name: personas.name,
         short: personas.short,
         profile: personas.profile,
+        lastStatus: personas.lastStatus,
       })
       .from(personas)
       .where(eq(personas.slug, slug))
@@ -89,6 +94,7 @@ export const getPersonaBySlug = cache(
       name: r.name,
       short: r.short,
       profile: parseMaybeProfile(r.slug, r.profile),
+      lastStatus: r.lastStatus ?? null,
     };
   }
 );
