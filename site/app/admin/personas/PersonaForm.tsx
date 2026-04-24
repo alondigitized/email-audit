@@ -1,4 +1,6 @@
 import type { PersonaProfile } from "@/lib/schema/persona";
+import type { PersonaLastStatus } from "@/lib/db/schema";
+import { buildJourneySteps } from "@/lib/journey-preview";
 
 // Server-rendered, uncontrolled form. Submit posts to the action passed
 // in via `action`. Used by both edit (/[slug]) and create (/new) pages —
@@ -13,6 +15,7 @@ export function PersonaForm({
   name,
   short,
   profile,
+  lastStatus,
   error,
   saved,
 }: {
@@ -22,6 +25,7 @@ export function PersonaForm({
   name?: string;
   short?: string;
   profile?: PersonaProfile | null;
+  lastStatus?: PersonaLastStatus | null;
   error?: string;
   saved?: boolean;
 }) {
@@ -194,6 +198,10 @@ export function PersonaForm({
         </Row>
       </Section>
 
+      {profile && (
+        <JourneyPreview profile={profile} lastStatus={lastStatus ?? null} />
+      )}
+
       <Section title="Inbox & display" subtitle="AgentMail inbox this persona polls. UI accent color used on pills.">
         <Row>
           <Field
@@ -289,5 +297,93 @@ function Field({
         <span className="block text-[11px] font-normal text-muted">{hint}</span>
       )}
     </label>
+  );
+}
+
+// ─── Journey preview ───────────────────────────────────────────────────────
+//
+// Renders the exact step list buildJourneySteps() will produce for this
+// persona's SAVED journey config, plus URL-validation badges from the
+// last save. The preview reflects saved state (not form draft) — live-
+// update-as-you-type is a Phase C wizard feature.
+
+function JourneyPreview({
+  profile,
+  lastStatus,
+}: {
+  profile: PersonaProfile;
+  lastStatus: PersonaLastStatus | null;
+}) {
+  const steps = buildJourneySteps({
+    site: profile.journey.site ?? undefined,
+    search_term: profile.journey.search_term ?? undefined,
+    category_path: profile.journey.category_path ?? [],
+    targets: (profile.journey.targets ?? []).map((t) => ({
+      label: t.label,
+      search_term: t.search_term ?? undefined,
+      category_path: t.category_path ?? [],
+    })),
+  });
+
+  const validation = lastStatus?.url_validation ?? null;
+  const byStepId = new Map(
+    (validation?.results ?? []).map((r) => [r.step_id, r])
+  );
+
+  return (
+    <fieldset className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm space-y-3">
+      <legend className="px-2 text-sm font-semibold text-muted uppercase tracking-wide">
+        Journey preview
+      </legend>
+      <p className="text-xs text-muted -mt-2 max-w-2xl">
+        The {steps.length}-step journey site-monitor will run on the next schedule. URL
+        badges come from the last save&apos;s HEAD check — fix any red rows before
+        Saturday.{" "}
+        {validation?.at ? (
+          <>Validated {new Date(validation.at).toLocaleString()}.</>
+        ) : (
+          <>No URL validation on record yet — save once to run it.</>
+        )}
+      </p>
+      <ol className="space-y-1.5 text-sm">
+        {steps.map((step, i) => {
+          const v = byStepId.get(step.id);
+          return (
+            <li
+              key={step.id}
+              className="flex items-center gap-2.5 font-mono text-[12.5px]"
+            >
+              <span className="w-6 text-right text-muted tabular-nums">{i + 1}.</span>
+              <span className="inline-block w-6 text-muted">{step.action === "nav_direct" ? "→" : step.action === "nav_category" ? "▸" : step.action === "nav_subcategory" ? "▸▸" : "·"}</span>
+              <span className="flex-1 min-w-0 truncate">{step.label}</span>
+              {v ? <UrlStatusBadge status={v.status} /> : null}
+            </li>
+          );
+        })}
+      </ol>
+    </fieldset>
+  );
+}
+
+function UrlStatusBadge({ status }: { status: number | "error" }) {
+  const isErr = status === "error";
+  const is2xx = typeof status === "number" && status >= 200 && status < 300;
+  const is3xx = typeof status === "number" && status >= 300 && status < 400;
+  const is4xx = typeof status === "number" && status >= 400 && status < 500;
+  const is5xx = typeof status === "number" && status >= 500;
+  const cls = is2xx
+    ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+    : is3xx
+      ? "bg-sky-50 text-sky-800 border-sky-200"
+      : is4xx || is5xx || isErr
+        ? "bg-rose-50 text-rose-800 border-rose-200"
+        : "bg-gray-100 text-gray-600 border-gray-200";
+  return (
+    <span
+      className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold border tabular-nums ${cls}`}
+      title={isErr ? "Fetch errored (timeout / DNS / abort)" : `HTTP ${status}`}
+    >
+      {isErr ? "ERR" : status}
+    </span>
   );
 }

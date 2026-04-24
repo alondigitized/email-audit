@@ -152,13 +152,16 @@ ${envPrefix}_PASSWORD=<generated-password>`}
       body: (
         <>
           <p className="text-sm mb-2">
-            Generate the plist + install (Phase 4 adds a single-command bootstrap script; for now this is a copy-paste):
+            One command handles everything — .env, cookies, plist install,
+            daemon restart, and a dry-run smoke test:
           </p>
           <pre className="bg-gray-900 text-gray-50 rounded-xl px-3 py-2 text-[12px] overflow-x-auto">
-{`node scripts/persona-bootstrap-export.mjs ${slug}
-cp site-monitor/launchd/ai.openclaw.${slug}.site-review.plist ~/Library/LaunchAgents/
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/ai.openclaw.${slug}.site-review.plist`}
+{`node scripts/onboard-persona.mjs ${slug}`}
           </pre>
+          <p className="text-[11px] text-muted mt-2">
+            Prompts for the retailer password interactively. Re-runnable —
+            skips steps where state is already fresh.
+          </p>
         </>
       ),
     },

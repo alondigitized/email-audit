@@ -11,6 +11,8 @@ import {
   type PersonaProfile,
 } from "@/lib/schema/persona";
 import { provisionInbox } from "@/lib/agentmail";
+import { journeyUrls } from "@/lib/journey-preview";
+import type { PersonaLastStatus } from "@/lib/db/schema";
 
 export type ActionResult =
   | { ok: true; slug?: string }
@@ -90,6 +92,7 @@ function buildProfileFromForm(
     onboarding: existing?.onboarding ?? {},
     color: s(fd, "color") ?? existing?.color ?? null,
     notes: s(fd, "notes") ?? existing?.notes ?? null,
+    status: existing?.status ?? "active",
   };
   // Inbox address is editable too (manual entry or provisioned later).
   const inbox = s(fd, "inbox_address");
@@ -191,6 +194,14 @@ export async function upsertPersonaAction(
     .update(personas)
     .set({ name, short, profile })
     .where(eq(personas.id, row.id));
+
+  // Fire-and-forget URL validation. Runs AFTER the save returns so a
+  // flaky retailer doesn't block the admin's form submit. Results land
+  // in persona.last_status.url_validation and surface as warnings on
+  // the next load. Silently tolerates network errors.
+  validateAndStoreJourneyUrls(slug, profile).catch((err) =>
+    console.warn(`[url-validation] ${slug} skipped:`, err)
+  );
 
   revalidatePath("/admin/personas");
   revalidatePath(`/admin/personas/${slug}`);
@@ -388,4 +399,71 @@ export async function setChecklistItemAndRefresh(fd: FormData) {
   // Redirect to same page so the server component re-reads and the
   // status pill reflects the new state.
   redirect(`/admin/personas/${slug}`);
+}
+
+// ─── Journey URL validation ────────────────────────────────────────────────
+//
+// Runs asynchronously after every upsert. HEAD each category URL the
+// journey will visit and record the HTTP status in last_status.url_validation.
+// We use HEAD because retailers rate-limit GET more aggressively, and a
+// mobile User-Agent because bot protection often 4xx's curl/node
+// defaults (Kasada on Skechers returned 410 to our first probe). Timeout
+// per URL: 3s so a flaky retailer can't stall the admin's form for long.
+
+const VALIDATION_TIMEOUT_MS = 3000;
+const VALIDATION_UA =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15";
+
+async function headUrl(url: string): Promise<number | "error"> {
+  try {
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), VALIDATION_TIMEOUT_MS);
+    const res = await fetch(url, {
+      method: "HEAD",
+      redirect: "manual",
+      headers: { "User-Agent": VALIDATION_UA },
+      signal: controller.signal,
+    });
+    clearTimeout(t);
+    return res.status;
+  } catch {
+    return "error";
+  }
+}
+
+async function validateAndStoreJourneyUrls(
+  slug: string,
+  profile: PersonaProfile
+): Promise<void> {
+  const journeyShape = {
+    site: profile.journey.site ?? null,
+    search_term: profile.journey.search_term ?? null,
+    category_path: profile.journey.category_path ?? [],
+    targets: profile.journey.targets ?? [],
+  };
+  const urls = journeyUrls(journeyShape);
+  if (urls.length === 0) return;
+
+  const results = await Promise.all(
+    urls.map(async ({ stepId, url }) => {
+      const status = await headUrl(url);
+      return { step_id: stepId, url, status };
+    })
+  );
+
+  const row = await db
+    .select({ id: personas.id, lastStatus: personas.lastStatus })
+    .from(personas)
+    .where(eq(personas.slug, slug))
+    .limit(1);
+  if (row.length === 0) return;
+
+  const nextStatus: PersonaLastStatus = {
+    ...(row[0].lastStatus ?? {}),
+    url_validation: { at: new Date().toISOString(), results },
+  };
+  await db
+    .update(personas)
+    .set({ lastStatus: nextStatus })
+    .where(eq(personas.id, row[0].id));
 }

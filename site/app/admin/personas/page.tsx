@@ -23,10 +23,24 @@ async function getAuditCountsBySlug(): Promise<Map<string, number>> {
   return out;
 }
 
+function daysAgo(iso: string | null | undefined): number | null {
+  if (!iso) return null;
+  const t = new Date(iso).getTime();
+  if (!Number.isFinite(t)) return null;
+  return Math.floor((Date.now() - t) / 86_400_000);
+}
+
+function relativeLabel(d: number | null): string {
+  if (d === null) return "—";
+  if (d <= 0) return "today";
+  if (d === 1) return "1d ago";
+  return `${d}d ago`;
+}
+
 export default async function AdminPersonasPage() {
   await requireAdmin();
   const [personas, auditCounts] = await Promise.all([
-    getAllPersonas(),
+    getAllPersonas({ includeDrafts: true }),
     getAuditCountsBySlug(),
   ]);
 
@@ -53,11 +67,16 @@ export default async function AdminPersonasPage() {
             <tr>
               <th className="text-left px-4 py-2 font-semibold">Persona</th>
               <th className="text-left px-4 py-2 font-semibold hidden sm:table-cell">
-                Age · Generation
+                Age · Gen
               </th>
-              <th className="text-left px-4 py-2 font-semibold hidden md:table-cell">
+              <th className="text-left px-4 py-2 font-semibold hidden lg:table-cell">
                 Inbox
               </th>
+              <th className="text-left px-4 py-2 font-semibold">Last audit</th>
+              <th className="text-left px-4 py-2 font-semibold hidden md:table-cell">
+                Cookies
+              </th>
+              <th className="text-left px-4 py-2 font-semibold">URLs</th>
               <th className="text-right px-4 py-2 font-semibold">Audits</th>
               <th className="px-4 py-2" />
             </tr>
@@ -65,7 +84,7 @@ export default async function AdminPersonasPage() {
           <tbody>
             {personas.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-muted">
+                <td colSpan={8} className="px-4 py-8 text-center text-muted">
                   No personas yet.{" "}
                   <Link href="/admin/personas/new" className="underline">
                     Create one
@@ -80,6 +99,43 @@ export default async function AdminPersonasPage() {
                 const inbox = p.profile?.agentmail.inbox_address ?? null;
                 const age = p.profile?.identity.age ?? null;
                 const gen = p.profile?.identity.generation ?? null;
+
+                const s = p.lastStatus;
+                const lastAuditDays = daysAgo(s?.last_audit_at ?? null);
+                const cookiesDays = daysAgo(s?.last_cookies_at ?? null);
+                const cookiesClass =
+                  cookiesDays === null
+                    ? "text-rose-700"
+                    : cookiesDays > 30
+                      ? "text-rose-700"
+                      : cookiesDays > 14
+                        ? "text-amber-700"
+                        : "text-emerald-700";
+                const urlResults = s?.url_validation?.results ?? [];
+                const urlBad = urlResults.filter(
+                  (r) =>
+                    r.status === "error" ||
+                    (typeof r.status === "number" && r.status >= 400)
+                ).length;
+                const urlOk = urlResults.filter(
+                  (r) =>
+                    typeof r.status === "number" &&
+                    r.status >= 200 &&
+                    r.status < 400
+                ).length;
+                const urlBadge =
+                  urlResults.length === 0
+                    ? { label: "—", cls: "text-muted" }
+                    : urlBad > 0
+                      ? {
+                          label: `${urlBad} bad`,
+                          cls: "bg-rose-50 text-rose-800 border-rose-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+                        }
+                      : {
+                          label: `${urlOk} ok`,
+                          cls: "bg-emerald-50 text-emerald-800 border-emerald-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+                        };
+
                 return (
                   <tr
                     key={p.slug}
@@ -93,7 +149,14 @@ export default async function AdminPersonasPage() {
                           aria-hidden
                         />
                         <div className="min-w-0">
-                          <div className="font-semibold truncate">{p.name}</div>
+                          <div className="font-semibold truncate flex items-center gap-2">
+                            <span>{p.name}</span>
+                            {p.profile?.status === "draft" && (
+                              <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">
+                                DRAFT
+                              </span>
+                            )}
+                          </div>
                           <div className="text-xs text-muted truncate">
                             {p.slug}
                           </div>
@@ -103,18 +166,44 @@ export default async function AdminPersonasPage() {
                     <td className="px-4 py-3 hidden sm:table-cell text-muted">
                       {age ? `${age} · ${gen ?? "—"}` : "—"}
                     </td>
-                    <td className="px-4 py-3 hidden md:table-cell text-muted truncate">
+                    <td className="px-4 py-3 hidden lg:table-cell text-muted truncate max-w-[180px]">
                       {inbox ?? "—"}
+                    </td>
+                    <td className="px-4 py-3 text-muted">
+                      {s?.last_audit_at ? (
+                        <div>
+                          <div>{relativeLabel(lastAuditDays)}</div>
+                          {s.last_audit_score && (
+                            <div className="text-[11px]">
+                              score {s.last_audit_score}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                    <td
+                      className={`px-4 py-3 hidden md:table-cell ${cookiesClass}`}
+                    >
+                      {relativeLabel(cookiesDays)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={urlBadge.cls}>{urlBadge.label}</span>
                     </td>
                     <td className="px-4 py-3 text-right tabular-nums">
                       {count.toLocaleString()}
                     </td>
                     <td className="px-4 py-3 text-right">
                       <Link
-                        href={`/admin/personas/${p.slug}`}
+                        href={
+                          p.profile?.status === "draft"
+                            ? `/admin/personas/new/${p.slug}/identity`
+                            : `/admin/personas/${p.slug}`
+                        }
                         className="text-sky-700 hover:text-sky-900 underline text-xs font-semibold"
                       >
-                        Edit
+                        {p.profile?.status === "draft" ? "Resume →" : "Edit"}
                       </Link>
                     </td>
                   </tr>

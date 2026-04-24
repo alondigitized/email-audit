@@ -80,6 +80,28 @@ export async function upsertAuditRow({ slug, data }) {
       media_keys = EXCLUDED.media_keys,
       updated_at = NOW()
   `;
+
+  // Writeback last-audit status so the admin UI shows "last audit 2 days
+  // ago, score 7/10" without having to scan the audit table. Best-effort:
+  // persona might not exist yet (extremely rare race), and the whole
+  // status column is JSONB so shape changes can evolve without migration.
+  try {
+    const statusRow = await sql`SELECT last_status FROM persona WHERE slug = ${persona} LIMIT 1`;
+    if (statusRow.length > 0) {
+      const current = statusRow[0].last_status || {};
+      const next = {
+        ...current,
+        last_audit_at: new Date().toISOString(),
+        last_audit_slug: slug,
+        last_audit_score: parsed.review?.score ?? null,
+        last_journey_status: 'ok',
+      };
+      await sql`UPDATE persona SET last_status = ${next}::jsonb WHERE slug = ${persona}`;
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`upsertAuditRow: persona.last_status writeback failed for ${slug}: ${msg.slice(0, 200)}`);
+  }
 }
 
 /**

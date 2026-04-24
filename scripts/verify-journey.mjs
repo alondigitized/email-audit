@@ -1,11 +1,8 @@
 #!/usr/bin/env node
-// Smoke test for the site-monitor journey builder. Imports buildJourneySteps
-// from site-review.mjs and runs it against every persona JSON on disk. Fails
-// loud on any runtime error or impossible shape (empty step list, missing
-// nav_path on nav_direct steps, etc.) — catches the exact regression that
-// shipped as a stray rawTargets reference.
-//
-// Usage (local or in a pre-push hook):
+// Smoke test for the journey step builder. Imports the shared
+// site/lib/journey-preview.mjs (same function the daemon and admin UI
+// use) and runs it against every persona JSON on disk. Fails loud on
+// any runtime error or impossible step shape.
 //
 //   node scripts/verify-journey.mjs
 //
@@ -15,48 +12,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 
+import { buildJourneySteps } from '../site/lib/journey-preview.mjs';
+
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..');
 const PERSONA_DIR = path.join(REPO, 'site-monitor', 'personas');
-
-// Pull the builder out of the monitor script without running the daemon.
-// site-review.mjs has side-effectful top-level code (env reads, Playwright
-// import), so a plain `import()` would crash. We source-extract the
-// function instead — ugly but sufficient for a smoke test.
-const SRC = fs.readFileSync(
-  path.join(REPO, 'site-monitor', 'site-review.mjs'),
-  'utf8'
-);
-
-function extractFn(name) {
-  const startMarker = `function ${name}(`;
-  const start = SRC.indexOf(startMarker);
-  if (start < 0) throw new Error(`function ${name} not found`);
-  // Walk braces to find the end of the function body.
-  let depth = 0;
-  let inFn = false;
-  for (let i = start; i < SRC.length; i++) {
-    if (SRC[i] === '{') {
-      depth++;
-      inFn = true;
-    } else if (SRC[i] === '}') {
-      depth--;
-      if (inFn && depth === 0) return SRC.slice(start, i + 1);
-    }
-  }
-  throw new Error(`function ${name} body did not close`);
-}
-
-const slugifyLabelSrc = extractFn('slugifyLabel');
-const buildJourneyStepsSrc = extractFn('buildJourneySteps');
-
-const eval2 = eval;
-const slugifyLabel = eval2(`(${slugifyLabelSrc.replace('function slugifyLabel', 'function')})`);
-const buildJourneySteps = eval2(
-  `(function(slugifyLabel){ return ${buildJourneyStepsSrc.replace('function buildJourneySteps', 'function')}; })`
-)(slugifyLabel);
-
-// ─── Assertions ────────────────────────────────────────────────────────────
 
 const errors = [];
 function fail(slug, msg) {
@@ -95,8 +55,6 @@ function checkJourney(slug, persona, steps) {
     }
   }
 }
-
-// ─── Run ───────────────────────────────────────────────────────────────────
 
 const files = fs
   .readdirSync(PERSONA_DIR)

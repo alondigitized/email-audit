@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { eq, asc } from "drizzle-orm";
 import { db, personas, userPersonas } from "./db/client";
+import type { PersonaLastStatus } from "./db/schema";
 import {
   safeParsePersonaProfile,
   type PersonaProfile,
@@ -24,6 +25,7 @@ export type PersonaRecord = {
   name: string;
   short: string;
   profile: PersonaProfile | null;
+  lastStatus: PersonaLastStatus | null;
 };
 
 function logDrift(slug: string, err: unknown) {
@@ -47,7 +49,20 @@ function parseMaybeProfile(
 
 // All personas, ordered by slug. Cached per-request so repeat calls inside
 // one server render don't round-trip.
-export const getAllPersonas = cache(async (): Promise<PersonaRecord[]> => {
+//
+// Drafts (profile.status === 'draft') are excluded by default — wizard-in-
+// progress personas shouldn't leak into /chat/{slug} or audit filters.
+// Admin surfaces (/admin/personas list) pass `{ includeDrafts: true }`
+// to see them.
+export async function getAllPersonas(opts?: {
+  includeDrafts?: boolean;
+}): Promise<PersonaRecord[]> {
+  const all = await getAllPersonasInternal();
+  if (opts?.includeDrafts) return all;
+  return all.filter((p) => (p.profile?.status ?? "active") !== "draft");
+}
+
+const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
   const rows = await db
     .select({
       id: personas.id,
@@ -55,6 +70,7 @@ export const getAllPersonas = cache(async (): Promise<PersonaRecord[]> => {
       name: personas.name,
       short: personas.short,
       profile: personas.profile,
+      lastStatus: personas.lastStatus,
     })
     .from(personas)
     .orderBy(asc(personas.slug));
@@ -64,6 +80,7 @@ export const getAllPersonas = cache(async (): Promise<PersonaRecord[]> => {
     name: r.name,
     short: r.short,
     profile: parseMaybeProfile(r.slug, r.profile),
+    lastStatus: r.lastStatus ?? null,
   }));
 });
 
@@ -77,6 +94,7 @@ export const getPersonaBySlug = cache(
         name: personas.name,
         short: personas.short,
         profile: personas.profile,
+        lastStatus: personas.lastStatus,
       })
       .from(personas)
       .where(eq(personas.slug, slug))
@@ -89,6 +107,7 @@ export const getPersonaBySlug = cache(
       name: r.name,
       short: r.short,
       profile: parseMaybeProfile(r.slug, r.profile),
+      lastStatus: r.lastStatus ?? null,
     };
   }
 );

@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install site deps
+        working-directory: site
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      # Journey smoke test — imports from site/lib/journey-preview.mjs and
+      # runs against every persona JSON. Catches the class of regression
+      # that slipped "rawTargets is not defined" into prod.
+      - name: Journey smoke test
+        run: node scripts/verify-journey.mjs
+
+      - name: Type check (site)
+        working-directory: site
+        run: npm run typecheck
+
+      - name: Build (site)
+        working-directory: site
+        run: npm run build
+        env:
+          # Build is a pure type/codegen pass — it doesn't need real creds.
+          # Provide placeholder env vars so Next's env-presence asserts
+          # don't fail the compile.
+          DATABASE_URL: "postgres://ci:ci@localhost:5432/ci"
+          DATABASE_URL_UNPOOLED: "postgres://ci:ci@localhost:5432/ci"
+          AUTH_SECRET: "ci-build-placeholder-do-not-use"
+          AUTH_EMAIL_FROM: "ci@example.com"
+          RESEND_API_KEY: "re_ci_placeholder"
+          NEXT_PUBLIC_SITE_URL: "https://example.com"
