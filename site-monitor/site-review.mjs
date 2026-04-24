@@ -45,6 +45,13 @@ const PERSONA_NAME = process.argv.includes('--persona')
   ? process.argv[process.argv.indexOf('--persona') + 1]
   : 'walker';
 
+// --dry-run: walk the journey but skip mutating steps (add_to_cart,
+// view_cart). Used by onboard-persona.mjs as a smoke test after
+// installing a new persona — catches Kasada blocks, missing cookies,
+// broken selectors BEFORE Saturday's real run. Also skips publishing
+// the audit to the DB + vault so we don't pollute review history.
+const DRY_RUN = process.argv.includes('--dry-run');
+
 const PIPELINE_DIR = path.join(path.dirname(__dirname), 'audit-pipeline');
 const SITE_MANIFEST = path.join(PIPELINE_DIR, 'published-audits.json');
 const ARTIFACTS_BASE = path.join(path.dirname(__dirname), 'reports', 'site-artifacts');
@@ -273,6 +280,15 @@ async function runJourney(persona, credentials, artifactDir) {
 
   for (const step of journeySteps) {
     stepNum++;
+    // Dry-run: walk the journey for visibility (screenshots still captured)
+    // but skip actions that mutate state on the retailer side or would
+    // require a valid product selector to work. The point is to catch
+    // navigation + Kasada + login regressions, not to exercise checkout.
+    if (DRY_RUN && MUTATING_STEP_ACTIONS.has(step.action)) {
+      log(`Step ${stepNum}: ${step.label} [dry-run skip]`);
+      steps.push({ step: stepNum, id: step.id, label: step.label, url: '', status: 'skipped', error: null, perf: null });
+      continue;
+    }
     log(`Step ${stepNum}: ${step.label}`);
     const stepResult = { step: stepNum, id: step.id, label: step.label, url: '', status: 'ok', error: null, perf: null };
 
@@ -960,11 +976,15 @@ async function main() {
   });
 
   let published = false;
-  try {
-    await publishSite(slug, artifactDir, previousSummary);
-    published = true;
-  } catch (err) {
-    log('Site publish failed (non-fatal)', { error: String(err).slice(0, 500) });
+  if (DRY_RUN) {
+    log('Dry-run: skipping publish (R2 upload + DB upsert + vault write + git push)');
+  } else {
+    try {
+      await publishSite(slug, artifactDir, previousSummary);
+      published = true;
+    } catch (err) {
+      log('Site publish failed (non-fatal)', { error: String(err).slice(0, 500) });
+    }
   }
 
   // Save today's summary for tomorrow's regression detection

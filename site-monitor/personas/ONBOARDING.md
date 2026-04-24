@@ -37,7 +37,7 @@ email-monitor and site-review:
 
 ```
 cd /path/to/openclaw-walker/workspace
-node scripts/persona-bootstrap-export.mjs <slug>
+node scripts/onboard-persona.mjs <slug>
 ```
 
 That generates everything the daemons still read from disk:

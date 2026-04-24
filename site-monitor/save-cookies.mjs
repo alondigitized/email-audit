@@ -58,6 +58,24 @@ async function main() {
 
   console.log(`Saved ${allCookies.length} cookies to ${cookiePath}`);
 
+  // Machine-readable status for the onboarding orchestrator. Written
+  // even on partial runs so orchestrator can distinguish "cookies saved
+  // but zero captured" from "save-cookies crashed before writing."
+  const statusPath = path.join(cookieDir, `${persona}-status.json`);
+  fs.writeFileSync(
+    statusPath,
+    JSON.stringify(
+      {
+        captured_at: new Date().toISOString(),
+        success: allCookies.length > 0,
+        session_cookie_count: allCookies.length,
+        persona,
+      },
+      null,
+      2,
+    ),
+  );
+
   await browser.close();
 
   // Clean up temp profile

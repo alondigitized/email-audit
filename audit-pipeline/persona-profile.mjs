@@ -78,6 +78,66 @@ export async function loadPersonaProfile(slug) {
 }
 
 /**
+ * Report an onboarding step's status back to the DB. Used by
+ * scripts/onboard-persona.mjs after each laptop-side step (.env write,
+ * cookie capture, LaunchAgent install, etc.) so the admin UI's wizard
+ * can live-poll progress. Best-effort — logs and returns on DB failure
+ * so the bootstrap keeps going even if Neon is down.
+ *
+ * @param {string} slug
+ * @param {string} key — free-form identifier ("env", "cookies", "plist", ...)
+ * @param {"pending"|"done"|"failed"} status
+ * @param {string} [detail] — one-line summary surfaced in the UI
+ */
+export async function reportOnboardingStep(slug, key, status, detail) {
+  const u = dbUrl();
+  if (!u) return;
+  try {
+    const sql = neon(u);
+    const rows = await sql`SELECT last_status FROM persona WHERE slug = ${slug} LIMIT 1`;
+    if (rows.length === 0) return;
+    const current = rows[0].last_status || {};
+    const nextOnboarding = {
+      ...(current.onboarding || {}),
+      [key]: {
+        status,
+        at: new Date().toISOString(),
+        ...(detail ? { detail } : {}),
+      },
+    };
+    const next = { ...current, onboarding: nextOnboarding };
+    await sql`UPDATE persona SET last_status = ${next}::jsonb WHERE slug = ${slug}`;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`reportOnboardingStep: DB write failed for ${slug}/${key}: ${msg.slice(0, 200)}`);
+  }
+}
+
+/**
+ * Record a cookies-captured timestamp on the persona row. Called by
+ * onboard-persona.mjs after save-cookies.mjs completes successfully.
+ */
+export async function reportCookiesCaptured(slug, ts, count) {
+  const u = dbUrl();
+  if (!u) return;
+  try {
+    const sql = neon(u);
+    const rows = await sql`SELECT last_status FROM persona WHERE slug = ${slug} LIMIT 1`;
+    if (rows.length === 0) return;
+    const current = rows[0].last_status || {};
+    const next = {
+      ...current,
+      last_cookies_at: ts,
+      cookies_count: count,
+    };
+    await sql`UPDATE persona SET last_status = ${next}::jsonb WHERE slug = ${slug}`;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`reportCookiesCaptured: DB write failed for ${slug}: ${msg.slice(0, 200)}`);
+  }
+}
+
+/**
  * Fetch the inbox→persona map from the DB. Shape matches the legacy
  * `email-monitor/inboxes.json` file: Array<{ inbox: string, persona: string }>.
  * Returns an empty array when the DB isn't reachable or no personas have
