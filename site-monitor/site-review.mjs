@@ -217,7 +217,7 @@ function buildJourneySteps(persona) {
   // search term (or persona.search_term fallback). Multi-target personas
   // still get one end-of-journey search — the LLM reviews per-step anyway.
   const firstSearch =
-    (rawTargets[0] && rawTargets[0].search_term) ||
+    (explicitTargets && explicitTargets[0] && explicitTargets[0].search_term) ||
     persona.search_term ||
     '';
   steps.push({ id: 'add-to-cart', label: 'Add to Cart', action: 'add_to_cart' });
