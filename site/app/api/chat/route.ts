@@ -88,7 +88,7 @@ export async function POST(req: Request) {
       return new Response("Not found", { status: 404 });
     }
   } else {
-    threadId = await createThread(user.id, personaSlug);
+    threadId = await createThread(user.id, personaSlug, user.tenantId);
   }
 
   const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");

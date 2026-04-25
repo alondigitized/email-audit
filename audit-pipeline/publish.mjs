@@ -67,10 +67,16 @@ export async function upsertAuditRow({ slug, data }) {
   const mediaKeys = extractMediaKeys(parsed);
 
   const sql = db();
+  // Resolve the persona's tenant_id so the audit row carries it. Tenant-
+  // scoped reads (lib/audits.ts) filter on tenant_id; missing it would
+  // hide the row from its own tenant. Falls back to NULL for dev/test
+  // setups where the persona row hasn't been backfilled yet.
+  const tenantRow = await sql`SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1`;
+  const tenantId = tenantRow[0]?.tenant_id ?? null;
   await sql`
-    INSERT INTO audit (slug, persona, type, timestamp, score, data, media_keys, updated_at)
+    INSERT INTO audit (slug, persona, type, timestamp, score, data, media_keys, tenant_id, updated_at)
     VALUES (${slug}, ${persona}, ${type}, ${timestamp}, ${score},
-            ${JSON.stringify(parsed)}::jsonb, ${JSON.stringify(mediaKeys)}::jsonb, NOW())
+            ${JSON.stringify(parsed)}::jsonb, ${JSON.stringify(mediaKeys)}::jsonb, ${tenantId}, NOW())
     ON CONFLICT (slug) DO UPDATE SET
       persona = EXCLUDED.persona,
       type = EXCLUDED.type,
@@ -78,6 +84,7 @@ export async function upsertAuditRow({ slug, data }) {
       score = EXCLUDED.score,
       data = EXCLUDED.data,
       media_keys = EXCLUDED.media_keys,
+      tenant_id = EXCLUDED.tenant_id,
       updated_at = NOW()
   `;
 

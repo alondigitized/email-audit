@@ -1,6 +1,6 @@
 import { cache } from "react";
-import { eq, asc } from "drizzle-orm";
-import { db, personas, userPersonas } from "./db/client";
+import { eq, and, asc } from "drizzle-orm";
+import { db, personas, userPersonas, users } from "./db/client";
 import type { PersonaLastStatus } from "./db/schema";
 import {
   safeParsePersonaProfile,
@@ -8,13 +8,25 @@ import {
 } from "./schema/persona";
 
 // Per-request cache (React cache). Each server request hydrates once.
+//
+// Cross-tenant ACL safety: the persona must belong to the user's tenant
+// (resolved from users.tenant_id). Even if a stale userPersonas grant
+// pointed at a persona outside the user's tenant, this query would not
+// return it. Admin call sites should not use this helper — admins have
+// cross-tenant visibility via getAllPersonas() unfiltered.
 export const getPersonaSlugsForUser = cache(
   async (userId: string): Promise<string[]> => {
     const rows = await db
       .select({ slug: personas.slug })
       .from(userPersonas)
       .innerJoin(personas, eq(userPersonas.personaId, personas.id))
-      .where(eq(userPersonas.userId, userId));
+      .innerJoin(users, eq(users.id, userPersonas.userId))
+      .where(
+        and(
+          eq(userPersonas.userId, userId),
+          eq(personas.tenantId, users.tenantId)
+        )
+      );
     return rows.map((r) => r.slug);
   }
 );
@@ -26,6 +38,7 @@ export type PersonaRecord = {
   short: string;
   profile: PersonaProfile | null;
   lastStatus: PersonaLastStatus | null;
+  tenantId: string | null;
 };
 
 function logDrift(slug: string, err: unknown) {
@@ -54,12 +67,22 @@ function parseMaybeProfile(
 // progress personas shouldn't leak into /chat/{slug} or audit filters.
 // Admin surfaces (/admin/personas list) pass `{ includeDrafts: true }`
 // to see them.
+//
+// Pass `tenantId` to scope to a single tenant's personas (the user-facing
+// case). Omit it for admin/ops cross-tenant views.
 export async function getAllPersonas(opts?: {
   includeDrafts?: boolean;
+  tenantId?: string | null;
 }): Promise<PersonaRecord[]> {
   const all = await getAllPersonasInternal();
-  if (opts?.includeDrafts) return all;
-  return all.filter((p) => (p.profile?.status ?? "active") !== "draft");
+  let filtered = all;
+  if (opts?.tenantId) {
+    filtered = filtered.filter((p) => p.tenantId === opts.tenantId);
+  }
+  if (!opts?.includeDrafts) {
+    filtered = filtered.filter((p) => (p.profile?.status ?? "active") !== "draft");
+  }
+  return filtered;
 }
 
 const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
@@ -71,6 +94,7 @@ const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
       short: personas.short,
       profile: personas.profile,
       lastStatus: personas.lastStatus,
+      tenantId: personas.tenantId,
     })
     .from(personas)
     .orderBy(asc(personas.slug));
@@ -81,12 +105,18 @@ const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
     short: r.short,
     profile: parseMaybeProfile(r.slug, r.profile),
     lastStatus: r.lastStatus ?? null,
+    tenantId: r.tenantId ?? null,
   }));
 });
 
-// Single persona by slug. Returns null if the slug doesn't exist.
+// Single persona by slug. Returns null if the slug doesn't exist OR if
+// `tenantId` is provided and doesn't match. Admin call sites omit tenantId
+// to bypass the filter.
 export const getPersonaBySlug = cache(
-  async (slug: string): Promise<PersonaRecord | null> => {
+  async (
+    slug: string,
+    opts?: { tenantId?: string | null }
+  ): Promise<PersonaRecord | null> => {
     const rows = await db
       .select({
         id: personas.id,
@@ -95,12 +125,14 @@ export const getPersonaBySlug = cache(
         short: personas.short,
         profile: personas.profile,
         lastStatus: personas.lastStatus,
+        tenantId: personas.tenantId,
       })
       .from(personas)
       .where(eq(personas.slug, slug))
       .limit(1);
     if (rows.length === 0) return null;
     const r = rows[0];
+    if (opts?.tenantId && r.tenantId !== opts.tenantId) return null;
     return {
       id: r.id,
       slug: r.slug,
@@ -108,6 +140,7 @@ export const getPersonaBySlug = cache(
       short: r.short,
       profile: parseMaybeProfile(r.slug, r.profile),
       lastStatus: r.lastStatus ?? null,
+      tenantId: r.tenantId ?? null,
     };
   }
 );

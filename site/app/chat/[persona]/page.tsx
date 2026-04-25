@@ -28,7 +28,9 @@ export default async function ChatPage({
   if (!user.isAdmin && !user.personas.includes(personaSlug)) {
     notFound();
   }
-  const meta = await getPersonaBySlug(personaSlug);
+  const meta = user.isAdmin
+    ? await getPersonaBySlug(personaSlug)
+    : await getPersonaBySlug(personaSlug, { tenantId: user.tenantId });
   if (!meta) notFound();
 
   const sp = await searchParams;

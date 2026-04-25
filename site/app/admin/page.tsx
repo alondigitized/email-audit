@@ -52,12 +52,32 @@ export default async function AdminPage() {
       <div className="mb-5 py-6">
         <div className="flex items-baseline justify-between gap-4 flex-wrap">
           <h1 className="text-2xl font-bold mt-1 mb-2">Admin</h1>
-          <a
-            href="/admin/personas"
-            className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-          >
-            Manage personas →
-          </a>
+          <div className="flex gap-4">
+            <a
+              href="/admin/waitlist"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Waitlist →
+            </a>
+            <a
+              href="/admin/laptop-queue"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Laptop queue →
+            </a>
+            <a
+              href="/admin/subscriptions"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Subscriptions →
+            </a>
+            <a
+              href="/admin/personas"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Manage personas →
+            </a>
+          </div>
         </div>
         <p className="text-muted text-sm max-w-xl">
           Manage the invite allowlist, grant persona access, and track

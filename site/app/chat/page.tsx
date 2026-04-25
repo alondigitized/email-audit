@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/dal";
 import { requireAppEnabled } from "@/lib/apps";
 import { getAllPersonas } from "@/lib/personas-db";
+import { UnlockedProposalsCard } from "@/components/UnlockedProposalsCard";
 
 export const dynamic = "force-dynamic";
 
@@ -16,12 +16,18 @@ export default async function ChatIndex() {
     userApps: user.apps,
   });
 
-  // Admins see all personas; users see only their own.
-  const allPersonas = await getAllPersonas();
+  // Admins see every tenant's personas; users see only their own tenant's
+  // personas, further restricted by their userPersona grants.
+  const allPersonas = user.isAdmin
+    ? await getAllPersonas()
+    : await getAllPersonas({ tenantId: user.tenantId });
   const visible = user.isAdmin
     ? allPersonas
     : allPersonas.filter((p) => user.personas.includes(p.slug));
 
+  // Don't auto-redirect single-persona users — we want them to see the
+  // unlocked-proposals upgrade card on this index. Show a single big tile
+  // that links into their persona's chat.
   if (visible.length === 0) {
     return (
       <div className="max-w-xl mx-auto py-16 text-center">
@@ -31,10 +37,6 @@ export default async function ChatIndex() {
         </p>
       </div>
     );
-  }
-
-  if (visible.length === 1) {
-    redirect(`/chat/${visible[0].slug}`);
   }
 
   return (
@@ -58,6 +60,7 @@ export default async function ChatIndex() {
           </a>
         ))}
       </div>
+      <UnlockedProposalsCard />
     </div>
   );
 }
