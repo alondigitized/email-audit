@@ -71,3 +71,29 @@ export function isCompanyEmail(email: string): {
     };
   return { ok: true, domain };
 }
+
+// Returns the canonical email domain we use as the tenant key.
+//
+// - Lowercases.
+// - Strips RFC 5233 plus-aliases ("alan+test@skechers.com" → "alan@skechers.com")
+//   before extracting the domain. The alias is ignored entirely for tenant
+//   matching since two messages from the same person can wear different
+//   plus-aliases yet belong to the same company.
+// - Does NOT collapse subdomains. "us.skechers.com" stays distinct from
+//   "skechers.com" in v1; merging is a manual operational task.
+//
+// Returns null when the input doesn't have a usable @host part.
+export function extractTenantDomain(email: string): string | null {
+  const lower = String(email ?? "").toLowerCase().trim();
+  const at = lower.lastIndexOf("@");
+  if (at < 0 || at === lower.length - 1) return null;
+  // Strip plus-alias from local part (we don't actually store the local
+  // part here, but stripping mirrors the canonicalization most mail
+  // servers apply when bouncing/aliasing).
+  const localRaw = lower.slice(0, at);
+  const local = localRaw.split("+")[0] ?? localRaw;
+  void local; // kept intentionally — future per-user normalization may use it.
+  const domain = lower.slice(at + 1);
+  if (!domain.includes(".")) return null;
+  return domain;
+}

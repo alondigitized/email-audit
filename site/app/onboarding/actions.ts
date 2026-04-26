@@ -8,7 +8,6 @@ import {
   db,
   personas,
   tenants,
-  userPersonas,
   laptopProvisioningJobs,
   subscriptionJobs,
 } from "@/lib/db/client";
@@ -264,16 +263,8 @@ export async function commitPersonaAction(fd: FormData): Promise<void> {
     })
     .returning({ id: personas.id });
 
-  // Grant the user access via the existing ACL table — keeps /chat & audit
-  // gates working without bypasses.
-  await db
-    .insert(userPersonas)
-    .values({
-      userId: state.user.id,
-      personaId: insertedPersona.id,
-      role: "owner",
-    })
-    .onConflictDoNothing();
+  // Persona access is now via tenant membership — every user with the same
+  // tenant_id has read/chat access. No userPersonas grant needed.
 
   // Queue the laptop bootstrap.
   await db.insert(laptopProvisioningJobs).values({

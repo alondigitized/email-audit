@@ -1,42 +1,64 @@
 import { eq, asc } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import { db, tenants, users } from "@/lib/db/client";
-import { extractDomain } from "@/lib/free-domains";
 import { approveTenantFormAction, denyTenantFormAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = { title: "Waitlist · admin · etell" };
 
-type Row = {
+// One row per waitlisted tenant. Multiple users at the same domain (e.g.
+// two coworkers signed up before approval) collapse into one tenant row;
+// approve once and everyone in that tenant gets a magic-link email.
+type TenantRow = {
   tenantId: string;
   tenantSlug: string;
-  email: string;
-  domain: string;
+  domain: string | null;
   createdAt: Date;
   referredBy: string | null;
+  members: { email: string; createdAt: Date }[];
 };
 
-async function loadWaitlist(): Promise<Row[]> {
-  const rows = await db
+async function loadWaitlist(): Promise<TenantRow[]> {
+  const tenantRows = await db
     .select({
-      tenantId: tenants.id,
-      tenantSlug: tenants.slug,
-      email: users.email,
+      id: tenants.id,
+      slug: tenants.slug,
+      emailDomain: tenants.emailDomain,
       createdAt: tenants.createdAt,
       referredBy: tenants.referredByTenantId,
     })
     .from(tenants)
-    .innerJoin(users, eq(users.tenantId, tenants.id))
     .where(eq(tenants.plan, "waitlisted"))
     .orderBy(asc(tenants.createdAt));
-  return rows.map((r) => ({
-    tenantId: r.tenantId,
-    tenantSlug: r.tenantSlug,
-    email: r.email,
-    domain: extractDomain(r.email) ?? "—",
-    createdAt: r.createdAt,
-    referredBy: r.referredBy ?? null,
+
+  if (tenantRows.length === 0) return [];
+
+  // Pull all members for each waitlisted tenant in one round trip.
+  const userRows = await db
+    .select({
+      email: users.email,
+      tenantId: users.tenantId,
+      createdAt: users.createdAt,
+    })
+    .from(users);
+  const membersByTenant = new Map<string, { email: string; createdAt: Date }[]>();
+  for (const u of userRows) {
+    if (!u.tenantId) continue;
+    const arr = membersByTenant.get(u.tenantId) ?? [];
+    arr.push({ email: u.email, createdAt: u.createdAt });
+    membersByTenant.set(u.tenantId, arr);
+  }
+
+  return tenantRows.map((t) => ({
+    tenantId: t.id,
+    tenantSlug: t.slug,
+    domain: t.emailDomain ?? null,
+    createdAt: t.createdAt,
+    referredBy: t.referredBy ?? null,
+    members: (membersByTenant.get(t.id) ?? []).sort(
+      (a, b) => a.createdAt.getTime() - b.createdAt.getTime()
+    ),
   }));
 }
 
@@ -52,15 +74,17 @@ function fmtAge(d: Date): string {
 export default async function WaitlistPage() {
   await requireAdmin();
   const rows = await loadWaitlist();
+  const totalUsers = rows.reduce((a, t) => a + t.members.length, 0);
 
   return (
     <div className="max-w-5xl mx-auto py-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold mb-1">Waitlist</h1>
         <p className="text-muted text-sm">
-          {rows.length} pending {rows.length === 1 ? "request" : "requests"}.
-          Approve to flip the tenant to <code>free</code> for 14 days and email
-          a sign-in link.
+          {rows.length} pending {rows.length === 1 ? "company" : "companies"}{" "}
+          ({totalUsers} {totalUsers === 1 ? "user" : "users"}). Approving a
+          company flips it to <code>free</code> for 14 days and emails a
+          sign-in link to <strong>every</strong> queued member.
         </p>
       </div>
 
@@ -73,8 +97,8 @@ export default async function WaitlistPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
               <tr>
-                <th className="px-4 py-3 font-medium">Email</th>
                 <th className="px-4 py-3 font-medium">Domain</th>
+                <th className="px-4 py-3 font-medium">Members</th>
                 <th className="px-4 py-3 font-medium">Tenant</th>
                 <th className="px-4 py-3 font-medium">Age</th>
                 <th className="px-4 py-3 font-medium">Referral</th>
@@ -83,9 +107,19 @@ export default async function WaitlistPage() {
             </thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.tenantId} className="border-t border-gray-100">
-                  <td className="px-4 py-3 font-mono text-xs">{r.email}</td>
-                  <td className="px-4 py-3">{r.domain}</td>
+                <tr key={r.tenantId} className="border-t border-gray-100 align-top">
+                  <td className="px-4 py-3 font-medium">{r.domain ?? "—"}</td>
+                  <td className="px-4 py-3 font-mono text-xs">
+                    {r.members.length === 0 ? (
+                      <span className="text-muted italic">no users yet</span>
+                    ) : (
+                      <div className="space-y-0.5">
+                        {r.members.map((m) => (
+                          <div key={m.email}>{m.email}</div>
+                        ))}
+                      </div>
+                    )}
+                  </td>
                   <td className="px-4 py-3 font-mono text-xs text-muted">
                     {r.tenantSlug}
                   </td>
@@ -93,7 +127,7 @@ export default async function WaitlistPage() {
                   <td className="px-4 py-3 text-muted">
                     {r.referredBy ? "✓ via /r" : "—"}
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3 text-right whitespace-nowrap">
                     <form
                       action={approveTenantFormAction}
                       className="inline-block mr-2"

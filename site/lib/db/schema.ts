@@ -51,6 +51,13 @@ export const tenants = pgTable("tenant", {
   id: uuid("id").primaryKey().defaultRandom(),
   slug: text("slug").unique().notNull(),
   name: text("name").notNull(),
+  // Tenant identity: every signup at the same registered work-email domain
+  // (e.g. @skechers.com) lands in the same tenant. Apex domain only — we
+  // strip +aliases but do NOT collapse subdomains. Unique so two signups
+  // from one company can't race-create rival tenants. NULL is reserved
+  // for the founder/admin tenant ('alon') which predates this model and
+  // is bypassed by the lookup-by-domain code paths.
+  emailDomain: text("email_domain").unique(),
   plan: tenantPlanEnum("plan").notNull().default("waitlisted"),
   tierStartedAt: timestamp("tier_started_at", { mode: "date" }),
   tierExpiresAt: timestamp("tier_expires_at", { mode: "date" }),

@@ -1,6 +1,6 @@
 import { cache } from "react";
-import { eq, and, asc } from "drizzle-orm";
-import { db, personas, userPersonas, users } from "./db/client";
+import { eq, asc } from "drizzle-orm";
+import { db, personas, users } from "./db/client";
 import type { PersonaLastStatus } from "./db/schema";
 import {
   safeParsePersonaProfile,
@@ -9,24 +9,18 @@ import {
 
 // Per-request cache (React cache). Each server request hydrates once.
 //
-// Cross-tenant ACL safety: the persona must belong to the user's tenant
-// (resolved from users.tenant_id). Even if a stale userPersonas grant
-// pointed at a persona outside the user's tenant, this query would not
-// return it. Admin call sites should not use this helper — admins have
+// Persona ownership is via tenant membership: a user has access to every
+// persona in their tenant. The legacy userPersonas join table is no longer
+// consulted on this path — keeping it around as inert data until a future
+// cleanup PR. Admin call sites should not use this helper — admins have
 // cross-tenant visibility via getAllPersonas() unfiltered.
 export const getPersonaSlugsForUser = cache(
   async (userId: string): Promise<string[]> => {
     const rows = await db
       .select({ slug: personas.slug })
-      .from(userPersonas)
-      .innerJoin(personas, eq(userPersonas.personaId, personas.id))
-      .innerJoin(users, eq(users.id, userPersonas.userId))
-      .where(
-        and(
-          eq(userPersonas.userId, userId),
-          eq(personas.tenantId, users.tenantId)
-        )
-      );
+      .from(personas)
+      .innerJoin(users, eq(users.tenantId, personas.tenantId))
+      .where(eq(users.id, userId));
     return rows.map((r) => r.slug);
   }
 );
