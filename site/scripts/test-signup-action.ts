@@ -15,7 +15,7 @@
 import { eq } from "drizzle-orm";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import { tenants, users } from "../lib/db/schema";
+import { tenants, users, sessions } from "../lib/db/schema";
 import { signupAction } from "../app/signup/actions";
 
 const TEST_EMAIL = "alan.tsang@skechers.com";
@@ -55,8 +55,25 @@ async function main() {
   const fd = new FormData();
   fd.set("email", TEST_EMAIL);
   console.log("\nfiring signupAction…");
-  const result = await signupAction(null, fd);
-  step("action returned ok", result.ok, result.ok ? "" : (result as { error: string }).error);
+  // Auto-approve path now ends in `redirect("/onboarding")`, which throws
+  // a NEXT_REDIRECT error. Catch and treat as success.
+  let actionOk = false;
+  let actionDetail = "";
+  try {
+    const result = await signupAction(null, fd);
+    actionOk = result.ok;
+    if (!result.ok) actionDetail = (result as { error: string }).error;
+  } catch (err) {
+    const e = err as { digest?: string; message?: string };
+    if (typeof e?.digest === "string" && e.digest.startsWith("NEXT_REDIRECT")) {
+      actionOk = true;
+      actionDetail = `redirect: ${e.digest}`;
+    } else {
+      actionOk = false;
+      actionDetail = e?.message ?? String(err);
+    }
+  }
+  step("action returned ok (or redirected)", actionOk, actionDetail);
 
   // Verify DB state.
   const [u] = await db
@@ -85,8 +102,22 @@ async function main() {
     step("slug = skechers", t.slug === "skechers", t.slug);
   }
 
+  // Verify session row got created (the auto-sign-in piece).
+  if (u?.id) {
+    const sess = await db
+      .select({ token: sessions.sessionToken, expires: sessions.expires })
+      .from(sessions)
+      .where(eq(sessions.userId, u.id));
+    step(
+      "session row created (auto-sign-in)",
+      sess.length === 1 && sess[0].expires > new Date(),
+      sess.length > 0 ? `token=${sess[0].token.slice(0, 8)}…` : ""
+    );
+  }
+
   if (!leave && u?.tenantId) {
     console.log("\n— cleanup —");
+    await db.delete(sessions).where(eq(sessions.userId, u.id));
     await db.delete(users).where(eq(users.id, u.id));
     await db.delete(tenants).where(eq(tenants.id, u.tenantId));
     console.log("  removed test rows");

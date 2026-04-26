@@ -7,9 +7,11 @@ import { isCompanyEmail, extractTenantDomain } from "@/lib/free-domains";
 import { sendWaitlistConfirmEmail } from "@/lib/email-tenant";
 import { signInRateLimit } from "@/lib/db/schema";
 import { sql, and, gte } from "drizzle-orm";
+import { redirect } from "next/navigation";
 import {
   approveWaitlistedTenant,
   creditReferrer,
+  createSessionForUser,
   nanoid,
   addDays,
   FREE_DAYS,
@@ -225,10 +227,16 @@ export async function signupAction(
   // Insert the user attached to the tenant. (auth.ts signIn callback gates
   // on tenant.plan, so users on a waitlisted tenant simply can't request a
   // magic link until the tenant is approved.)
-  await db.insert(users).values({ email, tenantId });
+  const [insertedUser] = await db
+    .insert(users)
+    .values({ email, tenantId })
+    .returning({ id: users.id });
 
-  if (tenantState === "fresh") {
-    // First signup from this domain. Send waitlist confirm email.
+  if (tenantState === "fresh" || tenantState === "existing-waitlisted") {
+    // Waitlist mode is on AND this user is queueing. Send the confirm email
+    // and stop here — they'll get a magic link when admin approves the
+    // tenant. Don't auto-create a session; their plan is 'waitlisted' and
+    // dashboard access is gated.
     try {
       await sendWaitlistConfirmEmail({ to: email, companyDomain: domain });
     } catch (err) {
@@ -237,45 +245,13 @@ export async function signupAction(
     return { ok: true };
   }
 
-  if (tenantState === "existing-waitlisted") {
-    // Tenant is in the queue and this user joined it. Same confirm email
-    // — they'll get a magic-link follow-up when admin approves the tenant.
-    try {
-      await sendWaitlistConfirmEmail({ to: email, companyDomain: domain });
-    } catch (err) {
-      console.warn("waitlist confirm email failed:", err);
-    }
-    return { ok: true };
-  }
+  // tenantState === "auto-approve" — tenant is on free/pro. Skip the
+  // magic-link round-trip entirely: create a session row + cookie now,
+  // then redirect to /onboarding so the user lands on the wizard
+  // immediately.
+  await createSessionForUser(insertedUser.id);
 
-  // tenantState === "auto-approve": tenant already on free/pro. Send the
-  // magic-link landing email immediately. The newly-inserted user passes
-  // the auth.ts signIn callback (their tenant.plan is free/pro) so the
-  // magic link works as soon as they click "Sign in to etell".
-  try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_APP_URL ??
-      process.env.AUTH_URL ??
-      "https://etell.app";
-    // Inline send rather than calling approveWaitlistedTenant (which
-    // re-runs flip-to-free + email-everyone). approveWaitlistedTenant is
-    // idempotent on already-free tenants (no-op), so it's safe to call
-    // either way; using it keeps the email shape identical for both paths.
-    void approveWaitlistedTenant; // re-export reference (kept callable elsewhere)
-    void baseUrl;
-    const { sendWaitlistApprovedEmail } = await import("@/lib/email-tenant");
-    await sendWaitlistApprovedEmail({
-      to: email,
-      loginUrl: `${baseUrl.replace(/\/$/, "")}/login`,
-      daysFree: 14,
-    });
-  } catch (err) {
-    console.warn("auto-approve email failed:", err);
-  }
-
-  // Apply referral credit (cross-domain or same-domain). On waitlisted
-  // tenants this fires only when admin clicks Approve; on auto-approved
-  // tenants we credit immediately. Best-effort.
+  // Apply referral credit (cross-domain or same-domain). Best-effort.
   if (referredByTenantId) {
     try {
       await creditReferrer(referredByTenantId, email);
@@ -284,5 +260,7 @@ export async function signupAction(
     }
   }
 
-  return { ok: true };
+  // Use Next.js redirect; this throws a redirect signal the client
+  // follows. The form's success state is bypassed.
+  redirect("/onboarding");
 }
