@@ -72,6 +72,19 @@ export function ChatClient({
     threadIdRef.current = threadId;
   }, [threadId]);
 
+  // Pre-warm the local LLM on mount so the first user message doesn't pay
+  // the model-load cold-start tax. Fire-and-forget; failures are silent
+  // (the real chat call still works, just slower on first turn).
+  useEffect(() => {
+    const ctl = new AbortController();
+    fetch("/api/chat/warmup", {
+      method: "POST",
+      signal: ctl.signal,
+      headers: { "Content-Type": "application/json" },
+    }).catch(() => {});
+    return () => ctl.abort();
+  }, [personaSlug]);
+
   const { messages, sendMessage, status, error, setMessages } = useChat({
     messages: toUIMessages(initialMessages),
     transport: new DefaultChatTransport({
