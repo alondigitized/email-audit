@@ -38,6 +38,7 @@ import {
   chatThread,
   audits,
   auditEmbedding,
+  emailMessages,
 } from "../lib/db/schema";
 import { isCompanyEmail } from "../lib/free-domains";
 import { fetchSiteSummary } from "../lib/onboarding/fetch-site";
@@ -46,7 +47,7 @@ import {
   PersonaProposalSchema,
   CompetitorProposalSchema,
 } from "../lib/onboarding/research-prompt";
-import { provisionInbox } from "../lib/agentmail";
+import { generateInboxAddress } from "../lib/inbox";
 import { z } from "zod";
 
 const TEST_EMAIL = "alan.tsang@skechers.com";
@@ -149,7 +150,6 @@ async function main() {
   let tenantId: string | null = null;
   let userId: string | null = null;
   let createdPersonaId: string | null = null;
-  let createdInboxId: string | null = null;
   let createdPersonaSlug: string | null = null;
 
   try {
@@ -306,15 +306,10 @@ async function main() {
     const personaSlug = `alan-${chosenPersona.name.toLowerCase().replace(/[^a-z0-9]/g, "-").slice(0, 16)}-${Date.now().toString(36).slice(-4)}`;
     createdPersonaSlug = personaSlug;
 
-    let inboxResult: { inbox_id: string; inbox_address: string } | null = null;
-    try {
-      inboxResult = await provisionInbox({ slug: personaSlug, displayName: chosenPersona.name });
-      createdInboxId = inboxResult.inbox_id;
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      step("AgentMail inbox provisioned", false, msg.slice(0, 200));
-    }
-    step("AgentMail inbox provisioned", !!inboxResult, inboxResult?.inbox_address ?? "—");
+    // Cloudflare-routed inbox — deterministic <slug>@etell.app, no API call,
+    // no upstream cap. Mirrors live commitPersonaAction.
+    const inboxResult = generateInboxAddress(personaSlug);
+    step("Cloudflare inbox address generated", true, inboxResult.inbox_address);
 
     const profile = {
       schema_version: 1 as const,
@@ -338,9 +333,9 @@ async function main() {
         targets: [],
       },
       agentmail: {
-        inbox_address: inboxResult?.inbox_address ?? null,
-        inbox_id: inboxResult?.inbox_id ?? null,
-        provisioned_at: inboxResult ? new Date().toISOString() : null,
+        inbox_address: inboxResult.inbox_address,
+        inbox_id: inboxResult.inbox_id, // null for Cloudflare-routed inboxes
+        provisioned_at: inboxResult.provisioned_at,
       },
       onboarding: {},
       color: null,
@@ -373,7 +368,7 @@ async function main() {
     });
     step("laptop_provisioning_jobs row queued", true);
 
-    if (inboxResult) {
+    {
       await db.insert(subscriptionJobs).values([
         {
           tenantId,
@@ -407,27 +402,19 @@ async function main() {
       .where(eq(subscriptionJobs.tenantId, tenantId));
     step("tenant.plan = free", tFinal.plan === "free");
     step("tenant has competitorTarget", !!tFinal.competitorTarget);
-    step("persona has agentmail.inbox_id", !!pFinal.profile?.agentmail?.inbox_id);
+    step("persona has inbox_address", !!pFinal.profile?.agentmail?.inbox_address);
     step("laptop queue has 1 row", lpJobs.length === 1);
     step("subscription queue has 2 rows", subJobs.length === 2);
   } finally {
     if (!leave) {
       console.log("\n— cleanup —");
       try {
-        if (createdInboxId) {
-          try {
-            const apiKey = process.env.AGENTMAIL_API_KEY;
-            if (apiKey) {
-              const { AgentMailClient } = await import("agentmail");
-              const client = new AgentMailClient({ apiKey });
-              await client.inboxes.delete(createdInboxId);
-              console.log("  agentmail inbox deleted");
-            }
-          } catch (err) {
-            console.warn("  agentmail delete failed (non-fatal):", err instanceof Error ? err.message : err);
-          }
-        }
+        // Cloudflare-routed inboxes are address strings — no API call needed
+        // to "delete" them. Just clean up DB rows scoped to this tenant.
         if (tenantId) {
+          // Also drop any email_message rows that arrived during the test
+          // (from inbound webhook hits) so future runs start clean.
+          await db.delete(emailMessages).where(eq(emailMessages.tenantId, tenantId));
           await db.delete(auditEmbedding).where(eq(auditEmbedding.persona, createdPersonaSlug ?? ""));
           await db.delete(audits).where(eq(audits.tenantId, tenantId));
           await db.delete(subscriptionJobs).where(eq(subscriptionJobs.tenantId, tenantId));
