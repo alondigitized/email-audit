@@ -138,18 +138,18 @@ export default async function TenantsPage() {
   const rows = await loadTenants();
 
   return (
-    <div className="max-w-6xl mx-auto py-8">
-      <div className="mb-6 flex items-baseline justify-between">
+    <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
+      <div className="mb-6 flex items-baseline justify-between gap-3 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold mb-1">Tenants</h1>
           <p className="text-muted text-sm">
-            {rows.length} {rows.length === 1 ? "tenant" : "tenants"}. Click in
+            {rows.length} {rows.length === 1 ? "tenant" : "tenants"}. Tap one
             to manage plan, tier, and members.
           </p>
         </div>
         <a
           href="/admin/waitlist"
-          className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+          className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline whitespace-nowrap"
         >
           Waitlist →
         </a>
@@ -160,61 +160,117 @@ export default async function TenantsPage() {
           No tenants. Public signups will populate this.
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
-              <tr>
-                <th className="px-4 py-3 font-medium">Domain</th>
-                <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Plan</th>
-                <th className="px-4 py-3 font-medium">Days left</th>
-                <th className="px-4 py-3 font-medium">Members</th>
-                <th className="px-4 py-3 font-medium">Personas</th>
-                <th className="px-4 py-3 font-medium">Audits</th>
-                <th className="px-4 py-3 font-medium">Last audit</th>
-                <th className="px-4 py-3 font-medium">Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => {
-                const pill = planPill(r.plan);
-                return (
-                  <tr key={r.id} className="border-t border-gray-100 hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium">
-                      <a
-                        href={`/admin/tenants/${r.id}`}
-                        className="text-sky-700 hover:underline"
-                      >
-                        {r.emailDomain ?? <span className="italic text-muted">—</span>}
-                      </a>
-                    </td>
-                    <td className="px-4 py-3 font-mono text-xs text-muted">
-                      {r.slug}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${pill.cls}`}
-                      >
-                        {pill.label}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 font-mono text-xs">{daysLeft(r)}</td>
-                    <td className="px-4 py-3 text-center">{r.memberCount}</td>
-                    <td className="px-4 py-3 text-center">{r.personaCount}</td>
-                    <td className="px-4 py-3 text-center">{r.auditCount}</td>
-                    <td className="px-4 py-3 text-muted">
-                      {fmtDate(r.lastAuditAt)}
-                    </td>
-                    <td className="px-4 py-3 text-muted">
-                      {fmtDate(r.createdAt)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <>
+          {/* Mobile: card list */}
+          <div className="md:hidden space-y-2">
+            {rows.map((r) => {
+              const pill = planPill(r.plan);
+              return (
+                <a
+                  key={r.id}
+                  href={`/admin/tenants/${r.id}`}
+                  className="block bg-white border border-gray-200 rounded-2xl p-4 active:bg-gray-50"
+                >
+                  <div className="flex items-baseline justify-between gap-2 mb-1">
+                    <div className="font-semibold truncate">
+                      {r.emailDomain ?? r.slug}
+                    </div>
+                    <span
+                      className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded whitespace-nowrap ${pill.cls}`}
+                    >
+                      {pill.label}
+                    </span>
+                  </div>
+                  <div className="text-xs text-muted font-mono mb-2">
+                    {r.slug}
+                  </div>
+                  <div className="grid grid-cols-4 gap-2 text-xs text-center">
+                    <Stat label="Days" value={daysLeft(r)} />
+                    <Stat label="Members" value={String(r.memberCount)} />
+                    <Stat label="Personas" value={String(r.personaCount)} />
+                    <Stat label="Audits" value={String(r.auditCount)} />
+                  </div>
+                  <div className="mt-2 text-[11px] text-muted">
+                    Last audit: {fmtDate(r.lastAuditAt)} · Created: {fmtDate(r.createdAt)}
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+
+          {/* Desktop: full table */}
+          <div className="hidden md:block bg-white border border-gray-200 rounded-2xl overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
+                <tr>
+                  <th className="px-4 py-3 font-medium">Domain</th>
+                  <th className="px-4 py-3 font-medium">Slug</th>
+                  <th className="px-4 py-3 font-medium">Plan</th>
+                  <th className="px-4 py-3 font-medium">Days left</th>
+                  <th className="px-4 py-3 font-medium">Members</th>
+                  <th className="px-4 py-3 font-medium">Personas</th>
+                  <th className="px-4 py-3 font-medium">Audits</th>
+                  <th className="px-4 py-3 font-medium">Last audit</th>
+                  <th className="px-4 py-3 font-medium">Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => {
+                  const pill = planPill(r.plan);
+                  return (
+                    <tr
+                      key={r.id}
+                      className="border-t border-gray-100 hover:bg-gray-50"
+                    >
+                      <td className="px-4 py-3 font-medium">
+                        <a
+                          href={`/admin/tenants/${r.id}`}
+                          className="text-sky-700 hover:underline"
+                        >
+                          {r.emailDomain ?? (
+                            <span className="italic text-muted">—</span>
+                          )}
+                        </a>
+                      </td>
+                      <td className="px-4 py-3 font-mono text-xs text-muted">
+                        {r.slug}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span
+                          className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${pill.cls}`}
+                        >
+                          {pill.label}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 font-mono text-xs">{daysLeft(r)}</td>
+                      <td className="px-4 py-3 text-center">{r.memberCount}</td>
+                      <td className="px-4 py-3 text-center">{r.personaCount}</td>
+                      <td className="px-4 py-3 text-center">{r.auditCount}</td>
+                      <td className="px-4 py-3 text-muted">
+                        {fmtDate(r.lastAuditAt)}
+                      </td>
+                      <td className="px-4 py-3 text-muted">
+                        {fmtDate(r.createdAt)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
+    </div>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-gray-50 rounded-lg py-1.5">
+      <div className="text-[9px] uppercase tracking-wide text-muted">
+        {label}
+      </div>
+      <div className="font-mono">{value}</div>
     </div>
   );
 }

@@ -92,21 +92,23 @@ export default async function TenantDetail({
   const planOptions = ["waitlisted", "free", "pro", "banned"] as const;
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
+    <div className="max-w-4xl mx-auto px-4 py-6 md:py-8">
       <div className="mb-6">
         <div className="text-xs text-muted">
           <a href="/admin/tenants" className="hover:underline">
             ← All tenants
           </a>
         </div>
-        <h1 className="text-2xl font-bold mt-1">{t.emailDomain ?? t.slug}</h1>
-        <div className="text-xs text-muted font-mono mt-1">
+        <h1 className="text-2xl font-bold mt-1 break-words">
+          {t.emailDomain ?? t.slug}
+        </h1>
+        <div className="text-xs text-muted font-mono mt-1 break-all">
           {t.id} · slug={t.slug}
         </div>
       </div>
 
       {/* State + actions */}
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div className="bg-white border border-gray-200 rounded-2xl p-5">
           <div className="text-xs uppercase tracking-wide text-muted mb-3">
             Current state
@@ -204,38 +206,40 @@ export default async function TenantDetail({
         {memberRows.length === 0 ? (
           <div className="text-sm text-muted">No users attached.</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead className="text-xs text-muted text-left">
-              <tr>
-                <th className="font-medium pb-2">Email</th>
-                <th className="font-medium pb-2">Role</th>
-                <th className="font-medium pb-2">Joined</th>
-                <th className="font-medium pb-2">Last sign-in</th>
-              </tr>
-            </thead>
-            <tbody>
-              {memberRows.map((m) => (
-                <tr key={m.id} className="border-t border-gray-100">
-                  <td className="py-2 font-mono text-xs">{m.email}</td>
-                  <td className="py-2 text-xs">
-                    {m.isAdmin ? (
-                      <span className="bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded text-[10px]">
-                        admin
-                      </span>
-                    ) : (
-                      "member"
-                    )}
-                  </td>
-                  <td className="py-2 text-xs text-muted">
-                    {fmtDate(m.createdAt)}
-                  </td>
-                  <td className="py-2 text-xs text-muted">
-                    {fmtDate(m.lastSignInAt)}
-                  </td>
+          <div className="overflow-x-auto -mx-2 sm:mx-0">
+            <table className="w-full text-sm min-w-[420px]">
+              <thead className="text-xs text-muted text-left">
+                <tr>
+                  <th className="font-medium pb-2 px-2">Email</th>
+                  <th className="font-medium pb-2 px-2">Role</th>
+                  <th className="font-medium pb-2 px-2 whitespace-nowrap">Joined</th>
+                  <th className="font-medium pb-2 px-2 whitespace-nowrap">Last sign-in</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {memberRows.map((m) => (
+                  <tr key={m.id} className="border-t border-gray-100">
+                    <td className="py-2 px-2 font-mono text-xs break-all">{m.email}</td>
+                    <td className="py-2 px-2 text-xs">
+                      {m.isAdmin ? (
+                        <span className="bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded text-[10px]">
+                          admin
+                        </span>
+                      ) : (
+                        "member"
+                      )}
+                    </td>
+                    <td className="py-2 px-2 text-xs text-muted whitespace-nowrap">
+                      {fmtDate(m.createdAt)}
+                    </td>
+                    <td className="py-2 px-2 text-xs text-muted whitespace-nowrap">
+                      {fmtDate(m.lastSignInAt)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
@@ -271,35 +275,37 @@ export default async function TenantDetail({
         {recentAudits.length === 0 ? (
           <div className="text-sm text-muted">No audits yet.</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead className="text-xs text-muted text-left">
-              <tr>
-                <th className="font-medium pb-2">Slug</th>
-                <th className="font-medium pb-2">Type</th>
-                <th className="font-medium pb-2">Score</th>
-                <th className="font-medium pb-2">When</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentAudits.map((a) => (
-                <tr key={a.slug} className="border-t border-gray-100">
-                  <td className="py-2 font-mono text-xs">
-                    <a
-                      href={`/audits/${a.slug}`}
-                      className="text-sky-700 hover:underline"
-                    >
-                      {a.slug}
-                    </a>
-                  </td>
-                  <td className="py-2 text-xs">{a.type}</td>
-                  <td className="py-2 text-xs">{a.score ?? "—"}</td>
-                  <td className="py-2 text-xs text-muted">
-                    {fmtDate(a.timestamp)}
-                  </td>
+          <div className="overflow-x-auto -mx-2 sm:mx-0">
+            <table className="w-full text-sm min-w-[420px]">
+              <thead className="text-xs text-muted text-left">
+                <tr>
+                  <th className="font-medium pb-2 px-2">Slug</th>
+                  <th className="font-medium pb-2 px-2">Type</th>
+                  <th className="font-medium pb-2 px-2">Score</th>
+                  <th className="font-medium pb-2 px-2 whitespace-nowrap">When</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {recentAudits.map((a) => (
+                  <tr key={a.slug} className="border-t border-gray-100">
+                    <td className="py-2 px-2 font-mono text-xs break-all">
+                      <a
+                        href={`/audits/${a.slug}`}
+                        className="text-sky-700 hover:underline"
+                      >
+                        {a.slug}
+                      </a>
+                    </td>
+                    <td className="py-2 px-2 text-xs">{a.type}</td>
+                    <td className="py-2 px-2 text-xs">{a.score ?? "—"}</td>
+                    <td className="py-2 px-2 text-xs text-muted whitespace-nowrap">
+                      {fmtDate(a.timestamp)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
