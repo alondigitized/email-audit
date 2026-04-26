@@ -13,6 +13,7 @@
     "db:seed-personas": "tsx --env-file=.env.local scripts/seed-personas.ts",
     "db:grant": "tsx --env-file=.env.local scripts/grant-persona.ts",
     "invite": "tsx --env-file=.env.local scripts/invite.ts",
+    "test:reset-tenant": "tsx --env-file=.env.local scripts/reset-test-tenant.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
