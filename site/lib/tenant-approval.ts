@@ -14,7 +14,8 @@
 // the referee.
 
 import { eq } from "drizzle-orm";
-import { db, tenants, users } from "./db/client";
+import { cookies } from "next/headers";
+import { db, tenants, users, sessions } from "./db/client";
 import {
   sendWaitlistApprovedEmail,
   sendReferralCreditEmail,
@@ -46,6 +47,52 @@ function loginUrl(): string {
     process.env.AUTH_URL ??
     "https://etell.app";
   return `${base.replace(/\/$/, "")}/login`;
+}
+
+// Creates a database-backed Auth.js session for a user and writes the
+// matching cookie. Bypasses the magic-link round-trip — used by the
+// signup auto-sign-in path so prospects land on the wizard immediately.
+//
+// Cookie name + shape mirror Auth.js's DrizzleAdapter session setup
+// (sessionToken PK, userId FK, expires). On HTTPS the cookie name picks
+// up the __Secure- prefix which Auth.js's auth() helper requires; on
+// http localhost dev it's plain "authjs.session-token".
+//
+// NOTE: this skips email verification — anyone who can post to /signup
+// can claim a session for any company email. With WAITLIST_ENABLED=false
+// that's already the security posture (no admin gate either). When
+// re-enabling waitlisting later, also gate this helper on plan != 'waitlisted'.
+const SESSION_DAYS = 30;
+
+export async function createSessionForUser(userId: string): Promise<string> {
+  const sessionToken = nanoid(48); // 48 alphabet chars = ~285 bits entropy
+  const expires = addDays(new Date(), SESSION_DAYS);
+
+  await db.insert(sessions).values({ sessionToken, userId, expires });
+
+  // Cookie-setting requires a Next.js request context. CLI scripts that
+  // exercise this helper for DB-state testing (scripts/test-signup-action.ts)
+  // call it without one — swallow the error so the session row still gets
+  // created and the script can verify it.
+  try {
+    const useSecure = process.env.NODE_ENV === "production";
+    const cookieName = useSecure
+      ? "__Secure-authjs.session-token"
+      : "authjs.session-token";
+    const c = await cookies();
+    c.set(cookieName, sessionToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+      secure: useSecure,
+      expires,
+    });
+  } catch {
+    // Outside a request context — the session row is created either way,
+    // a real HTTP signupAction call will set the cookie correctly.
+  }
+
+  return sessionToken;
 }
 
 // Flip a waitlisted tenant to free + stamp tier dates + mint referral code +
