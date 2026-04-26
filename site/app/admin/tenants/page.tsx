@@ -54,18 +54,28 @@ async function loadTenants(): Promise<Row[]> {
     if (p.tenantId) personaMap.set(p.tenantId, Number(p.n));
   }
 
-  // Audit count + last audit per tenant in one round trip.
+  // Audit count + last audit per tenant in one round trip. Drizzle's
+  // raw sql<Date>``max(...)`` returns whatever the driver gives back,
+  // which for the neon-http driver is an ISO string — coerce to Date so
+  // downstream fmtDate() can call .getTime() on it.
   const auditAgg = await db
     .select({
       tenantId: audits.tenantId,
       n: count(),
-      last: sql<Date>`max(${audits.timestamp})`,
+      last: sql<string | Date>`max(${audits.timestamp})`,
     })
     .from(audits)
     .groupBy(audits.tenantId);
   const auditMap = new Map<string, { n: number; last: Date | null }>();
   for (const a of auditAgg) {
-    if (a.tenantId) auditMap.set(a.tenantId, { n: Number(a.n), last: a.last });
+    if (!a.tenantId) continue;
+    const last =
+      a.last instanceof Date
+        ? a.last
+        : a.last
+          ? new Date(a.last)
+          : null;
+    auditMap.set(a.tenantId, { n: Number(a.n), last });
   }
 
   return tenantRows.map((t) => ({
@@ -96,16 +106,24 @@ function planPill(plan: Row["plan"]): { label: string; cls: string } {
   }
 }
 
+function asDate(d: Date | string | null | undefined): Date | null {
+  if (!d) return null;
+  if (d instanceof Date) return d;
+  const parsed = new Date(d);
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
+
 function daysLeft(t: Row): string {
   if (t.plan === "pro") return "∞";
-  if (!t.tierExpiresAt) return "—";
-  const ms = t.tierExpiresAt.getTime() - Date.now();
-  const d = Math.ceil(ms / 86400000);
+  const exp = asDate(t.tierExpiresAt);
+  if (!exp) return "—";
+  const d = Math.ceil((exp.getTime() - Date.now()) / 86400000);
   if (d < 0) return `${-d}d ago`;
   return `${d}d`;
 }
 
-function fmtDate(d: Date | null): string {
+function fmtDate(raw: Date | string | null | undefined): string {
+  const d = asDate(raw);
   if (!d) return "—";
   const ms = Date.now() - d.getTime();
   const min = Math.floor(ms / 60000);

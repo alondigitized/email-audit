@@ -10,7 +10,15 @@ import {
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Tenant · admin · etell" };
 
-function fmtDate(d: Date | null): string {
+function asDate(d: Date | string | null | undefined): Date | null {
+  if (!d) return null;
+  if (d instanceof Date) return d;
+  const parsed = new Date(d);
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function fmtDate(raw: Date | string | null | undefined): string {
+  const d = asDate(raw);
   if (!d) return "—";
   return d.toLocaleString(undefined, {
     year: "numeric",
@@ -21,8 +29,9 @@ function fmtDate(d: Date | null): string {
   });
 }
 
-function daysLeft(plan: string, expires: Date | null): string {
+function daysLeft(plan: string, raw: Date | string | null | undefined): string {
   if (plan === "pro") return "∞ (Pro)";
+  const expires = asDate(raw);
   if (!expires) return "—";
   const d = Math.ceil((expires.getTime() - Date.now()) / 86400000);
   if (d < 0) return `expired ${-d}d ago`;
