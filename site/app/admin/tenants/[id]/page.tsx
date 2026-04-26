@@ -5,6 +5,8 @@ import { db, tenants, users, personas, audits } from "@/lib/db/client";
 import {
   changeTenantPlanFormAction,
   extendTenantTierFormAction,
+  addMemberFormAction,
+  removeMemberFormAction,
 } from "../actions";
 
 export const dynamic = "force-dynamic";
@@ -204,9 +206,9 @@ export default async function TenantDetail({
           Members ({memberRows.length})
         </div>
         {memberRows.length === 0 ? (
-          <div className="text-sm text-muted">No users attached.</div>
+          <div className="text-sm text-muted mb-4">No users attached.</div>
         ) : (
-          <div className="overflow-x-auto -mx-2 sm:mx-0">
+          <div className="overflow-x-auto -mx-2 sm:mx-0 mb-4">
             <table className="w-full text-sm min-w-[420px]">
               <thead className="text-xs text-muted text-left">
                 <tr>
@@ -214,6 +216,7 @@ export default async function TenantDetail({
                   <th className="font-medium pb-2 px-2">Role</th>
                   <th className="font-medium pb-2 px-2 whitespace-nowrap">Joined</th>
                   <th className="font-medium pb-2 px-2 whitespace-nowrap">Last sign-in</th>
+                  <th className="font-medium pb-2 px-2 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -235,12 +238,60 @@ export default async function TenantDetail({
                     <td className="py-2 px-2 text-xs text-muted whitespace-nowrap">
                       {fmtDate(m.lastSignInAt)}
                     </td>
+                    <td className="py-2 px-2 text-right whitespace-nowrap">
+                      {m.isAdmin ? (
+                        <span className="text-[11px] text-muted italic">protected</span>
+                      ) : (
+                        <form
+                          action={removeMemberFormAction}
+                          className="inline-block"
+                        >
+                          <input type="hidden" name="tenantId" value={t.id} />
+                          <input type="hidden" name="userId" value={m.id} />
+                          <button
+                            type="submit"
+                            className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-[11px] hover:bg-rose-100 hover:text-rose-800"
+                          >
+                            Remove
+                          </button>
+                        </form>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         )}
+
+        {/* Add member */}
+        <form action={addMemberFormAction} className="border-t border-gray-100 pt-3">
+          <input type="hidden" name="tenantId" value={t.id} />
+          <label htmlFor="add-member-email" className="block text-xs font-medium mb-1">
+            Add member
+          </label>
+          <div className="flex gap-2 flex-wrap sm:flex-nowrap">
+            <input
+              id="add-member-email"
+              name="email"
+              type="email"
+              placeholder="someone@company.com"
+              required
+              className="flex-1 min-w-[200px] py-1.5 px-2 border border-gray-200 rounded-lg text-sm font-mono"
+            />
+            <button
+              type="submit"
+              className="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-semibold whitespace-nowrap"
+            >
+              Add + email
+            </button>
+          </div>
+          <p className="text-[10px] text-muted mt-1">
+            On a free/pro tenant the member gets an immediate magic-link
+            email. On waitlisted, they get the queue confirmation. Admins can
+            only be created via the seed-allowlist CLI.
+          </p>
+        </form>
       </div>
 
       {/* Personas */}
