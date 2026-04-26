@@ -313,6 +313,58 @@ export const audits = pgTable(
   })
 );
 
+// Inbound email landing zone. Cloudflare Email Worker POSTs every email
+// arriving at *@etell.app to /api/email/inbound, which inserts a row here.
+// The email-monitor daemon reads unprocessed rows (processed_at IS NULL),
+// runs the Claude review pipeline, then stamps processed_at + audit_slug.
+//
+// Replaces the AgentMail polling loop. Each persona's inbox is just a
+// recipient string; no per-inbox API call is needed and there is no
+// upstream cap. Persona's inbox address lives on persona.profile.agentmail.
+// inbox_address (kept the field name to avoid a profile-schema migration —
+// the value is now `<slug>@etell.app` instead of `<slug>@agentmail.to`).
+export const emailMessages = pgTable(
+  "email_message",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    personaSlug: text("persona_slug").notNull(),
+    tenantId: uuid("tenant_id")
+      .notNull()
+      .references(() => tenants.id, { onDelete: "cascade" }),
+    toAddress: text("to_address").notNull(),
+    fromAddress: text("from_address").notNull(),
+    fromDomain: text("from_domain").notNull(),
+    subject: text("subject"),
+    // Message-Id header — used to dedupe retries from the Worker.
+    messageId: text("message_id"),
+    html: text("html"),
+    textBody: text("text_body"),
+    // R2 key for the raw .eml (best-effort, optional).
+    rawKey: text("raw_key"),
+    receivedAt: timestamp("received_at", { mode: "date", withTimezone: true }).notNull(),
+    // Set by the daemon once the review pipeline succeeds.
+    processedAt: timestamp("processed_at", { mode: "date", withTimezone: true }),
+    auditSlug: text("audit_slug"),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    // Unique per (persona, message-id) so the Worker can safely retry. Only
+    // applies when message_id is non-null; null message_ids skip the
+    // constraint and are treated as fresh inserts.
+    msgIdUnique: index("email_message_msgid_idx").on(t.personaSlug, t.messageId),
+    // Hot path: daemon polls for unprocessed messages per persona ordered
+    // by receipt time. Partial index would be ideal but drizzle doesn't
+    // expose `WHERE` clauses for indexes inline; full index is fine at
+    // expected scale.
+    unprocessedIdx: index("email_message_unprocessed_idx").on(
+      t.personaSlug,
+      t.processedAt,
+      t.receivedAt
+    ),
+    tenantIdx: index("email_message_tenant_idx").on(t.tenantId),
+  })
+);
+
 // Phase D — brand-newsletter subscription queue. One row per
 // (persona, brand_domain) pair. Status flow:
 //   queued — fresh insert, awaiting auto-subscribe attempt

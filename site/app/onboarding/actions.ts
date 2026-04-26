@@ -21,7 +21,7 @@ import {
   PersonaProposalSchema,
   CompetitorProposalSchema,
 } from "@/lib/onboarding/research-prompt";
-import { provisionInbox } from "@/lib/agentmail";
+import { generateInboxAddress } from "@/lib/inbox";
 import { reportOnboardingStep } from "@/lib/persona-status";
 import { enqueueSubscriptionJob } from "@/lib/subscriptions/queue";
 import { tryAutoSubscribeJob } from "@/lib/subscriptions/auto";
@@ -213,22 +213,10 @@ export async function commitPersonaAction(fd: FormData): Promise<void> {
     .limit(1);
   if (existing.length > 0) slug = `${slug}-${state.tenant.slug}`;
 
-  // Build the canonical PersonaProfile.
-  let inbox: { inbox_address: string; inbox_id: string } | null = null;
-  try {
-    const r = await provisionInbox({
-      slug,
-      displayName: v.name,
-    });
-    inbox = {
-      inbox_address: r.inbox_address,
-      inbox_id: r.inbox_id,
-    };
-  } catch (err) {
-    console.warn("AgentMail provisioning failed during onboarding:", err);
-    // Non-fatal — admin can re-provision later. The persona row commits
-    // either way so the user sees forward progress.
-  }
+  // Persona inbox is a Cloudflare Email Routing recipient — just generate
+  // the address. No external API call, no upstream limit. Inbound emails
+  // land at *@etell.app and route through /api/email/inbound.
+  const inbox = generateInboxAddress(slug);
 
   const profile: PersonaProfile = personaProfileSchema.parse({
     schema_version: 1,
@@ -252,9 +240,12 @@ export async function commitPersonaAction(fd: FormData): Promise<void> {
       targets: [],
     },
     agentmail: {
-      inbox_address: inbox?.inbox_address ?? null,
-      inbox_id: inbox?.inbox_id ?? null,
-      provisioned_at: inbox ? new Date().toISOString() : null,
+      // Field name kept for backward-compat with profile schema; the value
+      // is now <slug>@etell.app delivered via Cloudflare Email Routing
+      // rather than a real AgentMail-managed inbox.
+      inbox_address: inbox.inbox_address,
+      inbox_id: inbox.inbox_id,
+      provisioned_at: inbox.provisioned_at,
     },
     onboarding: {},
     color: null,
@@ -294,7 +285,7 @@ export async function commitPersonaAction(fd: FormData): Promise<void> {
   // Phase D: enqueue subscription jobs for both the user's company and the
   // chosen competitor. Best-effort auto-subscribe runs immediately; failures
   // fall through to /admin/subscriptions for manual handling.
-  if (inbox?.inbox_address) {
+  if (inbox.inbox_address) {
     const userDomain = await getActorDomain();
     const ownDomain = userDomain ?? state.tenant.name;
     const competitorDomain = state.tenant.competitorTarget.domain;

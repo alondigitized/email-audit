@@ -1,0 +1,18 @@
+{
+  "name": "etell-inbound-worker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloudflare Email Worker for *@etell.app — parses inbound email and POSTs to /api/email/inbound on the site.",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail"
+  },
+  "dependencies": {
+    "postal-mime": "^2.4.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260201.0",
+    "wrangler": "^4.0.0"
+  }
+}

@@ -1,0 +1,10 @@
+name = "etell-inbound"
+main = "src/index.ts"
+compatibility_date = "2026-04-01"
+
+# Email handlers run in the standard Workers runtime — no extra bindings
+# required. Secrets are set via `wrangler secret put INBOUND_WEBHOOK_URL`
+# and `wrangler secret put INBOUND_WEBHOOK_SECRET`.
+#
+# Email Routing rule binding is configured in the Cloudflare dashboard
+# (zone → Email → Routing rules → catch-all → action: send to a Worker).

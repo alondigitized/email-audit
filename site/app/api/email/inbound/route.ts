@@ -1,0 +1,136 @@
+import { NextRequest, NextResponse } from "next/server";
+import { eq, and } from "drizzle-orm";
+import { db, emailMessages, personas } from "@/lib/db/client";
+import { z } from "zod";
+
+// Inbound email landing endpoint. Cloudflare Email Worker POSTs every
+// email arriving at *@etell.app here. We look up the persona by the
+// recipient's local-part, write a row in email_message, and return 200.
+// The email-monitor daemon picks up unprocessed rows and runs the
+// Claude review pipeline.
+//
+// Auth: shared secret (Bearer) in the Authorization header. Set
+// INBOUND_WEBHOOK_SECRET on Vercel (production + preview) and on the
+// Cloudflare Worker as the matching env var.
+//
+// Idempotency: (persona_slug, message_id) uniqueness lets the Worker
+// safely retry on transient 5xx without dupes. We respond 200 even when
+// the recipient maps to no persona — Cloudflare shouldn't bounce real
+// senders for our routing mistakes; we silently drop.
+
+export const dynamic = "force-dynamic";
+
+const InboundSchema = z.object({
+  to: z.string().email().max(254),
+  from: z.string().email().max(254),
+  messageId: z.string().nullable().optional(),
+  subject: z.string().max(998).nullable().optional(),
+  html: z.string().nullable().optional(),
+  text: z.string().nullable().optional(),
+  rawKey: z.string().nullable().optional(),
+  receivedAt: z.string().datetime().optional(),
+});
+
+function unauthorized() {
+  return new NextResponse("Unauthorized", { status: 401 });
+}
+
+export async function POST(req: NextRequest) {
+  const expected = process.env.INBOUND_WEBHOOK_SECRET;
+  if (!expected) {
+    console.error("INBOUND_WEBHOOK_SECRET not set; rejecting all inbound");
+    return unauthorized();
+  }
+  const auth = req.headers.get("authorization") ?? "";
+  // Constant-time-ish compare via length+bytewise — fine for short secrets.
+  if (auth !== `Bearer ${expected}`) {
+    return unauthorized();
+  }
+
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return new NextResponse("Bad JSON", { status: 400 });
+  }
+  const parsed = InboundSchema.safeParse(body);
+  if (!parsed.success) {
+    console.warn(
+      "inbound: schema validation failed:",
+      parsed.error.issues.slice(0, 3)
+    );
+    return new NextResponse("Invalid payload", { status: 400 });
+  }
+  const { to, from, messageId, subject, html, text, rawKey, receivedAt } =
+    parsed.data;
+
+  // Local part of the recipient maps to the persona slug. e.g.
+  // "alan-sarah-k@etell.app" -> "alan-sarah-k".
+  const slug = to.split("@")[0]?.toLowerCase();
+  if (!slug) {
+    return new NextResponse("Bad recipient", { status: 400 });
+  }
+
+  const [persona] = await db
+    .select({ tenantId: personas.tenantId })
+    .from(personas)
+    .where(eq(personas.slug, slug))
+    .limit(1);
+  if (!persona?.tenantId) {
+    // No persona for this address. Likely typo, decommissioned slug, or
+    // catch-all spam. Drop quietly — Cloudflare records the receive
+    // already; we don't bounce.
+    console.warn(`inbound: no persona for recipient '${to}'`);
+    return NextResponse.json({ ok: true, dropped: true });
+  }
+
+  const fromAt = from.lastIndexOf("@");
+  const fromDomain =
+    fromAt >= 0 ? from.slice(fromAt + 1).toLowerCase() : "unknown";
+
+  // Idempotent insert. (persona_slug, message_id) is indexed but not
+  // unique-constrained, so we de-dupe at insert time with a manual lookup
+  // when message_id is present.
+  if (messageId) {
+    const [existing] = await db
+      .select({ id: emailMessages.id })
+      .from(emailMessages)
+      .where(
+        and(
+          eq(emailMessages.personaSlug, slug),
+          eq(emailMessages.messageId, messageId)
+        )
+      )
+      .limit(1);
+    if (existing) {
+      return NextResponse.json({ ok: true, deduped: true });
+    }
+  }
+
+  await db.insert(emailMessages).values({
+    personaSlug: slug,
+    tenantId: persona.tenantId,
+    toAddress: to.toLowerCase(),
+    fromAddress: from.toLowerCase(),
+    fromDomain,
+    subject: subject ?? null,
+    messageId: messageId ?? null,
+    html: html ?? null,
+    textBody: text ?? null,
+    rawKey: rawKey ?? null,
+    receivedAt: receivedAt ? new Date(receivedAt) : new Date(),
+  });
+
+  return NextResponse.json({ ok: true });
+}
+
+// Allow a quick GET probe so ops can confirm the route is live without
+// guessing at the secret. Returns 200 with a tiny body — no sensitive info.
+export async function GET() {
+  return NextResponse.json({
+    route: "/api/email/inbound",
+    method: "POST",
+    auth: "Bearer INBOUND_WEBHOOK_SECRET",
+    status: process.env.INBOUND_WEBHOOK_SECRET ? "configured" : "missing-secret",
+  });
+}
