@@ -157,6 +157,27 @@ export type PersonaLastStatus = {
   } | null;
 };
 
+// Curated persona library — etell.app's IP. Tenants don't own templates;
+// they fork them at signup. A template's slug is the canonical reference
+// for read-merging audit/email/chat history into forks (see lib/personas-db.ts
+// getReadableSlugsForPersona). Industry tag drives the wizard's picker.
+//
+// Templates are inserted manually by admins (or by the
+// scripts/promote-personas-to-templates.ts one-shot for Walker/Martha/Calvin).
+// is_active=false hides a template from the picker without deleting it
+// (preserves provenance for already-forked instances).
+export const personaTemplates = pgTable("persona_template", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  slug: text("slug").unique().notNull(),
+  name: text("name").notNull(),
+  short: text("short").notNull(),
+  industry: text("industry").notNull(),
+  profile: jsonb("profile").$type<PersonaProfile>(),
+  lastStatus: jsonb("last_status").$type<PersonaLastStatus>(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
+
 export const personas = pgTable("persona", {
   id: uuid("id").primaryKey().defaultRandom(),
   slug: text("slug").unique().notNull(),
@@ -169,6 +190,42 @@ export const personas = pgTable("persona", {
   // (walker/martha/calvin-haze). Public wizard-created personas inherit the
   // signed-up user's tenant.
   tenantId: uuid("tenant_id").references(() => tenants.id, { onDelete: "restrict" }),
+  // Pointer back to the persona_template this row was forked from. NULL
+  // means a direct/legacy persona (created before templates existed, or
+  // an admin-curated one-off). Read paths use this to OR-match the
+  // template's slug into queries — see lib/personas-db.ts
+  // getReadableSlugsForPersona.
+  templateSlug: text("template_slug").references(() => personaTemplates.slug, {
+    onDelete: "set null",
+  }),
+});
+
+// Concierge queue: when a tenant signs up at /signup but no persona_template
+// matches their industry, we don't fall back to LLM-gen — we drop a row
+// here. Admin sees it at /admin/template-requests, builds the template
+// manually, then fires "Mark shipped" which auto-forks the new template
+// for the requesting tenant + emails them.
+export const templateRequestStatusEnum = pgEnum("template_request_status", [
+  "queued",
+  "building",
+  "shipped",
+  "rejected",
+]);
+
+export const templateRequests = pgTable("template_request", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  tenantId: uuid("tenant_id")
+    .notNull()
+    .references(() => tenants.id, { onDelete: "cascade" }),
+  requestedIndustry: text("requested_industry").notNull(),
+  brandDomain: text("brand_domain").notNull(),
+  status: templateRequestStatusEnum("status").notNull().default("queued"),
+  requestedAt: timestamp("requested_at", { mode: "date" }).defaultNow().notNull(),
+  shippedAt: timestamp("shipped_at", { mode: "date" }),
+  // The template slug we ended up shipping for this request. Lets us
+  // backfill the requesting tenant by re-running the fork action against
+  // this template once the row flips to status='shipped'.
+  fulfilledTemplateSlug: text("fulfilled_template_slug"),
 });
 
 export const userPersonas = pgTable(

@@ -5,7 +5,12 @@ import {
   type AuditData,
   type AuditSummary,
 } from "@/lib/schema/audit";
-import { getAllPersonas, personaColor, type PersonaRecord } from "@/lib/personas-db";
+import {
+  getAllPersonas,
+  expandReadableSlugs,
+  personaColor,
+  type PersonaRecord,
+} from "@/lib/personas-db";
 
 // Phase 3 of the foundation refactor: the site reads audits from Postgres
 // instead of the filesystem. Dual-write from the daemons keeps the
@@ -64,11 +69,12 @@ export async function getAuditIndexForUser(
   personaSlugs: string[]
 ): Promise<AuditSummary[]> {
   if (personaSlugs.length === 0) return [];
+  const readableSlugs = await expandReadableSlugs(personaSlugs);
   const [rows, allPersonas] = await Promise.all([
     db
       .select({ slug: audits.slug, data: audits.data })
       .from(audits)
-      .where(inArray(audits.persona, personaSlugs))
+      .where(inArray(audits.persona, readableSlugs))
       .orderBy(desc(audits.timestamp)),
     getAllPersonas(),
   ]);
@@ -90,10 +96,11 @@ export async function getAuditBySlugForUser(
   personaSlugs: string[]
 ): Promise<AuditData | null> {
   if (personaSlugs.length === 0) return null;
+  const readableSlugs = await expandReadableSlugs(personaSlugs);
   const rows = await db
     .select({ data: audits.data })
     .from(audits)
-    .where(and(eq(audits.slug, slug), inArray(audits.persona, personaSlugs)))
+    .where(and(eq(audits.slug, slug), inArray(audits.persona, readableSlugs)))
     .limit(1);
   if (rows.length === 0) return null;
   const parsed = auditDataSchema.safeParse(rows[0].data);

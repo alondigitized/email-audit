@@ -1,11 +1,45 @@
 import { cache } from "react";
-import { eq, asc } from "drizzle-orm";
+import { eq, asc, inArray } from "drizzle-orm";
 import { db, personas, users } from "./db/client";
 import type { PersonaLastStatus } from "./db/schema";
 import {
   safeParsePersonaProfile,
   type PersonaProfile,
 } from "./schema/persona";
+
+// Read-shared, write-isolated forking. Given persona slugs, returns the
+// SAME slugs PLUS each one's template_slug (when set and different).
+// Reads against any of the returned slugs surface the union of:
+// - the tenant's own forked-persona writes (audits, chats, emails) AND
+// - the source template's accumulated brain (curated by etell.app).
+//
+// Writes are unaffected — daemons stamp `audit.persona = forkSlug`, the
+// fork's own slug. Templates accumulate their brain via etell.app's own
+// reference accounts (Alon's tenant for now). See docs in lib/db/schema.ts
+// on the `personaTemplates` and `personas.templateSlug` columns.
+//
+// Idempotent for old/non-forked personas: if templateSlug is null or
+// equals the persona's own slug (Walker's self-reference after the
+// promote-to-templates migration), the input set is returned unchanged.
+export const expandReadableSlugs = cache(
+  async (personaSlugs: string[]): Promise<string[]> => {
+    if (personaSlugs.length === 0) return [];
+    const rows = await db
+      .select({
+        slug: personas.slug,
+        templateSlug: personas.templateSlug,
+      })
+      .from(personas)
+      .where(inArray(personas.slug, personaSlugs));
+    const out = new Set<string>(personaSlugs);
+    for (const r of rows) {
+      if (r.templateSlug && r.templateSlug !== r.slug) {
+        out.add(r.templateSlug);
+      }
+    }
+    return Array.from(out);
+  }
+);
 
 // Per-request cache (React cache). Each server request hydrates once.
 //
