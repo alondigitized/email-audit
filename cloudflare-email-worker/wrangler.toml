@@ -3,9 +3,18 @@ main = "src/index.ts"
 compatibility_date = "2026-04-01"
 workers_dev = false
 
-# Email handlers run in the standard Workers runtime — no extra bindings
-# required. Secrets are set via `wrangler secret put INBOUND_WEBHOOK_URL`
-# and `wrangler secret put INBOUND_WEBHOOK_SECRET`.
+# Secrets (set via `wrangler secret put`):
+#   INBOUND_WEBHOOK_URL    e.g. https://www.etell.app/api/email/inbound
+#   INBOUND_WEBHOOK_SECRET shared with the Vercel deploy's env var of the
+#                          same name. Bearer-format Authorization header.
 #
 # Email Routing rule binding is configured in the Cloudflare dashboard
 # (zone → Email → Routing rules → catch-all → action: send to a Worker).
+#
+# R2 binding: archives the raw .eml of every inbound message to the same
+# bucket the audit pipeline uses for screenshots, under prefix
+# `email-raw/{personaSlug}/`. Lets us re-extract headers / preheader /
+# attachments later without waiting for new mail.
+[[r2_buckets]]
+binding = "EMAIL_RAW"
+bucket_name = "etell-audit-media"
