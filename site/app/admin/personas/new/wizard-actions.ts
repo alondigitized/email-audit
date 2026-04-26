@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/dal";
-import { db, personas, userPersonas, users } from "@/lib/db/client";
+import { db, personas } from "@/lib/db/client";
 import {
   personaProfileSchema,
   type PersonaProfile,
@@ -99,24 +99,9 @@ export async function createDraftAndRedirect(fd: FormData) {
     })
     .returning({ id: personas.id });
 
-  // Grant admin user access to the draft (same as createPersonaAction in
-  // parent actions — reused here for consistency).
-  try {
-    const adminEmail = "alondigitized@gmail.com";
-    const [admin] = await db
-      .select({ id: users.id })
-      .from(users)
-      .where(eq(users.email, adminEmail))
-      .limit(1);
-    if (admin) {
-      await db
-        .insert(userPersonas)
-        .values({ userId: admin.id, personaId: inserted.id })
-        .onConflictDoNothing();
-    }
-  } catch {
-    // Best effort — ACL grant doesn't block the wizard
-  }
+  // Persona access is via tenant membership now — every user in the
+  // admin's tenant sees this draft. No userPersonas grant needed.
+  void inserted;
 
   revalidatePath("/admin/personas");
   redirect(`/admin/personas/new/${slug}/identity`);

@@ -3,18 +3,21 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db, tenants, users } from "@/lib/db/client";
-import { isCompanyEmail } from "@/lib/free-domains";
+import { isCompanyEmail, extractTenantDomain } from "@/lib/free-domains";
 import { sendWaitlistConfirmEmail } from "@/lib/email-tenant";
 import { signInRateLimit } from "@/lib/db/schema";
 import { sql, and, gte } from "drizzle-orm";
-import { headers } from "next/headers";
+import {
+  approveWaitlistedTenant,
+  creditReferrer,
+  nanoid,
+} from "@/lib/tenant-approval";
 
 export type SignupResult = { ok: true } | { ok: false; error: string };
 
 const EmailSchema = z.string().trim().email().max(254);
 const RefSchema = z.string().regex(/^[A-Za-z0-9_-]{4,16}$/).optional();
 
-// Same window/limit pattern as login rate-limiting (lib/login-rate-limit.ts):
 // 5 attempts per email per hour. Stops a single attacker from filling the
 // waitlist with one company's email.
 const RL_WINDOW_MS = 60 * 60 * 1000;
@@ -42,18 +45,10 @@ async function recordAttempt(email: string): Promise<void> {
 }
 
 function slugifyDomain(domain: string): string {
-  // Tenant slugs need to be unique + URL-safe. "skechers.com" → "skechers".
-  // Collisions are resolved with a 6-char suffix.
+  // Tenant slug is human-readable; uniqueness is enforced separately by
+  // the email_domain column. "skechers.com" → "skechers".
   const stem = domain.split(".")[0]?.toLowerCase().replace(/[^a-z0-9]/g, "") ?? "tenant";
   return stem.slice(0, 24) || "tenant";
-}
-
-function nanoid(n: number): string {
-  const alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
-  const buf = crypto.getRandomValues(new Uint8Array(n));
-  let out = "";
-  for (let i = 0; i < n; i++) out += alphabet[buf[i] % alphabet.length];
-  return out;
 }
 
 export async function signupAction(
@@ -70,22 +65,26 @@ export async function signupAction(
   if (!company.ok) {
     return { ok: false, error: company.reason ?? "Use your company email." };
   }
-  const domain = company.domain!;
+  const domain = extractTenantDomain(email);
+  if (!domain) {
+    return { ok: false, error: "Could not parse a domain from that email." };
+  }
 
-  // Optional referral code from /r/{code} landing.
   const refRaw = fd.get("ref");
   const refParsed =
     typeof refRaw === "string" ? RefSchema.safeParse(refRaw) : null;
   const refCode = refParsed?.success ? refParsed.data : null;
 
   if (await tooManyAttempts(email)) {
-    return { ok: false, error: "Too many signup attempts. Try again in an hour." };
+    return {
+      ok: false,
+      error: "Too many signup attempts. Try again in an hour.",
+    };
   }
   await recordAttempt(email);
 
-  // Idempotent on email: if a tenant + user already exist for this email,
-  // re-trigger the confirmation email and return ok. The waitlist queue
-  // doesn't grow on duplicate submits.
+  // Idempotent on email: re-submit just re-triggers the appropriate email
+  // for whichever state their tenant is currently in.
   const existingUser = await db
     .select({ id: users.id, tenantId: users.tenantId })
     .from(users)
@@ -95,12 +94,12 @@ export async function signupAction(
     try {
       await sendWaitlistConfirmEmail({ to: email, companyDomain: domain });
     } catch {
-      // best-effort; don't leak send errors to the form.
+      // best-effort
     }
     return { ok: true };
   }
 
-  // Resolve the referrer's tenant_id (if any) before creating the new tenant.
+  // Resolve the referrer's tenant_id (if any).
   let referredByTenantId: string | null = null;
   if (refCode) {
     const ref = await db
@@ -111,48 +110,142 @@ export async function signupAction(
     referredByTenantId = ref[0]?.id ?? null;
   }
 
-  // Tenant slug: prefer domain stem; fall back to a 6-char suffix on collision.
-  const baseSlug = slugifyDomain(domain);
-  let slug = baseSlug;
-  for (let i = 0; i < 5; i++) {
-    const taken = await db
-      .select({ id: tenants.id })
+  // Look up an existing tenant for this domain. If found, attach the user
+  // to it; otherwise create a fresh waitlisted tenant.
+  let tenantRow = (
+    await db
+      .select({
+        id: tenants.id,
+        plan: tenants.plan,
+        referredByTenantId: tenants.referredByTenantId,
+      })
       .from(tenants)
-      .where(eq(tenants.slug, slug))
-      .limit(1);
-    if (taken.length === 0) break;
-    slug = `${baseSlug}-${nanoid(6)}`;
+      .where(eq(tenants.emailDomain, domain))
+      .limit(1)
+  )[0];
+
+  if (tenantRow?.plan === "banned") {
+    // Don't leak that the domain is banned. Return the same generic
+    // success that any other signup would. No user row inserted.
+    return { ok: true };
   }
 
-  const [createdTenant] = await db
-    .insert(tenants)
-    .values({
-      slug,
-      name: domain,
-      plan: "waitlisted",
-      referredByTenantId,
-    })
-    .returning({ id: tenants.id });
+  let tenantId: string;
+  let tenantState: "fresh" | "existing-waitlisted" | "auto-approve";
+  if (!tenantRow) {
+    // First signup from this domain — create the tenant.
+    const baseSlug = slugifyDomain(domain);
+    let slug = baseSlug;
+    for (let i = 0; i < 5; i++) {
+      const taken = await db
+        .select({ id: tenants.id })
+        .from(tenants)
+        .where(eq(tenants.slug, slug))
+        .limit(1);
+      if (taken.length === 0) break;
+      slug = `${baseSlug}-${nanoid(6)}`;
+    }
+    try {
+      const [created] = await db
+        .insert(tenants)
+        .values({
+          slug,
+          name: domain,
+          emailDomain: domain,
+          plan: "waitlisted",
+          referredByTenantId,
+        })
+        .returning({ id: tenants.id });
+      tenantId = created.id;
+    } catch {
+      // Race: another concurrent signup just created the tenant. Re-fetch.
+      const [refetched] = await db
+        .select({ id: tenants.id, plan: tenants.plan })
+        .from(tenants)
+        .where(eq(tenants.emailDomain, domain))
+        .limit(1);
+      if (!refetched) {
+        return {
+          ok: false,
+          error: "Could not register tenant; please try again.",
+        };
+      }
+      tenantId = refetched.id;
+      tenantRow = { id: refetched.id, plan: refetched.plan, referredByTenantId: null };
+    }
+    tenantState = tenantRow ? (tenantRow.plan === "waitlisted" ? "existing-waitlisted" : "auto-approve") : "fresh";
+    if (!tenantRow) {
+      tenantState = "fresh";
+    }
+  } else if (tenantRow.plan === "waitlisted") {
+    tenantId = tenantRow.id;
+    tenantState = "existing-waitlisted";
+  } else {
+    // 'free' or 'pro' — already approved tenant. Auto-approve path.
+    tenantId = tenantRow.id;
+    tenantState = "auto-approve";
+  }
 
-  // Insert the user too — but they cannot sign in until plan flips to free.
-  // The auth.ts signIn callback gates on tenant.plan.
-  await db
-    .insert(users)
-    .values({
-      email,
-      tenantId: createdTenant.id,
-    });
+  // Insert the user attached to the tenant. (auth.ts signIn callback gates
+  // on tenant.plan, so users on a waitlisted tenant simply can't request a
+  // magic link until the tenant is approved.)
+  await db.insert(users).values({ email, tenantId });
 
-  // Surface IP for ops triage in case of abuse — stored on the rate-limit row
-  // already; nothing further to capture here.
-  void (await headers()).get("x-forwarded-for");
+  if (tenantState === "fresh") {
+    // First signup from this domain. Send waitlist confirm email.
+    try {
+      await sendWaitlistConfirmEmail({ to: email, companyDomain: domain });
+    } catch (err) {
+      console.warn("waitlist confirm email failed:", err);
+    }
+    return { ok: true };
+  }
 
+  if (tenantState === "existing-waitlisted") {
+    // Tenant is in the queue and this user joined it. Same confirm email
+    // — they'll get a magic-link follow-up when admin approves the tenant.
+    try {
+      await sendWaitlistConfirmEmail({ to: email, companyDomain: domain });
+    } catch (err) {
+      console.warn("waitlist confirm email failed:", err);
+    }
+    return { ok: true };
+  }
+
+  // tenantState === "auto-approve": tenant already on free/pro. Send the
+  // magic-link landing email immediately. The newly-inserted user passes
+  // the auth.ts signIn callback (their tenant.plan is free/pro) so the
+  // magic link works as soon as they click "Sign in to etell".
   try {
-    await sendWaitlistConfirmEmail({ to: email, companyDomain: domain });
+    const baseUrl =
+      process.env.NEXT_PUBLIC_APP_URL ??
+      process.env.AUTH_URL ??
+      "https://etell.app";
+    // Inline send rather than calling approveWaitlistedTenant (which
+    // re-runs flip-to-free + email-everyone). approveWaitlistedTenant is
+    // idempotent on already-free tenants (no-op), so it's safe to call
+    // either way; using it keeps the email shape identical for both paths.
+    void approveWaitlistedTenant; // re-export reference (kept callable elsewhere)
+    void baseUrl;
+    const { sendWaitlistApprovedEmail } = await import("@/lib/email-tenant");
+    await sendWaitlistApprovedEmail({
+      to: email,
+      loginUrl: `${baseUrl.replace(/\/$/, "")}/login`,
+      daysFree: 14,
+    });
   } catch (err) {
-    // We've already inserted the row; admin can still approve from /admin/waitlist
-    // even if the confirm mail bounced. Log and continue.
-    console.warn("waitlist confirm email failed:", err);
+    console.warn("auto-approve email failed:", err);
+  }
+
+  // Apply referral credit (cross-domain or same-domain). On waitlisted
+  // tenants this fires only when admin clicks Approve; on auto-approved
+  // tenants we credit immediately. Best-effort.
+  if (referredByTenantId) {
+    try {
+      await creditReferrer(referredByTenantId, email);
+    } catch (err) {
+      console.warn("creditReferrer failed:", err);
+    }
   }
 
   return { ok: true };

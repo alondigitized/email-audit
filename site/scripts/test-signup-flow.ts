@@ -172,12 +172,17 @@ async function main() {
     const domain = company.domain!;
 
     const slugStem = domain.split(".")[0]?.toLowerCase().replace(/[^a-z0-9]/g, "") ?? "tenant";
-    let tenantSlug = `${slugStem}-test-${Date.now()}`;
+    const ts = Date.now();
+    let tenantSlug = `${slugStem}-test-${ts}`;
+    // Use a synthetic domain so the test's tenant never collides with real
+    // @skechers.com signups (which would otherwise auto-join this row).
+    const syntheticDomain = `${slugStem}-test-${ts}.example`;
     const [createdTenant] = await db
       .insert(tenants)
       .values({
         slug: tenantSlug,
         name: domain,
+        emailDomain: syntheticDomain,
         plan: "waitlisted",
       })
       .returning({ id: tenants.id });
@@ -405,6 +410,26 @@ async function main() {
     step("persona has inbox_address", !!pFinal.profile?.agentmail?.inbox_address);
     step("laptop queue has 1 row", lpJobs.length === 1);
     step("subscription queue has 2 rows", subJobs.length === 2);
+
+    // ── 7. Second-user auto-join (mirrors signup auto-approve path) ──────
+    console.log("\n7. second user from same tenant (auto-approve path)");
+    const COWORKER_EMAIL = `coworker-${Date.now()}@${syntheticDomain}`;
+    const [coworkerInsert] = await db
+      .insert(users)
+      .values({ email: COWORKER_EMAIL, tenantId })
+      .returning({ id: users.id });
+    step("second user inserted into existing tenant", !!coworkerInsert);
+    const { getPersonaSlugsForUser } = await import("../lib/personas-db");
+    const coworkerSlugs = await getPersonaSlugsForUser(coworkerInsert.id);
+    step(
+      "second user inherits tenant's persona via tenant-id ACL",
+      coworkerSlugs.includes(personaSlug),
+      `slugs=[${coworkerSlugs.join(",")}]`
+    );
+    // Cleanup the coworker before the main cleanup block runs (the main
+    // cleanup deletes the tenant, but the FK on users.tenant_id is restrict
+    // — we need the user gone first).
+    await db.delete(users).where(eq(users.id, coworkerInsert.id));
   } finally {
     if (!leave) {
       console.log("\n— cleanup —");

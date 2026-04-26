@@ -92,6 +92,13 @@
       "when": 1777168431631,
       "tag": "0012_add_email_messages",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1777179602543,
+      "tag": "0013_add_tenant_email_domain",
+      "breakpoints": true
     }
   ]
 }
