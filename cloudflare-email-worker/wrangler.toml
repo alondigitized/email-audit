@@ -1,6 +1,7 @@
 name = "etell-inbound"
 main = "src/index.ts"
 compatibility_date = "2026-04-01"
+workers_dev = false
 
 # Email handlers run in the standard Workers runtime — no extra bindings
 # required. Secrets are set via `wrangler secret put INBOUND_WEBHOOK_URL`

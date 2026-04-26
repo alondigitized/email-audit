@@ -73,6 +73,11 @@ export default {
       );
       return;
     }
-    // 2xx — message accepted by the site. Cloudflare's reception is final.
+    // 2xx — message accepted by the site. Log a one-liner so wrangler tail
+    // and Cloudflare's Worker logs can confirm receipt at a glance.
+    const body = await res.text().catch(() => "");
+    console.log(
+      `inbound: to=${message.to} from=${message.from} subj=${(payload.subject ?? "").slice(0, 60)} → ${res.status} ${body.slice(0, 80)}`
+    );
   },
 };
