@@ -58,9 +58,43 @@ ${sitePart}Your job is to propose:
 - 3 distinct customer personas (different age + life stage + shopping motivation), one of which you recommend as the highest-leverage starter persona for this brand.
 - 5 close competitors who target the same kind of buyer, one of which you recommend as the most natural head-to-head comparison.
 
-Personas must be concrete people, not segments. Give each one a first name + last initial (e.g. "Sarah K.", "Jamal T."), a believable age, a generation label ("Gen Z", "Millennial", "Gen X", "Boomer"), a gender, a 1-2 sentence style description, a 2-3 sentence description of how they shop (channels, frequency, what triggers a purchase, dealbreakers), a tech-comfort line, 3-6 focus_areas (single-word or two-word topics they actively care about — "performance running", "vegan leather", "wide widths"), a believable rationale that explains *why* this persona is a good early target for this brand, a default search_term they'd type into search, and a category_path that mirrors the brand's nav (lowercase URL segments, e.g. ["women","running"] or ["kids","girls","shoes"]).
+Personas must be concrete people, not segments. Each persona is a real-feeling individual with a first name + last initial.
 
-Competitors must be real, current brands with valid domains. Skip anything you're not sure exists. Each competitor needs a 1-2 sentence rationale that names the customer overlap.
+Competitors must be real, current brands with valid web domains (example.com format).
 
-Return your output via the provided structured-output tool. Do not write prose; do not apologize.`;
+Output a SINGLE JSON object with EXACTLY these keys and no others:
+
+{
+  "personas": [
+    {
+      "name": "<First L.>",                                  // string, 1–80 chars
+      "age": <integer 18–95>,
+      "generation": "Gen Z" | "Millennial" | "Gen X" | "Boomer",
+      "gender": "<string>",
+      "style": "<1–2 sentence style description>",
+      "shopping_habits": "<2–3 sentences on channels, frequency, triggers, dealbreakers>",
+      "tech_comfort": "<1 sentence>",
+      "focus_areas": ["<topic1>", "<topic2>", ...],          // 1–8 short topics
+      "rationale": "<why this persona is a good early target for this brand>",
+      "search_term": "<query they would type into the brand's search>",
+      "category_path": ["<segment1>", "<segment2>", ...]     // 1–4 lowercase URL segments
+    },
+    { ... },                                                 // exactly 3 personas
+    { ... }
+  ],
+  "competitors": [
+    {
+      "name": "<Brand Name>",
+      "domain": "<example.com>",                              // valid lowercase domain
+      "rationale": "<1–2 sentence explanation of customer overlap>"
+    },
+    ...                                                       // exactly 5 competitors
+  ],
+  "recommended_persona_idx": <0 | 1 | 2>,                     // INDEX into personas[]
+  "recommended_competitor_idx": <0 | 1 | 2 | 3 | 4>           // INDEX into competitors[]
+}
+
+CRITICAL: use EXACTLY the field names above. Do not rename "rationale" to "rationale_for_overlap" or anything else. Do not return brand NAMES for the recommended fields — return the integer INDEX into the array.
+
+Return ONLY the JSON object. No prose, no markdown fences, no apology.`;
 }

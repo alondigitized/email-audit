@@ -13,6 +13,9 @@ const API_KEY = process.env.LLM_API_KEY ?? "ollama";
 
 export const CHAT_MODEL = process.env.LLM_CHAT_MODEL ?? "llama3.1:8b";
 export const TITLE_MODEL = process.env.LLM_TITLE_MODEL ?? CHAT_MODEL;
+// Onboarding research is one-off + structured-output; can run on a beefier
+// model than the chat default. Falls back to CHAT_MODEL when unset.
+export const RESEARCH_MODEL = process.env.LLM_RESEARCH_MODEL ?? CHAT_MODEL;
 export const EMBED_MODEL =
   process.env.LLM_EMBED_MODEL ?? "mxbai-embed-large";
 
@@ -26,6 +29,7 @@ const llm = createOpenAICompatible({
 
 export const chatModel = () => llm.chatModel(CHAT_MODEL);
 export const titleModel = () => llm.chatModel(TITLE_MODEL);
+export const researchModel = () => llm.chatModel(RESEARCH_MODEL);
 export const embeddingModel = () => llm.textEmbeddingModel(EMBED_MODEL);
 
 // Raw HTTP helper for the pipeline side (audit-pipeline/) which doesn't

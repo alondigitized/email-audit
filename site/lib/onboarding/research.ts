@@ -4,26 +4,26 @@ import {
   buildResearchPrompt,
   type ResearchOutput,
 } from "./research-prompt";
+import { researchModel } from "@/lib/chat/provider";
 
-// Calls Claude Opus 4.7 via the Vercel AI Gateway (default in AI SDK v6+).
-// Uses generateObject with the zod schema for structured output. The gateway
-// auto-resolves "anthropic/claude-opus-4-7" given AI_GATEWAY_API_KEY (or
-// the equivalent OIDC token in production).
+// Runs the onboarding wizard's research call against the same local LLM
+// (Ollama via LLM_BASE_URL / LLM_API_KEY) that powers persona chat. Uses
+// generateObject with the zod schema for structured output; AI SDK negotiates
+// JSON-mode with the OpenAI-compatible endpoint.
 //
-// Provider override: set ONBOARDING_RESEARCH_MODEL to switch e.g. for QA
-// (cheaper sonnet) without code changes.
-
-const DEFAULT_MODEL = "anthropic/claude-opus-4-7";
+// The model defaults to LLM_CHAT_MODEL ("llama3.1:8b" if unset). For higher-
+// quality research, set LLM_RESEARCH_MODEL to a beefier local model
+// (e.g. "qwen2.5:32b", "llama3.3:70b") without affecting chat. Switching to
+// a hosted provider just means changing LLM_BASE_URL — no code change.
 
 export async function runOnboardingResearch(args: {
   domain: string;
   siteSummary: string | null;
 }): Promise<ResearchOutput> {
-  const model = process.env.ONBOARDING_RESEARCH_MODEL ?? DEFAULT_MODEL;
   const prompt = buildResearchPrompt(args);
 
   const { object } = await generateObject({
-    model,
+    model: researchModel(),
     schema: ResearchOutputSchema,
     prompt,
     // Quietly cap runaway generations; the schema bounds output size already.
