@@ -52,9 +52,20 @@ export async function tryAutoSubscribe(
     };
   }
 
-  const klaviyo = detectKlaviyoListId(html);
-  if (klaviyo) {
-    const ok = await postKlaviyo(klaviyo, inboxAddress);
+  const companyId = detectKlaviyoCompanyId(html);
+  if (companyId) {
+    const listId = detectKlaviyoListId(html);
+    if (!listId) {
+      // Klaviyo's legacy ajax endpoint requires a real list ID — empty
+      // 'g' returns "List does not exist." If a brand JS-renders their
+      // form, the list ID isn't reachable from a curl and we can't
+      // subscribe without it. Fall through to manual.
+      return {
+        outcome: "manual_pending",
+        error: `klaviyo company ${companyId} found but no list_id in HTML`,
+      };
+    }
+    const ok = await postKlaviyo(companyId, listId, inboxAddress);
     if (ok)
       return {
         outcome: "auto_succeeded",
@@ -62,7 +73,7 @@ export async function tryAutoSubscribe(
       };
     return {
       outcome: "manual_pending",
-      error: `klaviyo POST failed for list ${klaviyo}`,
+      error: `klaviyo POST failed (company ${companyId} list ${listId})`,
     };
   }
 
@@ -87,25 +98,52 @@ async function fetchHomepage(url: string): Promise<string> {
   }
 }
 
-// Klaviyo embeds either an iframe or a `<script src="...klaviyo.com/...">` tag
-// that includes the company's account ID. The list ID is harder to detect from
-// pure HTML; many sites POST to /klaviyo/api/v3/subscribe with the public
-// company_id. For v1 we only attempt the simple Klaviyo legacy ajax form
-// shape (`a` parameter) when we can read the company_id off the page.
-function detectKlaviyoListId(html: string): string | null {
-  const m = html.match(/static\.klaviyo\.com\/onsite\/js\/([A-Za-z0-9]+)/);
+// Klaviyo embeds a `<script src="...klaviyo.com/onsite/js/<companyId>/klaviyo.js">`
+// tag (any klaviyo.com subdomain — `static.`, `www.`, or just `klaviyo.com`).
+// The hardcoded `klaviyo.js` tail distinguishes the real script src from
+// Shopify-block references like `.../onsite/js/klaviyo` (literal token, not
+// a company id).
+function detectKlaviyoCompanyId(html: string): string | null {
+  const m = html.match(/klaviyo\.com\/onsite\/js\/([A-Za-z0-9]+)\/klaviyo\.js/);
   return m ? m[1] : null;
+}
+
+// Klaviyo list IDs are 6-char alphanumeric, surfaced in HTML when a brand
+// inlines their newsletter list reference for popups / embedded forms.
+// Common shapes (in priority order):
+//   data-list="V9TWRD"  data-list-id="V9TWRD"  list_id: 'V9TWRD'
+//   klaviyoNewsletterId = 'V9TWRD'   klaviyoListId='V9TWRD'
+//   "g":"V9TWRD"        ?g=V9TWRD
+// Returns the FIRST match — picking the wrong list (e.g. an SMS-only list)
+// usually still produces a "subscribe accepted" response from Klaviyo, and
+// the welcome-email check downstream fills in any gap.
+function detectKlaviyoListId(html: string): string | null {
+  const patterns = [
+    /klaviyoNewsletterId\s*[=:]\s*['"]([A-Za-z0-9]{4,8})['"]/,
+    /klaviyoListId\s*[=:]\s*['"]([A-Za-z0-9]{4,8})['"]/,
+    /["']?list_?id["']?\s*[:=]\s*['"]([A-Za-z0-9]{4,8})['"]/,
+    /data-list(?:-id)?\s*=\s*["']([A-Za-z0-9]{4,8})["']/,
+    /[?&]g=([A-Za-z0-9]{4,8})\b/,
+    /["']g["']\s*:\s*["']([A-Za-z0-9]{4,8})["']/,
+  ];
+  for (const p of patterns) {
+    const m = html.match(p);
+    if (m) return m[1];
+  }
+  return null;
 }
 
 async function postKlaviyo(
   companyId: string,
+  listId: string,
   email: string
 ): Promise<boolean> {
-  // Klaviyo's public legacy ajax endpoint for newsletter subscribe. Many
-  // brands route their generic "Subscribe to our newsletter" form here.
-  // If the brand uses a custom list, this won't subscribe to it; the welcome
-  // email check in email-monitor flips the row even for that case (since most
-  // brands send *something* upon any signup).
+  // Klaviyo's public legacy ajax endpoint. `a` = company, `g` = list. If
+  // the brand has double-opt-in on the list, response is success:true with
+  // is_subscribed:false (user receives a confirm email at the inbox we
+  // provided; clicking it completes the subscribe). For our purposes any
+  // success:true counts as auto_succeeded — the confirmation email lands
+  // in the persona's Cloudflare-routed inbox just like a welcome email.
   try {
     const res = await fetch("https://manage.kmail-lists.com/ajax/subscriptions/subscribe", {
       method: "POST",
@@ -117,13 +155,11 @@ async function postKlaviyo(
       body: new URLSearchParams({
         a: companyId,
         email,
-        g: "",
+        g: listId,
       }).toString(),
     });
     if (!res.ok) return false;
     const text = await res.text();
-    // Klaviyo returns {"success":true,...}. Cheap match avoids the JSON parse
-    // overhead and accepts pretty-printed responses.
     return /"success"\s*:\s*true/i.test(text);
   } catch {
     return false;
