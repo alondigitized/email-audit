@@ -2,6 +2,10 @@ name = "etell-inbound"
 main = "src/index.ts"
 compatibility_date = "2026-04-01"
 
+# This Worker is triggered ONLY by Email Routing events, not HTTP. Disable
+# the workers.dev HTTP subdomain so wrangler doesn't try to register one.
+workers_dev = false
+
 # Email handlers run in the standard Workers runtime — no extra bindings
 # required. Secrets are set via `wrangler secret put INBOUND_WEBHOOK_URL`
 # and `wrangler secret put INBOUND_WEBHOOK_SECRET`.
