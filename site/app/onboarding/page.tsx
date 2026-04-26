@@ -30,7 +30,7 @@ export default async function OnboardingLanding() {
       </h1>
       <p className="text-muted text-base max-w-md mx-auto mb-10">
         We&apos;re reading your homepage and proposing 3 personas + 5
-        competitors. Hang tight — this takes about 20 seconds.
+        competitors. This usually finishes in about 90&ndash;120 seconds.
       </p>
       <ResearchTrigger />
     </div>
