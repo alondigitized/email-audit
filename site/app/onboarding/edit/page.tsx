@@ -1,22 +1,13 @@
 import { redirect } from "next/navigation";
+import { eq } from "drizzle-orm";
 import { loadOnboardingState } from "@/lib/onboarding/state";
-import { PersonaProposalSchema } from "@/lib/onboarding/research-prompt";
-import { z } from "zod";
+import { db, personaTemplates } from "@/lib/db/client";
 import { commitPersonaAction } from "../actions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Edit your persona · etell" };
 
 type Search = { [key: string]: string | string[] | undefined };
-
-function suggestedSlug(name: string): string {
-  const base = name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 24);
-  return base || "persona";
-}
 
 export default async function EditPage({
   searchParams,
@@ -27,29 +18,35 @@ export default async function EditPage({
   if (state.personaSlug) redirect("/chat");
   if (!state.tenant.competitorTarget) redirect("/onboarding/picker");
   const r = state.tenant.research;
-  if (!r?.personas || r.recommended_persona_idx === undefined) {
-    redirect("/onboarding/picker");
-  }
+  if (!r?.chosen_template_slug) redirect("/onboarding/picker");
 
-  const personas = z.array(PersonaProposalSchema).safeParse(r.personas);
-  if (!personas.success) redirect("/onboarding?error=corrupt");
-  const chosen = personas.data[r.recommended_persona_idx];
+  const [tpl] = await db
+    .select({
+      slug: personaTemplates.slug,
+      name: personaTemplates.name,
+      profile: personaTemplates.profile,
+    })
+    .from(personaTemplates)
+    .where(eq(personaTemplates.slug, r.chosen_template_slug))
+    .limit(1);
+  if (!tpl?.profile) redirect("/onboarding/picker?error=template-missing");
+
+  const id = tpl.profile.identity;
+  const journey = tpl.profile.journey;
   const competitor = state.tenant.competitorTarget;
 
   const sp = await searchParams;
   const error = typeof sp?.error === "string" ? sp.error : null;
-
-  const initialSlug = suggestedSlug(chosen.name);
 
   return (
     <div className="max-w-2xl mx-auto py-12">
       <div className="mb-3 px-3 py-1 inline-block rounded-full bg-sky-50 text-sky-700 text-xs font-medium tracking-wide uppercase">
         Step 3 of 3
       </div>
-      <h1 className="text-3xl font-bold mb-2">Make {chosen.name} yours</h1>
+      <h1 className="text-3xl font-bold mb-2">Make {tpl.name} yours</h1>
       <p className="text-muted text-sm mb-2">
-        Tweak anything you want. We&apos;ll create their inbox and start their
-        brain after you submit.
+        You&apos;re forking <strong>{tpl.name}</strong>. Your edits land on your
+        own copy — the curated original keeps growing untouched.
       </p>
       <p className="text-xs text-muted mb-6">
         Benchmarking against <strong>{competitor.name}</strong> ({competitor.domain})
@@ -61,24 +58,16 @@ export default async function EditPage({
         </div>
       )}
 
-      <form action={commitPersonaAction} className="space-y-5 bg-white border border-gray-200 rounded-2xl p-6">
-        <Field label="URL handle (slug)" htmlFor="slug" hint="lowercase letters, digits, hyphens">
-          <input
-            id="slug"
-            name="slug"
-            defaultValue={initialSlug}
-            required
-            pattern="[a-z][a-z0-9-]{1,39}"
-            className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm font-mono"
-          />
-        </Field>
-
+      <form
+        action={commitPersonaAction}
+        className="space-y-5 bg-white border border-gray-200 rounded-2xl p-6"
+      >
         <div className="grid grid-cols-2 gap-4">
           <Field label="Name" htmlFor="name">
             <input
               id="name"
               name="name"
-              defaultValue={chosen.name}
+              defaultValue={id.name}
               required
               className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
             />
@@ -88,7 +77,7 @@ export default async function EditPage({
               id="age"
               name="age"
               type="number"
-              defaultValue={chosen.age}
+              defaultValue={id.age}
               required
               min={18}
               max={95}
@@ -102,7 +91,7 @@ export default async function EditPage({
             <input
               id="generation"
               name="generation"
-              defaultValue={chosen.generation}
+              defaultValue={id.generation}
               required
               className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
             />
@@ -111,7 +100,7 @@ export default async function EditPage({
             <input
               id="gender"
               name="gender"
-              defaultValue={chosen.gender}
+              defaultValue={id.gender}
               required
               className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
             />
@@ -122,7 +111,7 @@ export default async function EditPage({
           <textarea
             id="style"
             name="style"
-            defaultValue={chosen.style}
+            defaultValue={id.style}
             required
             rows={2}
             className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
@@ -133,7 +122,7 @@ export default async function EditPage({
           <textarea
             id="shopping_habits"
             name="shopping_habits"
-            defaultValue={chosen.shopping_habits}
+            defaultValue={id.shopping_habits}
             required
             rows={3}
             className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
@@ -144,7 +133,7 @@ export default async function EditPage({
           <input
             id="tech_comfort"
             name="tech_comfort"
-            defaultValue={chosen.tech_comfort}
+            defaultValue={id.tech_comfort}
             required
             className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
           />
@@ -158,7 +147,7 @@ export default async function EditPage({
           <input
             id="focus_areas"
             name="focus_areas"
-            defaultValue={chosen.focus_areas.join(", ")}
+            defaultValue={(id.focus_areas ?? []).join(", ")}
             required
             className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
           />
@@ -173,7 +162,7 @@ export default async function EditPage({
             <input
               id="search_term"
               name="search_term"
-              defaultValue={chosen.search_term}
+              defaultValue={journey.search_term ?? ""}
               required
               className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm"
             />
@@ -186,7 +175,7 @@ export default async function EditPage({
             <input
               id="category_path"
               name="category_path"
-              defaultValue={chosen.category_path.join("/")}
+              defaultValue={(journey.category_path ?? []).join("/")}
               required
               className="w-full py-2 px-3 border border-gray-200 rounded-lg text-sm font-mono"
             />
@@ -198,7 +187,7 @@ export default async function EditPage({
             type="submit"
             className="px-5 py-2.5 bg-accent text-white font-semibold rounded-xl text-[15px]"
           >
-            Create my persona →
+            Fork &amp; create my persona →
           </button>
         </div>
       </form>

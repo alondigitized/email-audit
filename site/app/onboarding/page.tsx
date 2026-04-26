@@ -10,11 +10,10 @@ export default async function OnboardingLanding() {
 
   // Already past the wizard.
   if (state.personaSlug) redirect("/chat");
-  // Research already done — go straight to picker.
-  if (
-    state.tenant.research?.personas &&
-    state.tenant.research?.competitors
-  ) {
+  // Step 1 already done — skip ahead. Routing to picker vs concierge happens
+  // in ResearchTrigger / startWizardStep1Action; no need to duplicate the
+  // template lookup here.
+  if (state.tenant.research?.industry && state.tenant.research?.competitors) {
     redirect("/onboarding/picker");
   }
 
@@ -26,11 +25,12 @@ export default async function OnboardingLanding() {
         Step 1 of 3
       </div>
       <h1 className="text-3xl font-bold mb-3">
-        Researching {domain ?? "your company"}…
+        Sizing up {domain ?? "your company"}…
       </h1>
       <p className="text-muted text-base max-w-md mx-auto mb-10">
-        We&apos;re reading your homepage and proposing 3 personas + 5
-        competitors. This usually finishes in about 90&ndash;120 seconds.
+        We&apos;re classifying your industry and pulling 5 close competitors so
+        we can match you to a curated persona. Usually finishes in about
+        20&ndash;30 seconds.
       </p>
       <ResearchTrigger />
     </div>
