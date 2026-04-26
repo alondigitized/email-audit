@@ -54,6 +54,12 @@ export default async function AdminPage() {
           <h1 className="text-2xl font-bold mt-1 mb-2">Admin</h1>
           <div className="flex gap-4">
             <a
+              href="/admin/tenants"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Tenants →
+            </a>
+            <a
               href="/admin/waitlist"
               className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
             >
