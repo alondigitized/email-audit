@@ -78,11 +78,12 @@ export async function listMessages(threadId: string): Promise<MessageRow[]> {
 
 export async function createThread(
   userId: string,
-  personaSlug: string
+  personaSlug: string,
+  tenantId?: string | null
 ): Promise<string> {
   const [row] = await db
     .insert(chatThread)
-    .values({ userId, personaSlug })
+    .values({ userId, personaSlug, tenantId: tenantId ?? null })
     .returning({ id: chatThread.id });
   return row.id;
 }

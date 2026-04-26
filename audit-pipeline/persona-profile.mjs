@@ -114,6 +114,43 @@ export async function reportOnboardingStep(slug, key, status, detail) {
 }
 
 /**
+ * Phase D — flip a subscription_jobs row from manual_pending → manual_done
+ * when the persona's inbox receives the brand's first email. The email-
+ * monitor caller passes the audit's persona slug + the From-domain it just
+ * delivered. Best-effort; missing rows are just no-ops.
+ *
+ * Brand domains can include subdomains (newsletter.skechers.com); we match
+ * on the registrable suffix being a substring of brand_domain or vice versa
+ * so "skechers.com" matches "marketing.skechers.com".
+ *
+ * @param {string} personaSlug
+ * @param {string} fromDomain — the email's From-domain (lowercased)
+ */
+export async function noteSubscriptionConfirmed(personaSlug, fromDomain) {
+  const u = dbUrl();
+  if (!u || !personaSlug || !fromDomain) return;
+  try {
+    const sql = neon(u);
+    const lower = String(fromDomain).toLowerCase().trim();
+    // Match either direction: brand_domain is a suffix of fromDomain (subdomain
+    // case) or fromDomain is a suffix of brand_domain (rare; e.g. apex match).
+    await sql`
+      UPDATE subscription_job
+      SET status = 'manual_done', updated_at = NOW()
+      WHERE persona_slug = ${personaSlug}
+        AND status IN ('queued', 'manual_pending', 'auto_succeeded')
+        AND (
+          ${lower} LIKE '%' || brand_domain
+          OR brand_domain LIKE '%' || ${lower}
+        )
+    `;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`noteSubscriptionConfirmed: ${personaSlug} ${fromDomain}: ${msg.slice(0, 200)}`);
+  }
+}
+
+/**
  * Record a cookies-captured timestamp on the persona row. Called by
  * onboard-persona.mjs after save-cookies.mjs completes successfully.
  */

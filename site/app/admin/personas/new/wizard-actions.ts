@@ -56,7 +56,7 @@ function blankProfile(slug: string): PersonaProfile {
 // ─── Step 0 — create draft row ─────────────────────────────────────────────
 
 export async function createDraftAndRedirect(fd: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
 
   const slugParsed = SlugSchema.safeParse(fd.get("slug"));
   if (!slugParsed.success) {
@@ -84,10 +84,19 @@ export async function createDraftAndRedirect(fd: FormData) {
   }
 
   // Create draft. Insert, then grant admin access so the ACL exists.
+  // tenant_id stamped from the actor's tenant — admin-created personas live
+  // in Alon's tenant; public-wizard personas (Phase C) inherit the
+  // signed-up user's tenant via a parallel action.
   const profile = personaProfileSchema.parse(blankProfile(slug));
   const [inserted] = await db
     .insert(personas)
-    .values({ slug, name: slug, short: slug, profile })
+    .values({
+      slug,
+      name: slug,
+      short: slug,
+      profile,
+      tenantId: admin.tenantId ?? null,
+    })
     .returning({ id: personas.id });
 
   // Grant admin user access to the draft (same as createPersonaAction in

@@ -709,6 +709,27 @@ async function processMessage(client, state, inboxId, persona, message, source =
       created_at: fullMessage.created_at,
     });
 
+    // Phase D — flip any pending subscription_jobs row for this persona+brand
+    // to manual_done. Best-effort; does nothing if no matching row. Done
+    // before review work so a failure here can't lose the signal.
+    try {
+      const fromAddr = String(
+        fullMessage.from_ || fullMessage.from || ''
+      ).toLowerCase();
+      const at = fromAddr.lastIndexOf('@');
+      if (at >= 0) {
+        const fromDomain = fromAddr.slice(at + 1).replace(/[>\s].*$/, '');
+        if (fromDomain) {
+          const { noteSubscriptionConfirmed } = await import(
+            '../audit-pipeline/persona-profile.mjs'
+          );
+          await noteSubscriptionConfirmed(persona, fromDomain);
+        }
+      }
+    } catch (err) {
+      log('noteSubscriptionConfirmed failed (non-fatal)', { id, error: String(err).slice(0, 200) });
+    }
+
     const artifacts = await saveArtifacts(fullMessage);
 
     // Step 1: Render screenshot + run QA checks in parallel (both needed before reviews)

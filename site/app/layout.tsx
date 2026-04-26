@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { TopNav } from "@/components/TopNav";
+import { TrialBanner } from "@/components/TrialBanner";
 import { currentUser } from "@/lib/dal";
 import { isAppEnabled } from "@/lib/apps";
 
@@ -34,6 +35,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
+        <TrialBanner />
         <main className="max-w-[980px] mx-auto px-5 pt-8 pb-16 overflow-x-hidden">
           <TopNav
             isAdmin={user?.isAdmin ?? false}

@@ -40,7 +40,7 @@ export async function createChatThreadAction(
   if (!gate.user.isAdmin && !gate.user.personas.includes(slug.data)) {
     return { ok: false, error: "Not your persona." };
   }
-  const id = await createThread(gate.user.id, slug.data);
+  const id = await createThread(gate.user.id, slug.data, gate.user.tenantId);
   revalidatePath(`/chat/${slug.data}`);
   return { ok: true, threadId: id };
 }

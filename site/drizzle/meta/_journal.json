@@ -64,6 +64,27 @@
       "when": 1777062613499,
       "tag": "0008_add_persona_last_status",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1777140821426,
+      "tag": "0009_add_tenants",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1777143834607,
+      "tag": "0010_add_laptop_queue",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1777144604924,
+      "tag": "0011_add_subscription_jobs",
+      "breakpoints": true
     }
   ]
 }

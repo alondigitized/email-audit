@@ -12,6 +12,7 @@ import {
   sessions,
   verificationTokens,
   signInEvents,
+  tenants,
 } from "@/lib/db/client";
 import { sendMagicLinkEmail } from "@/lib/email-magic-link";
 
@@ -89,18 +90,29 @@ export const config: NextAuthConfig = {
     error: "/login",
   },
   callbacks: {
-    // S2: invite-only allowlist. When Auth.js is about to send a magic link
-    // (verificationRequest === true), look up the email in the users table.
-    // If not present, return false -> Resend send is skipped.
+    // Free-tier gate (replaces the static allowlist). When Auth.js is about
+    // to send a magic link (verificationRequest === true), look up the user
+    // and their tenant. Allow only if the tenant's plan is 'free' or 'pro'.
+    // 'waitlisted' tenants don't get a sign-in email until admin approves,
+    // and 'banned' tenants are dead. Admin (isAdmin=true) bypasses the plan
+    // gate so ops never lock themselves out.
     async signIn({ user, email }) {
       if (email?.verificationRequest) {
         const addr = user.email?.toLowerCase().trim();
         if (!addr) return false;
         const existing = await db.query.users.findFirst({
           where: eq(users.email, addr),
-          columns: { id: true },
+          columns: { id: true, tenantId: true, isAdmin: true },
         });
-        return !!existing;
+        if (!existing) return false;
+        if (existing.isAdmin) return true;
+        if (!existing.tenantId) return false;
+        const tenant = await db.query.tenants.findFirst({
+          where: eq(tenants.id, existing.tenantId),
+          columns: { plan: true },
+        });
+        if (!tenant) return false;
+        return tenant.plan === "free" || tenant.plan === "pro";
       }
       return true;
     },

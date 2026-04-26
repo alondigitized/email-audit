@@ -110,7 +110,7 @@ function buildProfileFromForm(
 export async function createPersonaAction(
   fd: FormData
 ): Promise<ActionResult> {
-  await requireAdmin();
+  const admin = await requireAdmin();
 
   const slugParsed = SlugSchema.safeParse(fd.get("slug"));
   if (!slugParsed.success) {
@@ -141,7 +141,9 @@ export async function createPersonaAction(
   const name = s(fd, "name") ?? slug;
   const short = s(fd, "short") ?? name.split(/\s+/)[0] ?? slug;
 
-  await db.insert(personas).values({ slug, name, short, profile });
+  await db
+    .insert(personas)
+    .values({ slug, name, short, profile, tenantId: admin.tenantId ?? null });
 
   revalidatePath("/admin/personas");
   revalidatePath("/admin");
