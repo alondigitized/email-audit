@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { eq, sql as dsql } from "drizzle-orm";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/dal";
-import { db, personas, audits } from "@/lib/db/client";
+import { db, personas, audits, personaTemplates } from "@/lib/db/client";
 import {
   personaProfileSchema,
   type PersonaProfile,
@@ -401,6 +401,104 @@ export async function setChecklistItemAndRefresh(fd: FormData) {
   // Redirect to same page so the server component re-reads and the
   // status pill reflects the new state.
   redirect(`/admin/personas/${slug}`);
+}
+
+// ─── Promote-to-template ───────────────────────────────────────────────────
+//
+// Lifts a tenant-scoped persona into a platform-level persona_template.
+// The persona row stays put — only its `template_slug` flips to its own
+// slug (Walker-style self-reference) so existing audits/embeddings/email/
+// chat continue to read-merge through the template after future forks.
+//
+// Idempotent: re-running on an already-promoted persona is a no-op (the
+// template row exists, the self-reference is already stamped).
+//
+// industry is the only field the admin needs to provide — everything else
+// (name, profile, last_status) is copied from the persona row.
+
+const PromoteSchema = z.object({
+  slug: SlugSchema,
+  industry: z
+    .string()
+    .trim()
+    .min(2)
+    .max(60)
+    .regex(/^[a-z][a-z0-9-]*$/, "lowercase + hyphens, e.g. 'athleisure'"),
+});
+
+export async function promotePersonaToTemplateAction(
+  fd: FormData
+): Promise<void> {
+  await requireAdmin();
+  const parsed = PromoteSchema.safeParse({
+    slug: String(fd.get("slug") ?? ""),
+    industry: String(fd.get("industry") ?? ""),
+  });
+  if (!parsed.success) {
+    const slug = String(fd.get("slug") ?? "");
+    const msg = parsed.error.issues[0]?.message ?? "Invalid input";
+    redirect(`/admin/personas/${slug}?error=${encodeURIComponent(msg)}`);
+  }
+  const { slug, industry } = parsed.data;
+
+  const [persona] = await db
+    .select({
+      slug: personas.slug,
+      name: personas.name,
+      short: personas.short,
+      profile: personas.profile,
+      lastStatus: personas.lastStatus,
+      templateSlug: personas.templateSlug,
+    })
+    .from(personas)
+    .where(eq(personas.slug, slug))
+    .limit(1);
+  if (!persona) {
+    redirect(`/admin/personas?error=${encodeURIComponent("persona not found")}`);
+  }
+  if (!persona.profile) {
+    redirect(
+      `/admin/personas/${slug}?error=${encodeURIComponent("persona has no profile to promote")}`
+    );
+  }
+
+  // Upsert template row (idempotent on slug).
+  const [existingTemplate] = await db
+    .select({ slug: personaTemplates.slug })
+    .from(personaTemplates)
+    .where(eq(personaTemplates.slug, slug))
+    .limit(1);
+  if (!existingTemplate) {
+    await db.insert(personaTemplates).values({
+      slug: persona.slug,
+      name: persona.name,
+      short: persona.short,
+      industry,
+      profile: persona.profile,
+      lastStatus: persona.lastStatus,
+      isActive: true,
+    });
+  } else {
+    // Template existed already — just sync industry + isActive (don't clobber
+    // a hand-tuned profile on the template side).
+    await db
+      .update(personaTemplates)
+      .set({ industry, isActive: true })
+      .where(eq(personaTemplates.slug, slug));
+  }
+
+  // Stamp persona.template_slug if not already pointing somewhere.
+  if (!persona.templateSlug) {
+    await db
+      .update(personas)
+      .set({ templateSlug: slug })
+      .where(eq(personas.slug, slug));
+  }
+
+  revalidatePath("/admin/personas");
+  revalidatePath(`/admin/personas/${slug}`);
+  revalidatePath("/admin/templates");
+  redirect(`/admin/templates/${slug}`);
 }
 
 // ─── Journey URL validation ────────────────────────────────────────────────

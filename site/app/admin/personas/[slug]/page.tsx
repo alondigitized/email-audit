@@ -3,12 +3,13 @@ import { notFound } from "next/navigation";
 import { desc, eq } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import { getPersonaBySlug, personaColor } from "@/lib/personas-db";
-import { db, audits } from "@/lib/db/client";
+import { db, audits, personaTemplates } from "@/lib/db/client";
 import { PersonaForm } from "../PersonaForm";
 import { ChecklistSection } from "../ChecklistSection";
 import {
   upsertPersonaAndRedirect,
   deletePersonaAndRedirect,
+  promotePersonaToTemplateAction,
 } from "../actions";
 
 export const dynamic = "force-dynamic";
@@ -44,6 +45,19 @@ export default async function EditPersonaPage({
     .where(eq(audits.persona, persona.slug))
     .orderBy(desc(audits.timestamp))
     .limit(5);
+
+  // Template state. If a row exists in persona_template at the same slug,
+  // this persona is curated platform IP. Otherwise, it's tenant-only.
+  const [templateRow] = await db
+    .select({
+      slug: personaTemplates.slug,
+      industry: personaTemplates.industry,
+      isActive: personaTemplates.isActive,
+    })
+    .from(personaTemplates)
+    .where(eq(personaTemplates.slug, persona.slug))
+    .limit(1);
+  const isTemplate = !!templateRow;
 
   return (
     <div className="mb-10 space-y-5">
@@ -91,6 +105,13 @@ export default async function EditPersonaPage({
         <ChecklistSection slug={persona.slug} profile={persona.profile} />
       )}
 
+      <TemplatePanel
+        slug={persona.slug}
+        isTemplate={isTemplate}
+        industry={templateRow?.industry ?? null}
+        templateActive={templateRow?.isActive ?? null}
+      />
+
       <section className="bg-white border border-rose-200 rounded-2xl p-5 shadow-sm">
         <h2 className="text-sm font-semibold text-rose-800 uppercase tracking-wide mb-1">
           Danger zone
@@ -109,6 +130,99 @@ export default async function EditPersonaPage({
         </form>
       </section>
     </div>
+  );
+}
+
+// ─── Template panel ────────────────────────────────────────────────────────
+//
+// Surfaces whether this persona is also a curated platform template, and
+// offers a one-click "promote" form when it isn't. Promotion lifts the
+// persona's profile into persona_template + stamps template_slug = own
+// slug (the Walker self-reference pattern). After promotion, future tenant
+// signups in this industry can pick this persona from the wizard.
+
+function TemplatePanel({
+  slug,
+  isTemplate,
+  industry,
+  templateActive,
+}: {
+  slug: string;
+  isTemplate: boolean;
+  industry: string | null;
+  templateActive: boolean | null;
+}) {
+  if (isTemplate) {
+    return (
+      <section className="bg-white border border-emerald-200 rounded-2xl p-5 shadow-sm">
+        <h2 className="text-sm font-semibold text-emerald-800 uppercase tracking-wide mb-1">
+          Template
+        </h2>
+        <p className="text-sm">
+          This persona is a curated platform template
+          {industry && (
+            <>
+              {" "}
+              under industry{" "}
+              <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">
+                {industry}
+              </code>
+            </>
+          )}
+          .{" "}
+          {templateActive
+            ? "Tenants can fork it from /onboarding."
+            : "Hidden from the wizard picker (existing forks unaffected)."}
+        </p>
+        <div className="mt-3 text-xs">
+          <Link
+            href={`/admin/templates/${slug}`}
+            className="underline text-sky-700 hover:text-sky-900"
+          >
+            Open template detail →
+          </Link>
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section className="bg-white border border-sky-200 rounded-2xl p-5 shadow-sm">
+      <h2 className="text-sm font-semibold text-sky-800 uppercase tracking-wide mb-1">
+        Promote to template
+      </h2>
+      <p className="text-xs text-muted mb-3">
+        Lift this persona into the platform-level template library so future
+        tenants can fork it. The persona row stays put; reads keep working.
+      </p>
+      <form
+        action={promotePersonaToTemplateAction}
+        className="flex items-end gap-2 flex-wrap"
+      >
+        <input type="hidden" name="slug" value={slug} />
+        <div>
+          <label
+            htmlFor={`industry-${slug}`}
+            className="block text-xs uppercase tracking-wide text-muted mb-1"
+          >
+            Industry tag
+          </label>
+          <input
+            id={`industry-${slug}`}
+            name="industry"
+            placeholder="footwear"
+            required
+            pattern="[a-z][a-z0-9-]*"
+            className="py-1.5 px-3 border border-gray-200 rounded-lg text-sm font-mono"
+          />
+        </div>
+        <button
+          type="submit"
+          className="text-sm font-semibold px-3 py-1.5 rounded-xl bg-sky-600 text-white"
+        >
+          Promote
+        </button>
+      </form>
+    </section>
   );
 }
 
