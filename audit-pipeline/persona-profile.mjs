@@ -190,7 +190,13 @@ export async function loadInboxMap() {
       FROM persona
       WHERE profile IS NOT NULL
         AND (profile->'agentmail'->>'inbox_address') IS NOT NULL
+        AND (profile->'agentmail'->>'inbox_address') LIKE '%@agentmail.to'
     `;
+    // Cloudflare-routed personas (addresses ending in @etell.app or anything
+    // other than @agentmail.to) deliver via the Worker → /api/email/inbound
+    // → email_message table pipeline. They are intentionally excluded here
+    // so the email-monitor daemon doesn't try to poll AgentMail for an
+    // inbox that doesn't exist on AgentMail.
     return rows
       .map((r) => ({
         inbox: r.profile?.agentmail?.inbox_address,
