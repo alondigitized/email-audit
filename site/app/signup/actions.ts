@@ -11,7 +11,15 @@ import {
   approveWaitlistedTenant,
   creditReferrer,
   nanoid,
+  addDays,
+  FREE_DAYS,
 } from "@/lib/tenant-approval";
+
+// Master kill-switch for waitlist gating. Default OFF (every signup is
+// auto-approved). Set WAITLIST_ENABLED=true on Vercel to re-enable the
+// admin-approval queue. The /admin/waitlist UI still works either way —
+// it just never sees rows when this is off.
+const WAITLIST_ENABLED = process.env.WAITLIST_ENABLED === "true";
 
 export type SignupResult = { ok: true } | { ok: false; error: string };
 
@@ -132,6 +140,16 @@ export async function signupAction(
 
   let tenantId: string;
   let tenantState: "fresh" | "existing-waitlisted" | "auto-approve";
+
+  // Plan to stamp on a freshly-created tenant. With waitlist disabled
+  // (default), every new tenant is born free with full tier dates so the
+  // signing-in user gets a working magic link immediately.
+  const initialPlan: "waitlisted" | "free" = WAITLIST_ENABLED ? "waitlisted" : "free";
+  const now = new Date();
+  const initialTierStart = WAITLIST_ENABLED ? null : now;
+  const initialTierExpires = WAITLIST_ENABLED ? null : addDays(now, FREE_DAYS);
+  const initialReferralCode = WAITLIST_ENABLED ? null : nanoid(8);
+
   if (!tenantRow) {
     // First signup from this domain — create the tenant.
     const baseSlug = slugifyDomain(domain);
@@ -152,11 +170,15 @@ export async function signupAction(
           slug,
           name: domain,
           emailDomain: domain,
-          plan: "waitlisted",
+          plan: initialPlan,
+          tierStartedAt: initialTierStart,
+          tierExpiresAt: initialTierExpires,
+          referralCode: initialReferralCode,
           referredByTenantId,
         })
         .returning({ id: tenants.id });
       tenantId = created.id;
+      tenantState = WAITLIST_ENABLED ? "fresh" : "auto-approve";
     } catch {
       // Race: another concurrent signup just created the tenant. Re-fetch.
       const [refetched] = await db
@@ -171,15 +193,29 @@ export async function signupAction(
         };
       }
       tenantId = refetched.id;
-      tenantRow = { id: refetched.id, plan: refetched.plan, referredByTenantId: null };
-    }
-    tenantState = tenantRow ? (tenantRow.plan === "waitlisted" ? "existing-waitlisted" : "auto-approve") : "fresh";
-    if (!tenantRow) {
-      tenantState = "fresh";
+      tenantRow = {
+        id: refetched.id,
+        plan: refetched.plan,
+        referredByTenantId: null,
+      };
+      tenantState =
+        tenantRow.plan === "waitlisted" ? "existing-waitlisted" : "auto-approve";
     }
   } else if (tenantRow.plan === "waitlisted") {
     tenantId = tenantRow.id;
-    tenantState = "existing-waitlisted";
+    if (!WAITLIST_ENABLED) {
+      // Legacy waitlisted tenant from before the flag flip — auto-approve
+      // it now so this user (and any prior waitlisted members) get magic
+      // links immediately.
+      try {
+        await approveWaitlistedTenant(tenantId);
+      } catch (err) {
+        console.warn("auto-approve of legacy waitlisted tenant failed:", err);
+      }
+      tenantState = "auto-approve";
+    } else {
+      tenantState = "existing-waitlisted";
+    }
   } else {
     // 'free' or 'pro' — already approved tenant. Auto-approve path.
     tenantId = tenantRow.id;
