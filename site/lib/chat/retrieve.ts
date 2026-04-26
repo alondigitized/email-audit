@@ -3,7 +3,7 @@ import path from "node:path";
 import { embed } from "ai";
 import { neon } from "@neondatabase/serverless";
 import { embeddingModel } from "./provider";
-import { getPersonaBySlug } from "@/lib/personas-db";
+import { expandReadableSlugs, getPersonaBySlug } from "@/lib/personas-db";
 
 // How many audits we retrieve per turn. 6 semantic + 4 recent = up to 10
 // rows (usually fewer after dedupe) × ~800 tokens = ~8K tokens of retrieved
@@ -46,13 +46,14 @@ export async function retrieveRelevantAudits(
   const sql = neon(url);
   const queryVec = await embedQuery(query);
   const literal = `[${queryVec.join(",")}]`;
+  const readableSlugs = await expandReadableSlugs([personaSlug]);
 
   const [semantic, recent] = (await Promise.all([
     sql`
       SELECT audit_slug, indexed_text,
              (embedding <=> ${literal}::vector) AS distance
       FROM audit_embedding
-      WHERE persona = ${personaSlug}
+      WHERE persona = ANY(${readableSlugs})
       ORDER BY embedding <=> ${literal}::vector
       LIMIT ${kSemantic}
     `,
@@ -61,7 +62,7 @@ export async function retrieveRelevantAudits(
              (ae.embedding <=> ${literal}::vector) AS distance
       FROM audit_embedding ae
       JOIN audit a ON a.slug = ae.audit_slug
-      WHERE ae.persona = ${personaSlug}
+      WHERE ae.persona = ANY(${readableSlugs})
       ORDER BY a.timestamp DESC
       LIMIT ${kRecent}
     `,
@@ -89,8 +90,9 @@ export async function getAuditMemoryCount(personaSlug: string): Promise<number> 
   const url = process.env.DATABASE_URL ?? process.env.DATABASE_URL_UNPOOLED;
   if (!url) return 0;
   const sql = neon(url);
+  const readableSlugs = await expandReadableSlugs([personaSlug]);
   const rows = (await sql`
-    SELECT COUNT(*)::int AS n FROM audit_embedding WHERE persona = ${personaSlug}
+    SELECT COUNT(*)::int AS n FROM audit_embedding WHERE persona = ANY(${readableSlugs})
   `) as Array<{ n: number }>;
   return Number(rows[0]?.n ?? 0);
 }
