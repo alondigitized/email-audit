@@ -35,15 +35,30 @@ export const tenantPlanEnum = pgEnum("tenant_plan", [
 
 // Wizard scratch — populated in Phase C. Declared here so the column type is
 // stable across phases. Consumers tolerate undefined fields.
+//
+// As of the persona-templates refactor, the wizard no longer LLM-generates
+// persona proposals. Step 1 classifies industry + picks competitors (in
+// parallel); the picker shows persona TEMPLATES from `persona_template`
+// filtered by industry. Legacy `personas` / `recommended_persona_idx` /
+// `unlocked_proposals` fields are kept for migration tolerance but are no
+// longer written by the new flow.
 export type TenantOnboardingResearch = {
   site_summary?: string | null;
   generations?: number;
-  personas?: unknown[];
+  // New (template-based wizard).
+  industry?: string;
+  industry_confidence?: "high" | "medium" | "low";
+  industry_alternates?: string[];
+  // Snapshot at picker render time so admin toggling is_active mid-session
+  // doesn't strand the user. Slugs only — full rows fetched fresh on commit.
+  available_template_slugs?: string[];
+  chosen_template_slug?: string;
+  // Competitor research (still LLM-generated alongside the industry classifier).
   competitors?: unknown[];
-  recommended_persona_idx?: number;
   recommended_competitor_idx?: number;
-  // The 2 personas the user did *not* pick during the wizard. Surfaced as
-  // upgrade bait in the dashboard. No persona row exists for these yet.
+  // Legacy (pre-templates wizard) — left typed for tolerance.
+  personas?: unknown[];
+  recommended_persona_idx?: number;
   unlocked_proposals?: unknown[];
 };
 

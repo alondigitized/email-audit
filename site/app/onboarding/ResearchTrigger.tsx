@@ -2,19 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { startResearchAction } from "./actions";
+import { startWizardStep1Action } from "./actions";
 
-// Simulated phase ticker. The actual research call is a single ~60–120s
-// LLM round-trip with no streamed progress; we don't have real-time
-// telemetry to drive this. Phases are time-bucketed so the UI feels
-// alive without lying about the underlying work.
+// Simulated phase ticker. The action is two parallel LLM calls (industry
+// classifier ~10s, competitor research ~30s) with no streamed progress;
+// phases are time-bucketed so the UI feels alive without lying about the
+// work. Total expected time ~30s, half the previous flow.
 const PHASES = [
   { atMs: 0, label: "Reading your homepage" },
-  { atMs: 12_000, label: "Mapping who shops with you" },
-  { atMs: 30_000, label: "Drafting persona profiles" },
-  { atMs: 60_000, label: "Ranking competitor brands" },
-  { atMs: 90_000, label: "Polishing the recommendations" },
-  { atMs: 130_000, label: "Almost there — wrapping up" },
+  { atMs: 4_000, label: "Classifying your industry" },
+  { atMs: 12_000, label: "Scanning competitors" },
+  { atMs: 22_000, label: "Matching curated personas" },
+  { atMs: 32_000, label: "Almost there — wrapping up" },
 ];
 
 function pickPhase(elapsedMs: number): number {
@@ -36,10 +35,10 @@ export function ResearchTrigger() {
     startedAtRef.current = Date.now();
 
     (async () => {
-      const r = await startResearchAction();
+      const r = await startWizardStep1Action();
       if (!mounted) return;
       if (r.ok) {
-        router.replace("/onboarding/picker");
+        router.replace(r.route);
       } else {
         setError(r.error);
       }
@@ -59,7 +58,7 @@ export function ResearchTrigger() {
   if (error) {
     return (
       <div className="max-w-md mx-auto text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
-        <strong>Research failed.</strong> {error}
+        <strong>Step 1 failed.</strong> {error}
         <div className="mt-2">
           <a href="/onboarding" className="underline">
             Try again
@@ -89,13 +88,13 @@ export function ResearchTrigger() {
           <span className="inline-block ml-1 animate-pulse">…</span>
         </div>
         <div className="text-xs text-muted mt-1 tabular-nums">
-          {seconds}s elapsed · usually finishes within 90–120s
+          {seconds}s elapsed · usually finishes within 30s
         </div>
       </div>
 
       {/* Phase pills */}
       <div className="flex justify-between gap-1">
-        {PHASES.slice(0, 5).map((p, i) => {
+        {PHASES.slice(0, 4).map((p, i) => {
           const reached = phaseIdx >= i;
           const active = phaseIdx === i;
           return (
@@ -116,8 +115,7 @@ export function ResearchTrigger() {
 
       {/* Reassurance footer */}
       <p className="mt-6 text-xs text-muted text-center">
-        Don&apos;t close this tab — we&apos;ll redirect you to pick a persona
-        the moment research finishes.
+        Don&apos;t close this tab — we&apos;ll redirect you the moment we&apos;re ready.
       </p>
     </div>
   );
