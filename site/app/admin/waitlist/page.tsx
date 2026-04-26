@@ -77,7 +77,7 @@ export default async function WaitlistPage() {
   const totalUsers = rows.reduce((a, t) => a + t.members.length, 0);
 
   return (
-    <div className="max-w-5xl mx-auto py-8">
+    <div className="max-w-5xl mx-auto px-4 py-6 md:py-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold mb-1">Waitlist</h1>
         <p className="text-muted text-sm">
@@ -93,68 +93,130 @@ export default async function WaitlistPage() {
           No pending sign-ups. The waitlist is clean.
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
-              <tr>
-                <th className="px-4 py-3 font-medium">Domain</th>
-                <th className="px-4 py-3 font-medium">Members</th>
-                <th className="px-4 py-3 font-medium">Tenant</th>
-                <th className="px-4 py-3 font-medium">Age</th>
-                <th className="px-4 py-3 font-medium">Referral</th>
-                <th className="px-4 py-3 font-medium text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => (
-                <tr key={r.tenantId} className="border-t border-gray-100 align-top">
-                  <td className="px-4 py-3 font-medium">{r.domain ?? "—"}</td>
-                  <td className="px-4 py-3 font-mono text-xs">
-                    {r.members.length === 0 ? (
-                      <span className="text-muted italic">no users yet</span>
-                    ) : (
-                      <div className="space-y-0.5">
-                        {r.members.map((m) => (
-                          <div key={m.email}>{m.email}</div>
-                        ))}
+        <>
+          {/* Mobile: stacked cards */}
+          <div className="md:hidden space-y-3">
+            {rows.map((r) => (
+              <div
+                key={r.tenantId}
+                className="bg-white border border-gray-200 rounded-2xl p-4"
+              >
+                <div className="flex items-baseline justify-between gap-2 mb-2">
+                  <div className="font-semibold truncate">
+                    {r.domain ?? "—"}
+                  </div>
+                  <span className="text-[10px] uppercase tracking-wide text-muted whitespace-nowrap">
+                    {fmtAge(r.createdAt)} · {r.referredBy ? "ref ✓" : "no ref"}
+                  </span>
+                </div>
+                <div className="text-[11px] text-muted font-mono mb-2">
+                  {r.tenantSlug}
+                </div>
+                <div className="text-xs font-mono mb-3 space-y-0.5">
+                  {r.members.length === 0 ? (
+                    <span className="text-muted italic">no users yet</span>
+                  ) : (
+                    r.members.map((m) => (
+                      <div key={m.email} className="break-all">
+                        {m.email}
                       </div>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted">
-                    {r.tenantSlug}
-                  </td>
-                  <td className="px-4 py-3 text-muted">{fmtAge(r.createdAt)}</td>
-                  <td className="px-4 py-3 text-muted">
-                    {r.referredBy ? "✓ via /r" : "—"}
-                  </td>
-                  <td className="px-4 py-3 text-right whitespace-nowrap">
-                    <form
-                      action={approveTenantFormAction}
-                      className="inline-block mr-2"
+                    ))
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  <form
+                    action={approveTenantFormAction}
+                    className="flex-1"
+                  >
+                    <input type="hidden" name="tenantId" value={r.tenantId} />
+                    <button
+                      type="submit"
+                      className="w-full px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700"
                     >
-                      <input type="hidden" name="tenantId" value={r.tenantId} />
-                      <button
-                        type="submit"
-                        className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-700"
-                      >
-                        Approve
-                      </button>
-                    </form>
-                    <form action={denyTenantFormAction} className="inline-block">
-                      <input type="hidden" name="tenantId" value={r.tenantId} />
-                      <button
-                        type="submit"
-                        className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-200"
-                      >
-                        Deny
-                      </button>
-                    </form>
-                  </td>
+                      Approve
+                    </button>
+                  </form>
+                  <form
+                    action={denyTenantFormAction}
+                    className="flex-1"
+                  >
+                    <input type="hidden" name="tenantId" value={r.tenantId} />
+                    <button
+                      type="submit"
+                      className="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200"
+                    >
+                      Deny
+                    </button>
+                  </form>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: full table */}
+          <div className="hidden md:block bg-white border border-gray-200 rounded-2xl overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
+                <tr>
+                  <th className="px-4 py-3 font-medium">Domain</th>
+                  <th className="px-4 py-3 font-medium">Members</th>
+                  <th className="px-4 py-3 font-medium">Tenant</th>
+                  <th className="px-4 py-3 font-medium">Age</th>
+                  <th className="px-4 py-3 font-medium">Referral</th>
+                  <th className="px-4 py-3 font-medium text-right">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr key={r.tenantId} className="border-t border-gray-100 align-top">
+                    <td className="px-4 py-3 font-medium">{r.domain ?? "—"}</td>
+                    <td className="px-4 py-3 font-mono text-xs">
+                      {r.members.length === 0 ? (
+                        <span className="text-muted italic">no users yet</span>
+                      ) : (
+                        <div className="space-y-0.5">
+                          {r.members.map((m) => (
+                            <div key={m.email}>{m.email}</div>
+                          ))}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 font-mono text-xs text-muted">
+                      {r.tenantSlug}
+                    </td>
+                    <td className="px-4 py-3 text-muted">{fmtAge(r.createdAt)}</td>
+                    <td className="px-4 py-3 text-muted">
+                      {r.referredBy ? "✓ via /r" : "—"}
+                    </td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap">
+                      <form
+                        action={approveTenantFormAction}
+                        className="inline-block mr-2"
+                      >
+                        <input type="hidden" name="tenantId" value={r.tenantId} />
+                        <button
+                          type="submit"
+                          className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-700"
+                        >
+                          Approve
+                        </button>
+                      </form>
+                      <form action={denyTenantFormAction} className="inline-block">
+                        <input type="hidden" name="tenantId" value={r.tenantId} />
+                        <button
+                          type="submit"
+                          className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-200"
+                        >
+                          Deny
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   );
