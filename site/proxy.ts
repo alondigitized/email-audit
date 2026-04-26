@@ -14,6 +14,7 @@ const PUBLIC_PREFIXES = [
   "/waitlist-status",
   "/auth/verify", // two-step magic-link confirm page
   "/api/auth/", // Auth.js catch-all
+  "/api/email/inbound", // Cloudflare Email Worker webhook (Bearer-auth only)
   "/_next/static",
   "/_next/image",
 ];
