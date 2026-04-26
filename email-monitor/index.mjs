@@ -792,6 +792,155 @@ async function processMessage(client, state, inboxId, persona, message, source =
   }
 }
 
+// ─── Cloudflare-routed email_message consumer ─────────────────────────────
+//
+// Personas with @etell.app inboxes (everything created post-CF migration —
+// rae-l, sarah-l, future tenant forks) get their mail via Cloudflare Email
+// Routing → Worker → /api/email/inbound → email_message table. This loop
+// is the daemon-side consumer.
+//
+// Idempotency: dedup is via the email_message.processed_at column, not
+// state.json. The DB is the source of truth — the daemon can crash and
+// restart without losing track. We also don't track retries here; a
+// poison-pill row will retry every poll cycle. If that becomes painful,
+// add an `attempts` column.
+//
+// Per-row flow mirrors processMessage but builds the AgentMail-shaped
+// `msg` from the row (no fetchMessage round-trip needed since the body
+// is already in Postgres).
+
+async function processCloudflareEmail(row) {
+  const id = row.id;
+  const personaSlug = row.persona_slug;
+  // Build a synthetic AgentMail-shaped message for saveArtifacts and the
+  // prompt builders. They only read .created_at, .subject, .html, .text,
+  // .from / .from_, and .messageId / .message_id.
+  const msg = {
+    messageId: row.message_id || `db-${id}`,
+    message_id: row.message_id || `db-${id}`,
+    created_at: row.received_at,
+    subject: row.subject || '(no subject)',
+    html: row.html || '',
+    text: row.text_body || '',
+    from: row.from_address,
+    from_: row.from_address,
+  };
+
+  log('processing email_message', {
+    id,
+    persona: personaSlug,
+    from: row.from_address,
+    subject: msg.subject,
+  });
+
+  try {
+    // Best-effort: flip any pending subscription_jobs row for this
+    // persona+brand to manual_done. Same pattern as the AgentMail flow.
+    try {
+      const fromAddr = String(row.from_address || '').toLowerCase();
+      const at = fromAddr.lastIndexOf('@');
+      if (at >= 0) {
+        const fromDomain = fromAddr.slice(at + 1).replace(/[>\s].*$/, '');
+        if (fromDomain) {
+          const { noteSubscriptionConfirmed } = await import(
+            '../audit-pipeline/persona-profile.mjs'
+          );
+          await noteSubscriptionConfirmed(personaSlug, fromDomain);
+        }
+      }
+    } catch (err) {
+      log('noteSubscriptionConfirmed failed (non-fatal)', {
+        id,
+        error: String(err).slice(0, 200),
+      });
+    }
+
+    const artifacts = await saveArtifacts(msg);
+
+    const [rendered, qaReport] = await Promise.all([
+      renderWebview(artifacts),
+      runQaChecks(artifacts),
+    ]);
+    const qaContext = buildQaSummaryForPrompt(qaReport);
+
+    let contentReview, technicalReview;
+    if (rendered) {
+      const personaIdentity = loadPersona(personaSlug);
+      [contentReview, technicalReview] = await Promise.all([
+        generateReview(buildContentPrompt(msg, rendered, personaIdentity), {
+          images: [rendered],
+          label: 'content-review',
+        }),
+        generateReview(buildTechnicalPrompt(msg, qaContext), {
+          label: 'technical-review',
+        }),
+      ]);
+    } else {
+      log('no screenshot available; running technical-only review', { id });
+      technicalReview = await generateReview(
+        buildTechnicalPrompt(msg, qaContext),
+        { label: 'technical-review' }
+      );
+      contentReview = '';
+    }
+    const reviewText = contentReview
+      ? mergeReviews(contentReview, technicalReview)
+      : technicalReview;
+    fs.writeFileSync(path.join(artifacts.dir, 'review.txt'), reviewText, 'utf8');
+
+    let published = false;
+    try {
+      await publishSite({
+        slug: artifacts.slug,
+        persona: personaSlug,
+        artifactDir: artifacts.dir,
+      });
+      published = true;
+    } catch (err) {
+      log('site publish failed (non-fatal)', {
+        id,
+        error: String(err).slice(0, 500),
+      });
+    }
+
+    const { markEmailMessageProcessed } = await import(
+      '../audit-pipeline/email-message-queue.mjs'
+    );
+    await markEmailMessageProcessed(id, artifacts.slug);
+    log('email_message completed', {
+      id,
+      persona: personaSlug,
+      slug: artifacts.slug,
+      rendered: !!rendered,
+      published,
+    });
+  } catch (err) {
+    // Leave processed_at NULL so the next poll retries. Verbose-log for
+    // ops visibility; persistent failures will scream every poll cycle.
+    log('email_message failed', {
+      id,
+      persona: personaSlug,
+      error: String(err).slice(0, 500),
+    });
+  }
+}
+
+async function pollCloudflareEmails() {
+  try {
+    const { loadUnprocessedEmailMessages } = await import(
+      '../audit-pipeline/email-message-queue.mjs'
+    );
+    const rows = await loadUnprocessedEmailMessages(20);
+    if (rows.length === 0) return;
+    log('cloudflare poll', { unprocessed: rows.length });
+    for (const r of rows) {
+      await processCloudflareEmail(r);
+    }
+  } catch (err) {
+    log('cloudflare poll failed', { error: String(err).slice(0, 500) });
+  }
+}
+
 async function pollInbox(client, state, inboxId, persona, reason = 'poll') {
   const inboxState = inboxStateFor(state, inboxId);
   // Startup: paginate all messages to catch anything missed during downtime
@@ -816,6 +965,10 @@ async function pollOnce(client, state, reason = 'poll') {
       log('inbox poll failed', { inbox, persona, reason, error: String(err), stack: err?.stack });
     }
   }
+  // Cloudflare-routed personas (@etell.app) — drains email_message table.
+  // Runs after AgentMail in case a single poll has work in both ingress
+  // paths; sequential keeps Claude review concurrency bounded.
+  await pollCloudflareEmails();
 }
 
 async function main() {
