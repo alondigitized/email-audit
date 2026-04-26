@@ -83,6 +83,18 @@ export default async function AdminPage() {
             >
               Manage personas →
             </a>
+            <a
+              href="/admin/templates"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Templates →
+            </a>
+            <a
+              href="/admin/template-requests"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Template requests →
+            </a>
           </div>
         </div>
         <p className="text-muted text-sm max-w-xl">
