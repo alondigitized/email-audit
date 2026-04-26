@@ -23,7 +23,10 @@ export function TopNav({
 }) {
   const pathname = usePathname() || "/";
 
-  if (pathname.startsWith("/login") || pathname.startsWith("/auth/"))
+  // Public/marketing routes — no nav. The signup funnel and the auth flow
+  // shouldn't expose authed tabs (Audits, Chat, Sign out) to unauthed visitors.
+  const PUBLIC_PATHS = ["/login", "/signup", "/auth/", "/r/"];
+  if (PUBLIC_PATHS.some((p) => pathname === p.replace(/\/$/, "") || pathname.startsWith(p)))
     return null;
 
   function isActive(href: string): boolean {
