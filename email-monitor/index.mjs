@@ -894,6 +894,18 @@ async function processCloudflareEmail(row) {
       : technicalReview;
     fs.writeFileSync(path.join(artifacts.dir, 'review.txt'), reviewText, 'utf8');
 
+    // extractAll() iterates audit-pipeline/published-audits.json — entries
+    // not in the manifest get skipped silently and audit-data.json never
+    // lands, which makes publishSite a no-op. Mirror the AgentMail flow:
+    // register the artifact in the manifest BEFORE publishSite runs.
+    updatePublishedManifest({
+      messageId: msg.messageId,
+      subject: msg.subject,
+      artifactDir: artifacts.dir,
+      slug: artifacts.slug,
+      persona: personaSlug,
+    });
+
     let published = false;
     try {
       await publishSite({
