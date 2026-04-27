@@ -43,10 +43,11 @@ export default async function EditPage({
       <div className="mb-3 px-3 py-1 inline-block rounded-full bg-sky-50 text-sky-700 text-xs font-medium tracking-wide uppercase">
         Step 3 of 3
       </div>
-      <h1 className="text-3xl font-bold mb-2">Make {tpl.name} yours</h1>
+      <h1 className="text-3xl font-bold mb-2">Create your persona</h1>
       <p className="text-muted text-sm mb-2">
-        You&apos;re forking <strong>{tpl.name}</strong>. Your edits land on your
-        own copy — the curated original keeps growing untouched.
+        You&apos;re creating <strong>{tpl.name}</strong> for your team. Your
+        edits land on your own copy of the persona — the curated original keeps
+        growing untouched.
       </p>
       <p className="text-xs text-muted mb-6">
         Benchmarking against <strong>{competitor.name}</strong> ({competitor.domain})
@@ -187,7 +188,7 @@ export default async function EditPage({
             type="submit"
             className="px-5 py-2.5 bg-accent text-white font-semibold rounded-xl text-[15px]"
           >
-            Fork &amp; create my persona →
+            Create my persona →
           </button>
         </div>
       </form>
