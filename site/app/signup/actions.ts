@@ -2,7 +2,7 @@
 
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { db, tenants, users } from "@/lib/db/client";
+import { db, tenants, users, userAppAccess } from "@/lib/db/client";
 import { isCompanyEmail, extractTenantDomain } from "@/lib/free-domains";
 import { sendWaitlistConfirmEmail } from "@/lib/email-tenant";
 import { signInRateLimit } from "@/lib/db/schema";
@@ -231,6 +231,14 @@ export async function signupAction(
     .insert(users)
     .values({ email, tenantId })
     .returning({ id: users.id });
+
+  // Every signup gets the core "chat" app. Without this, /chat 404s post-
+  // wizard because requireAppEnabled gates on user_app_access. If/when more
+  // apps get default-on status, lift this into a DEFAULT_USER_APPS list.
+  await db
+    .insert(userAppAccess)
+    .values({ userId: insertedUser.id, appKey: "chat" })
+    .onConflictDoNothing();
 
   if (tenantState === "fresh" || tenantState === "existing-waitlisted") {
     // Waitlist mode is on AND this user is queueing. Send the confirm email
