@@ -9,7 +9,6 @@ type Tab = { href: string; label: string; suffix?: string };
 
 const BASE_TABS: Tab[] = [
   { href: "/", label: "Audits" },
-  { href: "/analysis", label: "Analysis" },
 ];
 
 export function TopNav({
@@ -47,7 +46,12 @@ export function TopNav({
   } else if (isAdmin && hasPersonas) {
     tabs.push({ href: "/chat", label: "Chat", suffix: "(off)" });
   }
-  if (isAdmin) tabs.push({ href: "/admin", label: "Admin" });
+  // Analysis is admin-curated for now — no user-facing way to create one,
+  // so non-admins just see "No analyses yet". Hide the tab from them.
+  if (isAdmin) {
+    tabs.push({ href: "/analysis", label: "Analysis" });
+    tabs.push({ href: "/admin", label: "Admin" });
+  }
 
   return (
     <>

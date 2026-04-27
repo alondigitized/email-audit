@@ -46,8 +46,8 @@ export default async function EditPage({
       <h1 className="text-3xl font-bold mb-2">Create your persona</h1>
       <p className="text-muted text-sm mb-2">
         You&apos;re creating <strong>{tpl.name}</strong> for your team. Tweak
-        anything you want — every email and homepage your team puts in front
-        of them gets scored from this persona&apos;s perspective.
+        anything you want — every email your team puts in front of them gets
+        scored from this persona&apos;s perspective.
       </p>
       <p className="text-xs text-muted mb-6">
         Benchmarking against <strong>{competitor.name}</strong> ({competitor.domain})
