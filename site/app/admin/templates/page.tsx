@@ -5,7 +5,7 @@ import {
   db,
   personaTemplates,
   personas,
-  audits,
+  reactions,
 } from "@/lib/db/client";
 import { toggleTemplateActiveAction } from "./actions";
 
@@ -43,10 +43,10 @@ async function loadTemplates(): Promise<Row[]> {
       .where(inArray(personas.templateSlug, slugs))
       .groupBy(personas.templateSlug),
     db
-      .select({ slug: audits.persona, n: count() })
-      .from(audits)
-      .where(inArray(audits.persona, slugs))
-      .groupBy(audits.persona),
+      .select({ slug: reactions.personaSlug, n: count() })
+      .from(reactions)
+      .where(inArray(reactions.personaSlug, slugs))
+      .groupBy(reactions.personaSlug),
   ]);
 
   const forkMap = new Map(forkAgg.map((r) => [r.slug ?? "", Number(r.n)]));

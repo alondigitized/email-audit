@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 import { desc, eq } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import { getPersonaBySlug, personaColor } from "@/lib/personas-db";
-import { db, audits, personaTemplates } from "@/lib/db/client";
+import {
+  db,
+  reactions,
+  experiences,
+  personaTemplates,
+} from "@/lib/db/client";
 import { PersonaForm } from "../PersonaForm";
 import { ChecklistSection } from "../ChecklistSection";
 import {
@@ -36,14 +41,15 @@ export default async function EditPersonaPage({
   // Recent audits for the status panel — last 5, either email or site.
   const recentAudits = await db
     .select({
-      slug: audits.slug,
-      type: audits.type,
-      timestamp: audits.timestamp,
-      score: audits.score,
+      slug: reactions.slug,
+      type: experiences.type,
+      timestamp: experiences.receivedAt,
+      score: reactions.score,
     })
-    .from(audits)
-    .where(eq(audits.persona, persona.slug))
-    .orderBy(desc(audits.timestamp))
+    .from(reactions)
+    .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
+    .where(eq(reactions.personaSlug, persona.slug))
+    .orderBy(desc(experiences.receivedAt))
     .limit(5);
 
   // Template state. If a row exists in persona_template at the same slug,

@@ -1,6 +1,6 @@
 import { eq, desc, sql, count } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
-import { db, tenants, users, personas, audits } from "@/lib/db/client";
+import { db, tenants, users, personas, reactions } from "@/lib/db/client";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Tenants · admin · etell" };
@@ -60,12 +60,12 @@ async function loadTenants(): Promise<Row[]> {
   // downstream fmtDate() can call .getTime() on it.
   const auditAgg = await db
     .select({
-      tenantId: audits.tenantId,
+      tenantId: reactions.tenantId,
       n: count(),
-      last: sql<string | Date>`max(${audits.timestamp})`,
+      last: sql<string | Date>`max(${reactions.createdAt})`,
     })
-    .from(audits)
-    .groupBy(audits.tenantId);
+    .from(reactions)
+    .groupBy(reactions.tenantId);
   const auditMap = new Map<string, { n: number; last: Date | null }>();
   for (const a of auditAgg) {
     if (!a.tenantId) continue;

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { eq, sql as dsql } from "drizzle-orm";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/dal";
-import { db, personas, audits, personaTemplates } from "@/lib/db/client";
+import { db, personas, reactions, personaTemplates } from "@/lib/db/client";
 import {
   personaProfileSchema,
   type PersonaProfile,
@@ -225,8 +225,8 @@ export async function deletePersonaAction(
 
   const [auditCountRow] = await db
     .select({ n: dsql<number>`count(*)::int` })
-    .from(audits)
-    .where(eq(audits.persona, slug));
+    .from(reactions)
+    .where(eq(reactions.personaSlug, slug));
   const count = Number(auditCountRow?.n ?? 0);
   if (count > 0) {
     return {

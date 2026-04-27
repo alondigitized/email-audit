@@ -1,5 +1,5 @@
 import { eq, and, gte, count } from "drizzle-orm";
-import { db, tenants, audits } from "./db/client";
+import { db, tenants, reactions } from "./db/client";
 
 export type TenantState = {
   id: string;
@@ -83,14 +83,17 @@ export async function getTenantState(
 }
 
 // "Audits since lock" — used on /locked to prove the persona kept working.
-// Counts audits stamped after the tier expired.
+// V3: counts reactions (the persona-attributed unit) stamped after the
+// tier expired. Same semantic, just on the new table.
 export async function countAuditsSince(
   tenantId: string,
   since: Date
 ): Promise<number> {
   const [row] = await db
     .select({ n: count() })
-    .from(audits)
-    .where(and(eq(audits.tenantId, tenantId), gte(audits.timestamp, since)));
+    .from(reactions)
+    .where(
+      and(eq(reactions.tenantId, tenantId), gte(reactions.createdAt, since))
+    );
   return Number(row?.n ?? 0);
 }

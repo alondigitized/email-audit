@@ -6,7 +6,7 @@ import {
   db,
   personaTemplates,
   personas,
-  audits,
+  reactions,
   tenants,
 } from "@/lib/db/client";
 import { toggleTemplateActiveAction } from "../actions";
@@ -50,8 +50,8 @@ export default async function TemplateDetailPage({
       .where(eq(personas.templateSlug, slug)),
     db
       .select({ n: count() })
-      .from(audits)
-      .where(eq(audits.persona, slug)),
+      .from(reactions)
+      .where(eq(reactions.personaSlug, slug)),
   ]);
 
   const auditCount = Number(auditAgg[0]?.n ?? 0);

@@ -1,7 +1,14 @@
 import { notFound } from "next/navigation";
 import { eq, asc, desc } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
-import { db, tenants, users, personas, audits } from "@/lib/db/client";
+import {
+  db,
+  tenants,
+  users,
+  personas,
+  reactions,
+  experiences,
+} from "@/lib/db/client";
 import {
   changeTenantPlanFormAction,
   extendTenantTierFormAction,
@@ -81,14 +88,15 @@ export default async function TenantDetail({
 
   const recentAudits = await db
     .select({
-      slug: audits.slug,
-      type: audits.type,
-      timestamp: audits.timestamp,
-      score: audits.score,
+      slug: reactions.slug,
+      type: experiences.type,
+      timestamp: experiences.receivedAt,
+      score: reactions.score,
     })
-    .from(audits)
-    .where(eq(audits.tenantId, id))
-    .orderBy(desc(audits.timestamp))
+    .from(reactions)
+    .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
+    .where(eq(reactions.tenantId, id))
+    .orderBy(desc(experiences.receivedAt))
     .limit(10);
 
   const planOptions = ["waitlisted", "free", "pro", "banned"] as const;
