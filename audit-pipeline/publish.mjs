@@ -121,6 +121,137 @@ export async function deleteAuditRow(slug) {
 }
 
 /**
+ * V3 dual-write companion to upsertAuditRow. Splits the same data into
+ * one experience row (brand-side) + one reaction row (persona-side).
+ * Returns the reaction.id so the embedder can attach reaction_embedding.
+ *
+ * Shipped during XR-C (dual-write window). Once XR-D flips the site to
+ * read from these new tables and XR-F retires audit, this becomes the
+ * sole writer. Idempotent on slug — repeated calls on the same audit
+ * slug update the matching reaction + experience.
+ *
+ * messageId is best-effort — present for Cloudflare-routed inbound
+ * email_message rows, NULL for legacy AgentMail polling and site-
+ * journey audits. The partial unique index on
+ * (persona_slug, message_id WHERE NOT NULL) dedups Cloudflare retries
+ * without blocking legacy NULL rows.
+ */
+export async function upsertExperienceAndReaction({ slug, data, messageId = null }) {
+  const parsed = auditDataSchema.parse(data);
+  const persona = parsed.persona ?? null;
+  if (!persona) {
+    throw new Error(`reaction ${slug} missing persona — cannot upsert`);
+  }
+  const type = parsed.type ?? 'email';
+  const timestamp = parsed.email?.timestamp_iso;
+  if (!timestamp) {
+    throw new Error(`reaction ${slug} missing email.timestamp_iso — cannot upsert`);
+  }
+  const score = parseScore(parsed.review?.score);
+
+  // Brand-domain extraction matches the backfill heuristic — email.from
+  // is "Brand <noreply@brand.com>" or just "noreply@brand.com".
+  let brandDomain = null;
+  const from = parsed.email?.from;
+  if (from) {
+    const m =
+      from.match(/[<\s]([^<>\s@]+@([^<>\s]+))[>\s]?$/) ||
+      from.match(/^([^<>\s@]+@([^<>\s]+))$/);
+    if (m) brandDomain = m[2].toLowerCase().replace(/[>\s].*$/, '');
+  }
+
+  const sql = db();
+  const tenantRow = await sql`SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1`;
+  const tenantId = tenantRow[0]?.tenant_id ?? null;
+
+  // Upsert experience by slug-derived key. The reaction holds the slug
+  // (URL-friendly identifier); the experience is a 1-1 partner of the
+  // reaction during this transition. Once a reaction starts re-reacting
+  // to inherited experiences (post-v1), this 1-1 relationship breaks
+  // and we'd dedup by (persona_slug, message_id) instead.
+  //
+  // Strategy: UPDATE the existing reaction's experience if one exists,
+  // else INSERT a new experience and link via reaction.experience_id.
+  const existing = await sql`SELECT experience_id FROM reaction WHERE slug = ${slug} LIMIT 1`;
+
+  let experienceId;
+  if (existing.length > 0) {
+    experienceId = existing[0].experience_id;
+    await sql`
+      UPDATE experience SET
+        persona_slug = ${persona},
+        tenant_id = ${tenantId},
+        type = ${type},
+        brand_domain = ${brandDomain},
+        message_id = ${messageId},
+        received_at = ${timestamp},
+        email_data = ${JSON.stringify(parsed.email ?? {})}::jsonb,
+        qa_findings = ${JSON.stringify(parsed.qa ?? null)}::jsonb,
+        assets = ${JSON.stringify(parsed.assets ?? {})}::jsonb,
+        performance = ${JSON.stringify(parsed.performance ?? null)}::jsonb,
+        updated_at = NOW()
+      WHERE id = ${experienceId}
+    `;
+    await sql`
+      UPDATE reaction SET
+        persona_slug = ${persona},
+        tenant_id = ${tenantId},
+        score = ${score},
+        review_data = ${JSON.stringify(parsed.review ?? {})}::jsonb,
+        updated_at = NOW()
+      WHERE slug = ${slug}
+    `;
+  } else {
+    const expRows = await sql`
+      INSERT INTO experience
+        (persona_slug, tenant_id, type, brand_domain, message_id, received_at,
+         email_data, qa_findings, assets, performance)
+      VALUES
+        (${persona}, ${tenantId}, ${type}, ${brandDomain}, ${messageId}, ${timestamp},
+         ${JSON.stringify(parsed.email ?? {})}::jsonb,
+         ${JSON.stringify(parsed.qa ?? null)}::jsonb,
+         ${JSON.stringify(parsed.assets ?? {})}::jsonb,
+         ${JSON.stringify(parsed.performance ?? null)}::jsonb)
+      RETURNING id
+    `;
+    experienceId = expRows[0].id;
+    await sql`
+      INSERT INTO reaction
+        (experience_id, persona_slug, slug, score, review_data, tenant_id)
+      VALUES
+        (${experienceId}, ${persona}, ${slug}, ${score},
+         ${JSON.stringify(parsed.review ?? {})}::jsonb, ${tenantId})
+    `;
+  }
+
+  const rRow = await sql`SELECT id FROM reaction WHERE slug = ${slug} LIMIT 1`;
+  return { reactionId: rRow[0]?.id ?? null, experienceId };
+}
+
+/**
+ * Upsert a reaction_embedding row. Mirrors the audit_embedding writer in
+ * audit-pipeline/embed.mjs but keys on reaction_id instead of audit_slug.
+ * Called from the embed step alongside the legacy audit_embedding write
+ * so retrieval can flip from one to the other in XR-D without a daemon
+ * restart.
+ */
+export async function upsertReactionEmbedding({ reactionId, persona, indexedText, embedding }) {
+  if (!reactionId) return;
+  const sql = db();
+  // pgvector's `vector` type wants a '[a,b,c]' string literal — same
+  // shape as audit_embedding's writer.
+  const literal = `[${embedding.join(',')}]`;
+  await sql`
+    INSERT INTO reaction_embedding (reaction_id, persona, indexed_text, embedding)
+    VALUES (${reactionId}, ${persona}, ${indexedText}, ${literal}::vector)
+    ON CONFLICT (reaction_id) DO UPDATE SET
+      persona = EXCLUDED.persona,
+      indexed_text = EXCLUDED.indexed_text,
+      embedding = EXCLUDED.embedding
+  `;
+}
+
+/**
  * Summaries for a persona's audits, newest first. Used by the vault-writer
  * to pick "recent history" wikilinks. Shape matches AuditSummary.
  */

@@ -136,8 +136,12 @@ export async function upsertAuditEmbedding({
  * End-to-end: build indexed text, embed, upsert. Returns gracefully if the
  * endpoint isn't reachable (e.g. Ollama not running) so the pipeline keeps
  * publishing audits even when the local model is down.
+ *
+ * V3 dual-write: when `reactionId` is provided, ALSO upserts the
+ * reaction_embedding row. The audit_embedding write stays during the
+ * 7-day legacy retention window post-XR-F.
  */
-export async function embedAndStoreAudit({ audit, personaSlug }) {
+export async function embedAndStoreAudit({ audit, personaSlug, reactionId = null }) {
   try {
     const text = buildIndexedText(audit, personaSlug);
     const vec = await embed(text);
@@ -147,6 +151,26 @@ export async function embedAndStoreAudit({ audit, personaSlug }) {
       indexedText: text,
       embedding: vec,
     });
+    // V3 mirror: write reaction_embedding when caller supplied a
+    // reaction id (i.e. XR-C dual-write window). Best-effort — failures
+    // here don't undo the audit_embedding write above.
+    if (reactionId) {
+      try {
+        const { upsertReactionEmbedding } = await import('./publish.mjs');
+        await upsertReactionEmbedding({
+          reactionId,
+          persona: personaSlug,
+          indexedText: text,
+          embedding: vec,
+        });
+      } catch (err) {
+        console.warn(
+          `embedAndStoreAudit: reaction_embedding mirror failed for ${audit.slug}: ${
+            err instanceof Error ? err.message : String(err)
+          }`,
+        );
+      }
+    }
     return { embedded: true };
   } catch (err) {
     return { embedded: false, reason: err instanceof Error ? err.message : String(err) };
