@@ -484,6 +484,130 @@ export const laptopProvisioningJobs = pgTable("laptop_provisioning_job", {
   error: text("error"),
 });
 
+// ─── Experience / Reaction split (v3 — replaces audit) ───────────────────
+//
+// The legacy `audit` row fused two things into one: the brand-side
+// experience (email arrived at this inbox, with these contents and this
+// rendered screenshot) AND a persona's voiced review of that experience.
+// V3 separates them so a tenant-fork can inherit the brand corpus
+// (experiences) without inheriting the template's voice (reactions).
+//
+// Read semantics:
+//   - experience: read-shared with forks via `expandReadableSlugs`
+//     (`persona_slug ∈ [forkSlug, templateSlug]`). Same OR-match pattern
+//     today's audits use.
+//   - reaction: read-isolated. A fork only sees its own reactions; the
+//     template's reactions stay private to the template's persona row
+//     in Alon's tenant. Per the locked design (2026-04-27), forks do
+//     NOT auto-react to inherited experiences — they accumulate
+//     reactions only from new mail going forward.
+//
+// Audit and audit_embedding stay as deprecated legacy tables for 7 days
+// post-cutover for rollback safety; scheduled drop 2026-05-04+.
+
+export const experiences = pgTable(
+  "experience",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    // Inbox owner — the persona whose @etell.app inbox received the
+    // email (or whose site-monitor journey produced the audit). Forks
+    // read-merge against this column via expandReadableSlugs.
+    personaSlug: text("persona_slug").notNull(),
+    // Tenant scope mirrors audit.tenant_id — every list query filters
+    // by the actor's tenant_id (admin bypass).
+    tenantId: uuid("tenant_id").references(() => tenants.id, { onDelete: "restrict" }),
+    // 'email' (inbox-delivered) or 'site' (daemon journey).
+    type: text("type").notNull(),
+    // Sender domain extracted at ingest time. Cheap filter for
+    // brand-scoped queries; nullable for site-journey audits.
+    brandDomain: text("brand_domain"),
+    // Message-Id header, when present. Allows dedup across daemon
+    // restarts and (eventually) across Cloudflare Worker retries.
+    // Nullable — legacy AgentMail audits don't have a stable id.
+    messageId: text("message_id"),
+    // Original receipt or journey timestamp.
+    receivedAt: timestamp("received_at", { mode: "date", withTimezone: true }).notNull(),
+    // Email metadata block (subject, preheader, from*, date_formatted).
+    // For site-journeys this is null; the journey lives in `assets`.
+    emailData: jsonb("email_data"),
+    // Persona-agnostic QA: link checks, accessibility, compliance.
+    // Run by qa_checks.py — same regardless of which persona reviews.
+    qaFindings: jsonb("qa_findings"),
+    // Render screenshot key + pdf + webview URL + journey steps.
+    // assets.render_image_key is the R2 key the site mints signed URLs
+    // from at request time.
+    assets: jsonb("assets"),
+    // Site-journey performance metrics; null for email audits.
+    performance: jsonb("performance"),
+    // R2 key of the raw .eml — best-effort archive for re-processing.
+    rawKey: text("raw_key"),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    personaTsIdx: index("experience_persona_ts_idx").on(t.personaSlug, t.receivedAt),
+    typeTsIdx: index("experience_type_ts_idx").on(t.type, t.receivedAt),
+    tenantTsIdx: index("experience_tenant_ts_idx").on(t.tenantId, t.receivedAt),
+    brandIdx: index("experience_brand_idx").on(t.brandDomain),
+    // Dedup natural key when message_id is present — partial unique
+    // declared in the migration's raw SQL since drizzle-kit doesn't
+    // emit partial uniques cleanly.
+  })
+);
+
+export const reactions = pgTable(
+  "reaction",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    experienceId: uuid("experience_id")
+      .notNull()
+      .references(() => experiences.id, { onDelete: "cascade" }),
+    // The persona whose voice produced this review. Equal to
+    // experience.personaSlug for the inbox-owner's first-pass review,
+    // or different for any future "fork re-reacted to inherited
+    // experience" path (not enabled in v1 per locked decision).
+    personaSlug: text("persona_slug").notNull(),
+    // URL-friendly identifier. Backfill preserves the legacy audit slug
+    // so existing /audits/<slug> links don't 404.
+    slug: text("slug").unique().notNull(),
+    score: numeric("score", { precision: 5, scale: 2 }),
+    // The persona's voiced review (sections, raw_markdown, predictions).
+    reviewData: jsonb("review_data").notNull(),
+    // Tenant scope mirrors the experience's tenant scope.
+    tenantId: uuid("tenant_id").references(() => tenants.id, { onDelete: "restrict" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    personaTsIdx: index("reaction_persona_ts_idx").on(t.personaSlug, t.createdAt),
+    experienceIdx: index("reaction_experience_idx").on(t.experienceId),
+    tenantTsIdx: index("reaction_tenant_ts_idx").on(t.tenantId, t.createdAt),
+  })
+);
+
+// Replaces audit_embedding. Indexes the persona's voiced review (not
+// the brand-side experience), so retrieval grounding is always from
+// the requesting persona's own perspective.
+export const reactionEmbedding = pgTable(
+  "reaction_embedding",
+  {
+    reactionId: uuid("reaction_id")
+      .primaryKey()
+      .references(() => reactions.id, { onDelete: "cascade" }),
+    persona: text("persona").notNull(),
+    indexedText: text("indexed_text").notNull(),
+    embedding: vector("embedding", { dimensions: 1024 }).notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    embeddingIdx: index("reaction_embedding_hnsw_idx").using(
+      "hnsw",
+      t.embedding.op("vector_cosine_ops")
+    ),
+    personaIdx: index("reaction_embedding_persona_idx").on(t.persona),
+  })
+);
+
 // Per-user access to apps. Row present = user has access to that app
 // (in addition to the global app_flag being on). Admins bypass both gates.
 export const userAppAccess = pgTable(
