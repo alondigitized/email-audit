@@ -235,7 +235,13 @@ function ensureUtf8Charset(html) {
 }
 
 function dateSlug(iso) {
-  return String(iso || new Date().toISOString()).slice(0, 10);
+  // Coerce Date / number / string into a YYYY-MM-DD prefix. The legacy
+  // AgentMail path always passed an ISO string; the email_message path
+  // passes Date objects from neon's mode:'date'. String(<Date>) is
+  // "Sun Apr 26 ..." which sliced to 10 = "Sun Apr 26" (spaces!) and
+  // breaks downstream filesystem paths.
+  const d = iso instanceof Date ? iso : iso ? new Date(iso) : new Date();
+  return d.toISOString().slice(0, 10);
 }
 
 async function generateReview(message, { images = [], label = 'review' } = {}) {
