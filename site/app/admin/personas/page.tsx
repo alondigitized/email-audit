@@ -2,7 +2,7 @@ import Link from "next/link";
 import { sql as dsql } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import { getAllPersonas, personaColor } from "@/lib/personas-db";
-import { db, audits } from "@/lib/db/client";
+import { db, reactions } from "@/lib/db/client";
 
 export const dynamic = "force-dynamic";
 
@@ -13,11 +13,11 @@ export const metadata = {
 async function getAuditCountsBySlug(): Promise<Map<string, number>> {
   const rows = await db
     .select({
-      persona: audits.persona,
+      persona: reactions.personaSlug,
       n: dsql<number>`count(*)::int`,
     })
-    .from(audits)
-    .groupBy(audits.persona);
+    .from(reactions)
+    .groupBy(reactions.personaSlug);
   const out = new Map<string, number>();
   for (const r of rows) out.set(r.persona, Number(r.n));
   return out;

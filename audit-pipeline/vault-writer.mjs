@@ -27,6 +27,7 @@ export async function writeVaultNote({
   repoRoot,
   previousScore = null,
   siteIndex = null,
+  reactionId = null,
 }) {
   if (!auditData || !auditData.slug) {
     throw new Error('writeVaultNote: auditData.slug required');
@@ -49,7 +50,7 @@ export async function writeVaultNote({
   // blocks the vault write — a missing LLM endpoint (Ollama tunnel down),
   // network blip, or DB hiccup just leaves the row unwritten; it can be
   // backfilled later via audit-pipeline/backfill-embeddings.mjs.
-  embedAndStoreAudit({ audit: auditData, personaSlug }).catch((err) => {
+  embedAndStoreAudit({ audit: auditData, personaSlug, reactionId }).catch((err) => {
     const msg = err instanceof Error ? err.message : String(err);
     console.warn(`embed skipped for ${auditData.slug}: ${msg.slice(0, 200)}`);
   });

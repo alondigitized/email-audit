@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
-import { inArray, eq, and, sql } from "drizzle-orm";
+import { inArray, eq, and } from "drizzle-orm";
 import { z } from "zod";
 import { loadOnboardingState } from "@/lib/onboarding/state";
 import { CompetitorProposalSchema } from "@/lib/onboarding/research-prompt";
-import { db, personaTemplates, audits } from "@/lib/db/client";
+import { db, personaTemplates } from "@/lib/db/client";
 import { commitPickerAction, regenerateResearchAction } from "../actions";
 
 export const dynamic = "force-dynamic";
@@ -23,37 +23,27 @@ export default async function PickerPage() {
 
   const recCompetitor = r.recommended_competitor_idx ?? 0;
 
-  // Fetch templates + their accumulated audit counts. The audit count is
-  // surfaced as a credibility line ("400 audits curated") so the picker
-  // doesn't feel like a sterile form.
-  const [templates, auditCounts] = await Promise.all([
-    db
-      .select({
-        slug: personaTemplates.slug,
-        name: personaTemplates.name,
-        short: personaTemplates.short,
-        profile: personaTemplates.profile,
-      })
-      .from(personaTemplates)
-      .where(
-        and(
-          inArray(personaTemplates.slug, slugs),
-          eq(personaTemplates.isActive, true)
-        )
-      ),
-    db
-      .select({
-        persona: audits.persona,
-        n: sql<number>`count(*)::int`,
-      })
-      .from(audits)
-      .where(inArray(audits.persona, slugs))
-      .groupBy(audits.persona),
-  ]);
+  // Fetch templates. No audit-count credibility line in v3 — under the
+  // experience/reaction split, inherited reactions belong to the
+  // template persona's voice (Walker's reviews are Walker's, not yours).
+  // Surfacing them as "300 audits curated" was misleading; per the
+  // 2026-04-27 design lock the line is dropped entirely.
+  const templates = await db
+    .select({
+      slug: personaTemplates.slug,
+      name: personaTemplates.name,
+      short: personaTemplates.short,
+      profile: personaTemplates.profile,
+    })
+    .from(personaTemplates)
+    .where(
+      and(
+        inArray(personaTemplates.slug, slugs),
+        eq(personaTemplates.isActive, true)
+      )
+    );
 
   if (templates.length === 0) redirect("/onboarding/concierge");
-
-  const auditCountBySlug = new Map(auditCounts.map((c) => [c.persona, c.n]));
 
   return (
     <div className="max-w-4xl mx-auto py-12">
@@ -70,8 +60,9 @@ export default async function PickerPage() {
         )}
       </p>
       <p className="text-muted text-sm mb-8">
-        These personas are curated by our team and have months of accumulated
-        reviews behind them. Yours inherits all that history immediately.
+        Pick the persona whose voice fits your brand. They&apos;ll review every
+        email and homepage you put in front of them, scoring it from their
+        own perspective.
       </p>
 
       <form action={commitPickerAction} id="picker-form">
@@ -79,7 +70,6 @@ export default async function PickerPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
           {templates.map((t, i) => {
             const id = t.profile?.identity;
-            const auditCount = auditCountBySlug.get(t.slug) ?? 0;
             return (
               <label
                 key={t.slug}
@@ -112,7 +102,7 @@ export default async function PickerPage() {
                   <p className="text-sm mb-2 line-clamp-3">{id.style}</p>
                 )}
                 {id?.focus_areas && (
-                  <div className="flex flex-wrap gap-1 mb-2">
+                  <div className="flex flex-wrap gap-1">
                     {id.focus_areas.slice(0, 4).map((f) => (
                       <span
                         key={f}
@@ -123,11 +113,6 @@ export default async function PickerPage() {
                     ))}
                   </div>
                 )}
-                <div className="text-[11px] text-muted italic">
-                  {auditCount > 0
-                    ? `${auditCount.toLocaleString()} audit${auditCount === 1 ? "" : "s"} curated`
-                    : "Fresh persona — yours will start the brain"}
-                </div>
               </label>
             );
           })}

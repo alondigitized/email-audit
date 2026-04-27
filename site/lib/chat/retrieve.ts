@@ -3,7 +3,7 @@ import path from "node:path";
 import { embed } from "ai";
 import { neon } from "@neondatabase/serverless";
 import { embeddingModel } from "./provider";
-import { expandReadableSlugs, getPersonaBySlug } from "@/lib/personas-db";
+import { getPersonaBySlug } from "@/lib/personas-db";
 
 // How many audits we retrieve per turn. 6 semantic + 4 recent = up to 10
 // rows (usually fewer after dedupe) × ~800 tokens = ~8K tokens of retrieved
@@ -46,24 +46,30 @@ export async function retrieveRelevantAudits(
   const sql = neon(url);
   const queryVec = await embedQuery(query);
   const literal = `[${queryVec.join(",")}]`;
-  const readableSlugs = await expandReadableSlugs([personaSlug]);
 
+  // V3: retrieval grounds in the requesting persona's OWN reactions
+  // only. Walker's accumulated reviews never ground a fork's chat, even
+  // when the fork inherits the experience corpus — the fork's persona
+  // has its own voice and answering as Walker would be misleading.
+  // No expandReadableSlugs() — read-isolated.
   const [semantic, recent] = (await Promise.all([
     sql`
-      SELECT audit_slug, indexed_text,
-             (embedding <=> ${literal}::vector) AS distance
-      FROM audit_embedding
-      WHERE persona = ANY(${readableSlugs})
-      ORDER BY embedding <=> ${literal}::vector
+      SELECT r.slug AS audit_slug, re.indexed_text,
+             (re.embedding <=> ${literal}::vector) AS distance
+      FROM reaction_embedding re
+      JOIN reaction r ON r.id = re.reaction_id
+      WHERE re.persona = ${personaSlug}
+      ORDER BY re.embedding <=> ${literal}::vector
       LIMIT ${kSemantic}
     `,
     sql`
-      SELECT ae.audit_slug, ae.indexed_text,
-             (ae.embedding <=> ${literal}::vector) AS distance
-      FROM audit_embedding ae
-      JOIN audit a ON a.slug = ae.audit_slug
-      WHERE ae.persona = ANY(${readableSlugs})
-      ORDER BY a.timestamp DESC
+      SELECT r.slug AS audit_slug, re.indexed_text,
+             (re.embedding <=> ${literal}::vector) AS distance
+      FROM reaction_embedding re
+      JOIN reaction r ON r.id = re.reaction_id
+      JOIN experience e ON e.id = r.experience_id
+      WHERE re.persona = ${personaSlug}
+      ORDER BY e.received_at DESC
       LIMIT ${kRecent}
     `,
   ])) as Array<Array<{ audit_slug: string; indexed_text: string; distance: number }>>;
@@ -90,9 +96,10 @@ export async function getAuditMemoryCount(personaSlug: string): Promise<number> 
   const url = process.env.DATABASE_URL ?? process.env.DATABASE_URL_UNPOOLED;
   if (!url) return 0;
   const sql = neon(url);
-  const readableSlugs = await expandReadableSlugs([personaSlug]);
+  // V3: count own reactions only. The "knows X" indicator reflects the
+  // requesting persona's actual reviewed corpus, not inherited ones.
   const rows = (await sql`
-    SELECT COUNT(*)::int AS n FROM audit_embedding WHERE persona = ANY(${readableSlugs})
+    SELECT COUNT(*)::int AS n FROM reaction_embedding WHERE persona = ${personaSlug}
   `) as Array<{ n: number }>;
   return Number(rows[0]?.n ?? 0);
 }

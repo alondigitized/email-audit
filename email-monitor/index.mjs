@@ -9,7 +9,11 @@ import { AgentMailClient } from 'agentmail';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
-import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
+import {
+  upsertAuditRow,
+  upsertExperienceAndReaction,
+  dbConfigured,
+} from '../audit-pipeline/publish.mjs';
 import { extractAll } from '../audit-pipeline/extract.mjs';
 
 const execFileAsync = promisify(execFile);
@@ -613,6 +617,22 @@ async function publishSite({ slug, persona, artifactDir }) {
   }
   await upsertAuditRow({ slug, data });
 
+  // V3 dual-write: also split the row into experience + reaction during
+  // the XR-C window. Captures the reactionId so the embed step can
+  // mirror into reaction_embedding alongside the legacy audit_embedding
+  // write. Best-effort — a failure here logs but doesn't undo the audit
+  // upsert above (the legacy site read path still works on audit).
+  let reactionId = null;
+  try {
+    const r = await upsertExperienceAndReaction({ slug, data });
+    reactionId = r.reactionId;
+  } catch (err) {
+    log('experience+reaction dual-write failed (non-fatal)', {
+      slug,
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
   // Phase 2: persona brain vault note + embedding. Wrapped because vault
   // writes should never block the critical path (the DB write is what
   // the user-facing site reads).
@@ -621,6 +641,7 @@ async function publishSite({ slug, persona, artifactDir }) {
       auditData: data,
       personaSlug: persona,
       repoRoot,
+      reactionId,
     });
   } catch (err) {
     log('vault write failed (non-fatal)', { slug, error: err.message });

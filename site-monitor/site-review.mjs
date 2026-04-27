@@ -29,7 +29,11 @@ import dotenv from 'dotenv';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
-import { upsertAuditRow, dbConfigured } from '../audit-pipeline/publish.mjs';
+import {
+  upsertAuditRow,
+  upsertExperienceAndReaction,
+  dbConfigured,
+} from '../audit-pipeline/publish.mjs';
 import { extractAll } from '../audit-pipeline/extract.mjs';
 
 const execFileAsync = promisify(execFile);
@@ -885,6 +889,19 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
   }
   await upsertAuditRow({ slug, data });
 
+  // V3 dual-write: split the row into experience + reaction during the
+  // XR-C window. Returns reactionId so the embed step can mirror into
+  // reaction_embedding alongside audit_embedding.
+  let reactionId = null;
+  try {
+    const r = await upsertExperienceAndReaction({ slug, data });
+    reactionId = r.reactionId;
+  } catch (err) {
+    log('experience+reaction dual-write failed (non-fatal)', {
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
   // Persona brain vault note + embedding. Non-fatal — the DB write above
   // is what the user-facing site reads.
   try {
@@ -894,6 +911,7 @@ async function publishSite(slug, artifactDir, previousSummary = null) {
         personaSlug: data.persona,
         repoRoot,
         previousScore: previousSummary?.score ?? null,
+        reactionId,
       });
     }
   } catch (err) {

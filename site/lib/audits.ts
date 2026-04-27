@@ -1,5 +1,5 @@
 import { inArray, desc, eq, and } from "drizzle-orm";
-import { db, audits } from "@/lib/db/client";
+import { db, experiences, reactions } from "@/lib/db/client";
 import {
   auditDataSchema,
   type AuditData,
@@ -7,15 +7,27 @@ import {
 } from "@/lib/schema/audit";
 import {
   getAllPersonas,
-  expandReadableSlugs,
   personaColor,
   type PersonaRecord,
 } from "@/lib/personas-db";
 
-// Phase 3 of the foundation refactor: the site reads audits from Postgres
-// instead of the filesystem. Dual-write from the daemons keeps the
-// filesystem copy (content/audits/) up to date too, until Phase 4 deletes
-// it. Per-persona filtering happens in SQL so callers can't forget it.
+// V3 read path: reactions are the unit of display, joined to their
+// experience for the brand-side context (subject, render, qa).
+//
+// Read semantics:
+//   - reactions are persona-OWNED — a fork only sees its own. No
+//     expandReadableSlugs() expansion here. Walker's accumulated
+//     reviews stay private to the walker persona row in Alon's tenant;
+//     a walker-skechers fork sees zero of them (fresh slate by design).
+//   - experiences are persona-SHARED via template_slug, but they only
+//     surface to the user through their own reactions today. Inherited
+//     experiences without a reaction are not shown on /audits in v1.
+//
+// To keep the entire downstream UI stack stable, this module
+// reconstructs an `AuditData`-shaped object from the joined rows. The
+// `toSummary` mapping below and every consumer in app/audits/* keep
+// working unchanged. Once the legacy `audit` table drops in XR-F+7
+// days, callers should migrate to the new reaction-first shapes.
 
 function logDrift(where: string, slug: string, error: unknown) {
   const dev = process.env.NODE_ENV !== "production";
@@ -36,10 +48,37 @@ function logDrift(where: string, slug: string, error: unknown) {
   }
 }
 
-// Derive the card-sized summary from the full audit payload. Matches the
-// legacy index.json shape so downstream components stay unchanged. Persona
-// display fields are resolved against a per-request persona map so the UI
-// doesn't need its own registry.
+// Reconstruct the legacy AuditData blob from a (reaction, experience)
+// join. Keeps toSummary() and the audit-detail page working unchanged.
+function joinedRowToAuditData(row: {
+  slug: string;
+  type: string;
+  reactionPersona: string;
+  reviewData: unknown;
+  emailData: unknown;
+  qaFindings: unknown;
+  assets: unknown;
+  performance: unknown;
+}): AuditData | null {
+  const candidate = {
+    schema_version: 1,
+    slug: row.slug,
+    type: row.type,
+    persona: row.reactionPersona,
+    email: row.emailData ?? {},
+    review: row.reviewData ?? {},
+    qa: row.qaFindings ?? null,
+    assets: row.assets ?? {},
+    ...(row.performance ? { performance: row.performance } : {}),
+  };
+  const parsed = auditDataSchema.safeParse(candidate);
+  if (!parsed.success) {
+    logDrift("join", row.slug, parsed.error);
+    return null;
+  }
+  return parsed.data;
+}
+
 function toSummary(
   data: AuditData,
   personaBySlug: Map<string, PersonaRecord>
@@ -69,24 +108,30 @@ export async function getAuditIndexForUser(
   personaSlugs: string[]
 ): Promise<AuditSummary[]> {
   if (personaSlugs.length === 0) return [];
-  const readableSlugs = await expandReadableSlugs(personaSlugs);
   const [rows, allPersonas] = await Promise.all([
     db
-      .select({ slug: audits.slug, data: audits.data })
-      .from(audits)
-      .where(inArray(audits.persona, readableSlugs))
-      .orderBy(desc(audits.timestamp)),
+      .select({
+        slug: reactions.slug,
+        type: experiences.type,
+        reactionPersona: reactions.personaSlug,
+        reviewData: reactions.reviewData,
+        emailData: experiences.emailData,
+        qaFindings: experiences.qaFindings,
+        assets: experiences.assets,
+        performance: experiences.performance,
+        receivedAt: experiences.receivedAt,
+      })
+      .from(reactions)
+      .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
+      .where(inArray(reactions.personaSlug, personaSlugs))
+      .orderBy(desc(experiences.receivedAt)),
     getAllPersonas(),
   ]);
   const personaBySlug = new Map(allPersonas.map((p) => [p.slug, p]));
   const out: AuditSummary[] = [];
   for (const r of rows) {
-    const parsed = auditDataSchema.safeParse(r.data);
-    if (parsed.success) {
-      out.push(toSummary(parsed.data, personaBySlug));
-    } else {
-      logDrift("index", r.slug, parsed.error);
-    }
+    const data = joinedRowToAuditData(r);
+    if (data) out.push(toSummary(data, personaBySlug));
   }
   return out;
 }
@@ -96,17 +141,23 @@ export async function getAuditBySlugForUser(
   personaSlugs: string[]
 ): Promise<AuditData | null> {
   if (personaSlugs.length === 0) return null;
-  const readableSlugs = await expandReadableSlugs(personaSlugs);
   const rows = await db
-    .select({ data: audits.data })
-    .from(audits)
-    .where(and(eq(audits.slug, slug), inArray(audits.persona, readableSlugs)))
+    .select({
+      slug: reactions.slug,
+      type: experiences.type,
+      reactionPersona: reactions.personaSlug,
+      reviewData: reactions.reviewData,
+      emailData: experiences.emailData,
+      qaFindings: experiences.qaFindings,
+      assets: experiences.assets,
+      performance: experiences.performance,
+    })
+    .from(reactions)
+    .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
+    .where(
+      and(eq(reactions.slug, slug), inArray(reactions.personaSlug, personaSlugs))
+    )
     .limit(1);
   if (rows.length === 0) return null;
-  const parsed = auditDataSchema.safeParse(rows[0].data);
-  if (!parsed.success) {
-    logDrift("detail", slug, parsed.error);
-    return null;
-  }
-  return parsed.data;
+  return joinedRowToAuditData(rows[0]);
 }
