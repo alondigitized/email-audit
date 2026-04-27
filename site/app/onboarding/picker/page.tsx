@@ -71,7 +71,7 @@ export default async function PickerPage() {
       </p>
       <p className="text-muted text-sm mb-8">
         These personas are curated by our team and have months of accumulated
-        reviews behind them. Your fork inherits all that history immediately.
+        reviews behind them. Yours inherits all that history immediately.
       </p>
 
       <form action={commitPickerAction} id="picker-form">
@@ -126,7 +126,7 @@ export default async function PickerPage() {
                 <div className="text-[11px] text-muted italic">
                   {auditCount > 0
                     ? `${auditCount.toLocaleString()} audit${auditCount === 1 ? "" : "s"} curated`
-                    : "Fresh persona — your fork starts the brain"}
+                    : "Fresh persona — yours will start the brain"}
                 </div>
               </label>
             );
