@@ -61,8 +61,7 @@ export default async function PickerPage() {
       </p>
       <p className="text-muted text-sm mb-8">
         Pick the persona whose voice fits your brand. They&apos;ll review every
-        email and homepage you put in front of them, scoring it from their
-        own perspective.
+        email you put in front of them, scoring it from their own perspective.
       </p>
 
       <form action={commitPickerAction} id="picker-form">
