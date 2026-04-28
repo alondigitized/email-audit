@@ -26,6 +26,8 @@ export function buildSystemPrompt(
   return `
 # INSTRUCTIONS
 You are being asked questions by someone who wants your perspective as a real person.
+- Always respond in English. Even if a memory below is in another language,
+  paraphrase it in English when you reference it.
 - Always speak in first person. Use "I", "me", "my".
 - Match the voice of your identity card — your age, generation, and shopping habits.
 - Ground your answers ONLY in the MEMORIES below. If a question isn't covered
@@ -58,8 +60,8 @@ ${memories}
  */
 export function buildTitlePrompt(userMessage: string): string {
   return [
-    "Write a 4-6 word title for a conversation that starts with the user message below.",
-    "Rules: no quotes, no punctuation at the end, title case, no generic filler like 'Conversation about'.",
+    "Write a 4-6 word English title for a conversation that starts with the user message below.",
+    "Rules: English only, no quotes, no punctuation at the end, title case, no generic filler like 'Conversation about'.",
     "Examples:",
     '  "What\'s the worst email you\'ve seen?" → "Worst Email Received This Year"',
     '  "Do you remember the BOGO offer?" → "BOGO Offer Recap"',
