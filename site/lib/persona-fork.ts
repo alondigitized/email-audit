@@ -58,9 +58,17 @@ function randomSuffix(n: number): string {
   return out;
 }
 
-async function pickAvailableSlug(base: string): Promise<string> {
-  for (let attempt = 0; attempt < 4; attempt++) {
-    const candidate = attempt === 0 ? base : `${base}-${randomSuffix(4)}`;
+// Every persona gets a random tail. Embedding the tenant's brand name in
+// the inbox local-part (e.g. `diana-t-skechers@etell.app`) would let ESPs
+// detect the cross-brand context when the persona subscribes to a
+// competitor's email program and either suppress the subscription or
+// send altered content. The random suffix keeps slugs unique without
+// leaking tenancy.
+async function pickAvailableSlugRandom(stem: string): Promise<string> {
+  for (let attempt = 0; attempt < 6; attempt++) {
+    // 4 chars of base32-ish entropy = ~20 bits; collision odds for a
+    // single stem are vanishing.
+    const candidate = `${stem}-${randomSuffix(4)}`;
     const [existing] = await db
       .select({ id: personas.id })
       .from(personas)
@@ -68,9 +76,9 @@ async function pickAvailableSlug(base: string): Promise<string> {
       .limit(1);
     if (!existing) return candidate;
   }
-  // Astronomically unlikely; surface as a hard error rather than risk
-  // silently overwriting a legitimate persona.
-  throw new Error(`fork: could not allocate slug after 4 tries (base=${base})`);
+  throw new Error(
+    `fork: could not allocate random slug after 6 tries (stem=${stem})`
+  );
 }
 
 export async function forkTemplateForTenant(args: {
@@ -95,8 +103,10 @@ export async function forkTemplateForTenant(args: {
   if (!tpl.profile) throw new Error(`fork: template '${args.templateSlug}' has no profile`);
 
   const o = args.overrides;
-  const baseSlug = `${tpl.slug}-${args.tenantSlug}`;
-  const forkSlug = await pickAvailableSlug(baseSlug);
+  // Random suffix instead of `<template>-<tenant-slug>` so brands the fork
+  // subscribes to can't see the tenant in the inbox local-part. See
+  // pickAvailableSlugRandom for why.
+  const forkSlug = await pickAvailableSlugRandom(tpl.slug);
   const inbox = generateInboxAddress(forkSlug);
 
   // Deep-clone the template profile then layer overrides on top. Use
@@ -166,9 +176,12 @@ export async function forkTemplateForTenant(args: {
 // (matches the v3 design lock: forks/personas accumulate reactions only from
 // new mail, never inherit a template's voice).
 //
-// Slug shape mirrors the fork helper: <name-stem>-<tenant-slug>. The
-// per-tenant suffix prevents global slug collisions when two tenants generate
-// personas with similar names.
+// Slug shape: <name-stem>-<random-suffix>. We deliberately don't include
+// the tenant slug in the local-part because the inbox subscribes to brand
+// email programs (own + competitors); embedding the tenant brand name
+// (e.g. `diana-t-skechers@etell.app`) lets the competitor's ESP detect
+// the cross-brand context and either block the signup or send altered
+// content. Tenancy stays in the personas.tenant_id column.
 
 function slugifyName(name: string): string {
   return (
@@ -182,13 +195,14 @@ function slugifyName(name: string): string {
 
 export async function createTenantPersonaFromProposal(args: {
   tenantId: string;
+  /** Retained for symmetry with forkTemplateForTenant; unused in slug
+   *  generation now that we don't leak tenancy into the inbox local-part. */
   tenantSlug: string;
   proposal: PersonaProposal;
   ownDomain: string;
 }): Promise<ForkResult> {
   const p = args.proposal;
-  const baseSlug = `${slugifyName(p.name)}-${args.tenantSlug}`;
-  const slug = await pickAvailableSlug(baseSlug);
+  const slug = await pickAvailableSlugRandom(slugifyName(p.name));
   const inbox = generateInboxAddress(slug);
 
   const journeySite = args.ownDomain.startsWith("http")
