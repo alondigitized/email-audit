@@ -65,6 +65,16 @@ export async function signupAction(
   _prev: SignupResult | null,
   fd: FormData
 ): Promise<SignupResult> {
+  // Terms-of-use + privacy consent gate. Defends against a tampered client
+  // that strips the checkbox; the user row + tier_started_at timestamp
+  // serves as the consent record alongside this server check.
+  if (fd.get("agreed_terms") !== "1") {
+    return {
+      ok: false,
+      error: "You must agree to the Terms of Use and Privacy Policy to sign up.",
+    };
+  }
+
   const emailRaw = EmailSchema.safeParse(fd.get("email"));
   if (!emailRaw.success) {
     return { ok: false, error: "Enter a valid email address." };

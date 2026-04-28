@@ -24,7 +24,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const user = await requireUser();
   const audit = await getAuditBySlugForUser(slug, user.personas);
-  return { title: audit?.email.subject ?? "Audit" };
+  return {
+    title: audit?.email.subject ?? "Audit",
+    // Audit detail pages render copyrighted brand mail content for
+    // authed-internal review. Belt-and-suspenders against a misconfigured
+    // proxy ever exposing them to a crawler — proxy.ts already gates the
+    // route behind auth.
+    robots: { index: false, follow: false, nocache: true },
+  };
 }
 
 function TwoColLayout({

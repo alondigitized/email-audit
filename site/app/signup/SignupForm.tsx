@@ -4,12 +4,12 @@ import { useFormStatus } from "react-dom";
 import { useActionState, useState } from "react";
 import { signupAction, type SignupResult } from "./actions";
 
-function SubmitButton() {
+function SubmitButton({ disabled }: { disabled?: boolean }) {
   const { pending } = useFormStatus();
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={pending || disabled}
       className="w-full py-2.5 bg-accent text-white border-none rounded-xl text-[15px] cursor-pointer disabled:opacity-50"
     >
       {pending ? "Submitting…" : "Get on the waitlist"}
@@ -47,6 +47,7 @@ export default function SignupForm({ refCode }: { refCode: string | null }) {
     null
   );
   const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const clientError = clientCheck(email);
 
   if (state?.ok) {
@@ -80,7 +81,39 @@ export default function SignupForm({ refCode }: { refCode: string | null }) {
         autoFocus
         className="w-full py-2.5 px-3.5 border border-gray-200 rounded-xl text-[15px] mb-3 outline-none"
       />
-      <SubmitButton />
+      <label className="flex items-start gap-2 text-xs text-muted mb-3 cursor-pointer">
+        <input
+          type="checkbox"
+          name="agreed_terms"
+          value="1"
+          checked={agreed}
+          onChange={(e) => setAgreed(e.target.checked)}
+          required
+          className="mt-0.5 h-4 w-4 rounded border-gray-300 text-accent focus:ring-2 focus:ring-accent"
+        />
+        <span>
+          I agree to the{" "}
+          <a
+            href="/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-ink"
+          >
+            Terms of Use
+          </a>{" "}
+          and{" "}
+          <a
+            href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-ink"
+          >
+            Privacy Policy
+          </a>
+          .
+        </span>
+      </label>
+      <SubmitButton disabled={!agreed} />
     </form>
   );
 }
