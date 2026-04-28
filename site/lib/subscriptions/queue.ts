@@ -7,12 +7,18 @@ export async function enqueueSubscriptionJob(args: {
   personaSlug: string;
   brandDomain: string;
   inboxAddress: string;
-}): Promise<void> {
-  await db.insert(subscriptionJobs).values({
-    tenantId: args.tenantId,
-    personaSlug: args.personaSlug,
-    brandDomain: args.brandDomain.replace(/^https?:\/\//, "").replace(/\/.*$/, ""),
-    inboxAddress: args.inboxAddress,
-    status: "queued",
-  });
+}): Promise<string> {
+  const [row] = await db
+    .insert(subscriptionJobs)
+    .values({
+      tenantId: args.tenantId,
+      personaSlug: args.personaSlug,
+      brandDomain: args.brandDomain
+        .replace(/^https?:\/\//, "")
+        .replace(/\/.*$/, ""),
+      inboxAddress: args.inboxAddress,
+      status: "queued",
+    })
+    .returning({ id: subscriptionJobs.id });
+  return row.id;
 }

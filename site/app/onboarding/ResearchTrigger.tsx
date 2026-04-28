@@ -4,16 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { startWizardStep1Action } from "./actions";
 
-// Simulated phase ticker. The action is two parallel LLM calls (industry
-// classifier ~10s, competitor research ~30s) with no streamed progress;
-// phases are time-bucketed so the UI feels alive without lying about the
-// work. Total expected time ~30s, half the previous flow.
+// Simulated phase ticker. The action is one combined LLM call (~30s) with
+// no streamed progress; phases are time-bucketed so the UI feels alive
+// without lying about the work.
 const PHASES = [
   { atMs: 0, label: "Reading your homepage" },
-  { atMs: 4_000, label: "Classifying your industry" },
-  { atMs: 12_000, label: "Scanning competitors" },
-  { atMs: 22_000, label: "Matching curated personas" },
-  { atMs: 32_000, label: "Almost there — wrapping up" },
+  { atMs: 6_000, label: "Profiling your customers" },
+  { atMs: 16_000, label: "Picking competitors to benchmark" },
+  { atMs: 26_000, label: "Almost there — wrapping up" },
 ];
 
 function pickPhase(elapsedMs: number): number {
@@ -28,7 +26,7 @@ export function ResearchTrigger() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [elapsed, setElapsed] = useState(0);
-  const startedAtRef = useRef<number>(Date.now());
+  const startedAtRef = useRef<number>(0);
 
   useEffect(() => {
     let mounted = true;

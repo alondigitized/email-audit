@@ -1,178 +1,63 @@
 import { redirect } from "next/navigation";
-import { inArray, eq, and } from "drizzle-orm";
 import { z } from "zod";
-import { loadOnboardingState } from "@/lib/onboarding/state";
-import { CompetitorProposalSchema } from "@/lib/onboarding/research-prompt";
-import { db, personaTemplates } from "@/lib/db/client";
-import { commitPickerAction, regenerateResearchAction } from "../actions";
+import { loadOnboardingState, getUserDomain } from "@/lib/onboarding/state";
+import {
+  PersonaProposalSchema,
+  CompetitorProposalSchema,
+} from "@/lib/onboarding/research-prompt";
+import { ReviewForm } from "./ReviewForm";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Pick a persona · etell" };
+export const metadata = { title: "Review your bootstrap · etell" };
 
-export default async function PickerPage() {
+export default async function ReviewPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ error?: string }>;
+}) {
+  const sp = (await searchParams) ?? {};
   const state = await loadOnboardingState();
   if (state.personaSlug) redirect("/chat");
   const r = state.tenant.research;
-  if (!r?.industry || !r?.competitors) redirect("/onboarding");
+  if (!r?.personas || !r?.competitors) redirect("/onboarding");
 
-  const slugs = r.available_template_slugs ?? [];
-  if (slugs.length === 0) redirect("/onboarding/concierge");
-
-  const competitors = z.array(CompetitorProposalSchema).safeParse(r.competitors);
-  if (!competitors.success) redirect("/onboarding?error=corrupt");
-
-  const recCompetitor = r.recommended_competitor_idx ?? 0;
-
-  // Fetch templates. No audit-count credibility line in v3 — under the
-  // experience/reaction split, inherited reactions belong to the
-  // template persona's voice (Walker's reviews are Walker's, not yours).
-  // Surfacing them as "300 audits curated" was misleading; per the
-  // 2026-04-27 design lock the line is dropped entirely.
-  const templates = await db
-    .select({
-      slug: personaTemplates.slug,
-      name: personaTemplates.name,
-      short: personaTemplates.short,
-      profile: personaTemplates.profile,
-    })
-    .from(personaTemplates)
-    .where(
-      and(
-        inArray(personaTemplates.slug, slugs),
-        eq(personaTemplates.isActive, true)
-      )
-    );
-
-  if (templates.length === 0) redirect("/onboarding/concierge");
-
-  return (
-    <div className="max-w-4xl mx-auto py-12">
-      <div className="mb-3 px-3 py-1 inline-block rounded-full bg-sky-50 text-sky-700 text-xs font-medium tracking-wide uppercase">
-        Step 2 of 3
-      </div>
-      <h1 className="text-3xl font-bold mb-2">Pick your persona &amp; competitor</h1>
-      <p className="text-muted text-sm mb-1">
-        Industry: <strong>{r.industry}</strong>
-        {r.industry_confidence === "low" && (
-          <span className="ml-2 text-amber-700">
-            (low confidence — flag us if this is wrong)
-          </span>
-        )}
-      </p>
-      <p className="text-muted text-sm mb-8">
-        Pick the persona whose voice fits your brand. They&apos;ll review every
-        email you put in front of them, scoring it from their own perspective.
-      </p>
-
-      <form action={commitPickerAction} id="picker-form">
-        <SectionLabel>Personas</SectionLabel>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-          {templates.map((t, i) => {
-            const id = t.profile?.identity;
-            return (
-              <label
-                key={t.slug}
-                htmlFor={`template-${t.slug}`}
-                className="block bg-white border-2 border-gray-200 has-[:checked]:border-sky-500 rounded-2xl p-4 cursor-pointer transition-colors"
-              >
-                <input
-                  id={`template-${t.slug}`}
-                  type="radio"
-                  name="template_slug"
-                  value={t.slug}
-                  defaultChecked={i === 0}
-                  className="sr-only"
-                  required
-                />
-                <div className="flex items-baseline justify-between mb-1">
-                  <div className="font-semibold text-base">{t.name}</div>
-                  {i === 0 && (
-                    <span className="text-[10px] uppercase tracking-wide bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">
-                      ★ Recommended
-                    </span>
-                  )}
-                </div>
-                {id && (
-                  <div className="text-xs text-muted mb-2">
-                    {id.age} · {id.generation} · {id.gender}
-                  </div>
-                )}
-                {id?.style && (
-                  <p className="text-sm mb-2 line-clamp-3">{id.style}</p>
-                )}
-                {id?.focus_areas && (
-                  <div className="flex flex-wrap gap-1">
-                    {id.focus_areas.slice(0, 4).map((f) => (
-                      <span
-                        key={f}
-                        className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded"
-                      >
-                        {f}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </label>
-            );
-          })}
-        </div>
-
-        <SectionLabel>Competitor to benchmark against</SectionLabel>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
-          {competitors.data.map((c, i) => (
-            <label
-              key={i}
-              htmlFor={`competitor-${i}`}
-              className="block bg-white border-2 border-gray-200 has-[:checked]:border-sky-500 rounded-2xl p-4 cursor-pointer transition-colors"
-            >
-              <input
-                id={`competitor-${i}`}
-                type="radio"
-                name="competitor_idx"
-                value={i}
-                defaultChecked={i === recCompetitor}
-                className="sr-only"
-              />
-              <div className="flex items-baseline justify-between mb-1">
-                <div className="font-semibold text-base">{c.name}</div>
-                {i === recCompetitor && (
-                  <span className="text-[10px] uppercase tracking-wide bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">
-                    ★ Recommended
-                  </span>
-                )}
-              </div>
-              <div className="text-xs font-mono text-muted mb-2">{c.domain}</div>
-              <p className="text-sm line-clamp-2">{c.rationale}</p>
-            </label>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            type="submit"
-            className="px-5 py-2.5 bg-accent text-white font-semibold rounded-xl text-[15px]"
-          >
-            Continue →
-          </button>
-        </div>
-      </form>
-
-      <form action={regenerateResearchAction} className="mt-10">
-        <button
-          type="submit"
-          className="text-xs text-muted underline hover:text-sky-700"
-        >
-          Don&apos;t love these? Re-run step 1 →
-        </button>
-      </form>
-    </div>
+  const personasParse = z.array(PersonaProposalSchema).safeParse(r.personas);
+  const competitorsParse = z
+    .array(CompetitorProposalSchema)
+    .safeParse(r.competitors);
+  if (!personasParse.success || !competitorsParse.success) {
+    redirect("/onboarding?error=corrupt");
+  }
+  const personas = personasParse.data;
+  const competitors = competitorsParse.data;
+  const recommendedIdx = Math.max(
+    0,
+    Math.min(personas.length - 1, r.recommended_persona_idx ?? 0)
   );
-}
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+  const ownDomain = (await getUserDomain()) ?? state.tenant.name;
+
   return (
-    <div className="text-xs uppercase tracking-wide text-muted font-medium mb-2">
-      {children}
+    <div className="max-w-3xl mx-auto py-10">
+      <h1 className="text-3xl font-bold mb-2">Review your bootstrap</h1>
+      <p className="text-muted text-sm mb-8 max-w-xl">
+        Pick which persona will represent {ownDomain} and which email programs
+        their inbox should be enrolled in. You can fine-tune the persona&apos;s
+        identity below before continuing.
+      </p>
+
+      {sp.error && (
+        <div className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 mb-4">
+          {sp.error}
+        </div>
+      )}
+
+      <ReviewForm
+        personas={personas}
+        competitors={competitors}
+        recommendedIdx={recommendedIdx}
+        ownDomain={ownDomain}
+      />
     </div>
   );
 }

@@ -16,7 +16,6 @@ export type OnboardingState = {
     plan: "waitlisted" | "free" | "pro" | "banned";
     name: string;
     research: TenantOnboardingResearch | null;
-    competitorTarget: { name: string; domain: string; rationale: string } | null;
   };
   user: {
     id: string;
@@ -24,7 +23,7 @@ export type OnboardingState = {
     isAdmin: boolean;
   };
   // Slug of the wizard's primary persona (one per tenant on free tier).
-  // Null until /onboarding/edit commits the row.
+  // Null until /onboarding/review commits the row.
   personaSlug: string | null;
 };
 
@@ -43,7 +42,6 @@ export async function loadOnboardingState(): Promise<OnboardingState> {
       plan: tenants.plan,
       name: tenants.name,
       research: tenants.onboardingResearch,
-      competitorTarget: tenants.competitorTarget,
     })
     .from(tenants)
     .where(eq(tenants.id, u.tenantId))
@@ -67,10 +65,6 @@ export async function loadOnboardingState(): Promise<OnboardingState> {
       plan: t.plan,
       name: t.name,
       research: (t.research ?? null) as TenantOnboardingResearch | null,
-      competitorTarget:
-        (t.competitorTarget as
-          | { name: string; domain: string; rationale: string }
-          | null) ?? null,
     },
     user: { id: u.id, email: u.email, isAdmin: u.isAdmin },
     personaSlug: p?.slug ?? null,
