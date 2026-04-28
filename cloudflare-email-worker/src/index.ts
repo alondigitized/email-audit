@@ -108,7 +108,12 @@ export default {
 
     // 3. Parse for the structured payload. Pass the buffer (not the
     // already-consumed stream) so postal-mime works.
-    let parsed: { subject?: string; html?: string; text?: string };
+    let parsed: {
+      subject?: string;
+      html?: string;
+      text?: string;
+      from?: { address?: string; name?: string };
+    };
     try {
       parsed = await PostalMime.parse(rawBuf);
     } catch (err) {
@@ -116,9 +121,22 @@ export default {
       parsed = { subject: "", html: "", text: "" };
     }
 
+    // Prefer the visible RFC822 From: header (e.g. "Sally Beauty
+    // <sallybeauty@em.sallybeauty.com>") over Cloudflare's `message.from`,
+    // which exposes the SMTP envelope-from / Return-Path. ESPs use VERP-
+    // style envelope-froms (`bounce-<encoded-id>@bounce.<domain>`) for
+    // bounce attribution; surfacing those in the audit UI is misleading
+    // because users see "bounce.em.sallybeauty.com" instead of the brand
+    // they actually received mail from. Fall back to envelope-from if the
+    // visible From is somehow missing.
+    const visibleFrom = parsed.from?.name
+      ? `"${parsed.from.name}" <${parsed.from.address ?? message.from}>`
+      : parsed.from?.address ?? message.from;
+
     const payload = {
       to: message.to,
-      from: message.from,
+      from: visibleFrom,
+      envelopeFrom: message.from,
       messageId,
       subject: parsed.subject ?? message.headers.get("subject") ?? null,
       html: parsed.html ?? null,

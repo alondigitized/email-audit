@@ -22,7 +22,13 @@ export const dynamic = "force-dynamic";
 
 const InboundSchema = z.object({
   to: z.string().email().max(254),
-  from: z.string().email().max(254),
+  // From is the visible RFC822 From: header — may include display name
+  // (e.g. `"Sally Beauty" <sallybeauty@em.sallybeauty.com>`), so we don't
+  // .email()-validate it. The domain is extracted from the angle-addr
+  // below for fromDomain. envelopeFrom (SMTP MAIL FROM) carries the
+  // VERP/bounce return-path and is kept for diagnostics.
+  from: z.string().min(1).max(998),
+  envelopeFrom: z.string().min(1).max(998).optional(),
   messageId: z.string().nullable().optional(),
   subject: z.string().max(998).nullable().optional(),
   html: z.string().nullable().optional(),
@@ -30,6 +36,14 @@ const InboundSchema = z.object({
   rawKey: z.string().nullable().optional(),
   receivedAt: z.string().datetime().optional(),
 });
+
+// Pull the angle-addr out of an RFC822 From string. Examples:
+//   `"Sally Beauty" <sallybeauty@em.sallybeauty.com>` → sallybeauty@em.sallybeauty.com
+//   `bounce-XXX@bounce.em.sallybeauty.com`            → bounce-XXX@bounce.em.sallybeauty.com
+function extractAddress(s: string): string {
+  const m = s.match(/<([^>]+)>/);
+  return (m ? m[1] : s).trim();
+}
 
 function unauthorized() {
   return new NextResponse("Unauthorized", { status: 401 });
@@ -84,9 +98,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, dropped: true });
   }
 
-  const fromAt = from.lastIndexOf("@");
+  const fromEmail = extractAddress(from).toLowerCase();
+  const fromAt = fromEmail.lastIndexOf("@");
   const fromDomain =
-    fromAt >= 0 ? from.slice(fromAt + 1).toLowerCase() : "unknown";
+    fromAt >= 0 ? fromEmail.slice(fromAt + 1) : "unknown";
 
   // Idempotent insert. (persona_slug, message_id) is indexed but not
   // unique-constrained, so we de-dupe at insert time with a manual lookup
@@ -111,7 +126,9 @@ export async function POST(req: NextRequest) {
     personaSlug: slug,
     tenantId: persona.tenantId,
     toAddress: to.toLowerCase(),
-    fromAddress: from.toLowerCase(),
+    // Store the full visible From string (possibly with display name)
+    // so audit-pipeline's parseDisplayName can recover the brand.
+    fromAddress: from,
     fromDomain,
     subject: subject ?? null,
     messageId: messageId ?? null,
