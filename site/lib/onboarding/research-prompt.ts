@@ -35,9 +35,8 @@ export const CompetitorProposalSchema = z.object({
 
 export const ResearchOutputSchema = z.object({
   personas: z.array(PersonaProposalSchema).length(3),
-  competitors: z.array(CompetitorProposalSchema).length(5),
+  competitors: z.array(CompetitorProposalSchema).length(2),
   recommended_persona_idx: z.number().int().min(0).max(2),
-  recommended_competitor_idx: z.number().int().min(0).max(4),
 });
 
 export type PersonaProposal = z.infer<typeof PersonaProposalSchema>;
@@ -56,7 +55,7 @@ export function buildResearchPrompt(args: {
 
 ${sitePart}Your job is to propose:
 - 3 distinct customer personas (different age + life stage + shopping motivation), one of which you recommend as the highest-leverage starter persona for this brand.
-- 5 close competitors who target the same kind of buyer, one of which you recommend as the most natural head-to-head comparison.
+- 2 close competitors who target the same kind of buyer. The user will be invited to subscribe their persona's inbox to the email programs of these competitors, so pick brands the persona would genuinely want to receive marketing from.
 
 Personas must be concrete people, not segments. Each persona is a real-feeling individual with a first name + last initial.
 
@@ -88,13 +87,12 @@ Output a SINGLE JSON object with EXACTLY these keys and no others:
       "domain": "<example.com>",                              // valid lowercase domain
       "rationale": "<1–2 sentence explanation of customer overlap>"
     },
-    ...                                                       // exactly 5 competitors
+    { ... }                                                   // exactly 2 competitors
   ],
-  "recommended_persona_idx": <0 | 1 | 2>,                     // INDEX into personas[]
-  "recommended_competitor_idx": <0 | 1 | 2 | 3 | 4>           // INDEX into competitors[]
+  "recommended_persona_idx": <0 | 1 | 2>                      // INDEX into personas[]
 }
 
-CRITICAL: use EXACTLY the field names above. Do not rename "rationale" to "rationale_for_overlap" or anything else. Do not return brand NAMES for the recommended fields — return the integer INDEX into the array.
+CRITICAL: use EXACTLY the field names above. Do not rename "rationale" to "rationale_for_overlap" or anything else. Do not return brand NAMES for "recommended_persona_idx" — return the integer INDEX into the array.
 
 Return ONLY the JSON object. No prose, no markdown fences, no apology.`;
 }

@@ -104,12 +104,8 @@ function mockResearchOutput() {
     competitors: [
       { name: "Crocs", domain: "crocs.com", rationale: "Same comfort-first audience overlap." },
       { name: "HOKA", domain: "hoka.com", rationale: "Shared performance-walker buyer." },
-      { name: "New Balance", domain: "newbalance.com", rationale: "Comfort + lifestyle crossover." },
-      { name: "Allbirds", domain: "allbirds.com", rationale: "Same casual-comfort positioning." },
-      { name: "Vionic", domain: "vionicshoes.com", rationale: "Direct arch-support overlap." },
     ],
     recommended_persona_idx: 0,
-    recommended_competitor_idx: 0,
   };
 }
 
@@ -249,13 +245,13 @@ async function main() {
       }
       step("Claude research call returned", true, `${Date.now() - t0}ms`);
     }
-    step("3 personas + 5 competitors", research.personas.length === 3 && research.competitors.length === 5);
+    step("3 personas + 2 competitors", research.personas.length === 3 && research.competitors.length === 2);
     const personaParse = z.array(PersonaProposalSchema).safeParse(research.personas);
     const competitorParse = z.array(CompetitorProposalSchema).safeParse(research.competitors);
     step("persona shape matches zod", personaParse.success);
     step("competitor shape matches zod", competitorParse.success);
     console.log(`     recommended persona: ${research.personas[research.recommended_persona_idx].name}`);
-    console.log(`     recommended competitor: ${research.competitors[research.recommended_competitor_idx].name} (${research.competitors[research.recommended_competitor_idx].domain})`);
+    console.log(`     recommended competitor: ${research.competitors[0].name} (${research.competitors[0].domain})`);
 
     await db
       .update(tenants)
@@ -266,7 +262,6 @@ async function main() {
           personas: research.personas,
           competitors: research.competitors,
           recommended_persona_idx: research.recommended_persona_idx,
-          recommended_competitor_idx: research.recommended_competitor_idx,
         },
       })
       .where(eq(tenants.id, tenantId));
@@ -275,7 +270,7 @@ async function main() {
     // ── 4. Pick the recommended persona + competitor ──────────────────────
     console.log("\n4. picker commit");
     const chosenPersona = research.personas[research.recommended_persona_idx];
-    const chosenCompetitor = research.competitors[research.recommended_competitor_idx];
+    const chosenCompetitor = research.competitors[0];
     const otherPersonas = research.personas.filter(
       (_, i) => i !== research.recommended_persona_idx
     );
@@ -289,7 +284,6 @@ async function main() {
           personas: research.personas,
           competitors: research.competitors,
           recommended_persona_idx: research.recommended_persona_idx,
-          recommended_competitor_idx: research.recommended_competitor_idx,
           unlocked_proposals: otherPersonas,
         },
       })

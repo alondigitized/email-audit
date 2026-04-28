@@ -5,6 +5,7 @@ import {
   type PersonaProfile,
 } from "@/lib/schema/persona";
 import { generateInboxAddress } from "@/lib/inbox";
+import type { PersonaProposal } from "@/lib/onboarding/research-prompt";
 
 // Fork a curated persona_template into a tenant-scoped persona row. Reads
 // the template's profile, deep-clones it (so future template edits don't
@@ -22,8 +23,8 @@ import { generateInboxAddress } from "@/lib/inbox";
 // forkSlug, never at the template slug.
 
 export type ForkOverrides = {
-  // Identity overrides — anything the user edited in /onboarding/edit
-  // before submitting. Unset fields fall back to the template's value.
+  // Identity overrides — admin-supplied edits before forking. Unset fields
+  // fall back to the template's value.
   name?: string;
   age?: number;
   generation?: string;
@@ -152,6 +153,95 @@ export async function forkTemplateForTenant(args: {
     personaId: inserted.id,
     personaSlug: forkSlug,
     profile: merged,
+    inboxAddress: inbox.inbox_address,
+  };
+}
+
+// Public-funnel persona creation: no template, no fork. The wizard's research
+// step generates 3 fresh PersonaProposals via the LLM, the user picks one
+// (and optionally edits identity), and this helper writes the row directly.
+//
+// `templateSlug: null` is the IP-isolation signal — `expandReadableSlugs`
+// won't OR-match anything, so the persona's brain is genuinely empty on day 1
+// (matches the v3 design lock: forks/personas accumulate reactions only from
+// new mail, never inherit a template's voice).
+//
+// Slug shape mirrors the fork helper: <name-stem>-<tenant-slug>. The
+// per-tenant suffix prevents global slug collisions when two tenants generate
+// personas with similar names.
+
+function slugifyName(name: string): string {
+  return (
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 24) || "persona"
+  );
+}
+
+export async function createTenantPersonaFromProposal(args: {
+  tenantId: string;
+  tenantSlug: string;
+  proposal: PersonaProposal;
+  ownDomain: string;
+}): Promise<ForkResult> {
+  const p = args.proposal;
+  const baseSlug = `${slugifyName(p.name)}-${args.tenantSlug}`;
+  const slug = await pickAvailableSlug(baseSlug);
+  const inbox = generateInboxAddress(slug);
+
+  const journeySite = args.ownDomain.startsWith("http")
+    ? args.ownDomain
+    : `https://${args.ownDomain}`;
+
+  const profile: PersonaProfile = personaProfileSchema.parse({
+    schema_version: 1,
+    identity: {
+      name: p.name,
+      age: p.age,
+      generation: p.generation,
+      gender: p.gender,
+      style: p.style,
+      shopping_habits: p.shopping_habits,
+      tech_comfort: p.tech_comfort,
+      focus_areas: p.focus_areas,
+    },
+    journey: {
+      site: journeySite,
+      search_term: p.search_term,
+      category_path: p.category_path,
+      credentials_env_prefix: null,
+      targets: [],
+    },
+    agentmail: {
+      inbox_address: inbox.inbox_address,
+      inbox_id: inbox.inbox_id,
+      provisioned_at: inbox.provisioned_at,
+    },
+    onboarding: {},
+    color: null,
+    notes: null,
+    status: "active",
+  });
+
+  const short = p.name.split(/\s+/)[0] ?? slug;
+  const [inserted] = await db
+    .insert(personas)
+    .values({
+      slug,
+      name: p.name,
+      short,
+      profile,
+      tenantId: args.tenantId,
+      templateSlug: null,
+    })
+    .returning({ id: personas.id });
+
+  return {
+    personaId: inserted.id,
+    personaSlug: slug,
+    profile,
     inboxAddress: inbox.inbox_address,
   };
 }
