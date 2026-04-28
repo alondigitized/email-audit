@@ -10,6 +10,8 @@ import { deriveTenantState } from "@/lib/tenant";
 const PUBLIC_PREFIXES = [
   "/login",
   "/signup",
+  "/terms", // public-facing legal page; must be reachable pre-signup
+  "/privacy",
   "/r/", // referral landing pages
   "/waitlist-status",
   "/auth/verify", // two-step magic-link confirm page

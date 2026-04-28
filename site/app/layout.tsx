@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { TopNav } from "@/components/TopNav";
 import { TrialBanner } from "@/components/TrialBanner";
+import { Footer } from "@/components/Footer";
 import { currentUser } from "@/lib/dal";
 import { isAppEnabled } from "@/lib/apps";
 
@@ -44,6 +45,7 @@ export default async function RootLayout({
           />
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
