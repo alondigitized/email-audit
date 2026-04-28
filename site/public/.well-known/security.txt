@@ -1,0 +1,14 @@
+Contact: mailto:alon@etell.app
+Expires: 2027-04-28T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.etell.app/.well-known/security.txt
+Policy: https://www.etell.app/terms
+
+# Reporting:
+#   Email a description of the issue to alon@etell.app. Please include:
+#     - URL or endpoint affected
+#     - Reproduction steps
+#     - Impact
+#   Acknowledgment within 5 business days. We won't pursue legal action
+#   against good-faith research that respects user privacy and stays
+#   within the bounds of these guidelines.
