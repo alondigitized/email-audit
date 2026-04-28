@@ -63,6 +63,16 @@ export function ChatClient({
     setEditingTitle(false);
   }, [initialThreadId, initialThreadTitle]);
 
+  // Inter-thread navigation: when the user clicks a different thread in
+  // the sidebar, page.tsx re-renders with a new initialThreadId +
+  // initialMessages. Since the ChatClient is keyed stably per persona
+  // (no remount), we sync useChat's internal state here.
+  //
+  // Skip the reset when initialThreadId === threadIdRef.current — that
+  // happens after the first send commits a fresh thread and Next.js
+  // refreshes the URL: the in-memory useChat already has the user msg
+  // and is streaming the assistant, and we don't want to wipe that.
+
   // Map of message id -> retrieved slugs, populated from initialMessages and
   // from stream response headers (not currently exposed — we keep it as a
   // nice-to-have for initial messages only).
@@ -76,6 +86,9 @@ export function ChatClient({
   useEffect(() => {
     threadIdRef.current = threadId;
   }, [threadId]);
+
+  // (companion to the comment above — placed here so we have access to
+  // setMessages from the useChat hook below.)
 
   // Pre-warm the local LLM on mount so the first user message doesn't pay
   // the model-load cold-start tax. Fire-and-forget; failures are silent
@@ -108,6 +121,19 @@ export function ChatClient({
       router.refresh();
     },
   });
+
+  // Inter-thread navigation reset (see comment above threadIdRef block).
+  // initialMessages excluded from deps on purpose — its reference changes
+  // every render; we only want to act on real thread transitions.
+  useEffect(() => {
+    if (initialThreadId !== threadIdRef.current) {
+      setMessages(toUIMessages(initialMessages));
+      threadIdRef.current = initialThreadId;
+      setThreadId(initialThreadId);
+      setPendingText(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialThreadId, setMessages]);
 
   // Autoscroll to bottom on new messages.
   useEffect(() => {

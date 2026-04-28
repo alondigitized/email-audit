@@ -89,10 +89,13 @@ export default async function ChatPage({
       </div>
       <div className={`${chatVisibilityClass} h-full`}>
         <ChatClient
-          // Remount when the active thread changes so useChat picks up the
-          // new initialMessages — without this, navigating between threads
-          // leaves the chat pane showing the first thread's state forever.
-          key={threadId ?? "new"}
+          // Stable per-persona key. Inter-thread switching is handled
+          // inside ChatClient via an effect on initialThreadId — keying
+          // by threadId here would remount the component when
+          // commitChatThread → replaceState → router.refresh() updates
+          // the URL after the first send, wiping useChat's in-memory
+          // state and the user's just-sent bubble.
+          key={personaSlug}
           personaSlug={personaSlug}
           personaName={meta.name}
           auditCount={auditCount}
