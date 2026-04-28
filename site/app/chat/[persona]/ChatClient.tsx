@@ -314,9 +314,7 @@ export function ChatClient({
         )}
         {(isStreaming && messages[messages.length - 1]?.role === "user") ||
         (pendingText !== null && messages.length === 0) ? (
-          <div className="text-sm text-muted italic">
-            {personaName} is thinking…
-          </div>
+          <TypingIndicator personaName={personaName} />
         ) : null}
         {error && (
           <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
@@ -349,6 +347,33 @@ export function ChatClient({
         <div className="text-[11px] text-muted mt-1.5">
           Enter to send · Shift+Enter for newline
         </div>
+      </div>
+    </div>
+  );
+}
+
+function TypingIndicator({ personaName }: { personaName: string }) {
+  return (
+    <div className="flex justify-start" aria-live="polite">
+      <div className="flex items-center gap-2 bg-gray-100 text-ink rounded-2xl px-4 py-3">
+        <span className="sr-only">{personaName} is thinking</span>
+        <span className="flex gap-1" aria-hidden="true">
+          <span
+            className="block h-2 w-2 rounded-full bg-gray-500/70 animate-bounce"
+            style={{ animationDelay: "0ms" }}
+          />
+          <span
+            className="block h-2 w-2 rounded-full bg-gray-500/70 animate-bounce"
+            style={{ animationDelay: "150ms" }}
+          />
+          <span
+            className="block h-2 w-2 rounded-full bg-gray-500/70 animate-bounce"
+            style={{ animationDelay: "300ms" }}
+          />
+        </span>
+        <span className="text-xs text-muted">
+          {personaName} is thinking…
+        </span>
       </div>
     </div>
   );
