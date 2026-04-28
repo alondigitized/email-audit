@@ -50,6 +50,11 @@ export function ChatClient({
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState("");
   const [input, setInput] = useState("");
+  // Optimistic bubble shown during the createChatThreadAction round-trip on
+  // a fresh thread — without this, the textarea clears and nothing appears
+  // for 200-1500ms while the server action runs, which reads as "my message
+  // disappeared." Cleared as soon as useChat picks up the canonical bubble.
+  const [pendingText, setPendingText] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // Keep local title in sync when navigating between threads.
@@ -122,10 +127,15 @@ export function ChatClient({
     // known up-front — avoids relying on response headers that the AI SDK
     // v5 useChat hook no longer exposes.
     if (!threadIdRef.current) {
+      // Render the user bubble optimistically so the typed message doesn't
+      // vanish during the action round-trip. Cleared after sendMessage
+      // adds the canonical bubble to useChat's `messages`.
+      setPendingText(text);
       const result = await createChatThreadAction(personaSlug);
       if (!result.ok) {
-        // Surface as a normal error — useChat's error state is tied to its
-        // own request; this is a pre-flight failure, so just alert().
+        setPendingText(null);
+        // Restore the user's text so they can retry without retyping.
+        setInput(text);
         alert(result.error);
         return;
       }
@@ -140,6 +150,15 @@ export function ChatClient({
     sendMessage({ text });
   }, [input, isStreaming, sendMessage, personaSlug]);
 
+  // Clear the optimistic bubble once useChat has picked up the canonical
+  // user message. Without this the optimistic and the real bubble would
+  // briefly stack.
+  useEffect(() => {
+    if (pendingText !== null && messages.length > 0) {
+      setPendingText(null);
+    }
+  }, [messages.length, pendingText]);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -147,7 +166,7 @@ export function ChatClient({
     }
   };
 
-  const isEmpty = messages.length === 0;
+  const isEmpty = messages.length === 0 && pendingText === null;
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
@@ -248,25 +267,31 @@ export function ChatClient({
         {isEmpty ? (
           <EmptyState personaName={personaName} />
         ) : (
-          messages.map((m) => (
-            <MessageBubble
-              key={m.id}
-              role={m.role as "user" | "assistant"}
-              text={
-                m.parts
-                  ?.filter((p) => p.type === "text")
-                  .map((p) => ("text" in p ? p.text : ""))
-                  .join("") ?? ""
-              }
-              sources={sourcesById[m.id] ?? null}
-            />
-          ))
+          <>
+            {messages.map((m) => (
+              <MessageBubble
+                key={m.id}
+                role={m.role as "user" | "assistant"}
+                text={
+                  m.parts
+                    ?.filter((p) => p.type === "text")
+                    .map((p) => ("text" in p ? p.text : ""))
+                    .join("") ?? ""
+                }
+                sources={sourcesById[m.id] ?? null}
+              />
+            ))}
+            {pendingText !== null && messages.length === 0 && (
+              <MessageBubble role="user" text={pendingText} sources={null} />
+            )}
+          </>
         )}
-        {isStreaming && messages[messages.length - 1]?.role === "user" && (
+        {(isStreaming && messages[messages.length - 1]?.role === "user") ||
+        (pendingText !== null && messages.length === 0) ? (
           <div className="text-sm text-muted italic">
             {personaName} is thinking…
           </div>
-        )}
+        ) : null}
         {error && (
           <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
             Something went wrong. {error.message}
