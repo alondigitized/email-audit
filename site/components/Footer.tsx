@@ -12,6 +12,12 @@ export function Footer() {
           >
             Terms of Use
           </Link>
+          <Link
+            href="/privacy"
+            className="hover:text-ink transition-colors"
+          >
+            Privacy Policy
+          </Link>
         </nav>
       </div>
     </footer>

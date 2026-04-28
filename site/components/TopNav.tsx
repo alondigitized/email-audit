@@ -26,7 +26,7 @@ export function TopNav({
   // shouldn't expose authed tabs (Audits, Chat, Sign out) to unauthed visitors.
   // /onboarding is also hidden — first-time users should focus on the wizard,
   // not get distracted by Audits/Analysis tabs they haven't seen yet.
-  const PUBLIC_PATHS = ["/login", "/signup", "/terms", "/auth/", "/r/", "/onboarding"];
+  const PUBLIC_PATHS = ["/login", "/signup", "/terms", "/privacy", "/auth/", "/r/", "/onboarding"];
   if (PUBLIC_PATHS.some((p) => pathname === p.replace(/\/$/, "") || pathname.startsWith(p)))
     return null;
 
