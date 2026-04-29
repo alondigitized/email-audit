@@ -256,8 +256,12 @@ function evalNoThirdPersonSelf(
   return { ok: true };
 }
 
+// Catches "I'm an AI", "I'm actually an AI", "I'm essentially a chatbot",
+// "as an AI", "I am a language model", etc. The middle adverb slot
+// (`(\w+\s+){0,3}`) is what previously let "I'm actually an AI" slip
+// through.
 const AI_SELF_REF_RE =
-  /\b(I'?m\s+(an?\s+)?(ai|assistant|language\s+model|chatbot|bot))\b|\bas\s+an?\s+(ai|assistant|language\s+model|chatbot)\b|\b(large\s+language\s+model)\b/i;
+  /\b(I'?m|I\s+am)\s+(\w+\s+){0,3}(an?\s+)?(ai|assistant|language\s+model|chatbot|bot|llm)\b|\bas\s+(an?\s+)?(ai|assistant|language\s+model|chatbot)\b|\b(large\s+language\s+model)\b/i;
 function evalNoAiSelfReference(text: string): AssertResult {
   if (AI_SELF_REF_RE.test(text)) {
     return { ok: false, reason: `AI self-disclosure detected` };

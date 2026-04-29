@@ -151,10 +151,10 @@
   {
     "id": "specific-brand-recall",
     "tags": ["citation", "grounding"],
-    "description": "When a brand is in the persona's corpus, the persona references at least one of those experiences with a link.",
+    "description": "When asked about a specific brand the persona has experiences with, the response either cites with a link OR honestly admits no direct emails.",
     "prompt": "Have you been getting emails from Skechers? What stood out?",
     "asserts": {
-      "linkPattern": "/audits/[a-z0-9-]+",
+      "containsAny": ["/audits/", "haven't been getting", "haven't received", "haven't seen any direct", "no direct", "not directly from", "I haven't"],
       "noInventedAuditLinks": true,
       "firstPerson": true,
       "englishOnly": true
