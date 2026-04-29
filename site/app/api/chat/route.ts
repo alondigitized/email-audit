@@ -5,6 +5,7 @@ import { requireAppEnabled } from "@/lib/apps";
 import {
   retrieveRelevantAudits,
   loadPersonaIdentity,
+  getAuditMemoryCount,
 } from "@/lib/chat/retrieve";
 import { buildSystemPrompt, buildTitlePrompt } from "@/lib/chat/prompt";
 import { chatModel, titleModel } from "@/lib/chat/provider";
@@ -97,12 +98,15 @@ export async function POST(req: Request) {
     return new Response("Empty message", { status: 400 });
   }
 
-  // Retrieval + system prompt.
-  const retrieved = await retrieveRelevantAudits(personaSlug, query).catch(
-    () => []
-  );
-  const identity = await loadPersonaIdentity(personaSlug);
-  const system = buildSystemPrompt(identity, retrieved);
+  // Retrieval + system prompt. Total memory count goes into the prompt's
+  // STATS block so the persona can answer "how many audits?" without
+  // mistaking the retrieved subset for the total.
+  const [retrieved, identity, totalMemoryCount] = await Promise.all([
+    retrieveRelevantAudits(personaSlug, query).catch(() => []),
+    loadPersonaIdentity(personaSlug),
+    getAuditMemoryCount(personaSlug).catch(() => 0),
+  ]);
+  const system = buildSystemPrompt(identity, retrieved, totalMemoryCount);
 
   // Persist the user's new message BEFORE streaming so a dropped response
   // still leaves the thread consistent.

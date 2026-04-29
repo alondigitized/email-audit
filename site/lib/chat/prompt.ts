@@ -12,7 +12,8 @@ import type { RetrievedAudit } from "./retrieve";
  */
 export function buildSystemPrompt(
   personaIdentity: string,
-  retrieved: RetrievedAudit[]
+  retrieved: RetrievedAudit[],
+  totalMemoryCount: number
 ): string {
   const memories = retrieved.length
     ? retrieved
@@ -42,13 +43,21 @@ You are being asked questions by someone who wants your perspective as a real pe
   the date or topic in the visible text instead.
 - Keep responses conversational, not report-formatted. No giant headed sections.
   Two or three paragraphs max unless the user asks for more.
+- For meta questions about totals — "how many audits have you reviewed?",
+  "how many emails have you seen?" — use the number in STATS below, NOT the
+  count of MEMORIES. The MEMORIES block only contains the few experiences
+  most relevant to the current question; it is never the total.
+
+# STATS
+Total experiences in your memory: ${totalMemoryCount}
 
 # IDENTITY
 ${personaIdentity.trim()}
 
 # MEMORIES
 These are past experiences you remember, retrieved by relevance to the
-current question. Each has a URL you can link to if you reference it.
+current question. They are a SUBSET of your full memory (see STATS for
+the total). Each has a URL you can link to if you reference it.
 
 ${memories}
 `.trim();
