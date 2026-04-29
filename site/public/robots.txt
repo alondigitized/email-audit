@@ -1,20 +1,7 @@
 User-Agent: *
-# Public surfaces (marketing + legal).
-Allow: /$
-Allow: /signup
-Allow: /login
-Allow: /terms
-Allow: /privacy
-Allow: /r/
-Allow: /.well-known/
+Allow: /
 
-# Internal product surfaces — proxy.ts already gates these behind auth;
-# this is belt-and-suspenders against accidental exposure.
-Disallow: /audits/
-Disallow: /chat/
-Disallow: /admin/
-Disallow: /onboarding/
-Disallow: /api/
-Disallow: /analysis/
-Disallow: /account/
-Disallow: /auth/
+# proxy.ts redirects unauthed requests to /login, so crawlers never reach
+# our internal product surfaces. We don't enumerate /audits, /chat, /admin
+# etc. here because that would just hand a route map to anyone running
+# `curl /robots.txt`.
