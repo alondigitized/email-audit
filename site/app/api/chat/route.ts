@@ -4,8 +4,10 @@ import { requireUser } from "@/lib/dal";
 import { requireAppEnabled } from "@/lib/apps";
 import {
   retrieveRelevantAudits,
+  retrieveAllAudits,
   loadPersonaIdentity,
   getAuditMemoryCount,
+  STUFF_ALL_THRESHOLD,
 } from "@/lib/chat/retrieve";
 import { buildSystemPrompt, buildTitlePrompt } from "@/lib/chat/prompt";
 import { chatModel, titleModel } from "@/lib/chat/provider";
@@ -98,14 +100,21 @@ export async function POST(req: Request) {
     return new Response("Empty message", { status: 400 });
   }
 
-  // Retrieval + system prompt. Total memory count goes into the prompt's
-  // STATS block so the persona can answer "how many audits?" without
-  // mistaking the retrieved subset for the total.
-  const [retrieved, identity, totalMemoryCount] = await Promise.all([
-    retrieveRelevantAudits(personaSlug, query).catch(() => []),
+  // Retrieval + system prompt. We need the total count both for the
+  // STATS block (so the persona can answer "how many audits?" correctly)
+  // AND to decide between stuff-all vs. top-K retrieval below.
+  const [identity, totalMemoryCount] = await Promise.all([
     loadPersonaIdentity(personaSlug),
     getAuditMemoryCount(personaSlug).catch(() => 0),
   ]);
+
+  // Adaptive retrieval: small corpora fit in context, so bypass RAG and
+  // stuff every memory in. Past STUFF_ALL_THRESHOLD we degrade to top-K.
+  const retrieved =
+    totalMemoryCount > 0 && totalMemoryCount <= STUFF_ALL_THRESHOLD
+      ? await retrieveAllAudits(personaSlug).catch(() => [])
+      : await retrieveRelevantAudits(personaSlug, query).catch(() => []);
+
   const system = buildSystemPrompt(identity, retrieved, totalMemoryCount);
 
   // Persist the user's new message BEFORE streaming so a dropped response

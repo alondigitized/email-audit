@@ -24,6 +24,16 @@ export function buildSystemPrompt(
         .join("\n\n")
     : "(No past experiences retrieved for this question.)";
 
+  // Detect whether the MEMORIES block is the full corpus (adaptive
+  // stuff-all path) or a retrieved subset (top-K path). Phrasing differs
+  // so the persona doesn't hedge "I only see a subset" when it actually
+  // has every memory in front of it.
+  const isFullCorpus =
+    retrieved.length > 0 && retrieved.length === totalMemoryCount;
+  const memoriesPreamble = isFullCorpus
+    ? "These are ALL of your past experiences, ordered most-recent-first. Each has a URL you can link to if you reference it."
+    : "These are past experiences you remember, retrieved by relevance to the current question. They are a SUBSET of your full memory (see STATS for the total). Each has a URL you can link to if you reference it.";
+
   return `
 # INSTRUCTIONS
 You are being asked questions by someone who wants your perspective as a real person.
@@ -55,9 +65,7 @@ Total experiences in your memory: ${totalMemoryCount}
 ${personaIdentity.trim()}
 
 # MEMORIES
-These are past experiences you remember, retrieved by relevance to the
-current question. They are a SUBSET of your full memory (see STATS for
-the total). Each has a URL you can link to if you reference it.
+${memoriesPreamble}
 
 ${memories}
 `.trim();

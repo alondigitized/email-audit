@@ -12,6 +12,14 @@ export const RETRIEVAL_K_SEMANTIC = 6;
 export const RETRIEVAL_K_RECENT = 4;
 export const RETRIEVAL_K = RETRIEVAL_K_SEMANTIC + RETRIEVAL_K_RECENT;
 
+// When a persona's reaction corpus is at or below this threshold, the chat
+// route skips RAG entirely and stuffs every memory into the prompt. At
+// 1800 chars per indexed_text snippet, 60 memories ≈ 108k chars ≈ 27k
+// tokens — comfortable headroom inside qwen2.5:14b's 128k window for
+// identity + conversation + the reply itself. Above this, retrieval falls
+// back to the top-K semantic + recency hybrid below.
+export const STUFF_ALL_THRESHOLD = 60;
+
 export type RetrievedAudit = {
   slug: string;
   snippet: string;
@@ -86,6 +94,37 @@ export async function retrieveRelevantAudits(
     });
   }
   return merged;
+}
+
+/**
+ * Stuff-all variant: skip retrieval, return every reviewed reaction for
+ * this persona, ordered most-recent-first. Used when the persona's corpus
+ * is small enough to fit in context comfortably (see STUFF_ALL_THRESHOLD).
+ *
+ * Bypasses the embedding query, so the first chat turn is faster than
+ * the RAG path AND every memory is grounded — the persona never has to
+ * say "I don't remember seeing that" when they actually did.
+ */
+export async function retrieveAllAudits(
+  personaSlug: string
+): Promise<RetrievedAudit[]> {
+  const url = process.env.DATABASE_URL ?? process.env.DATABASE_URL_UNPOOLED;
+  if (!url) throw new Error("DATABASE_URL not set");
+  const sql = neon(url);
+  const rows = (await sql`
+    SELECT r.slug AS audit_slug, re.indexed_text
+    FROM reaction_embedding re
+    JOIN reaction r ON r.id = re.reaction_id
+    JOIN experience e ON e.id = r.experience_id
+    WHERE re.persona = ${personaSlug}
+    ORDER BY e.received_at DESC
+  `) as Array<{ audit_slug: string; indexed_text: string }>;
+  return rows.map((r) => ({
+    slug: r.audit_slug,
+    snippet: r.indexed_text,
+    // Score is irrelevant in stuff-all mode — kept for type compatibility.
+    score: 0,
+  }));
 }
 
 /**
