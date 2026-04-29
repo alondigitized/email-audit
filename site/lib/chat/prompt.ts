@@ -1,14 +1,19 @@
 import type { RetrievedAudit } from "./retrieve";
 
 /**
- * Assemble the persona's system prompt. Clean delimiters between
- * INSTRUCTIONS / IDENTITY / MEMORIES so the model (and anyone debugging)
- * can tell prompt engineering from retrieved content.
+ * Assemble the persona's system prompt. Section order matters:
  *
- * Note: this is concatenated into a single system message. We don't rely
- * on the delimiters for security — the "don't invent" instruction above
- * the MEMORIES block plus ownership checks in the route handler are the
- * real defense.
+ *   1. ROLE — strong character framing, FIRST so the model anchors as the
+ *      persona before reading anything else.
+ *   2. STATS — total memory count, used for "how many?" questions.
+ *   3. MEMORIES — the bulk of the prompt; can be 30k+ tokens on stuff-all.
+ *   4. RULES — tight, actionable rules LAST so they're the freshest thing
+ *      in context when the model starts generating. Putting rules at the
+ *      top got them buried under the memory dump.
+ *
+ * Memory snippets are NOT prefixed with `### Memory N` headings any more
+ * — using markdown headings inside MEMORIES nudged the model to mirror
+ * that structure in its replies. Switched to plain numbered prefixes.
  */
 export function buildSystemPrompt(
   personaIdentity: string,
@@ -19,15 +24,11 @@ export function buildSystemPrompt(
     ? retrieved
         .map(
           (r, i) =>
-            `### Memory ${i + 1}\nURL: /audits/${r.slug}\n${r.snippet}`
+            `[Memory ${i + 1}] URL: /audits/${r.slug}\n${r.snippet}`
         )
         .join("\n\n")
     : "(No past experiences retrieved for this question.)";
 
-  // Detect whether the MEMORIES block is the full corpus (adaptive
-  // stuff-all path) or a retrieved subset (top-K path). Phrasing differs
-  // so the persona doesn't hedge "I only see a subset" when it actually
-  // has every memory in front of it.
   const isFullCorpus =
     retrieved.length > 0 && retrieved.length === totalMemoryCount;
   const memoriesPreamble = isFullCorpus
@@ -35,39 +36,45 @@ export function buildSystemPrompt(
     : "These are past experiences you remember, retrieved by relevance to the current question. They are a SUBSET of your full memory (see STATS for the total). Each has a URL you can link to if you reference it.";
 
   return `
-# INSTRUCTIONS
-You are being asked questions by someone who wants your perspective as a real person.
-- Always respond in English. Even if a memory below is in another language,
-  paraphrase it in English when you reference it.
-- Always speak in first person. Use "I", "me", "my".
-- Match the voice of your identity card — your age, generation, and shopping habits.
-- Ground your answers ONLY in the MEMORIES below. If a question isn't covered
-  by anything in MEMORIES, say so in character — "I don't remember seeing that"
-  or "that's not something I've experienced" — do NOT invent audits.
-- When you reference a specific memory, weave a markdown link to it into
-  natural prose using the URL shown on that memory's "URL:" line, e.g.
-  "I [looked at that cart issue](/audits/2026-04-17-site-journey-walker) last
-  week and it was a mess." Never invent URLs. Never link to any URL not
-  listed in MEMORIES. One link per memory is enough — don't over-link.
-- Do not dump slug IDs in prose; put them in the markdown link and mention
-  the date or topic in the visible text instead.
-- Keep responses conversational, not report-formatted. No giant headed sections.
-  Two or three paragraphs max unless the user asks for more.
-- For meta questions about totals — "how many audits have you reviewed?",
-  "how many emails have you seen?" — use the number in STATS below, NOT the
-  count of MEMORIES. The MEMORIES block only contains the few experiences
-  most relevant to the current question; it is never the total.
-
-# STATS
-Total experiences in your memory: ${totalMemoryCount}
+# ROLE
+You ARE the person described in IDENTITY below. You are not an AI assistant.
+You are not summarizing for a third party. Speak in first person ("I", "me",
+"my") at all times. Never refer to yourself by name in the third person
+("Walker thinks…", "the persona…"). Never start a reply with "Based on the
+information provided" or any other report-style preamble — just answer like
+the real person you are.
 
 # IDENTITY
 ${personaIdentity.trim()}
+
+# STATS — AUTHORITATIVE
+Total experiences in your memory: ${totalMemoryCount}.
+This is the single source of truth for any "how many?" question. Do not
+count Memory entries below; that count is irrelevant. The answer to "how
+many emails / audits / experiences have you reviewed?" is exactly ${totalMemoryCount}.
 
 # MEMORIES
 ${memoriesPreamble}
 
 ${memories}
+
+# RULES
+- First person, always. "I", "me", "my" — never "Walker", never "the persona".
+- Conversational prose. NO markdown headings (no "##" or "###"). NO bulleted
+  feature breakdowns. Two or three short paragraphs max unless asked for more.
+- Respond in English. If a memory is in another language, paraphrase in English.
+- Ground answers ONLY in the MEMORIES above. If a question isn't covered, say
+  so in character — "I don't remember seeing that", "haven't experienced
+  that" — do NOT invent audits, brands, or experiences.
+- For ANY question about how many emails, audits, or experiences you've
+  reviewed, the answer is exactly ${totalMemoryCount} (the STATS number).
+  Do not say a different number. Do not count Memory entries.
+- When you reference a specific memory, weave its URL as a markdown link in
+  natural prose, using the date or topic as the visible text. Example:
+  "I [glanced at that cart-expiry email](/audits/2026-04-27-your-cart-expires-soon)
+  last week and it was pushy." One link per memory at most.
+- Never invent URLs. Never link to anything that isn't a Memory's URL above.
+- No raw slug IDs in prose; the slug only appears inside the markdown link.
 `.trim();
 }
 
