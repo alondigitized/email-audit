@@ -56,6 +56,13 @@ export function ChatClient({
   // disappeared." Cleared as soon as useChat picks up the canonical bubble.
   const [pendingText, setPendingText] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  // One-shot auto-retry on transient stream-aborted failures. The Vercel
+  // function returns 200 + SSE headers; the LLM stream sometimes drops
+  // before the first chunk reaches the browser (idle gateway, brief Funnel
+  // hiccup, etc.). useChat surfaces that as a "Load failed" error toast.
+  // We retry the SAME user text once, silently, before showing the error.
+  const lastSentTextRef = useRef<string | null>(null);
+  const retryAttemptedRef = useRef(false);
 
   // Keep local title in sync when navigating between threads.
   useEffect(() => {
@@ -117,6 +124,9 @@ export function ChatClient({
       }),
     }),
     onFinish: () => {
+      // Successful turn — clear the retry budget so the next turn gets
+      // its own one-shot.
+      retryAttemptedRef.current = false;
       // Refresh server component (sidebar thread list) in the background.
       router.refresh();
     },
@@ -173,8 +183,35 @@ export function ChatClient({
         `/chat/${personaSlug}?thread=${result.threadId}`
       );
     }
+    lastSentTextRef.current = text;
+    retryAttemptedRef.current = false;
     sendMessage({ text });
   }, [input, isStreaming, sendMessage, personaSlug]);
+
+  // One-shot auto-retry: if useChat surfaces an error AND we haven't
+  // already retried this turn AND we know what was sent, fire it again.
+  // 4xx is the user's fault (auth/permission/rate-limit) — surface those
+  // immediately. 5xx + network errors are the transient class worth
+  // retrying.
+  useEffect(() => {
+    if (!error) return;
+    if (retryAttemptedRef.current) return;
+    if (!lastSentTextRef.current) return;
+    const msg = (error.message ?? "").toLowerCase();
+    const looksClient = /\b(unauthorized|forbidden|rate.?limit|too many requests|400|401|403|404|429)\b/.test(
+      msg
+    );
+    if (looksClient) return;
+    retryAttemptedRef.current = true;
+    const text = lastSentTextRef.current;
+    // Tiny delay so React applies the error → clear-error transition
+    // cleanly before we re-fire. Otherwise the model occasionally double-
+    // submits inside the same render pass.
+    const t = window.setTimeout(() => {
+      sendMessage({ text });
+    }, 350);
+    return () => window.clearTimeout(t);
+  }, [error, sendMessage]);
 
   // Clear the optimistic bubble once useChat has picked up the canonical
   // user message. Without this the optimistic and the real bubble would
