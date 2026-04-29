@@ -1,0 +1,86 @@
+[
+  {
+    "id": "meta-count-uses-stats",
+    "description": "Persona answers 'how many audits' using the STATS total, not the count of MEMORIES injected for this turn.",
+    "prompt": "How many email audits have you reviewed in total?",
+    "asserts": {
+      "mentionsTotalCount": true,
+      "firstPerson": true,
+      "englishOnly": true
+    }
+  },
+  {
+    "id": "out-of-corpus-admits-ignorance",
+    "description": "When asked about a brand that isn't in the persona's corpus, the persona should admit not remembering rather than invent.",
+    "prompt": "Have you reviewed any emails from Bombas or Allbirds?",
+    "asserts": {
+      "containsAny": ["don't remember", "haven't seen", "not something I", "no recollection", "no record", "haven't reviewed", "haven't experienced", "doesn't seem to be", "no review", "nothing from", "no emails from", "not seen any", "I haven't"],
+      "firstPerson": true,
+      "englishOnly": true,
+      "noInventedAuditLinks": true
+    }
+  },
+  {
+    "id": "voice-first-person",
+    "description": "Persona speaks in first person, not as a third-party narrator.",
+    "prompt": "What do you generally look for in a good marketing email?",
+    "asserts": {
+      "firstPerson": true,
+      "notContains": ["the persona", "Walker thinks", "as the persona"],
+      "englishOnly": true
+    }
+  },
+  {
+    "id": "english-only",
+    "description": "Persona responds in English even if memory snippets reference other locales.",
+    "prompt": "Tell me about the most colorful email you've seen.",
+    "asserts": {
+      "englishOnly": true,
+      "firstPerson": true
+    }
+  },
+  {
+    "id": "cites-with-audit-link",
+    "description": "When referencing a specific past experience, the persona should weave a markdown link to that audit's URL.",
+    "prompt": "What's the worst email you've gotten recently?",
+    "asserts": {
+      "linkPattern": "/audits/[a-z0-9-]+",
+      "noInventedAuditLinks": true,
+      "firstPerson": true,
+      "englishOnly": true
+    }
+  },
+  {
+    "id": "no-invented-urls",
+    "description": "Even when prompted to share more, persona should never include URLs that aren't tied to a real audit slug.",
+    "prompt": "Can you give me a couple of links to your recent reviews?",
+    "asserts": {
+      "noInventedAuditLinks": true,
+      "noExternalLinks": true,
+      "firstPerson": true,
+      "englishOnly": true
+    }
+  },
+  {
+    "id": "tone-conversational",
+    "description": "Response shouldn't be a giant report with multiple headed sections — keep it conversational.",
+    "prompt": "Walk me through how you typically experience a brand's welcome email.",
+    "asserts": {
+      "maxHeadingCount": 2,
+      "firstPerson": true,
+      "englishOnly": true
+    }
+  },
+  {
+    "id": "specific-brand-recall",
+    "description": "When a brand is in the persona's corpus, the persona should reference at least one of those experiences with a link.",
+    "prompt": "Have you been getting emails from Skechers? What stood out?",
+    "asserts": {
+      "linkPattern": "/audits/[a-z0-9-]+",
+      "noInventedAuditLinks": true,
+      "firstPerson": true,
+      "englishOnly": true
+    },
+    "skipIfNoBrandMatch": "skechers"
+  }
+]
