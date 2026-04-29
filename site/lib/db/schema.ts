@@ -607,6 +607,51 @@ export const reactionEmbedding = pgTable(
   })
 );
 
+// Stage C — chat-thread reflections. After a thread settles (no new
+// activity for ~30 min), a background job summarizes the conversation
+// into a first-person "reflection" memory the persona retains. The
+// summary is embedded and surfaced alongside reactions during retrieval,
+// so the persona's chat output continues to feed its own brain.
+//
+// One reflection per thread. Re-running the summarizer on the same
+// thread updates the row in place (`reactedThroughMessageCount` tracks
+// how far the summary covers; if new turns arrive after, we re-summarize).
+export const chatReflection = pgTable(
+  "chat_reflection",
+  {
+    threadId: uuid("thread_id")
+      .primaryKey()
+      .references(() => chatThread.id, { onDelete: "cascade" }),
+    personaSlug: text("persona_slug").notNull(),
+    tenantId: uuid("tenant_id").references(() => tenants.id, {
+      onDelete: "restrict",
+    }),
+    // 4-8 word title, like a vault note title.
+    title: text("title").notNull(),
+    // 2-4 paragraph first-person summary. Same content gets mirrored to
+    // vaults/{persona}/reflections/{date}-{thread-id}.md.
+    summary: text("summary").notNull(),
+    // Embedding of `summary` so chat retrieval can semantic-match against
+    // the reflection alongside reaction embeddings.
+    embedding: vector("embedding", { dimensions: 1024 }).notNull(),
+    // How many messages this summary covers. If a thread grows past this
+    // count (user comes back, asks more questions), the reflector re-runs.
+    reflectedThroughMessageCount: integer("reflected_through_message_count")
+      .notNull()
+      .default(0),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    embeddingIdx: index("chat_reflection_hnsw_idx").using(
+      "hnsw",
+      t.embedding.op("vector_cosine_ops")
+    ),
+    personaIdx: index("chat_reflection_persona_idx").on(t.personaSlug),
+    tenantIdx: index("chat_reflection_tenant_idx").on(t.tenantId),
+  })
+);
+
 // Per-user access to apps. Row present = user has access to that app
 // (in addition to the global app_flag being on). Admins bypass both gates.
 export const userAppAccess = pgTable(
