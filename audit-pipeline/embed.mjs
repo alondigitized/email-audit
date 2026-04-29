@@ -70,10 +70,11 @@ export function buildIndexedText(audit, personaSlug) {
     parts.push(String(review.raw_markdown).slice(0, 800));
   }
 
-  // mxbai-embed-large has a 512-token context (~1800-2000 chars). Stay well
-  // below to keep a margin for the framing header. Other embedding models
-  // accept more; bump this cap if you swap to a longer-context model.
-  const MAX_CHARS = 1800;
+  // mxbai-embed-large has a 512-token context (~1800-2000 chars). 1800 was
+  // the original cap but ~1% of inputs (dense markdown, multi-byte chars)
+  // still tripped the 400 "input length exceeds the context length" error.
+  // 1500 leaves a margin without hurting recall meaningfully.
+  const MAX_CHARS = 1500;
   return parts.join('\n').slice(0, MAX_CHARS);
 }
 
@@ -141,10 +142,31 @@ export async function upsertAuditEmbedding({
  * reaction_embedding row. The audit_embedding write stays during the
  * 7-day legacy retention window post-XR-F.
  */
+// Embed-step retry policy: 3 attempts, 2s/4s back-off. Most embed
+// failures are "Ollama just loaded the chat model and embed is queued"
+// or transient Tailscale-Funnel hiccups — both clear up in seconds.
+// Without retries here, ~1% of audits silently land without embeddings
+// and never enter chat retrieval until a manual backfill.
+const EMBED_RETRY_DELAYS_MS = [0, 2_000, 4_000];
+
+async function embedWithRetry(text) {
+  let lastErr;
+  for (let i = 0; i < EMBED_RETRY_DELAYS_MS.length; i++) {
+    if (EMBED_RETRY_DELAYS_MS[i] > 0)
+      await new Promise((r) => setTimeout(r, EMBED_RETRY_DELAYS_MS[i]));
+    try {
+      return await embed(text);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr;
+}
+
 export async function embedAndStoreAudit({ audit, personaSlug, reactionId = null }) {
   try {
     const text = buildIndexedText(audit, personaSlug);
-    const vec = await embed(text);
+    const vec = await embedWithRetry(text);
     await upsertAuditEmbedding({
       auditSlug: audit.slug,
       persona: personaSlug,
@@ -173,7 +195,14 @@ export async function embedAndStoreAudit({ audit, personaSlug, reactionId = null
     }
     return { embedded: true };
   } catch (err) {
-    return { embedded: false, reason: err instanceof Error ? err.message : String(err) };
+    const reason = err instanceof Error ? err.message : String(err);
+    // Surface loudly — silent failure is what created the 362-row
+    // embedding backlog. Caller may still swallow, but at least the
+    // log line shows up for monitoring.
+    console.error(
+      `embedAndStoreAudit: PERMANENT FAIL for ${audit?.slug ?? 'unknown'} (${personaSlug}) after retries: ${reason.slice(0, 200)}`,
+    );
+    return { embedded: false, reason };
   }
 }
 

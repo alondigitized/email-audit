@@ -14,11 +14,18 @@ export const RETRIEVAL_K = RETRIEVAL_K_SEMANTIC + RETRIEVAL_K_RECENT;
 
 // When a persona's reaction corpus is at or below this threshold, the chat
 // route skips RAG entirely and stuffs every memory into the prompt. At
-// 1800 chars per indexed_text snippet, 60 memories ≈ 108k chars ≈ 27k
-// tokens — comfortable headroom inside qwen2.5:14b's 128k window for
-// identity + conversation + the reply itself. Above this, retrieval falls
-// back to the top-K semantic + recency hybrid below.
-export const STUFF_ALL_THRESHOLD = 60;
+// ~MAX_SNIPPET_CHARS per memory and 40 memories, that's roughly 100-160k
+// chars ≈ 25-40k tokens — comfortable headroom inside qwen2.5:14b's 128k
+// window for identity + conversation + the reply itself. Above this,
+// retrieval falls back to the top-K semantic + recency hybrid below.
+export const STUFF_ALL_THRESHOLD = 40;
+
+// Per-memory snippet cap. Chat retrieval used to use only the 1800-char
+// indexed_text (the embedding source). We now hydrate from the full
+// review markdown stored in `reaction.review_data.raw_markdown` — the same
+// content the persona's vault note carries. Capped here so a stuff-all
+// prompt with 40 memories stays under ~160k chars.
+const MAX_SNIPPET_CHARS = 4000;
 
 export type RetrievedAudit = {
   slug: string;
@@ -60,9 +67,17 @@ export async function retrieveRelevantAudits(
   // when the fork inherits the experience corpus — the fork's persona
   // has its own voice and answering as Walker would be misleading.
   // No expandReadableSlugs() — read-isolated.
+  //
+  // We pull `review_data->>'raw_markdown'` alongside `indexed_text` — the
+  // raw markdown is the full review the persona wrote (same content as
+  // the Obsidian vault note). It's much richer than the 1800-char
+  // indexed_text and gives the persona real context to reason over at
+  // chat time.
   const [semantic, recent] = (await Promise.all([
     sql`
-      SELECT r.slug AS audit_slug, re.indexed_text,
+      SELECT r.slug AS audit_slug,
+             re.indexed_text,
+             r.review_data->>'raw_markdown' AS raw_markdown,
              (re.embedding <=> ${literal}::vector) AS distance
       FROM reaction_embedding re
       JOIN reaction r ON r.id = re.reaction_id
@@ -71,7 +86,9 @@ export async function retrieveRelevantAudits(
       LIMIT ${kSemantic}
     `,
     sql`
-      SELECT r.slug AS audit_slug, re.indexed_text,
+      SELECT r.slug AS audit_slug,
+             re.indexed_text,
+             r.review_data->>'raw_markdown' AS raw_markdown,
              (re.embedding <=> ${literal}::vector) AS distance
       FROM reaction_embedding re
       JOIN reaction r ON r.id = re.reaction_id
@@ -80,7 +97,14 @@ export async function retrieveRelevantAudits(
       ORDER BY e.received_at DESC
       LIMIT ${kRecent}
     `,
-  ])) as Array<Array<{ audit_slug: string; indexed_text: string; distance: number }>>;
+  ])) as Array<
+    Array<{
+      audit_slug: string;
+      indexed_text: string;
+      raw_markdown: string | null;
+      distance: number;
+    }>
+  >;
 
   const seen = new Set<string>();
   const merged: RetrievedAudit[] = [];
@@ -89,21 +113,34 @@ export async function retrieveRelevantAudits(
     seen.add(r.audit_slug);
     merged.push({
       slug: r.audit_slug,
-      snippet: r.indexed_text,
+      snippet: pickSnippet(r.raw_markdown, r.indexed_text),
       score: Number(r.distance),
     });
   }
   return merged;
 }
 
+// Prefer the rich review markdown (same content as the Obsidian vault
+// note) over the compressed indexed_text. Falls back to indexed_text when
+// raw_markdown is missing — pre-v3 reactions or any audit whose review
+// pipeline didn't carry the full markdown forward.
+function pickSnippet(
+  rawMarkdown: string | null,
+  indexedText: string
+): string {
+  const source = (rawMarkdown ?? "").trim() || indexedText;
+  return source.slice(0, MAX_SNIPPET_CHARS);
+}
+
 /**
- * Stuff-all variant: skip retrieval, return every reviewed reaction for
- * this persona, ordered most-recent-first. Used when the persona's corpus
- * is small enough to fit in context comfortably (see STUFF_ALL_THRESHOLD).
+ * Stuff-all variant: skip retrieval entirely, return every reaction the
+ * persona has authored, ordered most-recent-first. Used when the
+ * corpus is small enough to fit in context (see STUFF_ALL_THRESHOLD).
  *
- * Bypasses the embedding query, so the first chat turn is faster than
- * the RAG path AND every memory is grounded — the persona never has to
- * say "I don't remember seeing that" when they actually did.
+ * Walks `reaction` directly — does NOT go through `reaction_embedding` —
+ * so a reaction without an embedding (pre-v3 row, embed step crashed)
+ * still lands in the persona's memory. The chat is grounded by reading
+ * the full review markdown, which doesn't depend on embeddings at all.
  */
 export async function retrieveAllAudits(
   personaSlug: string
@@ -112,33 +149,38 @@ export async function retrieveAllAudits(
   if (!url) throw new Error("DATABASE_URL not set");
   const sql = neon(url);
   const rows = (await sql`
-    SELECT r.slug AS audit_slug, re.indexed_text
-    FROM reaction_embedding re
-    JOIN reaction r ON r.id = re.reaction_id
+    SELECT r.slug AS audit_slug,
+           r.review_data->>'raw_markdown' AS raw_markdown
+    FROM reaction r
     JOIN experience e ON e.id = r.experience_id
-    WHERE re.persona = ${personaSlug}
+    WHERE r.persona_slug = ${personaSlug}
     ORDER BY e.received_at DESC
-  `) as Array<{ audit_slug: string; indexed_text: string }>;
+  `) as Array<{ audit_slug: string; raw_markdown: string | null }>;
   return rows.map((r) => ({
     slug: r.audit_slug,
-    snippet: r.indexed_text,
+    snippet: pickSnippet(r.raw_markdown, ""),
     // Score is irrelevant in stuff-all mode — kept for type compatibility.
     score: 0,
   }));
 }
 
 /**
- * Count how many audits are embedded for a persona — surfaced in the UI
- * as a "knows X audits" indicator.
+ * Count how many experiences a persona remembers — surfaced as the
+ * "Remembers N audits" indicator in the chat header AND as the STATS
+ * total in the system prompt.
+ *
+ * Counts `reaction` rows (every review the persona has written), NOT
+ * `reaction_embedding` rows. A reaction without an embedding is still a
+ * memory: stuff-all retrieval reads the review markdown directly, and
+ * the embedding-backed top-K path will pick it up the moment the daemon
+ * (re)embeds. Counting reactions makes "memory" align with "reviewed."
  */
 export async function getAuditMemoryCount(personaSlug: string): Promise<number> {
   const url = process.env.DATABASE_URL ?? process.env.DATABASE_URL_UNPOOLED;
   if (!url) return 0;
   const sql = neon(url);
-  // V3: count own reactions only. The "knows X" indicator reflects the
-  // requesting persona's actual reviewed corpus, not inherited ones.
   const rows = (await sql`
-    SELECT COUNT(*)::int AS n FROM reaction_embedding WHERE persona = ${personaSlug}
+    SELECT COUNT(*)::int AS n FROM reaction WHERE persona_slug = ${personaSlug}
   `) as Array<{ n: number }>;
   return Number(rows[0]?.n ?? 0);
 }
