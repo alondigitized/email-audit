@@ -78,6 +78,12 @@ export default async function AdminPage() {
               Subscriptions →
             </a>
             <a
+              href="/admin/email-health"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Email health →
+            </a>
+            <a
               href="/admin/personas"
               className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
             >
