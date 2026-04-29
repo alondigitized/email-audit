@@ -22,13 +22,33 @@ export function TopNav({
 }) {
   const pathname = usePathname() || "/";
 
-  // Public/marketing routes — no nav. The signup funnel and the auth flow
-  // shouldn't expose authed tabs (Audits, Chat, Sign out) to unauthed visitors.
-  // /onboarding is also hidden — first-time users should focus on the wizard,
-  // not get distracted by Audits/Analysis tabs they haven't seen yet.
-  const PUBLIC_PATHS = ["/login", "/signup", "/terms", "/privacy", "/auth/", "/r/", "/onboarding"];
-  if (PUBLIC_PATHS.some((p) => pathname === p.replace(/\/$/, "") || pathname.startsWith(p)))
+  // Auth-flow / wizard routes — fully hidden header so the user focuses on
+  // the form/funnel.
+  const HIDDEN_NAV_PATHS = ["/login", "/signup", "/auth/", "/r/", "/onboarding"];
+  if (
+    HIDDEN_NAV_PATHS.some(
+      (p) => pathname === p.replace(/\/$/, "") || pathname.startsWith(p)
+    )
+  )
     return null;
+
+  // Legal pages — render the wordmark only (clickable home link), no tabs.
+  // Visitors may be unauthed (linked from the footer on the login page),
+  // and we don't want to imply an authed UI with tabs + Sign out.
+  const WORDMARK_ONLY_PATHS = ["/terms", "/privacy"];
+  if (
+    WORDMARK_ONLY_PATHS.some(
+      (p) => pathname === p || pathname.startsWith(p + "/")
+    )
+  ) {
+    return (
+      <div className="mb-5 pt-2 text-center">
+        <Link href="/" className="inline-block">
+          <Wordmark />
+        </Link>
+      </div>
+    );
+  }
 
   function isActive(href: string): boolean {
     if (href === "/") {
