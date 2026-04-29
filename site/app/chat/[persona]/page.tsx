@@ -7,11 +7,6 @@ import { getAuditMemoryCount } from "@/lib/chat/retrieve";
 import { ChatClient } from "./ChatClient";
 import { ThreadList } from "./ThreadList";
 
-export const metadata = {
-  // Persona threads contain private conversational content; never indexable.
-  robots: { index: false, follow: false, nocache: true },
-};
-
 export const dynamic = "force-dynamic";
 
 type Search = { [key: string]: string | string[] | undefined };
