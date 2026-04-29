@@ -14,6 +14,7 @@
     "db:grant": "tsx --env-file=.env.local scripts/grant-persona.ts",
     "invite": "tsx --env-file=.env.local scripts/invite.ts",
     "test:reset-tenant": "tsx --env-file=.env.local scripts/reset-test-tenant.ts",
+    "test:chat-eval": "tsx --env-file=.env.local scripts/test-chat-eval.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
