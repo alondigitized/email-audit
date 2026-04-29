@@ -73,7 +73,7 @@ export async function retrieveRelevantAudits(
   // the Obsidian vault note). It's much richer than the 1800-char
   // indexed_text and gives the persona real context to reason over at
   // chat time.
-  const [semantic, recent] = (await Promise.all([
+  const [semantic, recent, reflections] = (await Promise.all([
     sql`
       SELECT r.slug AS audit_slug,
              re.indexed_text,
@@ -97,14 +97,39 @@ export async function retrieveRelevantAudits(
       ORDER BY e.received_at DESC
       LIMIT ${kRecent}
     `,
-  ])) as Array<
+    // Stage C — pull semantically-relevant reflections from prior chat
+    // threads. Top-2 is a soft cap so reflections augment but don't
+    // dominate the ground-truth audit memories.
+    sql`
+      SELECT cr.thread_id::text AS thread_id,
+             cr.title           AS title,
+             cr.summary         AS summary,
+             (cr.embedding <=> ${literal}::vector) AS distance
+      FROM chat_reflection cr
+      WHERE cr.persona_slug = ${personaSlug}
+      ORDER BY cr.embedding <=> ${literal}::vector
+      LIMIT 2
+    `,
+  ])) as [
     Array<{
       audit_slug: string;
       indexed_text: string;
       raw_markdown: string | null;
       distance: number;
-    }>
-  >;
+    }>,
+    Array<{
+      audit_slug: string;
+      indexed_text: string;
+      raw_markdown: string | null;
+      distance: number;
+    }>,
+    Array<{
+      thread_id: string;
+      title: string;
+      summary: string;
+      distance: number;
+    }>,
+  ];
 
   const seen = new Set<string>();
   const merged: RetrievedAudit[] = [];
@@ -115,6 +140,20 @@ export async function retrieveRelevantAudits(
       slug: r.audit_slug,
       snippet: pickSnippet(r.raw_markdown, r.indexed_text),
       score: Number(r.distance),
+    });
+  }
+  // Reflections are surfaced as memories with `reflection-{thread-id}`
+  // pseudo-slugs. The prompt rule "never invent URLs" still holds because
+  // these slugs aren't a /audits/ URL — the persona links them only when
+  // the user asks about the conversation itself.
+  for (const ref of reflections) {
+    const slug = `reflection-${ref.thread_id}`;
+    if (seen.has(slug)) continue;
+    seen.add(slug);
+    merged.push({
+      slug,
+      snippet: `Past reflection — ${ref.title}\n\n${ref.summary}`,
+      score: Number(ref.distance),
     });
   }
   return merged;
@@ -148,20 +187,43 @@ export async function retrieveAllAudits(
   const url = process.env.DATABASE_URL ?? process.env.DATABASE_URL_UNPOOLED;
   if (!url) throw new Error("DATABASE_URL not set");
   const sql = neon(url);
-  const rows = (await sql`
-    SELECT r.slug AS audit_slug,
-           r.review_data->>'raw_markdown' AS raw_markdown
-    FROM reaction r
-    JOIN experience e ON e.id = r.experience_id
-    WHERE r.persona_slug = ${personaSlug}
-    ORDER BY e.received_at DESC
-  `) as Array<{ audit_slug: string; raw_markdown: string | null }>;
-  return rows.map((r) => ({
+  const [rows, reflections] = (await Promise.all([
+    sql`
+      SELECT r.slug AS audit_slug,
+             r.review_data->>'raw_markdown' AS raw_markdown
+      FROM reaction r
+      JOIN experience e ON e.id = r.experience_id
+      WHERE r.persona_slug = ${personaSlug}
+      ORDER BY e.received_at DESC
+    `,
+    // Stage C — every reflection from this persona's prior settled
+    // chat threads is part of the brain in stuff-all mode.
+    sql`
+      SELECT cr.thread_id::text AS thread_id,
+             cr.title           AS title,
+             cr.summary         AS summary,
+             cr.updated_at      AS updated_at
+      FROM chat_reflection cr
+      WHERE cr.persona_slug = ${personaSlug}
+      ORDER BY cr.updated_at DESC
+    `,
+  ])) as [
+    Array<{ audit_slug: string; raw_markdown: string | null }>,
+    Array<{ thread_id: string; title: string; summary: string }>,
+  ];
+  const out: RetrievedAudit[] = rows.map((r) => ({
     slug: r.audit_slug,
     snippet: pickSnippet(r.raw_markdown, ""),
-    // Score is irrelevant in stuff-all mode — kept for type compatibility.
     score: 0,
   }));
+  for (const ref of reflections) {
+    out.push({
+      slug: `reflection-${ref.thread_id}`,
+      snippet: `Past reflection — ${ref.title}\n\n${ref.summary}`,
+      score: 0,
+    });
+  }
+  return out;
 }
 
 /**
