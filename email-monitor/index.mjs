@@ -562,7 +562,7 @@ function updatePublishedManifest(entry) {
 // DB row, writes the persona vault note, and git-pushes only the vault
 // markdown. Filesystem audit.json / index.json / manifest.json are runtime
 // artifacts, gitignored.
-async function publishSite({ slug, persona, artifactDir }) {
+async function publishSite({ slug, persona, artifactDir, messageId = null, rawKey = null }) {
   if (!slug || !artifactDir) {
     throw new Error('publishSite requires { slug, persona, artifactDir }');
   }
@@ -624,7 +624,7 @@ async function publishSite({ slug, persona, artifactDir }) {
   // upsert above (the legacy site read path still works on audit).
   let reactionId = null;
   try {
-    const r = await upsertExperienceAndReaction({ slug, data });
+    const r = await upsertExperienceAndReaction({ slug, data, messageId, rawKey });
     reactionId = r.reactionId;
   } catch (err) {
     log('experience+reaction dual-write failed (non-fatal)', {
@@ -803,6 +803,7 @@ async function processMessage(client, state, inboxId, persona, message, source =
         slug: artifacts.slug,
         persona,
         artifactDir: artifacts.dir,
+        messageId: fullMessage.messageId || fullMessage.message_id || null,
       });
       published = true;
     } catch (err) {
@@ -933,6 +934,13 @@ async function processCloudflareEmail(row) {
         slug: artifacts.slug,
         persona: personaSlug,
         artifactDir: artifacts.dir,
+        // The Cloudflare-fed path threads message_id + raw_key through so
+        // experience.message_id / .raw_key carry the same identifiers as
+        // the source email_message row, eliminating the historic
+        // duplicate-data problem (the two tables stored the same email
+        // with no FK linking them).
+        messageId: row.message_id || null,
+        rawKey: row.raw_key || null,
       });
       published = true;
     } catch (err) {

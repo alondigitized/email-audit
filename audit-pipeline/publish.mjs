@@ -136,7 +136,12 @@ export async function deleteAuditRow(slug) {
  * (persona_slug, message_id WHERE NOT NULL) dedups Cloudflare retries
  * without blocking legacy NULL rows.
  */
-export async function upsertExperienceAndReaction({ slug, data, messageId = null }) {
+export async function upsertExperienceAndReaction({
+  slug,
+  data,
+  messageId = null,
+  rawKey = null,
+}) {
   const parsed = auditDataSchema.parse(data);
   const persona = parsed.persona ?? null;
   if (!persona) {
@@ -184,6 +189,7 @@ export async function upsertExperienceAndReaction({ slug, data, messageId = null
         type = ${type},
         brand_domain = ${brandDomain},
         message_id = ${messageId},
+        raw_key = ${rawKey},
         received_at = ${timestamp},
         email_data = ${JSON.stringify(parsed.email ?? {})}::jsonb,
         qa_findings = ${JSON.stringify(parsed.qa ?? null)}::jsonb,
@@ -204,10 +210,10 @@ export async function upsertExperienceAndReaction({ slug, data, messageId = null
   } else {
     const expRows = await sql`
       INSERT INTO experience
-        (persona_slug, tenant_id, type, brand_domain, message_id, received_at,
+        (persona_slug, tenant_id, type, brand_domain, message_id, raw_key, received_at,
          email_data, qa_findings, assets, performance)
       VALUES
-        (${persona}, ${tenantId}, ${type}, ${brandDomain}, ${messageId}, ${timestamp},
+        (${persona}, ${tenantId}, ${type}, ${brandDomain}, ${messageId}, ${rawKey}, ${timestamp},
          ${JSON.stringify(parsed.email ?? {})}::jsonb,
          ${JSON.stringify(parsed.qa ?? null)}::jsonb,
          ${JSON.stringify(parsed.assets ?? {})}::jsonb,
