@@ -15,6 +15,7 @@ import {
   dbConfigured,
 } from '../audit-pipeline/publish.mjs';
 import { extractAll } from '../audit-pipeline/extract.mjs';
+import { scheduleEngagement } from '../audit-pipeline/engagement.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -645,6 +646,22 @@ async function publishSite({ slug, persona, artifactDir, messageId = null, rawKe
     });
   } catch (err) {
     log('vault write failed (non-fatal)', { slug, error: err.message });
+  }
+
+  // Phase 2b: engagement simulation. Pixel-fire + occasional CTA click
+  // a few minutes later, to keep the persona's address off ESP graymail
+  // suppression lists. Fire-and-forget — uses setTimeout internally so
+  // it doesn't block this poll's progression.
+  try {
+    const htmlPath = path.join(artifactDir, 'message.html');
+    const html = fs.existsSync(htmlPath)
+      ? fs.readFileSync(htmlPath, 'utf8')
+      : '';
+    const brandDomain =
+      data?.email?.from?.match(/@([^>\s]+)/)?.[1]?.toLowerCase() ?? null;
+    scheduleEngagement({ html, brandDomain, slug });
+  } catch (err) {
+    log('engagement schedule failed (non-fatal)', { slug, error: err.message });
   }
 
   // Phase 3: git push the vault markdown. Site no longer needs to redeploy
