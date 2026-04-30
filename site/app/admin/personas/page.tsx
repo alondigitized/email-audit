@@ -61,7 +61,114 @@ export default async function AdminPersonasPage() {
         </Link>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+      {/* Mobile: stacked card list */}
+      <ul className="sm:hidden flex flex-col gap-3">
+        {personas.length === 0 ? (
+          <li className="bg-white border border-gray-200 rounded-2xl p-6 text-center text-muted text-sm">
+            No personas yet.{" "}
+            <Link href="/admin/personas/new" className="underline">
+              Create one
+            </Link>
+            .
+          </li>
+        ) : (
+          personas.map((p) => {
+            const color = personaColor(p.slug, p.profile);
+            const count = auditCounts.get(p.slug) ?? 0;
+            const s = p.lastStatus;
+            const lastAuditDays = daysAgo(s?.last_audit_at ?? null);
+            const urlResults = s?.url_validation?.results ?? [];
+            const urlBad = urlResults.filter(
+              (r) =>
+                r.status === "error" ||
+                (typeof r.status === "number" && r.status >= 400)
+            ).length;
+            const urlOk = urlResults.filter(
+              (r) =>
+                typeof r.status === "number" &&
+                r.status >= 200 &&
+                r.status < 400
+            ).length;
+            const urlBadge =
+              urlResults.length === 0
+                ? { label: "—", cls: "text-muted" }
+                : urlBad > 0
+                  ? {
+                      label: `${urlBad} bad`,
+                      cls: "bg-rose-50 text-rose-800 border-rose-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+                    }
+                  : {
+                      label: `${urlOk} ok`,
+                      cls: "bg-emerald-50 text-emerald-800 border-emerald-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+                    };
+            const editHref =
+              p.profile?.status === "draft"
+                ? `/admin/personas/new/${p.slug}/identity`
+                : `/admin/personas/${p.slug}`;
+
+            return (
+              <li
+                key={p.slug}
+                className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm"
+              >
+                <div className="flex items-start gap-2.5 mb-2">
+                  <span
+                    className="mt-1.5 inline-block w-2.5 h-2.5 rounded-full shrink-0"
+                    style={{ backgroundColor: color }}
+                    aria-hidden
+                  />
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold flex items-center gap-2 flex-wrap">
+                      <span>{p.name}</span>
+                      {p.profile?.status === "draft" && (
+                        <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">
+                          DRAFT
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-xs text-muted break-all">{p.slug}</div>
+                  </div>
+                  <Link
+                    href={editHref}
+                    className="shrink-0 text-sky-700 hover:text-sky-900 underline text-xs font-semibold"
+                  >
+                    {p.profile?.status === "draft" ? "Resume →" : "Edit"}
+                  </Link>
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div>
+                    <div className="text-muted text-[10px] uppercase tracking-wide">
+                      Last audit
+                    </div>
+                    <div className="text-gray-800">
+                      {relativeLabel(lastAuditDays)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-muted text-[10px] uppercase tracking-wide">
+                      URLs
+                    </div>
+                    <div>
+                      <span className={urlBadge.cls}>{urlBadge.label}</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-muted text-[10px] uppercase tracking-wide">
+                      Audits
+                    </div>
+                    <div className="tabular-nums text-gray-800">
+                      {count.toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            );
+          })
+        )}
+      </ul>
+
+      {/* Desktop: table */}
+      <div className="hidden sm:block bg-white border border-gray-200 rounded-2xl overflow-x-auto shadow-sm">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200 text-muted text-xs uppercase tracking-wide">
             <tr>
