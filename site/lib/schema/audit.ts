@@ -19,6 +19,12 @@ import {
   qaReportSchema,
   qaSummarySchema,
   reviewSectionsSchema,
+  inventoryAuditSchema,
+  inventoryPlpSchema,
+  inventoryStyleSchema,
+  inventoryVariantSchema,
+  inventorySizeSchema,
+  inventoryTotalsSchema,
   parseAuditData,
   safeParseAuditData,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -36,6 +42,12 @@ export {
   qaReportSchema,
   qaSummarySchema,
   reviewSectionsSchema,
+  inventoryAuditSchema,
+  inventoryPlpSchema,
+  inventoryStyleSchema,
+  inventoryVariantSchema,
+  inventorySizeSchema,
+  inventoryTotalsSchema,
   parseAuditData,
   safeParseAuditData,
 };
@@ -50,3 +62,5 @@ export type QaSummary = z.infer<typeof qaSummarySchema>;
 export type QaReport = z.infer<typeof qaReportSchema>;
 export type AuditData = z.infer<typeof auditDataSchema>;
 export type AuditSummary = z.infer<typeof auditSummarySchema>;
+export type InventoryAudit = z.infer<typeof inventoryAuditSchema>;
+export type InventoryVariant = z.infer<typeof inventoryVariantSchema>;
