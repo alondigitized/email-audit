@@ -60,8 +60,9 @@ function arg(name, dflt) {
   return i >= 0 && i + 1 < argv.length ? argv[i + 1] : dflt;
 }
 const MAX_PLPS = Number(arg('--max-plps', '0')) || null;       // null = all
-const MAX_STYLES = Number(arg('--max-styles', '20'));
+const MAX_STYLES = Number(arg('--max-styles', '3'));
 const MAX_COLORS = Number(arg('--max-colors', '0')) || null;   // null = all
+const MAX_WIDTHS = Number(arg('--max-widths', '0')) || null;   // null = all
 const DRY_RUN = flag('--dry-run');
 const HEADLESS_FALLBACK = !flag('--no-headless-fallback');
 
@@ -96,6 +97,7 @@ const SEL_COLOR_SWATCHES = 'button.button-select-color, button.js-color-attr-sel
 // button gets the modifier `c-product-attributes__item__selector--unselectable`
 // when that size is out of stock.
 const SEL_SIZE_BUTTONS = 'button.button-select-size';
+const SEL_WIDTH_BUTTONS = 'button.button-select-width';
 const SIZE_UNAVAILABLE_CLASS = 'c-product-attributes__item__selector--unselectable';
 
 const NAV_TIMEOUT_MS = 30000;
@@ -189,40 +191,22 @@ async function scrapePdp(page, style, slug, plpSlug) {
   await delay(PDP_SETTLE_MS);
   await dismissPopups(page);
 
-  // Discover color variants. The PDP renders a button per color; each
-  // carries data-style-id (e.g. PNK, NVY) and aria-label="Select Color X".
-  // The currently-displayed variant has class `selected`. If we can't
-  // find any color buttons, treat the loaded PDP as a single variant.
-  let swatches = [];
-  try {
-    const handles = await page.locator(SEL_COLOR_SWATCHES).all();
-    const seen = new Set();
-    for (const h of handles) {
-      const styleId = await h.getAttribute('data-style-id').catch(() => null);
-      if (!styleId) continue;
-      const aria = (await h.getAttribute('aria-label').catch(() => '')) ?? '';
-      const name = aria.replace(/^select color\s*/i, '').trim() || styleId;
-      if (seen.has(styleId)) continue;
-      seen.add(styleId);
-      const cls = (await h.getAttribute('class').catch(() => '')) ?? '';
-      swatches.push({ styleId, name: name.slice(0, 60), selected: /\bselected\b/.test(cls) });
-    }
-  } catch {}
+  // Discover color buttons (data-style-id + aria-label) and width buttons
+  // (data-attr-value="medium"|"wide"|"narrow"). Both can be missing —
+  // fall back to a synthetic "Default" entry so single-color/single-width
+  // styles still produce one variant row.
+  let swatches = await readSwatches(page);
   if (swatches.length === 0) {
     swatches = [{ styleId: null, name: 'Default', selected: true }];
   }
   if (MAX_COLORS) swatches = swatches.slice(0, MAX_COLORS);
 
-  const colors = [];
-  for (let i = 0; i < swatches.length; i++) {
-    const sw = swatches[i];
+  const variants = [];
+  let variantIdx = 0;
+  for (const sw of swatches) {
     if (!sw.selected && sw.styleId) {
-      // Switch to this color in-place. Skechers fires an AJAX variation
-      // request that re-renders the size grid + price.
       try {
         await page.locator(`button[data-style-id="${sw.styleId}"]`).first().click({ timeout: 5000 });
-        // Wait for the size grid to actually swap. Polling for the active
-        // color marker is more reliable than a fixed delay.
         await page.waitForFunction(
           (id) => {
             const sel = document.querySelector('button.button-select-color.selected');
@@ -237,19 +221,114 @@ async function scrapePdp(page, style, slug, plpSlug) {
         continue;
       }
     }
-    const sizes = await readSizes(page);
-    const screenshotKey = await capturePdpProof(page, slug, plpSlug, style.rank, i);
-    const available = sizes.filter((s) => s.available).length;
-    colors.push({
-      name: sw.name,
-      pdp_url: page.url(),
-      pdp_screenshot_key: screenshotKey,
-      sizes,
-      available_count: available,
-      total_count: sizes.length,
-    });
+
+    let widths = await readWidths(page);
+    if (widths.length === 0) {
+      widths = [{ value: null, name: null, selected: true }];
+    }
+    if (MAX_WIDTHS) widths = widths.slice(0, MAX_WIDTHS);
+
+    for (const w of widths) {
+      if (w.value && !w.selected) {
+        // The clickable target is the wrapping <button>, but the value
+        // attribute lives on data-pdp-attr-value (lowercased) and/or the
+        // inner span. Walk the buttons in evaluate() so we don't have to
+        // chase Playwright's CSS selector quoting rules.
+        const clicked = await page.evaluate((value) => {
+          const buttons = document.querySelectorAll('button.button-select-width');
+          for (const b of buttons) {
+            const v =
+              b.getAttribute('data-pdp-attr-value') ??
+              b.querySelector('span[data-attr-value]')?.getAttribute('data-attr-value') ??
+              '';
+            if (v && v.toLowerCase() === value.toLowerCase()) {
+              b.click();
+              return true;
+            }
+          }
+          return false;
+        }, w.value).catch(() => false);
+        if (!clicked) {
+          log('width switch failed (no button matched)', { width: w.value });
+          continue;
+        }
+        await page.waitForFunction(
+          (v) => {
+            const sel = document.querySelector('button.button-select-width.selected, button.button-select-width.c-product-attributes__item__selector--selected');
+            const got =
+              sel?.getAttribute('data-pdp-attr-value') ??
+              sel?.querySelector('span[data-attr-value]')?.getAttribute('data-attr-value');
+            return got && got.toLowerCase() === v.toLowerCase();
+          },
+          w.value,
+          { timeout: 4000 }
+        ).catch(() => {});
+        await delay(500);
+      }
+      const sizes = await readSizes(page);
+      const screenshotKey = await capturePdpProof(page, slug, plpSlug, style.rank, variantIdx);
+      const available = sizes.filter((s) => s.available).length;
+      variants.push({
+        color: sw.name,
+        width: w.name,
+        pdp_url: page.url(),
+        pdp_screenshot_key: screenshotKey,
+        sizes,
+        available_count: available,
+        total_count: sizes.length,
+      });
+      variantIdx++;
+    }
   }
-  return colors;
+  return variants;
+}
+
+async function readSwatches(page) {
+  try {
+    const handles = await page.locator(SEL_COLOR_SWATCHES).all();
+    const seen = new Set();
+    const out = [];
+    for (const h of handles) {
+      const styleId = await h.getAttribute('data-style-id').catch(() => null);
+      if (!styleId) continue;
+      if (seen.has(styleId)) continue;
+      seen.add(styleId);
+      const aria = (await h.getAttribute('aria-label').catch(() => '')) ?? '';
+      const name = aria.replace(/^select color\s*/i, '').trim() || styleId;
+      const cls = (await h.getAttribute('class').catch(() => '')) ?? '';
+      out.push({ styleId, name: name.slice(0, 60), selected: /\bselected\b/.test(cls) });
+    }
+    return out;
+  } catch {
+    return [];
+  }
+}
+
+async function readWidths(page) {
+  // Width buttons mirror the size-button pattern: a wrapping <button> with
+  // an inner <span data-attr-value="medium">. Pull both the value (used to
+  // re-click in another iteration) and a human-readable label.
+  return await page.evaluate((sel) => {
+    const out = [];
+    const seen = new Set();
+    document.querySelectorAll(sel).forEach((b) => {
+      const span = b.querySelector('span[data-attr-value]');
+      const v = (span?.getAttribute('data-attr-value') ?? '').trim();
+      if (!v) return;
+      if (seen.has(v.toLowerCase())) return;
+      seen.add(v.toLowerCase());
+      const cls = b.getAttribute('class') ?? '';
+      const aria = b.getAttribute('aria-label') ?? '';
+      const text = (span.textContent ?? '').trim();
+      const label = text || aria.replace(/^select (width\s*)?/i, '').trim() || v;
+      out.push({
+        value: v,
+        name: label.slice(0, 30),
+        selected: /\bselected\b/.test(cls),
+      });
+    });
+    return out;
+  }, SEL_WIDTH_BUTTONS);
 }
 
 async function readSizes(page) {
@@ -321,10 +400,10 @@ function summarize(plps) {
     plpsAudited++;
     for (const s of p.styles) {
       styles++;
-      for (const c of s.colors) {
+      for (const v of s.variants) {
         variants++;
-        if (c.total_count > 0) {
-          coverageSum += c.available_count / c.total_count;
+        if (v.total_count > 0) {
+          coverageSum += v.available_count / v.total_count;
           coverageDenom++;
         }
       }
@@ -334,7 +413,7 @@ function summarize(plps) {
     plps_audited: plpsAudited,
     plps_failed: plpsFailed,
     styles,
-    color_variants: variants,
+    variants,
     avg_size_coverage: coverageDenom > 0 ? coverageSum / coverageDenom : 0,
   };
 }
@@ -359,11 +438,11 @@ async function main() {
       const enriched = [];
       for (const style of styles) {
         try {
-          const colors = await scrapePdp(page, style, slug, plpSlugify(plp.name));
-          enriched.push({ ...style, colors });
+          const variants = await scrapePdp(page, style, slug, plpSlugify(plp.name));
+          enriched.push({ ...style, variants });
         } catch (err) {
           log('PDP failed', { url: style.url, err: String(err).slice(0, 200) });
-          enriched.push({ ...style, colors: [] });
+          enriched.push({ ...style, variants: [] });
         }
       }
       results.push({ category: plp.name, url: plp.url, styles: enriched });
@@ -450,7 +529,7 @@ function buildFallbackNarrative(plps, totals) {
   const lines = [
     `# Skechers Women's Inventory Audit`,
     ``,
-    `Audited ${totals.plps_audited} categories, ${totals.styles} styles, ${totals.color_variants} (style, color) variants.`,
+    `Audited ${totals.plps_audited} categories, ${totals.styles} styles, ${totals.variants} (style, color, width) variants.`,
     `Average size coverage: ${pct}% per variant.`,
     ``,
     `## Per-category breakdown`,
@@ -465,9 +544,9 @@ function buildFallbackNarrative(plps, totals) {
     let cov = 0;
     let denom = 0;
     for (const s of p.styles) {
-      for (const c of s.colors) {
+      for (const x of s.variants) {
         v++;
-        if (c.total_count > 0) { cov += c.available_count / c.total_count; denom++; }
+        if (x.total_count > 0) { cov += x.available_count / x.total_count; denom++; }
       }
     }
     const cPct = denom > 0 ? ((cov / denom) * 100).toFixed(0) : '—';

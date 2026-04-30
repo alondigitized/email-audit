@@ -109,8 +109,13 @@ export const inventorySizeSchema = z.object({
   available: z.boolean(),
 });
 
-export const inventoryColorSchema = z.object({
-  name: z.string(),
+// One row per (color, width) combination on a PDP. Width is null when the
+// style ships in a single width (Skechers exposes a width selector only on
+// styles that come in Medium/Wide/etc.); flattening color × width keeps the
+// aggregation logic simple and the data layout uniform.
+export const inventoryVariantSchema = z.object({
+  color: z.string(),
+  width: z.string().nullable().optional(),
   pdp_url: z.string().nullable().optional(),
   pdp_screenshot_key: z.string().nullable().optional(),
   sizes: z.array(inventorySizeSchema),
@@ -122,7 +127,7 @@ export const inventoryStyleSchema = z.object({
   rank: z.number(),
   name: z.string(),
   url: z.string(),
-  colors: z.array(inventoryColorSchema),
+  variants: z.array(inventoryVariantSchema),
 });
 
 export const inventoryPlpSchema = z.object({
@@ -136,7 +141,8 @@ export const inventoryTotalsSchema = z.object({
   plps_audited: z.number(),
   plps_failed: z.number(),
   styles: z.number(),
-  color_variants: z.number(),
+  // Total (color, width) variants audited.
+  variants: z.number(),
   // 0–1 fraction; UI multiplies by 100 for display.
   avg_size_coverage: z.number(),
 });
