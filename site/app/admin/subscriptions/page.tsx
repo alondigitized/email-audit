@@ -69,7 +69,7 @@ export default async function SubscriptionsPage() {
   const pending = rows.filter((r) => r.status === "manual_pending").length;
 
   return (
-    <div className="max-w-6xl mx-auto py-8">
+    <div className="max-w-6xl mx-auto py-6 sm:py-8 px-4 sm:px-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold mb-1">Subscriptions queue</h1>
         <p className="text-muted text-sm">
@@ -84,88 +84,179 @@ export default async function SubscriptionsPage() {
           No subscription jobs yet.
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
-              <tr>
-                <th className="px-4 py-3 font-medium">Brand</th>
-                <th className="px-4 py-3 font-medium">Persona</th>
-                <th className="px-4 py-3 font-medium">Inbox</th>
-                <th className="px-4 py-3 font-medium">Tenant</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Attempts</th>
-                <th className="px-4 py-3 font-medium">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => {
-                const pill = statusPill(r.status);
-                const subUrl = `https://${r.brandDomain}/`;
-                return (
-                  <tr key={r.id} className="border-t border-gray-100 align-top">
-                    <td className="px-4 py-3">
-                      <a
-                        href={subUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="font-medium text-sky-700 underline"
-                      >
-                        {r.brandDomain}
-                      </a>
-                      {r.lastError && (
-                        <div className="mt-1 text-[11px] text-rose-700 italic">
-                          {r.lastError.slice(0, 90)}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 font-mono text-xs">{r.personaSlug}</td>
-                    <td className="px-4 py-3 font-mono text-xs">
-                      {r.inboxAddress}
-                    </td>
-                    <td className="px-4 py-3 font-mono text-xs text-muted">
-                      {r.tenantSlug}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${pill.cls}`}
-                      >
-                        {pill.label}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-xs text-muted">{r.attempts}</td>
-                    <td className="px-4 py-3">
-                      {(r.status === "manual_pending" ||
-                        r.status === "queued" ||
-                        r.status === "failed") && (
-                        <form action={markJobDoneFormAction} className="inline-block mr-2">
+        <>
+          {/* Mobile: stacked cards */}
+          <ul className="sm:hidden flex flex-col gap-3">
+            {rows.map((r) => {
+              const pill = statusPill(r.status);
+              const subUrl = `https://${r.brandDomain}/`;
+              const showMarkDone =
+                r.status === "manual_pending" ||
+                r.status === "queued" ||
+                r.status === "failed";
+              const showRetry =
+                r.status === "manual_pending" || r.status === "failed";
+              return (
+                <li
+                  key={r.id}
+                  className="bg-white border border-gray-200 rounded-2xl p-4"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <a
+                      href={subUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-sky-700 underline break-all"
+                    >
+                      {r.brandDomain}
+                    </a>
+                    <span
+                      className={`shrink-0 text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${pill.cls}`}
+                    >
+                      {pill.label}
+                    </span>
+                  </div>
+                  <dl className="text-xs space-y-1">
+                    <div className="flex gap-2">
+                      <dt className="text-muted w-16 shrink-0">Persona</dt>
+                      <dd className="font-mono break-all">{r.personaSlug}</dd>
+                    </div>
+                    <div className="flex gap-2">
+                      <dt className="text-muted w-16 shrink-0">Inbox</dt>
+                      <dd className="font-mono break-all">{r.inboxAddress}</dd>
+                    </div>
+                    <div className="flex gap-2">
+                      <dt className="text-muted w-16 shrink-0">Tenant</dt>
+                      <dd className="font-mono text-muted">{r.tenantSlug}</dd>
+                    </div>
+                    <div className="flex gap-2">
+                      <dt className="text-muted w-16 shrink-0">Attempts</dt>
+                      <dd className="text-muted">{r.attempts}</dd>
+                    </div>
+                  </dl>
+                  {r.lastError && (
+                    <div className="mt-2 text-[11px] text-rose-700 italic break-words">
+                      {r.lastError.slice(0, 160)}
+                    </div>
+                  )}
+                  {(showMarkDone || showRetry) && (
+                    <div className="mt-3 flex gap-2">
+                      {showMarkDone && (
+                        <form
+                          action={markJobDoneFormAction}
+                          className="flex-1"
+                        >
                           <input type="hidden" name="jobId" value={r.id} />
                           <button
                             type="submit"
-                            className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-700"
+                            className="w-full px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700"
                           >
                             Mark done
                           </button>
                         </form>
                       )}
-                      {(r.status === "manual_pending" ||
-                        r.status === "failed") && (
-                        <form action={retryJobFormAction} className="inline-block">
+                      {showRetry && (
+                        <form action={retryJobFormAction} className="flex-1">
                           <input type="hidden" name="jobId" value={r.id} />
                           <button
                             type="submit"
-                            className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-200"
+                            className="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200"
                           >
                             Retry auto
                           </button>
                         </form>
                       )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* Desktop: table */}
+          <div className="hidden sm:block bg-white border border-gray-200 rounded-2xl overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
+                <tr>
+                  <th className="px-4 py-3 font-medium">Brand</th>
+                  <th className="px-4 py-3 font-medium">Persona</th>
+                  <th className="px-4 py-3 font-medium">Inbox</th>
+                  <th className="px-4 py-3 font-medium">Tenant</th>
+                  <th className="px-4 py-3 font-medium">Status</th>
+                  <th className="px-4 py-3 font-medium">Attempts</th>
+                  <th className="px-4 py-3 font-medium">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => {
+                  const pill = statusPill(r.status);
+                  const subUrl = `https://${r.brandDomain}/`;
+                  return (
+                    <tr key={r.id} className="border-t border-gray-100 align-top">
+                      <td className="px-4 py-3">
+                        <a
+                          href={subUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-medium text-sky-700 underline"
+                        >
+                          {r.brandDomain}
+                        </a>
+                        {r.lastError && (
+                          <div className="mt-1 text-[11px] text-rose-700 italic">
+                            {r.lastError.slice(0, 90)}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 font-mono text-xs">{r.personaSlug}</td>
+                      <td className="px-4 py-3 font-mono text-xs">
+                        {r.inboxAddress}
+                      </td>
+                      <td className="px-4 py-3 font-mono text-xs text-muted">
+                        {r.tenantSlug}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span
+                          className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${pill.cls}`}
+                        >
+                          {pill.label}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-xs text-muted">{r.attempts}</td>
+                      <td className="px-4 py-3">
+                        {(r.status === "manual_pending" ||
+                          r.status === "queued" ||
+                          r.status === "failed") && (
+                          <form action={markJobDoneFormAction} className="inline-block mr-2">
+                            <input type="hidden" name="jobId" value={r.id} />
+                            <button
+                              type="submit"
+                              className="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-700"
+                            >
+                              Mark done
+                            </button>
+                          </form>
+                        )}
+                        {(r.status === "manual_pending" ||
+                          r.status === "failed") && (
+                          <form action={retryJobFormAction} className="inline-block">
+                            <input type="hidden" name="jobId" value={r.id} />
+                            <button
+                              type="submit"
+                              className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-200"
+                            >
+                              Retry auto
+                            </button>
+                          </form>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   );
