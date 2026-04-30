@@ -152,6 +152,10 @@ export const inventoryAuditSchema = z.object({
   scope: z.string(),
   plps: z.array(inventoryPlpSchema),
   totals: inventoryTotalsSchema,
+  // R2 key for the per-(PLP, style, color, width, size) detail spreadsheet
+  // (CSV). Audit detail page mints a signed GET URL for it so the user can
+  // download the raw data underlying the narrative + summary table.
+  csv_key: z.string().nullable().optional(),
 });
 
 // ─── Root schemas ──────────────────────────────────────────────────────────

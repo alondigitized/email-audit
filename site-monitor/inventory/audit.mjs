@@ -388,6 +388,114 @@ function plpSlugify(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
+// CSV-quote a single field. Wraps in double-quotes when the value contains a
+// comma, quote, or newline; doubles any embedded quotes per RFC 4180.
+function csvCell(v) {
+  if (v === null || v === undefined) return '';
+  const s = String(v);
+  if (/[",\r\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+  return s;
+}
+
+function buildCsv(plps) {
+  const header = [
+    'plp', 'plp_url',
+    'style_rank', 'style_name', 'style_url',
+    'color', 'width', 'pdp_url',
+    'size', 'available',
+    'pdp_screenshot_key',
+  ];
+  const rows = [header.join(',')];
+  for (const p of plps) {
+    if (p.error) {
+      rows.push([p.category, p.url, '', `PLP failed: ${p.error}`, '', '', '', '', '', '', ''].map(csvCell).join(','));
+      continue;
+    }
+    for (const s of p.styles) {
+      if (!s.variants || s.variants.length === 0) {
+        rows.push([
+          p.category, p.url, s.rank, s.name, s.url,
+          '', '', '', '', '', '',
+        ].map(csvCell).join(','));
+        continue;
+      }
+      for (const v of s.variants) {
+        if (!v.sizes || v.sizes.length === 0) {
+          rows.push([
+            p.category, p.url, s.rank, s.name, s.url,
+            v.color ?? '', v.width ?? '', v.pdp_url ?? '',
+            '', '', v.pdp_screenshot_key ?? '',
+          ].map(csvCell).join(','));
+          continue;
+        }
+        for (const sz of v.sizes) {
+          rows.push([
+            p.category, p.url, s.rank, s.name, s.url,
+            v.color ?? '', v.width ?? '', v.pdp_url ?? '',
+            sz.size, sz.available ? 'true' : 'false',
+            v.pdp_screenshot_key ?? '',
+          ].map(csvCell).join(','));
+        }
+      }
+    }
+  }
+  return rows.join('\n') + '\n';
+}
+
+// Markdown summary table — prepended to the narrative so it shows up at
+// the top of the audit detail page's Content Review tab without needing
+// any consumer-side rendering changes.
+function buildSummaryTable(plps, totals) {
+  const lines = [];
+  const pct = (totals.avg_size_coverage * 100).toFixed(1);
+  lines.push(`## Inventory summary`);
+  lines.push('');
+  lines.push(`**${totals.styles} styles · ${totals.variants} (color, width) variants · ${pct}% avg size coverage**`);
+  lines.push('');
+  lines.push('| Category | Styles | Variants | Coverage | Widths | Worst-missing sizes |');
+  lines.push('|---|---:|---:|---:|---|---|');
+  for (const p of plps) {
+    if (p.error) {
+      lines.push(`| ${p.category} | — | — | — | — | _PLP fetch failed_ |`);
+      continue;
+    }
+    let n = 0, cov = 0, denom = 0;
+    const widths = new Set();
+    const missing = new Map();
+    for (const s of p.styles) {
+      for (const v of s.variants) {
+        n++;
+        if (v.width) widths.add(v.width);
+        if (v.total_count > 0) { cov += v.available_count / v.total_count; denom++; }
+        for (const sz of v.sizes) {
+          if (!sz.available) missing.set(sz.size, (missing.get(sz.size) ?? 0) + 1);
+        }
+      }
+    }
+    const cPct = denom > 0 ? `${(cov / denom * 100).toFixed(0)}%` : '—';
+    const top3 = [...missing.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3)
+      .map(([sz, cnt]) => `${sz}×${cnt}`).join(', ');
+    lines.push(`| ${p.category} | ${p.styles.length} | ${n} | ${cPct} | ${[...widths].join(', ') || '—'} | ${top3 || '—'} |`);
+  }
+  lines.push('');
+  return lines.join('\n');
+}
+
+async function uploadCsv(slug, csv) {
+  if (DRY_RUN || !mediaConfigured()) return null;
+  const key = `audits/${slug}/inventory.csv`;
+  const tmpPath = path.join(ARTIFACTS_BASE, slug, 'inventory.csv');
+  fs.mkdirSync(path.dirname(tmpPath), { recursive: true });
+  fs.writeFileSync(tmpPath, csv);
+  try {
+    await putMedia({ filePath: tmpPath, key, contentType: 'text/csv' });
+    return key;
+  } catch (err) {
+    log('CSV upload failed', { key, err: String(err).slice(0, 160) });
+    return null;
+  }
+}
+
 function summarize(plps) {
   let styles = 0;
   let variants = 0;
@@ -466,6 +574,16 @@ async function main() {
     narrative = buildFallbackNarrative(results, totals);
   }
 
+  // Detail spreadsheet (CSV) + inline summary table. The CSV is uploaded
+  // to R2 alongside the screenshots; the audit detail page mints a signed
+  // URL from `inventory.csv_key`. The summary table is prepended to the
+  // narrative so it surfaces at the top of the Content Review tab.
+  const csv = buildCsv(results);
+  const csvKey = await uploadCsv(slug, csv);
+  log('csv built', { rows: csv.split('\n').length - 1, csvKey });
+  const summaryTable = buildSummaryTable(results, totals);
+  narrative = `${summaryTable}\n${narrative}`;
+
   const score = `${Math.round(totals.avg_size_coverage * 10)}/10`;
   const now = new Date();
   const auditData = {
@@ -497,6 +615,7 @@ async function main() {
       scope: "women's shoes",
       plps: results,
       totals,
+      csv_key: csvKey,
     },
   };
 
