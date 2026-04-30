@@ -465,6 +465,19 @@ export const subscriptionJobs = pgTable("subscription_job", {
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
 });
 
+// Brand-opt-out blocklist. Brands or their legal teams who don't want
+// us subscribing personas to their email programs email alon@etell.app
+// (per /terms section 6) and we add their domain here. Future
+// enqueueSubscriptionJob calls reject before the row is inserted.
+// Apex domain match — substring check covers `em.brand.com` and any
+// other ESP subdomain off the same brand.
+export const brandBlocklist = pgTable("brand_blocklist", {
+  domain: text("domain").primaryKey(),
+  reason: text("reason"),
+  addedBy: text("added_by").references(() => users.id),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
+
 // Phase C handoff: when a public-tenant user finishes the wizard, we enqueue
 // a row here. Alon claims the row at /admin/laptop-queue, which prints the
 // `node scripts/onboard-persona.mjs <slug>` command. status flips through

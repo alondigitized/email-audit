@@ -84,6 +84,12 @@ export default async function AdminPage() {
               Email health →
             </a>
             <a
+              href="/admin/brand-blocklist"
+              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
+            >
+              Brand blocklist →
+            </a>
+            <a
               href="/admin/personas"
               className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
             >
