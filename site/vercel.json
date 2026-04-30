@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/chat-reflect",
-      "schedule": "*/30 * * * *"
+      "schedule": "7 4 * * *"
     },
     {
       "path": "/api/cron/persona-synthesize",
