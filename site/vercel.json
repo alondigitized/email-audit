@@ -1,12 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/chat-reflect",
-      "schedule": "7 4 * * *"
-    },
-    {
-      "path": "/api/cron/persona-synthesize",
-      "schedule": "17 4 * * *"
-    }
-  ]
-}
+{}
