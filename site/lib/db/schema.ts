@@ -554,6 +554,11 @@ export const experiences = pgTable(
     assets: jsonb("assets"),
     // Site-journey performance metrics; null for email audits.
     performance: jsonb("performance"),
+    // Inventory audit payload (Ivy). Only set on inventory audits — null
+    // for email audits and Walker-style site journeys. Carries the full
+    // PLP × style × variant × size grid plus per-(color, width) screenshot
+    // keys + the sidecar CSV key.
+    inventory: jsonb("inventory"),
     // R2 key of the raw .eml — best-effort archive for re-processing.
     rawKey: text("raw_key"),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
