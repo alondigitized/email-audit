@@ -12,6 +12,7 @@ import { ScoreBadge } from "@/components/ScoreBadge";
 import { LikelihoodPill } from "@/components/LikelihoodPill";
 import { TabNav } from "@/components/TabNav";
 import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
+import { InventoryPane } from "./InventoryPane";
 
 // S7: per-user filtering means we can't statically pre-render slugs.
 export const dynamic = "force-dynamic";
@@ -270,16 +271,39 @@ export default async function AuditPage({
   const { heroUrl, stepUrls } = await resolveAllImageUrls(audit);
 
   // Inventory audits (Ivy) ship a sidecar CSV with one row per (PLP, style,
-  // color, width, size). When the audit row carries `inventory.csv_key`,
-  // mint a short-lived signed URL so the user can download the raw data.
+  // color, width, size) PLUS a per-(style, color, width) PDP screenshot.
+  // When the audit row carries `inventory.csv_key`, mint a short-lived
+  // signed URL for download. For the variant grid, sign every unique PDP
+  // screenshot key in parallel — typical run is ~187 keys = a single batch
+  // of R2 GET-presign calls.
   let inventoryCsvUrl: string | null = null;
   const inventoryCsvKey = audit.inventory?.csv_key ?? null;
-  if (inventoryCsvKey && r2IsConfigured()) {
-    try {
-      inventoryCsvUrl = await signGetUrl(inventoryCsvKey, 900);
-    } catch {
-      inventoryCsvUrl = null;
+  const variantScreenshotUrls: Record<string, string> = {};
+  if (audit.inventory && r2IsConfigured()) {
+    if (inventoryCsvKey) {
+      try {
+        inventoryCsvUrl = await signGetUrl(inventoryCsvKey, 900);
+      } catch {
+        inventoryCsvUrl = null;
+      }
     }
+    const keys = new Set<string>();
+    for (const plp of audit.inventory.plps) {
+      for (const style of plp.styles) {
+        for (const v of style.variants) {
+          if (v.pdp_screenshot_key) keys.add(v.pdp_screenshot_key);
+        }
+      }
+    }
+    await Promise.all(
+      [...keys].map(async (key) => {
+        try {
+          variantScreenshotUrls[key] = await signGetUrl(key, 900);
+        } catch {
+          // Skip on failure; the variant grid renders a "—" instead.
+        }
+      })
+    );
   }
 
   const heroLabel = isSiteJourney
@@ -379,6 +403,21 @@ export default async function AuditPage({
               />
             ),
           },
+          ...(audit.inventory
+            ? [
+                {
+                  id: "inventory",
+                  label: `Variants (${audit.inventory.totals.variants})`,
+                  content: (
+                    <InventoryPane
+                      inventory={audit.inventory}
+                      signedScreenshotUrls={variantScreenshotUrls}
+                      csvUrl={inventoryCsvUrl}
+                    />
+                  ),
+                },
+              ]
+            : []),
           {
             id: "technical",
             label: "Technical",
