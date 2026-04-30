@@ -1,7 +1,11 @@
 import { eq, desc, inArray } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import { db, subscriptionJobs, tenants } from "@/lib/db/client";
-import { markJobDoneFormAction, retryJobFormAction } from "./actions";
+import {
+  markJobDoneFormAction,
+  retryJobFormAction,
+  runAllQueuedFormAction,
+} from "./actions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Subscriptions · admin · etell" };
@@ -67,16 +71,30 @@ export default async function SubscriptionsPage() {
   await requireAdmin();
   const rows = await loadJobs();
   const pending = rows.filter((r) => r.status === "manual_pending").length;
+  const queued = rows.filter((r) => r.status === "queued").length;
 
   return (
     <div className="max-w-6xl mx-auto py-6 sm:py-8 px-4 sm:px-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-1">Subscriptions queue</h1>
-        <p className="text-muted text-sm">
-          {pending} jobs need a human. Open the brand&apos;s newsletter form,
-          paste the inbox address, hit submit, click <strong>Mark done</strong>.
-          Email-monitor flips rows automatically when the welcome email lands.
-        </p>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold mb-1">Subscriptions queue</h1>
+          <p className="text-muted text-sm">
+            {pending} jobs need a human, {queued} queued. Open the brand&apos;s
+            newsletter form, paste the inbox address, hit submit, click{" "}
+            <strong>Mark done</strong>. Email-monitor flips rows automatically
+            when the welcome email lands.
+          </p>
+        </div>
+        {queued > 0 && (
+          <form action={runAllQueuedFormAction} className="shrink-0">
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-4 py-2 bg-sky-600 text-white rounded-lg text-sm font-medium hover:bg-sky-700"
+            >
+              Run auto on {queued} queued
+            </button>
+          </form>
+        )}
       </div>
 
       {rows.length === 0 ? (
@@ -95,7 +113,9 @@ export default async function SubscriptionsPage() {
                 r.status === "queued" ||
                 r.status === "failed";
               const showRetry =
-                r.status === "manual_pending" || r.status === "failed";
+                r.status === "manual_pending" ||
+                r.status === "failed" ||
+                r.status === "queued";
               return (
                 <li
                   key={r.id}
@@ -238,7 +258,8 @@ export default async function SubscriptionsPage() {
                           </form>
                         )}
                         {(r.status === "manual_pending" ||
-                          r.status === "failed") && (
+                          r.status === "failed" ||
+                          r.status === "queued") && (
                           <form action={retryJobFormAction} className="inline-block">
                             <input type="hidden" name="jobId" value={r.id} />
                             <button
