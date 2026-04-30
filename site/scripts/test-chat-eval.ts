@@ -322,6 +322,34 @@ async function brandsForPersona(personaSlug: string): Promise<Set<string>> {
   return brands;
 }
 
+/**
+ * Most-frequent brand domain for a persona, returned as a friendly
+ * label (apex name without the TLD subdomains). Used to substitute
+ * `{primary_brand}` placeholders in case prompts so the suite
+ * generalizes across personas without hardcoded brand names.
+ */
+async function topBrandLabel(personaSlug: string): Promise<string | null> {
+  const rows = await db.execute(drizzleSql`
+    SELECT lower(e.brand_domain) AS brand, COUNT(*)::int AS n
+    FROM reaction r
+    JOIN experience e ON e.id = r.experience_id
+    WHERE r.persona_slug = ${personaSlug}
+    GROUP BY lower(e.brand_domain)
+    ORDER BY n DESC
+    LIMIT 1
+  `);
+  const domain = (rows.rows[0]?.brand as string | undefined) ?? null;
+  if (!domain) return null;
+  // "emails.skechers.com" → "Skechers". Strip common ESP subdomain
+  // prefixes + the TLD to land on the brand name. Falls through to the
+  // raw domain when the heuristic doesn't match.
+  const stripped = domain
+    .replace(/^(em|emails|email|mail|mailer|news|newsletter|track|click|links|bounce)\./i, "")
+    .replace(/\.[^.]+$/, "");
+  if (!stripped) return domain;
+  return stripped.charAt(0).toUpperCase() + stripped.slice(1);
+}
+
 async function loadPersonaName(slug: string): Promise<string | null> {
   const [p] = await db
     .select({ name: personas.name })
@@ -384,7 +412,8 @@ async function runCase(
   personaSlug: string,
   personaName: string,
   knownSlugs: Set<string>,
-  brands: Set<string>
+  brands: Set<string>,
+  primaryBrand: string | null
 ): Promise<{
   status: "pass" | "fail" | "skip";
   details: string[];
@@ -401,13 +430,30 @@ async function runCase(
   }
 
   // Normalize single-turn shorthand (`prompt`) into the multi-turn shape.
-  const turns: Turn[] = c.turns
+  const rawTurns: Turn[] = c.turns
     ? c.turns
     : c.prompt !== undefined
       ? [{ user: c.prompt, asserts: c.asserts ?? {} }]
       : [];
-  if (turns.length === 0)
+  if (rawTurns.length === 0)
     return { status: "fail", details: ["case has no prompt or turns"] };
+
+  // Substitute {primary_brand} with the persona's top brand. If the
+  // case references this placeholder but the persona has no audits at
+  // all, skip — there's nothing to ground the question in.
+  const usesPrimaryBrand = rawTurns.some((t) => t.user.includes("{primary_brand}"));
+  if (usesPrimaryBrand && !primaryBrand) {
+    return {
+      status: "skip",
+      details: ["case uses {primary_brand} but persona has no brand corpus"],
+    };
+  }
+  const turns: Turn[] = rawTurns.map((t) => ({
+    ...t,
+    user: primaryBrand
+      ? t.user.replaceAll("{primary_brand}", primaryBrand)
+      : t.user,
+  }));
 
   // Build the system prompt off the FIRST turn (retrieval can drift between
   // queries; we pin it to the opening turn so multi-turn anaphora cases
@@ -480,10 +526,11 @@ async function main() {
     process.exit(1);
   }
 
-  const [knownSlugs, brands, total] = await Promise.all([
+  const [knownSlugs, brands, total, primaryBrand] = await Promise.all([
     knownAuditSlugs(PERSONA),
     brandsForPersona(PERSONA),
     getAuditMemoryCount(PERSONA),
+    topBrandLabel(PERSONA),
   ]);
 
   if (!JSON_OUT) {
@@ -508,7 +555,14 @@ async function main() {
     if (!JSON_OUT) process.stdout.write(`  · ${c.id} … `);
     const t0 = Date.now();
     try {
-      const r = await runCase(c, PERSONA, personaName, knownSlugs, brands);
+      const r = await runCase(
+        c,
+        PERSONA,
+        personaName,
+        knownSlugs,
+        brands,
+        primaryBrand
+      );
       const ms = Date.now() - t0;
       results.push({ id: c.id, status: r.status, ms, details: r.details, finalText: r.finalText });
       if (!JSON_OUT) {
