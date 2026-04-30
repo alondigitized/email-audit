@@ -269,6 +269,19 @@ export default async function AuditPage({
   // isn't configured (local dev without keys), falls through to legacy paths.
   const { heroUrl, stepUrls } = await resolveAllImageUrls(audit);
 
+  // Inventory audits (Ivy) ship a sidecar CSV with one row per (PLP, style,
+  // color, width, size). When the audit row carries `inventory.csv_key`,
+  // mint a short-lived signed URL so the user can download the raw data.
+  let inventoryCsvUrl: string | null = null;
+  const inventoryCsvKey = audit.inventory?.csv_key ?? null;
+  if (inventoryCsvKey && r2IsConfigured()) {
+    try {
+      inventoryCsvUrl = await signGetUrl(inventoryCsvKey, 900);
+    } catch {
+      inventoryCsvUrl = null;
+    }
+  }
+
   const heroLabel = isSiteJourney
     ? `${email.from_display_name} Site Journey`
     : "Email Experience Intelligence";
@@ -317,6 +330,17 @@ export default async function AuditPage({
             <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">Score</span>
             <ScoreBadge score={review.score} />
           </div>
+          {inventoryCsvUrl && (
+            <div className="flex gap-3 items-center">
+              <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">Detail</span>
+              <a
+                href={inventoryCsvUrl}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-sky-700 hover:text-sky-900 underline"
+              >
+                Download spreadsheet (CSV)
+              </a>
+            </div>
+          )}
         </div>
         {!isSiteJourney && review.predictions && (
           <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">
