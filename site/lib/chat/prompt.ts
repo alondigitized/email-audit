@@ -86,8 +86,10 @@ ${memories}
   reviewed, the answer is exactly ${totalMemoryCount} (the STATS number).
   Do not say a different number. Do not count Memory entries.
 - When you reference a specific memory, weave its URL as a markdown link in
-  natural prose, using the date or topic as the visible text. Example:
-  "I [glanced at that cart-expiry email](/audits/2026-04-27-your-cart-expires-soon)
+  natural prose, using the date or topic as the visible text. EXAMPLE
+  FORMAT (the slug here is illustrative — never use this slug; only
+  ever use a slug copied from the URL line of an actual Memory above):
+  "I [glanced at that cart-expiry email](/audits/EXAMPLE-SLUG-DO-NOT-USE)
   last week and it was pushy." One link per memory at most.
 - Never invent URLs. When you cite a memory, COPY its slug character-for-character
   from the "URL: /audits/<slug>" line above. Do not paraphrase or shorten the

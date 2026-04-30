@@ -17,6 +17,7 @@ import {
 import { extractAll } from '../audit-pipeline/extract.mjs';
 import { scheduleEngagement } from '../audit-pipeline/engagement.mjs';
 import { mirrorReflectionsToVault } from '../audit-pipeline/mirror-reflections.mjs';
+import { mirrorSynthesesToVault } from '../audit-pipeline/mirror-syntheses.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -1035,18 +1036,26 @@ async function pollOnce(client, state, reason = 'poll') {
   // paths; sequential keeps Claude review concurrency bounded.
   await pollCloudflareEmails();
 
-  // Mirror any new chat_reflection rows to the persona vault. The
-  // Vercel chat-reflect cron writes to chat_reflection; the daemon owns
-  // the vault file write because Vercel functions can't commit to git.
+  // Mirror any new chat_reflection / persona_synthesis rows to the
+  // persona vault. Vercel crons write the DB rows; the daemon owns the
+  // vault file write because Vercel functions can't commit to git.
   // Best-effort — vault sync failures don't block the next poll.
+  const repoRoot = path.dirname(__dirname);
   try {
-    const repoRoot = path.dirname(__dirname);
     const r = await mirrorReflectionsToVault(repoRoot);
     if (r.processed > 0) {
       log('reflections mirrored to vault', { count: r.written.length, total: r.processed });
     }
   } catch (err) {
     log('reflections mirror failed (non-fatal)', { error: String(err).slice(0, 300) });
+  }
+  try {
+    const r = await mirrorSynthesesToVault(repoRoot);
+    if (r.processed > 0) {
+      log('syntheses mirrored to vault', { count: r.written.length, total: r.processed });
+    }
+  } catch (err) {
+    log('syntheses mirror failed (non-fatal)', { error: String(err).slice(0, 300) });
   }
 }
 
