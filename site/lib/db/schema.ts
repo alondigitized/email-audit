@@ -652,6 +652,11 @@ export const chatReflection = pgTable(
     reflectedThroughMessageCount: integer("reflected_through_message_count")
       .notNull()
       .default(0),
+    // Set by the email-monitor daemon's mirror-reflections pass once the
+    // markdown twin lands at vaults/{persona}/reflections/...md and
+    // gets git-pushed. Vercel functions can't commit, so the daemon
+    // owns this side-effect.
+    vaultSyncedAt: timestamp("vault_synced_at", { mode: "date" }),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
   },
