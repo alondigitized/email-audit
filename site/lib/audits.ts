@@ -59,6 +59,7 @@ function joinedRowToAuditData(row: {
   qaFindings: unknown;
   assets: unknown;
   performance: unknown;
+  inventory?: unknown;
 }): AuditData | null {
   const candidate = {
     schema_version: 1,
@@ -70,6 +71,7 @@ function joinedRowToAuditData(row: {
     qa: row.qaFindings ?? null,
     assets: row.assets ?? {},
     ...(row.performance ? { performance: row.performance } : {}),
+    ...(row.inventory ? { inventory: row.inventory } : {}),
   };
   const parsed = auditDataSchema.safeParse(candidate);
   if (!parsed.success) {
@@ -151,6 +153,7 @@ export async function getAuditBySlugForUser(
       qaFindings: experiences.qaFindings,
       assets: experiences.assets,
       performance: experiences.performance,
+      inventory: experiences.inventory,
     })
     .from(reactions)
     .innerJoin(experiences, eq(experiences.id, reactions.experienceId))

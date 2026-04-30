@@ -195,6 +195,7 @@ export async function upsertExperienceAndReaction({
         qa_findings = ${JSON.stringify(parsed.qa ?? null)}::jsonb,
         assets = ${JSON.stringify(parsed.assets ?? {})}::jsonb,
         performance = ${JSON.stringify(parsed.performance ?? null)}::jsonb,
+        inventory = ${JSON.stringify(parsed.inventory ?? null)}::jsonb,
         updated_at = NOW()
       WHERE id = ${experienceId}
     `;
@@ -211,13 +212,14 @@ export async function upsertExperienceAndReaction({
     const expRows = await sql`
       INSERT INTO experience
         (persona_slug, tenant_id, type, brand_domain, message_id, raw_key, received_at,
-         email_data, qa_findings, assets, performance)
+         email_data, qa_findings, assets, performance, inventory)
       VALUES
         (${persona}, ${tenantId}, ${type}, ${brandDomain}, ${messageId}, ${rawKey}, ${timestamp},
          ${JSON.stringify(parsed.email ?? {})}::jsonb,
          ${JSON.stringify(parsed.qa ?? null)}::jsonb,
          ${JSON.stringify(parsed.assets ?? {})}::jsonb,
-         ${JSON.stringify(parsed.performance ?? null)}::jsonb)
+         ${JSON.stringify(parsed.performance ?? null)}::jsonb,
+         ${JSON.stringify(parsed.inventory ?? null)}::jsonb)
       RETURNING id
     `;
     experienceId = expRows[0].id;

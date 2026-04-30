@@ -141,6 +141,13 @@
       "when": 1777507921773,
       "tag": "0019_rich_jackpot",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1777586613593,
+      "tag": "0020_modern_magus",
+      "breakpoints": true
     }
   ]
 }
