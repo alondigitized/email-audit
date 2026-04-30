@@ -34,10 +34,15 @@ import {
   userPersonas,
   chatThread,
   chatMessage,
+  chatReflection,
   audits,
   auditEmbedding,
+  experiences,
+  reactions,
+  reactionEmbedding,
   laptopProvisioningJobs,
   subscriptionJobs,
+  emailMessages,
   signInRateLimit,
   verificationTokens,
   sessions,
@@ -299,14 +304,47 @@ async function execute(db: ReturnType<typeof drizzle>, p: Plan) {
         console.log(`  agentmail.delete(${persona.inboxId}) → ${ok ? "ok" : "skipped/failed"}`);
       }
     }
+    // V3 cascade: chat_reflection (FK to chat_thread which we already
+    // dropped above), reaction_embedding (cascade from reaction),
+    // reaction (FK to experience), experience, then legacy audit/audit_
+    // embedding, then per-persona scoped jobs, then personas, user, tenant.
+    //
+    // chat_reflection cascades from chat_thread, so dropping threads in
+    // step 1 already cleared its rows for this user. Drop any tenant-
+    // scoped reflections that survived (e.g., from another user in the
+    // same tenant).
     await db
-      .delete(auditEmbedding)
-      .where(
-        or(...p.personasInTenant.map((x) => eq(auditEmbedding.persona, x.slug)))
-      );
+      .delete(chatReflection)
+      .where(eq(chatReflection.tenantId, p.tenant.id));
+    // V3 reaction_embedding cascades when reaction is deleted, but
+    // legacy persona-scoped rows might exist; drop by persona slug for
+    // belt-and-suspenders.
+    if (p.personasInTenant.length > 0) {
+      await db
+        .delete(reactionEmbedding)
+        .where(
+          or(...p.personasInTenant.map((x) => eq(reactionEmbedding.persona, x.slug)))
+        );
+    }
+    await db
+      .delete(reactions)
+      .where(eq(reactions.tenantId, p.tenant.id));
+    await db
+      .delete(experiences)
+      .where(eq(experiences.tenantId, p.tenant.id));
+    if (p.personasInTenant.length > 0) {
+      await db
+        .delete(auditEmbedding)
+        .where(
+          or(...p.personasInTenant.map((x) => eq(auditEmbedding.persona, x.slug)))
+        );
+    }
     await db
       .delete(audits)
       .where(eq(audits.tenantId, p.tenant.id));
+    await db
+      .delete(emailMessages)
+      .where(eq(emailMessages.tenantId, p.tenant.id));
     await db
       .delete(laptopProvisioningJobs)
       .where(eq(laptopProvisioningJobs.tenantId, p.tenant.id));
@@ -321,7 +359,10 @@ async function execute(db: ReturnType<typeof drizzle>, p: Plan) {
       await db.delete(users).where(eq(users.id, p.userId));
     }
     await db.delete(tenants).where(eq(tenants.id, p.tenant.id));
-    console.log("  removed tenant + its personas/audits/embeddings/jobs/user");
+    console.log(
+      "  removed tenant + reflections/reactions/experiences/audits/" +
+        "email_messages/jobs/personas/user"
+    );
   } else {
     // Just drop the user row; leave the tenant alone.
     if (p.userId) {
