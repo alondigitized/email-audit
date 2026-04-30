@@ -36,7 +36,7 @@ function buildUserPrompt({ scope, totals, plps }) {
   const lines = [
     `Inventory audit results — ${scope}.`,
     ``,
-    `Totals: ${totals.plps_audited} categories audited, ${totals.styles} styles examined, ${totals.color_variants} (style, color) variants.`,
+    `Totals: ${totals.plps_audited} categories audited, ${totals.styles} styles examined, ${totals.variants} (style, color, width) variants.`,
     `Average size coverage across variants: ${pct}%.`,
     `Failed categories: ${totals.plps_failed}.`,
     ``,
@@ -51,14 +51,16 @@ function buildUserPrompt({ scope, totals, plps }) {
     let cov = 0;
     let denom = 0;
     const missingSizes = new Map();
+    const widthsSeen = new Set();
     for (const s of p.styles) {
-      for (const c of s.colors) {
+      for (const x of s.variants) {
         v++;
-        if (c.total_count > 0) {
-          cov += c.available_count / c.total_count;
+        if (x.width) widthsSeen.add(x.width);
+        if (x.total_count > 0) {
+          cov += x.available_count / x.total_count;
           denom++;
         }
-        for (const sz of c.sizes) {
+        for (const sz of x.sizes) {
           if (!sz.available) {
             missingSizes.set(sz.size, (missingSizes.get(sz.size) ?? 0) + 1);
           }
@@ -71,13 +73,14 @@ function buildUserPrompt({ scope, totals, plps }) {
       .slice(0, 3)
       .map(([sz, n]) => `${sz} (gone in ${n} variants)`)
       .join(', ');
+    const widthStr = widthsSeen.size > 0 ? ` widths: ${[...widthsSeen].join('/')}.` : '';
     lines.push(
-      `- ${p.category}: ${p.styles.length} styles, ${v} color variants, ${cPct}% avg coverage. Most-missing sizes: ${top3Missing || 'n/a'}`
+      `- ${p.category}: ${p.styles.length} styles, ${v} variants, ${cPct}% avg coverage.${widthStr} Most-missing sizes: ${top3Missing || 'n/a'}`
     );
   }
   lines.push(
     '',
-    'Write the report. 4-6 short paragraphs max. Open with the headline. Name the worst-coverage categories. End with a bottom-line + score line.'
+    'Write the report. 4-6 short paragraphs max. Open with the headline. Name the worst-coverage categories. Call out width-specific gaps if any (e.g. "Wide is thin everywhere"). End with a bottom-line + score line.'
   );
   return lines.join('\n');
 }
