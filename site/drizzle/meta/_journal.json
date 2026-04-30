@@ -134,6 +134,13 @@
       "when": 1777507586577,
       "tag": "0018_jazzy_demogoblin",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1777507921773,
+      "tag": "0019_rich_jackpot",
+      "breakpoints": true
     }
   ]
 }

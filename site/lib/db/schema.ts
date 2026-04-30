@@ -670,6 +670,51 @@ export const chatReflection = pgTable(
   })
 );
 
+// Stage D — cross-audit synthesis. Periodic LLM job clusters a
+// persona's reactions by brand and writes one dense POV note per
+// (persona, brand) pair: "Walker on Skechers, April 2026". The note
+// distills 10s-100s of individual reactions into one synthesized
+// opinion the persona can recall instead of (or alongside) raw
+// reactions. Embedded so chat retrieval surfaces it on relevant
+// queries.
+//
+// Re-synthesizes when the underlying reaction count grows past the
+// previous summary's coverage. Vault-mirroring lives in the daemon
+// (audit-pipeline/mirror-syntheses.mjs), same shape as reflections.
+export const personaSyntheses = pgTable(
+  "persona_synthesis",
+  {
+    personaSlug: text("persona_slug").notNull(),
+    brandDomain: text("brand_domain").notNull(),
+    tenantId: uuid("tenant_id").references(() => tenants.id, {
+      onDelete: "restrict",
+    }),
+    title: text("title").notNull(),
+    summary: text("summary").notNull(),
+    embedding: vector("embedding", { dimensions: 1024 }).notNull(),
+    // How many reactions this synthesis covers. When count grows past
+    // this number, re-summarize.
+    reactionCount: integer("reaction_count").notNull(),
+    // Newest reaction timestamp covered. Used by the resynthesis check
+    // ("are there any reactions newer than this?").
+    throughReceivedAt: timestamp("through_received_at", {
+      mode: "date",
+      withTimezone: true,
+    }),
+    vaultSyncedAt: timestamp("vault_synced_at", { mode: "date" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.personaSlug, t.brandDomain] }),
+    embeddingIdx: index("persona_synthesis_hnsw_idx").using(
+      "hnsw",
+      t.embedding.op("vector_cosine_ops")
+    ),
+    personaIdx: index("persona_synthesis_persona_idx").on(t.personaSlug),
+  })
+);
+
 // Per-user access to apps. Row present = user has access to that app
 // (in addition to the global app_flag being on). Admins bypass both gates.
 export const userAppAccess = pgTable(

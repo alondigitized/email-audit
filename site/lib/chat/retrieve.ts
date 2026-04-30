@@ -73,7 +73,7 @@ export async function retrieveRelevantAudits(
   // the Obsidian vault note). It's much richer than the 1800-char
   // indexed_text and gives the persona real context to reason over at
   // chat time.
-  const [semantic, recent, reflections] = (await Promise.all([
+  const [semantic, recent, reflections, syntheses] = (await Promise.all([
     sql`
       SELECT r.slug AS audit_slug,
              re.indexed_text,
@@ -110,6 +110,21 @@ export async function retrieveRelevantAudits(
       ORDER BY cr.embedding <=> ${literal}::vector
       LIMIT 2
     `,
+    // Stage D — pull semantically-relevant cross-audit syntheses.
+    // Top-2 surfaces a "POV on Skechers" / "POV on Crocs" alongside
+    // raw reactions when the user's question rhymes with a brand
+    // we've synthesized.
+    sql`
+      SELECT ps.persona_slug    AS persona_slug,
+             ps.brand_domain    AS brand_domain,
+             ps.title           AS title,
+             ps.summary         AS summary,
+             (ps.embedding <=> ${literal}::vector) AS distance
+      FROM persona_synthesis ps
+      WHERE ps.persona_slug = ${personaSlug}
+      ORDER BY ps.embedding <=> ${literal}::vector
+      LIMIT 2
+    `,
   ])) as [
     Array<{
       audit_slug: string;
@@ -125,6 +140,13 @@ export async function retrieveRelevantAudits(
     }>,
     Array<{
       thread_id: string;
+      title: string;
+      summary: string;
+      distance: number;
+    }>,
+    Array<{
+      persona_slug: string;
+      brand_domain: string;
       title: string;
       summary: string;
       distance: number;
@@ -154,6 +176,19 @@ export async function retrieveRelevantAudits(
       slug,
       snippet: `Past reflection — ${ref.title}\n\n${ref.summary}`,
       score: Number(ref.distance),
+    });
+  }
+  // Stage D — synthesized POVs surface alongside raw reactions when
+  // the user's query is brand-shaped. Slug is `synthesis-{brand}` so
+  // it doesn't collide with reactions or reflections.
+  for (const syn of syntheses) {
+    const slug = `synthesis-${syn.brand_domain}`;
+    if (seen.has(slug)) continue;
+    seen.add(slug);
+    merged.push({
+      slug,
+      snippet: `My POV on ${syn.brand_domain} — ${syn.title}\n\n${syn.summary}`,
+      score: Number(syn.distance),
     });
   }
   return merged;
@@ -187,7 +222,7 @@ export async function retrieveAllAudits(
   const url = process.env.DATABASE_URL ?? process.env.DATABASE_URL_UNPOOLED;
   if (!url) throw new Error("DATABASE_URL not set");
   const sql = neon(url);
-  const [rows, reflections] = (await Promise.all([
+  const [rows, reflections, syntheses] = (await Promise.all([
     sql`
       SELECT r.slug AS audit_slug,
              r.review_data->>'raw_markdown' AS raw_markdown
@@ -207,9 +242,20 @@ export async function retrieveAllAudits(
       WHERE cr.persona_slug = ${personaSlug}
       ORDER BY cr.updated_at DESC
     `,
+    // Stage D — every cross-audit synthesis the persona has authored.
+    sql`
+      SELECT ps.brand_domain    AS brand_domain,
+             ps.title           AS title,
+             ps.summary         AS summary,
+             ps.updated_at      AS updated_at
+      FROM persona_synthesis ps
+      WHERE ps.persona_slug = ${personaSlug}
+      ORDER BY ps.updated_at DESC
+    `,
   ])) as [
     Array<{ audit_slug: string; raw_markdown: string | null }>,
     Array<{ thread_id: string; title: string; summary: string }>,
+    Array<{ brand_domain: string; title: string; summary: string }>,
   ];
   const out: RetrievedAudit[] = rows.map((r) => ({
     slug: r.audit_slug,
@@ -220,6 +266,13 @@ export async function retrieveAllAudits(
     out.push({
       slug: `reflection-${ref.thread_id}`,
       snippet: `Past reflection — ${ref.title}\n\n${ref.summary}`,
+      score: 0,
+    });
+  }
+  for (const syn of syntheses) {
+    out.push({
+      slug: `synthesis-${syn.brand_domain}`,
+      snippet: `My POV on ${syn.brand_domain} — ${syn.title}\n\n${syn.summary}`,
       score: 0,
     });
   }
