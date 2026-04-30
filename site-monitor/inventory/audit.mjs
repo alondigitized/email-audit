@@ -1,0 +1,484 @@
+#!/usr/bin/env node
+/**
+ * Ivy Inventory — Skechers women's-shoes inventory + sizing audit.
+ *
+ * Walks every PLP listed in categories.json, captures the top-20 product
+ * tiles per PLP (DOM order = merchandised order), navigates to each PDP,
+ * and records per-color size availability. Captures one screenshot per
+ * (style, color) for proof. Generates a first-person POV narrative via
+ * the local research model (Ivy's secret-shopper voice). Publishes:
+ *   - an `audit` row (type='site') with the structured inventory blob
+ *     under data.inventory plus the narrative under review.raw_markdown
+ *   - the `experience` + `reaction` v3 split via upsertExperienceAndReaction
+ *   - a vault markdown note at vaults/ivy-inventory/audits/{slug}.md
+ *   - per-(style, color) PDP screenshots in R2 under audits/{slug}/...
+ *
+ * Usage:
+ *   node site-monitor/inventory/audit.mjs                  # full run
+ *   node site-monitor/inventory/audit.mjs --max-plps 1     # smoke test
+ *   node site-monitor/inventory/audit.mjs --max-styles 5   # smoke test
+ *   node site-monitor/inventory/audit.mjs --dry-run        # no DB / no R2
+ *
+ * The Kasada bypass is the same as site-review.mjs: prefer connectOverCDP
+ * to a real Chrome on port 9222; fall back to playwright-extra+stealth.
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import dotenv from 'dotenv';
+import { chromium as playwrightChromium, devices } from 'playwright';
+import { chromium } from 'playwright-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+
+import { putMedia, mediaConfigured } from '../../audit-pipeline/media.mjs';
+import { upsertAuditRow, upsertExperienceAndReaction, dbConfigured } from '../../audit-pipeline/publish.mjs';
+import { writeVaultNote } from '../../audit-pipeline/vault-writer.mjs';
+import { generateNarrative } from './narrative.mjs';
+
+chromium.use(StealthPlugin());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(path.dirname(__dirname), '.env') });
+
+const PERSONA_SLUG = 'ivy-inventory';
+const REPO_ROOT = path.dirname(path.dirname(__dirname));
+const CATEGORIES_PATH = path.join(__dirname, 'categories.json');
+const ARTIFACTS_BASE = path.join(REPO_ROOT, 'reports', 'inventory-audits');
+const LOG_DIR = path.join(__dirname, '..', 'logs');
+const LOG_PATH = path.join(LOG_DIR, 'ivy-inventory.log');
+
+fs.mkdirSync(ARTIFACTS_BASE, { recursive: true });
+fs.mkdirSync(LOG_DIR, { recursive: true });
+
+// CLI flags
+const argv = process.argv.slice(2);
+function flag(name) { return argv.includes(name); }
+function arg(name, dflt) {
+  const i = argv.indexOf(name);
+  return i >= 0 && i + 1 < argv.length ? argv[i + 1] : dflt;
+}
+const MAX_PLPS = Number(arg('--max-plps', '0')) || null;       // null = all
+const MAX_STYLES = Number(arg('--max-styles', '20'));
+const MAX_COLORS = Number(arg('--max-colors', '0')) || null;   // null = all
+const DRY_RUN = flag('--dry-run');
+const HEADLESS_FALLBACK = !flag('--no-headless-fallback');
+
+function log(msg, extra = null) {
+  const ts = new Date().toISOString();
+  const line = extra ? `${ts} ${msg} ${JSON.stringify(extra)}` : `${ts} ${msg}`;
+  console.log(line);
+  fs.appendFileSync(LOG_PATH, line + '\n');
+}
+
+function todayUtcSlug() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// Skechers selectors. Mirror the ones already in site-review.mjs so the two
+// scripts stay in sync if the brand redesigns:
+//   - product tiles: a.c-product-tile-V2__title (PLP V2)
+//   - size buttons: .c-size-selector button (PDP)
+const SEL_PRODUCT_TILES = [
+  'a.c-product-tile-V2__title',
+  'a.c-product-tile-V2__body-elements-anchor-wrapper',
+  'a.c-product-tile__title',
+].join(', ');
+
+// PDP color swatches. Skechers exposes color variants as buttons (NOT
+// anchors) — clicking re-renders sizes in place via an AJAX variation
+// call. We read the data-style-id + aria-label, then click to load.
+const SEL_COLOR_SWATCHES = 'button.button-select-color, button.js-color-attr-selector';
+
+// PDP size buttons. Each variant is a `<button class="button-select-size
+// js-attr-selector">` containing a `<span data-attr-value="7.0">`. The
+// button gets the modifier `c-product-attributes__item__selector--unselectable`
+// when that size is out of stock.
+const SEL_SIZE_BUTTONS = 'button.button-select-size';
+const SIZE_UNAVAILABLE_CLASS = 'c-product-attributes__item__selector--unselectable';
+
+const NAV_TIMEOUT_MS = 30000;
+const STEP_DELAY_MS = 1500;
+const PDP_SETTLE_MS = 2500;
+
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function dismissPopups(page) {
+  // Best-effort: Skechers shows email/SMS modals + a region picker. Try the
+  // common close-button selectors and ignore failures.
+  const closers = [
+    'button[aria-label="Close"]',
+    'button[aria-label="close"]',
+    '.c-modal-close',
+    '.modal-close',
+    'button.close',
+    '[data-dismiss="modal"]',
+  ];
+  for (const sel of closers) {
+    try {
+      const btn = page.locator(sel).first();
+      if (await btn.isVisible({ timeout: 800 })) {
+        await btn.click({ timeout: 1500 }).catch(() => {});
+        await delay(300);
+      }
+    } catch {}
+  }
+}
+
+async function openBrowser() {
+  const cdpPort = process.env.CHROME_DEBUG_PORT || '9222';
+  try {
+    const browser = await playwrightChromium.connectOverCDP(`http://localhost:${cdpPort}`);
+    log('connected to real Chrome via CDP');
+    const context = browser.contexts()[0] || (await browser.newContext({ ...devices['iPhone 14'], bypassCSP: true }));
+    return { browser, context, real: true };
+  } catch (err) {
+    log('CDP connect failed; falling back to stealth chromium', { err: String(err).slice(0, 160) });
+    if (!HEADLESS_FALLBACK) throw err;
+    const browser = await chromium.launch({ headless: true });
+    const context = await browser.newContext({ ...devices['iPhone 14'], bypassCSP: true });
+    return { browser, context, real: false };
+  }
+}
+
+async function scrapePlpTopStyles(page, plp) {
+  log(`PLP load ${plp.url}`);
+  await page.goto(plp.url, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT_MS });
+  await delay(STEP_DELAY_MS);
+  await dismissPopups(page);
+
+  // Lazy-load tiles: scroll a bit so the top-N are hydrated.
+  for (let i = 0; i < 4; i++) {
+    await page.evaluate(() => window.scrollBy(0, 800));
+    await delay(400);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await delay(400);
+
+  const tiles = await page.locator(SEL_PRODUCT_TILES).all();
+  log(`PLP ${plp.name} — found ${tiles.length} product tiles`);
+
+  const styles = [];
+  const seenHrefs = new Set();
+  for (let i = 0; i < tiles.length && styles.length < MAX_STYLES; i++) {
+    const tile = tiles[i];
+    let href = null;
+    try { href = await tile.getAttribute('href'); } catch {}
+    if (!href) continue;
+    const absUrl = href.startsWith('http') ? href : `https://www.skechers.com${href}`;
+    // Strip color-variant query params so we get one row per style.
+    const norm = absUrl.split(/[?#]/)[0];
+    if (seenHrefs.has(norm)) continue;
+    seenHrefs.add(norm);
+    let name = '';
+    try { name = (await tile.textContent())?.trim() ?? ''; } catch {}
+    // Tile anchors sometimes wrap an image-only span; fall back to slug.
+    if (!name) {
+      const slug = norm.split('/').filter(Boolean).pop() ?? '';
+      name = slug.replace(/-/g, ' ').replace(/\.html$/, '');
+    }
+    styles.push({ rank: styles.length + 1, name: name.slice(0, 120), url: absUrl });
+  }
+  return styles;
+}
+
+async function scrapePdp(page, style, slug, plpSlug) {
+  log(`PDP ${style.url}`);
+  await page.goto(style.url, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT_MS });
+  await delay(PDP_SETTLE_MS);
+  await dismissPopups(page);
+
+  // Discover color variants. The PDP renders a button per color; each
+  // carries data-style-id (e.g. PNK, NVY) and aria-label="Select Color X".
+  // The currently-displayed variant has class `selected`. If we can't
+  // find any color buttons, treat the loaded PDP as a single variant.
+  let swatches = [];
+  try {
+    const handles = await page.locator(SEL_COLOR_SWATCHES).all();
+    const seen = new Set();
+    for (const h of handles) {
+      const styleId = await h.getAttribute('data-style-id').catch(() => null);
+      if (!styleId) continue;
+      const aria = (await h.getAttribute('aria-label').catch(() => '')) ?? '';
+      const name = aria.replace(/^select color\s*/i, '').trim() || styleId;
+      if (seen.has(styleId)) continue;
+      seen.add(styleId);
+      const cls = (await h.getAttribute('class').catch(() => '')) ?? '';
+      swatches.push({ styleId, name: name.slice(0, 60), selected: /\bselected\b/.test(cls) });
+    }
+  } catch {}
+  if (swatches.length === 0) {
+    swatches = [{ styleId: null, name: 'Default', selected: true }];
+  }
+  if (MAX_COLORS) swatches = swatches.slice(0, MAX_COLORS);
+
+  const colors = [];
+  for (let i = 0; i < swatches.length; i++) {
+    const sw = swatches[i];
+    if (!sw.selected && sw.styleId) {
+      // Switch to this color in-place. Skechers fires an AJAX variation
+      // request that re-renders the size grid + price.
+      try {
+        await page.locator(`button[data-style-id="${sw.styleId}"]`).first().click({ timeout: 5000 });
+        // Wait for the size grid to actually swap. Polling for the active
+        // color marker is more reliable than a fixed delay.
+        await page.waitForFunction(
+          (id) => {
+            const sel = document.querySelector('button.button-select-color.selected');
+            return sel?.getAttribute('data-style-id') === id;
+          },
+          sw.styleId,
+          { timeout: 5000 }
+        ).catch(() => {});
+        await delay(800);
+      } catch (err) {
+        log('color switch failed', { styleId: sw.styleId, err: String(err).slice(0, 160) });
+        continue;
+      }
+    }
+    const sizes = await readSizes(page);
+    const screenshotKey = await capturePdpProof(page, slug, plpSlug, style.rank, i);
+    const available = sizes.filter((s) => s.available).length;
+    colors.push({
+      name: sw.name,
+      pdp_url: page.url(),
+      pdp_screenshot_key: screenshotKey,
+      sizes,
+      available_count: available,
+      total_count: sizes.length,
+    });
+  }
+  return colors;
+}
+
+async function readSizes(page) {
+  try {
+    await page.locator(SEL_SIZE_BUTTONS).first().scrollIntoViewIfNeeded({ timeout: 3000 });
+  } catch {}
+  await delay(300);
+
+  // Pull the buttons + their unavailable-class flag in one DOM round-trip
+  // — Playwright's per-locator getAttribute calls add up fast on a 15-PLP
+  // run.
+  const raw = await page.evaluate((sel) => {
+    const out = [];
+    const seen = new Set();
+    const nodes = document.querySelectorAll(sel);
+    nodes.forEach((b) => {
+      const span = b.querySelector('span[data-attr-value]');
+      const v = span?.getAttribute('data-attr-value')?.trim() ?? '';
+      if (!v) return;
+      if (seen.has(v)) return;
+      seen.add(v);
+      const cls = b.getAttribute('class') ?? '';
+      const unavailable =
+        cls.includes('c-product-attributes__item__selector--unselectable') ||
+        b.hasAttribute('disabled') ||
+        b.getAttribute('aria-disabled') === 'true';
+      out.push({ size: v.slice(0, 12), available: !unavailable });
+    });
+    return out;
+  }, SEL_SIZE_BUTTONS);
+  return raw;
+}
+
+async function capturePdpProof(page, slug, plpSlug, rank, colorIdx) {
+  const fname = `${plpSlug}-rank${String(rank).padStart(2, '0')}-color${colorIdx}.png`;
+  const localDir = path.join(ARTIFACTS_BASE, slug);
+  fs.mkdirSync(localDir, { recursive: true });
+  const localPath = path.join(localDir, fname);
+  try {
+    await page.screenshot({ path: localPath, fullPage: false });
+  } catch (err) {
+    log('screenshot failed', { fname, err: String(err).slice(0, 160) });
+    return null;
+  }
+  if (DRY_RUN || !mediaConfigured()) return null;
+  const key = `audits/${slug}/${fname}`;
+  try {
+    await putMedia({ filePath: localPath, key, contentType: 'image/png' });
+    return key;
+  } catch (err) {
+    log('R2 upload failed', { key, err: String(err).slice(0, 160) });
+    return null;
+  }
+}
+
+function plpSlugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function summarize(plps) {
+  let styles = 0;
+  let variants = 0;
+  let coverageSum = 0;
+  let coverageDenom = 0;
+  let plpsAudited = 0;
+  let plpsFailed = 0;
+  for (const p of plps) {
+    if (p.error) { plpsFailed++; continue; }
+    plpsAudited++;
+    for (const s of p.styles) {
+      styles++;
+      for (const c of s.colors) {
+        variants++;
+        if (c.total_count > 0) {
+          coverageSum += c.available_count / c.total_count;
+          coverageDenom++;
+        }
+      }
+    }
+  }
+  return {
+    plps_audited: plpsAudited,
+    plps_failed: plpsFailed,
+    styles,
+    color_variants: variants,
+    avg_size_coverage: coverageDenom > 0 ? coverageSum / coverageDenom : 0,
+  };
+}
+
+async function main() {
+  const slug = `${todayUtcSlug()}-skechers-womens-inventory`;
+  log(`run start slug=${slug}`, { dryRun: DRY_RUN, maxPlps: MAX_PLPS, maxStyles: MAX_STYLES, maxColors: MAX_COLORS });
+
+  const allPlps = JSON.parse(fs.readFileSync(CATEGORIES_PATH, 'utf8'));
+  const plps = MAX_PLPS ? allPlps.slice(0, MAX_PLPS) : allPlps;
+
+  const { browser, context, real } = await openBrowser();
+  const page = await context.newPage();
+  if (!real) {
+    await page.setViewportSize({ width: devices['iPhone 14'].viewport.width, height: devices['iPhone 14'].viewport.height });
+  }
+
+  const results = [];
+  for (const plp of plps) {
+    try {
+      const styles = await scrapePlpTopStyles(page, plp);
+      const enriched = [];
+      for (const style of styles) {
+        try {
+          const colors = await scrapePdp(page, style, slug, plpSlugify(plp.name));
+          enriched.push({ ...style, colors });
+        } catch (err) {
+          log('PDP failed', { url: style.url, err: String(err).slice(0, 200) });
+          enriched.push({ ...style, colors: [] });
+        }
+      }
+      results.push({ category: plp.name, url: plp.url, styles: enriched });
+    } catch (err) {
+      log('PLP failed', { plp: plp.name, err: String(err).slice(0, 200) });
+      results.push({ category: plp.name, url: plp.url, styles: [], error: String(err).slice(0, 200) });
+    }
+  }
+
+  await browser.close().catch(() => {});
+
+  const totals = summarize(results);
+  log('run summary', totals);
+
+  // Narrative — Ivy's first-person secret-shopper report.
+  let narrative;
+  try {
+    narrative = await generateNarrative({ plps: results, totals, scope: "Skechers women's shoes" });
+  } catch (err) {
+    log('narrative generation failed', { err: String(err).slice(0, 200) });
+    narrative = buildFallbackNarrative(results, totals);
+  }
+
+  const score = `${Math.round(totals.avg_size_coverage * 10)}/10`;
+  const now = new Date();
+  const auditData = {
+    schema_version: 1,
+    slug,
+    type: 'site',
+    persona: PERSONA_SLUG,
+    email: {
+      subject: `Inventory Audit · Skechers Women's Shoes · ${todayUtcSlug()}`,
+      preheader: null,
+      from: 'ivy-inventory@etell.app',
+      from_display_name: 'Ivy Inventory',
+      timestamp_iso: now.toISOString(),
+      date_formatted: now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
+    },
+    review: {
+      score,
+      raw_markdown: narrative,
+      sections: {},
+    },
+    qa: null,
+    assets: {
+      render_image: null,
+      pdf: null,
+      webview_url: 'https://www.skechers.com/women/shoes/',
+    },
+    inventory: {
+      site: 'skechers.com',
+      scope: "women's shoes",
+      plps: results,
+      totals,
+    },
+  };
+
+  // Write a local artifact regardless of dry-run.
+  const localJsonPath = path.join(ARTIFACTS_BASE, slug, 'audit-data.json');
+  fs.mkdirSync(path.dirname(localJsonPath), { recursive: true });
+  fs.writeFileSync(localJsonPath, JSON.stringify(auditData, null, 2));
+  log(`wrote ${localJsonPath}`);
+
+  if (DRY_RUN) {
+    log('dry-run — skipping DB upsert + vault note');
+    return;
+  }
+
+  if (dbConfigured()) {
+    await upsertAuditRow({ slug, data: auditData });
+    await upsertExperienceAndReaction({ slug, data: auditData });
+    log('audit row + experience + reaction upserted');
+  } else {
+    log('DB not configured — skipping upsert');
+  }
+
+  await writeVaultNote({ auditData, personaSlug: PERSONA_SLUG, repoRoot: REPO_ROOT });
+  log('vault note written');
+  log('run complete');
+}
+
+function buildFallbackNarrative(plps, totals) {
+  const pct = (totals.avg_size_coverage * 100).toFixed(1);
+  const lines = [
+    `# Skechers Women's Inventory Audit`,
+    ``,
+    `Audited ${totals.plps_audited} categories, ${totals.styles} styles, ${totals.color_variants} (style, color) variants.`,
+    `Average size coverage: ${pct}% per variant.`,
+    ``,
+    `## Per-category breakdown`,
+    ``,
+  ];
+  for (const p of plps) {
+    if (p.error) {
+      lines.push(`- **${p.category}** — failed: ${p.error}`);
+      continue;
+    }
+    let v = 0;
+    let cov = 0;
+    let denom = 0;
+    for (const s of p.styles) {
+      for (const c of s.colors) {
+        v++;
+        if (c.total_count > 0) { cov += c.available_count / c.total_count; denom++; }
+      }
+    }
+    const cPct = denom > 0 ? ((cov / denom) * 100).toFixed(0) : '—';
+    lines.push(`- **${p.category}** — ${p.styles.length} styles, ${v} variants, ${cPct}% avg size coverage`);
+  }
+  lines.push('', `**${pct}% / 10**`);
+  return lines.join('\n');
+}
+
+main().catch((err) => {
+  console.error(err);
+  log('FATAL', { err: String(err).slice(0, 400) });
+  process.exit(1);
+});

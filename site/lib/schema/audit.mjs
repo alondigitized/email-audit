@@ -97,6 +97,57 @@ export const qaReportSchema = z.object({
   categories: z.record(z.string(), qaCategorySchema),
 });
 
+// ─── Inventory audit (Ivy) ─────────────────────────────────────────────────
+// Recurring inventory audit by the secret-shopper persona (Ivy Inventory).
+// Captures size availability across the top-N styles per PLP for a brand.
+// Lives under audit.data.inventory; the audit row has type='site' so the
+// existing audit list renders it like a site experience review. Email block
+// is faked to a placeholder line.
+
+export const inventorySizeSchema = z.object({
+  size: z.string(),
+  available: z.boolean(),
+});
+
+export const inventoryColorSchema = z.object({
+  name: z.string(),
+  pdp_url: z.string().nullable().optional(),
+  pdp_screenshot_key: z.string().nullable().optional(),
+  sizes: z.array(inventorySizeSchema),
+  available_count: z.number(),
+  total_count: z.number(),
+});
+
+export const inventoryStyleSchema = z.object({
+  rank: z.number(),
+  name: z.string(),
+  url: z.string(),
+  colors: z.array(inventoryColorSchema),
+});
+
+export const inventoryPlpSchema = z.object({
+  category: z.string(),
+  url: z.string(),
+  styles: z.array(inventoryStyleSchema),
+  error: z.string().nullable().optional(),
+});
+
+export const inventoryTotalsSchema = z.object({
+  plps_audited: z.number(),
+  plps_failed: z.number(),
+  styles: z.number(),
+  color_variants: z.number(),
+  // 0–1 fraction; UI multiplies by 100 for display.
+  avg_size_coverage: z.number(),
+});
+
+export const inventoryAuditSchema = z.object({
+  site: z.string(),
+  scope: z.string(),
+  plps: z.array(inventoryPlpSchema),
+  totals: inventoryTotalsSchema,
+});
+
 // ─── Root schemas ──────────────────────────────────────────────────────────
 
 export const auditTypeSchema = z.enum(['email', 'site']);
@@ -133,6 +184,7 @@ export const auditDataSchema = z.object({
       steps: z.array(perfStepSchema),
     })
     .optional(),
+  inventory: inventoryAuditSchema.nullable().optional(),
 });
 
 export const auditSummarySchema = z.object({
