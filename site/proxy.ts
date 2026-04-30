@@ -17,6 +17,7 @@ const PUBLIC_PREFIXES = [
   "/auth/verify", // two-step magic-link confirm page
   "/api/auth/", // Auth.js catch-all
   "/api/email/inbound", // Cloudflare Email Worker webhook (Bearer-auth only)
+  "/api/cron/", // Mac mini cron caller (Bearer-auth via CRON_SECRET)
   "/_next/static",
   "/_next/image",
 ];
