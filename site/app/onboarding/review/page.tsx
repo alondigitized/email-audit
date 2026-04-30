@@ -41,9 +41,10 @@ export default async function ReviewPage({
     <div className="max-w-3xl mx-auto py-10">
       <h1 className="text-3xl font-bold mb-2">Review your bootstrap</h1>
       <p className="text-muted text-sm mb-8 max-w-xl">
-        Pick which persona will represent {ownDomain} and which email programs
-        their inbox should be enrolled in. You can fine-tune the persona&apos;s
-        identity below before continuing.
+        Pick which persona will represent {ownDomain}. They&apos;ll review every
+        email and site experience you put in front of them, scoring it from
+        their own perspective. Pick the email programs to enroll, fine-tune
+        their identity below, and we&apos;ll start auditing.
       </p>
 
       {sp.error && (

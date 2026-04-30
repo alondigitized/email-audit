@@ -52,7 +52,9 @@ export default async function HandoffPage() {
       <p className="text-muted text-base max-w-xl mb-8">
         Each click below opens the brand and copies your persona&apos;s inbox.
         Paste it into their email signup form, then come back and mark it done.
-        Auditing starts the moment the first email lands.
+        Auditing starts the moment the first email lands. The persona will
+        also start running scheduled site-experience reviews against the
+        brand homepage — first one shows up after the next overnight sweep.
       </p>
 
       {inboxAddress && (
