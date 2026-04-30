@@ -1,8 +1,10 @@
 import { sql as drizzleSql } from "drizzle-orm";
 import { db, subscriptionJobs } from "@/lib/db/client";
 
-// Enqueue a single (persona, brand) subscription job. Caller-side concern;
-// the auto-subscribe runner picks rows up where status='queued'.
+// Enqueue a single (persona, brand) subscription job. Lands at
+// status='manual_pending' immediately — there is no auto-subscribe layer
+// any more (most retailers gate their signup behind bot management; the
+// Klaviyo-only auto path covered too few brands to be worth maintaining).
 //
 // Returns the new job id, or `null` when the brand is blocklisted (a brand
 // or their legal team requested we not subscribe personas to their list,
@@ -42,7 +44,7 @@ export async function enqueueSubscriptionJob(args: {
       personaSlug: args.personaSlug,
       brandDomain,
       inboxAddress: args.inboxAddress,
-      status: "queued",
+      status: "manual_pending",
     })
     .returning({ id: subscriptionJobs.id });
   return row.id;

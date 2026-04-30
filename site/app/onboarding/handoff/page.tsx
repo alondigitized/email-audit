@@ -32,13 +32,15 @@ export default async function HandoffPage() {
     .from(subscriptionJobs)
     .where(eq(subscriptionJobs.personaSlug, state.personaSlug));
 
+  // `auto_succeeded` is a legacy value; new jobs land at manual_pending and
+  // flip to manual_done when the user clicks "I've subscribed" or the
+  // welcome email lands.
   const done = jobs.filter(
     (j) => j.status === "auto_succeeded" || j.status === "manual_done"
   );
   const pending = jobs.filter(
     (j) =>
       j.status === "queued" ||
-      j.status === "running" ||
       j.status === "manual_pending" ||
       j.status === "failed"
   );
@@ -91,11 +93,7 @@ export default async function HandoffPage() {
           <SectionLabel>Already subscribed</SectionLabel>
           <div className="space-y-2">
             {done.map((job) => (
-              <DoneTile
-                key={job.id}
-                brandDomain={job.brandDomain}
-                wasManual={job.status === "manual_done"}
-              />
+              <DoneTile key={job.id} brandDomain={job.brandDomain} />
             ))}
           </div>
         </div>
@@ -161,21 +159,13 @@ function PendingTile({
   );
 }
 
-function DoneTile({
-  brandDomain,
-  wasManual,
-}: {
-  brandDomain: string;
-  wasManual: boolean;
-}) {
+function DoneTile({ brandDomain }: { brandDomain: string }) {
   return (
     <div className="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl px-5 py-3">
       <span className="text-emerald-600 text-base leading-none">✓</span>
       <div className="flex-1 flex items-baseline justify-between gap-3">
         <span className="font-semibold text-sm">{brandDomain}</span>
-        <span className="text-[11px] text-muted">
-          {wasManual ? "Subscribed" : "Subscribed automatically"}
-        </span>
+        <span className="text-[11px] text-muted">Subscribed</span>
       </div>
     </div>
   );

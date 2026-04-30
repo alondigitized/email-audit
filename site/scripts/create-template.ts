@@ -22,9 +22,9 @@
  * 5. Stamps personas.template_slug = own slug (Walker self-reference).
  * 6. Writes vaults/{slug}/README.md so Alon's Obsidian sees a landing
  *    page immediately.
- * 7. Enqueues subscription jobs for each brand and runs the auto-subscribe
- *    sweep. Klaviyo-embedded brands flip to auto_succeeded; everything
- *    else flips to manual_pending and surfaces in /admin/subscriptions.
+ * 7. Enqueues a manual_pending subscription job for each brand. They
+ *    surface in /admin/subscriptions for the admin to walk through and
+ *    mark done.
  *
  * Aborts cleanly on slug collision; does NOT roll back partial work
  * because the steps are append-only and idempotent on re-run with a
@@ -117,18 +117,10 @@ async function main() {
   console.log(`  vault README:      ${result.vaultReadmePath}`);
   console.log(`  template promoted: yes`);
 
+  const subs = result.subscriptions ?? [];
   console.log(`\n--- subscriptions ---`);
-  const auto = result.subscriptions?.filter((s) => s.outcome === "auto_succeeded") ?? [];
-  const manual = result.subscriptions?.filter((s) => s.outcome === "manual_pending") ?? [];
-  const failed = result.subscriptions?.filter((s) => s.outcome === "failed") ?? [];
-  console.log(`  auto-succeeded: ${auto.length}`);
-  for (const s of auto) console.log(`    ✓ ${s.brandDomain}`);
-  console.log(`  manual-pending: ${manual.length}  (visit /admin/subscriptions)`);
-  for (const s of manual) console.log(`    ⏳ ${s.brandDomain}`);
-  if (failed.length > 0) {
-    console.log(`  failed: ${failed.length}`);
-    for (const s of failed) console.log(`    ✗ ${s.brandDomain}`);
-  }
+  console.log(`  ${subs.length} enqueued for manual signup (visit /admin/subscriptions)`);
+  for (const s of subs) console.log(`    ⏳ ${s.brandDomain}`);
 
   console.log(
     `\nDone. Template '${result.persona.slug}' is live in /admin/templates and ready for fresh ${args.industry} signups to fork.`
