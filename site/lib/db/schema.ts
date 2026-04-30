@@ -445,11 +445,14 @@ export const emailMessages = pgTable(
 
 // Phase D — brand-newsletter subscription queue. One row per
 // (persona, brand_domain) pair. Status flow:
-//   queued — fresh insert, awaiting auto-subscribe attempt
-//   auto_succeeded — auto path subscribed + welcome email confirmed
-//   manual_pending — auto path failed (form blocked etc); human takes over
-//   manual_done — admin clicked "mark done" or email-monitor confirmed
-//   failed — terminal failure (auto failed + admin marked unreachable)
+//   manual_pending — fresh insert, waiting for the admin / tenant member
+//                    to subscribe via the brand's signup form
+//   manual_done — someone clicked "Mark done" or the welcome email landed
+//   failed — admin marked the brand unreachable (e.g. signup region-locked)
+//
+// Legacy values still present in the column (no migration yet):
+//   queued, auto_succeeded — created during the auto-subscribe era
+//   (removed; substring-matching Klaviyo signups covered too few brands).
 export const subscriptionJobs = pgTable("subscription_job", {
   id: uuid("id").primaryKey().defaultRandom(),
   tenantId: uuid("tenant_id")

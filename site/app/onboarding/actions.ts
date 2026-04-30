@@ -23,7 +23,6 @@ import {
 import { createTenantPersonaFromProposal } from "@/lib/persona-fork";
 import { reportOnboardingStep } from "@/lib/persona-status";
 import { enqueueSubscriptionJob } from "@/lib/subscriptions/queue";
-import { tryAutoSubscribeJob } from "@/lib/subscriptions/auto";
 
 const MAX_GENERATIONS = 3;
 
@@ -203,8 +202,9 @@ export async function commitPersonaAction(fd: FormData): Promise<void> {
     status: "queued",
   });
 
-  // Subscriptions — enqueue rows for each toggled brand, then await all
-  // auto-subscribe attempts in parallel. ~5s worst case (FETCH_TIMEOUT_MS).
+  // Subscriptions — enqueue one manual_pending row per toggled brand. The
+  // bootstrap dashboard renders these as "subscribe yourself" tiles; there
+  // is no longer an auto-subscribe sweep.
   const targets: { brandDomain: string }[] = [];
   if (v.subscribe_own) targets.push({ brandDomain: ownDomain });
   if (v.subscribe_comp_0 && competitorsArr.data[0]) {
@@ -222,21 +222,18 @@ export async function commitPersonaAction(fd: FormData): Promise<void> {
   });
 
   if (created.inboxAddress && uniqueTargets.length > 0) {
-    const jobIds: string[] = [];
     for (const t of uniqueTargets) {
       try {
-        const id = await enqueueSubscriptionJob({
+        await enqueueSubscriptionJob({
           tenantId: state.tenant.id,
           personaSlug: created.personaSlug,
           brandDomain: t.brandDomain,
           inboxAddress: created.inboxAddress,
         });
-        if (id) jobIds.push(id);
       } catch (err) {
         console.warn(`subscription enqueue failed (${t.brandDomain}):`, err);
       }
     }
-    await Promise.allSettled(jobIds.map((id) => tryAutoSubscribeJob(id)));
   }
 
   await reportOnboardingStep(

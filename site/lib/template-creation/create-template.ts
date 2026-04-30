@@ -1,20 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { eq } from "drizzle-orm";
-import {
-  db,
-  personas,
-  personaTemplates,
-  subscriptionJobs,
-  tenants,
-} from "@/lib/db/client";
+import { db, personas, personaTemplates, tenants } from "@/lib/db/client";
 import {
   personaProfileSchema,
   type PersonaProfile,
 } from "@/lib/schema/persona";
 import { generateInboxAddress } from "@/lib/inbox";
 import { enqueueSubscriptionJob } from "@/lib/subscriptions/queue";
-import { tryAutoSubscribeJob } from "@/lib/subscriptions/auto";
 import {
   generateTemplatePersona,
   type TemplatePersona,
@@ -62,7 +55,6 @@ export type CreateTemplateOutput = {
   subscriptions?: Array<{
     brandDomain: string;
     jobId: string;
-    outcome: "auto_succeeded" | "manual_pending" | "failed";
   }>;
 };
 
@@ -246,32 +238,17 @@ export async function createTemplate(
     fs.writeFileSync(readmePath, vaultReadmeContent(persona, input.industry));
   }
 
-  // 8. Enqueue brand subscription jobs.
+  // 8. Enqueue brand subscription jobs (manual_pending — there is no
+  // auto-subscribe layer; the admin queue is the path).
+  const subResults: CreateTemplateOutput["subscriptions"] = [];
   for (const b of brands.brands) {
-    await enqueueSubscriptionJob({
+    const jobId = await enqueueSubscriptionJob({
       tenantId: tenant.id,
       personaSlug: persona.slug,
       brandDomain: b.domain,
       inboxAddress: inbox.inbox_address,
     });
-  }
-
-  // 9. Sweep the queued jobs through tryAutoSubscribeJob. Sequential to
-  // be polite to the brand homepages we're scraping.
-  const queuedJobs = await db
-    .select({ id: subscriptionJobs.id, brandDomain: subscriptionJobs.brandDomain })
-    .from(subscriptionJobs)
-    .where(eq(subscriptionJobs.personaSlug, persona.slug));
-  const subResults: CreateTemplateOutput["subscriptions"] = [];
-  for (const job of queuedJobs) {
-    let outcome: "auto_succeeded" | "manual_pending" | "failed" = "failed";
-    try {
-      outcome = await tryAutoSubscribeJob(job.id);
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.warn(`auto-subscribe failed for ${job.brandDomain}: ${msg.slice(0, 200)}`);
-    }
-    subResults.push({ brandDomain: job.brandDomain, jobId: job.id, outcome });
+    if (jobId) subResults.push({ brandDomain: b.domain, jobId });
   }
 
   return {
