@@ -9,6 +9,7 @@ import { BrandSelector } from "./BrandSelector";
 import {
   DateRangeSelector,
   auditMatchesRange,
+  DATE_RANGE_PRESETS,
 } from "./DateRangeSelector";
 
 // Brand identity comes from the audit row's `from_display_name` (e.g.
@@ -126,6 +127,11 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
         audits={visibleAudits}
         selectedDate={selectedDate}
         onSelectDate={setSelectedDate}
+        days={
+          selectedRange
+            ? DATE_RANGE_PRESETS.find((p) => p.key === selectedRange)?.days
+            : undefined
+        }
       />
       <AuditList
         audits={visibleAudits}
