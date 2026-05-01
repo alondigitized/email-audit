@@ -2,6 +2,26 @@ import type { InventoryAudit } from "@/lib/schema/audit";
 
 type Variant = InventoryAudit["plps"][number]["styles"][number]["variants"][number];
 
+// Skechers PDP URLs end in `<style-number>_<color-code>.html`, e.g.
+// /dlites---spring-bloom/150553_PNK.html. We parse that into "150553 PNK"
+// so the heatmap row labels match what the brand's PDP shows under
+// "Style #:". Falls back to null on URLs that don't follow the pattern
+// (Skechers promo / redirect URLs) — caller drops back to rank.
+export function parseStyleSku(pdpUrl: string | null | undefined): string | null {
+  if (!pdpUrl) return null;
+  try {
+    const u = new URL(pdpUrl);
+    const last = (u.pathname.split("/").filter(Boolean).pop() ?? "").replace(
+      /\.html?$/i,
+      ""
+    );
+    if (!/^[0-9A-Za-z]+_[0-9A-Za-z]+$/.test(last)) return null;
+    return last.replace("_", " ");
+  } catch {
+    return null;
+  }
+}
+
 // Sort sizes numerically by their leading float — handles "5", "5.0", "5.5",
 // "10.5", "13" correctly. Non-numeric labels (e.g. "Medium" — shouldn't be
 // here after the size/width split, but defensive) sort to the end.
@@ -207,11 +227,20 @@ export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
                       className="text-right pr-2 text-[10px] text-gray-700 whitespace-nowrap max-w-[260px] overflow-hidden text-ellipsis"
                       title={label}
                     >
-                      <span className="text-muted">#{row.styleRank}</span>{" "}
-                      <span className="font-medium">{row.color}</span>
-                      {row.width ? (
-                        <span className="text-muted"> {row.width}</span>
-                      ) : null}
+                      {(() => {
+                        const sku = parseStyleSku(row.variant.pdp_url);
+                        return (
+                          <>
+                            <span className="font-mono text-muted">
+                              {sku ?? `#${row.styleRank}`}
+                            </span>{" "}
+                            <span className="font-medium">{row.color}</span>
+                            {row.width ? (
+                              <span className="text-muted"> {row.width}</span>
+                            ) : null}
+                          </>
+                        );
+                      })()}
                     </td>
                     {sizeAxis.map((sz) => {
                       const state = sizeStateMap.get(sz) ?? "missing";
