@@ -80,7 +80,7 @@ export function FilterCombobox({
   const placeholder = allLabel ?? `All ${filterLabel.toLowerCase()}s`;
 
   return (
-    <div className="flex items-center gap-2 mb-4 flex-wrap">
+    <div className="flex items-center gap-2">
       <span className="text-xs font-semibold uppercase tracking-wide text-muted">
         {filterLabel}
       </span>
@@ -133,7 +133,7 @@ export function FilterCombobox({
                 className="w-full px-3 py-2 text-sm rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-gray-400"
               />
               <div className="mt-1.5 flex items-center justify-between text-[11px] text-muted">
-                <span>{totalAudits} audits across all {filterLabel.toLowerCase()}s</span>
+                <span>{totalAudits} audits total</span>
                 {selected && (
                   <button
                     onClick={() => {

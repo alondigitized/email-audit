@@ -6,6 +6,10 @@ import { ActivityChart } from "./ActivityChart";
 import { AuditList } from "./AuditList";
 import { PersonaSelector } from "./PersonaSelector";
 import { BrandSelector } from "./BrandSelector";
+import {
+  DateRangeSelector,
+  auditMatchesRange,
+} from "./DateRangeSelector";
 
 // Brand identity comes from the audit row's `from_display_name` (e.g.
 // "Skechers"). Some senders share a display name across orgs (rare),
@@ -16,16 +20,25 @@ function brandKey(label: string): string {
 }
 
 export function HomeContent({ audits }: { audits: AuditSummary[] }) {
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  // Filter hierarchy: range → persona → brand → specific day. Each level
+  // narrows the set the next operates on, so the dropdown counts always
+  // reflect what's actually pickable.
+  const [selectedRange, setSelectedRange] = useState<string | null>(null);
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const rangeScopedAudits = useMemo(() => {
+    if (!selectedRange) return audits;
+    return audits.filter((a) => auditMatchesRange(a, selectedRange));
+  }, [audits, selectedRange]);
 
   // Persona options for the combobox: keyed on slug, sorted by audit
   // count desc (matches BrandSelector). Each row already carries
   // persona_name after the audits query resolves them.
   const availablePersonas = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
-    for (const a of audits) {
+    for (const a of rangeScopedAudits) {
       if (!a.persona) continue;
       const existing = counts.get(a.persona);
       if (existing) {
@@ -40,14 +53,12 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     return [...counts.entries()]
       .map(([key, v]) => ({ key, label: v.label, count: v.count }))
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
-  }, [audits]);
+  }, [rangeScopedAudits]);
 
-  // Persona scope applies first — when a persona is picked, the brand
-  // dropdown only lists brands that persona has audited.
   const personaScopedAudits = useMemo(() => {
-    if (!selectedPersona) return audits;
-    return audits.filter((a) => a.persona === selectedPersona);
-  }, [audits, selectedPersona]);
+    if (!selectedPersona) return rangeScopedAudits;
+    return rangeScopedAudits.filter((a) => a.persona === selectedPersona);
+  }, [rangeScopedAudits, selectedPersona]);
 
   const availableBrands = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
@@ -67,8 +78,6 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
   }, [personaScopedAudits]);
 
-  // Reset brand if the active selection isn't in the scoped list anymore
-  // (happens when the user picks a persona that hasn't audited that brand).
   const visibleAudits = useMemo(() => {
     let list = personaScopedAudits;
     if (selectedBrand) {
@@ -81,23 +90,38 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
 
   return (
     <>
-      <PersonaSelector
-        personas={availablePersonas}
-        selected={selectedPersona}
-        onSelect={(slug) => {
-          setSelectedPersona(slug);
-          setSelectedBrand(null);
-          setSelectedDate(null);
-        }}
-      />
-      <BrandSelector
-        brands={availableBrands}
-        selected={selectedBrand}
-        onSelect={(key) => {
-          setSelectedBrand(key);
-          setSelectedDate(null);
-        }}
-      />
+      {/* Filters live on a single wrap-aware row. Mobile stacks the pills
+          vertically; desktop fits all three side-by-side. gap-x is tighter
+          than gap-y so the row reads as a unit. */}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-4">
+        <DateRangeSelector
+          audits={audits}
+          selected={selectedRange}
+          onSelect={(key) => {
+            setSelectedRange(key);
+            setSelectedPersona(null);
+            setSelectedBrand(null);
+            setSelectedDate(null);
+          }}
+        />
+        <PersonaSelector
+          personas={availablePersonas}
+          selected={selectedPersona}
+          onSelect={(slug) => {
+            setSelectedPersona(slug);
+            setSelectedBrand(null);
+            setSelectedDate(null);
+          }}
+        />
+        <BrandSelector
+          brands={availableBrands}
+          selected={selectedBrand}
+          onSelect={(key) => {
+            setSelectedBrand(key);
+            setSelectedDate(null);
+          }}
+        />
+      </div>
       <ActivityChart
         audits={visibleAudits}
         selectedDate={selectedDate}
