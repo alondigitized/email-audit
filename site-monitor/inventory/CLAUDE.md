@@ -10,7 +10,9 @@ note + R2 screenshots + sidecar CSV.
 | Slug | Display | Scope | Categories file | Schedule |
 |---|---|---|---|---|
 | `ivy-inventory` | Ivy Inventory | Skechers women's shoes | `categories-womens.json` | Mondays 13:00 UTC |
+| `ida-inventory` | Ida Inventory | Skechers girls' shoes | `categories-girls.json` | Tuesdays 13:00 UTC |
 | `ian-inventory` | Ian Inventory | Skechers men's shoes | `categories-mens.json` | Wednesdays 13:00 UTC |
+| `ike-inventory` | Ike Inventory | Skechers boys' shoes | `categories-boys.json` | Thursdays 13:00 UTC |
 
 Personas are staggered across weekdays so the Mac mini isn't running
 two ~25-min Playwright jobs at once. To add another persona, append
