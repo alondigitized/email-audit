@@ -34,12 +34,27 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     return audits.filter((a) => auditMatchesRange(a, selectedRange));
   }, [audits, selectedRange]);
 
-  // Persona options for the combobox: keyed on slug, sorted by audit
-  // count desc (matches BrandSelector). Each row already carries
-  // persona_name after the audits query resolves them.
+  // Faceted scoping: each filter's dropdown options reflect "what's
+  // pickable given every OTHER active filter". So picking brand=DSW
+  // narrows the persona dropdown to only personas with DSW audits, and
+  // vice-versa. The visible list applies both.
+  //
+  // Range sits above the facets — it always narrows everything below.
+  const personaPool = useMemo(() => {
+    if (!selectedBrand) return rangeScopedAudits;
+    return rangeScopedAudits.filter(
+      (a) => brandKey(a.from_display_name ?? "") === selectedBrand
+    );
+  }, [rangeScopedAudits, selectedBrand]);
+
+  const brandPool = useMemo(() => {
+    if (!selectedPersona) return rangeScopedAudits;
+    return rangeScopedAudits.filter((a) => a.persona === selectedPersona);
+  }, [rangeScopedAudits, selectedPersona]);
+
   const availablePersonas = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
-    for (const a of rangeScopedAudits) {
+    for (const a of personaPool) {
       if (!a.persona) continue;
       const existing = counts.get(a.persona);
       if (existing) {
@@ -54,16 +69,11 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     return [...counts.entries()]
       .map(([key, v]) => ({ key, label: v.label, count: v.count }))
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
-  }, [rangeScopedAudits]);
-
-  const personaScopedAudits = useMemo(() => {
-    if (!selectedPersona) return rangeScopedAudits;
-    return rangeScopedAudits.filter((a) => a.persona === selectedPersona);
-  }, [rangeScopedAudits, selectedPersona]);
+  }, [personaPool]);
 
   const availableBrands = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
-    for (const a of personaScopedAudits) {
+    for (const a of brandPool) {
       const label = a.from_display_name?.trim();
       if (!label) continue;
       const key = brandKey(label);
@@ -77,17 +87,18 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     return [...counts.entries()]
       .map(([key, v]) => ({ key, label: v.label, count: v.count }))
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
-  }, [personaScopedAudits]);
+  }, [brandPool]);
 
   const visibleAudits = useMemo(() => {
-    let list = personaScopedAudits;
+    let list = rangeScopedAudits;
+    if (selectedPersona) list = list.filter((a) => a.persona === selectedPersona);
     if (selectedBrand) {
       list = list.filter(
         (a) => brandKey(a.from_display_name ?? "") === selectedBrand
       );
     }
     return list;
-  }, [personaScopedAudits, selectedBrand]);
+  }, [rangeScopedAudits, selectedPersona, selectedBrand]);
 
   return (
     <>
@@ -110,7 +121,9 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
           selected={selectedPersona}
           onSelect={(slug) => {
             setSelectedPersona(slug);
-            setSelectedBrand(null);
+            // Persona + brand are siblings; don't clear the other side.
+            // The dropdowns auto-narrow to keep the remaining selection
+            // valid. Day filter clears since the chart re-buckets.
             setSelectedDate(null);
           }}
         />
