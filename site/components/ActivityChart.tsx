@@ -15,7 +15,7 @@ import {
 import type { AuditSummary } from "@/lib/types";
 import { localDateKey, startOfLocalDay } from "@/lib/dates";
 
-const DAYS = 14;
+const DEFAULT_DAYS = 14;
 const MAX_BRANDS = 6;
 const OTHER_BUCKET = "Other";
 
@@ -45,13 +45,13 @@ function normalizeSender(name: string | undefined | null): string {
   return (name ?? "").trim();
 }
 
-// Pick the top-N senders over the DAYS window (email audits only) and
+// Pick the top-N senders over the days window (email audits only) and
 // return the bucket order ending with "Other". Buckets are sorted
 // alphabetically for stable color assignment across renders.
-function pickSenders(audits: AuditSummary[]): string[] {
+function pickSenders(audits: AuditSummary[], days: number): string[] {
   const today = startOfLocalDay(new Date());
   const start = new Date(today);
-  start.setDate(start.getDate() - (DAYS - 1));
+  start.setDate(start.getDate() - (days - 1));
 
   const counts = new Map<string, number>();
   for (const a of audits) {
@@ -82,16 +82,17 @@ function colorFor(senderOrder: string[], sender: string): string {
 
 function buildData(
   audits: AuditSummary[],
-  senderOrder: string[]
+  senderOrder: string[],
+  days: number
 ): DayBucket[] {
   const topSet = new Set(senderOrder.filter((s) => s !== OTHER_BUCKET));
   const today = startOfLocalDay(new Date());
   const start = new Date(today);
-  start.setDate(start.getDate() - (DAYS - 1));
+  start.setDate(start.getDate() - (days - 1));
 
   const indexByKey = new Map<string, number>();
   const out: DayBucket[] = [];
-  for (let i = 0; i < DAYS; i++) {
+  for (let i = 0; i < days; i++) {
     const d = new Date(start);
     d.setDate(d.getDate() + i);
     const key = localDateKey(d);
@@ -126,6 +127,26 @@ interface Props {
   audits: AuditSummary[];
   selectedDate: string | null;
   onSelectDate: (date: string | null) => void;
+  // Window size in days for the chart's x-axis. Driven by the date-range
+  // filter on HomeContent so picking "Last 30 days" widens the chart to
+  // match. Falls back to the legacy 14-day default when unset.
+  days?: number;
+}
+
+// Label density: ~10-14 visible ticks across the axis regardless of
+// the window size, otherwise 90-day windows render an unreadable wall
+// of overlapping labels.
+function tickInterval(days: number): number | "preserveStartEnd" {
+  if (days <= 14) return 1;
+  if (days <= 30) return 2;
+  if (days <= 60) return 4;
+  if (days <= 90) return 6;
+  return "preserveStartEnd";
+}
+
+function windowLabel(days: number): string {
+  if (days === 1) return "today";
+  return `last ${days} days`;
 }
 
 function dayTotal(d: DayBucket, senderOrder: string[]): number {
@@ -134,7 +155,12 @@ function dayTotal(d: DayBucket, senderOrder: string[]): number {
   return sum;
 }
 
-export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
+export function ActivityChart({
+  audits,
+  selectedDate,
+  onSelectDate,
+  days = DEFAULT_DAYS,
+}: Props) {
   // Recharts' ResponsiveContainer measures its parent in a layout effect.
   // During SSR the parent has no dimensions, which emits a width(-1)/height(-1)
   // warning and briefly renders an empty chart. Gate the chart on hydration
@@ -142,8 +168,8 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const senderOrder = pickSenders(audits);
-  const data = buildData(audits, senderOrder);
+  const senderOrder = pickSenders(audits, days);
+  const data = buildData(audits, senderOrder, days);
   const total = data.reduce((s, d) => s + dayTotal(d, senderOrder), 0);
   const peak = data.reduce(
     (m, d) => Math.max(m, dayTotal(d, senderOrder)),
@@ -173,7 +199,7 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
       <div className="flex justify-between items-baseline gap-3 flex-wrap mb-3">
         <h2 className="text-base font-semibold m-0">Email activity</h2>
         <div className="text-muted text-xs">
-          {total} emails · last {DAYS} days · peak {peak}/day
+          {total} emails · {windowLabel(days)} · peak {peak}/day
         </div>
       </div>
       <div style={{ width: "100%", height: 220 }}>
@@ -193,7 +219,7 @@ export function ActivityChart({ audits, selectedDate, onSelectDate }: Props) {
               tick={{ fontSize: 11, fill: "#6b7280" }}
               tickLine={false}
               axisLine={{ stroke: "#e5e7eb" }}
-              interval={1}
+              interval={tickInterval(days)}
             />
             <YAxis
               tick={{ fontSize: 11, fill: "#6b7280" }}
