@@ -1,4 +1,5 @@
 import type { InventoryAudit } from "@/lib/schema/audit";
+import { InventoryHeatmap } from "./InventoryHeatmap";
 
 type Inventory = InventoryAudit;
 
@@ -85,6 +86,12 @@ export function InventoryPane({
           </a>
         )}
       </div>
+
+      <InventoryHeatmap inventory={inventory} />
+
+      <h3 className="text-sm font-semibold mb-3 mt-2">
+        Detail — every variant
+      </h3>
 
       {/* Mobile: stacked cards */}
       <ul className="sm:hidden flex flex-col gap-3">
