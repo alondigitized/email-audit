@@ -20,26 +20,26 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
 
-  // Derive persona metas from the audits themselves — each row already
-  // carries persona_name / persona_short after the audits query resolves
-  // them. Avoids needing a separate persona registry in this client tree.
+  // Persona options for the combobox: keyed on slug, sorted by audit
+  // count desc (matches BrandSelector). Each row already carries
+  // persona_name after the audits query resolves them.
   const availablePersonas = useMemo(() => {
-    const bySlug = new Map<
-      string,
-      { slug: string; name: string; short: string }
-    >();
+    const counts = new Map<string, { label: string; count: number }>();
     for (const a of audits) {
       if (!a.persona) continue;
-      if (bySlug.has(a.persona)) continue;
-      bySlug.set(a.persona, {
-        slug: a.persona,
-        name: a.persona_name ?? a.persona,
-        short: a.persona_short ?? a.persona,
-      });
+      const existing = counts.get(a.persona);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        counts.set(a.persona, {
+          label: a.persona_name ?? a.persona,
+          count: 1,
+        });
+      }
     }
-    return Array.from(bySlug.values()).sort((a, b) =>
-      a.slug.localeCompare(b.slug)
-    );
+    return [...counts.entries()]
+      .map(([key, v]) => ({ key, label: v.label, count: v.count }))
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
   }, [audits]);
 
   // Persona scope applies first — when a persona is picked, the brand

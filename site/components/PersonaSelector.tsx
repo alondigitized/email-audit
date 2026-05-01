@@ -1,45 +1,25 @@
 "use client";
 
-import type { PersonaMeta } from "@/lib/personas";
+import { FilterCombobox, type FilterOption } from "./FilterCombobox";
 
 interface Props {
-  personas: PersonaMeta[];
+  personas: FilterOption[];
   selected: string | null;
   onSelect: (slug: string | null) => void;
 }
 
-export function PersonaSelector({ personas: metas, selected, onSelect }: Props) {
-  // Hide the selector entirely if there's 0 or 1 persona — no choice to make
-  if (metas.length <= 1) return null;
-
+// Persona filter on the audit list. Same combobox UI as BrandSelector
+// (the persona roster grew past the point where flat pills made sense
+// once Ivy/Ian/Ida/Ike + 50 retailer personas joined Walker/Martha/
+// Calvin). HomeContent shapes the FilterOption list with persona name
+// + audit count.
+export function PersonaSelector({ personas, selected, onSelect }: Props) {
   return (
-    <div className="flex items-center gap-2 mb-4 flex-wrap">
-      <span className="text-xs font-semibold uppercase tracking-wide text-muted">
-        Persona
-      </span>
-      <button
-        onClick={() => onSelect(null)}
-        className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-colors ${
-          selected === null
-            ? "bg-gray-900 text-white"
-            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-        }`}
-      >
-        All
-      </button>
-      {metas.map((m) => (
-        <button
-          key={m.slug}
-          onClick={() => onSelect(m.slug)}
-          className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-colors ${
-            selected === m.slug
-              ? "bg-gray-900 text-white"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          }`}
-        >
-          {m.name}
-        </button>
-      ))}
-    </div>
+    <FilterCombobox
+      filterLabel="Persona"
+      options={personas}
+      selected={selected}
+      onSelect={onSelect}
+    />
   );
 }
