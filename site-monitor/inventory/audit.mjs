@@ -42,12 +42,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(path.dirname(__dirname), '.env') });
 
-const PERSONA_SLUG = 'ivy-inventory';
 const REPO_ROOT = path.dirname(path.dirname(__dirname));
-const CATEGORIES_PATH = path.join(__dirname, 'categories.json');
+const PERSONAS_PATH = path.join(__dirname, 'personas.json');
 const ARTIFACTS_BASE = path.join(REPO_ROOT, 'reports', 'inventory-audits');
 const LOG_DIR = path.join(__dirname, '..', 'logs');
-const LOG_PATH = path.join(LOG_DIR, 'ivy-inventory.log');
 
 fs.mkdirSync(ARTIFACTS_BASE, { recursive: true });
 fs.mkdirSync(LOG_DIR, { recursive: true });
@@ -59,12 +57,22 @@ function arg(name, dflt) {
   const i = argv.indexOf(name);
   return i >= 0 && i + 1 < argv.length ? argv[i + 1] : dflt;
 }
+const PERSONA_SLUG = arg('--persona', 'ivy-inventory');
 const MAX_PLPS = Number(arg('--max-plps', '0')) || null;       // null = all
 const MAX_STYLES = Number(arg('--max-styles', '3'));
 const MAX_COLORS = Number(arg('--max-colors', '0')) || null;   // null = all
 const MAX_WIDTHS = Number(arg('--max-widths', '0')) || null;   // null = all
 const DRY_RUN = flag('--dry-run');
 const HEADLESS_FALLBACK = !flag('--no-headless-fallback');
+
+const PERSONAS = JSON.parse(fs.readFileSync(PERSONAS_PATH, 'utf8'));
+const PERSONA = PERSONAS[PERSONA_SLUG];
+if (!PERSONA) {
+  console.error(`unknown persona '${PERSONA_SLUG}' — known: ${Object.keys(PERSONAS).join(', ')}`);
+  process.exit(64);
+}
+const CATEGORIES_PATH = path.join(__dirname, PERSONA.categoriesFile);
+const LOG_PATH = path.join(LOG_DIR, `${PERSONA_SLUG}.log`);
 
 function log(msg, extra = null) {
   const ts = new Date().toISOString();
@@ -229,7 +237,12 @@ async function scrapePdp(page, style, slug, plpSlug) {
     if (MAX_WIDTHS) widths = widths.slice(0, MAX_WIDTHS);
 
     for (const w of widths) {
-      if (w.value && !w.selected) {
+      // When the PDP only ships one width, whatever it is is already the
+      // active one — no need to click. Avoids a noisy "no button matched"
+      // log on extra-wide-only men's styles where readWidths can't tell
+      // a single-option button is "selected".
+      const onlyOne = widths.length === 1;
+      if (w.value && !w.selected && !onlyOne) {
         // The clickable target is the wrapping <button>, but the value
         // attribute lives on data-pdp-attr-value (lowercased) and/or the
         // inner span. Walk the buttons in evaluate() so we don't have to
@@ -527,8 +540,8 @@ function summarize(plps) {
 }
 
 async function main() {
-  const slug = `${todayUtcSlug()}-skechers-womens-inventory`;
-  log(`run start slug=${slug}`, { dryRun: DRY_RUN, maxPlps: MAX_PLPS, maxStyles: MAX_STYLES, maxColors: MAX_COLORS });
+  const slug = `${todayUtcSlug()}-${PERSONA.auditSlugSuffix}`;
+  log(`run start slug=${slug} persona=${PERSONA_SLUG}`, { dryRun: DRY_RUN, maxPlps: MAX_PLPS, maxStyles: MAX_STYLES, maxColors: MAX_COLORS });
 
   const allPlps = JSON.parse(fs.readFileSync(CATEGORIES_PATH, 'utf8'));
   const plps = MAX_PLPS ? allPlps.slice(0, MAX_PLPS) : allPlps;
@@ -565,10 +578,15 @@ async function main() {
   const totals = summarize(results);
   log('run summary', totals);
 
-  // Narrative — Ivy's first-person secret-shopper report.
+  // Narrative — secret-shopper report in the persona's voice.
   let narrative;
   try {
-    narrative = await generateNarrative({ plps: results, totals, scope: "Skechers women's shoes" });
+    narrative = await generateNarrative({
+      plps: results,
+      totals,
+      scope: PERSONA.scope,
+      displayName: PERSONA.displayName,
+    });
   } catch (err) {
     log('narrative generation failed', { err: String(err).slice(0, 200) });
     narrative = buildFallbackNarrative(results, totals);
@@ -592,10 +610,10 @@ async function main() {
     type: 'site',
     persona: PERSONA_SLUG,
     email: {
-      subject: `Inventory Audit · Skechers Women's Shoes · ${todayUtcSlug()}`,
+      subject: `${PERSONA.subjectPrefix} · ${todayUtcSlug()}`,
       preheader: null,
-      from: 'ivy-inventory@etell.app',
-      from_display_name: 'Ivy Inventory',
+      from: PERSONA.fromAddress,
+      from_display_name: PERSONA.displayName,
       timestamp_iso: now.toISOString(),
       date_formatted: now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
     },
@@ -608,11 +626,11 @@ async function main() {
     assets: {
       render_image: null,
       pdf: null,
-      webview_url: 'https://www.skechers.com/women/shoes/',
+      webview_url: PERSONA.auditWebviewUrl,
     },
     inventory: {
-      site: 'skechers.com',
-      scope: "women's shoes",
+      site: PERSONA.site,
+      scope: PERSONA.scope.replace(/^Skechers\s+/i, ''),
       plps: results,
       totals,
       csv_key: csvKey,

@@ -1,47 +1,88 @@
-# Ivy Inventory — Skechers women's-shoes audit
+# Inventory audits — Skechers women's + men's shoes
 
-Recurring inventory + size-coverage audit. Walks every PLP listed in `categories.json`, captures the top-20 product tiles per PLP (DOM order = merchandised order), navigates each PDP, records per-color size availability + a PDP screenshot.
+Persona-driven inventory + size-coverage scraper. One script
+(`audit.mjs`) drives multiple personas via `personas.json`. Each
+persona has a categories file and writes its own audit row + vault
+note + R2 screenshots + sidecar CSV.
 
-## How it runs
+## Personas
 
-- **LaunchAgent**: `ai.openclaw.ivy-inventory` (plist in `../launchd/`)
-- **Schedule**: Weekly, Mondays 13:00 UTC (off-peak; full run is 60–90 min)
-- **Command**: `node site-monitor/inventory/audit.mjs`
+| Slug | Display | Scope | Categories file | Schedule |
+|---|---|---|---|---|
+| `ivy-inventory` | Ivy Inventory | Skechers women's shoes | `categories-womens.json` | Mondays 13:00 UTC |
+| `ian-inventory` | Ian Inventory | Skechers men's shoes | `categories-mens.json` | Wednesdays 13:00 UTC |
+
+Personas are staggered across weekdays so the Mac mini isn't running
+two ~25-min Playwright jobs at once. To add another persona, append
+to `personas.json`, drop in a categories file, seed the persona
+(`scripts/seed-{slug}.ts`), and add a launchd plist.
+
+## How a run works
+
+1. Load persona config from `personas.json`.
+2. Load PLP list from the persona's categories file.
+3. Connect to Chrome via CDP on port 9222 (Kasada bypass) or fall back
+   to playwright-extra + stealth.
+4. For each PLP: scrape the top-N product tile anchors (default 3).
+5. For each PDP: enumerate color swatches, then per color enumerate
+   width buttons; each (color, width) combo becomes a variant row.
+6. For each variant: scrape size buttons, capture a screenshot of the
+   PDP, upload it to R2 at `audits/{slug}/{plp}-rank{NN}-color{N}.png`.
+7. Build a CSV (one row per (PLP, style, color, width, size)) and
+   upload to `audits/{slug}/inventory.csv`.
+8. Generate a first-person POV narrative via the local chat model
+   (Ollama, `LLM_CHAT_MODEL`) using the persona's display name.
+9. Prepend a markdown summary table to the narrative.
+10. Upsert the audit row + experience + reaction; write the vault
+    markdown note.
+
+## Output per run
+
+- Slug shape: `{date}-{persona.auditSlugSuffix}` (e.g.
+  `2026-04-30-skechers-womens-inventory`).
+- DB: `audit` row, `experience` row (with `inventory` jsonb column),
+  `reaction` row, embedding.
+- R2: per-(color, width) PDP screenshots + `inventory.csv` sidecar.
+- Vault: `vaults/{persona}/audits/{slug}.md`.
+- Local artifacts: `reports/inventory-audits/{slug}/audit-data.json`
+  + screenshots + CSV.
 
 ## Browser strategy
 
-Same as `site-review.mjs`:
-1. Try `connectOverCDP` to `localhost:9222` — uses real Chrome (carries the persona's manually-curated Kasada-passing fingerprint).
-2. Fallback: `playwright-extra` + stealth plugin headless.
+Same as `site-review.mjs`: prefer real Chrome on `localhost:9222`
+(carries the manually-curated Kasada-passing fingerprint), fall back
+to headless stealth chromium.
 
-## Output
+## Bootstrap (one-time, on Mac mini)
 
-Per run (`slug = YYYY-MM-DD-skechers-womens-inventory`):
-- `audit` row, type=`site`, with the structured inventory blob under `data.inventory`.
-- `experience` + `reaction` rows via `upsertExperienceAndReaction`.
-- Vault note at `vaults/ivy-inventory/audits/{slug}.md`.
-- Per-(style, color) PDP screenshots in R2 at `audits/{slug}/{plp}-rank{NN}-color{N}.png`.
-- Local artifact dump at `reports/inventory-audits/{slug}/` (audit-data.json + screenshots).
-
-## Narrative
-
-After the scrape, `narrative.mjs` calls the local chat model (Ollama via `LLM_BASE_URL`) with an Ivy-voice system prompt. The completion lands in `data.review.raw_markdown` so it shows up in the audit detail page. Voice rules are enforced in the prompt — no customer gushing, no marketing copy.
+```bash
+cp site-monitor/launchd/ai.openclaw.ivy-inventory.plist ~/Library/LaunchAgents/
+cp site-monitor/launchd/ai.openclaw.ian-inventory.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$UID ~/Library/LaunchAgents/ai.openclaw.ivy-inventory.plist
+launchctl bootstrap gui/$UID ~/Library/LaunchAgents/ai.openclaw.ian-inventory.plist
+```
 
 ## Manual run
 
 ```bash
-# Smoke test against a single PLP, 5 styles, 1 color each, no DB writes
-node site-monitor/inventory/audit.mjs --max-plps 1 --max-styles 5 --max-colors 1 --dry-run
-
-# Full run (all 15 PLPs × 20 styles × all colors)
+# Ivy (women's)
 node site-monitor/inventory/audit.mjs
+
+# Ian (men's)
+node site-monitor/inventory/audit.mjs --persona ian-inventory
+
+# Smoke test
+node site-monitor/inventory/audit.mjs --persona ian-inventory \
+  --max-plps 1 --max-styles 2 --max-colors 1 --dry-run
 ```
 
-## Selectors
+## Selectors (Skechers, mirror site-review.mjs)
 
-Mirror `site-review.mjs` so they don't drift:
 - Product tiles (PLP): `a.c-product-tile-V2__title, a.c-product-tile-V2__body-elements-anchor-wrapper, a.c-product-tile__title`
-- Color swatches (PDP): `a.c-product-detail__attr-swatch, a.swatch-circle, a[data-attr-color], .c-color-swatches a`
-- Size buttons (PDP): `.c-size-selector button, .c-product-detail__sizes button, button[data-attr-value]`
+- Color swatches (PDP): `button.button-select-color`, `button.js-color-attr-selector`
+- Width buttons (PDP): `button.button-select-width`
+- Size buttons (PDP): `button.button-select-size`
+- Unavailable modifier class: `c-product-attributes__item__selector--unselectable`
 
-If Skechers redesigns, update both files in lockstep.
+If Skechers redesigns, update both `site-review.mjs` and this script
+in lockstep.
