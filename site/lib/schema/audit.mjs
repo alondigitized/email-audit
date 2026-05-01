@@ -97,6 +97,24 @@ export const qaReportSchema = z.object({
   categories: z.record(z.string(), qaCategorySchema),
 });
 
+// ─── Double-opt-in auto-confirm ────────────────────────────────────────────
+// Brand newsletter signups frequently land a "confirm your email" message
+// in the persona's inbox. We detect it on ingest, extract the primary CTA
+// URL, fetch it, and record the result here so the audit page can show
+// "Auto-confirmed at 4:51 PM" without the user having to click around.
+
+export const autoConfirmSchema = z.object({
+  // The URL we clicked (post-quoted-printable decode).
+  url: z.string(),
+  attempted_at: z.string(),
+  // HTTP status from the GET. Null if the fetch threw (DNS, timeout, etc.).
+  http_status: z.number().nullable().optional(),
+  // True iff http_status is 2xx or 3xx (most brand DOI endpoints either
+  // 200 with a thank-you page or 302 to one).
+  success: z.boolean(),
+  error: z.string().nullable().optional(),
+});
+
 // ─── Inventory audit (Ivy) ─────────────────────────────────────────────────
 // Recurring inventory audit by the secret-shopper persona (Ivy Inventory).
 // Captures size availability across the top-N styles per PLP for a brand.
@@ -195,6 +213,7 @@ export const auditDataSchema = z.object({
     })
     .optional(),
   inventory: inventoryAuditSchema.nullable().optional(),
+  auto_confirm: autoConfirmSchema.nullable().optional(),
 });
 
 export const auditSummarySchema = z.object({

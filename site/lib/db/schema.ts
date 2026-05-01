@@ -559,6 +559,11 @@ export const experiences = pgTable(
     // PLP × style × variant × size grid plus per-(color, width) screenshot
     // keys + the sidecar CSV key.
     inventory: jsonb("inventory"),
+    // Double-opt-in auto-confirm result. Set on email audits where the
+    // ingest pipeline detected a "confirm your email" message and clicked
+    // the primary CTA. Null on every other email and on site/inventory
+    // audits. Shape: { url, attempted_at, http_status, success, error }.
+    autoConfirm: jsonb("auto_confirm"),
     // R2 key of the raw .eml — best-effort archive for re-processing.
     rawKey: text("raw_key"),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),

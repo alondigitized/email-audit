@@ -1,0 +1,1 @@
+ALTER TABLE "experience" ADD COLUMN "auto_confirm" jsonb;

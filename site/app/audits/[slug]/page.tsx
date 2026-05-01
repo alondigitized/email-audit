@@ -365,6 +365,47 @@ export default async function AuditPage({
               </a>
             </div>
           )}
+          {audit.auto_confirm && (
+            <div className="flex gap-3 items-start">
+              <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">Confirm</span>
+              <div className="flex-1 min-w-0">
+                {audit.auto_confirm.success ? (
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                    ✓ auto-confirmed
+                    {typeof audit.auto_confirm.http_status === "number" && (
+                      <span className="font-normal opacity-80">
+                        HTTP {audit.auto_confirm.http_status}
+                      </span>
+                    )}
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200">
+                    ✗ auto-confirm failed
+                    {typeof audit.auto_confirm.http_status === "number" && (
+                      <span className="font-normal opacity-80">
+                        HTTP {audit.auto_confirm.http_status}
+                      </span>
+                    )}
+                  </span>
+                )}
+                {audit.auto_confirm.url && (
+                  <a
+                    href={audit.auto_confirm.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ml-2 text-xs text-sky-700 hover:text-sky-900 underline break-all"
+                  >
+                    open link
+                  </a>
+                )}
+                {audit.auto_confirm.error && (
+                  <div className="mt-1 text-[11px] text-rose-700 italic break-words">
+                    {audit.auto_confirm.error}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         {!isSiteJourney && review.predictions && (
           <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">

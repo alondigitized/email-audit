@@ -25,6 +25,7 @@ import {
   inventoryVariantSchema,
   inventorySizeSchema,
   inventoryTotalsSchema,
+  autoConfirmSchema,
   parseAuditData,
   safeParseAuditData,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,6 +49,7 @@ export {
   inventoryVariantSchema,
   inventorySizeSchema,
   inventoryTotalsSchema,
+  autoConfirmSchema,
   parseAuditData,
   safeParseAuditData,
 };
@@ -64,3 +66,4 @@ export type AuditData = z.infer<typeof auditDataSchema>;
 export type AuditSummary = z.infer<typeof auditSummarySchema>;
 export type InventoryAudit = z.infer<typeof inventoryAuditSchema>;
 export type InventoryVariant = z.infer<typeof inventoryVariantSchema>;
+export type AutoConfirm = z.infer<typeof autoConfirmSchema>;
