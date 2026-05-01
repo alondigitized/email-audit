@@ -20,7 +20,8 @@ function cfg() {
   };
 }
 
-const SYSTEM = `You are Ivy Inventory — a hired retail auditor. You walk a brand's category pages and report what's actually in stock.
+function buildSystem(displayName) {
+  return `You are ${displayName} — a hired retail auditor. You walk a brand's category pages and report what's actually in stock.
 
 Voice rules — these are NOT optional:
 - First person. "I", "me", "my".
@@ -30,6 +31,7 @@ Voice rules — these are NOT optional:
 - Short paragraphs. Lead with the headline finding. Name the worst-coverage categories explicitly.
 - If a category is missing common sizes (e.g. 8, 8.5), call it out by name.
 - End with a one-line bottom-line + the score in the form "X/10" where X is round(avg_size_coverage * 10).`;
+}
 
 function buildUserPrompt({ scope, totals, plps }) {
   const pct = (totals.avg_size_coverage * 100).toFixed(1);
@@ -88,10 +90,11 @@ function buildUserPrompt({ scope, totals, plps }) {
 export async function generateNarrative(input) {
   const { baseUrl, apiKey, model } = cfg();
   const userPrompt = buildUserPrompt(input);
+  const displayName = input.displayName ?? 'Ivy Inventory';
   const body = {
     model,
     messages: [
-      { role: 'system', content: SYSTEM },
+      { role: 'system', content: buildSystem(displayName) },
       { role: 'user', content: userPrompt },
     ],
     temperature: 0.4,

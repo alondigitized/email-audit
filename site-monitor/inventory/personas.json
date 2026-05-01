@@ -1,0 +1,22 @@
+{
+  "ivy-inventory": {
+    "displayName": "Ivy Inventory",
+    "fromAddress": "ivy-inventory@etell.app",
+    "scope": "Skechers women's shoes",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/women/shoes/",
+    "categoriesFile": "categories-womens.json",
+    "auditSlugSuffix": "skechers-womens-inventory",
+    "subjectPrefix": "Inventory Audit · Skechers Women's Shoes"
+  },
+  "ian-inventory": {
+    "displayName": "Ian Inventory",
+    "fromAddress": "ian-inventory@etell.app",
+    "scope": "Skechers men's shoes",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/men/shoes/",
+    "categoriesFile": "categories-mens.json",
+    "auditSlugSuffix": "skechers-mens-inventory",
+    "subjectPrefix": "Inventory Audit · Skechers Men's Shoes"
+  }
+}

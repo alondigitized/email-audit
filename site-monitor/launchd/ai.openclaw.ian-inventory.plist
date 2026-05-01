@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>ai.openclaw.ivy-inventory</string>
+    <string>ai.openclaw.ian-inventory</string>
     <key>ProgramArguments</key>
     <array>
         <string>/opt/homebrew/bin/node</string>
         <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/inventory/audit.mjs</string>
         <string>--persona</string>
-        <string>ivy-inventory</string>
+        <string>ian-inventory</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>
@@ -18,7 +18,7 @@
         <key>Minute</key>
         <integer>0</integer>
         <key>Weekday</key>
-        <integer>1</integer>
+        <integer>3</integer>
     </dict>
     <key>WorkingDirectory</key>
     <string>/Users/alontsang/.openclaw-walker/workspace</string>
@@ -30,8 +30,8 @@
         <string>/Users/alontsang</string>
     </dict>
     <key>StandardOutPath</key>
-    <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/ivy-inventory.out.log</string>
+    <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/ian-inventory.out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/ivy-inventory.err.log</string>
+    <string>/Users/alontsang/.openclaw-walker/workspace/site-monitor/logs/ian-inventory.err.log</string>
 </dict>
 </plist>
