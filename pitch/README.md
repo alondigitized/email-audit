@@ -28,7 +28,7 @@ Why: pre-revenue + nights-and-weekends won't clear the bar for a generalist SaaS
 | 3–4 | 03 product, 03a capabilities | Persona narrative + what we actually ship |
 | 4–5 | 04 how-it-works, 05 moat | Demystify the tech; land the data-compounds point |
 | 5–7 | 06 market, 07 GTM | Size of prize + how we get there |
-| 7–8 | 08 competition, 09 traction | Position vs alternatives + honest state |
+| 7–8 | 08 competition, 08a why-we-win, 09 traction | Position vs alternatives + structural moat + honest state |
 | 8–9 | 10 team, 11 vision | Why us + how big this can get |
 | 9–10 | 12 ask, 13 close | Concrete ask + next step |
 
@@ -40,6 +40,7 @@ Why: pre-revenue + nights-and-weekends won't clear the bar for a generalist SaaS
 - `appendix-qa-prep.md` — scripted answers to the questions you'll actually get
 - `appendix-investor-targets.md` — starting list of investors to research
 - `appendix-metrics.md` — the factual backup for every number in the deck
+- `appendix-pitch-by-audience.md` — TAM + competition framing tailored to operator / investor / strategic buyer
 
 ## Review order before sending to any real investor
 
