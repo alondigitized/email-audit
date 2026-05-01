@@ -11,11 +11,13 @@ import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/medi
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 import {
   upsertAuditRow,
+  upsertAutoConfirm,
   upsertExperienceAndReaction,
   dbConfigured,
 } from '../audit-pipeline/publish.mjs';
 import { extractAll } from '../audit-pipeline/extract.mjs';
 import { scheduleEngagement } from '../audit-pipeline/engagement.mjs';
+import { runAutoConfirm } from '../audit-pipeline/auto-confirm.mjs';
 import { mirrorReflectionsToVault } from '../audit-pipeline/mirror-reflections.mjs';
 import { mirrorSynthesesToVault } from '../audit-pipeline/mirror-syntheses.mjs';
 
@@ -631,6 +633,40 @@ async function publishSite({ slug, persona, artifactDir, messageId = null, rawKe
     reactionId = r.reactionId;
   } catch (err) {
     log('experience+reaction dual-write failed (non-fatal)', {
+      slug,
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  // Phase 1b: double-opt-in auto-confirm. Detect/extract/click happens
+  // off the cached message body so we don't refetch from R2. Best-effort —
+  // failures here are visible to the user via the audit page badge but
+  // don't block any downstream step.
+  try {
+    const subject = data?.email?.subject ?? '';
+    const htmlPath = path.join(artifactDir, 'message.html');
+    const textPath = path.join(artifactDir, 'message.txt');
+    const html = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : '';
+    const text = fs.existsSync(textPath) ? fs.readFileSync(textPath, 'utf8') : '';
+    const result = await runAutoConfirm({ subject, html, text });
+    if (result) {
+      data.auto_confirm = result;
+      try {
+        await upsertAutoConfirm({ slug, autoConfirm: result });
+      } catch (err) {
+        log('auto-confirm DB writeback failed', { slug, error: String(err).slice(0, 200) });
+      }
+      // Also re-write the artifact so rerun-audit picks up the new field.
+      fs.writeFileSync(srcAudit, JSON.stringify(data, null, 2));
+      log('auto-confirm', {
+        slug,
+        success: result.success,
+        http: result.http_status,
+        url: (result.url ?? '').slice(0, 120),
+      });
+    }
+  } catch (err) {
+    log('auto-confirm step failed (non-fatal)', {
       slug,
       error: err instanceof Error ? err.message : String(err),
     });

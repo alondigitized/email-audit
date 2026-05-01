@@ -196,6 +196,7 @@ export async function upsertExperienceAndReaction({
         assets = ${JSON.stringify(parsed.assets ?? {})}::jsonb,
         performance = ${JSON.stringify(parsed.performance ?? null)}::jsonb,
         inventory = ${JSON.stringify(parsed.inventory ?? null)}::jsonb,
+        auto_confirm = COALESCE(${JSON.stringify(parsed.auto_confirm ?? null)}::jsonb, experience.auto_confirm),
         updated_at = NOW()
       WHERE id = ${experienceId}
     `;
@@ -212,14 +213,15 @@ export async function upsertExperienceAndReaction({
     const expRows = await sql`
       INSERT INTO experience
         (persona_slug, tenant_id, type, brand_domain, message_id, raw_key, received_at,
-         email_data, qa_findings, assets, performance, inventory)
+         email_data, qa_findings, assets, performance, inventory, auto_confirm)
       VALUES
         (${persona}, ${tenantId}, ${type}, ${brandDomain}, ${messageId}, ${rawKey}, ${timestamp},
          ${JSON.stringify(parsed.email ?? {})}::jsonb,
          ${JSON.stringify(parsed.qa ?? null)}::jsonb,
          ${JSON.stringify(parsed.assets ?? {})}::jsonb,
          ${JSON.stringify(parsed.performance ?? null)}::jsonb,
-         ${JSON.stringify(parsed.inventory ?? null)}::jsonb)
+         ${JSON.stringify(parsed.inventory ?? null)}::jsonb,
+         ${JSON.stringify(parsed.auto_confirm ?? null)}::jsonb)
       RETURNING id
     `;
     experienceId = expRows[0].id;
@@ -234,6 +236,31 @@ export async function upsertExperienceAndReaction({
 
   const rRow = await sql`SELECT id FROM reaction WHERE slug = ${slug} LIMIT 1`;
   return { reactionId: rRow[0]?.id ?? null, experienceId };
+}
+
+/**
+ * Stamp the auto_confirm result onto an existing experience + the legacy
+ * audit row by slug. Used by the email-monitor post-publish hook and the
+ * one-shot backfill script. Idempotent — overwrites on each call.
+ */
+export async function upsertAutoConfirm({ slug, autoConfirm }) {
+  const sql = db();
+  const blob = JSON.stringify(autoConfirm ?? null);
+  // Update the legacy audit.data->auto_confirm so re-renders out of the
+  // legacy table see the same shape, then the experience column for v3.
+  await sql`
+    UPDATE audit
+    SET data = jsonb_set(data, '{auto_confirm}', ${blob}::jsonb, true),
+        updated_at = NOW()
+    WHERE slug = ${slug}
+  `;
+  await sql`
+    UPDATE experience e
+    SET auto_confirm = ${blob}::jsonb,
+        updated_at = NOW()
+    FROM reaction r
+    WHERE r.experience_id = e.id AND r.slug = ${slug}
+  `;
 }
 
 /**

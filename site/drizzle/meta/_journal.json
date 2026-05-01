@@ -148,6 +148,13 @@
       "when": 1777586613593,
       "tag": "0020_modern_magus",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1777655075098,
+      "tag": "0021_furry_diamondback",
+      "breakpoints": true
     }
   ]
 }
