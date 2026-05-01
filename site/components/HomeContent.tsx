@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { AuditSummary } from "@/lib/types";
 import { ActivityChart } from "./ActivityChart";
 import { AuditList } from "./AuditList";
@@ -20,14 +21,60 @@ function brandKey(label: string): string {
   return label.trim().toLowerCase();
 }
 
+// URL params used to persist filter state across the list → detail →
+// back navigation. Short keys (r/p/b/d) keep the URL short. Empty/null
+// values are dropped from the URL so the default state is `/`.
+const PARAM_RANGE = "r";
+const PARAM_PERSONA = "p";
+const PARAM_BRAND = "b";
+const PARAM_DAY = "d";
+
 export function HomeContent({ audits }: { audits: AuditSummary[] }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   // Filter hierarchy: range → persona → brand → specific day. Each level
   // narrows the set the next operates on, so the dropdown counts always
-  // reflect what's actually pickable.
-  const [selectedRange, setSelectedRange] = useState<string | null>(null);
-  const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  // reflect what's actually pickable. Initial values come from the URL
+  // so back-navigation from /audits/<slug> restores the previous view.
+  const [selectedRange, setSelectedRange] = useState<string | null>(
+    () => searchParams.get(PARAM_RANGE)
+  );
+  const [selectedPersona, setSelectedPersona] = useState<string | null>(
+    () => searchParams.get(PARAM_PERSONA)
+  );
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(
+    () => searchParams.get(PARAM_BRAND)
+  );
+  const [selectedDate, setSelectedDate] = useState<string | null>(
+    () => searchParams.get(PARAM_DAY)
+  );
+
+  // Mirror filter state into the URL via replace (no history entry per
+  // change — back from /audits/<slug> still lands here, but we don't
+  // accumulate one entry per dropdown click). scroll:false avoids
+  // jumping the page when the user picks a filter further down.
+  useEffect(() => {
+    const next = new URLSearchParams();
+    if (selectedRange) next.set(PARAM_RANGE, selectedRange);
+    if (selectedPersona) next.set(PARAM_PERSONA, selectedPersona);
+    if (selectedBrand) next.set(PARAM_BRAND, selectedBrand);
+    if (selectedDate) next.set(PARAM_DAY, selectedDate);
+    const qs = next.toString();
+    const target = qs ? `${pathname}?${qs}` : pathname;
+    const current =
+      pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+    if (target !== current) router.replace(target, { scroll: false });
+  }, [
+    selectedRange,
+    selectedPersona,
+    selectedBrand,
+    selectedDate,
+    pathname,
+    router,
+    searchParams,
+  ]);
 
   const rangeScopedAudits = useMemo(() => {
     if (!selectedRange) return audits;
