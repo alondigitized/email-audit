@@ -18,5 +18,25 @@
     "categoriesFile": "categories-mens.json",
     "auditSlugSuffix": "skechers-mens-inventory",
     "subjectPrefix": "Inventory Audit · Skechers Men's Shoes"
+  },
+  "ida-inventory": {
+    "displayName": "Ida Inventory",
+    "fromAddress": "ida-inventory@etell.app",
+    "scope": "Skechers girls' shoes",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/kids/girls/",
+    "categoriesFile": "categories-girls.json",
+    "auditSlugSuffix": "skechers-girls-inventory",
+    "subjectPrefix": "Inventory Audit · Skechers Girls' Shoes"
+  },
+  "ike-inventory": {
+    "displayName": "Ike Inventory",
+    "fromAddress": "ike-inventory@etell.app",
+    "scope": "Skechers boys' shoes",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/kids/boys/",
+    "categoriesFile": "categories-boys.json",
+    "auditSlugSuffix": "skechers-boys-inventory",
+    "subjectPrefix": "Inventory Audit · Skechers Boys' Shoes"
   }
 }
