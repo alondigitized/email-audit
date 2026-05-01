@@ -3,26 +3,35 @@ slug: 2026-05-01-skechers-girls-inventory
 type: site
 date: 2026-05-01
 persona: ida-inventory
-score: "3/10"
+score: "6/10"
 sender: Ida Inventory
 subject: "Inventory Audit · Skechers Girls' Shoes · 2026-05-01"
-tags: [site-journey, score-3, sender/ida-inventory]
+tags: [site-journey, score-6, sender/ida-inventory]
 ---
 # Inventory Audit · Skechers Girls' Shoes · 2026-05-01
-**Score:** 3/10 · **Type:** Site journey · **2026-05-01**
+**Score:** 6/10 · **Type:** Site journey · **2026-05-01**
 ## Full review
 ## Inventory summary
 
-**1 styles · 1 (color, width) variants · 30.0% avg size coverage**
+**18 styles · 23 (color, width) variants · 60.8% avg size coverage**
 
 | Category | Styles | Variants | Coverage | Widths | Worst-missing sizes |
 |---|---:|---:|---:|---|---|
-| Athletic Shoes & Sneakers | 1 | 1 | 30% | Medium | 10.5×1, 11.0×1, 11.5×1 |
+| Athletic Shoes & Sneakers | 3 | 4 | 45% | Medium | 6.5×4, 7.0×4, 11.0×3 |
+| Hands Free Slip-ins | 3 | 6 | 74% | Medium | 5.5×4, 4.5×3, 5.0×3 |
+| Slip-Ons | 3 | 3 | 61% | Medium | 4.5×3, 5.0×3, 5.5×3 |
+| Boots | 3 | 3 | 48% | Medium | 6.0×3, 7.0×3, 4.5×2 |
+| Sandals | 3 | 3 | 50% | Medium | 5.0×2, 10.5×2, 11.5×2 |
+| Light-Up Shoes | 3 | 4 | 73% | Medium | 10.5×3, 11.0×3, 11.5×3 |
 
-The Skechers girls' shoes category has very limited size coverage, particularly in athletic shoes and sneakers. The single style I audited had only one variant available, covering just 30% of the sizes typically expected for this type of product. This means that common sizes like 10.5, 11, and 11.5 are completely missing from inventory.
+Skechers girls' shoes have an overall average size coverage of 60.8%, indicating moderate inventory availability but significant room for improvement, particularly in the Athletic Shoes & Sneakers and Boots categories.
 
-The Athletic Shoes & Sneakers category is notably understocked, with critical gaps in size availability. Only medium widths were present across all variants, indicating a lack of variety for girls who might need wider or narrower options.
+The Athletic Shoes & Sneakers category shows the lowest coverage at 45%. Key sizes missing across variants include 6.5, 7.0, and 11.0. Similarly, Boots have an average size coverage of only 48%, with critical gaps in sizes 6.0, 7.0, and 4.5.
 
-Given the sparse selection within this single style, it's clear that customers looking for Skechers athletic shoes and sneakers will find very few sizes to choose from. This limited range could deter potential buyers who are searching for specific size requirements.
+Slip-Ons and Sandals both have similar coverage at around 60%. The Slip-On category lacks consistent availability for sizes 4.5, 5.0, and 5.5 across variants. Meanwhile, Sandals are missing crucial sizes like 5.0, 10.5, and 11.5.
 
-In summary, the Skechers girls' shoes category is severely lacking in size variety, especially in athletic shoes and sneakers. The absence of multiple critical sizes suggests a need for improved inventory management to better meet customer needs. 3/10
+The Hands Free Slip-ins and Light-Up Shoes categories perform better with average coverages of 74% and 73%, respectively. However, these still have notable gaps in sizes such as 5.5 for Hands Free Slip-ins and 10.5, 11.0, and 11.5 for Light-Up Shoes.
+
+All examined categories offer only Medium widths, lacking any Wide or Narrow options across the board. This uniformity suggests a need to diversify width offerings to cater to more customer needs.
+
+Bottom line: Skechers girls' shoes inventory has moderate size coverage but critical gaps in key sizes and lacks width diversity. 6/10
