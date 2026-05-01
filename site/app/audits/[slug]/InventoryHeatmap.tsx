@@ -207,10 +207,10 @@ export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
                       className="text-right pr-2 text-[10px] text-gray-700 whitespace-nowrap max-w-[260px] overflow-hidden text-ellipsis"
                       title={label}
                     >
-                      <span className="text-muted">{row.plp}</span>{" "}
+                      <span className="text-muted">#{row.styleRank}</span>{" "}
                       <span className="font-medium">{row.color}</span>
                       {row.width ? (
-                        <span className="text-muted"> · {row.width}</span>
+                        <span className="text-muted"> {row.width}</span>
                       ) : null}
                     </td>
                     {sizeAxis.map((sz) => {
