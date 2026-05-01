@@ -13,6 +13,7 @@ import { LikelihoodPill } from "@/components/LikelihoodPill";
 import { TabNav } from "@/components/TabNav";
 import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
 import { InventoryPane } from "./InventoryPane";
+import { BackLink } from "./BackLink";
 
 // S7: per-user filtering means we can't statically pre-render slugs.
 export const dynamic = "force-dynamic";
@@ -314,9 +315,7 @@ export default async function AuditPage({
   return (
     <>
       <p className="mb-4">
-        <Link href="/" className="text-ink no-underline hover:underline">
-          &larr; Back to all reviews
-        </Link>
+        <BackLink>&larr; Back to all reviews</BackLink>
       </p>
 
       {/* Hero */}
