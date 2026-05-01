@@ -1,5 +1,5 @@
 import type { InventoryAudit } from "@/lib/schema/audit";
-import { InventoryHeatmap } from "./InventoryHeatmap";
+import { InventoryHeatmap, parseStyleSku } from "./InventoryHeatmap";
 
 type Inventory = InventoryAudit;
 
@@ -114,7 +114,10 @@ export function InventoryPane({
                   {r.styleName}
                 </a>
                 <div className="text-xs text-muted mt-0.5">
-                  #{r.styleRank} · {r.color}
+                  <span className="font-mono">
+                    {parseStyleSku(r.pdpUrl) ?? `#${r.styleRank}`}
+                  </span>{" "}
+                  · {r.color}
                   {r.width ? ` · ${r.width}` : ""}
                 </div>
               </div>
@@ -176,7 +179,9 @@ export function InventoryPane({
                   >
                     {r.styleName}
                   </a>
-                  <div className="text-[11px] text-muted">#{r.styleRank}</div>
+                  <div className="text-[11px] text-muted font-mono">
+                    {parseStyleSku(r.pdpUrl) ?? `#${r.styleRank}`}
+                  </div>
                 </td>
                 <td className="px-3 py-2 whitespace-nowrap">{r.color}</td>
                 <td className="px-3 py-2 text-muted whitespace-nowrap">
