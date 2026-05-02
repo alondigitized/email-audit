@@ -24,7 +24,7 @@ Why: pre-revenue + nights-and-weekends won't clear the bar for a generalist SaaS
 |---|---|---|
 | 0–1 | 00 title, 01 problem | Frame the pain |
 | 1–2 | 01a prospect-questions | "Here are the questions on your whiteboard right now" |
-| 2–3 | 02 insight | "Why this is suddenly answerable" |
+| 2–3 | 02 insight, 02a the-new-reader | "Why this is suddenly answerable" + "AI is the new reader, and that's our wedge" |
 | 3–4 | 03 product, 03a capabilities | Persona narrative + what we actually ship |
 | 4–5 | 04 how-it-works, 05 moat | Demystify the tech; land the data-compounds point |
 | 5–7 | 06 market, 07 GTM | Size of prize + how we get there |
