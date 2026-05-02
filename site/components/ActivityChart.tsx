@@ -45,17 +45,21 @@ function normalizeSender(name: string | undefined | null): string {
   return (name ?? "").trim();
 }
 
-// Pick the top-N senders over the days window (email audits only) and
-// return the bucket order ending with "Other". Buckets are sorted
+// Pick the top-N senders/brands over the days window. Counts every
+// audit type unless the caller passes a channel filter. Buckets sort
 // alphabetically for stable color assignment across renders.
-function pickSenders(audits: AuditSummary[], days: number): string[] {
+function pickSenders(
+  audits: AuditSummary[],
+  days: number,
+  channel: string | null
+): string[] {
   const today = startOfLocalDay(new Date());
   const start = new Date(today);
   start.setDate(start.getDate() - (days - 1));
 
   const counts = new Map<string, number>();
   for (const a of audits) {
-    if (a.type && a.type !== "email") continue;
+    if (channel && (a.type ?? "email") !== channel) continue;
     if (!a.timestamp_iso) continue;
     const ts = new Date(a.timestamp_iso);
     if (Number.isNaN(ts.getTime())) continue;
@@ -83,7 +87,8 @@ function colorFor(senderOrder: string[], sender: string): string {
 function buildData(
   audits: AuditSummary[],
   senderOrder: string[],
-  days: number
+  days: number,
+  channel: string | null
 ): DayBucket[] {
   const topSet = new Set(senderOrder.filter((s) => s !== OTHER_BUCKET));
   const today = startOfLocalDay(new Date());
@@ -109,7 +114,7 @@ function buildData(
   }
 
   for (const a of audits) {
-    if (a.type && a.type !== "email") continue;
+    if (channel && (a.type ?? "email") !== channel) continue;
     if (!a.timestamp_iso) continue;
     const ts = new Date(a.timestamp_iso);
     if (Number.isNaN(ts.getTime())) continue;
@@ -131,6 +136,9 @@ interface Props {
   // filter on HomeContent so picking "Last 30 days" widens the chart to
   // match. Falls back to the legacy 14-day default when unset.
   days?: number;
+  // Channel filter — null/undefined means all surfaces (email + site).
+  // 'email' or 'site' restricts to that channel.
+  channel?: string | null;
 }
 
 // Label density: ~10-14 visible ticks across the axis regardless of
@@ -160,6 +168,7 @@ export function ActivityChart({
   selectedDate,
   onSelectDate,
   days = DEFAULT_DAYS,
+  channel = null,
 }: Props) {
   // Recharts' ResponsiveContainer measures its parent in a layout effect.
   // During SSR the parent has no dimensions, which emits a width(-1)/height(-1)
@@ -168,8 +177,8 @@ export function ActivityChart({
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const senderOrder = pickSenders(audits, days);
-  const data = buildData(audits, senderOrder, days);
+  const senderOrder = pickSenders(audits, days, channel);
+  const data = buildData(audits, senderOrder, days, channel);
   const total = data.reduce((s, d) => s + dayTotal(d, senderOrder), 0);
   const peak = data.reduce(
     (m, d) => Math.max(m, dayTotal(d, senderOrder)),
@@ -197,9 +206,21 @@ export function ActivityChart({
   return (
     <div className="bg-white border border-[var(--color-line)] rounded-2xl p-6 mb-5 shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
       <div className="flex justify-between items-baseline gap-3 flex-wrap mb-3">
-        <h2 className="text-base font-semibold m-0">Email activity</h2>
+        <h2 className="text-base font-semibold m-0">
+          {channel === "email"
+            ? "Email activity"
+            : channel === "site"
+              ? "Web activity"
+              : "Experience activity"}
+        </h2>
         <div className="text-muted text-xs">
-          {total} emails · {windowLabel(days)} · peak {peak}/day
+          {total}{" "}
+          {channel === "email"
+            ? "emails"
+            : channel === "site"
+              ? "site visits"
+              : "experiences"}{" "}
+          · {windowLabel(days)} · peak {peak}/day
         </div>
       </div>
       <div style={{ width: "100%", height: 220 }}>
