@@ -10,6 +10,7 @@ import { ReviewContent } from "@/components/ReviewContent";
 import { QaCard } from "@/components/QaCard";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { LikelihoodPill } from "@/components/LikelihoodPill";
+import { scoreLabels } from "@/lib/score-labels";
 import { TabNav } from "@/components/TabNav";
 import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
 import { InventoryPane } from "./InventoryPane";
@@ -439,23 +440,28 @@ export default async function AuditPage({
             </div>
           )}
         </div>
-        {!isSiteJourney && review.predictions && (
-          <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">
-            {review.predictions.open_likelihood && (
-              <LikelihoodPill
-                label="Open"
-                score={review.predictions.open_likelihood.score}
-                rationale={review.predictions.open_likelihood.rationale}
-              />
-            )}
-            {review.predictions.click_likelihood && (
-              <LikelihoodPill
-                label="Click"
-                score={review.predictions.click_likelihood.score}
-                rationale={review.predictions.click_likelihood.rationale}
-              />
-            )}
-          </div>
+        {review.predictions && (
+          (() => {
+            const labels = scoreLabels(audit.type);
+            return (
+              <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">
+                {review.predictions.open_likelihood && (
+                  <LikelihoodPill
+                    label={labels.firstStep}
+                    score={review.predictions.open_likelihood.score}
+                    rationale={review.predictions.open_likelihood.rationale}
+                  />
+                )}
+                {review.predictions.click_likelihood && (
+                  <LikelihoodPill
+                    label={labels.secondStep}
+                    score={review.predictions.click_likelihood.score}
+                    rationale={review.predictions.click_likelihood.rationale}
+                  />
+                )}
+              </div>
+            );
+          })()
         )}
       </div>
 

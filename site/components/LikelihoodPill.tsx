@@ -11,11 +11,16 @@ function colorFor(score: number): string {
 
 export function LikelihoodPill({
   label,
+  compactLabel,
   score,
   rationale,
   compact = false,
 }: {
   label: string;
+  // Override the compact-mode label (default = first letter of label).
+  // Lets "Conversion" render as "Cv" instead of colliding with "Click"
+  // → "C" on the email side.
+  compactLabel?: string;
   score: number;
   rationale?: string;
   compact?: boolean;
@@ -27,7 +32,7 @@ export function LikelihoodPill({
         title={rationale || `${label} ${rounded}/10`}
         className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[11px] font-semibold ${colorFor(score)}`}
       >
-        <span className="opacity-70">{label.charAt(0)}</span>
+        <span className="opacity-70">{compactLabel ?? label.charAt(0)}</span>
         <span className="tabular-nums">{rounded}</span>
       </span>
     );

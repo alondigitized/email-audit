@@ -3,6 +3,7 @@ import type { AuditSummary } from "@/lib/types";
 import { ScoreBadge } from "./ScoreBadge";
 import { QaBadge } from "./QaBadge";
 import { LikelihoodPill } from "./LikelihoodPill";
+import { scoreLabels } from "@/lib/score-labels";
 
 // Persona pill colored by the DB-resolved color (profile.color or slug-hash
 // fallback, computed in lib/audits.ts at query time). Inline styles so the
@@ -44,6 +45,7 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
         minute: "2-digit",
       })
     : "\u2014";
+  const labels = scoreLabels(audit.type);
 
   return (
     <Link
@@ -70,17 +72,27 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
         )}
         {audit.type === "site" && (
           <span className="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700">
-            Journey
+            Web
           </span>
         )}
         <span>{audit.from_display_name}</span>
         <span className="text-line">&middot;</span>
         <span>{datetime}</span>
         {typeof audit.open_likelihood === "number" && (
-          <LikelihoodPill label="Open" score={audit.open_likelihood} compact />
+          <LikelihoodPill
+            label={labels.firstStep}
+            compactLabel={labels.firstStepShort}
+            score={audit.open_likelihood}
+            compact
+          />
         )}
         {typeof audit.click_likelihood === "number" && (
-          <LikelihoodPill label="Click" score={audit.click_likelihood} compact />
+          <LikelihoodPill
+            label={labels.secondStep}
+            compactLabel={labels.secondStepShort}
+            score={audit.click_likelihood}
+            compact
+          />
         )}
         <span className="ml-auto">
           <QaBadge summary={audit.qa_summary} />
