@@ -33,6 +33,14 @@ export const tenantPlanEnum = pgEnum("tenant_plan", [
   "banned",
 ]);
 
+// Membership role on a (user, tenant) pair. Owner can manage the team;
+// member cannot. We're staying with two roles in v1 — adding manager /
+// viewer / billing is a Phase-2 concern once tenants ask for it.
+export const tenantMemberRoleEnum = pgEnum("tenant_member_role", [
+  "owner",
+  "member",
+]);
+
 // Wizard scratch — populated in Phase C. Declared here so the column type is
 // stable across phases. Consumers tolerate undefined fields.
 //
@@ -99,6 +107,30 @@ export const users = pgTable("user", {
   // to exactly one tenant in v1 (no multi-tenant memberships).
   tenantId: uuid("tenant_id").references(() => tenants.id, { onDelete: "restrict" }),
 });
+
+// Tenant team membership. Composite PK on (user_id, tenant_id) so the
+// shape supports future multi-tenant memberships without schema rework,
+// even though v1 keeps the user.tenant_id 1:1 invariant. Always at
+// least one `owner` per tenant (enforced application-side at remove +
+// transfer time, not in DB).
+export const tenantMembers = pgTable(
+  "tenant_member",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    tenantId: uuid("tenant_id")
+      .notNull()
+      .references(() => tenants.id, { onDelete: "cascade" }),
+    role: tenantMemberRoleEnum("role").notNull().default("member"),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.tenantId] }),
+    tenantIdx: index("tenant_member_tenant_idx").on(t.tenantId),
+  })
+);
 
 export const accounts = pgTable(
   "account",

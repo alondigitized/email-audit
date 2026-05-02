@@ -2,7 +2,7 @@
 
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { db, tenants, users, userAppAccess } from "@/lib/db/client";
+import { db, tenants, users, userAppAccess, tenantMembers } from "@/lib/db/client";
 import { isCompanyEmail, extractTenantDomain } from "@/lib/free-domains";
 import { sendWaitlistConfirmEmail } from "@/lib/email-tenant";
 import { signInRateLimit } from "@/lib/db/schema";
@@ -248,6 +248,21 @@ export async function signupAction(
   await db
     .insert(userAppAccess)
     .values({ userId: insertedUser.id, appKey: "chat" })
+    .onConflictDoNothing();
+
+  // Tenant team membership. The first user in a fresh tenant becomes its
+  // owner; subsequent signups in an existing tenant join as members. We
+  // detect "first user" by checking whether the tenant already has any
+  // members — keeps the rule simple even if signups race.
+  const existingMembers = await db
+    .select({ userId: tenantMembers.userId })
+    .from(tenantMembers)
+    .where(eq(tenantMembers.tenantId, tenantId))
+    .limit(1);
+  const role = existingMembers.length === 0 ? "owner" : "member";
+  await db
+    .insert(tenantMembers)
+    .values({ userId: insertedUser.id, tenantId, role })
     .onConflictDoNothing();
 
   if (tenantState === "fresh" || tenantState === "existing-waitlisted") {

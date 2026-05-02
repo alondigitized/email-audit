@@ -15,10 +15,12 @@ export function TopNav({
   isAdmin = false,
   chatEnabled = false,
   hasPersonas = false,
+  hasTenant = false,
 }: {
   isAdmin?: boolean;
   chatEnabled?: boolean;
   hasPersonas?: boolean;
+  hasTenant?: boolean;
 }) {
   const pathname = usePathname() || "/";
 
@@ -71,6 +73,11 @@ export function TopNav({
   if (isAdmin) {
     tabs.push({ href: "/analysis", label: "Analysis" });
     tabs.push({ href: "/admin", label: "Admin" });
+  }
+  // Team tab: any tenant member sees it (read-only roster for members,
+  // owner controls for owners). Admins also see it for their own tenant.
+  if (hasTenant) {
+    tabs.push({ href: "/account/team", label: "Team" });
   }
 
   return (

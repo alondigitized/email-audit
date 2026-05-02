@@ -42,6 +42,7 @@ export default async function RootLayout({
             isAdmin={user?.isAdmin ?? false}
             chatEnabled={chatVisible}
             hasPersonas={hasPersonas}
+            hasTenant={!!user?.tenantId}
           />
           {children}
         </main>
