@@ -148,7 +148,7 @@ async function dismissPopups(page) {
   }
 }
 
-function buildPrompt(persona, brandHostname) {
+function buildPrompt(persona, brandHostname, screenshotPath) {
   const id = persona.profile?.identity ?? {};
   const summary = [
     `You are ${persona.name}.`,
@@ -165,9 +165,13 @@ function buildPrompt(persona, brandHostname) {
   return [
     summary,
     '',
-    `You just opened ${brandHostname} on your phone. The image attached is the homepage as you see it.`,
+    `You just opened ${brandHostname} on your phone. The screenshot of what you see is at this absolute path:`,
     '',
-    'Write a first-person reaction in 3-4 short paragraphs. What is the brand showcasing? What stands out? What feels relevant to you and what feels off-target? Stay in your voice — no marketing-speak, no generic UX critique. Be specific about what is on the page (offers, hero copy, featured categories, urgency cues, badges).',
+    screenshotPath,
+    '',
+    'IMPORTANT: Use the Read tool to view the screenshot above BEFORE writing your review. Do not describe the homepage from memory or guess — only describe what is visible in the image.',
+    '',
+    'Then write a first-person reaction in 3-4 short paragraphs. What is the brand showcasing? What stands out? What feels relevant to you and what feels off-target? Stay in your voice — no marketing-speak, no generic UX critique. Be specific about what is on the page (offers, hero copy, featured categories, urgency cues, badges).',
     '',
     'End with one line: "**X/10**" where X is your overall score for how well this homepage targets a person like you (1 = ignore-and-leave, 10 = made-for-me).',
   ].join('\n');
@@ -254,7 +258,7 @@ async function auditPersonaHomepage(browser, persona, real) {
     return { ok: false, persona: persona.slug, error: navError };
   }
 
-  const prompt = buildPrompt(persona, hostname);
+  const prompt = buildPrompt(persona, hostname, screenshotPath);
   let review;
   try {
     review = await generateClaudeReview(prompt, screenshotPath);
