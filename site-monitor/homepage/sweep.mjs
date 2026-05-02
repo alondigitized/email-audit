@@ -43,6 +43,10 @@ import {
   dbConfigured,
 } from '../../audit-pipeline/publish.mjs';
 import { writeVaultNote } from '../../audit-pipeline/vault-writer.mjs';
+import {
+  parseReviewSections,
+  parsePredictions,
+} from '../../audit-pipeline/extract.mjs';
 
 chromium.use(StealthPlugin());
 const execFileAsync = promisify(execFile);
@@ -150,7 +154,7 @@ async function dismissPopups(page) {
 
 function buildPrompt(persona, brandHostname, screenshotPath) {
   const id = persona.profile?.identity ?? {};
-  const summary = [
+  const personaPreamble = [
     `You are ${persona.name}.`,
     id.age ? `Age: ${id.age}.` : '',
     id.generation ? `Generation: ${id.generation}.` : '',
@@ -163,7 +167,7 @@ function buildPrompt(persona, brandHostname, screenshotPath) {
     .join(' ');
 
   return [
-    summary,
+    personaPreamble,
     '',
     `You just opened ${brandHostname} on your phone. The screenshot of what you see is at this absolute path:`,
     '',
@@ -171,9 +175,69 @@ function buildPrompt(persona, brandHostname, screenshotPath) {
     '',
     'IMPORTANT: Use the Read tool to view the screenshot above BEFORE writing your review. Do not describe the homepage from memory or guess — only describe what is visible in the image.',
     '',
-    'Then write a first-person reaction in 3-4 short paragraphs. What is the brand showcasing? What stands out? What feels relevant to you and what feels off-target? Stay in your voice — no marketing-speak, no generic UX critique. Be specific about what is on the page (offers, hero copy, featured categories, urgency cues, badges).',
+    'Use this EXACT markdown structure. Each numbered heading must appear verbatim — do not rename, append subtitles, or merge headings. The headings drive downstream parsing.',
     '',
-    'End with one line: "**X/10**" where X is your overall score for how well this homepage targets a person like you (1 = ignore-and-leave, 10 = made-for-me).',
+    '## 1. Executive Summary',
+    'Two or three sentences in your voice — top-level reaction to the homepage as a whole. What kind of brand does this look like to you, and what is it pushing right now?',
+    '',
+    '## 2. Business Impact Score (1-10)',
+    'On the line below, write only `**X/10**` where X is your overall score for how well this homepage targets a person like you. 1 = ignore-and-leave, 5 = generic, 10 = made-for-me. Anchor: most homepages land 4-7. Reserve 8+ for genuinely-targeted experiences.',
+    '',
+    "## 3. What's Working",
+    'Short bullet list. Each bullet names a specific element on the page (the urgency timer, the comfort-tech hero, the loyalty CTA, etc.) and why it lands for someone like you.',
+    '',
+    "## 4. What's Weak",
+    'Short bullet list. Each bullet names a specific element and why it falls flat or feels off-target.',
+    '',
+    '## 5. Recommendations',
+    'Two-to-four bullets, concrete and visual ("swap the runway hero for a lifestyle shot"), not vague ("be more on-brand"). Recommendations the brand could ship next week.',
+    '',
+    '## 6. Bottom Line',
+    'One sentence: would you keep browsing, leave, or convert? In your voice.',
+    '',
+    '## 7. Hero & Above-the-Fold Analysis',
+    'Compact structured block, this exact layout:',
+    '- **Hero copy (verbatim):** `<the headline / hero text exactly as it appears>`',
+    '- **Hero image:** <one-line description — model, product, or lifestyle scene>',
+    '- **Primary CTA:** `<verbatim button text>` — visible above the fold? yes/no',
+    '- **Scores (1-10):** Clarity `X`, Relevance to you `X`, Visual hierarchy `X`, On-brand `X`',
+    '- **Strengths:** one or two short bullets',
+    '- **Weaknesses:** one or two short bullets',
+    '',
+    '## 8. Promotional & Urgency Cues',
+    'Compact block listing every offer / countdown / banner you can see:',
+    '- **Active promos:** comma-separated list (e.g. "BOGO 50%, Free shipping over $50, 25% off rewards")',
+    '- **Urgency / scarcity:** countdown timers, "ends today", limited-stock copy',
+    '- **Loyalty hooks:** rewards-program callouts, member-pricing badges',
+    '- **Honesty check:** anything that feels manipulative, exclusionary, or buried in fine print',
+    '',
+    '## 9. Visit-Engagement Likelihood',
+    "How likely would YOU keep scrolling past the first screen?",
+    '- **Score:** `X/10`',
+    '- **Rationale:** 1-2 sentences grounded in specific above-the-fold elements.',
+    '',
+    '## 10. Conversion Likelihood',
+    "Assuming you kept browsing, how likely would YOU add to cart, sign up, or follow a CTA?",
+    '- **Score:** `X/10`',
+    '- **Rationale:** 1-2 sentences — what pulled you toward action or away from it.',
+    '',
+    '## 11. Evidence',
+    'Bullet list of every distinct module visible on the homepage (in scroll order):',
+    '- Hero / primary value prop',
+    '- Featured categories',
+    '- Promotional banners or strips',
+    '- Loyalty / rewards section',
+    '- Editorial / lifestyle modules',
+    '- New-arrivals or best-seller rails',
+    '- Footer credibility (reviews, awards, policies)',
+    '- Bugs / friction / clarity issues that are VISIBLE in the screenshot',
+    '',
+    'Style requirements:',
+    '- First person ("I", "me", "my") — this is YOUR reaction.',
+    "- Voice matches your persona's age, generation, and shopping habits — a 34-year-old mom does not sound like a 62-year-old retiree.",
+    '- Specific over generic. Quote real text and name real elements you can see.',
+    '- Recommendations over root-cause theory.',
+    '- Only flag visual bugs you can actually see — do not speculate about HTML, JS, or anything off-screen.',
   ].join('\n');
 }
 
@@ -286,6 +350,12 @@ async function auditPersonaHomepage(browser, persona, real) {
 
   const score = extractScore(review);
   const now = new Date();
+  // Parse the structured-markdown review into typed sections + per-
+  // section predictions, same shape as email audits. Powers
+  // /audits/{slug} rendering, vault note structuring, embedding
+  // search, and any aggregate analytics over time.
+  const sections = parseReviewSections(review);
+  const predictions = parsePredictions(sections);
   const auditData = {
     schema_version: 1,
     slug,
@@ -302,7 +372,8 @@ async function auditPersonaHomepage(browser, persona, real) {
     review: {
       score,
       raw_markdown: review,
-      sections: {},
+      sections,
+      predictions,
     },
     qa: null,
     assets: {
