@@ -83,6 +83,39 @@ function ReviewPane({
   );
 
   if (isSiteJourney) {
+    // Walker-style multi-step journeys render the gallery on the right.
+    // Single-screenshot audits (homepage sweep) have no journey_steps —
+    // stack narrative on top, hero screenshot below as the proof block.
+    if (journeySteps.length === 0) {
+      return (
+        <div className="flex flex-col gap-5">
+          {card}
+          {heroUrl && (
+            <div className="bg-white border border-gray-200 rounded-[20px] p-3 shadow-sm">
+              <div className="text-[11px] uppercase tracking-wide text-muted px-2 py-1">
+                Proof — homepage as captured
+              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={heroUrl}
+                alt="Homepage screenshot captured at audit time"
+                className="w-full rounded-2xl border border-gray-100"
+              />
+              {webviewUrl && (
+                <a
+                  href={webviewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center text-sm text-muted mt-2 hover:text-ink transition-colors"
+                >
+                  Open live site &rarr;
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    }
     return (
       <div className="grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1">
         {card}
