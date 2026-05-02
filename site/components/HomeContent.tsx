@@ -12,6 +12,7 @@ import {
   auditMatchesRange,
   DATE_RANGE_PRESETS,
 } from "./DateRangeSelector";
+import { ChannelSelector, auditMatchesChannel } from "./ChannelSelector";
 
 // Brand identity comes from the audit row's `from_display_name` (e.g.
 // "Skechers"). Some senders share a display name across orgs (rare),
@@ -22,9 +23,10 @@ function brandKey(label: string): string {
 }
 
 // URL params used to persist filter state across the list → detail →
-// back navigation. Short keys (r/p/b/d) keep the URL short. Empty/null
+// back navigation. Short keys (r/c/p/b/d) keep the URL short. Empty/null
 // values are dropped from the URL so the default state is `/`.
 const PARAM_RANGE = "r";
+const PARAM_CHANNEL = "c";
 const PARAM_PERSONA = "p";
 const PARAM_BRAND = "b";
 const PARAM_DAY = "d";
@@ -40,6 +42,9 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   // so back-navigation from /audits/<slug> restores the previous view.
   const [selectedRange, setSelectedRange] = useState<string | null>(
     () => searchParams.get(PARAM_RANGE)
+  );
+  const [selectedChannel, setSelectedChannel] = useState<string | null>(
+    () => searchParams.get(PARAM_CHANNEL)
   );
   const [selectedPersona, setSelectedPersona] = useState<string | null>(
     () => searchParams.get(PARAM_PERSONA)
@@ -58,6 +63,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   useEffect(() => {
     const next = new URLSearchParams();
     if (selectedRange) next.set(PARAM_RANGE, selectedRange);
+    if (selectedChannel) next.set(PARAM_CHANNEL, selectedChannel);
     if (selectedPersona) next.set(PARAM_PERSONA, selectedPersona);
     if (selectedBrand) next.set(PARAM_BRAND, selectedBrand);
     if (selectedDate) next.set(PARAM_DAY, selectedDate);
@@ -68,6 +74,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     if (target !== current) router.replace(target, { scroll: false });
   }, [
     selectedRange,
+    selectedChannel,
     selectedPersona,
     selectedBrand,
     selectedDate,
@@ -81,23 +88,30 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     return audits.filter((a) => auditMatchesRange(a, selectedRange));
   }, [audits, selectedRange]);
 
+  // Channel sits with range at the top of the hierarchy — both narrow
+  // the universe before facets (persona/brand) start carving it up.
+  const channelScopedAudits = useMemo(() => {
+    if (!selectedChannel) return rangeScopedAudits;
+    return rangeScopedAudits.filter((a) =>
+      auditMatchesChannel(a, selectedChannel)
+    );
+  }, [rangeScopedAudits, selectedChannel]);
+
   // Faceted scoping: each filter's dropdown options reflect "what's
   // pickable given every OTHER active filter". So picking brand=DSW
   // narrows the persona dropdown to only personas with DSW audits, and
   // vice-versa. The visible list applies both.
-  //
-  // Range sits above the facets — it always narrows everything below.
   const personaPool = useMemo(() => {
-    if (!selectedBrand) return rangeScopedAudits;
-    return rangeScopedAudits.filter(
+    if (!selectedBrand) return channelScopedAudits;
+    return channelScopedAudits.filter(
       (a) => brandKey(a.from_display_name ?? "") === selectedBrand
     );
-  }, [rangeScopedAudits, selectedBrand]);
+  }, [channelScopedAudits, selectedBrand]);
 
   const brandPool = useMemo(() => {
-    if (!selectedPersona) return rangeScopedAudits;
-    return rangeScopedAudits.filter((a) => a.persona === selectedPersona);
-  }, [rangeScopedAudits, selectedPersona]);
+    if (!selectedPersona) return channelScopedAudits;
+    return channelScopedAudits.filter((a) => a.persona === selectedPersona);
+  }, [channelScopedAudits, selectedPersona]);
 
   const availablePersonas = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
@@ -137,7 +151,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   }, [brandPool]);
 
   const visibleAudits = useMemo(() => {
-    let list = rangeScopedAudits;
+    let list = channelScopedAudits;
     if (selectedPersona) list = list.filter((a) => a.persona === selectedPersona);
     if (selectedBrand) {
       list = list.filter(
@@ -145,7 +159,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
       );
     }
     return list;
-  }, [rangeScopedAudits, selectedPersona, selectedBrand]);
+  }, [channelScopedAudits, selectedPersona, selectedBrand]);
 
   return (
     <>
@@ -160,6 +174,14 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
             setSelectedRange(key);
             setSelectedPersona(null);
             setSelectedBrand(null);
+            setSelectedDate(null);
+          }}
+        />
+        <ChannelSelector
+          audits={rangeScopedAudits}
+          selected={selectedChannel}
+          onSelect={(key) => {
+            setSelectedChannel(key);
             setSelectedDate(null);
           }}
         />
@@ -187,6 +209,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
         audits={visibleAudits}
         selectedDate={selectedDate}
         onSelectDate={setSelectedDate}
+        channel={selectedChannel}
         days={
           selectedRange
             ? DATE_RANGE_PRESETS.find((p) => p.key === selectedRange)?.days
