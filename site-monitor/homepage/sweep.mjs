@@ -242,26 +242,43 @@ async function auditPersonaHomepage(browser, persona, real) {
   await dismissPopups(page);
   await new Promise((r) => setTimeout(r, 500));
 
-  const screenshotPath = path.join(artifactDir, 'homepage.png');
+  // Two screenshots: viewport for Claude (above-fold focus, small),
+  // fullpage for the audit-page proof block. Both upload to R2;
+  // render_image_key points at fullpage so the audit detail page
+  // shows the whole homepage as proof.
+  const viewportPath = path.join(artifactDir, 'homepage-viewport.png');
+  const fullpagePath = path.join(artifactDir, 'homepage-fullpage.png');
   try {
-    await page.screenshot({ path: screenshotPath, fullPage: false });
+    await page.screenshot({ path: viewportPath, fullPage: false });
   } catch (err) {
-    log('screenshot failed', { persona: persona.slug, err: String(err).slice(0, 200) });
+    log('viewport screenshot failed', { persona: persona.slug, err: String(err).slice(0, 200) });
+  }
+  try {
+    await page.screenshot({ path: fullpagePath, fullPage: true });
+  } catch (err) {
+    log('fullpage screenshot failed', { persona: persona.slug, err: String(err).slice(0, 200) });
   }
 
   // Cleanup the per-persona context unless we're using the real Chrome
   // default context (closing it would kill the user's Chrome session).
   if (!real) await context.close().catch(() => {});
 
-  if (navError && !fs.existsSync(screenshotPath)) {
+  // Fall back across screenshots if either capture failed.
+  const reviewPath = fs.existsSync(viewportPath)
+    ? viewportPath
+    : fs.existsSync(fullpagePath)
+      ? fullpagePath
+      : null;
+  const proofPath = fs.existsSync(fullpagePath) ? fullpagePath : viewportPath;
+  if (navError && !reviewPath) {
     log('skipping persona — no screenshot to review', { persona: persona.slug });
     return { ok: false, persona: persona.slug, error: navError };
   }
 
-  const prompt = buildPrompt(persona, hostname, screenshotPath);
+  const prompt = buildPrompt(persona, hostname, reviewPath);
   let review;
   try {
-    review = await generateClaudeReview(prompt, screenshotPath);
+    review = await generateClaudeReview(prompt, reviewPath);
   } catch (err) {
     log('claude review failed', { persona: persona.slug, err: String(err).slice(0, 200) });
     return { ok: false, persona: persona.slug, error: 'claude failed' };
@@ -295,18 +312,37 @@ async function auditPersonaHomepage(browser, persona, real) {
     },
   };
 
-  // R2 upload + key stamping.
-  let renderKey = null;
+  // R2 upload — fullpage as the canonical proof, viewport as a
+  // sidecar (handy if we ever want to render an above-the-fold preview
+  // inside the audit page).
   if (!DRY_RUN && mediaConfigured()) {
-    try {
-      renderKey = await putMedia({
-        filePath: screenshotPath,
-        key: auditMediaKey(slug, 'homepage.png'),
-        contentType: 'image/png',
-      });
-      auditData.assets.render_image_key = renderKey;
-    } catch (err) {
-      log('R2 upload failed', { persona: persona.slug, err: String(err).slice(0, 200) });
+    if (fs.existsSync(fullpagePath)) {
+      try {
+        const key = await putMedia({
+          filePath: fullpagePath,
+          key: auditMediaKey(slug, 'homepage-fullpage.png'),
+          contentType: 'image/png',
+        });
+        auditData.assets.render_image_key = key;
+      } catch (err) {
+        log('R2 fullpage upload failed', { persona: persona.slug, err: String(err).slice(0, 200) });
+      }
+    }
+    if (fs.existsSync(viewportPath)) {
+      try {
+        await putMedia({
+          filePath: viewportPath,
+          key: auditMediaKey(slug, 'homepage-viewport.png'),
+          contentType: 'image/png',
+        });
+      } catch (err) {
+        log('R2 viewport upload failed', { persona: persona.slug, err: String(err).slice(0, 200) });
+      }
+    }
+    // If fullpage failed but viewport succeeded, fall back so the audit
+    // page still has something to show as proof.
+    if (!auditData.assets.render_image_key && fs.existsSync(viewportPath)) {
+      auditData.assets.render_image_key = auditMediaKey(slug, 'homepage-viewport.png');
     }
   }
 
