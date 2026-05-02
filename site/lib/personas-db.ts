@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { eq, asc, inArray } from "drizzle-orm";
-import { db, personas, users } from "./db/client";
+import { db, personas, users, tenantPersonaGrants } from "./db/client";
 import type { PersonaLastStatus } from "./db/schema";
 import {
   safeParsePersonaProfile,
@@ -43,19 +43,32 @@ export const expandReadableSlugs = cache(
 
 // Per-request cache (React cache). Each server request hydrates once.
 //
-// Persona ownership is via tenant membership: a user has access to every
-// persona in their tenant. The legacy userPersonas join table is no longer
-// consulted on this path — keeping it around as inert data until a future
-// cleanup PR. Admin call sites should not use this helper — admins have
-// cross-tenant visibility via getAllPersonas() unfiltered.
+// Two sources are unioned:
+//   1. Personas owned by the user's tenant (the legacy path).
+//   2. Personas granted to the user's tenant via tenant_persona_grant
+//      (cross-tenant read-only access; e.g. Kohl's tenant gets a grant
+//      to read Rosie Coupon, which is owned by Alon's founder tenant).
+//
+// Admin call sites should not use this helper — admins have cross-
+// tenant visibility via getAllPersonas() unfiltered. The legacy
+// userPersonas join table is not consulted; ownership lives entirely
+// at the tenant level now.
 export const getPersonaSlugsForUser = cache(
   async (userId: string): Promise<string[]> => {
-    const rows = await db
+    const ownedRows = await db
       .select({ slug: personas.slug })
       .from(personas)
       .innerJoin(users, eq(users.tenantId, personas.tenantId))
       .where(eq(users.id, userId));
-    return rows.map((r) => r.slug);
+    const grantedRows = await db
+      .select({ slug: tenantPersonaGrants.personaSlug })
+      .from(tenantPersonaGrants)
+      .innerJoin(users, eq(users.tenantId, tenantPersonaGrants.tenantId))
+      .where(eq(users.id, userId));
+    const set = new Set<string>();
+    for (const r of ownedRows) set.add(r.slug);
+    for (const r of grantedRows) set.add(r.slug);
+    return Array.from(set);
   }
 );
 

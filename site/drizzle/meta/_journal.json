@@ -162,6 +162,13 @@
       "when": 1777757085247,
       "tag": "0022_neat_darkstar",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1777758080309,
+      "tag": "0023_lively_jack_power",
+      "breakpoints": true
     }
   ]
 }

@@ -3,7 +3,7 @@
 import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { db, tenants, users } from "@/lib/db/client";
+import { db, tenants, users, personas, tenantPersonaGrants } from "@/lib/db/client";
 import { requireAdmin } from "@/lib/dal";
 import { addDays, MAX_TIER_DAYS } from "@/lib/tenant-approval";
 import {
@@ -265,5 +265,81 @@ export async function removeMemberFormAction(fd: FormData): Promise<void> {
   if (!r.ok) console.warn("removeMemberFormAction:", r.error);
 }
 
-void and; // kept for future filters
+// Persona grants — admin grants a tenant read-only access to a persona
+// owned by a different tenant. Used when a brand-specific persona was
+// forked under the founder tenant ('alon') and we want to give the
+// brand's own tenant visibility into it (e.g. Kohl's reads
+// `rosie-coupon-kohls`).
+const SlugSchema = z.string().regex(/^[a-z0-9-]+$/).max(64);
+
+export async function grantPersonaToTenantAction(
+  fd: FormData
+): Promise<AdminActionResult> {
+  const admin = await requireAdmin();
+  const tenantId = String(fd.get("tenantId") ?? "");
+  if (!isUuid(tenantId)) return { ok: false, error: "Bad tenantId." };
+  const slugParsed = SlugSchema.safeParse(fd.get("personaSlug"));
+  if (!slugParsed.success) return { ok: false, error: "Bad persona slug." };
+  const personaSlug = slugParsed.data;
+
+  const [persona] = await db
+    .select({ slug: personas.slug, tenantId: personas.tenantId })
+    .from(personas)
+    .where(eq(personas.slug, personaSlug))
+    .limit(1);
+  if (!persona) {
+    return { ok: false, error: `Persona "${personaSlug}" not found.` };
+  }
+  // Guard against the obvious mistake of granting a persona to the same
+  // tenant that already owns it — would be a noop but the UI shouldn't
+  // suggest the persona is shared when it isn't.
+  if (persona.tenantId === tenantId) {
+    return {
+      ok: false,
+      error: "That persona is already owned by this tenant — no grant needed.",
+    };
+  }
+
+  await db
+    .insert(tenantPersonaGrants)
+    .values({
+      tenantId,
+      personaSlug,
+      mode: "read",
+      grantedBy: admin.id,
+    })
+    .onConflictDoNothing();
+  revalidatePath(`/admin/tenants/${tenantId}`);
+  return { ok: true };
+}
+
+export async function revokePersonaGrantAction(
+  fd: FormData
+): Promise<AdminActionResult> {
+  await requireAdmin();
+  const tenantId = String(fd.get("tenantId") ?? "");
+  if (!isUuid(tenantId)) return { ok: false, error: "Bad tenantId." };
+  const slugParsed = SlugSchema.safeParse(fd.get("personaSlug"));
+  if (!slugParsed.success) return { ok: false, error: "Bad persona slug." };
+  await db
+    .delete(tenantPersonaGrants)
+    .where(
+      and(
+        eq(tenantPersonaGrants.tenantId, tenantId),
+        eq(tenantPersonaGrants.personaSlug, slugParsed.data)
+      )
+    );
+  revalidatePath(`/admin/tenants/${tenantId}`);
+  return { ok: true };
+}
+
+export async function grantPersonaFormAction(fd: FormData): Promise<void> {
+  const r = await grantPersonaToTenantAction(fd);
+  if (!r.ok) console.warn("grantPersonaFormAction:", r.error);
+}
+
+export async function revokePersonaGrantFormAction(fd: FormData): Promise<void> {
+  const r = await revokePersonaGrantAction(fd);
+  if (!r.ok) console.warn("revokePersonaGrantFormAction:", r.error);
+}
 

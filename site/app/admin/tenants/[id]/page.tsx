@@ -8,12 +8,15 @@ import {
   personas,
   reactions,
   experiences,
+  tenantPersonaGrants,
 } from "@/lib/db/client";
 import {
   changeTenantPlanFormAction,
   extendTenantTierFormAction,
   addMemberFormAction,
   removeMemberFormAction,
+  grantPersonaFormAction,
+  revokePersonaGrantFormAction,
 } from "../actions";
 
 export const dynamic = "force-dynamic";
@@ -85,6 +88,23 @@ export default async function TenantDetail({
     .from(personas)
     .where(eq(personas.tenantId, id))
     .orderBy(asc(personas.slug));
+
+  // Cross-tenant persona grants. Join personas to surface display name +
+  // owning tenant slug for context (an admin should see "Rosie Coupon
+  // (owned by alon)" not just the slug).
+  const grantRows = await db
+    .select({
+      personaSlug: tenantPersonaGrants.personaSlug,
+      personaName: personas.name,
+      ownerTenantId: personas.tenantId,
+      mode: tenantPersonaGrants.mode,
+      grantedBy: tenantPersonaGrants.grantedBy,
+      createdAt: tenantPersonaGrants.createdAt,
+    })
+    .from(tenantPersonaGrants)
+    .leftJoin(personas, eq(personas.slug, tenantPersonaGrants.personaSlug))
+    .where(eq(tenantPersonaGrants.tenantId, id))
+    .orderBy(asc(tenantPersonaGrants.personaSlug));
 
   const recentAudits = await db
     .select({
@@ -324,6 +344,88 @@ export default async function TenantDetail({
             ))}
           </ul>
         )}
+      </div>
+
+      {/* Cross-tenant persona grants */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-6">
+        <div className="text-xs uppercase tracking-wide text-muted mb-2">
+          Persona grants ({grantRows.length})
+        </div>
+        <p className="text-[11px] text-muted mb-3">
+          Read-only access to personas owned by other tenants. Use this to
+          let a brand&apos;s tenant view audits for a persona we keep under
+          the founder tenant — e.g. give Kohl&apos;s read access to
+          <code className="font-mono mx-0.5">rosie-coupon-kohls</code>.
+        </p>
+        {grantRows.length > 0 && (
+          <ul className="text-sm space-y-1.5 mb-3">
+            {grantRows.map((g) => (
+              <li
+                key={g.personaSlug}
+                className="flex items-center justify-between gap-2 border-b border-gray-50 pb-1.5 last:border-0"
+              >
+                <div className="min-w-0">
+                  <a
+                    href={`/admin/personas/${g.personaSlug}`}
+                    className="text-sky-700 hover:underline font-mono text-xs"
+                  >
+                    {g.personaSlug}
+                  </a>
+                  {g.personaName && (
+                    <span className="text-muted text-xs"> — {g.personaName}</span>
+                  )}
+                  <span className="ml-2 text-[10px] uppercase tracking-wide bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
+                    {g.mode}
+                  </span>
+                </div>
+                <form action={revokePersonaGrantFormAction} className="shrink-0">
+                  <input type="hidden" name="tenantId" value={t.id} />
+                  <input type="hidden" name="personaSlug" value={g.personaSlug} />
+                  <button
+                    type="submit"
+                    className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-[11px] hover:bg-rose-100 hover:text-rose-800"
+                  >
+                    Revoke
+                  </button>
+                </form>
+              </li>
+            ))}
+          </ul>
+        )}
+        <form
+          action={grantPersonaFormAction}
+          className="border-t border-gray-100 pt-3"
+        >
+          <input type="hidden" name="tenantId" value={t.id} />
+          <label
+            htmlFor="grant-persona-slug"
+            className="block text-xs font-medium mb-1"
+          >
+            Grant a persona (read-only)
+          </label>
+          <div className="flex gap-2 flex-wrap sm:flex-nowrap">
+            <input
+              id="grant-persona-slug"
+              name="personaSlug"
+              type="text"
+              placeholder="rosie-coupon-kohls"
+              required
+              pattern="^[a-z0-9-]+$"
+              className="flex-1 min-w-[200px] py-1.5 px-2 border border-gray-200 rounded-lg text-sm font-mono"
+            />
+            <button
+              type="submit"
+              className="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-semibold whitespace-nowrap"
+            >
+              Grant
+            </button>
+          </div>
+          <p className="text-[10px] text-muted mt-1">
+            Tenant members will see this persona&apos;s audits in their
+            list. They cannot edit, delete, or chat-as a granted persona
+            until we expose those modes.
+          </p>
+        </form>
       </div>
 
       {/* Recent audits */}

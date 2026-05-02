@@ -108,6 +108,38 @@ export const users = pgTable("user", {
   tenantId: uuid("tenant_id").references(() => tenants.id, { onDelete: "restrict" }),
 });
 
+// Cross-tenant persona grants. The persona is OWNED by the tenant in
+// `personas.tenant_id`, but additional tenants can be granted read-only
+// access — used when a brand-specific persona was forked under Alon's
+// founder tenant ('alon') and we want to give the brand's own tenant
+// visibility into it (e.g. Kohl's reads `rosie-coupon-kohls` audits).
+//
+// `mode` is read-only in v1; future modes (chat, admin) get a new enum
+// value without a schema change. Application code must check mode on
+// any write path that's exposed across tenants.
+export const tenantPersonaGrants = pgTable(
+  "tenant_persona_grant",
+  {
+    tenantId: uuid("tenant_id")
+      .notNull()
+      .references(() => tenants.id, { onDelete: "cascade" }),
+    personaSlug: text("persona_slug")
+      .notNull()
+      .references(() => personas.slug, { onDelete: "cascade" }),
+    mode: text("mode").notNull().default("read"),
+    grantedBy: text("granted_by").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at", { mode: "date" })
+      .defaultNow()
+      .notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.tenantId, t.personaSlug] }),
+    personaIdx: index("tenant_persona_grant_persona_idx").on(t.personaSlug),
+  })
+);
+
 // Tenant team membership. Composite PK on (user_id, tenant_id) so the
 // shape supports future multi-tenant memberships without schema rework,
 // even though v1 keeps the user.tenant_id 1:1 invariant. Always at
