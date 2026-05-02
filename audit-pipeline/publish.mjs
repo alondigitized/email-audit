@@ -239,6 +239,31 @@ export async function upsertExperienceAndReaction({
 }
 
 /**
+ * List every active persona that has a homepage configured. Used by the
+ * homepage-sweep daemon. Filtering on JSON `profile.status` tolerates
+ * legacy rows where `status` is missing (treat as active).
+ */
+export async function listActivePersonasWithSite() {
+  const sql = db();
+  const rows = await sql`
+    SELECT slug, name, short, profile
+    FROM persona
+    WHERE profile->>'status' = 'active'
+       OR profile->>'status' IS NULL
+    ORDER BY slug
+  `;
+  return rows
+    .map((r) => ({
+      slug: r.slug,
+      name: r.name,
+      short: r.short,
+      profile: r.profile,
+      site: r.profile?.journey?.site ?? null,
+    }))
+    .filter((p) => p.site && /^https?:\/\//.test(p.site));
+}
+
+/**
  * Stamp the auto_confirm result onto an existing experience + the legacy
  * audit row by slug. Used by the email-monitor post-publish hook and the
  * one-shot backfill script. Idempotent — overwrites on each call.
