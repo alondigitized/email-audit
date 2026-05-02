@@ -155,6 +155,13 @@
       "when": 1777655075098,
       "tag": "0021_furry_diamondback",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1777757085247,
+      "tag": "0022_neat_darkstar",
+      "breakpoints": true
     }
   ]
 }
