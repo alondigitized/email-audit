@@ -148,6 +148,26 @@ const SECTION_HEADINGS = new Map([
   ['evidence', 'evidence'],
   ['evidence & analysis', 'evidence'],
   ['evidence and analysis', 'evidence'],
+  // Homepage-audit aliases. Same shape as email sections (hero ≈
+  // subject, above-fold ≈ preview, visit-engagement ≈ open, conversion
+  // ≈ click) so /audits rendering, embeddings, and predictions reuse
+  // the same downstream pipeline.
+  ['hero analysis', 'subject_line'],
+  ['hero & above-the-fold analysis', 'subject_line'],
+  ['hero and above-the-fold analysis', 'subject_line'],
+  ['hero & above the fold analysis', 'subject_line'],
+  ['above-the-fold analysis', 'subject_line'],
+  ['above the fold analysis', 'subject_line'],
+  ['promotional & urgency cues', 'preview_text'],
+  ['promotional and urgency cues', 'preview_text'],
+  ['urgency cues', 'preview_text'],
+  ['promotional cues', 'preview_text'],
+  ['visit-engagement likelihood', 'open_likelihood'],
+  ['visit engagement likelihood', 'open_likelihood'],
+  ['visit-engagement likelihood (persona-grounded)', 'open_likelihood'],
+  ['scroll likelihood', 'open_likelihood'],
+  ['conversion likelihood', 'click_likelihood'],
+  ['conversion likelihood (persona-grounded)', 'click_likelihood'],
 ]);
 
 export function parseReviewSections(reviewText) {
