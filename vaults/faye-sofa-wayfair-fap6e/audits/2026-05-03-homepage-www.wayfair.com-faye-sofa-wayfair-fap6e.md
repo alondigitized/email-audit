@@ -3,181 +3,148 @@ slug: 2026-05-03-homepage-www.wayfair.com-faye-sofa-wayfair-fap6e
 type: site
 date: 2026-05-03
 persona: faye-sofa-wayfair-fap6e
-score: "6/10"
+score: "1/10"
 sender: www.wayfair.com
 subject: Homepage snapshot · www.wayfair.com · 2026-05-03
-tags: [site-journey, score-6, sender/www-wayfair-com]
+tags: [site-journey, score-1, sender/www-wayfair-com]
 ---
 # Homepage snapshot · www.wayfair.com · 2026-05-03
-**Score:** 6/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 1/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Okay, the first thing I see is a full-bleed orange-and-red explosion screaming **48-HOUR CLEARANCE — UP TO 70% OFF**. I get it, Wayfair is in deal mode right now, and honestly as someone who has the Way Day tab permanently pinned, that gets my attention. But the hero is pure graphic energy — no furniture, no lifestyle, no "this is what your living room could look like" moment. It looks like a department store circular, not a home brand I trust to help me pick a sofa.
-- **6/10**
-- + Concrete offer visible above the fold: "UP TO 70% OFF" is explicit and prominent
-- + Primary CTA present: "SHOP NOW" purple button, clearly visible in the hero
-- + Visual hierarchy is clear: the 70% OFF graphic dominates, eye goes straight there
-- + No render bugs: page is clean, no layout breakage or broken images
-- + Page reflects current campaign: 48-hour clearance is timely and live, not stale
-- − Hero doesn't explicitly speak to my persona (no mid-century imagery, no starter-home lifestyle)
-- − No returning-shopper hook (no recently-viewed, no rewards balance, no member CTA)
-- − No loyalty/membership benefits visible
-- − "Up to 70%" feels like bait-and-switch territory — individual items could be 5% off
-- − No demographic signals that read millennial starter-home buyer
+- I opened Wayfair — supposedly one of my go-to apps — and got hit with a bot wall before I even saw a single sofa. The entire screen is a "Press & Hold to confirm you are a human" challenge with a reference ID at the bottom. Zero product, zero deals, zero Wayfair. This is a security gate, not a homepage, and as a shopper I have no idea if I'm even on the right site.
+- **1/10**
+- − Hero copy/imagery speaks to persona: no hero, no imagery — just a CAPTCHA challenge
+- − Returning-shopper hook visible: none
+- − Concrete offer above the fold: none
+- − Primary shopping CTA: the only button says "Press & Hold" — that's a verification prompt, not a shop-now call
+- − Visual hierarchy: there is only one thing on the page, which isn't a business signal
+- − No render bugs: the page rendered fine, but it's a bot interstitial, not a homepage — counts as a full friction failure
+- − Demographic signals: none
+- − Current campaign/season: none
+- − Loyalty/membership: none
+- − Honest offer: there is no offer to evaluate
+- Score: **1/10** — none of the ten business-impact criteria are met. The homepage never loaded.
 
 ## What's working
 
-- **The urgency banner** — "UP TO 70% OFF | 48-HOUR CLEARANCE →" as a sticky strip above the hero is a smart double-hit. I'm the person who checks the app before coffee. That strip works.
-- **The "SHOP NOW" button** — purple, centered, unmissable. I know exactly what the next tap does.
-- **Product thumbnails below the fold** — I can already see what looks like a dresser and outdoor seating. Getting to actual product imagery fast is what keeps me scrolling.
-- **Clean render** — no janky layout shifts, no overlapping text, no broken images. The page just... loads.
+- The bot challenge itself renders without visual errors — text is legible, the button is tappable, reference ID is at the bottom for support purposes.
 
 ## What's weak
 
-- **Zero lifestyle in the hero** — I'm a photo browser. I need to *see* the dresser styled in a bedroom, the sofa in a real apartment, the light fixture over a dining table. This hero is pure graphic design, not home inspiration.
-- **No free-shipping callout** — Wayfair's free shipping over $35 is one of their best hooks for someone like me buying big stuff. It's not anywhere on this screen.
-- **No category entry points** — I can't tap directly to "Sofas" or "Living Room" without first opening the hamburger menu. That's a friction point on mobile.
-- **No trust signals at all** — no review counts, no "4.8 stars from 12K reviews," no "free returns" badge. For a $600 sofa purchase I need some reassurance before I even browse.
-- **"Up to 70% off" without anchoring** — feels like a trap. What's actually 70% off? Without a few hero products shown at their before/after price, this just reads as marketing inflation.
+- **The entire shopping experience is blocked** — there is no hero, no nav, no category grid, no promotion. From my seat as a Way Day deal-hunter, I saw exactly nothing Wayfair intended to show me.
+- **No brand reassurance** — the page is completely white with grey text. No Wayfair logo, no purple, no wordmark. I'd double-check the URL to make sure I wasn't phished.
+- **Friction at entry, not at checkout** — bot challenges belong deeper in the funnel (cart, account creation), not before I see a single piece of furniture. Intercepting me cold is the fastest path to a bounce.
+- **No fallback messaging** — there's no "This is Wayfair, we just need to verify you" copy. For a first-time-ish session visitor this feels alarming, not routine.
 
 ## Recommendations
 
-- **Swap the graphic hero for a lifestyle hero**: show a real room — a mid-century sofa, a credenza, a statement lamp — with the clearance badge overlaid. Let me see the *stuff* on sale, not just the numbers.
-- **Add a free-shipping strip or badge**: put "$35 ships free" somewhere above the fold. It's a conversion accelerator for big-ticket home purchases and it's currently invisible.
-- **Surface one category shortcut below the search bar**: a "Sofas," "Bedroom," "Rugs" pill row takes up 40px and cuts the tap-to-category from 2 steps to 1.
-- **Show at-a-glance star ratings on the product thumbnails**: even just "★ 4.7 (2.3K)" next to the dresser image would make me feel like I'm not flying blind.
+- Move bot-detection challenges to higher-risk actions (add to cart, checkout) rather than homepage load — most casual browsers should never see this screen.
+- If the interstitial is unavoidable, add the Wayfair logo and a one-line reassurance ("You're on Wayfair.com — just a quick security check") so I don't think I landed on a phishing page.
+- Log the session and serve a personalized homepage immediately after verification passes, rather than a cold reload — don't waste the friction by dropping me on a generic page.
+- Reduce challenge frequency for returning users with a valid cookie/session; I've bought here before and I shouldn't have to prove I'm human every visit.
 
 ## Full review
 ## 1. Executive Summary
 
-Okay, the first thing I see is a full-bleed orange-and-red explosion screaming **48-HOUR CLEARANCE — UP TO 70% OFF**. I get it, Wayfair is in deal mode right now, and honestly as someone who has the Way Day tab permanently pinned, that gets my attention. But the hero is pure graphic energy — no furniture, no lifestyle, no "this is what your living room could look like" moment. It looks like a department store circular, not a home brand I trust to help me pick a sofa.
-
----
+I opened Wayfair — supposedly one of my go-to apps — and got hit with a bot wall before I even saw a single sofa. The entire screen is a "Press & Hold to confirm you are a human" challenge with a reference ID at the bottom. Zero product, zero deals, zero Wayfair. This is a security gate, not a homepage, and as a shopper I have no idea if I'm even on the right site.
 
 ## 2. Business Impact Score (1-10)
 
-**6/10**
+**1/10**
 
-- + Concrete offer visible above the fold: "UP TO 70% OFF" is explicit and prominent
-- + Primary CTA present: "SHOP NOW" purple button, clearly visible in the hero
-- + Visual hierarchy is clear: the 70% OFF graphic dominates, eye goes straight there
-- + No render bugs: page is clean, no layout breakage or broken images
-- + Page reflects current campaign: 48-hour clearance is timely and live, not stale
-- − Hero doesn't explicitly speak to my persona (no mid-century imagery, no starter-home lifestyle)
-- − No returning-shopper hook (no recently-viewed, no rewards balance, no member CTA)
-- − No loyalty/membership benefits visible
-- − "Up to 70%" feels like bait-and-switch territory — individual items could be 5% off
-- − No demographic signals that read millennial starter-home buyer
+- − Hero copy/imagery speaks to persona: no hero, no imagery — just a CAPTCHA challenge
+- − Returning-shopper hook visible: none
+- − Concrete offer above the fold: none
+- − Primary shopping CTA: the only button says "Press & Hold" — that's a verification prompt, not a shop-now call
+- − Visual hierarchy: there is only one thing on the page, which isn't a business signal
+- − No render bugs: the page rendered fine, but it's a bot interstitial, not a homepage — counts as a full friction failure
+- − Demographic signals: none
+- − Current campaign/season: none
+- − Loyalty/membership: none
+- − Honest offer: there is no offer to evaluate
 
----
+Score: **1/10** — none of the ten business-impact criteria are met. The homepage never loaded.
 
 ## 3. What's Working
 
-- **The urgency banner** — "UP TO 70% OFF | 48-HOUR CLEARANCE →" as a sticky strip above the hero is a smart double-hit. I'm the person who checks the app before coffee. That strip works.
-- **The "SHOP NOW" button** — purple, centered, unmissable. I know exactly what the next tap does.
-- **Product thumbnails below the fold** — I can already see what looks like a dresser and outdoor seating. Getting to actual product imagery fast is what keeps me scrolling.
-- **Clean render** — no janky layout shifts, no overlapping text, no broken images. The page just... loads.
-
----
+- The bot challenge itself renders without visual errors — text is legible, the button is tappable, reference ID is at the bottom for support purposes.
 
 ## 4. What's Weak
 
-- **Zero lifestyle in the hero** — I'm a photo browser. I need to *see* the dresser styled in a bedroom, the sofa in a real apartment, the light fixture over a dining table. This hero is pure graphic design, not home inspiration.
-- **No free-shipping callout** — Wayfair's free shipping over $35 is one of their best hooks for someone like me buying big stuff. It's not anywhere on this screen.
-- **No category entry points** — I can't tap directly to "Sofas" or "Living Room" without first opening the hamburger menu. That's a friction point on mobile.
-- **No trust signals at all** — no review counts, no "4.8 stars from 12K reviews," no "free returns" badge. For a $600 sofa purchase I need some reassurance before I even browse.
-- **"Up to 70% off" without anchoring** — feels like a trap. What's actually 70% off? Without a few hero products shown at their before/after price, this just reads as marketing inflation.
-
----
+- **The entire shopping experience is blocked** — there is no hero, no nav, no category grid, no promotion. From my seat as a Way Day deal-hunter, I saw exactly nothing Wayfair intended to show me.
+- **No brand reassurance** — the page is completely white with grey text. No Wayfair logo, no purple, no wordmark. I'd double-check the URL to make sure I wasn't phished.
+- **Friction at entry, not at checkout** — bot challenges belong deeper in the funnel (cart, account creation), not before I see a single piece of furniture. Intercepting me cold is the fastest path to a bounce.
+- **No fallback messaging** — there's no "This is Wayfair, we just need to verify you" copy. For a first-time-ish session visitor this feels alarming, not routine.
 
 ## 5. Recommendations
 
-- **Swap the graphic hero for a lifestyle hero**: show a real room — a mid-century sofa, a credenza, a statement lamp — with the clearance badge overlaid. Let me see the *stuff* on sale, not just the numbers.
-- **Add a free-shipping strip or badge**: put "$35 ships free" somewhere above the fold. It's a conversion accelerator for big-ticket home purchases and it's currently invisible.
-- **Surface one category shortcut below the search bar**: a "Sofas," "Bedroom," "Rugs" pill row takes up 40px and cuts the tap-to-category from 2 steps to 1.
-- **Show at-a-glance star ratings on the product thumbnails**: even just "★ 4.7 (2.3K)" next to the dresser image would make me feel like I'm not flying blind.
-
----
+- Move bot-detection challenges to higher-risk actions (add to cart, checkout) rather than homepage load — most casual browsers should never see this screen.
+- If the interstitial is unavoidable, add the Wayfair logo and a one-line reassurance ("You're on Wayfair.com — just a quick security check") so I don't think I landed on a phishing page.
+- Log the session and serve a personalized homepage immediately after verification passes, rather than a cold reload — don't waste the friction by dropping me on a generic page.
+- Reduce challenge frequency for returning users with a valid cookie/session; I've bought here before and I shouldn't have to prove I'm human every visit.
 
 ## 6. Bottom Line
 
-I'm staying — because a 48-hour clearance banner is basically catnip for me — but I'd be way more excited if I could *see* the furniture instead of just the discount math.
-
----
+I'm closing this and opening the app — there's zero chance I sit here pressing and holding a button when I could just tap the Wayfair app icon on my home screen.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `48-HOUR CLEARANCE` / `UP TO 70% OFF`
-- **Hero image:** Bold orange-and-red geometric graphic with large "48" background element; no furniture, no people, no lifestyle scene
-- **Primary CTA:** `SHOP NOW` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `8`, Relevance to me `4`, Visual hierarchy `9`, On-brand `5`
+- **Hero copy (verbatim):** `Before we continue...`
+- **Hero image:** None — white background only
+- **Primary CTA:** `Press & Hold` — visible above the fold? yes — but it is a bot-verification button, not a shopping CTA
+- **Scores (1-10):** Clarity `2`, Relevance to you `1`, Visual hierarchy `3`, On-brand `1`
 - **Strengths:**
-  - Discount magnitude is impossible to miss — great for deal-motivated shoppers like me
-  - CTA placement and contrast are solid; button doesn't get lost in the graphic
+  - The single instruction is clear and readable — no ambiguity about what to do mechanically
 - **Weaknesses:**
-  - No furniture visible anywhere in the hero — I have zero emotional pull toward a specific product
-  - The red/orange colorway feels more like a Target clearance event than Wayfair's usual warmer home aesthetic
-
----
+  - Zero Wayfair branding; I cannot confirm I'm on the right site
+  - No shopping content whatsoever — the "hero" is a security gate
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** Up to 70% OFF (48-Hour Clearance)
-- **Urgency / scarcity:** "48-HOUR CLEARANCE" implies time pressure, but there is no countdown timer, no "ends at midnight" language, no hours-remaining display — the urgency is stated, not felt
-- **Loyalty hooks:** None visible — no rewards callout, no member pricing, no "sign in for extra %"
-- **Honesty check:** "UP TO 70% OFF" without anchoring product examples is classic bait-and-switch language. If the best deal on screen is a $9 picture frame at 70% off and my sofa is 12% off, I'm going to feel duped when I get deeper in.
-
----
+- **Active promos:** none
+- **Urgency / scarcity:** none
+- **Loyalty hooks:** none
+- **Honesty check:** The page itself isn't manipulative, but intercepting a shopper before any product is shown is aggressively bad UX — it's friction masquerading as security.
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: clearance sale on home goods — yes, that's my jam, even if the visual is just a graphic
-- − Easy to reach my category: hamburger menu only, no pill nav, need 2 taps to get to Sofas
-- + Eye-catching imagery in my category: the dresser thumbnail at the bottom is exactly the kind of thing I'd tap
-- + Promo banner I would use: 48-hour clearance is a sale I would genuinely shop
-- + Page renders cleanly: no perf issues, no layout breakage visible
-- − Imagery includes someone like me: no people at all in this viewport
-- + Copy register matches mine: direct, deal-focused, not over-cute — works for me
-- − Trust signals visible: none — no reviews, no free-returns badge, no ratings
-- − New / hot rail in my category: not visible above the fold
-- + No dark patterns: no forced modals, no pop-ups, clean entry
-
-**Score:** `6/10` — should equal 1 + count of "+" bullets above (5 signals + base 1 = 6).
-
-**Rationale:** The clearance hook and clean render keep me from bouncing immediately, but the lack of category navigation and trust signals means I'm scrolling out of FOMO, not genuine excitement about what I'm about to find.
-
----
+- − Hero relates to my focus area: no hero exists — bot challenge only
+- − Easy to reach my category: no navigation visible
+- − Eye-catching imagery in my category: no imagery at all
+- − Promo banner I would use: none
+- + Page renders cleanly: the challenge page itself has no layout bugs
+- − Imagery includes someone like me: none
+- − Copy register matches mine: the clinical "confirm you are a human" tone is the opposite of aspirational home-decor energy
+- − Trust signals visible: no reviews, badges, policies, or brand logo
+- − New / hot rail in my category: none
+- − No dark patterns: the interstitial IS a dark pattern — unexpected friction at the very top of the funnel
+- **Score:** `2/10` — 1 base + 1 for clean render
+- **Rationale:** The page is technically functional but it's a wall, not a welcome mat. The only reason I don't give it a 1 is that the CAPTCHA itself didn't crash or overlap.
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: Wayfair is home goods by definition, so "SHOP NOW" on a home clearance event lands in my category
-- + Unambiguous CTA copy: "SHOP NOW" is clear — I know what happens when I tap
-- + Active price reduction or member pricing: 70% off is a concrete reduction
-- + Time-bounded credible deadline: "48-HOUR CLEARANCE" is a believable, real-feeling window
-- − Reachable free-shipping threshold: not mentioned anywhere on screen
-- + Specific product page one tap away: the dresser and outdoor set thumbnails suggest I'm one tap from a PDP
-- − Sizing / fit info accessible: not visible (dimensions, room-fit guidance — not here)
-- − Returns / exchanges mentioned: not visible
-- − Reviews / ratings visible on featured products: the two thumbnails have no star ratings
-- − Trust / security signals: nothing about secure checkout, pay-later, or guarantees
-
-**Score:** `6/10` — 1 base + 5 "+" signals.
-
-**Rationale:** The time-bounded offer and direct CTA push me toward tapping, but the complete absence of reviews, returns info, and free-shipping clarity creates real hesitation — for a $400+ furniture purchase, I need more than just a discount number before I commit.
-
----
+- − CTA in my category: none — the only CTA is bot verification
+- − Unambiguous CTA copy: "Press & Hold" is clear mechanically but meaningless for shopping intent
+- − Active price reduction or member pricing: none
+- − Time-bounded credible deadline: none
+- − Reachable free-shipping threshold: none
+- − Specific product page one tap away: none
+- − Sizing / fit info accessible: not applicable — no products shown
+- − Returns / exchanges mentioned: none
+- − Reviews / ratings visible: none
+- − Trust / security signals: none — ironically, the security-focused page has no trust signals
+- **Score:** `1/10`
+- **Rationale:** Nothing on this screen moves me toward a purchase. I'm being asked to do work before I've seen a single reason to stay.
 
 ## 11. Evidence
 
 Visible modules in scroll order:
 
-- **Header bar:** Wayfair purple logo centered, hamburger menu (left), account icon, cart icon (right)
-- **Search bar:** Full-width "Find anything home..." field with purple search button
-- **Promo strip / sticky banner:** Purple band reading "UP TO 70% OFF | 48-HOUR CLEARANCE →"
-- **Hero carousel:** Full-width orange/red graphic hero — "48-HOUR CLEARANCE / UP TO 70% OFF / SHOP NOW" button; carousel pagination dots show 4 slides, currently on slide 1
-- **Section header below hero:** "up to 70% OFF: 48-Hour Clearance →" in black text
-- **Product thumbnail rail (partially visible):** Two cards — an olive/green dresser with heart icon, and a blue outdoor dining set with a checkmark badge and heart icon
-- **Bugs / friction:** No countdown timer despite "48-hour" urgency claim; no visible free-shipping callout; no category shortcuts below search; no star ratings on product thumbnails; no loyalty/rewards module
+- **Bot-detection interstitial:** Full-screen white page with headline "Before we continue...", body copy "Press & Hold to confirm you are a human (and not a bot).", and a pill-shaped "Press & Hold" button in blue outline
+- **Reference ID footer:** Small grey text at bottom — "Reference ID 7121b43f-471d-11f1-8080-dc9eb7a1bc70"
+- **No other modules are visible** — no nav bar, no logo, no hero image, no category grid, no promotional strip, no loyalty section, no product rails, no footer with policies or reviews
+- **Friction/bug flagged:** The homepage never rendered. The bot interstitial replaced the entire page. This is a critical capture failure — from a real user's perspective it reads as a broken or suspicious site.
 ## Recent history
 
 - [[2026-05-02-homepage-www.wayfair.com-faye-sofa-wayfair-fap6e]] — 8/10 (2026-05-02)
