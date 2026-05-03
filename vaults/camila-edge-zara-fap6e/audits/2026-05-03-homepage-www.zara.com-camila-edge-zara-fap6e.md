@@ -12,145 +12,135 @@ tags: [site-journey, score-3, sender/www-zara-com]
 **Score:** 3/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- I didn't get a homepage — I got a gate. Zara dropped me into a location/language selector before I could see a single product, campaign image, or anything resembling a store. That's the whole above-the-fold experience: a logo, two dropdowns, and a "CONTINUE" button on a white screen. For a brand that's supposed to feel editorial and now, this is a cold, bureaucratic first impression.
+- I opened Zara and hit a wall — literally. This isn't a homepage, it's a location gate: logo, two dropdowns, and a "CONTINUE" button. There's zero product, zero editorial, zero reason to feel anything about the brand right now. Zara is one of the most visually arresting fashion sites out there and this is what I get on mobile.
 - **3/10**
-- + One unmistakable primary CTA is visible above the fold — `CONTINUE` button, clearly labeled
-- + Visual hierarchy is clear — logo → location selector → CTA flows top to bottom with no confusion
-- + No render bugs — page loads cleanly, no broken elements
-- − No hero copy or imagery targeting my persona
-- − No returning-shopper hook, loyalty callout, or account signal
-- − No offer, promo, or campaign content of any kind
-- − No demographic signals whatsoever
-- − No current season or collection context
-- − No loyalty/membership visibility
-- − No offer to evaluate for honesty
-- The 3 is generous — it's purely structural. The page technically functions but delivers zero commercial value.
+- + Visual hierarchy is clear — the form is clean, the button is obvious, I know exactly what to do mechanically
+- + No render bugs — nothing broken, text is readable, layout holds
+- + One unmistakable primary CTA is visible: `CONTINUE` button with a border, above the fold
+- − No hero copy or imagery of any kind — no brand signal, no campaign, nothing
+- − No offer, no loyalty hook, no returning-shopper signal
+- − No demographic match, no seasonal content, no persona relevance whatsoever
 
 ## What's working
 
-- **The CONTINUE button** — unambiguous, prominent, gets me through the gate without hunting for a tap target. Good on mobile.
-- **"Remember selection" checkbox** — at least there's an opt-in so I'm not re-doing this every visit. That's a small but real UX courtesy.
-- **No visual noise** — the page is clean. If you have to show a gate, at least it doesn't assault me with popups on top of it.
+- **The CONTINUE button** — outlined, clear label, easy to tap on mobile. No ambiguity about the next step.
+- **The "Remember selection" checkbox** — small but useful UX detail; I don't want to click through this every visit.
+- **Clean white layout** — no clutter, no competing elements fighting for space. Minimalist matches the Zara aesthetic.
 
 ## What's weak
 
-- **Zero product or brand content** — I see a logo and form fields. Zara is a visual brand. There's no editorial image, no season hook, no campaign tease. I have no idea what's new this week.
-- **"SELECT YOUR LOCATION" as the headline** — that's a form label, not a brand statement. This is the entire verbal identity of my first interaction.
-- **No shortcut for returning users** — if I've been here before, there's nothing that detects that or speeds me through. I have to click CONTINUE every single time unless I remembered to check the box last visit.
-- **"DO NOT SELL OR SHARE MY PERSONAL INFORMATION"** at the bottom — this is a legal footer notice dropped into what is, visually, the only content on the page. It reads awkwardly out of context and adds zero warmth.
-- **No campaign awareness** — it's early May. SRPLS, Studio, or any warm-weather editorial should be teased here. There's nothing.
+- **The gate itself** — I'm a returning Zara customer. I've been here before. There is no reason I should be seeing a country selector on mobile in 2026. Cookie or locale detection should handle this invisibly.
+- **Zero brand content** — the entire above-the-fold experience is a form. No editorial image, no new drop teaser, no season hook. Completely dead air.
+- **No loyalty recognition** — if I'm logged in or have a Zara account, I should be landing directly on my personalized homepage, not a generic gate.
+- **"DO NOT SELL OR SHARE MY PERSONAL INFORMATION"** footer text is the only secondary copy on the screen — privacy legalese is not the vibe I want associating with my shopping session opener.
 
 ## Recommendations
 
-- **Inject a background editorial image behind the gate form** — a current-season campaign shot (muted, full-bleed) that signals what's new without requiring a click. The form can float on top. Zara has beautiful visual assets; use them.
-- **Auto-detect location and pre-fill** — most mobile browsers expose locale/IP. Skip the gate for users already geolocated to a supported market and drop them directly on the homepage.
-- **Add a "Sign in" link on this screen** — returning members shouldn't need to fight through a location gate; a one-tap account login could bypass or auto-resolve it.
-- **Rename "SELECT YOUR LOCATION" to something brand-appropriate** — even "Welcome to Zara" with a short seasonal line ("New Studio collection — just dropped") would buy goodwill while the form loads.
+- **Auto-detect locale on mobile and skip the gate** — use IP geolocation + browser language headers. If you need to confirm, surface a small dismissible banner ("Shopping from United States?") instead of a full-screen blocker.
+- **If the gate must exist, put a hero image behind it** — even a blurred or darkened editorial shot of the current drop season gives me a reason to feel something while I click through. The gate becomes a moment, not a wall.
+- **Recognize returning users** — detect a stored locale cookie or account session and route me directly to the homepage. No gate, no friction.
+- **Surface the current collection name in the gate** — even one line like "New In: Studio SS26" in small caps below the logo would tell me something is worth continuing for.
 
 ## Full review
 ## 1. Executive Summary
 
-I didn't get a homepage — I got a gate. Zara dropped me into a location/language selector before I could see a single product, campaign image, or anything resembling a store. That's the whole above-the-fold experience: a logo, two dropdowns, and a "CONTINUE" button on a white screen. For a brand that's supposed to feel editorial and now, this is a cold, bureaucratic first impression.
+I opened Zara and hit a wall — literally. This isn't a homepage, it's a location gate: logo, two dropdowns, and a "CONTINUE" button. There's zero product, zero editorial, zero reason to feel anything about the brand right now. Zara is one of the most visually arresting fashion sites out there and this is what I get on mobile.
 
 ## 2. Business Impact Score (1-10)
 
 **3/10**
-- + One unmistakable primary CTA is visible above the fold — `CONTINUE` button, clearly labeled
-- + Visual hierarchy is clear — logo → location selector → CTA flows top to bottom with no confusion
-- + No render bugs — page loads cleanly, no broken elements
-- − No hero copy or imagery targeting my persona
-- − No returning-shopper hook, loyalty callout, or account signal
-- − No offer, promo, or campaign content of any kind
-- − No demographic signals whatsoever
-- − No current season or collection context
-- − No loyalty/membership visibility
-- − No offer to evaluate for honesty
 
-The 3 is generous — it's purely structural. The page technically functions but delivers zero commercial value.
+- + Visual hierarchy is clear — the form is clean, the button is obvious, I know exactly what to do mechanically
+- + No render bugs — nothing broken, text is readable, layout holds
+- + One unmistakable primary CTA is visible: `CONTINUE` button with a border, above the fold
+- − No hero copy or imagery of any kind — no brand signal, no campaign, nothing
+- − No offer, no loyalty hook, no returning-shopper signal
+- − No demographic match, no seasonal content, no persona relevance whatsoever
 
 ## 3. What's Working
 
-- **The CONTINUE button** — unambiguous, prominent, gets me through the gate without hunting for a tap target. Good on mobile.
-- **"Remember selection" checkbox** — at least there's an opt-in so I'm not re-doing this every visit. That's a small but real UX courtesy.
-- **No visual noise** — the page is clean. If you have to show a gate, at least it doesn't assault me with popups on top of it.
+- **The CONTINUE button** — outlined, clear label, easy to tap on mobile. No ambiguity about the next step.
+- **The "Remember selection" checkbox** — small but useful UX detail; I don't want to click through this every visit.
+- **Clean white layout** — no clutter, no competing elements fighting for space. Minimalist matches the Zara aesthetic.
 
 ## 4. What's Weak
 
-- **Zero product or brand content** — I see a logo and form fields. Zara is a visual brand. There's no editorial image, no season hook, no campaign tease. I have no idea what's new this week.
-- **"SELECT YOUR LOCATION" as the headline** — that's a form label, not a brand statement. This is the entire verbal identity of my first interaction.
-- **No shortcut for returning users** — if I've been here before, there's nothing that detects that or speeds me through. I have to click CONTINUE every single time unless I remembered to check the box last visit.
-- **"DO NOT SELL OR SHARE MY PERSONAL INFORMATION"** at the bottom — this is a legal footer notice dropped into what is, visually, the only content on the page. It reads awkwardly out of context and adds zero warmth.
-- **No campaign awareness** — it's early May. SRPLS, Studio, or any warm-weather editorial should be teased here. There's nothing.
+- **The gate itself** — I'm a returning Zara customer. I've been here before. There is no reason I should be seeing a country selector on mobile in 2026. Cookie or locale detection should handle this invisibly.
+- **Zero brand content** — the entire above-the-fold experience is a form. No editorial image, no new drop teaser, no season hook. Completely dead air.
+- **No loyalty recognition** — if I'm logged in or have a Zara account, I should be landing directly on my personalized homepage, not a generic gate.
+- **"DO NOT SELL OR SHARE MY PERSONAL INFORMATION"** footer text is the only secondary copy on the screen — privacy legalese is not the vibe I want associating with my shopping session opener.
 
 ## 5. Recommendations
 
-- **Inject a background editorial image behind the gate form** — a current-season campaign shot (muted, full-bleed) that signals what's new without requiring a click. The form can float on top. Zara has beautiful visual assets; use them.
-- **Auto-detect location and pre-fill** — most mobile browsers expose locale/IP. Skip the gate for users already geolocated to a supported market and drop them directly on the homepage.
-- **Add a "Sign in" link on this screen** — returning members shouldn't need to fight through a location gate; a one-tap account login could bypass or auto-resolve it.
-- **Rename "SELECT YOUR LOCATION" to something brand-appropriate** — even "Welcome to Zara" with a short seasonal line ("New Studio collection — just dropped") would buy goodwill while the form loads.
+- **Auto-detect locale on mobile and skip the gate** — use IP geolocation + browser language headers. If you need to confirm, surface a small dismissible banner ("Shopping from United States?") instead of a full-screen blocker.
+- **If the gate must exist, put a hero image behind it** — even a blurred or darkened editorial shot of the current drop season gives me a reason to feel something while I click through. The gate becomes a moment, not a wall.
+- **Recognize returning users** — detect a stored locale cookie or account session and route me directly to the homepage. No gate, no friction.
+- **Surface the current collection name in the gate** — even one line like "New In: Studio SS26" in small caps below the logo would tell me something is worth continuing for.
 
 ## 6. Bottom Line
 
-I'm tapping CONTINUE because I actually want to see the collection, not because this page earned it — if the real site doesn't deliver fast, I'm gone.
+I'd tap CONTINUE because I already know I like Zara, but this gate is doing negative work — it's friction with no payoff and it makes the site feel like it doesn't know me at all.
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `SELECT YOUR LOCATION`
 - **Hero image:** None — white background only
 - **Primary CTA:** `CONTINUE` — visible above the fold? yes
-- **Scores (1-10):** Clarity `7`, Relevance to me `1`, Visual hierarchy `5`, On-brand `2`
+- **Scores (1-10):** Clarity `7`, Relevance to you `1`, Visual hierarchy `6`, On-brand `3`
 - **Strengths:**
-  - CTA is impossible to miss; tap target is appropriately sized for mobile
-  - Functional clarity — I know exactly what this screen is asking me to do
+  - Form is clean and functional; no confusion about what to do
+  - CONTINUE button is properly sized for mobile tap targets
 - **Weaknesses:**
-  - Zero brand expression beyond the logo; feels like an IT form, not a fashion brand
-  - Relevance score is a 1 because there is literally nothing here that speaks to drops, collections, or anything I came for
+  - "SELECT YOUR LOCATION" as the headline of my Zara visit is genuinely deflating — this is not editorial, this is DMV energy
+  - Zero brand presence beyond the logo; Zara's visual identity is completely absent from the experience
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** None visible
-- **Urgency / scarcity:** None
-- **Loyalty hooks:** None
-- **Honesty check:** The "DO NOT SELL OR SHARE MY PERSONAL INFORMATION" link at the bottom is a California privacy compliance footer — it's required by law, not manipulative, but it reads oddly prominent when it's the only secondary text on screen.
+- **Active promos:** none
+- **Urgency / scarcity:** none
+- **Loyalty hooks:** none
+- **Honesty check:** "DO NOT SELL OR SHARE MY PERSONAL INFORMATION" at the bottom is CCPA boilerplate — not manipulative, but it's a strange note to end on when the rest of the screen has nothing. No dark patterns detected, but nothing honest about this as a commerce experience either.
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: no hero exists, no SRPLS or Studio content whatsoever
-- − Easy to reach my category: no navigation visible at all
-- − Eye-catching imagery in my category: no images on screen
-- − Promo banner I would use: no promos
-- + Page renders cleanly: yes — fast, no layout shift, no broken elements
-- − Imagery includes someone like me: no imagery
-- − Copy register matches mine: "SELECT YOUR LOCATION" is a form label, not copy
-- − Trust signals visible: none
-- − New / hot rail in my category: none
-- + No dark patterns: the gate itself is expected behavior; no popup stacked on it, no dark patterns
-- **Score:** `3/10` — should equal 1 + count of "+" bullets above.
-- **Rationale:** The page technically functions without dark patterns and renders cleanly, but it delivers nothing that would make a drops-watcher want to keep going — I'm tapping through on brand loyalty, not because this screen earned it.
+- − Hero relates to my focus area: no hero, no content, full stop
+- − Easy to reach my category: there is no navigation visible — I cannot access SRPLS, Studio, or any category
+- − Eye-catching imagery in my category: no imagery whatsoever
+- − Promo banner I would use: no promos visible
+- + Page renders cleanly: yes — layout is stable, no CLS, no broken assets
+- − Imagery includes someone like me: no imagery at all
+- − Copy register matches mine: "SELECT YOUR LOCATION" is bureaucratic, not editorial
+- − Trust signals visible: none beyond the privacy footer
+- − New / hot rail in my category: not present
+- + No dark patterns: the gate is annoying but not manipulative; checkbox is honest; no forced modals beyond the gate itself
+
+**Score:** `3/10` — should equal 1 + count of "+" bullets above.
+- **Rationale:** The page renders cleanly and has no deceptive patterns, but those are table-stakes minimums — there is literally no content here to engage with, and I'm blocked from my category entirely until I click through.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: CONTINUE routes to the homepage; it's not category-specific
-- + Unambiguous CTA copy: `CONTINUE` is clear, no guessing
-- − Active price reduction or member pricing: none
+- − CTA in my category: the only CTA is CONTINUE — it routes me to a homepage, not a category or product
+- + Unambiguous CTA copy: CONTINUE is clear and I know what happens when I tap it
+- − Active price reduction or member pricing: none visible
 - − Time-bounded credible deadline: none
 - − Reachable free-shipping threshold: not mentioned
-- − Specific product page one tap away: two taps minimum — CONTINUE → then navigate
+- − Specific product page one tap away: not possible from this screen
 - − Sizing / fit info accessible: not applicable at this stage
 - − Returns / exchanges mentioned: not visible
 - − Reviews / ratings visible: none
-- − Trust / security signals: none beyond the privacy footer link
-- **Score:** `2/10` — should equal 1 + count of "+" bullets.
-- **Rationale:** The only conversion-adjacent element is a clear CONTINUE button — everything else that would pull me toward adding something to cart is completely absent at this stage of the funnel; this screen exists solely to route me, not sell to me.
+- − Trust / security signals: privacy footer is present but carries no commerce trust weight
+
+**Score:** `2/10` — should equal 1 + count of "+" bullets above.
+- **Rationale:** The CONTINUE CTA is technically clear, but this screen cannot convert me toward a purchase — it's a prerequisite step, not a commerce moment, and there is nothing here that makes me more likely to buy once I get through it.
 
 ## 11. Evidence
 
-- **Hero / primary value prop:** ZARA wordmark logo (large, centered, bold serif) — no tagline, no campaign copy
-- **Location selector module:** "SELECT YOUR LOCATION" header, LOCATION dropdown pre-filled to "United States", LANGUAGE dropdown pre-filled to "English"
-- **Primary CTA:** `CONTINUE` button — outlined rectangle, centered below the dropdowns
-- **Utility control:** "Remember selection" checkbox with label
-- **Footer text:** "DO NOT SELL OR SHARE MY PERSONAL INFORMATION" — appears to be a tappable privacy link
-- **Bugs / friction:** The entire above-the-fold experience is a gate with no editorial content — not a render bug per se, but a significant UX friction point for any returning mobile shopper who expects to land on product immediately
+- **Logo module:** Zara wordmark in large serif — the only brand visual on screen
+- **Location gate form:** "SELECT YOUR LOCATION" heading + Location dropdown (United States) + Language dropdown (English)
+- **Primary CTA button:** `CONTINUE` — outlined rectangle, center-left placement
+- **"Remember selection" checkbox:** unchecked by default, small label text
+- **Footer line:** `DO NOT SELL OR SHARE MY PERSONAL INFORMATION` — small caps, bottom of viewport
+- **Bugs / friction:** No technical bugs visible, but the gate itself is a UX friction point — on mobile in 2026, locale auto-detection should make this screen unnecessary entirely
 ## Recent history
 
 - [[2026-05-02-homepage-www.zara.com-camila-edge-zara-fap6e]] — 1/10 (2026-05-02)
