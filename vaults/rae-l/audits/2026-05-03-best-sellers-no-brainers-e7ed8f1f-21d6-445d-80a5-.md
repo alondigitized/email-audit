@@ -12,49 +12,51 @@ tags: [email, score-5, sender/skechers]
 **Score:** 5/10 · **Type:** Email audit · **2026-05-03**
 ## Executive summary
 
-- A broad-strokes Skechers promotional email anchored by a BOGO 50% Off banner and four distinct product category pushes: Best Sellers, Hands Free Slip-ins, Cozy Fit, and a 25% Off Apparel call. The email is well-rendered and visually clean, but it suffers from gender-ambiguous targeting and lacks a single sharp offer — it reads like a brand catalog rather than a targeted send. Walker persona (adult male, practical footwear focus) will find some relevance in Slip-ins and Best Sellers, but the apparel push and female model imagery dilute the focus.
+- A standard Skechers promotional blast built around three shoe categories — Best Sellers, Hands Free Slip-Ins, and Cozy Fit — plus a 25% off apparel offer tacked on below the fold. The hero banner leads with a BOGO 50% off deal, which is the strongest signal in the email, but the subject line ("Best Sellers & No Brainers") doesn't surface it. Layout is clean and functional; the shoe imagery is lifestyle-oriented and consistent with the brand. Nothing is broken. Nothing is particularly personalized or compelling either.
 
 ## What's working
 
-- **BOGO 50% Off is unmissable.** The banner is the first thing the eye hits — clear, high-contrast, unambiguous.
-- **Slip-ins module is on-persona.** "Hands Free Slip-ins" with a dedicated shoe image and CTA is directly relevant to Walker's primary footwear interest.
-- **Modular layout is scannable.** Four distinct sections with their own CTAs allow quick skim without confusion.
-- **No render issues.** All images load, no broken blocks, no lorem ipsum, no clipped text.
-- **Utility row is solid.** Afterpay/Klarna, curbside pickup, find-a-store, and app download are all visible and cleanly laid out.
+- **BOGO hero is immediately visible.** The top banner is short, bold, and communicates "Buy One, Get One 50% Off" before anything else.
+- **Category flow is logical.** Best Sellers → Hands Free Slip-Ins → Cozy Fit is a coherent walk through comfort-oriented product lines.
+- **Hands Free Slip-Ins section is well-executed.** The hero shoe shot is large, clear, and the typography treatment ("Hands Free Slip-Ins") is distinctive brand language that Skechers has actually built recognition around.
+- **No visual clutter or broken elements.** The layout renders correctly.
+- **Secondary utility section is present.** App download, curbside pickup, Afterpay/Klarna, store finder — these are genuinely useful and don't feel spammy.
 
 ## What's weak
 
-- **Female-forward hero.** The lead model image is a woman in athleisure holding a basketball. For a male walking-shoe persona, this is immediately off-signal.
-- **Too many competing CTAs.** Four separate "Shop X" buttons plus a 25% Off Apparel section dilutes attention. There's no single priority.
-- **Apparel push is off-category.** Walker is here for shoes, not shirts. The 25% Off Apparel block takes up meaningful real estate for zero persona relevance.
-- **"Best Sellers & No Brainers" subject is vague.** It tells you nothing about what's on offer — no category, no %, no product hint.
-- **No social proof visible.** Reviews, ratings, or bestseller counts are absent despite the "Tried, tested, and top-rated" copy reference. That claim is asserted but not shown.
-- **Walking category absent.** The "Walking" label appears in the small category nav chips (Casuals / Walking / Running), but there's no dedicated walking-specific hero or CTA block — a miss for Walker.
+- **Subject line doesn't mention the BOGO deal.** "Best Sellers & No Brainers" wastes the strongest hook in the email.
+- **"No Brainers" is vague brand-speak.** It signals nothing concrete to the recipient scanning an inbox.
+- **25% off apparel feels like an afterthought.** It appears mid-scroll with no visual emphasis. If apparel is a genuine push, it needs a dedicated section — not a thin band between shoe categories.
+- **No personalization.** No name, no "because you bought X," no segmentation signal. This reads as a pure mass blast.
+- **The "Winning Pairs" hero image competes with the BOGO banner.** The large lifestyle copy ("The Winning Pairs") draws the eye away from the offer.
+- **Cozy Fit section is underserved.** The shoe is shown in a very pale/low-contrast render against a white background and feels like it was included to fill space.
+- **Category navigation row (Casuals / Walking / Running) appears small and easy to miss** between the Best Sellers section and the Slip-Ins block.
 
 ## Recommendations
 
-- 1. **Lead with the Slip-ins or Walking hero for male segments.** Swap the female model for a male walker with Slip-ins to immediately signal relevance.
-- 2. **Drop or defer the apparel block** for footwear-focused segments. Use that space for a Walking or Active module with product imagery.
-- 3. **Add a "Top-Rated" trust signal** — even one visible star rating or "4.7★ from 12,000 reviews" under Best Sellers would validate the claim.
-- 4. **Sharpen the subject line.** "BOGO 50% Off — Best Sellers Including Slip-ins" is more concrete than "No Brainers."
-- 5. **Segment the "Shop Additional Styles" nav.** Leading with Women/Men/Kids in that order buries men — reorder to Men-first for this segment.
-- | Priority | Issue | Action |
-- |---|---|---|
-- | High | 12 HTTP image sources | Update all `image.emails.skechers.com` asset URLs to HTTPS |
-- | High | `List-Unsubscribe` / `List-Unsubscribe-Post` absent | Verify raw SMTP headers; configure one-click unsubscribe to comply with Google/Yahoo policy |
-- | High | HTTP third-party pixel (ink1000) | Migrate to HTTPS endpoint or remove if redundant with SFMC open tracking |
-- | Medium | Empty JSON-LD structured data | Populate `subjectLine` and `description`, or remove `DiscountOffer` block for non-code sends |
-- | Medium | `maximum-scale=1` | Remove from viewport meta to allow user zoom (WCAG 1.4.4) |
-- | Medium | Missing alt text on content image (`49468f73...png`) | Add descriptive `alt` attribute |
-- | Low | Duplicate media query blocks (375px / 640px) | Consolidate into single 640px block |
-- | Low | `<link rel="icon">` in email head | Remove — no email client honors it; HTTP source adds mixed-content flag |
+- 1. **Put the BOGO in the subject line** — even "Buy One, Get One 50% Off — Shop Best Sellers" would dramatically lift open rate.
+- 2. **Collapse or cut the apparel section** unless apparel is a core campaign focus. If it stays, give it a proper hero module, not a banner strip.
+- 3. **Pick one shoe story.** Best Sellers + Slip-Ins + Cozy Fit is three pitches. Lead with Slip-Ins (the branded differentiator) or Best Sellers, not both.
+- 4. **Add a deadline to the BOGO.** "Today only" or "through Sunday" adds credibility and urgency without feeling spammy.
+- 5. **Sharpen the Cozy Fit visual.** The pale colorway on white background makes that shoe disappear. Use a contrasting background or a lifestyle shot.
+- | Priority | Action |
+- |---|---|
+- | **P0** | Migrate all `image.emails.skechers.com` asset URLs from `http://` to `https://`. 12 images will be blocked or broken in Gmail, Apple Mail, and others. |
+- | **P0** | Fix `http://www.ink1000.com` pixel to HTTPS or remove if Epsilon attribution is redundant with SFMC click tracking. |
+- | **P1** | Populate JSON-LD schema fields (`subjectLine`, `discountCode`, `availabilityStarts/Ends`) or remove the empty blocks. Empty DiscountOffer schema is worse than no schema. |
+- | **P1** | Confirm List-Unsubscribe and List-Unsubscribe-Post headers are present at the MTA level. Required for Google/Yahoo bulk sender compliance. |
+- | **P1** | Move `.preheader` style rule into the `<head>` `<style>` block — Gmail strips `<style>` tags in `<body>`. |
+- | **P2** | Fix favicon domain: `image.emails.nl.skechers.com` → `image.emails.skechers.com`, and upgrade to HTTPS. |
+- | **P2** | Add explicit `alt=""` to tracking pixel images (`o.gif`); add descriptive alt text to `49468f73...png`. |
+- | **P2** | Scope `-webkit-text-size-adjust: none` to `body` rather than the `*` selector. |
+- | **P3** | Manually probe 3+ click-tracked CTAs to confirm UTM params and landing page alignment. |
 
 ## Full review
 ---
 
 ## 1. Executive Summary
 
-A broad-strokes Skechers promotional email anchored by a BOGO 50% Off banner and four distinct product category pushes: Best Sellers, Hands Free Slip-ins, Cozy Fit, and a 25% Off Apparel call. The email is well-rendered and visually clean, but it suffers from gender-ambiguous targeting and lacks a single sharp offer — it reads like a brand catalog rather than a targeted send. Walker persona (adult male, practical footwear focus) will find some relevance in Slip-ins and Best Sellers, but the apparel push and female model imagery dilute the focus.
+A standard Skechers promotional blast built around three shoe categories — Best Sellers, Hands Free Slip-Ins, and Cozy Fit — plus a 25% off apparel offer tacked on below the fold. The hero banner leads with a BOGO 50% off deal, which is the strongest signal in the email, but the subject line ("Best Sellers & No Brainers") doesn't surface it. Layout is clean and functional; the shoe imagery is lifestyle-oriented and consistent with the brand. Nothing is broken. Nothing is particularly personalized or compelling either.
 
 ---
 
@@ -62,114 +64,115 @@ A broad-strokes Skechers promotional email anchored by a BOGO 50% Off banner and
 
 **5/10**
 
-Criteria TRUE:
-- Concrete offer visible (BOGO 50% Off + 25% Off Apparel)
-- Primary CTA is unambiguous ("Shop Best Sellers", "Shop Hands Free Slip-ins", "Shop Cozy Fit")
-- No render bugs — email renders cleanly with all images loading
-- Offer feels honest — no obvious bait-and-switch or buried exclusions visible
-- One recognizable brand (Skechers)
+Criteria that were TRUE:
+- Sender is a recognizable brand (Skechers)
+- One concrete offer is visible (BOGO 50% off, 25% off apparel)
+- Primary CTA is unambiguous ("Shop Best Sellers," clear buttons)
+- No render bugs — clean layout, all images load
+- Offer feels honest — no buried bait-and-switch visible
 
-Criteria NOT met:
-- Hero copy does not reference Walker's specific focus area (men's walking/slip-in footwear)
-- Demographic signals are mixed — female model dominates the hero
-- Email is not segmented to persona (feels like a full-list blast)
-- No loyalty/member pricing visible
-- Seasonal relevance is weak (generic "winning pairs" framing, no spring/summer tie-in)
+Criteria NOT met: Subject/hero copy doesn't reference my persona's focus area specifically; demographic signals are neutral (model is athletic but not age/style-targeted); no loyalty/member benefits visible; season relevance is vague; email doesn't segment to my footwear category.
 
 ---
 
 ## 3. What's Working
 
-- **BOGO 50% Off is unmissable.** The banner is the first thing the eye hits — clear, high-contrast, unambiguous.
-- **Slip-ins module is on-persona.** "Hands Free Slip-ins" with a dedicated shoe image and CTA is directly relevant to Walker's primary footwear interest.
-- **Modular layout is scannable.** Four distinct sections with their own CTAs allow quick skim without confusion.
-- **No render issues.** All images load, no broken blocks, no lorem ipsum, no clipped text.
-- **Utility row is solid.** Afterpay/Klarna, curbside pickup, find-a-store, and app download are all visible and cleanly laid out.
+- **BOGO hero is immediately visible.** The top banner is short, bold, and communicates "Buy One, Get One 50% Off" before anything else.
+- **Category flow is logical.** Best Sellers → Hands Free Slip-Ins → Cozy Fit is a coherent walk through comfort-oriented product lines.
+- **Hands Free Slip-Ins section is well-executed.** The hero shoe shot is large, clear, and the typography treatment ("Hands Free Slip-Ins") is distinctive brand language that Skechers has actually built recognition around.
+- **No visual clutter or broken elements.** The layout renders correctly.
+- **Secondary utility section is present.** App download, curbside pickup, Afterpay/Klarna, store finder — these are genuinely useful and don't feel spammy.
 
 ---
 
 ## 4. What's Weak
 
-- **Female-forward hero.** The lead model image is a woman in athleisure holding a basketball. For a male walking-shoe persona, this is immediately off-signal.
-- **Too many competing CTAs.** Four separate "Shop X" buttons plus a 25% Off Apparel section dilutes attention. There's no single priority.
-- **Apparel push is off-category.** Walker is here for shoes, not shirts. The 25% Off Apparel block takes up meaningful real estate for zero persona relevance.
-- **"Best Sellers & No Brainers" subject is vague.** It tells you nothing about what's on offer — no category, no %, no product hint.
-- **No social proof visible.** Reviews, ratings, or bestseller counts are absent despite the "Tried, tested, and top-rated" copy reference. That claim is asserted but not shown.
-- **Walking category absent.** The "Walking" label appears in the small category nav chips (Casuals / Walking / Running), but there's no dedicated walking-specific hero or CTA block — a miss for Walker.
+- **Subject line doesn't mention the BOGO deal.** "Best Sellers & No Brainers" wastes the strongest hook in the email.
+- **"No Brainers" is vague brand-speak.** It signals nothing concrete to the recipient scanning an inbox.
+- **25% off apparel feels like an afterthought.** It appears mid-scroll with no visual emphasis. If apparel is a genuine push, it needs a dedicated section — not a thin band between shoe categories.
+- **No personalization.** No name, no "because you bought X," no segmentation signal. This reads as a pure mass blast.
+- **The "Winning Pairs" hero image competes with the BOGO banner.** The large lifestyle copy ("The Winning Pairs") draws the eye away from the offer.
+- **Cozy Fit section is underserved.** The shoe is shown in a very pale/low-contrast render against a white background and feels like it was included to fill space.
+- **Category navigation row (Casuals / Walking / Running) appears small and easy to miss** between the Best Sellers section and the Slip-Ins block.
 
 ---
 
 ## 5. Recommendations
 
-1. **Lead with the Slip-ins or Walking hero for male segments.** Swap the female model for a male walker with Slip-ins to immediately signal relevance.
-2. **Drop or defer the apparel block** for footwear-focused segments. Use that space for a Walking or Active module with product imagery.
-3. **Add a "Top-Rated" trust signal** — even one visible star rating or "4.7★ from 12,000 reviews" under Best Sellers would validate the claim.
-4. **Sharpen the subject line.** "BOGO 50% Off — Best Sellers Including Slip-ins" is more concrete than "No Brainers."
-5. **Segment the "Shop Additional Styles" nav.** Leading with Women/Men/Kids in that order buries men — reorder to Men-first for this segment.
+1. **Put the BOGO in the subject line** — even "Buy One, Get One 50% Off — Shop Best Sellers" would dramatically lift open rate.
+2. **Collapse or cut the apparel section** unless apparel is a core campaign focus. If it stays, give it a proper hero module, not a banner strip.
+3. **Pick one shoe story.** Best Sellers + Slip-Ins + Cozy Fit is three pitches. Lead with Slip-Ins (the branded differentiator) or Best Sellers, not both.
+4. **Add a deadline to the BOGO.** "Today only" or "through Sunday" adds credibility and urgency without feeling spammy.
+5. **Sharpen the Cozy Fit visual.** The pale colorway on white background makes that shoe disappear. Use a contrasting background or a lifestyle shot.
 
 ---
 
 ## 6. Bottom Line
 
-Competent but generic. The BOGO hook is strong and the Slip-ins module is on-target for Walker, but the female hero, scattered CTAs, and apparel detour signal this is a full-list blast rather than a segmented send. A persona-targeted version with a male walking focus and a single lead CTA would meaningfully outperform this.
+A competent but generic mass promotional email. The BOGO offer is real and the layout is clean, but the subject line buries the lede and there's no segmentation to reward loyalty or indicate this was sent for any particular reason. Misses an easy conversion lift by not naming the deal upfront.
 
 ---
 
 ## 7. Subject Line Analysis
 
 - **Subject:** `Best Sellers & No Brainers`
-- **Length:** 26 chars
-- **Scores (1-10):** Clarity `4`, Curiosity `4`, Personalization `1`, Urgency `3`, Specificity `2`
+- **Length:** 26 characters
+- **Scores (1-10):** Clarity `5`, Curiosity `4`, Personalization `1`, Urgency `2`, Specificity `3`
 - **Strengths:**
-  - Short and mobile-safe at 26 characters
-  - "No Brainers" implies a deal without being spammy
+  - Short and mobile-friendly at 26 chars
+  - "Best Sellers" signals a curated, popular picks frame
 - **Weaknesses:**
-  - Zero specificity — no %, no product category, no offer type
-  - "Best Sellers" is table stakes copy; every brand uses it; adds no signal
-- **Alt A:** `BOGO 50% Off: Slip-ins, Best Sellers & More`
-- **Alt B:** `Your next pair is 50% off — shop what's working`
+  - "No Brainers" is vague filler — adds nothing concrete
+  - The BOGO 50% deal inside the email is completely absent from the subject
+- **Alt A:** `Buy One, Get One 50% Off — Skechers Best Sellers`
+- **Alt B:** `The Slip-Ins Everyone's Wearing (+ BOGO 50% Off)`
 
 ---
 
 ## 8. Preview Text Analysis
 
-- **Preview:** `(none / leaking junk)` — no distinct preheader visible; inbox would likely pull the first body line ("Buy One, Get One 50% Off")
+- **Preview:** `(none / leaking junk)` — no distinct preheader visible; inbox likely shows "Shop on.skechers.com" or HTML fallback
 - **Length:** N/A
-- **Scores (1-10):** Complements subject `2`, Specificity `3`, Clarity `3`, Inbox-fit `2`
+- **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `1`, Inbox-fit `1`
 - **Strengths:**
-  - If BOGO text bleeds into preview, at least it's a concrete offer
+  - (none observed)
 - **Weaknesses:**
-  - No intentional preheader — a missed lift opportunity
-  - Preview likely duplicates the subject's vagueness or repeats offer text that should feel additive
-- **Alt A:** `Hands Free Slip-ins, cushioned walkers, and more — all BOGO 50% off`
-- **Alt B:** `Top-rated comfort shoes are half off your second pair — see what's trending`
+  - No intentional preheader copy; inbox receives nothing that adds to the subject line
+  - Missed chance to surface the BOGO deal for the subject/preview combo
+- **Alt A:** `BOGO 50% off sitewide — shop your size before it's gone`
+- **Alt B:** `Hands Free Slip-Ins, top-rated walkers + 25% off apparel`
 
 ---
 
 ## 9. Open Likelihood (persona-grounded)
 
 - **Score:** `4/10`
-- **Signals counted:** Sender recognizable (Skechers), subject is concrete-ish (deal implied by "No Brainers"), no spam signals (no ALL CAPS or !!!)
-- **Rationale:** The subject line gives almost no reason to click in — no %, no category, no urgency. A Walker who sees "Best Sellers & No Brainers" from Skechers has low incentive to open unless already in shopping mode. The sender recognition saves it from worse.
+- **Signals counted:** Sender display name recognizable (Skechers), subject is under 50 chars, no spam signals (no ALL CAPS stacking, no !!!)
+- **Rationale:** The sender is known but the subject offers no concrete hook — no price, no urgency, no category relevance. "No Brainers" reads as filler, not a reason to open. Three of the ten criteria hit; score is 1 + 3 = 4.
 
 ---
 
 ## 10. Click-Through Likelihood (persona-grounded)
 
 - **Score:** `5/10`
-- **Signals counted:** Hero offer visible without scrolling (BOGO banner), Slip-ins CTA is on-category, offer reduces price (BOGO 50%), CTA copy is specific ("Shop Hands Free Slip-ins"), no render friction
-- **Rationale:** The Slip-ins block is the one moment the email earns a click from Walker — it's on-product and the BOGO offer is real. Everything else (apparel, female hero, vague Best Sellers) works against it.
+- **Signals counted:** Hero offer visible without scrolling (BOGO banner at top), offer reduces price (BOGO 50% off), CTA is present with button, brand voice consistent and trusted, no friction/broken elements
+- **Rationale:** Once opened, the BOGO deal at the top is a genuine click driver. The Hands Free Slip-Ins section with a strong category CTA is the second pull. Lost points on no time-bound deadline, no specific linked product, and no reviews or social proof visible.
 
 ---
 
 ## 11. Evidence
 
-- **Overall purpose:** Broad promotional send pushing multiple Skechers product families under a BOGO 50% Off umbrella
-- **Hero / primary value prop:** "Buy One, Get One 50% Off" banner atop a "The Winning Pairs" lifestyle image featuring a female model — the offer is clear but the creative doesn't target a specific audience
-- **Membership / benefits section:** None visible — no loyalty tier, no member pricing, no "Skechers Elite" callout
-- **Product discoverability / recommendation modules:** Four modules — Best Sellers (with category chips: Casuals / Walking / Running), Hands Free Slip-ins, Cozy Fit, and 25% Off Apparel. Walking is acknowledged in the chip nav but not given its own hero
-- **Utility / secondary modules:** Strong utility row — Afterpay, Klarna, curbside pickup, find a store, app download (App Store + Google Play). Clean and functional
-- **Bugs / friction / clarity issues:** None visible — all images load, no overlapping text, no broken blocks. The female model in the hero is a targeting/segmentation issue, not a render bug
+- **Overall purpose:** Drive traffic to Skechers.com across three shoe categories with a BOGO offer and secondary apparel discount as the conversion hooks.
+- **Hero / primary value proposition:** "Buy One, Get One 50% Off" banner at the very top, with a "The Winning Pairs" lifestyle image beneath it. Hero CTA is "Shop Best Sellers."
+- **Membership / benefits section:** None visible. No rewards points, no member-exclusive pricing.
+- **Product discoverability / recommendation modules:**
+  - Best Sellers category block with navigation row (Casuals / Walking / Running)
+  - Hands Free Slip-Ins dedicated section with full-width shoe image and CTA
+  - Cozy Fit section with muted shoe image and CTA
+  - 25% Off Apparel thin banner
+  - "Shop Additional Styles" text nav block (Women / Men / Kids / Clothing / New Arrivals / Sale)
+- **Utility / secondary modules:** Download the App, Curbside Pickup, Shop Now Pay Later (Afterpay / Klarna), Find a Store. Social follow icons (Facebook, Instagram, etc.). Standard legal footer.
+- **Bugs / friction / clarity issues:** No visible render bugs. The Cozy Fit shoe renders in a very low-contrast colorway against a white background — not broken, but weak. The category navigation row between Best Sellers and Slip-Ins is small and easy to scroll past.
 
 ---
 
@@ -177,60 +180,77 @@ Competent but generic. The BOGO hook is strong and the Slip-ins module is on-tar
 
 ## Technical Audit — Skechers "Best Sellers & No Brainers"
 
+**From:** no-reply@emails.skechers.com | **Date:** 2026-05-03
+
 ---
 
 ### 1. Technical Summary
 
-Functionally compliant promotional email built on a standard ESP (Salesforce Marketing Cloud) stack. Primary issues are pervasive HTTP image sources risking client-side blocking, unfilled JSON-LD structured data tokens, and unverifiable authentication/compliance headers at the relay layer.
+The email is functional but carries a systemic HTTP-vs-HTTPS asset problem across 12+ images, two unfilled JSON-LD schema blocks, and missing compliance headers that cannot be confirmed through the AgentMail relay. No broken links detected, but all 25 click links were untestable due to redirect-domain skipping.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**Third-party beacon over HTTP**
-`http://www.ink1000.com/p/up/7076d8b15a776085/o.gif` loads over plain HTTP and has no `alt` attribute. This is a third-party pixel (likely Salesforce Intelligence/Inbox) that modern clients (Gmail, Apple Mail) will block or proxy-strip.
+**Third-party tracking pixel over HTTP**
+`http://www.ink1000.com/p/up/7076d8b15a776085/o.gif` (Epsilon/Conversant attribution pixel) is served over plain HTTP. This will be blocked by Gmail, Apple Mail, and most modern clients that enforce HTTPS-only mixed-content policies.
 
-**Krux/Salesforce DMP pixel**
-`https://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_...` embedded in a hidden `<div style="display:none !important;">` along with the open tracker. While HTTPS, this is a cross-domain fingerprinting beacon; some privacy-focused clients will suppress it.
+**25 click-tracked links not probed**
+All CTA links route through `click.emails.skechers.com` redirect domain. HTTP probing was skipped for all 25. Landing page UTM continuity cannot be confirmed without manual spot-check (see §6).
 
-**25 click-redirect links unverifiable**
-All CTAs route through `click.emails.skechers.com`. The QA probe skipped these, so destination health (404s, redirect chains) and UTM parameter consistency cannot be confirmed from available data.
+**Krux/Salesforce audience-match beacon**
+```
+https://beacon.krxd.net/1x1_usermatch.gif?partner=LprH63a7_sfmc_100007688_sha25&partner_uid=7e8656d...
+```
+SHA-256 hashed PII (`partner_uid`) is passed to a third-party data broker in the pixel load. Confirm this aligns with current privacy policy and consent scope.
+
+**Favicon domain mismatch**
+`<link rel="icon">` references `http://image.emails.nl.skechers.com/...` — note the `.nl.` subdomain vs the main asset domain `image.emails.skechers.com`. Likely a copy-paste error from a Netherlands/locale template. Also served over HTTP.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**HTTP image sources — 12 affected assets**
-All footer and utility images (social icons, app store badges, Curbside Pickup, AfterPay, Find A Store) load over `http://image.emails.skechers.com/...`. Gmail and Apple Mail proxy/block HTTP image sources; these icons will silently fail to render in a significant share of opens.
+**HTTP image sources (12 images blocked in strict clients)**
 
+All images hosted on `image.emails.skechers.com` are served via `http://`, not `https://`. Affected assets include the logo, app store badges, social icons, utility icons, and one unnamed content image. Full list from QA:
+
+| Asset | Issue |
+|---|---|
+| `dde00662...png` ("Skechers" logo) | HTTP |
+| `49468f73...png` (no alt text) | HTTP + missing alt |
+| `0ec56c9f...png` ("Available on the App Store") | HTTP |
+| `9bb508d0...png` ("Android App on Google Play") | HTTP |
+| `00100b23...png` ("Curbside Pickup") | HTTP |
+| `07cb60b5...png` ("AfterPay") | HTTP |
+| `fc08601a...png` ("Find A Store") | HTTP |
+| `b782e0aa...png` ("Instagram") | HTTP |
+| `a5c4cae0...png` ("Facebook") | HTTP |
+| `8c5738fc...png` ("YouTube") | HTTP |
+
+**Missing alt text**
+Two images have no `alt` attribute:
+- `o.gif` (ink1000.com tracking pixel — acceptable to leave empty, but should be `alt=""` explicitly)
+- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — unknown content image with no alt
+
+**Aggressive global text-size override**
+```css
+* { -webkit-text-size-adjust: none; }
 ```
-http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/b782e0aa-...  (Instagram)
-http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/a5c4cae0-...  (Facebook)
-http://image.emails.skechers.com/lib/fe3115707564047a731c78/m/11/8c5738fc-...  (YouTube)
-... (9 additional assets — see QA findings)
-```
-
-**Favicon loads over HTTP**
-`<link rel="icon" href="http://image.emails.nl.skechers.com/...">` — HTTP, and `<link rel="icon">` is ignored by all major email clients; this tag has no effect and carries a mixed-content risk.
-
-**Missing alt text — 2 images**
-- `o.gif` (ink1000 third-party pixel) — no `alt`
-- `49468f73-4651-4af3-bea2-61d1ae5db486.png` — no `alt`; this appears to be a content image, not purely decorative
-
-**`maximum-scale=1` viewport restriction**
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-```
-Prevents users from pinching to zoom on mobile. Fails WCAG 1.4.4 (Resize Text).
+Applied to every element via the universal selector. This disables iOS's automatic text size adjustment globally and can make text illegible at small sizes on iPhone. Scope should be narrowed to `body` or specific selectors.
 
 **Duplicate media query blocks**
-`@media only screen and (max-width: 375px)` and `@media only screen and (max-width: 640px)` contain identical rule sets. The 375px block is fully superseded by the 640px block — dead CSS weight with no functional harm, but signals copy-paste maintenance debt.
+`@media only screen and (max-width: 375px)` and `@media only screen and (max-width: 640px)` each declare identical rule sets across two `<style>` blocks. This is harmless but inflates payload and complicates maintenance.
+
+**Style block in `<body>`**
+A third `<style>` block appears immediately after `<body>` (`.preheader { display: none !important; }`). Inline `<style>` in `<body>` is not supported in Gmail and will be stripped, potentially exposing the preheader text.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-JSON-LD structured data block has three fields with empty string values — unfilled at send time:
+**Unpopulated JSON-LD schema**
+Three schema objects are present in `<head>` with empty string values:
 
 ```json
 { "@type": "EmailMessage", "subjectLine": "" }
@@ -238,49 +258,49 @@ JSON-LD structured data block has three fields with empty string values — unfi
   "availabilityStarts": "", "availabilityEnds": "" }
 ```
 
-`subjectLine` should mirror the email subject (`"Best Sellers & No Brainers"`). `discountCode` and date fields are likely intentionally blank for non-code promotions, but the empty `description` on a `DiscountOffer` type will suppress any Google Gmail promotional annotation that might otherwise render. These should either be populated or the `DiscountOffer` block removed.
+`subjectLine` is blank despite the actual subject being "Best Sellers & No Brainers". The `DiscountOffer` block is fully empty — either the merge tokens failed to inject or this is a template with fields never wired. Gmail uses this schema for promotional tab annotation; empty blocks provide no value and signal a broken template pipeline.
 
-No dangling `{{merge_tag}}` or `%%variable%%` tokens found in visible HTML.
+No unresolved `{{token}}` or `%%token%%` syntax was found in the visible HTML excerpt.
 
 ---
 
 ### 5. Compliance
 
-**`List-Unsubscribe` header absent** (QA: WARN)
-Header not captured by the AgentMail relay. If legitimately missing at the MTA level, this violates Google/Yahoo bulk sender requirements (effective February 2024) for >5K/day senders. Needs confirmation at the raw SMTP header level, not just the relay capture.
+**List-Unsubscribe header** — not confirmed present (AgentMail relay capture gap). CAN-SPAM and GDPR require a functional unsubscribe mechanism; if this header is absent at the MTA level, bulk sender requirements (Google/Yahoo 2024 mandate) are violated.
 
-**`List-Unsubscribe-Post` header absent** (QA: WARN — RFC 8058)
-One-click unsubscribe is required by Google/Yahoo bulk sender policy. If the `List-Unsubscribe` header exists but uses only `mailto:` (not `https:`), `List-Unsubscribe-Post` must also be present.
+**List-Unsubscribe-Post (RFC 8058)** — not confirmed present. Without this, one-click unsubscribe in Gmail/Yahoo is unavailable, which fails the February 2024 bulk sender mandate for senders >5K/day.
 
-**SPF/DKIM authentication unverifiable** (QA: WARN)
-`Authentication-Results` header not captured. Cannot confirm DKIM signature on `emails.skechers.com` or SPF alignment. This is likely a relay artifact, but should be verified against raw headers.
+**Authentication-Results** — SPF/DKIM/DMARC pass status unknown due to relay header stripping. Cannot confirm deliverability posture from available data.
 
-**CAN-SPAM**: Unsubscribe link and physical address are present in the email body (visible in preheader + standard footer pattern). No issues detectable from available HTML.
+*Note: All three compliance gaps may be relay artifacts rather than actual sending failures. Verify against raw headers from a direct inbox delivery.*
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-**UTM parameters unverifiable**
-All 25 CTA links route through `click.emails.skechers.com` redirects which were not probed. Cannot confirm whether destination URLs carry consistent UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`).
+Cannot fully assess — all 25 destination URLs are behind `click.emails.skechers.com` redirects that were not probed. Spot-check recommendation: manually follow 2–3 CTAs (hero, BOGO, category) and confirm:
 
-**Campaign ID visible in ink1000 pixel**
-`mi_ecmp=MKG_US_NONPURCLICK_U_BEST_NONPURCH_EN_0503202` — campaign slug is present in the third-party pixel. If UTMs on CTA links do not match this segment identifier, attribution will be inconsistent across analytics systems.
+- UTM params present: `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`
+- Landing pages are in-stock and match the promoted offer
+- No redirect chains >2 hops
+
+The ink1000.com pixel includes a campaign identifier (`mi_ecmp=MKG_US_NONPURCLICK_U_BEST_NONPURCH_EN_0503202`) suggesting Epsilon attribution is wired — confirm UTM and Epsilon tracking don't double-count conversions.
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Issue | Action |
-|---|---|---|
-| High | 12 HTTP image sources | Update all `image.emails.skechers.com` asset URLs to HTTPS |
-| High | `List-Unsubscribe` / `List-Unsubscribe-Post` absent | Verify raw SMTP headers; configure one-click unsubscribe to comply with Google/Yahoo policy |
-| High | HTTP third-party pixel (ink1000) | Migrate to HTTPS endpoint or remove if redundant with SFMC open tracking |
-| Medium | Empty JSON-LD structured data | Populate `subjectLine` and `description`, or remove `DiscountOffer` block for non-code sends |
-| Medium | `maximum-scale=1` | Remove from viewport meta to allow user zoom (WCAG 1.4.4) |
-| Medium | Missing alt text on content image (`49468f73...png`) | Add descriptive `alt` attribute |
-| Low | Duplicate media query blocks (375px / 640px) | Consolidate into single 640px block |
-| Low | `<link rel="icon">` in email head | Remove — no email client honors it; HTTP source adds mixed-content flag |
+| Priority | Action |
+|---|---|
+| **P0** | Migrate all `image.emails.skechers.com` asset URLs from `http://` to `https://`. 12 images will be blocked or broken in Gmail, Apple Mail, and others. |
+| **P0** | Fix `http://www.ink1000.com` pixel to HTTPS or remove if Epsilon attribution is redundant with SFMC click tracking. |
+| **P1** | Populate JSON-LD schema fields (`subjectLine`, `discountCode`, `availabilityStarts/Ends`) or remove the empty blocks. Empty DiscountOffer schema is worse than no schema. |
+| **P1** | Confirm List-Unsubscribe and List-Unsubscribe-Post headers are present at the MTA level. Required for Google/Yahoo bulk sender compliance. |
+| **P1** | Move `.preheader` style rule into the `<head>` `<style>` block — Gmail strips `<style>` tags in `<body>`. |
+| **P2** | Fix favicon domain: `image.emails.nl.skechers.com` → `image.emails.skechers.com`, and upgrade to HTTPS. |
+| **P2** | Add explicit `alt=""` to tracking pixel images (`o.gif`); add descriptive alt text to `49468f73...png`. |
+| **P2** | Scope `-webkit-text-size-adjust: none` to `body` rather than the `*` selector. |
+| **P3** | Manually probe 3+ click-tracked CTAs to confirm UTM params and landing page alignment. |
 ## Recent history
 
 - [[2026-05-02-summer-essentials-just-in-3fe5fbe8-f189-4d7a-84ea-]] — 5/10 (2026-05-02)

@@ -12,148 +12,148 @@ tags: [site-journey, score-8, sender/www-rei-com]
 **Score:** 8/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- REI opens with a camp kitchen co-branded with YETI and Zempire — solid outdoor brands, gear I actually care about. Above that there's a rotating "up to 50% off past-season styles" banner that's basically speaking directly to how I shop. The co-op brand feels right at home here, and the Trade-In link sitting in the top nav is a quiet flex that they know their member base.
+- REI knows who I am the moment I land — that Co-op logo is basically my house crest. Right now they're leading with a YETI-branded camp kitchen push, which is exactly the kind of "better gear, better trip" framing I respond to on a Friday when I'm mentally already at the trailhead. That said, I'm a co-op member who tracks my dividend and actually uses the Trade-In program, and there's zero personalized hook here — no member pricing badge, no rewards balance nudge, nothing that says "hey, you've got history with us."
 - **8/10**
-- + Hero imagery speaks to my persona: YETI camp kitchen scene maps perfectly to backpacking weekends
-- + Concrete offer above fold: "Up to 50% off past-season styles from your favorite brands"
-- + Primary CTA visible: "Shop camp kitchen" — dark green button, unambiguous
-- + Visual hierarchy clear: banner strip → hero tile → subtext → CTA, no confusion
-- + No render bugs: clean layout, right-rail tile is a natural carousel clip, not breakage
-- + Demographic signals match: camp cooking is millennial outdoor lifestyle, not REI-for-beginners
-- + Page reflects current season: YETI x camp kitchen is on-point for spring/early-summer camping
-- + Offer feels honest: "past-season styles" framing is transparent, not bait-and-switch
-- − No returning-shopper hook: no dividend balance, no "Welcome back, Cody," no recently-viewed
-- − Loyalty/membership benefits not visible without scrolling: Co-op member pricing not called out above fold
+- + Hero imagery (camp cooking with YETI/Zempiren) speaks directly to my backpacking-weekend lifestyle
+- − No returning-shopper hook: no dividend callout, no rewards balance, no "welcome back, member" signal
+- + Concrete offer visible: "Up to 50% off past-season styles from your favorite brands"
+- + Primary CTA clearly visible: "Shop camp kitchen" green button
+- + Visual hierarchy is clean — banner → hero → CTA, eye flows naturally
+- + No render bugs or layout breaks on mobile
+- + Demographic signals fit: outdoor camp lifestyle, millennial-adjacent gear framing
+- + Seasonal relevance: May = camping season, camp kitchen push makes sense
+- + Loyalty/membership visible: REI Co-op logo + "Trade-In" in top nav = co-op-specific signals both present
+- + Offer feels honest: no countdown manipulation, no buried asterisks visible
 
 ## What's working
 
-- **Trade-In in the top nav** — sitting right there before I even scroll. That's the kind of shortcut that keeps me from bouncing to Craigslist.
-- **"Up to 50% off past-season styles" banner** — I am a Garage Sale regular. This banner is basically the digital equivalent of the annual sale email.
-- **YETI x Zempire camp kitchen hero** — the photo is honest gear-in-use: camp stove, cast iron, real food. It doesn't look like an Instagram set, it looks like my weekend.
-- **"Cooking, covered." headline** — short, functional, millennial pacing. Doesn't overexplain.
-- **"Shop camp kitchen" CTA** — specific category destination, not a vague "Explore More."
+- **The camp kitchen hero** — "Cooking, covered." with YETI and Zempiren branding hits my exact fantasy: car camping that's actually dialed in. I'm already thinking about my next trip.
+- **"Trade-In" in the top nav** — I don't always see this foregrounded. As someone who regularly drops gear at the Trade-In station, having it one tap away feels like REI remembers I exist.
+- **"Classes & Events" nav link** — I've taken their backpacking skills class twice. Seeing it front-and-center reinforces that this is my co-op, not just a retailer.
+- **The 50% off banner** — Past-season styles at half off is the exact play for a dividend-maximizer. That banner stops my thumb.
+- **Search bar with "gear & clothing" placeholder** — Specific, not generic. Tells me this box knows its audience.
 
 ## What's weak
 
-- **No Co-op member hook above the fold** — I'm a dividend-driven member and nothing on this screen acknowledges that. No "Member pricing," no "Your dividend," no "Members-only" badge anywhere.
-- **Partially visible right-rail tile** — the shoe card is cropped in a way that reads broken even if it's technically a carousel. I don't know to swipe right.
-- **"Shop now!" hyperlink on the promo banner** — feels low-effort for a co-op brand. A "Shop the Sale" button styled like the camp kitchen CTA would hold more weight.
-- **No trust signals above fold** — no free shipping threshold, no free returns reminder, nothing. For a first-time visit this would be a cold open.
+- **No member-specific pricing visible** — I'm a co-op member. Where's my "Members: extra 20% off" badge on that camp kitchen hero? The 50% off feels like it's for everyone, which diminishes the membership payoff.
+- **No one in the hero image** — It's all gear and food, no person. I can't see myself in the shot, literally. The aspirational lift is lower when there's no human in the frame.
+- **The carousel's second card is a pink athletic shoe** — Cropped and barely readable, but that shoe reads "running/fitness," not "backpacking weekend." It's a jarring context shift from YETI camp cooking.
+- **No shipping, returns, or free-threshold callout** — For a co-op member comparison-shopping against MEC or Backcountry, the "free shipping on $X" signal would close the gap. It's nowhere visible.
+- **The 50% off banner has no deadline** — "Past-season styles" could mean anytime. No urgency, no "ends Sunday," so I'm not racing to tap.
 
 ## Recommendations
 
-- **Add a member-pricing badge or dividend callout to the promo banner** — even "Members save more" next to "Up to 50% off" would activate the co-op identity and reward loyalty without a layout overhaul.
-- **Swap the "Shop now!" text link for a styled button** — match the design language of the "Shop camp kitchen" button; the inconsistency reads as a leftover from a different template.
-- **Add a "swipe to see more" indicator** on the right-cropped tile — one arrow or a dot-nav so mobile users know there's a second card.
-- **Surface the free-shipping threshold in the banner strip** — even a line like "Free shipping on orders $50+" keeps me from second-guessing checkout before I've tapped anything.
+- **Add a co-op member pricing badge to the hero** — A small "Members: extra 15% off" pill overlaid on the YETI image immediately differentiates this from any other outdoor retailer and rewards my loyalty without a separate screen.
+- **Put the dividend or rewards balance in the signed-in header** — Where my cart icon is, show something like "Dividend: $47" for logged-in members. That single number drives purchase intent more than any banner.
+- **Swap or re-order the carousel** — If the second card is a pink running shoe, bury it. Lead with camp kitchen, follow with backpacking packs or outerwear — stay in the same outdoor-adventure lane.
+- **Add a free-shipping strip or the REI Co-op return policy blurb** — One line: "Free shipping on orders $50+ | Free REI returns" — below the hero CTA. Seals the deal for comparison shoppers.
 
 ## Full review
 ## 1. Executive Summary
 
-REI opens with a camp kitchen co-branded with YETI and Zempire — solid outdoor brands, gear I actually care about. Above that there's a rotating "up to 50% off past-season styles" banner that's basically speaking directly to how I shop. The co-op brand feels right at home here, and the Trade-In link sitting in the top nav is a quiet flex that they know their member base.
+REI knows who I am the moment I land — that Co-op logo is basically my house crest. Right now they're leading with a YETI-branded camp kitchen push, which is exactly the kind of "better gear, better trip" framing I respond to on a Friday when I'm mentally already at the trailhead. That said, I'm a co-op member who tracks my dividend and actually uses the Trade-In program, and there's zero personalized hook here — no member pricing badge, no rewards balance nudge, nothing that says "hey, you've got history with us."
 
 ## 2. Business Impact Score (1-10)
 
 **8/10**
 
-- + Hero imagery speaks to my persona: YETI camp kitchen scene maps perfectly to backpacking weekends
-- + Concrete offer above fold: "Up to 50% off past-season styles from your favorite brands"
-- + Primary CTA visible: "Shop camp kitchen" — dark green button, unambiguous
-- + Visual hierarchy clear: banner strip → hero tile → subtext → CTA, no confusion
-- + No render bugs: clean layout, right-rail tile is a natural carousel clip, not breakage
-- + Demographic signals match: camp cooking is millennial outdoor lifestyle, not REI-for-beginners
-- + Page reflects current season: YETI x camp kitchen is on-point for spring/early-summer camping
-- + Offer feels honest: "past-season styles" framing is transparent, not bait-and-switch
-- − No returning-shopper hook: no dividend balance, no "Welcome back, Cody," no recently-viewed
-- − Loyalty/membership benefits not visible without scrolling: Co-op member pricing not called out above fold
+- + Hero imagery (camp cooking with YETI/Zempiren) speaks directly to my backpacking-weekend lifestyle
+- − No returning-shopper hook: no dividend callout, no rewards balance, no "welcome back, member" signal
+- + Concrete offer visible: "Up to 50% off past-season styles from your favorite brands"
+- + Primary CTA clearly visible: "Shop camp kitchen" green button
+- + Visual hierarchy is clean — banner → hero → CTA, eye flows naturally
+- + No render bugs or layout breaks on mobile
+- + Demographic signals fit: outdoor camp lifestyle, millennial-adjacent gear framing
+- + Seasonal relevance: May = camping season, camp kitchen push makes sense
+- + Loyalty/membership visible: REI Co-op logo + "Trade-In" in top nav = co-op-specific signals both present
+- + Offer feels honest: no countdown manipulation, no buried asterisks visible
 
 ## 3. What's Working
 
-- **Trade-In in the top nav** — sitting right there before I even scroll. That's the kind of shortcut that keeps me from bouncing to Craigslist.
-- **"Up to 50% off past-season styles" banner** — I am a Garage Sale regular. This banner is basically the digital equivalent of the annual sale email.
-- **YETI x Zempire camp kitchen hero** — the photo is honest gear-in-use: camp stove, cast iron, real food. It doesn't look like an Instagram set, it looks like my weekend.
-- **"Cooking, covered." headline** — short, functional, millennial pacing. Doesn't overexplain.
-- **"Shop camp kitchen" CTA** — specific category destination, not a vague "Explore More."
+- **The camp kitchen hero** — "Cooking, covered." with YETI and Zempiren branding hits my exact fantasy: car camping that's actually dialed in. I'm already thinking about my next trip.
+- **"Trade-In" in the top nav** — I don't always see this foregrounded. As someone who regularly drops gear at the Trade-In station, having it one tap away feels like REI remembers I exist.
+- **"Classes & Events" nav link** — I've taken their backpacking skills class twice. Seeing it front-and-center reinforces that this is my co-op, not just a retailer.
+- **The 50% off banner** — Past-season styles at half off is the exact play for a dividend-maximizer. That banner stops my thumb.
+- **Search bar with "gear & clothing" placeholder** — Specific, not generic. Tells me this box knows its audience.
 
 ## 4. What's Weak
 
-- **No Co-op member hook above the fold** — I'm a dividend-driven member and nothing on this screen acknowledges that. No "Member pricing," no "Your dividend," no "Members-only" badge anywhere.
-- **Partially visible right-rail tile** — the shoe card is cropped in a way that reads broken even if it's technically a carousel. I don't know to swipe right.
-- **"Shop now!" hyperlink on the promo banner** — feels low-effort for a co-op brand. A "Shop the Sale" button styled like the camp kitchen CTA would hold more weight.
-- **No trust signals above fold** — no free shipping threshold, no free returns reminder, nothing. For a first-time visit this would be a cold open.
+- **No member-specific pricing visible** — I'm a co-op member. Where's my "Members: extra 20% off" badge on that camp kitchen hero? The 50% off feels like it's for everyone, which diminishes the membership payoff.
+- **No one in the hero image** — It's all gear and food, no person. I can't see myself in the shot, literally. The aspirational lift is lower when there's no human in the frame.
+- **The carousel's second card is a pink athletic shoe** — Cropped and barely readable, but that shoe reads "running/fitness," not "backpacking weekend." It's a jarring context shift from YETI camp cooking.
+- **No shipping, returns, or free-threshold callout** — For a co-op member comparison-shopping against MEC or Backcountry, the "free shipping on $X" signal would close the gap. It's nowhere visible.
+- **The 50% off banner has no deadline** — "Past-season styles" could mean anytime. No urgency, no "ends Sunday," so I'm not racing to tap.
 
 ## 5. Recommendations
 
-- **Add a member-pricing badge or dividend callout to the promo banner** — even "Members save more" next to "Up to 50% off" would activate the co-op identity and reward loyalty without a layout overhaul.
-- **Swap the "Shop now!" text link for a styled button** — match the design language of the "Shop camp kitchen" button; the inconsistency reads as a leftover from a different template.
-- **Add a "swipe to see more" indicator** on the right-cropped tile — one arrow or a dot-nav so mobile users know there's a second card.
-- **Surface the free-shipping threshold in the banner strip** — even a line like "Free shipping on orders $50+" keeps me from second-guessing checkout before I've tapped anything.
+- **Add a co-op member pricing badge to the hero** — A small "Members: extra 15% off" pill overlaid on the YETI image immediately differentiates this from any other outdoor retailer and rewards my loyalty without a separate screen.
+- **Put the dividend or rewards balance in the signed-in header** — Where my cart icon is, show something like "Dividend: $47" for logged-in members. That single number drives purchase intent more than any banner.
+- **Swap or re-order the carousel** — If the second card is a pink running shoe, bury it. Lead with camp kitchen, follow with backpacking packs or outerwear — stay in the same outdoor-adventure lane.
+- **Add a free-shipping strip or the REI Co-op return policy blurb** — One line: "Free shipping on orders $50+ | Free REI returns" — below the hero CTA. Seals the deal for comparison shoppers.
 
 ## 6. Bottom Line
 
-I'm staying — that camp kitchen setup and the 50% off banner is basically my version of a homepage that gets me.
+I'm scrolling — the camp kitchen hero pulled me in and the 50% off banner has me thinking about that YETI stove I've been eyeing — but I'm not converting until I see a member pricing signal that justifies staying on-site instead of hopping to Backcountry.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Cooking, covered.`
-- **Hero image:** Camp stove cooking scene with YETI cooler, Zempire branding, cast iron and saucepan on a portable burner, surrounded by food prep — no people, all gear-in-use
+- **Hero copy (verbatim):** `Cooking, covered.` / `Elevated camp meals start with better gear.`
+- **Hero image:** Overhead camp cooking scene — cast iron pan, camp stove, YETI cooler, fresh vegetables and oranges on a wooden camp table; YETI and Zempiren logos visible; no human subject
 - **Primary CTA:** `Shop camp kitchen` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `9`, Relevance to you `8`, Visual hierarchy `8`, On-brand `9`
+- **Scores (1-10):** Clarity `8`, Relevance to me `7`, Visual hierarchy `8`, On-brand `9`
 - **Strengths:**
-  - Gear-first photography without lifestyle-model fluff — feels like REI, not a fashion brand
-  - Co-brand partnership (YETI + Zempire) adds instant credibility for gear-literate shoppers
+  - Copy is clean and confident — "Cooking, covered." doesn't talk down to me
+  - YETI + Zempiren co-branding lends instant credibility; these are legit camp brands
 - **Weaknesses:**
-  - No person in the shot means no aspirational anchor; just gear on a table
-  - "Elevated camp meals start with better gear" subhead is a little generic — could call out members or a specific upgrade angle
+  - No human in frame reduces aspiration; I want to see myself at that camp table
+  - "Elevated camp meals" skews toward car-camping luxe, not the ultralight backpacking kit I actually buy
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** "Up to 50% off past-season styles from your favorite brands"
-- **Urgency / scarcity:** None visible — no countdown, no "ends Sunday," no limited-stock copy
-- **Loyalty hooks:** None visible above fold — "Sign In" is in the nav but carries no member-value message
-- **Honesty check:** "Past-season styles" disclosure is upfront, no buried asterisk. "Favorite brands" is vague but not misleading. The pause button on the rotating banner is a nice accessibility touch.
+- **Active promos:** "Up to 50% off past-season styles from your favorite brands" (red marquee banner)
+- **Urgency / scarcity:** None visible — no countdown, no "ends tonight," no stock indicator
+- **Loyalty hooks:** REI Co-op logo (passive brand signal), "Trade-In" in top nav (co-op program, one tap away); no explicit dividend or member-exclusive pricing callout
+- **Honesty check:** The "up to 50% off" framing is standard retail ("up to" can mean one item at 50%) but there's no asterisk, exclusion list, or fine-print block visible — feels clean from what I can see
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: YETI camp kitchen = direct hit on backpacking/camping gear
-- + Easy to reach my category: Trade-In visible in top nav, search bar prominent, hamburger accessible
-- + Eye-catching imagery in my category: camp cooking scene is well-shot and gear-dense
-- + Promo banner I would use: "Up to 50% off past-season" is exactly how I stretch my dividend
-- + Page renders cleanly: no layout shift, no broken images, type is legible
-- − Imagery includes someone like me: no people in the hero — it's all gear and food, no 30-something dude camping
-- + Copy register matches mine: "Elevated camp meals start with better gear" is functional and confident, not too cute
-- − Trust signals visible: no reviews, no returns badge, no star ratings anywhere above fold
-- − New/hot rail in my category: not visible above fold — no "New Arrivals in Camping" strip
-- + No dark patterns: no forced modal, no fake countdown, no aggressive overlay
-
-**Score:** `7/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The camp kitchen hero and the discount banner are doing real work — I'd scroll. The missing trust signals and "nobody like me" imagery keep it from being an easy 8+.
+- + Hero relates to my focus area: camp cooking is adjacent to backpacking weekends — I'm mentally in
+- − Easy to reach my category: hamburger menu requires a tap, no category chips visible at a glance; one extra step to reach Men's Outerwear or Packs
+- + Eye-catching imagery in my category: YETI-branded camp spread is visually strong for an outdoor enthusiast
+- + Promo banner I would use: past-season 50% off is exactly how I shop — dividend + clearance is my strategy
+- + Page renders cleanly: no layout shift, no broken images, clean mobile spacing
+- − Imagery includes someone like me: no people in the hero frame, can't see myself in it
+- + Copy register matches mine: "Cooking, covered." is confident and terse — I'm 34, not looking for exclamation points
+- + Trust signals visible: REI Co-op logo + YETI brand both signal "this is legitimate"
+- − New / hot rail in my category: the second carousel card is a pink shoe (likely footwear), not packs or outerwear; no visible new-arrivals rail for my gear category
+- + No dark patterns: no forced modal, no aggressive countdown, no "act now before it's gone" manipulation
+- **Score:** `7/10`
+- **Rationale:** The camp kitchen hero and the 50% off banner are strong enough pulls that I'm staying — but the lack of a visible category grid and no person in the frame means my engagement is conditional on that first "Shop camp kitchen" tap paying off.
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: "Shop camp kitchen" lands squarely in my gear zone
-- + Unambiguous CTA copy: "Shop camp kitchen" leaves zero ambiguity about where I'm going
-- + Active price reduction or member pricing: "Up to 50% off" is visible and applies to gear brands I know
-- − Time-bounded credible deadline: no end date on the offer — nothing pushing me to act today
-- − Reachable free-shipping threshold: not mentioned anywhere above fold
-- + Specific product page one tap away: "Shop camp kitchen" goes directly to a category, not a vague landing page
-- − Sizing / fit info accessible: not relevant for kitchen gear, and not shown
-- − Returns / exchanges mentioned: not visible
-- − Reviews / ratings visible: no star ratings or review counts above fold
-- − Trust / security signals: no secure checkout badge, no pay-later callout
-
-**Score:** `5/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** I'd tap "Shop camp kitchen" because the category is right, but without a deadline, free-shipping clarity, or any social proof, I'm more likely to browse than commit. The missing member-pricing hook is a real missed conversion for a Co-op loyalist.
+- + CTA in my category: "Shop camp kitchen" is close enough — camp gear lives in my world
+- + Unambiguous CTA copy: "Shop camp kitchen" is specific and actionable
+- + Active price reduction or member pricing: the 50% off banner is visible and credible
+- − Time-bounded credible deadline: no end date on the 50% off offer — no urgency to act today
+- − Reachable free-shipping threshold: no shipping threshold visible in the viewport
+- + Specific product page one tap away: tapping "Shop camp kitchen" should land me in the category — that's close enough
+- − Sizing / fit info accessible: irrelevant for camp kitchen, but for my actual purchases (outerwear, footwear) there's nothing visible
+- − Returns / exchanges mentioned: REI has a great return policy but it's nowhere in this viewport
+- − Reviews / ratings visible: no star ratings or review counts on any featured product
+- − Trust / security signals: no "secure checkout," no "free returns" badge, no pay-later option visible
+- **Score:** `5/10`
+- **Rationale:** The hero and offer are compelling enough to get me to the camp kitchen category page, but without member pricing, a shipping threshold, or trust signals, I'm window-shopping — not reaching for my REI Visa.
 
 ## 11. Evidence
 
-- **Top utility nav strip:** "Shop REI | REI Outlet | Trade-In | Travel | Classes & Eve..." (truncated on mobile viewport)
-- **Header:** REI Co-op logo (mountain/tree icon), "Shop" label, location pin, Sign In, cart icon, hamburger menu
-- **Search bar:** "Search for gear & clothing" placeholder — full-width, prominent
-- **Rotating promotional banner:** Red background, "Up to 50% off past-season styles from your favorite brands. Shop now!" with pause/play control icon at right
-- **Hero tile (left, primary):** YETI + Zempire logos, camp cooking scene photo, "Cooking, covered." headline, "Elevated camp meals start with better gear." subtext, "Shop camp kitchen" dark-green button
-- **Hero tile (right, partially visible):** Pink/coral running shoe, text beginning "The ne..." and "Featuring improve..." — CTA button "Shop" partially cropped
-- **Bugs / friction:** Right-side carousel tile is clipped with no swipe indicator — discoverability issue on mobile
+- **Top utility nav strip:** "Shop REI," "REI Outlet," "Trade-In," "Travel," "Classes & Eve..." (truncated) on dark background
+- **Main header:** REI Co-op mountain logo + "Shop" wordmark; location pin, SIGN IN, cart, and hamburger icons
+- **Search bar:** "Search for gear & clothing" placeholder with magnifying glass — full width
+- **Marquee/scrolling promo banner:** Red background, "Up to 50% off past-season styles from your favorite brands. Shop now!" with a pause/play toggle icon (⏸)
+- **Hero card — camp kitchen:** Full-bleed overhead food/cooking photo; YETI + Zempiren co-branding; "Cooking, covered." headline; "Elevated camp meals start with better gear." subline; "Shop camp kitchen" dark green CTA button
+- **Partial second carousel card (right edge):** Cropped-in pink/coral athletic shoe; "The ne..." headline (cut off); "Featuring... improve..." body copy (cut off); "Shop" CTA button — slides in from right
+- **Bugs / friction:** The second card is partially visible and unreadable — this is expected carousel UX on mobile, not a bug, but it does make the shoe card feel like visual noise rather than a navigational aid
 ## Recent history
 
 - [[2026-05-02-homepage-www.rei.com-cody-trail-rei-fap6e]] — 8/10 (2026-05-02)
