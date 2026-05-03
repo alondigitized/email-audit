@@ -3,181 +3,183 @@ slug: 2026-05-03-homepage-www.walmart.com-holly-saver-walmart-fap6e
 type: site
 date: 2026-05-03
 persona: holly-saver-walmart-fap6e
-score: "6/10"
+score: "7/10"
 sender: www.walmart.com
 subject: Homepage snapshot · www.walmart.com · 2026-05-03
-tags: [site-journey, score-6, sender/www-walmart-com]
+tags: [site-journey, score-7, sender/www-walmart-com]
 ---
 # Homepage snapshot · www.walmart.com · 2026-05-03
-**Score:** 6/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 7/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- This is Walmart doing Walmart things — promo tiles right out of the gate, deal percentages front and center. Right now it's pushing Mother's Day and a couple of flash deals, which makes sense for early May. But for me, a Walmart+ member who came here to knock out my weekly household run, this opener is weirdly off-target — I'm not seeing groceries, household staples, or anything about my membership. And that big "Get the app" banner eating up the bottom third of my screen? I already have the app. This is my phone.
-- **6/10**
-- + Concrete offer visible: "30% off Crocs for all" and "Up to 65% off" are real numbers, not vague promises — that's my language
-- + No visible render bugs: page looks clean and loads in clean tiles
-- + Current campaign/season: Mother's Day in May is right on calendar — that's genuine
-- + Demographic signals partial match: female-skewing gifts (perfume, self-care set), household manager who buys for the family
-- + Offer feels honest: percentage-off with "Shop now" links, no fine print traps visible
-- + Visual hierarchy: the tile grid is organized and scannable
-- − No Walmart+ / loyalty hook: zero mention of my membership, no "member savings," no rewards balance — I'm an existing customer and the page has no idea
-- − No returning-shopper recognition: no recently viewed, no "pick up where you left off"
-- − Hero doesn't speak to my actual use case: grocery and household are completely absent from this viewport
-- − No single unmistakable primary CTA for shopping: the dominant blue button says "Get the app," which is the wrong ask for me
+- Walmart.com is pushing Mother's Day right now — the "Moms & members know best" hero and the Mother's Day nav tab make that obvious. As a Walmart+ member who runs this app every week for groceries and household staples, I'm not mad at the page, but I'm also not bowled over. The Flash Deals section is exactly what I came for, but the products they chose to feature up front — wiper blades, a fake rose, a dog feeder — don't say "weekly household run." It feels like a general sale grab, not a homepage built for someone who lives inside this app.
+- **7/10**
+- + Hero copy speaks to persona: "Moms & members know best" hits me on two levels — I'm a mom and I'm a Walmart+ member
+- − No returning-shopper hook: no rewards balance, no recently-viewed items, no Walmart+ delivery window shown
+- + Concrete offer above the fold: "Flash Deals — Up to 65% off" with actual prices and strikethroughs
+- − No unmistakable button CTA: "View all" is a text link; the hero CTA is a play/pause carousel control, not a shopping button
+- + Visual hierarchy is clear: search bar → nav tabs → hero banner → Flash Deals flows cleanly
+- + No render bugs: page looks crisp, no broken images or overlapping text
+- + Demographic signals partially match: "Moms" framing is correct, though Flash Deal products (wipers, rose, dog feeder) aren't household-manager fare
+- + Current campaign/season: Mother's Day tab + "Moms" hero is timely for early May
+- − Loyalty benefits not spelled out: "members" is mentioned but no Walmart+ perks, free delivery benefit, or rewards balance are visible
+- + Offer feels honest: original and sale prices are shown side-by-side with "Reduced price" badges
 
 ## What's working
 
-- **"Rollbacks & More" tab in the nav strip** — that's basically my entire shopping philosophy named in three words. One tap and I'm in the right headspace.
-- **"30% off Crocs for all" tile** — concrete, category is broad, and Crocs are legitimately what every person in my house wears in the backyard. This one lands.
-- **"Up to 65% off" on what looks like a Burberry perfume** — I never pay full price, and 65% off a name-brand fragrance is the kind of deal that makes me pause and look.
-- **Mother's Day tile ("Gifts to pamper Mom")** — it's the right week, right audience. The purple spa-aesthetic gift set is visually clear about what it's selling.
-- **Location set to Alhambra, 91801** — I appreciate that it knows my zip. That's the foundation for "Get it Fast" to actually mean something.
+- **"Flash Deals — Up to 65% off" section:** This is my language. I track unit prices in my head, and a 65% off claim with visible strikethrough prices ($20.99 → $10.52 on the rose, for example) is exactly the kind of signal that makes me tap "View all" immediately.
+- **"Rollbacks & More" nav tab:** This is the first horizontal nav item and it's the thing I actively hunt for in-store and in the app. Seeing it in the sub-nav means I know where to go.
+- **Mother's Day timing on hero:** "Moms & members know best" is on-the-nose for early May. I'm shopping for my mom and my kids are probably shopping for me, so the seasonal hook is correctly timed.
+- **"Get it Fast" tab:** As a Walmart+ delivery user, this is a shortcut I'd actually use. It's right in the nav bar without having to dig.
+- **Dismissable language notification:** The Spanish/Español banner has an X. No forced interaction, no modal. Clean.
 
 ## What's weak
 
-- **The app install banner** is the biggest own-goal on this screen. It covers roughly a third of the viewport, is the most prominent blue CTA on the page, and is pushing me to download an app I definitely already have as a Walmart+ member. For a returning customer on mobile, this is just noise and friction.
-- **Zero grocery or household presence** — my main mission every week and it's not even hinted at above the fold. Crocs and perfume are fine, but they're not the reason I opened Walmart.com.
-- **No Walmart+ acknowledgment** — if I'm signed in (or even if I'm not), a member-tier badge, a "your savings this month" nudge, or even a "Walmart+ free delivery" reminder would immediately make this page feel like it knows me. Nothing.
-- **"Shop now" links are small and plain** — they're doing a lot of heavy lifting as the main CTAs but they're text links, not buttons. For medium-tech-comfort me on mobile, a proper tap target would feel more confident.
-- **No urgency on any deal** — is the 65% off flash sale ending tonight? Tomorrow? "Flash" is in the tile title but there's no deadline. I'm not motivated to tap now vs. later.
+- **Flash Deals product selection is off for my persona:** Windshield wipers, an artificial rose, and a dog feeder are the three visible Flash Deals. I'm not coming to Walmart.com for a decorative rose. Show me paper towels, cleaning supplies, pantry staples — things I actually reorder weekly.
+- **No Walmart+ benefit callout above the fold:** The hero mentions "members" but doesn't tell me what I get. No free delivery reminder, no member pricing badge, no "your next delivery is X." For a loyalty play, this is thin.
+- **Zero grocery content visible:** My primary use case is grocery delivery. There's no "Shop Groceries," no produce imagery, no household essentials module anywhere above the fold. Groceries are the core of what I use Walmart+ for and they're invisible here.
+- **Hero CTA is a carousel play/pause button:** Not a shopping CTA. The hero is a video/slideshow and the only interactive element is a pause icon. That's not going to get me into a product page.
+- **No trust signals or review counts:** The Flash Deal product cards show prices but no star ratings, no review counts. I'd want to see that before tapping "Options."
 
 ## Recommendations
 
-- **Suppress the app install banner for logged-in Walmart+ members** — or any user who clearly arrived from the Walmart app. Pushing an app install to someone already in the app is friction for no reason.
-- **Add a Walmart+ member strip directly below the nav** — one line: "Member prices active · Free delivery on groceries · Your savings this month: $XX.XX." That's the hook that makes me feel seen.
-- **Swap or add a grocery/household tile alongside the current promo grid** — one tile showing "Rollbacks on pantry essentials" with a real example (paper towels, laundry detergent) immediately speaks to the weekly-run customer and doesn't displace the Mother's Day push.
-- **Put a deadline on the flash tile** — "Up to 65% off · Ends Sunday" takes 10 characters and turns browsing into urgency.
+- **Swap one Flash Deal slot for a household/grocery bundle:** Replace the artificial rose card with something like Tide Pods, paper towels, or a pantry item at rollback price. One relevant product changes the whole feel for my persona.
+- **Add a Walmart+ delivery benefit line under the "members" hero copy:** Even just "Members get free grocery delivery" in 14px text under the banner headline would give me a reason to feel seen. Right now "members know best" is a slogan, not a benefit.
+- **Make "View all Flash Deals" a real button:** The text link is easy to miss. A yellow pill button with the same copy would take five minutes to ship and meaningfully increase taps from people like me who are in scan mode on mobile.
+- **Surface a "Reorder Your Favorites" or "Your Weekly Picks" module:** For a Walmart+ member who shops weekly, a personalized reorder rail above the Flash Deals section would be the single highest-ROI change. Even a static "Frequently bought" category shortcut (Produce, Cleaning, Dairy) would reduce friction.
 
 ## Full review
 ## 1. Executive Summary
 
-This is Walmart doing Walmart things — promo tiles right out of the gate, deal percentages front and center. Right now it's pushing Mother's Day and a couple of flash deals, which makes sense for early May. But for me, a Walmart+ member who came here to knock out my weekly household run, this opener is weirdly off-target — I'm not seeing groceries, household staples, or anything about my membership. And that big "Get the app" banner eating up the bottom third of my screen? I already have the app. This is my phone.
+Walmart.com is pushing Mother's Day right now — the "Moms & members know best" hero and the Mother's Day nav tab make that obvious. As a Walmart+ member who runs this app every week for groceries and household staples, I'm not mad at the page, but I'm also not bowled over. The Flash Deals section is exactly what I came for, but the products they chose to feature up front — wiper blades, a fake rose, a dog feeder — don't say "weekly household run." It feels like a general sale grab, not a homepage built for someone who lives inside this app.
 
 ---
 
 ## 2. Business Impact Score (1-10)
 
-**6/10**
+**7/10**
 
-- + Concrete offer visible: "30% off Crocs for all" and "Up to 65% off" are real numbers, not vague promises — that's my language
-- + No visible render bugs: page looks clean and loads in clean tiles
-- + Current campaign/season: Mother's Day in May is right on calendar — that's genuine
-- + Demographic signals partial match: female-skewing gifts (perfume, self-care set), household manager who buys for the family
-- + Offer feels honest: percentage-off with "Shop now" links, no fine print traps visible
-- + Visual hierarchy: the tile grid is organized and scannable
-- − No Walmart+ / loyalty hook: zero mention of my membership, no "member savings," no rewards balance — I'm an existing customer and the page has no idea
-- − No returning-shopper recognition: no recently viewed, no "pick up where you left off"
-- − Hero doesn't speak to my actual use case: grocery and household are completely absent from this viewport
-- − No single unmistakable primary CTA for shopping: the dominant blue button says "Get the app," which is the wrong ask for me
+- + Hero copy speaks to persona: "Moms & members know best" hits me on two levels — I'm a mom and I'm a Walmart+ member
+- − No returning-shopper hook: no rewards balance, no recently-viewed items, no Walmart+ delivery window shown
+- + Concrete offer above the fold: "Flash Deals — Up to 65% off" with actual prices and strikethroughs
+- − No unmistakable button CTA: "View all" is a text link; the hero CTA is a play/pause carousel control, not a shopping button
+- + Visual hierarchy is clear: search bar → nav tabs → hero banner → Flash Deals flows cleanly
+- + No render bugs: page looks crisp, no broken images or overlapping text
+- + Demographic signals partially match: "Moms" framing is correct, though Flash Deal products (wipers, rose, dog feeder) aren't household-manager fare
+- + Current campaign/season: Mother's Day tab + "Moms" hero is timely for early May
+- − Loyalty benefits not spelled out: "members" is mentioned but no Walmart+ perks, free delivery benefit, or rewards balance are visible
+- + Offer feels honest: original and sale prices are shown side-by-side with "Reduced price" badges
 
 ---
 
 ## 3. What's Working
 
-- **"Rollbacks & More" tab in the nav strip** — that's basically my entire shopping philosophy named in three words. One tap and I'm in the right headspace.
-- **"30% off Crocs for all" tile** — concrete, category is broad, and Crocs are legitimately what every person in my house wears in the backyard. This one lands.
-- **"Up to 65% off" on what looks like a Burberry perfume** — I never pay full price, and 65% off a name-brand fragrance is the kind of deal that makes me pause and look.
-- **Mother's Day tile ("Gifts to pamper Mom")** — it's the right week, right audience. The purple spa-aesthetic gift set is visually clear about what it's selling.
-- **Location set to Alhambra, 91801** — I appreciate that it knows my zip. That's the foundation for "Get it Fast" to actually mean something.
+- **"Flash Deals — Up to 65% off" section:** This is my language. I track unit prices in my head, and a 65% off claim with visible strikethrough prices ($20.99 → $10.52 on the rose, for example) is exactly the kind of signal that makes me tap "View all" immediately.
+- **"Rollbacks & More" nav tab:** This is the first horizontal nav item and it's the thing I actively hunt for in-store and in the app. Seeing it in the sub-nav means I know where to go.
+- **Mother's Day timing on hero:** "Moms & members know best" is on-the-nose for early May. I'm shopping for my mom and my kids are probably shopping for me, so the seasonal hook is correctly timed.
+- **"Get it Fast" tab:** As a Walmart+ delivery user, this is a shortcut I'd actually use. It's right in the nav bar without having to dig.
+- **Dismissable language notification:** The Spanish/Español banner has an X. No forced interaction, no modal. Clean.
 
 ---
 
 ## 4. What's Weak
 
-- **The app install banner** is the biggest own-goal on this screen. It covers roughly a third of the viewport, is the most prominent blue CTA on the page, and is pushing me to download an app I definitely already have as a Walmart+ member. For a returning customer on mobile, this is just noise and friction.
-- **Zero grocery or household presence** — my main mission every week and it's not even hinted at above the fold. Crocs and perfume are fine, but they're not the reason I opened Walmart.com.
-- **No Walmart+ acknowledgment** — if I'm signed in (or even if I'm not), a member-tier badge, a "your savings this month" nudge, or even a "Walmart+ free delivery" reminder would immediately make this page feel like it knows me. Nothing.
-- **"Shop now" links are small and plain** — they're doing a lot of heavy lifting as the main CTAs but they're text links, not buttons. For medium-tech-comfort me on mobile, a proper tap target would feel more confident.
-- **No urgency on any deal** — is the 65% off flash sale ending tonight? Tomorrow? "Flash" is in the tile title but there's no deadline. I'm not motivated to tap now vs. later.
+- **Flash Deals product selection is off for my persona:** Windshield wipers, an artificial rose, and a dog feeder are the three visible Flash Deals. I'm not coming to Walmart.com for a decorative rose. Show me paper towels, cleaning supplies, pantry staples — things I actually reorder weekly.
+- **No Walmart+ benefit callout above the fold:** The hero mentions "members" but doesn't tell me what I get. No free delivery reminder, no member pricing badge, no "your next delivery is X." For a loyalty play, this is thin.
+- **Zero grocery content visible:** My primary use case is grocery delivery. There's no "Shop Groceries," no produce imagery, no household essentials module anywhere above the fold. Groceries are the core of what I use Walmart+ for and they're invisible here.
+- **Hero CTA is a carousel play/pause button:** Not a shopping CTA. The hero is a video/slideshow and the only interactive element is a pause icon. That's not going to get me into a product page.
+- **No trust signals or review counts:** The Flash Deal product cards show prices but no star ratings, no review counts. I'd want to see that before tapping "Options."
 
 ---
 
 ## 5. Recommendations
 
-- **Suppress the app install banner for logged-in Walmart+ members** — or any user who clearly arrived from the Walmart app. Pushing an app install to someone already in the app is friction for no reason.
-- **Add a Walmart+ member strip directly below the nav** — one line: "Member prices active · Free delivery on groceries · Your savings this month: $XX.XX." That's the hook that makes me feel seen.
-- **Swap or add a grocery/household tile alongside the current promo grid** — one tile showing "Rollbacks on pantry essentials" with a real example (paper towels, laundry detergent) immediately speaks to the weekly-run customer and doesn't displace the Mother's Day push.
-- **Put a deadline on the flash tile** — "Up to 65% off · Ends Sunday" takes 10 characters and turns browsing into urgency.
+- **Swap one Flash Deal slot for a household/grocery bundle:** Replace the artificial rose card with something like Tide Pods, paper towels, or a pantry item at rollback price. One relevant product changes the whole feel for my persona.
+- **Add a Walmart+ delivery benefit line under the "members" hero copy:** Even just "Members get free grocery delivery" in 14px text under the banner headline would give me a reason to feel seen. Right now "members know best" is a slogan, not a benefit.
+- **Make "View all Flash Deals" a real button:** The text link is easy to miss. A yellow pill button with the same copy would take five minutes to ship and meaningfully increase taps from people like me who are in scan mode on mobile.
+- **Surface a "Reorder Your Favorites" or "Your Weekly Picks" module:** For a Walmart+ member who shops weekly, a personalized reorder rail above the Flash Deals section would be the single highest-ROI change. Even a static "Frequently bought" category shortcut (Produce, Cleaning, Dairy) would reduce friction.
 
 ---
 
 ## 6. Bottom Line
 
-I'd tap "Rollbacks & More" and move on, but Walmart missed a real chance to make me feel like a recognized member rather than a cold visitor who needs to download their app.
+I'd scroll past the fold and tap "Rollbacks & More" — but this homepage didn't earn that click; I came in already knowing where I wanted to go.
 
 ---
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `30% off Crocs for all` / `Gifts to pamper Mom` / `Up to 65% off`
-- **Hero image:** Three-tile promo grid — Crocs sandals on a light background (left), a purple/lavender spa gift set with sunglasses and a bottle (right), and a Burberry-style perfume bottle on yellow (bottom left)
-- **Primary CTA:** `Get the app` — visible above the fold? yes — but this is the app install modal CTA, not a shopping CTA
-- **Scores (1-10):** Clarity `7`, Relevance to you `4`, Visual hierarchy `6`, On-brand `8`
+- **Hero copy (verbatim):** `Moms & members know best`
+- **Hero image:** Walmart+ branded carousel banner with gift boxes and colorful product imagery; a play/pause control indicates it's a video or auto-rotating carousel
+- **Primary CTA:** No dedicated shopping button in the hero — `View all` (text link, Flash Deals section) — visible above the fold? yes, but it's a text link, not a button
+- **Scores (1-10):** Clarity `6`, Relevance to you `7`, Visual hierarchy `7`, On-brand `8`
 - **Strengths:**
-  - Deals are scannable in under two seconds — I know what's on sale before I read a word
-  - The tile grid feels very Walmart — organized, value-forward, no pretension
+  - The "members" reference is the right hook for a Walmart+ subscriber — it acknowledges I have a relationship with the brand
+  - Mother's Day timing is spot-on for early May and doesn't feel stale
 - **Weaknesses:**
-  - The "Get the app" banner commands the most visual weight on the screen but is completely irrelevant to a returning Walmart+ mobile user
-  - None of the three hero promo tiles are grocery or household — my core mission is invisible
+  - "Know best" is a slogan, not an offer — I can't act on it; there's no button that says "Shop Member Deals" or "Claim Your Perk"
+  - The hero image is gift-box generic; nothing in it signals grocery delivery or household value, which is my actual use case
 
 ---
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** 30% off Crocs for all, Gifts to pamper Mom (Shop now), Up to 65% off (appears to be fragrance/flash deal)
-- **Urgency / scarcity:** None visible — "Flash" appears in the bottom-left tile text but there is no countdown, no "ends today," no stock indicator
-- **Loyalty hooks:** None — no Walmart+ mention, no member pricing badge, no rewards callout anywhere in the viewport
-- **Honesty check:** The deals look clean — specific percentages, no asterisks visible, no "select styles only" fine print in frame. The "Up to 65% off" is a wide range but that's standard. No manipulation flags.
+- **Active promos:** Flash Deals up to 65% off; "Reduced price" badge on Qoosea Eternal Rose ($20.99 → $10.52) and MateyLife product
+- **Urgency / scarcity:** None visible — no countdown timer, no "ends tonight," no low-stock indicator
+- **Loyalty hooks:** "Moms & members know best" banner references Walmart+ membership implicitly; no rewards balance, no member-exclusive pricing badge, no Walmart+ shield icon on deals
+- **Honesty check:** The strikethrough pricing on the Flash Deals looks legitimate — original and sale prices both displayed. No asterisks or buried fine print visible. The "up to 65% off" claim with specific products showing less dramatic discounts (e.g., 49% off on the rose) is typical retail phrasing but not egregious.
 
 ---
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: Crocs, Mother's Day gifts, and perfume are not my weekly grocery + household run
-- + Easy to reach my category: "Rollbacks & More" tab is right there in the nav strip — one tap and I'm in deal-hunting mode
-- − Eye-catching imagery in my category: Nothing grocery, nothing cleaning products, nothing household — the visible imagery is footwear and personal care gifts
-- + Promo banner I would use: The 65% off tile and the Crocs deal are real savings on things I might buy — the Mother's Day tile is timely if I'm shopping for my mom
-- − Page renders cleanly: The page grid is clean but the app install banner aggressively covers the bottom of the screen, which is friction, not rendering
-- − Imagery includes someone like me: No people visible at all — it's product-only tiles, no lifestyle photography with a 45-year-old household manager in frame
-- + Copy register matches mine: Percentage-off language is exactly how I think — I track unit prices, I respond to "30% off" and "up to 65% off" instantly
-- − Trust signals visible: The app store star rating (4.5 stars) is for the app download prompt — not shopping trust like free returns, secure checkout, or product reviews
-- − New / hot rail in my category: No grocery or household best-seller rail visible — just the three promo tiles
-- − No dark patterns: The app install modal covering ~30% of the screen for a user already on the site qualifies as a soft dark pattern — it's not malicious but it's pushy
+- − Hero relates to my focus area: "Moms & members" is flattering but the hero imagery is gift-box gifting, not my weekly grocery haul
+- + Easy to reach my category: "Rollbacks & More" is the first sub-nav tab — that's my aisle
+- − Eye-catching imagery in my category: Wiper blades, a decorative rose, a dog feeder — not a single grocery or cleaning product visible
+- + Promo banner I would use: Flash Deals at up to 65% off is exactly the trigger that gets me tapping
+- + Page renders cleanly: No layout shift, no broken images, crisp text and imagery
+- − Imagery includes someone like me: No person visible in the screenshot at all — just products and a branded banner
+- + Copy register matches mine: "Flash Deals," "Rollbacks & More," "Get it Fast" are plain-English, not techie or try-hard — that works for me
+- − Trust signals visible: No star ratings, no review counts, no "free returns" badge above fold
+- − New/hot rail in my category: The Flash Deals rail is the only product rail visible and it's not in my grocery/household lane
+- + No dark patterns: The Spanish notification is dismissable with a clear X; no forced modal, no pop-up overlay
 
-**Score:** `4/10`
-**Rationale:** The "Rollbacks & More" nav tab and deal-first language are genuine wins for me, but the homepage is running a mismatch — I'm a weekly household shopper and the entire above-the-fold shows footwear and fragrance with no grocery hook and no Walmart+ recognition. The app banner makes it worse.
+**Score:** `6/10` — 1 + 5 true signals
+**Rationale:** The Rollbacks tab and Flash Deals section would keep me on the page, but the complete absence of grocery content means I'm doing the navigation work myself — the page isn't meeting me where I shop.
 
 ---
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: No grocery, no household essentials CTA visible — the shopping CTAs are for Crocs and Mother's Day gifts
-- − Unambiguous CTA copy: "Shop now" appears three times as a plain text link — it's clear what it does but it's not a confident tap target; "Get the app" is the dominant button and it's the wrong ask
-- + Active price reduction or member pricing: "30% off Crocs" and "Up to 65% off" are real reductions — I'd believe these are actual Rollback-style deals
-- − Time-bounded credible deadline: No end date, no countdown, no "ends Sunday" — "Flash" is just a label, not a deadline
-- − Reachable free-shipping threshold: Not visible anywhere in this viewport
-- + Specific product page one tap away: "Shop now" on the Crocs tile and the Mother's Day tile go directly to the category or product page — that's efficient
-- − Sizing / fit info accessible: Not applicable to my grocery/household focus, and not visible for the footwear either
-- − Returns / exchanges mentioned: Not visible
-- − Reviews / ratings visible: None on featured products — no star counts, no "4.8 · 2,341 reviews" on any tile
-- − Trust / security signals: None visible — no "secure checkout," no "free returns," no pay-later option shown
+- − CTA in my category: No grocery, household, or pantry CTA visible — Flash Deals skews random
+- + Unambiguous CTA copy: "View all" and "Options" are plain and clear, no confusion about what they do
+- + Active price reduction or member pricing: Strikethrough pricing on Flash Deal products with "Reduced price" badge is a real, visible discount
+- − Time-bounded credible deadline: No timer, no expiry date, no "ends at midnight" anywhere visible
+- − Reachable free-shipping threshold: Free shipping / free delivery threshold not mentioned above fold
+- + Specific product page one tap away: Each Flash Deal card has an "Options" button that's one tap to the product page
+- − Sizing / fit info accessible: Not applicable to my category (grocery/household), but also not relevant to the products shown
+- − Returns / exchanges mentioned: Not visible above fold
+- − Reviews / ratings visible: No star ratings or review counts on any Flash Deal product card
+- − Trust / security signals: No secure checkout badge, no Walmart+ shield, no "free returns" callout visible
 
-**Score:** `3/10`
-**Rationale:** Two real discount signals keep this from bottoming out, but everything that closes a sale for me — free shipping threshold, reviews, returns policy, member pricing — is completely absent from this viewport. I'd need to tap through before I'd commit to anything.
+**Score:** `4/10` — 1 + 3 true signals
+**Rationale:** The Flash Deals pricing is transparent and I'm one tap from a product page, but without social proof (ratings), a deadline, or free-delivery confirmation, I'd be tapping "View all" to browse rather than heading straight to checkout.
 
 ---
 
 ## 11. Evidence
 
-- **Header bar:** Walmart spark logo, hamburger menu, "Search Walmart" search field, cart icon showing $0.00
-- **Language banner:** "Spanish / Español now available!" with globe icon and dismiss X — full-width, sits below header
-- **Location strip:** "Alhambra, 91801" with dropdown chevron — confirms geo-aware delivery context
-- **Category nav tabs:** "Rollbacks & More," "Mother's Day," "Get it Fast" — horizontal scroll strip below location
-- **Promo tile — top left:** "30% off Crocs for all" with "Shop now" text link, Crocs imagery
-- **Promo tile — top right:** "Gifts to pamper Mom" with "Shop now" text link, purple spa/self-care gift set imagery
-- **Promo tile — bottom left (partial):** "Up to 65% off" with "Shop now," "Flash" label visible, Burberry-style perfume bottle on yellow background — partially obscured by app banner
-- **App install modal/banner:** Walmart spark icon, "Walmart - Shopping & Grocery" label, "The easiest way to shop, check out & track your orders – anywhere you are." copy, 4.5-star app rating (partial stars visible), "Get the app" blue CTA button — covers approximately the bottom 30% of the viewport
-- **Bugs / friction:** App install banner is the dominant interactive element on screen, overlapping the bottom promo tile and commandeering the primary blue-button slot — major friction for an existing Walmart+ mobile user
+- **Hero / primary value prop:** Carousel banner — "Moms & members know best" — Walmart+ branded with gift imagery and a play/pause control; appears to be auto-rotating or video-based
+- **Top navigation bar:** Hamburger menu (left), Walmart spark logo, search bar ("Search Walmart"), cart icon with $0.00 balance (right)
+- **Language notification strip:** "Spanish / Español now available!" — blue globe icon, dismissable with X button
+- **Location/delivery bar:** "Alhambra, 91801" with a dropdown arrow
+- **Sub-navigation tabs:** "Rollbacks & More" | "Mother's Day" | "Get it Fast"
+- **Flash Deals section header:** "Flash Deals" (bold, left-aligned) + "Up to 65% off" subhead + "View all" text link (right-aligned)
+- **Flash Deal product cards (3 visible, 3rd partially cut off):**
+  - FARRLADI Silicone Windshield Wipers — $15.99, "more options from $15.28," "Options" button, heart icon
+  - Qoosea Eternal Rose — "Now $10.52" (was $20.99), "Reduced price" badge, options range $10.52–$12.14, "Options" button, heart icon
+  - MateyLife S Feeder Dog — "Now $10..." (price cut off at right edge), "Reduced price" badge, "Options" button, heart icon
+- **Bugs / friction:** The third product card is clipped by the right viewport edge — price is cut off mid-number ("Now $10..."). Minor, but on mobile this could be a real display issue depending on screen width.
 ## Recent history
 
 - [[2026-05-02-homepage-www.walmart.com-holly-saver-walmart-fap6e]] — 7/10 (2026-05-02)
