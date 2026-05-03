@@ -143,10 +143,93 @@ export default async function TemplateRequestsPage({
         </div>
       )}
 
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-        {rows.length === 0 ? (
-          <div className="p-6 text-sm text-muted">No requests yet.</div>
-        ) : (
+      {rows.length === 0 ? (
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 text-sm text-muted">
+          No requests yet.
+        </div>
+      ) : (
+        <>
+        {/* Mobile: stacked cards */}
+        <ul className="sm:hidden flex flex-col gap-3">
+          {rows.map((r) => (
+            <li key={r.id} className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <div className="min-w-0">
+                  <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">
+                    {r.industry}
+                  </code>
+                  <div className="text-sm break-all mt-1">{r.brandDomain}</div>
+                </div>
+                <div className="shrink-0">{statusPill(r.status)}</div>
+              </div>
+              <dl className="text-xs space-y-1 mb-2">
+                <div className="flex gap-2">
+                  <dt className="text-muted w-20 shrink-0">Tenant</dt>
+                  <dd className="font-mono break-all">
+                    {r.tenantSlug ?? "—"}
+                    {r.tenantPlan && (
+                      <span className="text-muted text-[10px]"> ({r.tenantPlan})</span>
+                    )}
+                  </dd>
+                </div>
+                <div className="flex gap-2">
+                  <dt className="text-muted w-20 shrink-0">Requested</dt>
+                  <dd className="text-muted">{fmtDate(r.requestedAt)}</dd>
+                </div>
+                {r.status === "shipped" && r.fulfilledTemplateSlug && (
+                  <div className="flex gap-2">
+                    <dt className="text-muted w-20 shrink-0">Fulfilled</dt>
+                    <dd className="font-mono text-emerald-700 break-all">
+                      → {r.fulfilledTemplateSlug}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+              {r.status === "queued" && (
+                <div className="flex flex-col gap-2">
+                  <form
+                    action={fulfillTemplateRequestAction}
+                    className="flex flex-col sm:flex-row gap-2"
+                  >
+                    <input type="hidden" name="requestId" value={r.id} />
+                    <select
+                      name="templateSlug"
+                      defaultValue=""
+                      required
+                      className="flex-1 text-xs border border-gray-200 rounded-lg px-2 py-2 bg-white"
+                    >
+                      <option value="" disabled>
+                        Pick template…
+                      </option>
+                      {activeTemplates.map((t) => (
+                        <option key={t.slug} value={t.slug}>
+                          {t.slug} ({t.industry})
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      type="submit"
+                      className="px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium"
+                    >
+                      Ship
+                    </button>
+                  </form>
+                  <form action={rejectTemplateRequestAction}>
+                    <input type="hidden" name="requestId" value={r.id} />
+                    <button
+                      type="submit"
+                      className="text-xs underline text-muted hover:text-amber-700"
+                    >
+                      Reject
+                    </button>
+                  </form>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+        {/* Desktop: table */}
+        <div className="hidden sm:block bg-white border border-gray-200 rounded-2xl shadow-sm overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-xs uppercase tracking-wide text-muted">
@@ -226,8 +309,9 @@ export default async function TemplateRequestsPage({
               ))}
             </tbody>
           </table>
-        )}
-      </div>
+        </div>
+        </>
+      )}
     </>
   );
 }

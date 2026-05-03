@@ -52,62 +52,27 @@ export default async function AdminPage() {
       <div className="mb-5 py-6">
         <div className="flex items-baseline justify-between gap-4 flex-wrap">
           <h1 className="text-2xl font-bold mt-1 mb-2">Admin</h1>
-          <div className="flex gap-4">
-            <a
-              href="/admin/tenants"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Tenants →
-            </a>
-            <a
-              href="/admin/waitlist"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Waitlist →
-            </a>
-            <a
-              href="/admin/laptop-queue"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Laptop queue →
-            </a>
-            <a
-              href="/admin/subscriptions"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Subscriptions →
-            </a>
-            <a
-              href="/admin/email-health"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Email health →
-            </a>
-            <a
-              href="/admin/brand-blocklist"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Brand blocklist →
-            </a>
-            <a
-              href="/admin/personas"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Manage personas →
-            </a>
-            <a
-              href="/admin/templates"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Templates →
-            </a>
-            <a
-              href="/admin/template-requests"
-              className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline"
-            >
-              Template requests →
-            </a>
-          </div>
+          <nav className="flex flex-wrap gap-x-4 gap-y-2">
+            {[
+              ["/admin/tenants", "Tenants"],
+              ["/admin/waitlist", "Waitlist"],
+              ["/admin/laptop-queue", "Laptop queue"],
+              ["/admin/subscriptions", "Subscriptions"],
+              ["/admin/email-health", "Email health"],
+              ["/admin/brand-blocklist", "Brand blocklist"],
+              ["/admin/personas", "Manage personas"],
+              ["/admin/templates", "Templates"],
+              ["/admin/template-requests", "Template requests"],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={href}
+                className="text-sm font-semibold text-sky-700 hover:text-sky-900 underline whitespace-nowrap"
+              >
+                {label} →
+              </a>
+            ))}
+          </nav>
         </div>
         <p className="text-muted text-sm max-w-xl">
           Manage the invite allowlist, grant persona access, and track

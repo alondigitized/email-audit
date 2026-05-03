@@ -73,7 +73,7 @@ export default async function BrandBlocklistPage() {
         action={addEntry}
         className="mb-8 bg-white border border-gray-200 rounded-2xl p-5 space-y-3"
       >
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <label className="text-xs">
             <span className="block uppercase tracking-wide text-muted mb-1">
               Domain
@@ -104,7 +104,7 @@ export default async function BrandBlocklistPage() {
         </button>
       </form>
 
-      <div className="bg-white border border-gray-200 rounded-2xl">
+      <div className="bg-white border border-gray-200 rounded-2xl overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-left text-xs uppercase text-muted">
             <tr>

@@ -91,30 +91,47 @@ export default async function EmailHealthPage() {
 
       {stuckRows.rows.length > 0 && (
         <Section title="Stuck (unprocessed) inbound">
-          <table className="w-full text-sm">
-            <thead className="text-left text-xs uppercase text-muted">
-              <tr>
-                <th className="py-1.5 pr-4">Age</th>
-                <th className="py-1.5 pr-4">Persona</th>
-                <th className="py-1.5 pr-4">From</th>
-                <th className="py-1.5">Subject</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stuckRows.rows.map((r) => (
-                <tr key={String(r.id)} className="border-t border-gray-100">
-                  <td className="py-1.5 pr-4 font-mono text-xs">{formatAge(Number(r.age_seconds))}</td>
-                  <td className="py-1.5 pr-4 font-mono text-xs">{String(r.persona_slug)}</td>
-                  <td className="py-1.5 pr-4 text-xs">{String(r.from_address ?? "").slice(0, 40)}</td>
-                  <td className="py-1.5 text-xs">{String(r.subject ?? "").slice(0, 60)}</td>
+          {/* Mobile: stacked cards */}
+          <ul className="sm:hidden flex flex-col gap-3">
+            {stuckRows.rows.map((r) => (
+              <li key={String(r.id)} className="border border-gray-200 rounded-xl p-3">
+                <div className="flex items-baseline justify-between gap-2 mb-1">
+                  <span className="font-mono text-[11px] text-muted">{formatAge(Number(r.age_seconds))}</span>
+                  <span className="font-mono text-[11px] text-muted break-all">{String(r.persona_slug)}</span>
+                </div>
+                <div className="text-xs text-muted break-all mb-0.5">{String(r.from_address ?? "")}</div>
+                <div className="text-sm break-words">{String(r.subject ?? "")}</div>
+              </li>
+            ))}
+          </ul>
+          {/* Desktop: table */}
+          <div className="hidden sm:block overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="text-left text-xs uppercase text-muted">
+                <tr>
+                  <th className="py-1.5 pr-4">Age</th>
+                  <th className="py-1.5 pr-4">Persona</th>
+                  <th className="py-1.5 pr-4">From</th>
+                  <th className="py-1.5">Subject</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {stuckRows.rows.map((r) => (
+                  <tr key={String(r.id)} className="border-t border-gray-100">
+                    <td className="py-1.5 pr-4 font-mono text-xs">{formatAge(Number(r.age_seconds))}</td>
+                    <td className="py-1.5 pr-4 font-mono text-xs">{String(r.persona_slug)}</td>
+                    <td className="py-1.5 pr-4 text-xs">{String(r.from_address ?? "").slice(0, 40)}</td>
+                    <td className="py-1.5 text-xs">{String(r.subject ?? "").slice(0, 60)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </Section>
       )}
 
       <Section title="Persona reaction volume">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-left text-xs uppercase text-muted">
             <tr>
@@ -140,6 +157,7 @@ export default async function EmailHealthPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </Section>
 
       {reflectionRows.rows.length > 0 && (
