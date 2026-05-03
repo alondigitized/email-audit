@@ -162,6 +162,8 @@ const SECTION_HEADINGS = new Map([
   ['promotional and urgency cues', 'preview_text'],
   ['urgency cues', 'preview_text'],
   ['promotional cues', 'preview_text'],
+  ['engagement likelihood', 'open_likelihood'],
+  ['engagement likelihood (persona-grounded)', 'open_likelihood'],
   ['visit-engagement likelihood', 'open_likelihood'],
   ['visit engagement likelihood', 'open_likelihood'],
   ['visit-engagement likelihood (persona-grounded)', 'open_likelihood'],
