@@ -3,158 +3,161 @@ slug: 2026-05-03-homepage-www.skechers.com-calvin-haze
 type: site
 date: 2026-05-03
 persona: calvin-haze
-score: "5/10"
+score: "7/10"
 sender: www.skechers.com
 subject: Homepage snapshot · www.skechers.com · 2026-05-03
-tags: [site-journey, score-5, sender/www-skechers-com]
+tags: [site-journey, score-7, sender/www-skechers-com]
 ---
 # Homepage snapshot · www.skechers.com · 2026-05-03
-**Score:** 5/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 7/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- First impression: Skechers is going broad-audience comfort with a celebrity pair play — looks like Brooke Burke and what I'm reading as Tony Hawk or Tony Romo sitting in styled home settings, both wearing Skechers. There are two competing discount banners fighting for attention before I even hit the hero, and the "Hands Free Slip-ins" headline is just barely peaking into frame at the bottom like they're teasing the one thing I actually care about. This brand is pushing celebrity credibility and value — not exactly the sneakerhead energy I get from my TikTok For You page, but the BOGO deal stops the scroll on its own.
-- **5/10**
-- + Concrete offer above fold: BOGO 50% OFF banner, plus 25% OFF Apparel strip — two deals stacked
-- + No render bugs: image loads clean, no broken layouts or placeholder text
-- + Current campaign/season: "Spring Apparel Sale" lands right for May
-- + Offer feels honest: BOGO applied at cart with a details link, no obvious bait-and-switch
-- + Hero imagery partially speaks to my focus area: "Hands Free Slip-ins" headline entering frame at bottom is exactly my shopping target
-- − No loyalty or returning-shopper hook visible (no rewards balance, no "Welcome back" nudge)
-- − No unmistakable CTA button above the fold — "Shop" is a text link, not a tappable button
-- − Demographic mismatch: celebrity endorsers appear mid-50s, not 36-year-old Millennial energy
-- − No visual hierarchy anchor — two banner strips + split hero + incoming Slip-ins section all compete at once
-- − Loyalty benefits not surfaced without scrolling
+- Skechers is leading with their Hands Free Slip-ins platform, which is literally my thing — gym, errands, Saturday coffee run, all of it. The celebrity lifestyle split-shot hero feels polished and the BOGO deal upfront is hard to ignore. The page has energy but it cuts off before the real payoff lands.
+- **7/10**
+- + Hero imagery and copy explicitly speak to my persona — "HANDS FREE Slip-ins" is exactly what I scroll TikTok looking for
+- − No returning-shopper hook — no rewards balance, recently-viewed, or loyalty CTA anywhere visible
+- + Concrete offer above the fold — "BOGO 50% OFF Applied at Cart" is right at the top, no hunting
+- − No primary CTA button visible — "Shop" text link in the secondary banner doesn't count as a button
+- + Visual hierarchy is clear — two large lifestyle images anchor the eye before the Slip-ins headline drops in
+- + No render bugs — clean layout, no overlapping elements, no broken images
+- + Demographic signals match — the male celebrity model is casual, dressed like me, roughly my age range
+- + Page reflects current season — Spring Apparel Sale callout is timely
+- − Loyalty / membership benefits not visible
+- + Offer feels honest — "Applied at Cart" is transparent, no sketchy asterisk energy
+- Score: 1 base + 7 = **7/10**
 
 ## What's working
 
-- **BOGO 50% OFF banner** — I see it instantly at the very top in blue. That's a real hook. I'm not scrolling past a buy-one-get-one-half-off without at least reading it.
-- **"Hands Free Slip-ins" entering frame** — the moment I see those words I know Skechers clocked what I actually want. That's the product I came here for whether I knew it yet or not.
-- **Dual celeb placement** — the split-screen with a man and a woman signals the brand is going after couples shopping together, which is literally my Saturday with Martha. Not mad at that framing.
-- **Clean mobile render** — no jank, no CLS, no broken images. On mobile that's table stakes but a lot of brands still blow it.
+- **BOGO 50% OFF strip at the very top** — sticky blue banner, impossible to miss, sets the commercial tone immediately before I've even processed anything else
+- **"HANDS FREE Slip-ins" headline** — starting to roll in at the bottom of the viewport and it's speaking my language directly; this is the product line I actually care about
+- **Split celebrity lifestyle shot** — two people, casual home settings, real footwear visible; it reads like content I'd stop on mid-scroll on Instagram
+- **Spring Apparel 25% OFF secondary banner** — layered deal structure signals there's more to explore, pulls me to keep scrolling
+- **Male model is wearing the actual product** — blue and white Slip-ins on a dude who looks like he could be at brunch with me and Martha; that's the reference point I want
 
 ## What's weak
 
-- **Celebrity skew is too old for me** — Brooke Burke and the male ambassador both read 50s. I'm 36. I want to see someone who looks like they could've been in my college dorm, not on Dancing with the Stars.
-- **No primary CTA button above the fold** — the only actionable element is a small text "Shop | details" link. Where's the big "Shop Slip-ins" tap target? I shouldn't have to hunt.
-- **Two competing discount banners create noise** — BOGO on shoes AND 25% off apparel in the same scroll creates decision paralysis rather than urgency. Pick one to lead with.
-- **Hero image has no copy explaining who I'm looking at or why I should care** — the celeb names appear small on the image. If I don't recognize them immediately on a small phone screen, the hero just reads as two smiling people on furniture.
-- **Slip-ins are the lead product but buried** — the section I most want is at the bottom of the viewport, not the hero. That's the wrong priority order for my browsing session.
+- **No CTA button in the viewport** — "Shop | details" as a text link buried under the secondary banner is too soft; there's no obvious tap target pointing me toward Slip-ins Men's specifically
+- **Hamburger-only nav** — I can't get to Men's Shoes or Slip-ins in one tap from here; on mobile this kills speed and I'm a mobile-first shopper
+- **Loyalty/rewards completely invisible** — I know Skechers has a rewards program, but nothing in this frame tells me my status, my points, or what I'm leaving on the table by not being a member
+- **No urgency signal on the BOGO** — "BOGO 50% OFF Applied at Cart" is great but there's no "ends Sunday" or countdown — the deal feels permanent, which takes away the push to act now
+- **Apparel sale competing for attention** — I'm here for sneakers, not apparel; the 25% off apparel banner is eating real estate that could double down on Slip-ins
 
 ## Recommendations
 
-- **Make Slip-ins the hero, full stop.** Move the "Hands Free Slip-ins" section above the celebrity lifestyle shot, or replace the hero with a lifestyle scene of someone actually putting on a slip-in hands-free. That's the money shot.
-- **Add one big tappable button above the fold** — "Shop Men's Slip-ins" in blue or yellow on the hero. Text links are for desktop circa 2012.
-- **Consolidate to one deal in the top banner** — BOGO is stronger than 25% off apparel for my basket. Lead with BOGO, put apparel sale as a secondary strip or fold it into navigation.
-- **Cast someone 30s-40s in the hero** — or at least a mixed-age duo. Show a guy my age throwing on slip-ins before a coffee run, not a posed living-room editorial.
+- **Add a dedicated "Shop Men's Slip-ins" button** over the hero image before the Slip-ins headline — one tap should land me directly on the men's Slip-ins grid, not a general search
+- **Drop a deadline on the BOGO** — "BOGO 50% OFF — Ends Sunday" or a 48-hour countdown timer changes this from ambient deal to urgent action
+- **Swap the apparel secondary banner for a Slip-ins callout** — "New colorways just dropped" or "Shop the gym-to-street Slip-ins" matches what I'm actually on site for
+- **Surface a trust micro-signal** — one line like "Free shipping + free returns" somewhere in the nav bar would remove the last bit of friction before I'm ready to tap
 
 ## Full review
 ## 1. Executive Summary
 
-First impression: Skechers is going broad-audience comfort with a celebrity pair play — looks like Brooke Burke and what I'm reading as Tony Hawk or Tony Romo sitting in styled home settings, both wearing Skechers. There are two competing discount banners fighting for attention before I even hit the hero, and the "Hands Free Slip-ins" headline is just barely peaking into frame at the bottom like they're teasing the one thing I actually care about. This brand is pushing celebrity credibility and value — not exactly the sneakerhead energy I get from my TikTok For You page, but the BOGO deal stops the scroll on its own.
+Skechers is leading with their Hands Free Slip-ins platform, which is literally my thing — gym, errands, Saturday coffee run, all of it. The celebrity lifestyle split-shot hero feels polished and the BOGO deal upfront is hard to ignore. The page has energy but it cuts off before the real payoff lands.
 
 ## 2. Business Impact Score (1-10)
 
-**5/10**
+**7/10**
 
-- + Concrete offer above fold: BOGO 50% OFF banner, plus 25% OFF Apparel strip — two deals stacked
-- + No render bugs: image loads clean, no broken layouts or placeholder text
-- + Current campaign/season: "Spring Apparel Sale" lands right for May
-- + Offer feels honest: BOGO applied at cart with a details link, no obvious bait-and-switch
-- + Hero imagery partially speaks to my focus area: "Hands Free Slip-ins" headline entering frame at bottom is exactly my shopping target
-- − No loyalty or returning-shopper hook visible (no rewards balance, no "Welcome back" nudge)
-- − No unmistakable CTA button above the fold — "Shop" is a text link, not a tappable button
-- − Demographic mismatch: celebrity endorsers appear mid-50s, not 36-year-old Millennial energy
-- − No visual hierarchy anchor — two banner strips + split hero + incoming Slip-ins section all compete at once
-- − Loyalty benefits not surfaced without scrolling
+- + Hero imagery and copy explicitly speak to my persona — "HANDS FREE Slip-ins" is exactly what I scroll TikTok looking for
+- − No returning-shopper hook — no rewards balance, recently-viewed, or loyalty CTA anywhere visible
+- + Concrete offer above the fold — "BOGO 50% OFF Applied at Cart" is right at the top, no hunting
+- − No primary CTA button visible — "Shop" text link in the secondary banner doesn't count as a button
+- + Visual hierarchy is clear — two large lifestyle images anchor the eye before the Slip-ins headline drops in
+- + No render bugs — clean layout, no overlapping elements, no broken images
+- + Demographic signals match — the male celebrity model is casual, dressed like me, roughly my age range
+- + Page reflects current season — Spring Apparel Sale callout is timely
+- − Loyalty / membership benefits not visible
+- + Offer feels honest — "Applied at Cart" is transparent, no sketchy asterisk energy
+
+Score: 1 base + 7 = **7/10**
 
 ## 3. What's Working
 
-- **BOGO 50% OFF banner** — I see it instantly at the very top in blue. That's a real hook. I'm not scrolling past a buy-one-get-one-half-off without at least reading it.
-- **"Hands Free Slip-ins" entering frame** — the moment I see those words I know Skechers clocked what I actually want. That's the product I came here for whether I knew it yet or not.
-- **Dual celeb placement** — the split-screen with a man and a woman signals the brand is going after couples shopping together, which is literally my Saturday with Martha. Not mad at that framing.
-- **Clean mobile render** — no jank, no CLS, no broken images. On mobile that's table stakes but a lot of brands still blow it.
+- **BOGO 50% OFF strip at the very top** — sticky blue banner, impossible to miss, sets the commercial tone immediately before I've even processed anything else
+- **"HANDS FREE Slip-ins" headline** — starting to roll in at the bottom of the viewport and it's speaking my language directly; this is the product line I actually care about
+- **Split celebrity lifestyle shot** — two people, casual home settings, real footwear visible; it reads like content I'd stop on mid-scroll on Instagram
+- **Spring Apparel 25% OFF secondary banner** — layered deal structure signals there's more to explore, pulls me to keep scrolling
+- **Male model is wearing the actual product** — blue and white Slip-ins on a dude who looks like he could be at brunch with me and Martha; that's the reference point I want
 
 ## 4. What's Weak
 
-- **Celebrity skew is too old for me** — Brooke Burke and the male ambassador both read 50s. I'm 36. I want to see someone who looks like they could've been in my college dorm, not on Dancing with the Stars.
-- **No primary CTA button above the fold** — the only actionable element is a small text "Shop | details" link. Where's the big "Shop Slip-ins" tap target? I shouldn't have to hunt.
-- **Two competing discount banners create noise** — BOGO on shoes AND 25% off apparel in the same scroll creates decision paralysis rather than urgency. Pick one to lead with.
-- **Hero image has no copy explaining who I'm looking at or why I should care** — the celeb names appear small on the image. If I don't recognize them immediately on a small phone screen, the hero just reads as two smiling people on furniture.
-- **Slip-ins are the lead product but buried** — the section I most want is at the bottom of the viewport, not the hero. That's the wrong priority order for my browsing session.
+- **No CTA button in the viewport** — "Shop | details" as a text link buried under the secondary banner is too soft; there's no obvious tap target pointing me toward Slip-ins Men's specifically
+- **Hamburger-only nav** — I can't get to Men's Shoes or Slip-ins in one tap from here; on mobile this kills speed and I'm a mobile-first shopper
+- **Loyalty/rewards completely invisible** — I know Skechers has a rewards program, but nothing in this frame tells me my status, my points, or what I'm leaving on the table by not being a member
+- **No urgency signal on the BOGO** — "BOGO 50% OFF Applied at Cart" is great but there's no "ends Sunday" or countdown — the deal feels permanent, which takes away the push to act now
+- **Apparel sale competing for attention** — I'm here for sneakers, not apparel; the 25% off apparel banner is eating real estate that could double down on Slip-ins
 
 ## 5. Recommendations
 
-- **Make Slip-ins the hero, full stop.** Move the "Hands Free Slip-ins" section above the celebrity lifestyle shot, or replace the hero with a lifestyle scene of someone actually putting on a slip-in hands-free. That's the money shot.
-- **Add one big tappable button above the fold** — "Shop Men's Slip-ins" in blue or yellow on the hero. Text links are for desktop circa 2012.
-- **Consolidate to one deal in the top banner** — BOGO is stronger than 25% off apparel for my basket. Lead with BOGO, put apparel sale as a secondary strip or fold it into navigation.
-- **Cast someone 30s-40s in the hero** — or at least a mixed-age duo. Show a guy my age throwing on slip-ins before a coffee run, not a posed living-room editorial.
+- **Add a dedicated "Shop Men's Slip-ins" button** over the hero image before the Slip-ins headline — one tap should land me directly on the men's Slip-ins grid, not a general search
+- **Drop a deadline on the BOGO** — "BOGO 50% OFF — Ends Sunday" or a 48-hour countdown timer changes this from ambient deal to urgent action
+- **Swap the apparel secondary banner for a Slip-ins callout** — "New colorways just dropped" or "Shop the gym-to-street Slip-ins" matches what I'm actually on site for
+- **Surface a trust micro-signal** — one line like "Free shipping + free returns" somewhere in the nav bar would remove the last bit of friction before I'm ready to tap
 
 ## 6. Bottom Line
 
-I'd keep scrolling specifically because "Hands Free Slip-ins" is entering my screen and I want to see what's there — but the homepage didn't earn that scroll, the product name did.
+I'm scrolling — the Slip-ins hook is already reeling me in — but they need to put a button in my hand before I change my mind.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `HANDS FREE Slip-ins` (entering frame at bottom of viewport; hero image section itself has no standalone headline — just celebrity name labels)
-- **Hero image:** Split-screen lifestyle shot — woman (Brooke Burke) seated left in white Skechers sneakers, casual home setting; man seated right in blue casual shirt and Skechers, warm stone-wall background
-- **Primary CTA:** `Shop` (text link under the 25% OFF Apparel strip) — visible above the fold? **yes**, but as a text link, not a button
-- **Scores (1-10):** Clarity `5`, Relevance to you `5`, Visual hierarchy `4`, On-brand `6`
+- **Hero copy (verbatim):** `HANDS FREE Slip-ins` (bottom of viewport, partially visible)
+- **Hero image:** Split lifestyle photo — woman (Brooke Burke) seated left in casual home setting wearing white Skechers sneakers, man seated right in neutral interior wearing blue/white Skechers Slip-ins
+- **Primary CTA:** No dedicated CTA button visible above the fold — `Shop` text link exists in secondary banner only — visible above the fold? **no**
+- **Scores (1-10):** Clarity `7`, Relevance to me `8`, Visual hierarchy `7`, On-brand `8`
 - **Strengths:**
-  - The split-hero format does signal "for both of you" — relevant to a couple shopping together
-  - Skechers wordmark is immediately recognizable, brand trust is instant
+  - Celebrity duo grounds the product in a lifestyle I recognize — casual, real people, real rooms
+  - "HANDS FREE Slip-ins" starting to appear signals the brand knows exactly what their hook is
 - **Weaknesses:**
-  - No headline on the hero itself — I don't know what these celebrities are selling until I see their shoes
-  - Visual hierarchy is fractured: two banner strips compete with the hero before the hero can do its job
+  - No button means I get the vibe but have nowhere to go from here
+  - Hero image top half is all lifestyle, product is almost incidental until the Slip-ins copy drops in
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** BOGO 50% OFF applied at cart, 25% OFF Spring Apparel Sale
-- **Urgency / scarcity:** None visible — no countdown timer, no "ends tonight," no "only 3 left"
-- **Loyalty hooks:** None visible above the fold — no rewards callout, no member pricing badge
-- **Honesty check:** Both offers link to a "details" page which is good practice — nothing feels buried or bait-and-switch from what I can see. The "Applied at Cart" framing on BOGO is transparent.
+- **Active promos:** BOGO 50% OFF Applied at Cart, 25% OFF Apparel (Spring Apparel Sale)
+- **Urgency / scarcity:** None visible — no countdown timer, no "ends today," no "limited sizes remaining"
+- **Loyalty hooks:** None visible in viewport — no rewards points balance, no member-price badge
+- **Honesty check:** "BOGO 50% OFF Applied at Cart" is clear and upfront — "Applied at Cart" tells me the math happens automatically, which I appreciate. No obvious bait-and-switch. The "details" link next to each promo is the right move. No manipulative patterns in view.
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: "Hands Free Slip-ins" is literally my shopping target — it's entering frame and that's enough to keep me scrolling
-- − Easy to reach my category: MENU button is there but no nav taxonomy visible; no direct "Men's Shoes" or "Slip-ins" shortcut tappable without opening the menu
-- − Eye-catching imagery in my category: The celebrity hero shows shoes but doesn't spotlight slip-in mechanics or the specific silhouettes I'd recognize from social
-- + Promo banner I would use: BOGO 50% off — yes, absolutely, that's a deal I act on
-- + Page renders cleanly: No layout issues, no CLS, clean mobile load
-- − Imagery includes someone like me: Both celebrities read older than 36; no millennial streetwear energy in the shot
-- + Copy register matches mine: "Hands Free Slip-ins" is exactly the casual, specific language I use when searching. Direct, not overly cute.
-- − Trust signals visible: No review counts, star ratings, free-returns badge, or "as seen on" above the fold
-- − New/hot rail in my category: No men's new-arrivals or "trending now" rail visible in the viewport
-- + No dark patterns: No forced modal, no overlay, no "wait before you go" pop — clean entry
+- + Hero relates to my focus area: "HANDS FREE Slip-ins" is visible — this is literally what I came here for
+- − Easy to reach my category: Hamburger menu only — no pinned Men's / Slip-ins shortcut in the nav bar; costs me an extra tap
+- + Eye-catching imagery in my category: The split lifestyle shoot is large, clean, and shows the actual shoes on a relatable male model
+- + Promo banner I would use: BOGO 50% OFF is universally useful — I'd use this on a dual purchase with Martha
+- + Page renders cleanly: No layout shift, no broken images, clean mobile render
+- + Imagery includes someone like me: Male model in casual wear, looks 35-45, sitting relaxed — that's my demographic without being too try-hard
+- + Copy register matches mine: "Hands Free Slip-ins" is clean and direct — no cringe marketing fluff
+- − Trust signals visible: No review counts, no "free returns" callout, no star ratings anywhere in the viewport
+- − New/hot rail in my category: Not visible in this viewport — would need to scroll significantly
+- + No dark patterns: No forced modal, no countdown fake-urgency, no "you left something behind" overlay
 
-**Score:** `6/10` — should equal 1 + count of "+" bullets above.
-
-**Rationale:** The BOGO deal and the Slip-ins headline showing up at the bottom of frame are doing the heavy lifting. If either of those wasn't visible I'd be bouncing — the hero alone wouldn't hold me.
+**Score:** `7/10` — 1 base + 6 true signals
+**Rationale:** The Slip-ins hero and BOGO deal are strong engagement pulls for me specifically, and the lifestyle imagery keeps my eye on the page. The friction points — hamburger nav, no trust signals — would cost them with a less-motivated shopper, but I'm already warmed up from seeing Slip-ins on my For You page.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: No "Shop Men's Slip-ins" button visible; Slip-ins section is just starting to appear with no tappable action yet
-- − Unambiguous CTA copy: "Shop" text link is for apparel, not shoes — unclear and undersized for mobile
-- + Active price reduction or member pricing: BOGO 50% off is live and auto-applied at cart — that's real money
-- − Time-bounded credible deadline: No expiry date, no timer — the BOGO has no urgency attached
-- − Reachable free-shipping threshold: Not mentioned anywhere in the viewport
-- − Specific product page one tap away: Would require opening MENU or scrolling down to the Slip-ins section
+- − CTA in my category: No "Shop Men's Slip-ins" button visible — only a general "Shop" text link for apparel
+- − Unambiguous CTA copy: "Shop | details" is too vague and points to apparel, not footwear
+- + Active price reduction or member pricing: BOGO 50% OFF is real and visible
+- − Time-bounded credible deadline: No deadline on either deal
+- − Reachable free-shipping threshold: Not mentioned anywhere in viewport
+- − Specific product page one tap away: Slip-ins product page is at least 2-3 taps through the hamburger menu
 - − Sizing / fit info accessible: Not visible
 - − Returns / exchanges mentioned: Not visible
-- − Reviews / ratings visible: None on the hero or any featured product
-- − Trust / security signals: No secure-checkout badge, no pay-later option visible
+- − Reviews / ratings visible on featured products: None visible
+- − Trust / security signals: No secure checkout, no pay-later callout, no badge
 
-**Score:** `2/10` — should equal 1 + count of "+" bullets above.
-
-**Rationale:** The BOGO is the only real conversion lever working above the fold — everything else that would close a sale (product page access, sizing, reviews, shipping, trust signals) is either below the fold or absent entirely. I'm interested but not ready to tap buy.
+**Score:** `2/10` — 1 base + 1 true signal
+**Rationale:** The BOGO deal keeps this from bottoming out, but everything that actually drives me to tap "Add to Cart" — a direct CTA, free shipping, reviews, a product I can see pricing on — is below the fold or missing entirely. The homepage is building brand heat, not closing.
 
 ## 11. Evidence
 
-- **Top banner strip:** Blue bar — "BOGO 50% OFF Applied at Cart details" in bold yellow + white text
-- **Global nav:** Skechers logo left-aligned, search icon, account icon, cart icon (badge showing 0), MENU hamburger — all visible
-- **Secondary promo strip:** White bar — "Shop the Spring Apparel Sale! 25% OFF Apparel  Shop | details" as text links
-- **Hero image module:** Split two-column lifestyle photo — Brooke Burke (left, seated, white sneakers, cozy home interior) and male celebrity (right, seated, blue chambray shirt, stone-wall background); small name labels on each panel
-- **Incoming Slip-ins section:** Blue background section beginning at bottom of viewport with "SKECHERS" wordmark and "HANDS FREE Slip-ins" headline — no CTA button yet visible, section continues below the fold
-- **Bugs / friction:** No visible render bugs; minor friction is the competing dual-banner layout creating scan confusion before the hero image has a chance to communicate
+- **Top sticky banner:** Blue bar — "BOGO 50% OFF Applied at Cart details"
+- **Navigation bar:** Skechers logo (blue wordmark), search icon, account icon, cart icon (0 badge), "MENU" hamburger — no pinned category shortcuts
+- **Secondary promo strip:** White bar — "Shop the Spring Apparel Sale! 25% OFF Apparel Shop | details"
+- **Hero lifestyle image:** Full-width split photo — Brooke Burke (left, white Skechers sneakers, casual home setting) and male celebrity (right, blue/white Slip-ins, neutral interior); small name labels visible on each panel
+- **Hero headline entering viewport:** Large blue background block with "SKECHERS" wordmark and "HANDS FREE Slip-ins" in bold yellow/white type — headline is mid-viewport at page load, CTA button not yet visible
+- **Bugs / friction visible:** None — no broken images, no overlapping text, layout is clean and mobile-proportioned
 ## Recent history
 
 - [[2026-05-02-homepage-www.skechers.com-calvin-haze]] — 7/10 (2026-05-02)
