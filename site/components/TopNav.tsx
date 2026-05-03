@@ -37,7 +37,7 @@ export function TopNav({
   // Legal pages — render the wordmark only (clickable home link), no tabs.
   // Visitors may be unauthed (linked from the footer on the login page),
   // and we don't want to imply an authed UI with tabs + Sign out.
-  const WORDMARK_ONLY_PATHS = ["/terms", "/privacy"];
+  const WORDMARK_ONLY_PATHS = ["/terms", "/privacy", "/scoring"];
   if (
     WORDMARK_ONLY_PATHS.some(
       (p) => pathname === p || pathname.startsWith(p + "/")
