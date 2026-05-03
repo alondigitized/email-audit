@@ -15,6 +15,9 @@ import { TabNav } from "@/components/TabNav";
 import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
 import { InventoryPane } from "./InventoryPane";
 import { BackLink } from "./BackLink";
+import { RewritesPanel } from "./RewritesPanel";
+import { eq as drizzleEq } from "drizzle-orm";
+import { db, reactions, personas as personasTable } from "@/lib/db/client";
 
 // S7: per-user filtering means we can't statically pre-render slugs.
 export const dynamic = "force-dynamic";
@@ -305,6 +308,27 @@ export default async function AuditPage({
   // isn't configured (local dev without keys), falls through to legacy paths.
   const { heroUrl, stepUrls } = await resolveAllImageUrls(audit);
 
+  // Rewrites (persisted on reaction.rewrites) + persona display name for
+  // the Rewrites tab. Both are owned by the persona side of the v3 split,
+  // not the experience, so we query them by slug here.
+  const [rewriteRow] = await db
+    .select({ rewrites: reactions.rewrites })
+    .from(reactions)
+    .where(drizzleEq(reactions.slug, slug))
+    .limit(1);
+  const rewrites = (rewriteRow?.rewrites ?? null) as
+    | React.ComponentProps<typeof RewritesPanel>["rewrites"]
+    | null;
+  let personaDisplayName = audit.persona ?? "the persona";
+  if (audit.persona) {
+    const [pr] = await db
+      .select({ short: personasTable.short, name: personasTable.name })
+      .from(personasTable)
+      .where(drizzleEq(personasTable.slug, audit.persona))
+      .limit(1);
+    personaDisplayName = pr?.short ?? pr?.name ?? audit.persona;
+  }
+
   // Inventory audits (Ivy) ship a sidecar CSV with one row per (PLP, style,
   // color, width, size) PLUS a per-(style, color, width) PDP screenshot.
   // When the audit row carries `inventory.csv_key`, mint a short-lived
@@ -492,6 +516,26 @@ export default async function AuditPage({
                       inventory={audit.inventory}
                       signedScreenshotUrls={variantScreenshotUrls}
                       csvUrl={inventoryCsvUrl}
+                    />
+                  ),
+                },
+              ]
+            : []),
+          // Rewrites tab — only when the audit has a persona attached.
+          // Public-funnel rules out a "rewrite" surface for unsigned
+          // walker.legacy rows; we gate on audit.persona to be safe.
+          ...(audit.persona
+            ? [
+                {
+                  id: "rewrites",
+                  label: rewrites
+                    ? `Rewrites (${rewrites.alternatives.length})`
+                    : "Rewrites",
+                  content: (
+                    <RewritesPanel
+                      slug={audit.slug}
+                      personaName={personaDisplayName}
+                      rewrites={rewrites}
                     />
                   ),
                 },
