@@ -16,6 +16,8 @@ import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
 import { InventoryPane } from "./InventoryPane";
 import { BackLink } from "./BackLink";
 import { RewritesPanel } from "./RewritesPanel";
+import { CollapsibleReview } from "./CollapsibleReview";
+import type { ReviewSections } from "@/lib/schema/audit";
 import { eq as drizzleEq } from "drizzle-orm";
 import { db, reactions, personas as personasTable } from "@/lib/db/client";
 
@@ -63,6 +65,8 @@ function TwoColLayout({
 // aligned.
 function ReviewPane({
   markdown,
+  sections,
+  channel,
   isSiteJourney,
   hasImage,
   heroUrl,
@@ -71,6 +75,11 @@ function ReviewPane({
   stepUrls,
 }: {
   markdown: string | null;
+  // Structured sections from data.review.sections. When populated we
+  // render the collapsible accordion; falls back to the raw markdown
+  // for legacy / technical-tab paths.
+  sections?: ReviewSections | null;
+  channel?: "email" | "site" | null;
   isSiteJourney: boolean;
   hasImage: boolean;
   heroUrl: string | null;
@@ -78,7 +87,11 @@ function ReviewPane({
   journeySteps: JourneyStep[];
   stepUrls: Record<number, string | null>;
 }) {
-  const card = markdown ? (
+  const hasStructuredSections =
+    !!sections && Object.values(sections).some((v) => Array.isArray(v) && v.length > 0);
+  const card = hasStructuredSections && sections ? (
+    <CollapsibleReview sections={sections} channel={channel ?? null} />
+  ) : markdown ? (
     <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
       <ReviewContent markdown={markdown} />
     </div>
@@ -497,6 +510,8 @@ export default async function AuditPage({
             content: (
               <ReviewPane
                 markdown={content}
+                sections={review.sections as ReviewSections}
+                channel={audit.type ?? "email"}
                 isSiteJourney={isSiteJourney}
                 hasImage={hasImage}
                 heroUrl={heroUrl}
