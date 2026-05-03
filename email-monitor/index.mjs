@@ -304,9 +304,12 @@ async function generateReview(message, { images = [], label = 'review' } = {}) {
 // review is written in that specific persona's voice. Falls back to a
 // generic reviewer prompt if the persona file can't be loaded.
 const PERSONA_CACHE = new Map();
-function loadPersona(slug) {
+async function loadPersona(slug) {
   if (!slug) return null;
   if (PERSONA_CACHE.has(slug)) return PERSONA_CACHE.get(slug);
+
+  // Path 1: legacy filesystem JSON (walker, martha, calvin-haze) —
+  // hand-curated identity files used pre-DB.
   try {
     const p = path.join(
       path.dirname(__dirname),
@@ -317,7 +320,46 @@ function loadPersona(slug) {
     const data = JSON.parse(fs.readFileSync(p, 'utf8'));
     PERSONA_CACHE.set(slug, data);
     return data;
-  } catch {
+  } catch {}
+
+  // Path 2: DB lookup — every persona seeded via /admin/personas/new or
+  // the wizard lives in the persona table with profile.identity. Reshape
+  // to the same flat keys buildContentPrompt expects (name, age,
+  // generation, gender, style, shopping_habits, tech_comfort,
+  // focus_areas) so the prompt builder doesn't care about the source.
+  try {
+    const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
+    if (!url) {
+      PERSONA_CACHE.set(slug, null);
+      return null;
+    }
+    const { neon } = await import('@neondatabase/serverless');
+    const sql = neon(url);
+    const rows = await sql`SELECT name, profile FROM persona WHERE slug = ${slug} LIMIT 1`;
+    const r = rows[0];
+    if (!r?.profile?.identity) {
+      PERSONA_CACHE.set(slug, null);
+      return null;
+    }
+    const id = r.profile.identity;
+    const data = {
+      slug,
+      name: r.name ?? id.name,
+      age: id.age,
+      generation: id.generation,
+      gender: id.gender,
+      style: id.style,
+      shopping_habits: id.shopping_habits,
+      tech_comfort: id.tech_comfort,
+      focus_areas: id.focus_areas ?? [],
+      site: r.profile.journey?.site ?? null,
+      search_term: r.profile.journey?.search_term ?? null,
+      category_path: r.profile.journey?.category_path ?? [],
+    };
+    PERSONA_CACHE.set(slug, data);
+    return data;
+  } catch (err) {
+    log('loadPersona DB fallback failed', { slug, err: String(err).slice(0, 200) });
     PERSONA_CACHE.set(slug, null);
     return null;
   }
@@ -399,12 +441,12 @@ function buildContentPrompt(msg, screenshotPath, persona = null) {
     '**Click Likelihood (1-10)** — assuming you opened, how likely YOU',
     'would click a CTA in the body. Add 1 per signal:',
     '- Hero offer is visible without scrolling on mobile',
-    '- Primary CTA is in YOUR category (Men\'s Shoes if you are Walker)',
-    '- CTA copy is specific ("Shop Slip-ins", not "Discover")',
+    '- Primary CTA is in YOUR category / focus area',
+    '- CTA copy is specific (a verb + a noun, not "Discover")',
     '- Offer reduces price OR has loyalty member pricing',
     '- Offer is time-bounded with credible deadline',
     '- One specific product / hero linked (not just to homepage)',
-    '- Sizing / fit / availability info visible (relevant for footwear)',
+    '- Product detail you care about (sizing, fit, availability, ingredients, etc.) is visible',
     '- Reviews or social proof visible',
     '- Brand voice is consistent and trusted',
     '- No friction — no "view in browser" first, no broken-image gaps',
@@ -877,7 +919,7 @@ async function processMessage(client, state, inboxId, persona, message, source =
     if (rendered) {
       // Both agents run concurrently: content reviews the screenshot, technical reviews HTML.
       // Content review gets the persona identity so the voice matches the inbox's owner.
-      const personaIdentity = loadPersona(persona);
+      const personaIdentity = await loadPersona(persona);
       [contentReview, technicalReview] = await Promise.all([
         generateReview(buildContentPrompt(fullMessage, rendered, personaIdentity), { images: [rendered], label: 'content-review' }),
         generateReview(buildTechnicalPrompt(fullMessage, qaContext), { label: 'technical-review' }),
@@ -999,7 +1041,7 @@ async function processCloudflareEmail(row) {
 
     let contentReview, technicalReview;
     if (rendered) {
-      const personaIdentity = loadPersona(personaSlug);
+      const personaIdentity = await loadPersona(personaSlug);
       [contentReview, technicalReview] = await Promise.all([
         generateReview(buildContentPrompt(msg, rendered, personaIdentity), {
           images: [rendered],
