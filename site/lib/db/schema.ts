@@ -662,6 +662,11 @@ export const reactions = pgTable(
     score: numeric("score", { precision: 5, scale: 2 }),
     // The persona's voiced review (sections, raw_markdown, predictions).
     reviewData: jsonb("review_data").notNull(),
+    // Persona-voiced rewrite alternatives generated on-demand from the
+    // audit detail page. Shape: { generated_at, baseline_score,
+    // alternatives: [{ dimension, text, predicted_score, rationale }] }.
+    // Null until the user clicks "Ask {persona} to rewrite".
+    rewrites: jsonb("rewrites"),
     // Tenant scope mirrors the experience's tenant scope.
     tenantId: uuid("tenant_id").references(() => tenants.id, { onDelete: "restrict" }),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
