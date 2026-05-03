@@ -12,6 +12,7 @@ const PUBLIC_PREFIXES = [
   "/signup",
   "/terms", // public-facing legal page; must be reachable pre-signup
   "/privacy",
+  "/scoring", // public methodology / rubric explainer
   "/r/", // referral landing pages
   "/waitlist-status",
   "/auth/verify", // two-step magic-link confirm page
