@@ -60,7 +60,68 @@ export default async function LaptopQueuePage() {
           Queue is empty.
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+        <>
+        {/* Mobile: stacked cards */}
+        <ul className="sm:hidden flex flex-col gap-3">
+          {rows.map((r) => {
+            const pill = statusPill(r.status);
+            return (
+              <li key={r.id} className="bg-white border border-gray-200 rounded-2xl p-4">
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="font-mono text-xs font-semibold break-all">
+                    {r.personaSlug}
+                  </div>
+                  <span
+                    className={`shrink-0 text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${pill.cls}`}
+                  >
+                    {pill.label}
+                  </span>
+                </div>
+                <dl className="text-xs space-y-1 mb-2">
+                  <div className="flex gap-2">
+                    <dt className="text-muted w-14 shrink-0">Tenant</dt>
+                    <dd className="font-mono break-all">{r.tenantSlug}</dd>
+                  </div>
+                  <div className="flex gap-2">
+                    <dt className="text-muted w-14 shrink-0">Owner</dt>
+                    <dd className="font-mono break-all">{r.ownerEmail}</dd>
+                  </div>
+                </dl>
+                {r.status === "queued" && (
+                  <code className="block mb-2 text-[11px] bg-gray-900 text-gray-100 px-2 py-1 rounded break-all">
+                    node scripts/onboard-persona.mjs {r.personaSlug}
+                  </code>
+                )}
+                <div className="flex gap-2 flex-wrap">
+                  {r.status === "queued" && (
+                    <form action={claimJobFormAction} className="flex-1">
+                      <input type="hidden" name="jobId" value={r.id} />
+                      <button
+                        type="submit"
+                        className="w-full px-3 py-2 bg-sky-600 text-white rounded-lg text-sm font-medium"
+                      >
+                        Claim
+                      </button>
+                    </form>
+                  )}
+                  {(r.status === "running" || r.status === "queued") && (
+                    <form action={markDoneFormAction} className="flex-1">
+                      <input type="hidden" name="jobId" value={r.id} />
+                      <button
+                        type="submit"
+                        className="w-full px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium"
+                      >
+                        Mark done
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        {/* Desktop: table */}
+        <div className="hidden sm:block bg-white border border-gray-200 rounded-2xl overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
               <tr>
@@ -127,6 +188,7 @@ export default async function LaptopQueuePage() {
             </tbody>
           </table>
         </div>
+        </>
       )}
     </div>
   );
