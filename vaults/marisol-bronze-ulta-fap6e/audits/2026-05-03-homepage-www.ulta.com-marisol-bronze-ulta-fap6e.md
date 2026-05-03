@@ -12,147 +12,164 @@ tags: [site-journey, score-8, sender/www-ulta-com]
 **Score:** 8/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Okay, Ulta is doing what Ulta does — leading with a big sitewide sale and hitting me with the rewards popover the second I land. It reads immediately as a deals-first retailer, which honestly tracks with why I come here: one cart, prestige and drugstore, all under one Rewards roof. Right now the push is a BOPIS20 code for 20% off 160+ brands, which is genuinely good, but the homepage feels more "promotional flyer" than "editorial beauty destination."
+- Okay, Ulta knows exactly who I am the second I land. The rewards modal pops before I can even see the hero — which, honestly, felt a little aggressive, but the payoff was immediate: 5X points on fragrance, Prada and D&G bottles front and center, and a May 9 deadline that made me tap instinctively. This is a loyalty-first, prestige-leaning beauty push, and it's aimed squarely at my wallet.
 - **8/10**
-- + Hero speaks to my focus area: a sitewide beauty deal covering 160+ brands, both mass and prestige, is exactly my lane
-- + Returning-shopper hook visible: the Rewards popover calls out points, birthday perks, and a $5 sign-up bonus — loyalty is front and center
-- + Concrete offer above the fold: "20% off 160+ brands" with code BOPIS20 and an end date
-- + Primary CTA above the fold: black "Shop now" button, can't miss it
-- + Visual hierarchy is clear: offer card dominates, rewards pop, search bar accessible
-- + No render bugs: layout looks clean on mobile
-- + Current campaign: "Online only | Ends May 7" is timely, not stale
-- + Offer feels honest: code is shown, end date is shown, BOPIS qualifier is explicit
-- − Demographic signals are generic: no lifestyle imagery, no person visible — could be targeting anyone 18–65
-- − Loyalty popup targets non-members: as a Diamond member, "Unlock $5 just for joining" is not for me — my Diamond perks and current points balance are nowhere
+- + Hero copy/imagery speaks to my persona: prestige fragrance brands (Prada, Dolce & Gabbana) visible immediately — hits my prestige-plus-mass shopping identity
+- + Returning-shopper hook: Rewards modal is the first thing I see — "$5* for joining," Birthday Perks, Points = $ off — three-bullet loyalty pitch front and center
+- + Concrete offer above the fold: "Earn 5X points on fragrance purchases" plus "$35+ free same day delivery" in the top bar
+- + Unmistakable primary CTA: "Activate" in a solid black button — no ambiguity
+- − Visual hierarchy: modal overlay stacks on top of the promo card, creating a double-attention split — eye doesn't land cleanly anywhere
+- + No render bugs: layout is clean, no broken images, no text overlap
+- + Demographic signals: Prada + D&G = prestige-beauty shopper, not mass-only — matches my Ultamate Diamond sensibility
+- + Current campaign/season: "Ends May 9" deadline anchors the page to right now
+- + Loyalty benefits visible without scrolling: the modal literally forces them into view
+- + Offer feels honest: "Exclusions apply" is stated on the card; $5* asterisk is noted — fine print exists but is disclosed
 
 ## What's working
 
-- **The BOPIS20 offer card** is impossible to miss — "20% off 160+ brands" in giant text with a deadline is exactly the urgency trigger that makes me open the app in the first place
-- **Free same-day delivery at $35** in the top bar answers my #1 practical question before I even think to ask it — that threshold is very reachable for me
-- **The Rewards popover**, while targeted at non-members, still surfaces the loyalty program immediately; it keeps top-of-mind that points stack on this purchase
-- **The "Ends May 7" label** on the hero card and a second "Ends May 10" teaser below the fold create layered urgency — I know I'm in a real promo window, not just a permanent sale page
-- **Search bar is prominent** — for a Diamond member who already knows what she wants (Rare Beauty setting spray, e.l.f. dupe, whatever), tap-to-search is the fastest path
+- **The rewards modal** — as a Diamond member who actively tracks my points, seeing "$5* just for joining," Birthday Perks, and "Points = $ off" summarized in three checkmarks is immediately validating. I know this program and I'm reminded why I'm in it.
+- **5X points on fragrance + "Ends May 9"** — the deadline with the multiplier is exactly the kind of time-sensitive nudge that makes me Activate right now instead of waiting.
+- **Prestige fragrance imagery** — Prada and Dolce & Gabbana bottles on the card immediately signal this isn't a drugstore-tier push. It's speaking to the half of me that researches $120 perfumes.
+- **Free same-day delivery at $35** in the sticky top bar — that threshold is totally reachable for a fragrance top-up, and it removes my biggest mobile-shopping hesitation.
 
 ## What's weak
 
-- **The Rewards popover is new-member messaging on a returning-member's screen** — "Unlock $5 just for joining" and "Sign in or join for free" means Ulta doesn't know I'm already a Diamond member, which feels like a breakdown in personalization
-- **No Diamond-tier callout** — my points balance, my Diamond benefits, my upcoming 21 Days of Beauty access — none of that is visible; I'm treated like an anonymous guest
-- **Zero lifestyle imagery above the fold** — illustrated icons (box, car, envelope) and a shopping bag are charming but tell me nothing about the actual products in the sale; as someone who posts dupe comparisons, I want to see the products themselves
-- **"Shop now" is vague** — 160+ brands is huge, and the CTA doesn't filter by category (skincare, makeup, haircare); I have no idea where tapping takes me
-- **The right-side carousel card is cropped** — I can see "M" and "Fr" peeking in, suggesting there's a second promo card that's half off-screen with no affordance telling me to swipe
+- **The modal as a dark pattern** — I already have an Ulta account. Hitting me with a "join for free!" popup as a Diamond member feels like a miss. Should be showing my actual rewards balance, not a generic acquisition pitch.
+- **No lifestyle imagery of anyone** — I see perfume bottles but zero humans. For a beauty brand targeting a 31-year-old who follows beauty creators, there's no aspirational reference point.
+- **"Deals for you — 12 items" is barely visible** and not rendered yet — the section teases personalization but delivers nothing above the fold. That's a wasted hook.
+- **The right-side card is completely cut off** — the "Or..." card is sliced out of frame with no affordance that it's swipeable. On mobile this is a real discoverability issue.
 
 ## Recommendations
 
-- **Replace the generic rewards popup with a personalized Diamond banner** — if I'm logged in, show "Welcome back, Diamond member — you have X points ready to redeem" instead of a recruitment pitch for people who haven't joined yet
-- **Add one product hero image** — swap the illustrated shopping-bag graphic for an actual product flatlay or a quick lifestyle shot featuring something in the 20% off sale (a Dior lip oil next to an e.l.f. dupe, for example — that's literally my content)
-- **Make "Shop now" category-smart** — add quick-tap pills below the CTA ("Skincare · Makeup · Haircare · Fragrance") so I can skip the browse and get to my department in one tap
-- **Add a swipe indicator or a "and more deals" label** to the carousel so I know to swipe right without guessing
+- **Swap the generic sign-in modal for a logged-in member widget** — show my actual point balance and my next tier reward. "You have 3,847 points — redeem now" converts way harder than a join prompt for someone already Diamond.
+- **Add a lifestyle shot to the fragrance card** — even a quick A/B with a real woman spritzing a wrist would lift click-through; product-only shots feel catalog-cold on mobile.
+- **Make the horizontal card rail swipeable with a visible peek** — right now the right card is invisibly cut off. Add a partial card peek (20–30px) so I know to swipe.
+- **Surface the "Deals for you" module one scroll earlier** — the personalization signal ("12 items curated for you") is the strongest conversion lever on the page and it's buried below the fold.
 
 ## Full review
 ## 1. Executive Summary
 
-Okay, Ulta is doing what Ulta does — leading with a big sitewide sale and hitting me with the rewards popover the second I land. It reads immediately as a deals-first retailer, which honestly tracks with why I come here: one cart, prestige and drugstore, all under one Rewards roof. Right now the push is a BOPIS20 code for 20% off 160+ brands, which is genuinely good, but the homepage feels more "promotional flyer" than "editorial beauty destination."
+Okay, Ulta knows exactly who I am the second I land. The rewards modal pops before I can even see the hero — which, honestly, felt a little aggressive, but the payoff was immediate: 5X points on fragrance, Prada and D&G bottles front and center, and a May 9 deadline that made me tap instinctively. This is a loyalty-first, prestige-leaning beauty push, and it's aimed squarely at my wallet.
 
 ## 2. Business Impact Score (1-10)
 
 **8/10**
-- + Hero speaks to my focus area: a sitewide beauty deal covering 160+ brands, both mass and prestige, is exactly my lane
-- + Returning-shopper hook visible: the Rewards popover calls out points, birthday perks, and a $5 sign-up bonus — loyalty is front and center
-- + Concrete offer above the fold: "20% off 160+ brands" with code BOPIS20 and an end date
-- + Primary CTA above the fold: black "Shop now" button, can't miss it
-- + Visual hierarchy is clear: offer card dominates, rewards pop, search bar accessible
-- + No render bugs: layout looks clean on mobile
-- + Current campaign: "Online only | Ends May 7" is timely, not stale
-- + Offer feels honest: code is shown, end date is shown, BOPIS qualifier is explicit
-- − Demographic signals are generic: no lifestyle imagery, no person visible — could be targeting anyone 18–65
-- − Loyalty popup targets non-members: as a Diamond member, "Unlock $5 just for joining" is not for me — my Diamond perks and current points balance are nowhere
+
+- + Hero copy/imagery speaks to my persona: prestige fragrance brands (Prada, Dolce & Gabbana) visible immediately — hits my prestige-plus-mass shopping identity
+- + Returning-shopper hook: Rewards modal is the first thing I see — "$5* for joining," Birthday Perks, Points = $ off — three-bullet loyalty pitch front and center
+- + Concrete offer above the fold: "Earn 5X points on fragrance purchases" plus "$35+ free same day delivery" in the top bar
+- + Unmistakable primary CTA: "Activate" in a solid black button — no ambiguity
+- − Visual hierarchy: modal overlay stacks on top of the promo card, creating a double-attention split — eye doesn't land cleanly anywhere
+- + No render bugs: layout is clean, no broken images, no text overlap
+- + Demographic signals: Prada + D&G = prestige-beauty shopper, not mass-only — matches my Ultamate Diamond sensibility
+- + Current campaign/season: "Ends May 9" deadline anchors the page to right now
+- + Loyalty benefits visible without scrolling: the modal literally forces them into view
+- + Offer feels honest: "Exclusions apply" is stated on the card; $5* asterisk is noted — fine print exists but is disclosed
+
+---
 
 ## 3. What's Working
 
-- **The BOPIS20 offer card** is impossible to miss — "20% off 160+ brands" in giant text with a deadline is exactly the urgency trigger that makes me open the app in the first place
-- **Free same-day delivery at $35** in the top bar answers my #1 practical question before I even think to ask it — that threshold is very reachable for me
-- **The Rewards popover**, while targeted at non-members, still surfaces the loyalty program immediately; it keeps top-of-mind that points stack on this purchase
-- **The "Ends May 7" label** on the hero card and a second "Ends May 10" teaser below the fold create layered urgency — I know I'm in a real promo window, not just a permanent sale page
-- **Search bar is prominent** — for a Diamond member who already knows what she wants (Rare Beauty setting spray, e.l.f. dupe, whatever), tap-to-search is the fastest path
+- **The rewards modal** — as a Diamond member who actively tracks my points, seeing "$5* just for joining," Birthday Perks, and "Points = $ off" summarized in three checkmarks is immediately validating. I know this program and I'm reminded why I'm in it.
+- **5X points on fragrance + "Ends May 9"** — the deadline with the multiplier is exactly the kind of time-sensitive nudge that makes me Activate right now instead of waiting.
+- **Prestige fragrance imagery** — Prada and Dolce & Gabbana bottles on the card immediately signal this isn't a drugstore-tier push. It's speaking to the half of me that researches $120 perfumes.
+- **Free same-day delivery at $35** in the sticky top bar — that threshold is totally reachable for a fragrance top-up, and it removes my biggest mobile-shopping hesitation.
+
+---
 
 ## 4. What's Weak
 
-- **The Rewards popover is new-member messaging on a returning-member's screen** — "Unlock $5 just for joining" and "Sign in or join for free" means Ulta doesn't know I'm already a Diamond member, which feels like a breakdown in personalization
-- **No Diamond-tier callout** — my points balance, my Diamond benefits, my upcoming 21 Days of Beauty access — none of that is visible; I'm treated like an anonymous guest
-- **Zero lifestyle imagery above the fold** — illustrated icons (box, car, envelope) and a shopping bag are charming but tell me nothing about the actual products in the sale; as someone who posts dupe comparisons, I want to see the products themselves
-- **"Shop now" is vague** — 160+ brands is huge, and the CTA doesn't filter by category (skincare, makeup, haircare); I have no idea where tapping takes me
-- **The right-side carousel card is cropped** — I can see "M" and "Fr" peeking in, suggesting there's a second promo card that's half off-screen with no affordance telling me to swipe
+- **The modal as a dark pattern** — I already have an Ulta account. Hitting me with a "join for free!" popup as a Diamond member feels like a miss. Should be showing my actual rewards balance, not a generic acquisition pitch.
+- **No lifestyle imagery of anyone** — I see perfume bottles but zero humans. For a beauty brand targeting a 31-year-old who follows beauty creators, there's no aspirational reference point.
+- **"Deals for you — 12 items" is barely visible** and not rendered yet — the section teases personalization but delivers nothing above the fold. That's a wasted hook.
+- **The right-side card is completely cut off** — the "Or..." card is sliced out of frame with no affordance that it's swipeable. On mobile this is a real discoverability issue.
+
+---
 
 ## 5. Recommendations
 
-- **Replace the generic rewards popup with a personalized Diamond banner** — if I'm logged in, show "Welcome back, Diamond member — you have X points ready to redeem" instead of a recruitment pitch for people who haven't joined yet
-- **Add one product hero image** — swap the illustrated shopping-bag graphic for an actual product flatlay or a quick lifestyle shot featuring something in the 20% off sale (a Dior lip oil next to an e.l.f. dupe, for example — that's literally my content)
-- **Make "Shop now" category-smart** — add quick-tap pills below the CTA ("Skincare · Makeup · Haircare · Fragrance") so I can skip the browse and get to my department in one tap
-- **Add a swipe indicator or a "and more deals" label** to the carousel so I know to swipe right without guessing
+- **Swap the generic sign-in modal for a logged-in member widget** — show my actual point balance and my next tier reward. "You have 3,847 points — redeem now" converts way harder than a join prompt for someone already Diamond.
+- **Add a lifestyle shot to the fragrance card** — even a quick A/B with a real woman spritzing a wrist would lift click-through; product-only shots feel catalog-cold on mobile.
+- **Make the horizontal card rail swipeable with a visible peek** — right now the right card is invisibly cut off. Add a partial card peek (20–30px) so I know to swipe.
+- **Surface the "Deals for you" module one scroll earlier** — the personalization signal ("12 items curated for you") is the strongest conversion lever on the page and it's buried below the fold.
+
+---
 
 ## 6. Bottom Line
 
-I'm staying — that 20% off code is real money and Ends May 7 means I have no excuse to wait — but Ulta is leaving personalization points on the table by treating their most loyal Diamond members like first-time visitors.
+I'm tapping "Activate" on those 5X points immediately and then heading straight to the fragrance section — Ulta knows exactly how to keep a Diamond member engaged.
+
+---
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Online only | Ends May 7 — 20% off 160+ brands — when you order online, pick up in store with code BOPIS20`
-- **Hero image:** Pink-toned card with a yellow Ulta shopping bag and illustrated icons (delivery car, package, envelope) — no person, no product
-- **Primary CTA:** `Shop now` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `8`, Relevance to you `7`, Visual hierarchy `8`, On-brand `7`
+- **Hero copy (verbatim):** `Earn 5X points on fragrance purchases. Exclusions apply.`
+- **Hero image:** Three prestige fragrance bottles (Dolce & Gabbana Dolce, Prada, and a third gold bottle) arranged on a warm pink-and-gold gradient background
+- **Primary CTA:** `Activate` — visible above the fold? **yes**
+- **Scores (1-10):** Clarity `8`, Relevance to you `8`, Visual hierarchy `5`, On-brand `8`
 - **Strengths:**
-  - End date and promo code are spelled out explicitly — no guesswork
-  - High-contrast black button on pink background is easy to tap on mobile
+  - Prestige brand names (Prada, D&G) immediately communicate this is a high-end fragrance push — not a generic sale
+  - "Ends May 9" + "In store & online" covers both my mobile and IRL shopping modes
 - **Weaknesses:**
-  - Illustrated icons instead of actual products make the sale feel abstract
-  - No category context — 160+ brands of what, exactly?
+  - The rewards modal sits directly on top of the card, so I have to dismiss or engage with two competing asks simultaneously
+  - No human element — product-only hero doesn't create the "I want to smell like that" pull that lifestyle photography would
+
+---
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** 20% off 160+ brands (code BOPIS20, BOPIS required), Free same-day delivery on select purchases $35+, second unnamed promo teased ("Ends May 10" with what looks like a Matrix product)
-- **Urgency / scarcity:** "Ends May 7" on main hero, "Ends May 10" on second card — real deadlines, no countdown timer visible
-- **Loyalty hooks:** Ulta Beauty Rewards popover (unlock $5, birthday perks, points = $ off), "Sign in or join for free" CTA
-- **Honesty check:** The "Online only" qualifier is clearly labeled which is good — but requiring BOPIS (pick up in store) for an online-only code is mildly inconvenient UX, and the popup "Unlock $5*" asterisk is too small to read in the screenshot; that fine print bears watching
+- **Active promos:** Earn 5X points on fragrance purchases, Free same-day delivery on select purchases $35+, Unlock $5* just for joining Rewards
+- **Urgency / scarcity:** "Ends May 9" on the fragrance 5X card — clear deadline, short window
+- **Loyalty hooks:** Ulta Beauty Rewards® modal with three bullet benefits; "Activate" CTA on the fragrance card tied to the Rewards program; "ULTA BEAUTY ♥ REWARDS" branding on the card itself
+- **Honesty check:** "Exclusions apply" is called out on the card (good), and the $5* has an asterisk with no in-frame disclosure — the * fine print isn't visible in the screenshot, which is a mild concern. "Just for joining" implies free but the asterisk suggests there are conditions.
+
+---
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: 20% off across mass and prestige brands is exactly why I shop Ulta
-- − Easy to reach my category: hamburger nav is visible but no category shortcuts above the fold; one extra tap required
-- − Eye-catching imagery in my category: shopping bag illustration is cute but I want to see Rare Beauty, Charlotte Tilbury, or a drugstore dupe — not clip art
-- + Promo banner I would use: absolutely, 20% off is my trigger to stock up
-- + Page renders cleanly: no layout shift, no broken images, clean mobile render
-- − Imagery includes someone like me: zero people in this viewport — can't score it
-- + Copy register matches mine: clean, direct, promo-first copy — reads like a Millennial deal hunter's native language
-- − Trust signals visible: no review counts, no badge, no "free returns" callout above the fold
-- − New / hot rail in my category: nothing visible above the fold — it's all deal, no discovery
-- + No dark patterns: rewards popup has an X and closes cleanly; BOPIS qualifier is disclosed
-- **Score:** `6/10` — should equal 1 + count of "+" bullets above (5 positives + base of 1).
-- **Rationale:** The deal itself is compelling enough to keep me, but Ulta is leaning entirely on the promotion and not giving me any category discovery or lifestyle content to draw me deeper into the site.
+- + Hero relates to my focus area: fragrance is absolutely in my beauty rotation, and prestige brands are half my Ulta cart
+- − Easy to reach my category: hamburger menu is collapsed and the modal blocks any category strip — I can't tap into Skincare or Makeup in one tap without dismissing first
+- + Eye-catching imagery in my category: Prada and D&G bottles are immediately recognizable and aspirational for me
+- + Promo banner I would use: 5X on fragrance + Activate = I am literally the target of this offer as a Diamond member
+- + Page renders cleanly: no broken images, no layout shift, text is legible — clean mobile render
+- − Imagery includes someone like me: zero humans on screen — product-only, no representation of a 31-year-old beauty shopper
+- + Copy register matches mine: "Earn 5X points," "In store & online," "Ends May 9" — benefit-first, direct, no cringe millennial pandering or overly clinical language
+- + Trust signals visible: Ulta Beauty Rewards® branding, Birthday Perks callout, recognizable prestige brand names on the bottles
+- − New/hot rail in my category: "Deals for you — 12 items" teased but not rendered; nothing new-arrivals specific is visible
+- − No dark patterns: the rewards modal fires before I can browse — it's dismissible, but it's still a forced interrupt that breaks flow
+
+**Score:** `6/10`
+**Rationale:** The 5X fragrance offer and rewards modal are highly relevant to me, but the modal-as-gating-experience and collapsed navigation mean I have to do extra work before I can actually shop. Strong intent but moderate friction.
+
+---
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "Shop now" is sitewide — no makeup / skincare / haircare anchoring
-- − Unambiguous CTA copy: "Shop now" is generic; I don't know what page it drops me on
-- + Active price reduction or member pricing: 20% off 160+ brands is a real, meaningful discount
-- + Time-bounded credible deadline: "Ends May 7" is believable and close enough to create urgency
-- + Reachable free-shipping threshold: $35 is in the top bar — easily cleared in my typical cart
-- − Specific product page one tap away: the CTA likely lands on a filtered sale page, but I can't confirm from this screen
-- − Sizing / fit info accessible: n/a for beauty, but no "how to use" or "best for your skin type" signals either
-- − Returns / exchanges mentioned: not visible above the fold
-- − Reviews / ratings visible: none on the hero card
-- − Trust / security signals: no secure checkout badge, no pay-later option visible
-- **Score:** `4/10` — 1 base + 3 positives.
-- **Rationale:** The 20% off with a real deadline is genuinely motivating, but the lack of category context on the CTA and zero social proof above the fold means I'll engage but I'm not quite at "tap and cart" yet — I need to see the product landing page first.
+- + CTA in my category: "Shop now" on the fragrance card goes directly to a category I buy from
+- + Unambiguous CTA copy: "Activate" and "Shop now" — both are clear action verbs with no ambiguity
+- + Active price reduction or member pricing: 5X points on fragrance = real monetary value for a Diamond member who redeems regularly
+- + Time-bounded credible deadline: "Ends May 9" — specific date, feels real and pressuring in a good way
+- + Reachable free-shipping threshold: "$35+" is visible in the top bar — easy to hit on a fragrance purchase
+- + Specific product page one tap away: "Shop now" presumably leads to the fragrance category — one tap from this card
+- − Sizing/fit info accessible: N/A for fragrance, but no sample/try-before-you-buy language either — missed for someone who needs to smell before buying full size
+- − Returns/exchanges mentioned: not visible anywhere in the viewport
+- − Reviews/ratings visible: no star ratings or review counts on any featured product
+- − Trust/security signals at checkout depth: no "secure checkout," no pay-later option, no free-returns badge visible
+
+**Score:** `7/10`
+**Rationale:** The 5X points deadline is a genuine conversion driver for me — I'd tap Activate and Shop Now immediately. The missing trust signals (reviews, returns, pay-later) would only slow me down once I'm deeper in the funnel, not here.
+
+---
 
 ## 11. Evidence
 
-- **Top bar:** "Free same day delivery on select purchases $35+" — persistent, high-value signal
-- **Global header:** Ulta logo, search bar, account icon, cart icon — standard mobile nav
-- **Rewards popover (overlaying content):** "Ulta Beauty Rewards® are waiting" with three benefit bullets and "Sign in or join for free!" CTA with close X
-- **Hero card (primary):** Pink background, Ulta shopping bag, illustrated delivery icons, "Online only | Ends May 7," "20% off 160+ brands," BOPIS20 code, black "Shop now" button, "20% off" displayed large
-- **Hero card (secondary, partially visible right):** "M" and "Fr" text cropped — likely a second carousel promo card, not fully accessible without swiping
-- **Teaser module below fold:** "Ends May 10" label with what appears to be a Matrix haircare product — second promo wave starting to show
-- **Bugs / friction:** Right-side carousel card is cut off with no swipe affordance visible; rewards popup targets non-members even on a returning-user session
+- **Top bar:** "Free same day delivery on select purchases $35+" — sticky, visible throughout
+- **Global nav:** Hamburger menu (left), Ulta wordmark logo (center-left), search bar, account icon, bag icon
+- **Rewards modal overlay:** "Ulta Beauty Rewards® are waiting" with three-bullet benefit list + "Sign in or join for free!" CTA and X close button
+- **Primary promo card:** "In store & online | Ends May 9" header; "Earn 5X points on fragrance purchases. Exclusions apply." headline; "Activate" (black button) + "Shop now" link; Prada, Dolce & Gabbana, and third fragrance bottle on pink/gold background; "ULTA BEAUTY ♥ REWARDS" label at card bottom
+- **Partially visible right card:** Cut off at viewport edge — "Or..." text and a pink/red circular element visible; no readable offer copy; no swipe affordance shown
+- **"Deals for you" module header:** "Deals for you / 12 items" visible below the card row — items not rendered in this viewport
+- **Bugs / friction:** Right-side card is invisibly clipped with no peek affordance; rewards modal targets logged-out users but fires for all visitors; "Deals for you" personalization promise not fulfilled above fold
 ## Recent history
 
 - [[2026-05-02-homepage-www.ulta.com-marisol-bronze-ulta-fap6e]] — 7/10 (2026-05-02)

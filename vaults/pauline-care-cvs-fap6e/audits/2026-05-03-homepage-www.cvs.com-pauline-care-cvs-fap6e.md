@@ -12,170 +12,150 @@ tags: [site-journey, score-5, sender/www-cvs-com]
 **Score:** 5/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- CVS knows I'm a caregiver — that hero line, "Here for all the ways you care," landed before I even finished loading. The Mother's Day tab and "Manage prescriptions" shortcut tell me someone at HQ thought about who actually walks through those doors every week. But before I could take any of it in, a full-screen data-consent wall dropped on top of everything and buried the page. That's a rough first impression for someone who just wants to check if her ExtraBucks are still good.
+- CVS is leading with a soft floral hero and what looks like a warm brand statement — "Here for what…" something — but I can barely tell because a giant cookie-consent wall jumped up and swallowed the whole page the second it loaded. As a weekly Rx customer who practically runs on ExtraBucks, I'm relieved to see "Manage prescriptions" right at the top, but I needed to close a legal modal just to get a look at my own pharmacy's homepage. Feels like the store greeter handed me a liability waiver before saying hello.
 - **5/10**
-- + Hero copy speaks to my persona: "Here for all the ways you care" is a direct nod to caregiving, not a generic tagline
-- + Demographic signals match: Prescription management front-and-center, Mother's Day tab, caregiver-coded language
-- + Page reflects current season: Mother's Day is days away (it's May 3), that tab is timely
-- + No actual render bugs: Everything that loaded did so cleanly
-- − No loyalty/rewards hook visible above fold: I can see "Sign in" but zero ExtraCare or ExtraBucks mention
-- − No concrete offer visible: The consent modal ate whatever promo was below the hero
-- − No clear shopping CTA: "Use the CVS app" is an app-download pitch, not a path to the beauty aisle
-- − Visual hierarchy destroyed by modal: I cannot see what is below the hero headline at all
-- − Free-shipping threshold not visible
-- − Offer honesty impossible to judge: Modal blocks it
+- + Hero imagery uses soft florals that skew toward my demographic (not Gen Z energy)
+- + "Manage prescriptions" is visible in the nav strip without scrolling — directly relevant to my weekly Rx habit
+- + "Mother's Day" tab signals current seasonal campaign — I'm in caregiver mode, this lands
+- + Location/store info visible ("101 E. ALAMEDA AVE. / Open, Closes 12:00 AM") — useful for an in-store planner like me
+- + "Sign in" is visible — returning-shopper hook exists
+- − No ExtraBucks balance, no rewards callout visible — the one loyalty hook that would stop me cold is absent
+- − No concrete offer (no %/$ off, no bonus bucks deal visible above the fold)
+- − Primary CTA ("Here for what…") is cut off and blocked by the modal — can't even read it
+- − Cookie modal is a render-blocking dark pattern covering the hero
+- − No demographic imagery visible (the floral could be anyone's)
 
 ## What's working
 
-- **"Here for all the ways you care" hero headline** — As someone who fills my mom's prescriptions every Thursday and then grabs her Bengay from the shelf, that copy speaks directly to my life. It's warm and specific without being maudlin.
-- **"Manage prescriptions" quick-access tab** — That is the first thing I look for when I open this site. Having it as a top-of-screen shortcut next to the search bar tells me they know their customer.
-- **Mother's Day tab in the nav strip** — Timely and visible. I need a card and a candle, so I'd tap that.
-- **Store location + hours visible** — "101 E. ALAMEDA AVE. Open, Closes 12:00 AM" is right there. Useful when I need to know if I have time to run in after my shift.
+- **"Manage prescriptions" nav tab** — it's the first tappable item after Mother's Day and it's right at my eye level. As a caregiver managing someone else's meds plus my own, I notice this immediately and it earns trust.
+- **Mother's Day seasonal tab** — I'm in the thick of caregiver gifting right now; this signals the site knows what time of year it is.
+- **Store location with hours** — "Open, Closes 12:00 AM" tells me exactly what I need for a late-night pharmacy run. That green "Open" text is reassuring.
+- **"Use the CVS app" button** — I already use the app for ExtraBucks tracking, so this is a clean handoff prompt that makes sense in context.
+- **Search bar with "ask a question" framing** — slightly more conversational than a cold search box; matches my medium-tech comfort.
 
 ## What's weak
 
-- **Full-screen privacy consent modal** — It covered the entire bottom two-thirds of the page the instant it loaded. I have no idea what offers are running, what products are featured, or whether my ExtraBucks are expiring. This is the biggest problem on the page.
-- **No ExtraCare callout visible** — As a weekly shopper who clips every coupon and prints that long receipt, I want to see my ExtraBucks balance or at least an "ExtraCare member" hook. There's nothing. Just "Sign in" in gray text.
-- **"Use the CVS app" CTA** — That blue button is pushing me to download an app I may already have. It's wasting the only visible button slot above the fold.
-- **Hero image is almost entirely hidden** — I can see a sliver of red/orange below the headline, but the modal swallowed the rest. I have no idea what CVS is actually selling me right now.
-- **No offer or price signal** — Not a single dollar amount, percentage off, or ExtraBucks incentive is visible. For a store whose loyalty program is literally built around rewards, that's a missed shot.
+- **Cookie-consent modal blocks the entire hero** — I can't see the offer, can't see the full CTA, can't evaluate what CVS is actually trying to sell me today. This is the biggest problem on the screen.
+- **"Here for what" hero copy is truncated** — I literally cannot read the brand promise because the modal ate it. Even if I close the modal, I already lost the thread.
+- **No ExtraBucks balance or loyalty welcome** — I'm a signed-out user on the homepage, but CVS knows I'm a repeat customer (they have my app data, my card). The homepage could tease my rewards and pull me to sign in; instead I see a generic "Sign in" link.
+- **No visible offer or price hook above the fold** — no bonus bucks promotion, no "save $X with ExtraCare," nothing. For a habitual deal-stacker like me, this is a missed stop sign.
+- **"Use the CVS app" button competes with "Sign in"** — two conversion CTAs pulling in different directions with no hierarchy between them.
 
 ## Recommendations
 
-- **Dismiss or shrink the consent modal** — Move it to a slim banner at the bottom of the screen (like most sites do) so the hero and offers are immediately visible. Right now it's the loudest thing on the page and it says absolutely nothing useful to me.
-- **Surface the ExtraBucks/ExtraCare hook above the fold** — Even a one-liner like "You have $4 ExtraBucks — redeem before May 15" next to the Sign In button would make me stop scrolling and feel seen. That's the whole point of the program.
-- **Swap "Use the CVS app" for an ExtraCare sign-in CTA** — Make the blue button say "Sign in to ExtraCare" and route me directly to my account and rewards. I'm a loyal weekly customer; don't make me feel like a stranger.
-- **Add a concrete offer strip below the nav tabs** — Something like "25% off beauty with ExtraBucks | Free shipping over $35" in one line. That's the kind of thing that makes me keep scrolling instead of closing the tab.
+- **Kill or auto-dismiss the cookie modal for returning visitors.** I've been to CVS.com dozens of times. If the site can detect I've accepted before, don't show me the wall again. At minimum, shrink it to a slim bottom banner — don't let it eat the hero.
+- **Surface ExtraBucks balance in the nav bar (or a signed-out teaser).** A small badge like "You have $X in ExtraBucks — Sign in" next to the "Sign in" link would stop me cold and trigger a login. That's the loyalty hook I came for.
+- **Add a concrete offer strip just below the nav tabs** — one line: "Earn 2X ExtraBucks on vitamins this week" or "Free $10 ExtraCare Bonus when you spend $30 on health." I read that strip every time I walk into the store; put it on the homepage too.
+- **Rewrite or complete the hero CTA** — "Here for what" going nowhere is worse than no tagline. Finish the thought visually so it doesn't look broken, and pair it with a button that says something like "Shop ExtraCare Deals" — unambiguous, loyalty-forward.
 
 ## Full review
 ## 1. Executive Summary
 
-CVS knows I'm a caregiver — that hero line, "Here for all the ways you care," landed before I even finished loading. The Mother's Day tab and "Manage prescriptions" shortcut tell me someone at HQ thought about who actually walks through those doors every week. But before I could take any of it in, a full-screen data-consent wall dropped on top of everything and buried the page. That's a rough first impression for someone who just wants to check if her ExtraBucks are still good.
-
----
+CVS is leading with a soft floral hero and what looks like a warm brand statement — "Here for what…" something — but I can barely tell because a giant cookie-consent wall jumped up and swallowed the whole page the second it loaded. As a weekly Rx customer who practically runs on ExtraBucks, I'm relieved to see "Manage prescriptions" right at the top, but I needed to close a legal modal just to get a look at my own pharmacy's homepage. Feels like the store greeter handed me a liability waiver before saying hello.
 
 ## 2. Business Impact Score (1-10)
 
 **5/10**
 
-- + Hero copy speaks to my persona: "Here for all the ways you care" is a direct nod to caregiving, not a generic tagline
-- + Demographic signals match: Prescription management front-and-center, Mother's Day tab, caregiver-coded language
-- + Page reflects current season: Mother's Day is days away (it's May 3), that tab is timely
-- + No actual render bugs: Everything that loaded did so cleanly
-- − No loyalty/rewards hook visible above fold: I can see "Sign in" but zero ExtraCare or ExtraBucks mention
-- − No concrete offer visible: The consent modal ate whatever promo was below the hero
-- − No clear shopping CTA: "Use the CVS app" is an app-download pitch, not a path to the beauty aisle
-- − Visual hierarchy destroyed by modal: I cannot see what is below the hero headline at all
-- − Free-shipping threshold not visible
-- − Offer honesty impossible to judge: Modal blocks it
-
----
+- + Hero imagery uses soft florals that skew toward my demographic (not Gen Z energy)
+- + "Manage prescriptions" is visible in the nav strip without scrolling — directly relevant to my weekly Rx habit
+- + "Mother's Day" tab signals current seasonal campaign — I'm in caregiver mode, this lands
+- + Location/store info visible ("101 E. ALAMEDA AVE. / Open, Closes 12:00 AM") — useful for an in-store planner like me
+- + "Sign in" is visible — returning-shopper hook exists
+- − No ExtraBucks balance, no rewards callout visible — the one loyalty hook that would stop me cold is absent
+- − No concrete offer (no %/$ off, no bonus bucks deal visible above the fold)
+- − Primary CTA ("Here for what…") is cut off and blocked by the modal — can't even read it
+- − Cookie modal is a render-blocking dark pattern covering the hero
+- − No demographic imagery visible (the floral could be anyone's)
 
 ## 3. What's Working
 
-- **"Here for all the ways you care" hero headline** — As someone who fills my mom's prescriptions every Thursday and then grabs her Bengay from the shelf, that copy speaks directly to my life. It's warm and specific without being maudlin.
-- **"Manage prescriptions" quick-access tab** — That is the first thing I look for when I open this site. Having it as a top-of-screen shortcut next to the search bar tells me they know their customer.
-- **Mother's Day tab in the nav strip** — Timely and visible. I need a card and a candle, so I'd tap that.
-- **Store location + hours visible** — "101 E. ALAMEDA AVE. Open, Closes 12:00 AM" is right there. Useful when I need to know if I have time to run in after my shift.
-
----
+- **"Manage prescriptions" nav tab** — it's the first tappable item after Mother's Day and it's right at my eye level. As a caregiver managing someone else's meds plus my own, I notice this immediately and it earns trust.
+- **Mother's Day seasonal tab** — I'm in the thick of caregiver gifting right now; this signals the site knows what time of year it is.
+- **Store location with hours** — "Open, Closes 12:00 AM" tells me exactly what I need for a late-night pharmacy run. That green "Open" text is reassuring.
+- **"Use the CVS app" button** — I already use the app for ExtraBucks tracking, so this is a clean handoff prompt that makes sense in context.
+- **Search bar with "ask a question" framing** — slightly more conversational than a cold search box; matches my medium-tech comfort.
 
 ## 4. What's Weak
 
-- **Full-screen privacy consent modal** — It covered the entire bottom two-thirds of the page the instant it loaded. I have no idea what offers are running, what products are featured, or whether my ExtraBucks are expiring. This is the biggest problem on the page.
-- **No ExtraCare callout visible** — As a weekly shopper who clips every coupon and prints that long receipt, I want to see my ExtraBucks balance or at least an "ExtraCare member" hook. There's nothing. Just "Sign in" in gray text.
-- **"Use the CVS app" CTA** — That blue button is pushing me to download an app I may already have. It's wasting the only visible button slot above the fold.
-- **Hero image is almost entirely hidden** — I can see a sliver of red/orange below the headline, but the modal swallowed the rest. I have no idea what CVS is actually selling me right now.
-- **No offer or price signal** — Not a single dollar amount, percentage off, or ExtraBucks incentive is visible. For a store whose loyalty program is literally built around rewards, that's a missed shot.
-
----
+- **Cookie-consent modal blocks the entire hero** — I can't see the offer, can't see the full CTA, can't evaluate what CVS is actually trying to sell me today. This is the biggest problem on the screen.
+- **"Here for what" hero copy is truncated** — I literally cannot read the brand promise because the modal ate it. Even if I close the modal, I already lost the thread.
+- **No ExtraBucks balance or loyalty welcome** — I'm a signed-out user on the homepage, but CVS knows I'm a repeat customer (they have my app data, my card). The homepage could tease my rewards and pull me to sign in; instead I see a generic "Sign in" link.
+- **No visible offer or price hook above the fold** — no bonus bucks promotion, no "save $X with ExtraCare," nothing. For a habitual deal-stacker like me, this is a missed stop sign.
+- **"Use the CVS app" button competes with "Sign in"** — two conversion CTAs pulling in different directions with no hierarchy between them.
 
 ## 5. Recommendations
 
-- **Dismiss or shrink the consent modal** — Move it to a slim banner at the bottom of the screen (like most sites do) so the hero and offers are immediately visible. Right now it's the loudest thing on the page and it says absolutely nothing useful to me.
-- **Surface the ExtraBucks/ExtraCare hook above the fold** — Even a one-liner like "You have $4 ExtraBucks — redeem before May 15" next to the Sign In button would make me stop scrolling and feel seen. That's the whole point of the program.
-- **Swap "Use the CVS app" for an ExtraCare sign-in CTA** — Make the blue button say "Sign in to ExtraCare" and route me directly to my account and rewards. I'm a loyal weekly customer; don't make me feel like a stranger.
-- **Add a concrete offer strip below the nav tabs** — Something like "25% off beauty with ExtraBucks | Free shipping over $35" in one line. That's the kind of thing that makes me keep scrolling instead of closing the tab.
-
----
+- **Kill or auto-dismiss the cookie modal for returning visitors.** I've been to CVS.com dozens of times. If the site can detect I've accepted before, don't show me the wall again. At minimum, shrink it to a slim bottom banner — don't let it eat the hero.
+- **Surface ExtraBucks balance in the nav bar (or a signed-out teaser).** A small badge like "You have $X in ExtraBucks — Sign in" next to the "Sign in" link would stop me cold and trigger a login. That's the loyalty hook I came for.
+- **Add a concrete offer strip just below the nav tabs** — one line: "Earn 2X ExtraBucks on vitamins this week" or "Free $10 ExtraCare Bonus when you spend $30 on health." I read that strip every time I walk into the store; put it on the homepage too.
+- **Rewrite or complete the hero CTA** — "Here for what" going nowhere is worse than no tagline. Finish the thought visually so it doesn't look broken, and pair it with a button that says something like "Shop ExtraCare Deals" — unambiguous, loyalty-forward.
 
 ## 6. Bottom Line
 
-I'd close that consent wall, tap "Manage prescriptions" for my mom's refill, and probably bounce before I ever saw a single offer — which means CVS left money on the table from someone who comes back every single week.
-
----
+I'd tap "Close" on that modal, glance at prescriptions, and probably just jump straight to the app — the homepage isn't giving me enough of a reason to stay.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Here for all the ways you care`
-- **Hero image:** Partially visible — a sliver of warm red/orange imagery is visible beneath the headline but obscured by the consent modal; subject and product unclear
-- **Primary CTA:** `Use the CVS app` — visible above the fold? **yes**, but it's an app-download CTA, not a shopping path
-- **Scores (1-10):** Clarity `7`, Relevance to you `8`, Visual hierarchy `3`, On-brand `7`
+- **Hero copy (verbatim):** `Here for what`
+- **Hero image:** Soft pink floral elements (roses or peonies) against a light background — lifestyle-adjacent, no model visible
+- **Primary CTA:** Not readable — blocked by privacy modal — visible above the fold? **no**
+- **Scores (1-10):** Clarity `3`, Relevance to you `5`, Visual hierarchy `4`, On-brand `6`
 - **Strengths:**
-  - Headline is genuinely resonant for a caregiver demographic — emotionally warm and specific
-  - Copy is simple, readable, appropriate register for my age group
+  - Soft florals and the "Here for what…" sentiment lean warm and caregiving — tonally right for me
+  - "Manage prescriptions" in the nav strip punches through the noise and speaks directly to my weekly routine
 - **Weaknesses:**
-  - Visual hierarchy collapses completely because the consent modal buries the hero image and any sub-copy beneath it
-  - The only visible button ("Use the CVS app") doesn't advance the shopping journey for a returning customer
-
----
+  - The hero copy is literally incomplete — I cannot read the full sentence
+  - The privacy modal destroys any first impression the hero was trying to make; there is no functional above-the-fold experience
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** None visible — modal blocks any promotional content below the hero
+- **Active promos:** None visible above the fold — zero %/$ offer, no bonus bucks callout, no ExtraCare member deal
 - **Urgency / scarcity:** None visible
-- **Loyalty hooks:** "Sign in" link only — no ExtraCare branding, no ExtraBucks mention, no member-pricing badge anywhere above the fold
-- **Honesty check:** The consent modal itself is a friction tactic — it's interruptive and large enough to obscure all offers; while legally standard, the implementation here is disruptive enough to undermine the entire above-the-fold experience for a returning loyal customer
-
----
+- **Loyalty hooks:** "Sign in" link only — no ExtraBucks mention, no ExtraCare badge, no member pricing teaser
+- **Honesty check:** The cookie/privacy consent modal ("Improving your site experience") is written in friendly framing but is functionally a hard interstitial that blocks content — the "Close" button is there, but it's positioned top-right in small text while the wall of legalese dominates. Not outright manipulative, but it front-loads friction in a way that feels like it serves CVS's data collection more than my shopping experience.
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: "Here for all the ways you care" is caregiver-coded and lands for me personally
-- + Easy to reach my category: "Manage prescriptions" is a one-tap shortcut right in the nav strip
-- − Eye-catching imagery in my category: Hero image is almost entirely hidden by the modal; I cannot see any product or lifestyle imagery
-- − Promo banner I would use: No promo is visible above the modal
-- − Page renders cleanly: The consent modal is a major CLS/friction moment — it dropped on top of content I was trying to read
-- − Imagery includes someone like me: Can't see the hero image well enough to say
-- + Copy register matches mine: Clear, warm English — not jargon-heavy, not too cute
-- − Trust signals visible: None — no review counts, no "free returns," nothing
-- − New/hot rail in my category: Completely hidden below the modal
-- − No dark patterns: The full-viewport consent wall is a dark pattern in practice even if it's technically compliant
+- + Hero relates to my focus area: Floral imagery and "Here for what" skew caregiver/warm — loosely relevant even if the copy is cut off
+- + Easy to reach my category: "Manage prescriptions" is one tap away in the nav strip — that's my primary use case, right there
+- − Eye-catching imagery in my category: The floral hero is pretty but vague — I can't see any pharmacy, health, or cosmetics imagery
+- − Promo banner I would use: No offer visible — I'm an ExtraBucks collector and there's nothing to collect on first glance
+- + Page renders cleanly: Outside the modal, the layout looks structurally clean — no broken images, no garbled text
+- − Imagery includes someone like me: No people visible at all — just flowers
+- + Copy register matches mine: "Search CVS or ask a question" and the general tone feel accessible, not too techy
+- − Trust signals visible: No review counts, no free-delivery threshold, no return policy callout above the fold
+- − New / hot rail in my category: No product rail visible — modal blocks everything below the hero
+- − No dark patterns: The privacy modal IS a dark pattern in practice — it forces engagement before I can see the site
 
-**Score:** `3/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The caregiver headline and the prescription shortcut are genuinely good signals, but the consent modal wipes out everything else and leaves me with almost nothing to engage with. Three positives is more than most generic homepages would score for me, but the wall is a dealbreaker for casual browsing momentum.
-
----
+**Score:** `4/10`
+**Rationale:** The prescription tab saves the engagement score from bottoming out — it's the one element that speaks directly to why I visit CVS weekly. But the modal-blocked hero, zero promos, and no loyalty hook make this a homepage I'd tap through rather than browse.
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: "Manage prescriptions" is exactly my category and it's one tap
-- − Unambiguous CTA copy: "Use the CVS app" is clear in what it wants but irrelevant to my shopping intent; no "Shop now" or product-specific CTA
+- − CTA in my category: The only visible CTA is "Use the CVS app" — useful but not a shopping CTA in my category
+- − Unambiguous CTA copy: "Here for what" is incomplete and ambiguous; the button text beneath it is completely hidden by the modal
 - − Active price reduction or member pricing: Nothing visible
 - − Time-bounded credible deadline: Nothing visible
 - − Reachable free-shipping threshold: Nothing visible
-- − Specific product page one tap away: Nothing visible — modal blocks it all
-- − Sizing/fit info accessible: N/A for my shopping focus here
-- − Returns/exchanges mentioned: Not visible
-- − Reviews/ratings visible: Not visible
-- − Trust/security signals: Not visible
+- − Specific product page one tap away: Prescriptions tab is there, but no product page — that's a service, not a purchase funnel
+- − Sizing / fit info accessible: Not applicable to my shopping here (sundries, Rx)
+- − Returns / exchanges mentioned: Nothing visible
+- − Reviews / ratings visible: Nothing visible
+- − Trust / security signals: Nothing visible at this scroll depth
 
-**Score:** `2/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** I'd likely tap "Manage prescriptions" because that's a task I come here to complete, but there is zero persuasive commercial content visible — no offer, no product, no ExtraBucks incentive — to push me toward adding anything else to a cart. The modal killed any impulse-buy moment before it could happen.
-
----
+**Score:** `1/10`
+**Rationale:** Above the fold, there is literally nothing converting me — no offer, no price, no product, no trust signal, no completing CTA. The modal ate the homepage's conversion layer entirely. If I weren't already a loyal CVS customer out of habit, this screen would send me to Walgreens.
 
 ## 11. Evidence
 
-Modules visible in the screenshot (scroll order, top to bottom):
-
-- **Global header bar** — Hamburger menu (≡), CVS heart logo, "Sign in" text link, shopping cart icon (0 items)
-- **Search bar** — Full-width: "Search CVS or ask a question" with magnifying glass icon
-- **Quick-nav tab strip** — Three tabs visible: "Mother's Day," "Manage prescriptions," and a third tab truncated ("Sch…" — likely "Schedule" or "Shots")
-- **Store locator strip** — "101 E. ALAMEDA AVE. Open, Closes 12:00 AM" with a blue "Use the CVS app" button
-- **Hero section** — Large white-background headline: "Here for all the ways you care" in bold dark type; hero image partially visible (warm red/orange) beneath the headline
-- **Full-viewport consent modal (overlay)** — White card with "Close" link top-right; title "Improving your site experience"; lengthy paragraph about data collection, third-party sharing, marketing analytics; links to "Privacy Policy" and "Terms of Use" — this covers approximately 60–65% of the viewport and hides all content below the hero copy
-- **Bugs / friction / clarity issues:** The consent modal is the dominant visible element and functionally prevents access to all promotional, product, and loyalty content on the homepage; no ExtraCare or ExtraBucks branding is anywhere in the visible viewport
+- **Nav bar:** CVS logo (red heart), hamburger menu, "Sign in" link, cart icon (showing 0)
+- **Search bar:** "Search CVS or ask a question" — full-width, prominent
+- **Horizontal nav tabs:** "Mother's Day," "Manage prescriptions," "Sch…" (third tab cut off by scroll/viewport)
+- **Store location strip:** "101 E. ALAMEDA AVE. / Open, Closes 12:00 AM" (green "Open" text) + "Use the CVS app" button (blue pill)
+- **Hero module (partially visible):** Soft pink floral imagery at top + large bold text "Here for what" (truncated)
+- **Full-page privacy/cookie modal:** "Improving your site experience" — lengthy paragraph about data collection, links to Privacy Policy and Terms of Use, "Close" button top-right — blocks all below-the-fold content
+- **Bugs / friction visible:** Hero CTA text is entirely hidden behind modal; hero copy sentence is incomplete in viewport; no loyalty/rewards information surfaced anywhere above the fold; modal effectively renders the page non-functional until dismissed
 ## Recent history
 
 - [[2026-05-02-homepage-www.cvs.com-pauline-care-cvs-fap6e]] — 7/10 (2026-05-02)

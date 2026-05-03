@@ -12,150 +12,153 @@ tags: [site-journey, score-6, sender/www-macys-com]
 **Score:** 6/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Macy's is running their Friends & Family Sale right now — which is honestly my Super Bowl — but I can barely see it because the first thing I get when I open the app is two things stacked on top of the page: some AI chat bubble and an email sign-up modal. I had to squint past all of that just to catch a glimpse of "Friends & Family Sale" in the background. For someone who has been circling this event on her calendar for years, this is a frustrating way to say hello.
+- Oh, I know this event — Friends and Family is my Super Bowl. Macy's is pushing one of their biggest annual sale events and I can see the 30% off code right up top, so that part lands. But honestly, the first thing that happened when I opened this page was two things popped up at once — some AI chat bubble AND an email sign-up form — and I nearly closed the whole thing.
 - **6/10**
-- + Hero copy visible (Friends & Family Sale is right in the background — speaks directly to a loyalist like me)
-- + Returning-shopper hook: "Sign In" button is in the header
-- + Concrete offer above fold: "Extra 30% off with code FRIEND" in the top banner
-- + Current campaign: Friends & Family is a real, timely Macy's event
-- + Offer feels honest: promo code "FRIEND" is clearly stated, no mystery
-- − Primary shopping CTA: the only button I can actually tap is "Sign up" for emails — not a shop button
-- − Visual hierarchy: two overlapping modals completely obscure the hero and page content
-- − No render bugs: stacking an AI tooltip and an email modal on top of each other is a functional UX failure
-- − Demographic signals: lifestyle imagery is entirely hidden behind the modals
-- − Loyalty benefits: "15%" is visible in the top strip but it's not labeled as Star Rewards — I shouldn't have to guess
+- + Hero copy explicitly speaks to persona: "Friends & Family Sale" is the exact event I clear my calendar for — direct hit
+- + Concrete offer visible above the fold: "Extra 30% off with code FRIEND" in the promo bar, clear as day
+- + Demographic signals match: F&F Sale is a Boomer-era Macy's institution; this isn't aimed at TikTok teens
+- + Page reflects current campaign: "Friends & Family Sale" + "new spring arrivals" is timely
+- + Offer feels honest: code FRIEND in the top bar is straightforward, no asterisk mystery
+- − No returning-shopper hook: no Star Money balance, no Star Pass callout, no "Welcome back" — I've been shopping here for 30 years and it doesn't know me
+- − No unmistakable shopping CTA above fold: the email modal's "Sign up" button ate that slot
+- − Visual hierarchy destroyed by dual overlays: AI tooltip AND email modal firing simultaneously
+- − No loyalty/membership benefits visible: my Star Pass is a big reason I stack deals — nowhere to be seen
 
 ## What's working
 
-- **Friends & Family Sale headline** — even peeking through the modal, I can see "Friends & Family Sale" and "3 ways to save." That's the magic phrase that gets me clicking every single year. The brand knows this event matters.
-- **"Extra 30% off with code FRIEND" top banner** — straightforward, sticky, and I can read it without dismissing anything. That's the kind of thing I screenshot and text my daughter.
-- **"Ends tomorrow!" hint** — I can just barely make out urgency copy in the background. Deadline language works on me every time.
-- **"Ask Macy's+" AI assistant** — honestly interesting. Medium-tech me might actually use that to ask "what's excluded from the Friends & Family code?" That's a real question I always have.
+- **"Friends & Family Sale" headline** — three words that make me stop scrolling Instagram and open my wallet. This is exactly the event I look for.
+- **Top promo bar** — "Extra 30% off with code FRIEND" and "15%" are right there in the first line I see, no hunting required.
+- **Countdown timer** — I can see a clock ticking ("11:59:57" visible behind the modal). That urgency is real for me; I've rushed to Macy's for a One Day Sale before it ended.
+- **"3 ways to save"** subhead — as someone who stacks Star Pass on top of department promotions, multiple save paths is exactly my game.
+- **Macy's star logo** — familiar, trusted brand mark, instantly orienting.
 
 ## What's weak
 
-- **Double-modal pile-up** — an AI tooltip AND a "We're better together" email sign-up sheet are both open at once. I don't know which one to close first. A 60-year-old with medium tech comfort is going to feel lost or just close the whole browser tab.
-- **Email gate before I see the sale** — I am already a Star Rewards member. I already get the emails. Asking me to sign up for emails before I can even see what's on sale feels like I walked into Macy's and someone grabbed my arm at the door.
-- **"15%" in the top bar is unexplained** — Is that my Star Rewards rate? Is that a second coupon? I need a label. "15% Star Rewards member discount" would take five words and save a lot of confusion.
-- **No visible navigation** — My usual path is Women's → Dresses or Shoes → filter by sale. I can't see any category tiles or nav because the modals are covering everything.
-- **The 30% and 15% breakdowns below the headline** — I can partially see "30% | 15% | $20 in" but the modal cuts it off. This is exactly the chart I use to figure out how to stack my Star Pass — and I can't read it.
+- **Dual popup collision** — the AI assistant tooltip AND the "We're better together" email modal are both open at the same time. That is not an experience, that is a wall. I have to close two things before I can see what I came for.
+- **Email modal (Step 1 of 2)** — I'm a loyalist who already gets Macy's emails. This gate feels like it's for strangers, not me. Two steps to dismiss is two too many.
+- **No Star Money / Star Pass mention** — this sale is where I do my biggest Star Money earn of the year. Macy's knows that. Why isn't "Earn Star Money" anywhere in sight?
+- **"Ask Macy's+" AI button** — at my tech comfort level, an AI chat button with a pink border reads like a gimmick. It's not why I'm here.
+- **Navigation is just a hamburger** — one tap to my category (women's clothing, handbags, fragrance) is not possible with a collapsed menu. I have to dig.
 
 ## Recommendations
 
-- **Close one modal, not two** — kill the AI assistant auto-pop on load. Let it sit as a persistent button (the "Ask Macy's+" button already does this). Stack the email capture ONLY after a user dismisses the hero — not at the same time as the tooltip.
-- **Label the 15%** — change the top strip to read "15% Star Rewards | Extra 30% with code FRIEND" so loyal members immediately understand the stacking logic.
-- **Add a "Already a member? Sign In to unlock your rate" shortcut** inside the email modal — give returning shoppers a one-tap path to skip the sign-up entirely and go straight to their personalized deal.
-- **Surface the exclusions link right next to the promo code** — "Extra 30% off code FRIEND — see exclusions" is what every experienced One Day Sale shopper hunts for first. If it's buried, trust erodes fast.
+- **Close the AI tooltip before the page loads, or remove it entirely on mobile** — firing two overlays at once is the fastest way to lose a Boomer who just wants to shop the sale.
+- **Replace the email modal hero with a loyalty returning-user module** — "Welcome back, Maddie. You have X Star Money points. Use them on Friends & Family." That converts me instantly.
+- **Add a Star Pass / Star Money earning callout directly under the hero copy** — something like "Star Pass members earn triple Star Money this weekend" layered on top of the 30% offer is what I specifically look for.
+- **Swap hamburger nav for a one-row category strip on mobile** — Women's, Shoes, Handbags, Beauty — four taps and I'm in the aisle I want.
 
 ## Full review
 ## 1. Executive Summary
 
-Macy's is running their Friends & Family Sale right now — which is honestly my Super Bowl — but I can barely see it because the first thing I get when I open the app is two things stacked on top of the page: some AI chat bubble and an email sign-up modal. I had to squint past all of that just to catch a glimpse of "Friends & Family Sale" in the background. For someone who has been circling this event on her calendar for years, this is a frustrating way to say hello.
+Oh, I know this event — Friends and Family is my Super Bowl. Macy's is pushing one of their biggest annual sale events and I can see the 30% off code right up top, so that part lands. But honestly, the first thing that happened when I opened this page was two things popped up at once — some AI chat bubble AND an email sign-up form — and I nearly closed the whole thing.
 
 ## 2. Business Impact Score (1-10)
 
 **6/10**
 
-- + Hero copy visible (Friends & Family Sale is right in the background — speaks directly to a loyalist like me)
-- + Returning-shopper hook: "Sign In" button is in the header
-- + Concrete offer above fold: "Extra 30% off with code FRIEND" in the top banner
-- + Current campaign: Friends & Family is a real, timely Macy's event
-- + Offer feels honest: promo code "FRIEND" is clearly stated, no mystery
-- − Primary shopping CTA: the only button I can actually tap is "Sign up" for emails — not a shop button
-- − Visual hierarchy: two overlapping modals completely obscure the hero and page content
-- − No render bugs: stacking an AI tooltip and an email modal on top of each other is a functional UX failure
-- − Demographic signals: lifestyle imagery is entirely hidden behind the modals
-- − Loyalty benefits: "15%" is visible in the top strip but it's not labeled as Star Rewards — I shouldn't have to guess
+- + Hero copy explicitly speaks to persona: "Friends & Family Sale" is the exact event I clear my calendar for — direct hit
+- + Concrete offer visible above the fold: "Extra 30% off with code FRIEND" in the promo bar, clear as day
+- + Demographic signals match: F&F Sale is a Boomer-era Macy's institution; this isn't aimed at TikTok teens
+- + Page reflects current campaign: "Friends & Family Sale" + "new spring arrivals" is timely
+- + Offer feels honest: code FRIEND in the top bar is straightforward, no asterisk mystery
+- − No returning-shopper hook: no Star Money balance, no Star Pass callout, no "Welcome back" — I've been shopping here for 30 years and it doesn't know me
+- − No unmistakable shopping CTA above fold: the email modal's "Sign up" button ate that slot
+- − Visual hierarchy destroyed by dual overlays: AI tooltip AND email modal firing simultaneously
+- − No loyalty/membership benefits visible: my Star Pass is a big reason I stack deals — nowhere to be seen
 
 ## 3. What's Working
 
-- **Friends & Family Sale headline** — even peeking through the modal, I can see "Friends & Family Sale" and "3 ways to save." That's the magic phrase that gets me clicking every single year. The brand knows this event matters.
-- **"Extra 30% off with code FRIEND" top banner** — straightforward, sticky, and I can read it without dismissing anything. That's the kind of thing I screenshot and text my daughter.
-- **"Ends tomorrow!" hint** — I can just barely make out urgency copy in the background. Deadline language works on me every time.
-- **"Ask Macy's+" AI assistant** — honestly interesting. Medium-tech me might actually use that to ask "what's excluded from the Friends & Family code?" That's a real question I always have.
+- **"Friends & Family Sale" headline** — three words that make me stop scrolling Instagram and open my wallet. This is exactly the event I look for.
+- **Top promo bar** — "Extra 30% off with code FRIEND" and "15%" are right there in the first line I see, no hunting required.
+- **Countdown timer** — I can see a clock ticking ("11:59:57" visible behind the modal). That urgency is real for me; I've rushed to Macy's for a One Day Sale before it ended.
+- **"3 ways to save"** subhead — as someone who stacks Star Pass on top of department promotions, multiple save paths is exactly my game.
+- **Macy's star logo** — familiar, trusted brand mark, instantly orienting.
 
 ## 4. What's Weak
 
-- **Double-modal pile-up** — an AI tooltip AND a "We're better together" email sign-up sheet are both open at once. I don't know which one to close first. A 60-year-old with medium tech comfort is going to feel lost or just close the whole browser tab.
-- **Email gate before I see the sale** — I am already a Star Rewards member. I already get the emails. Asking me to sign up for emails before I can even see what's on sale feels like I walked into Macy's and someone grabbed my arm at the door.
-- **"15%" in the top bar is unexplained** — Is that my Star Rewards rate? Is that a second coupon? I need a label. "15% Star Rewards member discount" would take five words and save a lot of confusion.
-- **No visible navigation** — My usual path is Women's → Dresses or Shoes → filter by sale. I can't see any category tiles or nav because the modals are covering everything.
-- **The 30% and 15% breakdowns below the headline** — I can partially see "30% | 15% | $20 in" but the modal cuts it off. This is exactly the chart I use to figure out how to stack my Star Pass — and I can't read it.
+- **Dual popup collision** — the AI assistant tooltip AND the "We're better together" email modal are both open at the same time. That is not an experience, that is a wall. I have to close two things before I can see what I came for.
+- **Email modal (Step 1 of 2)** — I'm a loyalist who already gets Macy's emails. This gate feels like it's for strangers, not me. Two steps to dismiss is two too many.
+- **No Star Money / Star Pass mention** — this sale is where I do my biggest Star Money earn of the year. Macy's knows that. Why isn't "Earn Star Money" anywhere in sight?
+- **"Ask Macy's+" AI button** — at my tech comfort level, an AI chat button with a pink border reads like a gimmick. It's not why I'm here.
+- **Navigation is just a hamburger** — one tap to my category (women's clothing, handbags, fragrance) is not possible with a collapsed menu. I have to dig.
 
 ## 5. Recommendations
 
-- **Close one modal, not two** — kill the AI assistant auto-pop on load. Let it sit as a persistent button (the "Ask Macy's+" button already does this). Stack the email capture ONLY after a user dismisses the hero — not at the same time as the tooltip.
-- **Label the 15%** — change the top strip to read "15% Star Rewards | Extra 30% with code FRIEND" so loyal members immediately understand the stacking logic.
-- **Add a "Already a member? Sign In to unlock your rate" shortcut** inside the email modal — give returning shoppers a one-tap path to skip the sign-up entirely and go straight to their personalized deal.
-- **Surface the exclusions link right next to the promo code** — "Extra 30% off code FRIEND — see exclusions" is what every experienced One Day Sale shopper hunts for first. If it's buried, trust erodes fast.
+- **Close the AI tooltip before the page loads, or remove it entirely on mobile** — firing two overlays at once is the fastest way to lose a Boomer who just wants to shop the sale.
+- **Replace the email modal hero with a loyalty returning-user module** — "Welcome back, Maddie. You have X Star Money points. Use them on Friends & Family." That converts me instantly.
+- **Add a Star Pass / Star Money earning callout directly under the hero copy** — something like "Star Pass members earn triple Star Money this weekend" layered on top of the 30% offer is what I specifically look for.
+- **Swap hamburger nav for a one-row category strip on mobile** — Women's, Shoes, Handbags, Beauty — four taps and I'm in the aisle I want.
 
 ## 6. Bottom Line
 
-I would close both modals, tap Sign In, and go straight to Women's — but Macy's made me work for it when they know I was already coming here to shop the Friends & Family Sale.
+I'd stay — because Friends and Family is my event and that 30% code caught my eye — but I'd be annoyed for the first 30 seconds while I close all those pop-ups, and if I were any less patient I'd have bounced already.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Friends & Family Sale — 3 ways to save on our best brands & new spring arrivals.`
-- **Hero image:** Gold/warm-toned decorative background, partially visible behind email sign-up modal — no model or product clearly shown
-- **Primary CTA:** `Sign up` — visible above the fold? yes — but it's for email capture, not a shopping action
-- **Scores (1-10):** Clarity `4`, Relevance to you `8`, Visual hierarchy `2`, On-brand `7`
+- **Hero copy (verbatim):** `Friends & Family Sale`
+- **Hero image:** Gold and cream decorative background with a stylized ampersand; no model or lifestyle scene visible — abstract celebratory aesthetic
+- **Primary CTA:** No shopping CTA button is visible above the fold — the email modal's `Sign up` button dominates the viewport — visible above the fold? **yes, but it is an email capture CTA, not a shop CTA**
+- **Scores (1-10):** Clarity `6`, Relevance to you `8`, Visual hierarchy `3`, On-brand `7`
 - **Strengths:**
-  - "Friends & Family Sale" is the single most motivating phrase Macy's can show me — relevance is sky-high
-  - The warm celebratory aesthetic behind the modals is on-brand for a big event
+  - "Friends & Family Sale" headline is high-relevance and emotionally resonant for a loyalist like me
+  - The gold/celebratory aesthetic reads "special occasion sale," which matches the event's prestige feel
 - **Weaknesses:**
-  - The hero is almost entirely obscured by two simultaneous overlapping modals — I am reading it through the frosted glass, essentially
-  - The actual savings structure (30% / 15% / $20) is cut off mid-line; I can't complete the thought
+  - Two overlapping overlays (AI chat bubble + email modal) cover the hero entirely — I cannot see the full offer structure or any imagery
+  - No visible shop button; the only tappable action above the fold routes me to email signup, not to products
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** Extra 30% off with code FRIEND, 15% (unlabeled — possibly Star Rewards tier), $20 in (cut off — likely $20 in Star Money or bonus cash), 30% off women's dresses, 40-60% off men's (partially visible at bottom)
-- **Urgency / scarcity:** "Ends tomorrow!" — partially visible behind the AI tooltip; credible and effective if I could actually read it
-- **Loyalty hooks:** "Sign In" button in header; the "15%" strip could be a Star Rewards rate but is not labeled as such — missed opportunity
-- **Honesty check:** The email modal ("We're better together") before I can see the sale smells like a soft gate. If I need to be signed in to get the best rate, say that — don't dress it up as a newsletter opt-in.
+- **Active promos:** Extra 30% off with code FRIEND, 15% (additional tier partially visible), 30% off women's dresses, 40-60% off men's suits (partially visible beneath modal)
+- **Urgency / scarcity:** Countdown timer showing "11:59:57" visible through the modal — credible time pressure, though the label it's counting down to is obscured
+- **Loyalty hooks:** None visible — no Star Money, no Star Pass, no "member pricing" callout anywhere on screen
+- **Honesty check:** The email modal intercepting before I can see the sale terms feels like a hostage situation — "give us your address or you can't see the deals." For someone already in my inbox, this reads as a dark pattern. The dual-overlay firing feels like a bug more than a strategy.
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: Friends & Family Sale is my event. Even obscured, I recognize it immediately.
-- − Easy to reach my category: Can't see any nav or category tiles — everything is behind modals.
-- − Eye-catching imagery in my category: Imagery hidden. I can't see Women's or any product.
-- + Promo banner I would use: "Extra 30% off code FRIEND" — yes, I'd use this.
-- − Page renders cleanly: Two simultaneous modals = visual chaos. Not clean.
-- − Imagery includes someone like me: Can't see any lifestyle or model imagery.
-- + Copy register matches mine: "Friends & Family Sale" and "Star" language is classic Macy's — I understand it immediately.
-- − Trust signals visible: No return policy, no ratings, nothing reassuring visible.
-- − New/hot rail in my category: Completely hidden.
-- − No dark patterns: The pre-browse email gate is a dark pattern — I'm a returning customer and it's still the first thing I see.
+- + Hero relates to my focus area: "Friends & Family Sale" is the exact reason I open the Macy's app — direct hit
+- − Easy to reach my category: hamburger menu only, no visible category strip; I'd need an extra tap just to get started
+- − Eye-catching imagery in my category: the hero background is abstract gold; no women's apparel, handbags, or fragrance imagery visible
+- + Promo banner I would use: "Extra 30% off with code FRIEND" is immediately actionable for me
+- − Page renders cleanly: two simultaneous overlays (AI tooltip + email modal) make this feel broken, not intentional
+- − Imagery includes someone like me: no people visible at all — abstract background only
+- + Copy register matches mine: "Friends & Family Sale" and "3 ways to save" is plain, clear English — not too cute, not too techy
+- − Trust signals visible: no free returns badge, no secure checkout, no review counts above the fold
+- − New/hot rail in my category: invisible behind the modal stack
+- − No dark patterns: email modal as a gate before I can see any product is a textbook dark pattern
 
-**Score:** `4/10`
-**Rationale:** The Friends & Family hook is genuinely strong for someone like me, and the promo banner is readable — but two stacked modals block everything else and the email gate before I can browse is exactly the kind of friction that makes me want to open the physical store flyer instead.
+**Score:** `4/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The F&F Sale headline and the promo code are genuinely strong hooks for me, but the dual-overlay assault means I spend my first 15 seconds dismissing popups rather than shopping — and a shopper like me who came with intent is the exact person you cannot afford to frustrate.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: The only actionable button is "Sign up" for email. No shopping CTA.
-- − Unambiguous CTA copy: "Sign up" is clear but sends me the wrong direction.
-- + Active price reduction or member pricing: 30% off with code FRIEND is visible and real.
-- + Time-bounded credible deadline: "Ends tomorrow!" is partially readable — I feel the urgency.
-- − Reachable free-shipping threshold: Not visible anywhere on screen.
-- − Specific product page one tap away: Everything is behind the modal. I'd need to dismiss two things and then navigate.
-- − Sizing / fit info accessible: Not applicable or visible.
-- − Returns / exchanges mentioned: Not visible.
-- − Reviews / ratings visible: Not visible.
-- − Trust / security signals: Nothing at this scroll depth.
+- − CTA in my category: no women's or beauty shop-now button visible — email signup owns the viewport
+- − Unambiguous CTA copy: "Sign up" is clear but routes me to email, not to cart
+- + Active price reduction or member pricing: 30% off with code FRIEND is live and concrete
+- + Time-bounded credible deadline: the countdown timer is visible, even partially — I feel the clock
+- − Reachable free-shipping threshold: not mentioned anywhere on screen
+- − Specific product page one tap away: impossible with the modal in the way
+- − Sizing/fit info accessible: not applicable or visible
+- − Returns/exchanges mentioned: not visible
+- − Reviews/ratings visible: not visible
+- − Trust/security signals: none visible above the fold
 
-**Score:** `3/10`
-**Rationale:** The offer itself is strong — I know what "30% off with code FRIEND" means and it moves me — but I can't actually get to a product page without clearing two modals and navigating blind, which is two steps too many before I've even seen anything I want.
+**Score:** `3/10` — should equal 1 + count of "+" bullets.
+**Rationale:** The offer is real and the urgency clock does its job, but the path from "I see the deal" to "I tap a product" is completely blocked by the modal — so intent without access does not convert.
 
 ## 11. Evidence
 
-- **Top announcement strip:** "TODAY'S DEALS | Extra 30% off with code FRIEND | 15%" — persistent, readable
-- **Header bar:** Macy's logo with "Celebrations start at" tagline, Sign In button, cart icon
-- **Search bar:** "What are you looking for?" with "Ask Macy's+" AI assistant button
-- **AI assistant tooltip (modal 1):** "I'm an AI-powered assistant. You can ask me to help you shop, discover new trends or compare favorites." — floating over hero
-- **Hero (partially visible):** "Friends & Family Sale / 3 ways to save on our best brands & new spring arrivals" with a warm gold background; "Ends tomorrow!" copy partially readable
-- **Savings tier chart (partially visible):** "30% | 15% | $20 in" — cut off by modal; cannot read the full structure
-- **Email sign-up modal (modal 2, labeled STEP 1 OF 2):** "We're better together / Be the first to know about sales, latest trends, and new arrivals when you sign up for emails." — email field + Sign Up button
-- **Bottom of screen (barely visible):** "30% off women's dresses and 40-60% off men's poles, suits & more with code FRIEND" — this is the detail I actually want and it's the hardest thing to read
-- **Bug / friction:** Two simultaneous modals (AI tooltip + email gate) covering the hero — the core Friends & Family messaging is obscured before I can even decide if I want to engage
+- **Promo bar (top):** "TODAY'S DEALS | Extra 30% off with code FRIEND | 15%" — persistent across top of screen
+- **Header:** Macy's star logo with "Celebrations start at" tagline, Sign In link, cart icon
+- **Search bar:** "What are you looking for?" input with "Ask Macy's+" AI button in pink outline
+- **AI assistant tooltip overlay:** "I'm an AI-powered assistant. You can ask me to help you shop, discover new trends or compare favorites." — floating tooltip partially blocking hero
+- **Countdown timer (partially visible):** "Price in 11:59:57" — obscured by the modal, timing something
+- **Hero headline:** "Friends & Family Sale" in large serif type with decorative gold ampersand
+- **Hero subhead:** "3 ways to save on our best brands & new spring arrivals."
+- **Three-column offer strip (partially visible):** "30% | 15% | $20 in" — cut off below by email modal
+- **Email capture modal (Step 1 of 2):** "We're better together — Be the first to know about sales, latest trends, and new arrivals when you sign up for emails." with email field and "Sign up" CTA button
+- **Privacy footnote:** "By continuing, you agree to Macy's Privacy Practices."
+- **Partially visible below modal:** "30% off women's dresses and 40-60% off men's poles, suits & more with code FRIEND"
+- **Bugs / friction:** Two overlays active simultaneously (AI tooltip + email modal) create a layered obstruction that makes the above-fold experience feel broken; the countdown timer label is illegible through the modal stack
 ## Recent history
 
 - [[2026-05-02-homepage-www.macys.com-maddie-sale-macys-fap6e]] — 6/10 (2026-05-02)

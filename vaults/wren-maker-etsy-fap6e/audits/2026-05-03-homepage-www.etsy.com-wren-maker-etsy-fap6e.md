@@ -12,149 +12,146 @@ tags: [site-journey, score-1, sender/www-etsy-com]
 **Score:** 1/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- I opened Etsy and got a wall. The entire viewport is a bot-block page — orange logo, white void, and "Access is temporarily restricted" with a list of reasons my visit looked suspicious. There's no homepage to review here: no hero, no products, no nav, no offers — just an error screen and a "Submit feedback" link.
+- I didn't get Etsy. I got a wall. The page loaded with nothing but the orange Etsy logo and a cold "Access is temporarily restricted" message — no hero, no products, no categories, zero browsing experience. For a handmade marketplace that's supposed to feel warm and community-driven, this is a brutal first impression. Whatever triggered this block (their bot detection flagged the session), a real shopper seeing this on their phone would close the tab and open a competitor.
 - **1/10**
-- − Hero copy speaks to my persona: no hero exists, only an error message
+- − Hero copy or imagery explicitly speaks to my persona: no hero at all, just a block page
 - − Returning-shopper hook visible: none
 - − Concrete offer above the fold: none
 - − Unmistakable primary CTA: none
-- − Visual hierarchy is clear: the only hierarchy is Etsy logo → error text → explanation bullets
-- − No render bugs: this IS a render failure — the page never loaded
-- − Demographic signals match persona: irrelevant, no content
-- − Page reflects current campaign/season: no content
+- − Visual hierarchy clear: technically yes — there's only one thing to look at, but it's an error state
+- − No render bugs: there IS a render failure — the entire homepage is inaccessible
+- − Demographic signals match persona: none
+- − Page reflects current season/campaign: none
 - − Loyalty/membership visible: none
-- − Offer feels honest: no offer present
-- Score starts at 1; zero rubric signals are present. Stays at **1/10**.
+- − Offer feels honest: n/a — no offer exists
+- Starting score of 1, no criteria satisfied. Score stays at **1**.
 
 ## What's working
 
-- The Etsy wordmark in orange renders correctly — at least I know I'm in the right place before everything falls apart.
-- The "Submit feedback" link is functional-looking and at least gives me a theoretically actionable next step.
+- The Etsy logo renders clearly in the correct orange brand color — at least I know I'm in the right place before the page tells me to go away.
+- The "Submit feedback" link is present, giving a marginally graceful exit vs. a completely dead error page.
 
 ## What's weak
 
-- The entire homepage failed to load — I see zero product imagery, zero navigation, zero CTAs. For a shopper arriving to browse handmade gifts this is a dead stop.
-- The error copy is cold and clinical ("automated (bot) activity," "IP 47.41.15.19") — it reads like a server log, not a message to a real human.
-- The large empty white rectangle between the logo and the explanation block makes the page feel broken and half-loaded; there's no skeleton state or friendly illustration to soften the experience.
-- No retry button, no "go back to homepage" link, no path forward except the vague "Submit feedback" anchor.
-- Showing my raw IP address publicly on screen is an odd, slightly unsettling UX choice.
+- **The entire homepage is blocked.** "Access is temporarily restricted" with a large blank white body — there is no browsable content, no product imagery, nothing.
+- **The error copy is clinical and unfriendly:** "We detected unusual activity from your device or network" reads like a security vendor wrote it, not a handmade goods marketplace. Completely off-brand for Etsy's warm, maker-community voice.
+- **The diagnostic list is user-hostile:** showing end users "Automated (bot) activity on your network (IP 47.41.15.19)" is jargon that will confuse or alarm a regular shopper, not help them.
+- **No recovery path offered:** beyond "Submit feedback," there's no CAPTCHA, no retry button, no alternative way to access the site — a dead end.
+- **Zero personalization or session continuity:** even a logged-in returning shopper would see nothing here, losing any recent views or wishlist context.
 
 ## Recommendations
 
-- Add a friendly retry CTA ("Try again" button) directly on this block page so a real shopper who triggered it by accident can get back in without copy-pasting a URL.
-- Replace the bare white void with a warm placeholder illustration (a craft table, yarn, candles — anything on-brand) so the page at least *feels* like Etsy while I'm blocked.
-- Soften the error language — "We couldn't load the page quite right" with a human explanation beats listing bot-detection heuristics and an IP address at a regular shopper.
-- Surface a direct link back to the Etsy homepage or search so I'm not fully stranded.
+- **Replace the cold block page with a soft CAPTCHA flow** — a simple "Tap to confirm you're human" checkbox keeps the shopper in the funnel instead of ejecting them entirely.
+- **Rewrite the error copy in Etsy's voice:** something like "Hang on — we just want to make sure it's you before we show you all the good stuff" fits the brand and reduces panic.
+- **Hide the raw IP address and technical diagnostics** from the user-facing screen — surface those only in the feedback submission metadata.
+- **Surface a static fallback tile** (e.g., a featured handmade category grid that doesn't require dynamic rendering) so even a restricted session sees *something* worth staying for.
 
 ## Full review
 ## 1. Executive Summary
 
-I opened Etsy and got a wall. The entire viewport is a bot-block page — orange logo, white void, and "Access is temporarily restricted" with a list of reasons my visit looked suspicious. There's no homepage to review here: no hero, no products, no nav, no offers — just an error screen and a "Submit feedback" link.
+I didn't get Etsy. I got a wall. The page loaded with nothing but the orange Etsy logo and a cold "Access is temporarily restricted" message — no hero, no products, no categories, zero browsing experience. For a handmade marketplace that's supposed to feel warm and community-driven, this is a brutal first impression. Whatever triggered this block (their bot detection flagged the session), a real shopper seeing this on their phone would close the tab and open a competitor.
 
 ## 2. Business Impact Score (1-10)
 
 **1/10**
-
-- − Hero copy speaks to my persona: no hero exists, only an error message
+- − Hero copy or imagery explicitly speaks to my persona: no hero at all, just a block page
 - − Returning-shopper hook visible: none
 - − Concrete offer above the fold: none
 - − Unmistakable primary CTA: none
-- − Visual hierarchy is clear: the only hierarchy is Etsy logo → error text → explanation bullets
-- − No render bugs: this IS a render failure — the page never loaded
-- − Demographic signals match persona: irrelevant, no content
-- − Page reflects current campaign/season: no content
+- − Visual hierarchy clear: technically yes — there's only one thing to look at, but it's an error state
+- − No render bugs: there IS a render failure — the entire homepage is inaccessible
+- − Demographic signals match persona: none
+- − Page reflects current season/campaign: none
 - − Loyalty/membership visible: none
-- − Offer feels honest: no offer present
+- − Offer feels honest: n/a — no offer exists
 
-Score starts at 1; zero rubric signals are present. Stays at **1/10**.
+Starting score of 1, no criteria satisfied. Score stays at **1**.
 
 ## 3. What's Working
 
-- The Etsy wordmark in orange renders correctly — at least I know I'm in the right place before everything falls apart.
-- The "Submit feedback" link is functional-looking and at least gives me a theoretically actionable next step.
+- The Etsy logo renders clearly in the correct orange brand color — at least I know I'm in the right place before the page tells me to go away.
+- The "Submit feedback" link is present, giving a marginally graceful exit vs. a completely dead error page.
 
 ## 4. What's Weak
 
-- The entire homepage failed to load — I see zero product imagery, zero navigation, zero CTAs. For a shopper arriving to browse handmade gifts this is a dead stop.
-- The error copy is cold and clinical ("automated (bot) activity," "IP 47.41.15.19") — it reads like a server log, not a message to a real human.
-- The large empty white rectangle between the logo and the explanation block makes the page feel broken and half-loaded; there's no skeleton state or friendly illustration to soften the experience.
-- No retry button, no "go back to homepage" link, no path forward except the vague "Submit feedback" anchor.
-- Showing my raw IP address publicly on screen is an odd, slightly unsettling UX choice.
+- **The entire homepage is blocked.** "Access is temporarily restricted" with a large blank white body — there is no browsable content, no product imagery, nothing.
+- **The error copy is clinical and unfriendly:** "We detected unusual activity from your device or network" reads like a security vendor wrote it, not a handmade goods marketplace. Completely off-brand for Etsy's warm, maker-community voice.
+- **The diagnostic list is user-hostile:** showing end users "Automated (bot) activity on your network (IP 47.41.15.19)" is jargon that will confuse or alarm a regular shopper, not help them.
+- **No recovery path offered:** beyond "Submit feedback," there's no CAPTCHA, no retry button, no alternative way to access the site — a dead end.
+- **Zero personalization or session continuity:** even a logged-in returning shopper would see nothing here, losing any recent views or wishlist context.
 
 ## 5. Recommendations
 
-- Add a friendly retry CTA ("Try again" button) directly on this block page so a real shopper who triggered it by accident can get back in without copy-pasting a URL.
-- Replace the bare white void with a warm placeholder illustration (a craft table, yarn, candles — anything on-brand) so the page at least *feels* like Etsy while I'm blocked.
-- Soften the error language — "We couldn't load the page quite right" with a human explanation beats listing bot-detection heuristics and an IP address at a regular shopper.
-- Surface a direct link back to the Etsy homepage or search so I'm not fully stranded.
+- **Replace the cold block page with a soft CAPTCHA flow** — a simple "Tap to confirm you're human" checkbox keeps the shopper in the funnel instead of ejecting them entirely.
+- **Rewrite the error copy in Etsy's voice:** something like "Hang on — we just want to make sure it's you before we show you all the good stuff" fits the brand and reduces panic.
+- **Hide the raw IP address and technical diagnostics** from the user-facing screen — surface those only in the feedback submission metadata.
+- **Surface a static fallback tile** (e.g., a featured handmade category grid that doesn't require dynamic rendering) so even a restricted session sees *something* worth staying for.
 
 ## 6. Bottom Line
 
-I'd close the tab and try again in a browser, genuinely unsure if my account got flagged for something — not the vibe you want from your homepage.
+I'm closing this tab immediately — I came to browse candle holders and custom name signs, and Etsy locked me out before I could see a single product.
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `Access is temporarily restricted`
-- **Hero image:** None — large blank white space occupies the mid-screen area
-- **Primary CTA:** `Submit feedback.` — visible above the fold? yes (though it is a last-resort link, not a shopping CTA)
-- **Scores (1-10):** Clarity `2`, Relevance to you `1`, Visual hierarchy `3`, On-brand `1`
+- **Hero image:** None — the above-the-fold area is entirely white with only the Etsy wordmark and the restriction message
+- **Primary CTA:** `Submit feedback.` — visible above the fold? yes (but it is a help/support link, not a shopping CTA)
+- **Scores (1-10):** Clarity `2`, Relevance to me `1`, Visual hierarchy `3`, On-brand `1`
 - **Strengths:**
-  - The Etsy logo is recognizable and correctly colored, so brand recall is intact.
-  - The error ID is present, which helps support triage if I actually submit feedback.
+  - The Etsy orange logo is unmistakable and renders correctly
+  - The page is at least legible — no overlapping text
 - **Weaknesses:**
-  - Zero shopping content of any kind; the "hero" is a bot-detection gate.
-  - The blank white space reads as a broken load state — no brand warmth, no craft aesthetic.
+  - There is no shopping experience whatsoever — the "hero" is an access denial
+  - Copy tone is cold and technical, the opposite of Etsy's maker warmth
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** None
-- **Urgency / scarcity:** None
-- **Loyalty hooks:** None
-- **Honesty check:** Showing a visitor's raw IP address (47.41.15.19) on the public-facing error screen is unnecessary and mildly alarming — most shoppers don't know what that is and will assume something went wrong with their device or account.
+- **Active promos:** none
+- **Urgency / scarcity:** none
+- **Loyalty hooks:** none
+- **Honesty check:** Displaying a raw IP address (`47.41.15.19`) to the end user alongside "bot activity" language is alarming out of context — a real shopper might think their account was compromised rather than understanding it was a routine rate-limit. That feels manipulative-adjacent even if unintentional.
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: the "hero" is an access block; nothing about handmade gifts, vintage finds, or gifting occasions
-- − Easy to reach my category: no navigation present at all
-- − Eye-catching imagery in my category: no imagery whatsoever
-- − Promo banner I would use: no promos visible
-- − Page renders cleanly: fails — blank mid-section, clinical error copy, no layout beyond logo + text
-- − Imagery includes someone like me: no imagery
-- − Copy register matches mine: the error language is technical and cold, the opposite of Etsy's usual warm craft-market tone
+- − Hero relates to my focus area: the only visible text is an access restriction notice, nothing handmade, nothing gift-related
+- − Easy to reach my category: no navigation visible at all
+- − Eye-catching imagery in my category: no imagery of any kind
+- − Promo banner I would use: no banners
+- − Page renders cleanly: no — the homepage failed to render; only an error state loaded
+- − Imagery includes someone like me: none
+- − Copy register matches mine: no — clinical security language, not warm maker-community tone
 - − Trust signals visible: none
-- − New/hot rail in my category: none
-- − No dark patterns: the experience itself is a hard block with no escape route — that's a friction dark pattern even if unintentional
+- − New / hot rail in my category: none
+- − No dark patterns: the clinical error copy with IP address exposure is borderline alarming for a casual shopper
 
-**Score:** `1/10` — 1 base + zero confirmed "+" signals.
-**Rationale:** Every engagement path is severed; the page is functionally a dead end with no navigation, no product content, and no inviting copy to keep me curious.
+**Score:** `1/10` — 1 base, zero criteria earned.
+**Rationale:** The page is a complete dead end — there is nothing to engage with, and the copy actively signals "you did something wrong," which is a bounce trigger regardless of how much I love Etsy.
 
 ## 10. Conversion Likelihood
 
 - − CTA in my category: none
-- − Unambiguous CTA copy: "Submit feedback" is the only CTA — not a shopping action
+- − Unambiguous CTA copy: the only CTA is "Submit feedback," which is a support action, not a purchase path
 - − Active price reduction or member pricing: none
 - − Time-bounded credible deadline: none
 - − Reachable free-shipping threshold: none
 - − Specific product page one tap away: none
-- − Sizing/fit info accessible: not applicable; no products
-- − Returns/exchanges mentioned: none
-- − Reviews/ratings visible: none
-- − Trust/security signals: none
+- − Sizing / fit info accessible: n/a
+- − Returns / exchanges mentioned: none
+- − Reviews / ratings visible: none
+- − Trust / security signals: none
 
-**Score:** `1/10` — 1 base + zero confirmed "+" signals.
-**Rationale:** There is literally nothing to convert on; the page delivered an error gate instead of any shoppable content, so conversion probability is effectively zero.
+**Score:** `1/10` — 1 base, zero criteria earned.
+**Rationale:** There is literally nothing to convert on — no product, no CTA, no offer. This session ends at the block page.
 
 ## 11. Evidence
 
-Visible modules in scroll order:
-
-- **Etsy wordmark / logo** — orange serif logotype, centered, top of page; the only branded element present
-- **Error headline** — "Access is temporarily restricted" in dark gray sans-serif, centered below logo
-- **Large blank white block** — occupies the middle third of the viewport; appears to be a failed content load area (no image, no skeleton)
-- **Explanation block** — gray background section listing four possible causes of the block: "Rapid taps or clicks," "JavaScript disabled or not working," "Automated (bot) activity on your network (IP 47.41.15.19)," "Use of developer or inspection tools"
-- **Support CTA** — "Need help? Submit feedback." with underlined anchor link
-- **Session ID** — "ID: ddf1ab12-7b51-5358-8e34-7f4967498178" in small text at bottom
-- **Bugs / friction visible:** Entire homepage content absent; blank mid-section looks like a broken load; raw IP address exposed to the user; no retry path, no back-to-homepage link, no nav
+- **Etsy wordmark** — orange serif logo, centered, top of page, renders correctly
+- **Block/restriction message** — "Access is temporarily restricted" in medium-weight sans-serif, centered below logo
+- **Large blank white body** — no content, no imagery, no modules loaded
+- **Diagnostic error panel (bottom of viewport)** — "We detected unusual activity from your device or network" with four bullet reasons: rapid taps/clicks, JavaScript disabled, automated bot activity with raw IP (47.41.15.19), and developer/inspection tools
+- **"Submit feedback." link** — underlined orange hyperlink, the only actionable element on the page
+- **Session ID string** — "ID: 938f0d2c-1905-ce8a-2f0f-38ae4e9a219f" displayed in plain text at the bottom
+- **Bugs / friction:** The homepage completely failed to load — the entire shopping experience is inaccessible; no nav, no hero, no products, no personalization, no offers. The raw IP and bot-language framing creates unnecessary alarm for a regular shopper.
 ## Recent history
 
 - [[2026-05-02-homepage-www.etsy.com-wren-maker-etsy-fap6e]] — 0/10 (2026-05-02)

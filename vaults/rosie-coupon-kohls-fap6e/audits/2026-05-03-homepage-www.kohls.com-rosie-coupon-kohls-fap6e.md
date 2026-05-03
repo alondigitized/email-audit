@@ -12,116 +12,118 @@ tags: [site-journey, score-1, sender/www-kohls-com]
 **Score:** 1/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Well, honey, I didn't even get through the door. What I'm looking at is a big bold "Access Denied" error — Kohl's CDN turned me away before I could see a single comforter or a coupon. This isn't a homepage review, it's a bouncer situation. Whatever brand Kohl's thinks it's running right now, it's running an invisible one for me.
+- Well, honey, this is not what I came here for. I pulled up Kohl's dot com on my phone and all I got was a big bold "Access Denied" with some gobbledygook reference number underneath it. No Kohl's Cash reminder, no "extra 30% off" banner, nothing. Just a white screen telling me I'm not welcome. I don't know what I did wrong, but this is not a homepage — it's a wall.
 - **1/10**
-- − Hero copy matches my persona: no hero exists — only an error message
-- − Returning-shopper hook: none visible
-- − Concrete offer above the fold: none visible
-- − Primary CTA: none visible
-- − Visual hierarchy: a plain HTML error page with one heading and two lines of text — no hierarchy at all
-- − No render bugs: this IS the bug — a full site block (Akamai edge denial, Reference #18.8c77d917.1777782566.3984e874)
-- − Demographic signals: absent
-- − Current campaign/season: absent
-- − Loyalty/membership benefits: absent
-- − Honest offer: absent
-- Starts at 1, no criteria met. Score stays at 1.
+- − Hero copy or imagery explicitly speaks to my persona: no hero exists, just an error message
+- − Returning-shopper hook visible: none
+- − Concrete offer above the fold: none
+- − Unmistakable primary CTA: none
+- − Clear visual hierarchy: none — just plain black text on white
+- − No render bugs: FAIL — the entire page is a broken access-denied error
+- − Demographic signals match my persona: none
+- − Page reflects current campaign/season: none
+- − Loyalty/membership benefits visible: none
+- − Offer feels honest: N/A — there is no offer
+- Starts at 1, zero criteria met. Score stays at 1.
 
 ## What's working
 
-- Nothing. The page loads fast, I'll give it that — a blank white page with black text renders instantly.
+- The error message text is at least legible — big, clear sans-serif font, so I can read that I've been blocked without squinting. Cold comfort, but that's genuinely all I've got.
 
 ## What's weak
 
-- The entire homepage is replaced by an Akamai "Access Denied" block — I cannot see a single product, offer, or navigation element.
-- The error message ("You don't have permission to access http://www.kohls.com/ on this server") gives me zero path forward — no retry link, no redirect, no customer service number.
-- The reference ID (`#18.8c77d917.1777782566.3984e874`) means absolutely nothing to a regular shopper. I'm not a developer. I don't know what to do with that.
-- The page is completely blank below the three lines of text — a white void that goes on forever.
+- The entire homepage failed to load — I see "Access Denied" where my deals should be. Kohl's is blocked me at the door before I even got to the comforter aisle.
+- There is zero branding — no Kohl's logo, no red-and-white color scheme, not even a favicon in my browser bar to confirm I typed the right address.
+- No fallback page, no retry button, no "try the app instead" — just a raw Akamai CDN error with a reference hash I have no idea what to do with.
+- The reference URL (`errors.edgesuite.net/...`) is completely meaningless to a shopper. I'm 56, not a network engineer.
+- Blank white screen below the error text takes up the entire phone screen — looks broken and abandoned.
 
 ## Recommendations
 
-- Fix the bot-detection configuration so real mobile shoppers aren't caught in the block — I'm on my phone trying to check for Kohl's Cash deals and I got locked out.
-- If a block must show, give me a human-readable page with a "Go back" button or a customer service phone number, not a raw CDN error reference.
-- Add a fallback landing page at the edge level so loyal rewards members don't see a dead wall.
-- At minimum, link to the Kohl's app as an alternative path — don't just leave me staring at nothing.
+- **Show a branded fallback page** instead of a naked Akamai error — at minimum the Kohl's logo, a "something went wrong" message in plain English, and a link to the app or a phone number.
+- **Add a retry CTA** — a big red "Try Again" button so people like me don't just give up and drive to Target instead.
+- **Fix the bot-detection or geo-block rule** that's incorrectly triggering on regular shoppers — whatever firewall setting blocked this visit is losing real revenue.
+- **Route blocked users to the app store** — if the web is down, at least capture me into the Kohl's app with a single tap so the session isn't completely lost.
 
 ## Full review
 ## 1. Executive Summary
 
-Well, honey, I didn't even get through the door. What I'm looking at is a big bold "Access Denied" error — Kohl's CDN turned me away before I could see a single comforter or a coupon. This isn't a homepage review, it's a bouncer situation. Whatever brand Kohl's thinks it's running right now, it's running an invisible one for me.
+Well, honey, this is not what I came here for. I pulled up Kohl's dot com on my phone and all I got was a big bold "Access Denied" with some gobbledygook reference number underneath it. No Kohl's Cash reminder, no "extra 30% off" banner, nothing. Just a white screen telling me I'm not welcome. I don't know what I did wrong, but this is not a homepage — it's a wall.
 
 ## 2. Business Impact Score (1-10)
 
 **1/10**
 
-- − Hero copy matches my persona: no hero exists — only an error message
-- − Returning-shopper hook: none visible
-- − Concrete offer above the fold: none visible
-- − Primary CTA: none visible
-- − Visual hierarchy: a plain HTML error page with one heading and two lines of text — no hierarchy at all
-- − No render bugs: this IS the bug — a full site block (Akamai edge denial, Reference #18.8c77d917.1777782566.3984e874)
-- − Demographic signals: absent
-- − Current campaign/season: absent
-- − Loyalty/membership benefits: absent
-- − Honest offer: absent
+- − Hero copy or imagery explicitly speaks to my persona: no hero exists, just an error message
+- − Returning-shopper hook visible: none
+- − Concrete offer above the fold: none
+- − Unmistakable primary CTA: none
+- − Clear visual hierarchy: none — just plain black text on white
+- − No render bugs: FAIL — the entire page is a broken access-denied error
+- − Demographic signals match my persona: none
+- − Page reflects current campaign/season: none
+- − Loyalty/membership benefits visible: none
+- − Offer feels honest: N/A — there is no offer
 
-Starts at 1, no criteria met. Score stays at 1.
+Starts at 1, zero criteria met. Score stays at 1.
 
 ## 3. What's Working
 
-- Nothing. The page loads fast, I'll give it that — a blank white page with black text renders instantly.
+- The error message text is at least legible — big, clear sans-serif font, so I can read that I've been blocked without squinting. Cold comfort, but that's genuinely all I've got.
 
 ## 4. What's Weak
 
-- The entire homepage is replaced by an Akamai "Access Denied" block — I cannot see a single product, offer, or navigation element.
-- The error message ("You don't have permission to access http://www.kohls.com/ on this server") gives me zero path forward — no retry link, no redirect, no customer service number.
-- The reference ID (`#18.8c77d917.1777782566.3984e874`) means absolutely nothing to a regular shopper. I'm not a developer. I don't know what to do with that.
-- The page is completely blank below the three lines of text — a white void that goes on forever.
+- The entire homepage failed to load — I see "Access Denied" where my deals should be. Kohl's is blocked me at the door before I even got to the comforter aisle.
+- There is zero branding — no Kohl's logo, no red-and-white color scheme, not even a favicon in my browser bar to confirm I typed the right address.
+- No fallback page, no retry button, no "try the app instead" — just a raw Akamai CDN error with a reference hash I have no idea what to do with.
+- The reference URL (`errors.edgesuite.net/...`) is completely meaningless to a shopper. I'm 56, not a network engineer.
+- Blank white screen below the error text takes up the entire phone screen — looks broken and abandoned.
 
 ## 5. Recommendations
 
-- Fix the bot-detection configuration so real mobile shoppers aren't caught in the block — I'm on my phone trying to check for Kohl's Cash deals and I got locked out.
-- If a block must show, give me a human-readable page with a "Go back" button or a customer service phone number, not a raw CDN error reference.
-- Add a fallback landing page at the edge level so loyal rewards members don't see a dead wall.
-- At minimum, link to the Kohl's app as an alternative path — don't just leave me staring at nothing.
+- **Show a branded fallback page** instead of a naked Akamai error — at minimum the Kohl's logo, a "something went wrong" message in plain English, and a link to the app or a phone number.
+- **Add a retry CTA** — a big red "Try Again" button so people like me don't just give up and drive to Target instead.
+- **Fix the bot-detection or geo-block rule** that's incorrectly triggering on regular shoppers — whatever firewall setting blocked this visit is losing real revenue.
+- **Route blocked users to the app store** — if the web is down, at least capture me into the Kohl's app with a single tap so the session isn't completely lost.
 
 ## 6. Bottom Line
 
-I closed the tab and went to check my mailer instead — if Kohl's doesn't want me on their website, I'll wait for the coupon book.
+I closed the tab and went to look for my Kohl's mailer because there is absolutely nothing on this screen for me to do.
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `Access Denied`
-- **Hero image:** No image — white background, plain black system font text only
-- **Primary CTA:** None — visible above the fold? no
+- **Hero image:** No image — plain white background with black system-font error text
+- **Primary CTA:** None — visible above the fold? **No**
 - **Scores (1-10):** Clarity `1`, Relevance to you `1`, Visual hierarchy `1`, On-brand `1`
 - **Strengths:**
-  - Text is at least legible (high contrast, no overlap)
+  - Text is at least readable at large size; no overlapping elements
 - **Weaknesses:**
-  - This is a CDN error page, not the Kohl's homepage — zero brand, zero offer, zero navigation
-  - No path forward for the shopper whatsoever
+  - This is a server error page masquerading as a homepage — zero Kohl's branding, zero merchandising, zero value
+  - No recovery path whatsoever for the shopper
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** none
-- **Urgency / scarcity:** none
-- **Loyalty hooks:** none
-- **Honesty check:** The block itself is the problem — a real customer trying to browse gets silently denied with no explanation she can act on. That's not manipulative, it's just broken.
+- **Active promos:** None
+- **Urgency / scarcity:** None
+- **Loyalty hooks:** None — no Yes2You, no Kohl's Cash, no rewards mention anywhere
+- **Honesty check:** The page is technically honest — it really did deny me access — but it provides zero context a normal person can act on. The Akamai reference number feels cold and corporate-hostile.
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: no hero exists, just an error heading
-- − Easy to reach my category: no navigation of any kind
+- − Hero relates to my focus area: error screen, no shopping content whatsoever
+- − Easy to reach my category: no navigation visible
 - − Eye-catching imagery in my category: no imagery at all
-- − Promo banner I would use: no banners
-- − Page renders cleanly: the error page itself renders, but the intended homepage does not — this is a critical failure
+- − Promo banner I would use: none
+- − Page renders cleanly: hard no — this is a broken access-denied error
 - − Imagery includes someone like me: none
-- − Copy register matches mine: error-page boilerplate is not written for any human being
+- − Copy register matches mine: "You don't have permission to access" is not how you talk to a loyal Kohl's shopper
 - − Trust signals visible: none
 - − New / hot rail in my category: none
-- − No dark patterns: the block itself is the dark pattern — I can't get in at all
+- − No dark patterns: technically no dark patterns, but a total failure to render is worse
 
-**Score:** `1/10` — 1 base, zero criteria met.
-**Rationale:** A fully blocked page fails every engagement criterion before I can even decide whether to scroll. There is nothing here to engage with.
+**Score:** `1/10` — every criterion missed; the page never loaded.
+**Rationale:** There is nothing to engage with. A blank wall with an error code has a 0% scroll-through rate for anyone, let alone a 56-year-old deal-hunter who came here specifically for the Kohl's Cash stack.
 
 ## 10. Conversion Likelihood
 
@@ -136,17 +138,19 @@ I closed the tab and went to check my mailer instead — if Kohl's doesn't want 
 - − Reviews / ratings visible: none
 - − Trust / security signals: none
 
-**Score:** `1/10` — 1 base, zero criteria met.
-**Rationale:** You cannot convert a page that doesn't exist. Every conversion signal is absent because the homepage was blocked at the CDN before rendering.
+**Score:** `1/10` — zero conversion criteria met.
+**Rationale:** You cannot convert a shopper who never sees a product. Every single conversion signal is missing because the site refused to load at all.
 
 ## 11. Evidence
 
-- **Access Denied heading:** Large bold `<h1>` — the only above-the-fold element
-- **Error body text:** "You don't have permission to access `http://www.kohls.com/` on this server." — one paragraph
-- **Reference line:** `Reference #18.8c77d917.1777782566.3984e874` — raw CDN identifier, meaningless to a shopper
-- **Error URL:** `https://errors.edgesuite.net/18.8c77d917.1777782566.3984e874` — confirms Akamai edge block
-- **Remaining viewport:** Completely white and empty for the rest of the scroll height
-- **Bugs / friction:** The entire homepage is the bug — Kohl's bot/IP filtering blocked the visit before any page content loaded, leaving a shopper with no product, no offer, no nav, and no way forward
+Modules visible in the screenshot, in scroll order:
+
+- **Error header:** Large bold "Access Denied" in black system font — the only visible content
+- **Error body:** Plain-text sentence — `You don't have permission to access "http://www.kohls.com/" on this server.`
+- **Reference number:** `Reference #18.8a0ed217.1777836472.4753b580` — raw Akamai CDN identifier, meaningless to shoppers
+- **Error URL:** `https://errors.edgesuite.net/18.8a0ed217.1777836472.4753b580` — bare hyperlink-styled URL with no explanation
+- **Remaining screen:** Completely blank white — no footer, no logo, no recovery path
+- **Bugs / friction:** The entire homepage is a render failure — Akamai CDN blocked the request before any Kohl's content could be served; no branded fallback; no retry mechanism; no navigation; no branding of any kind
 ## Recent history
 
 - [[2026-05-02-homepage-www.kohls.com-rosie-coupon-kohls-fap6e]] — 0/10 (2026-05-02)

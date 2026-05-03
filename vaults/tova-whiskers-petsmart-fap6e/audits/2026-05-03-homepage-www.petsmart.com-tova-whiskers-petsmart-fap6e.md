@@ -3,158 +3,154 @@ slug: 2026-05-03-homepage-www.petsmart.com-tova-whiskers-petsmart-fap6e
 type: site
 date: 2026-05-03
 persona: tova-whiskers-petsmart-fap6e
-score: "5/10"
+score: "7/10"
 sender: www.petsmart.com
 subject: Homepage snapshot · www.petsmart.com · 2026-05-03
-tags: [site-journey, score-5, sender/www-petsmart-com]
+tags: [site-journey, score-7, sender/www-petsmart-com]
 ---
 # Homepage snapshot · www.petsmart.com · 2026-05-03
-**Score:** 5/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 7/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Okay, it loaded fast and the 20% off banner caught my eye immediately — but then I realized there's not a single cat in sight. "Splash into extra savings" on a teal background feels like they're selling me pool noodles, not litter or grooming appointments. It's a promo-first homepage that could belong to any retailer; nothing here tells me I'm in the right place for my two longhairs.
-- **5/10**
-- + Concrete offer visible above the fold: "EXTRA 20% OFF thousands of items online with code: SAVE20 thru 5/3" — specific code, specific deadline
-- + Primary CTA visible: "Shop now" button, blue, readable
-- + Visual hierarchy is clear: banner → nav → hero → CTA, the eye lands in the right order
-- + No render bugs: page looks clean, no broken assets or layout issues
-- + Seasonal feel: "Splash" + teal in early May reads like spring rollout, not stale
-- − No pet, no cat, no creature anywhere above the fold — doesn't speak to me as a cat owner
-- − No loyalty or Treats membership hook visible
-- − No demographic signals — this is a universal savings blast, not targeted
-- − Asterisks on "5/3\*" and "thousands of items\*" suggest fine print I'll have to dig for
-- − No returning-shopper hook (no "welcome back," no rewards balance)
+- PetSmart is leading hard with a last-day sale countdown — 20% off with code SAVE20, ticking down in real time. The brand looks promotional and urgent right now, which I get, but the "Splash into extra savings" hero is so generic I can't tell if I'm shopping for a goldfish, a golden retriever, or my two indoor cats. There is nothing about this above-the-fold experience that says "we know you."
+- **7/10**
+- + Concrete offer visible: "EXTRA 20% OFF thousands of items online with code*: SAVE20"
+- + Primary CTA visible: "Shop now" button clearly rendered
+- + Visual hierarchy clear: countdown strip → hero headline → CTA flows without confusion
+- + No render bugs: layout is clean, no broken elements
+- + Reflects current campaign/season: "Splash into extra savings," ends 5/3 — timely, not stale
+- + Offer feels honest: code is spelled out, deadline is specific ("thru 5/3*"), countdown matches
+- − Hero copy/imagery does not speak to my persona: no cats, no grooming, no treats — nothing
+- − No loyalty/membership hook: I'm a Treats member and I see zero acknowledgment of that
+- − No demographic signal: this could be an ad for anyone buying anything at any pet store
 
 ## What's working
 
-- **The top promo strip** — "EXTRA 20% OFF… SAVE20 thru 5/3" is the first thing I see. Code + deadline + percentage. That's the right formula.
-- **"Shop now" button** — Solid blue, good contrast against the teal hero. It doesn't make me hunt.
-- **Minimal clutter** — Search bar is prominent, nav icons are sensible (account, location, cart). I can find my way.
-- **Deadline urgency** — "thru 5/3" tells me this expires tomorrow, which actually makes me want to act.
+- **Urgency strip:** "LAST DAY! Ends in 13h : 45m : 06s" — I clock that immediately and it makes me feel like I'd be leaving money on the table if I bounced. That countdown is doing real work.
+- **Code visibility:** SAVE20 is right there in the banner AND restated in the hero body copy. I don't have to dig for it. As someone with medium tech comfort, not having to hunt for a promo code matters.
+- **Clean render on mobile:** The page is uncluttered. No pop-ups ambushing me, no layout chaos. Search bar is right there. That's the baseline, but it's met.
+- **"Splash into extra savings" + teal palette:** For early May it reads fresh and seasonal, not recycled Valentine's inventory.
 
 ## What's weak
 
-- **Zero cat content above the fold** — "Splash into extra savings" is a stock savings headline. I have cats. Show me a cat.
-- **"Shop now" goes nowhere specific** — For a returning Treats member who auto-ships litter, that CTA is useless. Where's "reorder" or "your subscriptions"?
-- **No Treats program callout** — I'm a member. Tell me if the 20% stacks with my points. That asterisk makes me nervous it doesn't.
-- **No grooming hook** — I book monthly grooming in-store. Nothing up here acknowledges that service exists.
-- **"Enable accessibility"** renders as a visible line of text sitting awkwardly between the promo strip and nav — looks like a dev artifact, not intentional UI.
+- **Zero cat content above the fold:** The hero image appears to be a graphic/teal wash — no cats, no grooming shot, no treat bag. I'm a two-cat household. Give me something.
+- **No Treats member acknowledgment:** My Treats points balance, a "Welcome back" nudge, anything — completely absent. I'm a returning customer and this page treats me like a stranger walking in off the street.
+- **"Shop now" CTA is category-less:** Where am I going when I tap that? Cat treats? Dog food? Aquatics? That vagueness creates friction for me and probably kills impulse taps.
+- **No free-shipping callout:** I auto-ship litter. Shipping cost is a real decision factor for me and I can't see a threshold anywhere.
+- **No navigation shortcuts visible:** The hamburger menu is there but no quick-tap category chips — no "Cats," "Dog," "Grooming" shortcuts that would let me get to my section in one move.
 
 ## Recommendations
 
-- **Swap the generic "Splash" hero for a cat lifestyle shot** — even a single image of a fluffy longhair being brushed or a bowl of premium kibble would signal "yes, you're home."
-- **Add a Treats member banner or greeting** — "Welcome back, Tova — your 20% stacks with Treats points" would stop me cold and keep me there.
-- **Clarify the asterisk** — Either surface the one key exclusion in-hero ("excludes Rx food") or lose the asterisk. Right now it reads like a trap.
-- **Surface a grooming CTA above the fold** — Something like "Book your May grooming now →" would directly convert my regular in-store behavior into a tap.
+- **Swap the generic "Splash" hero for a cat-specific lifestyle shot** — a long-haired cat mid-groom or a treat bag front-and-center with the same SAVE20 offer overlaid. You have the promo; make the creative earn it.
+- **Surface a Treats member balance or "You have X points" banner** for logged-in users above the fold — even a one-line personalization strip would make me feel seen as a repeat customer.
+- **Rewrite the CTA to "Shop Cat Deals"** or add category-split CTAs (Cats / Dogs / Small Pets) so the "Shop now" tap lands somewhere relevant, not a generic sale page.
+- **Add a free-shipping threshold line** in the promo strip ("Free shipping on orders $49+") — one line, already in the banner, would remove a purchase blocker for auto-ship customers like me.
 
 ## Full review
 ## 1. Executive Summary
 
-Okay, it loaded fast and the 20% off banner caught my eye immediately — but then I realized there's not a single cat in sight. "Splash into extra savings" on a teal background feels like they're selling me pool noodles, not litter or grooming appointments. It's a promo-first homepage that could belong to any retailer; nothing here tells me I'm in the right place for my two longhairs.
+PetSmart is leading hard with a last-day sale countdown — 20% off with code SAVE20, ticking down in real time. The brand looks promotional and urgent right now, which I get, but the "Splash into extra savings" hero is so generic I can't tell if I'm shopping for a goldfish, a golden retriever, or my two indoor cats. There is nothing about this above-the-fold experience that says "we know you."
 
 ## 2. Business Impact Score (1-10)
 
-**5/10**
+**7/10**
 
-- + Concrete offer visible above the fold: "EXTRA 20% OFF thousands of items online with code: SAVE20 thru 5/3" — specific code, specific deadline
-- + Primary CTA visible: "Shop now" button, blue, readable
-- + Visual hierarchy is clear: banner → nav → hero → CTA, the eye lands in the right order
-- + No render bugs: page looks clean, no broken assets or layout issues
-- + Seasonal feel: "Splash" + teal in early May reads like spring rollout, not stale
-- − No pet, no cat, no creature anywhere above the fold — doesn't speak to me as a cat owner
-- − No loyalty or Treats membership hook visible
-- − No demographic signals — this is a universal savings blast, not targeted
-- − Asterisks on "5/3\*" and "thousands of items\*" suggest fine print I'll have to dig for
-- − No returning-shopper hook (no "welcome back," no rewards balance)
+- + Concrete offer visible: "EXTRA 20% OFF thousands of items online with code*: SAVE20"
+- + Primary CTA visible: "Shop now" button clearly rendered
+- + Visual hierarchy clear: countdown strip → hero headline → CTA flows without confusion
+- + No render bugs: layout is clean, no broken elements
+- + Reflects current campaign/season: "Splash into extra savings," ends 5/3 — timely, not stale
+- + Offer feels honest: code is spelled out, deadline is specific ("thru 5/3*"), countdown matches
+- − Hero copy/imagery does not speak to my persona: no cats, no grooming, no treats — nothing
+- − No loyalty/membership hook: I'm a Treats member and I see zero acknowledgment of that
+- − No demographic signal: this could be an ad for anyone buying anything at any pet store
 
 ## 3. What's Working
 
-- **The top promo strip** — "EXTRA 20% OFF… SAVE20 thru 5/3" is the first thing I see. Code + deadline + percentage. That's the right formula.
-- **"Shop now" button** — Solid blue, good contrast against the teal hero. It doesn't make me hunt.
-- **Minimal clutter** — Search bar is prominent, nav icons are sensible (account, location, cart). I can find my way.
-- **Deadline urgency** — "thru 5/3" tells me this expires tomorrow, which actually makes me want to act.
+- **Urgency strip:** "LAST DAY! Ends in 13h : 45m : 06s" — I clock that immediately and it makes me feel like I'd be leaving money on the table if I bounced. That countdown is doing real work.
+- **Code visibility:** SAVE20 is right there in the banner AND restated in the hero body copy. I don't have to dig for it. As someone with medium tech comfort, not having to hunt for a promo code matters.
+- **Clean render on mobile:** The page is uncluttered. No pop-ups ambushing me, no layout chaos. Search bar is right there. That's the baseline, but it's met.
+- **"Splash into extra savings" + teal palette:** For early May it reads fresh and seasonal, not recycled Valentine's inventory.
 
 ## 4. What's Weak
 
-- **Zero cat content above the fold** — "Splash into extra savings" is a stock savings headline. I have cats. Show me a cat.
-- **"Shop now" goes nowhere specific** — For a returning Treats member who auto-ships litter, that CTA is useless. Where's "reorder" or "your subscriptions"?
-- **No Treats program callout** — I'm a member. Tell me if the 20% stacks with my points. That asterisk makes me nervous it doesn't.
-- **No grooming hook** — I book monthly grooming in-store. Nothing up here acknowledges that service exists.
-- **"Enable accessibility"** renders as a visible line of text sitting awkwardly between the promo strip and nav — looks like a dev artifact, not intentional UI.
+- **Zero cat content above the fold:** The hero image appears to be a graphic/teal wash — no cats, no grooming shot, no treat bag. I'm a two-cat household. Give me something.
+- **No Treats member acknowledgment:** My Treats points balance, a "Welcome back" nudge, anything — completely absent. I'm a returning customer and this page treats me like a stranger walking in off the street.
+- **"Shop now" CTA is category-less:** Where am I going when I tap that? Cat treats? Dog food? Aquatics? That vagueness creates friction for me and probably kills impulse taps.
+- **No free-shipping callout:** I auto-ship litter. Shipping cost is a real decision factor for me and I can't see a threshold anywhere.
+- **No navigation shortcuts visible:** The hamburger menu is there but no quick-tap category chips — no "Cats," "Dog," "Grooming" shortcuts that would let me get to my section in one move.
 
 ## 5. Recommendations
 
-- **Swap the generic "Splash" hero for a cat lifestyle shot** — even a single image of a fluffy longhair being brushed or a bowl of premium kibble would signal "yes, you're home."
-- **Add a Treats member banner or greeting** — "Welcome back, Tova — your 20% stacks with Treats points" would stop me cold and keep me there.
-- **Clarify the asterisk** — Either surface the one key exclusion in-hero ("excludes Rx food") or lose the asterisk. Right now it reads like a trap.
-- **Surface a grooming CTA above the fold** — Something like "Book your May grooming now →" would directly convert my regular in-store behavior into a tap.
+- **Swap the generic "Splash" hero for a cat-specific lifestyle shot** — a long-haired cat mid-groom or a treat bag front-and-center with the same SAVE20 offer overlaid. You have the promo; make the creative earn it.
+- **Surface a Treats member balance or "You have X points" banner** for logged-in users above the fold — even a one-line personalization strip would make me feel seen as a repeat customer.
+- **Rewrite the CTA to "Shop Cat Deals"** or add category-split CTAs (Cats / Dogs / Small Pets) so the "Shop now" tap lands somewhere relevant, not a generic sale page.
+- **Add a free-shipping threshold line** in the promo strip ("Free shipping on orders $49+") — one line, already in the banner, would remove a purchase blocker for auto-ship customers like me.
 
 ## 6. Bottom Line
 
-I'd tap "Shop now" only because the 20% code expires tomorrow — but I'm shopping the sale, not because this homepage made me feel seen.
+I'd probably tap "Shop now" because 20% off and a ticking clock got me, but I'm doing it despite the page, not because of it — and if the landing experience is equally generic, I'm out fast.
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `Splash into extra savings` / `on thousands of items with promo code: SAVE20 thru 5/3*`
-- **Hero image:** Solid teal background with colorful confetti/floral pattern at the bottom edge — no product, no animal, no person
-- **Primary CTA:** `Shop now` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `7`, Relevance to you `2`, Visual hierarchy `7`, On-brand `5`
+- **Hero image:** Solid teal/blue graphic wash — no product, no animal, no lifestyle scene visible
+- **Primary CTA:** `Shop now` — visible above the fold? yes
+- **Scores (1-10):** Clarity `8`, Relevance to you `3`, Visual hierarchy `7`, On-brand `6`
 - **Strengths:**
-  - Offer details (code + date) are readable at a glance
-  - CTA button has good contrast and placement
+  - Copy is readable at a glance — big headline, subhead with code and date, button. No noise.
+  - Countdown in the top strip creates genuine urgency that syncs with the hero message.
 - **Weaknesses:**
-  - A PetSmart hero with no pet is a brand miss — I had to check the logo to confirm I was in the right app
-  - "Splash" reads summery/water, not cats or grooming — wrong emotional trigger for me
+  - Teal graphic with no animal imagery whatsoever — this is a pet store; I need to see a pet.
+  - "Shop now" destination is completely undefined, which creates hesitation at the one moment I'm most primed to act.
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** "EXTRA 20% OFF thousands of items online with code: SAVE20 thru 5/3\*"
-- **Urgency / scarcity:** "thru 5/3" — expires tomorrow, which is real urgency, but it's only text, no countdown timer
-- **Loyalty hooks:** None visible above the fold — no Treats balance, no member-specific pricing, no "stacks with points" language
-- **Honesty check:** Two asterisks (on "5/3\*" and implied on "thousands of items\*") with no visible fine print — classic "great deal with hidden exclusions" pattern; I always wonder if my prescription food or grooming add-ons are excluded
+- **Active promos:** EXTRA 20% OFF with code SAVE20 on thousands of items online, thru 5/3
+- **Urgency / scarcity:** Live countdown timer — "Ends in 13h : 45m : 06s" — and "LAST DAY!" label
+- **Loyalty hooks:** None visible above the fold; no Treats member mention, no points balance, no member-price badge
+- **Honesty check:** The asterisk on SAVE20* suggests exclusions exist but they're not spelled out here — standard enough that it doesn't feel like a trap, but I'd want to know before I spend time filling a cart
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: Teal + "Splash" = not cats, not litter, not grooming
-- − Easy to reach my category: Hamburger menu only — categories are hidden, requires an extra tap
-- − Eye-catching imagery in my category: No cat products visible anywhere
-- + Promo banner I would use: 20% off could absolutely apply to litter and treats I buy anyway
-- + Page renders cleanly: No visual jank, fast-feeling load, no layout shift
-- − Imagery includes someone like me: No person, no cat, no lifestyle scene at all
-- + Copy register matches mine: Simple, declarative, no cringe slang — I can read this without eyerolling
-- − Trust signals visible: No reviews, no "free returns," no badge
-- − New / hot rail in my category: Not visible above the fold
-- + No dark patterns: No popup, no forced email gate, no countdown-timer pressure tactics beyond the date
-
-**Score:** `5/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The promo and clean render keep me from bouncing immediately, but the complete absence of cat content means I'm engaging out of discount-hunting instinct, not because this page spoke to me.
+- − Hero relates to my focus area: "Splash into extra savings" is sale-generic; no cats, no grooming, no treats angle
+- − Easy to reach my category: hamburger menu only — no quick-tap category chips for Cats visible
+- − Eye-catching imagery in my category: no cat imagery whatsoever in the visible frame
+- + Promo banner I would use: 20% off at my primary pet store — yes, I would use this
+- + Page renders cleanly: no layout issues, no pop-ups, no CLS visible
+- − Imagery includes someone like me: no people, no cats — just a teal graphic
+- + Copy register matches mine: "Splash into extra savings" is plain English, not cute or jargon-heavy
+- − Trust signals visible: no review counts, no badges, no return policy mention
+- − New / hot rail in my category: nothing below the hero is visible in this viewport
+- + No dark patterns: no forced modals, no dark overlay, clean experience
+- **Score:** `5/10` — should equal 1 + count of "+" bullets above.
+- **Rationale:** The sale itself is the only thing working for me here; the page does nothing to speak to cat owners specifically and the lack of any category navigation shortcut means I'd have to work to get where I'm going.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "Shop now" is category-agnostic — not pointed at cat food, litter, or grooming
-- + Unambiguous CTA copy: "Shop now" is clear even if generic — I know what tapping it does
-- + Active price reduction or member pricing: 20% off with a code is a real discount I can use
-- + Time-bounded credible deadline: "thru 5/3" — tomorrow — feels real and actionable
-- − Reachable free-shipping threshold: Not mentioned anywhere above the fold
-- − Specific product page one tap away: "Shop now" → sale landing page, not my litter or grooming
-- − Sizing / fit info accessible: N/A for cat supplies, but no product-level detail visible
-- − Returns / exchanges mentioned: Absent
-- − Reviews / ratings visible: None
-- − Trust / security signals: None visible above the fold
-
-**Score:** `4/10` — should equal 1 + count of "+" bullets.
-**Rationale:** The expiring code nudges me toward action, but without a direct path to what I actually buy — or any reassurance that the 20% applies to my specific items — I'm going to scroll cautiously rather than tap confidently.
+- − CTA in my category: "Shop now" is destination-unknown — not cats, not grooming, not treats
+- + Unambiguous CTA copy: "Shop now" is at least clear as an action verb
+- + Active price reduction or member pricing: 20% off with SAVE20 is a real, usable discount
+- + Time-bounded credible deadline: "LAST DAY! Ends in 13h:45m:06s" + "thru 5/3" — credible
+- − Reachable free-shipping threshold: not visible anywhere above the fold
+- − Specific product page one tap away: "Shop now" goes somewhere unknown, not a cat-specific page
+- − Sizing / fit info accessible: not applicable / not visible
+- − Returns / exchanges mentioned: not visible
+- − Reviews / ratings visible: no products shown, no ratings visible
+- − Trust / security signals: none visible at this scroll depth
+- **Score:** `4/10` — should equal 1 + count of "+" bullets.
+- **Rationale:** The discount and deadline are doing the conversion work solo; everything that would close the deal for me — category relevance, free shipping, reviews — is invisible, and a generic "Shop now" button going to an unknown landing page is the kind of friction that makes me pause and put my phone down.
 
 ## 11. Evidence
 
-- **Top promo strip:** Blue bar — "EXTRA 20% OFF thousands of items online with code: SAVE20 thru 5/3* >" with a right-arrow implying more detail
-- **Accessibility link:** "Enable accessibility" rendered as plain visible text between strip and nav — looks unfinished
-- **Global navigation bar:** Hamburger menu (left), account icon, PetSmart logo (centered), location pin, cart icon (right)
-- **Search bar:** Full-width with magnifying glass icon — prominent and usable
-- **Hero section:** Teal background, large white headline "Splash into extra savings," smaller body copy with promo code and date, "Shop now" blue CTA button
-- **Decorative band:** Colorful confetti/floral pattern at very bottom of the visible viewport — suggests more content below the fold
-- **Feedback tab:** Vertical "Feedback" button pinned to the right edge mid-screen — visible but doesn't interfere
-- **Bugs / friction:** "Enable accessibility" text reads as an exposed dev/accessibility toggle rather than polished UI; asterisks on the promo with no visible fine print creates trust friction
+- **Urgency/promo strip (top):** Blue background, white and yellow text — "LAST DAY! EXTRA 20% OFF thousands of items online with code*: SAVE20 >" with live countdown "Ends in 13h : 45m : 06s"
+- **Accessibility link:** "Enable accessibility" text link below the promo strip
+- **Navigation bar:** Hamburger menu (left), account icon, PetSmart logo (center), location pin, cart icon (right)
+- **Search bar:** Full-width search field with magnifying glass icon
+- **Hero module:** Large teal/blue wash background — headline "Splash into extra savings," subhead "on thousands of items with promo code: SAVE20 thru 5/3*," blue "Shop now" button
+- **Feedback tab:** Blue vertical "Feedback" tab affixed to the right edge of the screen
+- **Bottom of viewport:** Colorful circular/paw-print decorative tile pattern just beginning to appear at the bottom edge — content below not yet visible
+- **Bugs / friction:** No visible bugs; however, the complete absence of any animal imagery on a pet retailer homepage is a notable missed opportunity that reads almost like a render failure even though it isn't one
 ## Recent history
 
 - [[2026-05-02-homepage-www.petsmart.com-tova-whiskers-petsmart-fap6e]] — 4/10 (2026-05-02)

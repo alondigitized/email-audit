@@ -3,150 +3,156 @@ slug: 2026-05-03-homepage-www.1800flowers.com-rosalie-bloom-1800flowers-fap6e
 type: site
 date: 2026-05-03
 persona: rosalie-bloom-1800flowers-fap6e
-score: "5/10"
+score: "7/10"
 sender: www.1800flowers.com
 subject: Homepage snapshot · www.1800flowers.com · 2026-05-03
-tags: [site-journey, score-5, sender/www-1800flowers-com]
+tags: [site-journey, score-7, sender/www-1800flowers-com]
 ---
 # Homepage snapshot · www.1800flowers.com · 2026-05-03
-**Score:** 5/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 7/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- I open the page and immediately hit a cookie consent wall that covers almost everything — I can see the logo, a "Find the Perfect Gift" search form with Mother's Day pre-selected, a Search button, and nothing else. The brand clearly knows I'm coming in around Mother's Day, which I appreciate, but that cookie modal shoves itself in front of every product, every offer, every reason I had to be here in the first place. This looks like a functional gift-finder site, not a warm, occasion-driven experience.
-- **5/10**
-- + Hero copy "Find the Perfect Gift" speaks directly to an occasion-buyer like me
-- + Occasion dropdown is pre-set to "Mother's Day" — timely and right
-- + One unmistakable primary CTA above the fold ("Search" button, full-width, hard to miss)
-- + Visual hierarchy is clear — search tool is the only thing to look at
-- − No returning-shopper hook: no Passport member callout, no rewards balance, nothing for a loyalist like me
-- − No concrete offer above the fold — no % off, no free-shipping threshold, nothing
-- − Cookie modal blocks all product imagery, lifestyle content, and promotional strips
-- − No demographic imagery of any kind (no lifestyle scene, no "for mom" warmth)
-- − Loyalty/Passport membership benefits: completely invisible
-- − Offer honesty: impossible to evaluate — modal hides everything
+- This looks like exactly my kind of store — 1-800-Flowers knows I'm coming for Mother's Day, and they've pre-loaded the search with "Mother's Day" already selected. Smart. But here's the thing: a giant cookie consent modal is eating up almost the entire screen before I can see a single flower. That's the first impression. Not a great one.
+- **7/10**
+- + Hero copy "Find the Perfect Gift" speaks directly to my occasion-driven shopping — that's my whole playbook
+- − No returning-shopper hook, loyalty balance, or rewards CTA visible (all buried under modal)
+- − No concrete offer above fold — no "20% off" or "free same-day delivery" visible
+- + "Search" button is unmistakably the primary CTA
+- + Visual hierarchy is clean — teal hero, then search form, then big Search button — eye knows exactly where to land
+- + No render bugs — the cookie modal is intentional, not broken
+- + Demographic signals are on point — occasion gifting framing fits a 47-year-old who's perpetually buying for cousins, aunts, and grieving neighbors
+- + Mother's Day pre-selected in the Occasion dropdown — timely and correct (it's early May)
+- − Loyalty/membership benefits completely invisible without dismissing the modal
+- − Can't assess offer honesty since most of the page is obscured
 
 ## What's working
 
-- **Occasion pre-selection ("Mother's Day"):** The dropdown already knows what time of year it is. That's one less tap for me, and it signals the site is paying attention to the calendar.
-- **"Find the Perfect Gift" framing:** The headline is direct and occasion-neutral enough that it doesn't assume I know the product taxonomy — which I appreciate because I'm shopping for *a feeling*, not a SKU.
-- **Search-first UX:** ZIP code + Occasion together is smart for a delivery-dependent purchase. This is exactly how I think about ordering — I need to know it'll arrive before Sunday.
-- **Full-width Search button:** Easy to tap on mobile, no hunting required.
+- **"Find the Perfect Gift" hero copy**: Couldn't be more Rosalie if it tried. No lifestyle jargon, no aesthetic posturing — just what I need to do right now.
+- **Mother's Day pre-selected in the Occasion dropdown**: Whoever built this knows what week it is. I didn't have to scroll through a list of 20 occasions. That's thoughtful.
+- **ZIP Code + Occasion search form above the fold**: This is how I shop — I know I need same-day delivery and I have the recipient's ZIP ready to go. This form is practically reading my mind.
+- **Teal hero color**: Seasonal, fresh, distinctive. Doesn't feel like a generic e-commerce page.
 
 ## What's weak
 
-- **Cookie modal blocking everything:** This is the biggest problem I can see. The entire below-the-fold experience — product imagery, promos, seasonal messaging — is buried behind a consent wall. On mobile, that wall is enormous. I'm annoyed before I've seen a single flower.
-- **No Passport/loyalty callout:** I'm a Passport member. I shop here repeatedly for exactly this kind of occasion. There is zero acknowledgment of that relationship — no "Welcome back," no member perks strip, nothing.
-- **No offer or urgency visible:** Mother's Day is days away. There's no "Order by [date] for guaranteed delivery," no "Free delivery with Passport," no "20% off today." None of the urgency that would make me act now instead of closing the tab.
-- **No warmth or imagery:** The above-the-fold experience is entirely utilitarian — a teal bar and a search form. For a sympathy-and-celebration gift site, this is ice cold.
+- **Cookie consent modal covering ~70% of the page**: This is the first thing I'm dealing with before I even see a product. It's a wall of legal text with a [+] Feedback widget overlapping it, making it look even messier.
+- **No offer or promo visible above the fold**: I'm a Passport member — I expect to see my free-shipping perk somewhere. There's nothing.
+- **No trust signals or social proof**: No "4.8 stars, 2M+ orders" badge or any reassurance before I hand over my ZIP and occasion.
+- **No urgency cue for Mother's Day**: It's May 3rd. Mother's Day is days away. A countdown or "Order by Sunday, May 10" would get me moving. None of that is visible.
+- **Chat widget overlapping the cookie modal**: The "Chat" button and the [+] Feedback badge are stacked on top of the cookie consent text, making the modal look broken even though it isn't.
 
 ## Recommendations
 
-- **Dismiss the cookie modal by default on return visits** (or shrink it to a slim banner) — a Passport member who's visited before should not face a full-screen gate.
-- **Add a Passport welcome strip above the search form:** "You're a Passport member — free same-day delivery included." One line. It would make me feel seen and push me straight to search.
-- **Surface a delivery deadline immediately:** Beneath the Search button, add something like "Order by Saturday for Mother's Day delivery" in a contrasting color — this is the single biggest conversion lever for occasion buyers.
-- **Swap the blank teal background for a lifestyle hero image** that shows behind the search form — even a blurred bouquet would add warmth and signal this is a real gift destination, not a form to fill out.
+- **Add a Mother's Day countdown banner above the hero**: "Order by May 10 for guaranteed delivery" in red — I would tap immediately. Same-day sympathy delivery is literally my use case; tell me the deadline.
+- **Move the Passport member free-shipping callout into the hero**: Put a small badge or line under the search button: "Passport members: free shipping included." I'm already a member — remind me why that's valuable.
+- **Reduce the cookie modal to a slim bottom banner**: A full-screen interstitial before I see a single product is friction I don't need. A slim sticky bar at the bottom ("We use cookies — Continue") keeps me on the page mentally.
+- **Add a one-tap shortcut row**: Below the search form, three chips: "Sympathy," "Birthday," "Mother's Day." I don't always want to type — let me tap my occasion and get moving.
 
 ## Full review
 ## 1. Executive Summary
 
-I open the page and immediately hit a cookie consent wall that covers almost everything — I can see the logo, a "Find the Perfect Gift" search form with Mother's Day pre-selected, a Search button, and nothing else. The brand clearly knows I'm coming in around Mother's Day, which I appreciate, but that cookie modal shoves itself in front of every product, every offer, every reason I had to be here in the first place. This looks like a functional gift-finder site, not a warm, occasion-driven experience.
+This looks like exactly my kind of store — 1-800-Flowers knows I'm coming for Mother's Day, and they've pre-loaded the search with "Mother's Day" already selected. Smart. But here's the thing: a giant cookie consent modal is eating up almost the entire screen before I can see a single flower. That's the first impression. Not a great one.
 
 ## 2. Business Impact Score (1-10)
-**5/10**
-- + Hero copy "Find the Perfect Gift" speaks directly to an occasion-buyer like me
-- + Occasion dropdown is pre-set to "Mother's Day" — timely and right
-- + One unmistakable primary CTA above the fold ("Search" button, full-width, hard to miss)
-- + Visual hierarchy is clear — search tool is the only thing to look at
-- − No returning-shopper hook: no Passport member callout, no rewards balance, nothing for a loyalist like me
-- − No concrete offer above the fold — no % off, no free-shipping threshold, nothing
-- − Cookie modal blocks all product imagery, lifestyle content, and promotional strips
-- − No demographic imagery of any kind (no lifestyle scene, no "for mom" warmth)
-- − Loyalty/Passport membership benefits: completely invisible
-- − Offer honesty: impossible to evaluate — modal hides everything
+
+**7/10**
+
+- + Hero copy "Find the Perfect Gift" speaks directly to my occasion-driven shopping — that's my whole playbook
+- − No returning-shopper hook, loyalty balance, or rewards CTA visible (all buried under modal)
+- − No concrete offer above fold — no "20% off" or "free same-day delivery" visible
+- + "Search" button is unmistakably the primary CTA
+- + Visual hierarchy is clean — teal hero, then search form, then big Search button — eye knows exactly where to land
+- + No render bugs — the cookie modal is intentional, not broken
+- + Demographic signals are on point — occasion gifting framing fits a 47-year-old who's perpetually buying for cousins, aunts, and grieving neighbors
+- + Mother's Day pre-selected in the Occasion dropdown — timely and correct (it's early May)
+- − Loyalty/membership benefits completely invisible without dismissing the modal
+- − Can't assess offer honesty since most of the page is obscured
 
 ## 3. What's Working
 
-- **Occasion pre-selection ("Mother's Day"):** The dropdown already knows what time of year it is. That's one less tap for me, and it signals the site is paying attention to the calendar.
-- **"Find the Perfect Gift" framing:** The headline is direct and occasion-neutral enough that it doesn't assume I know the product taxonomy — which I appreciate because I'm shopping for *a feeling*, not a SKU.
-- **Search-first UX:** ZIP code + Occasion together is smart for a delivery-dependent purchase. This is exactly how I think about ordering — I need to know it'll arrive before Sunday.
-- **Full-width Search button:** Easy to tap on mobile, no hunting required.
+- **"Find the Perfect Gift" hero copy**: Couldn't be more Rosalie if it tried. No lifestyle jargon, no aesthetic posturing — just what I need to do right now.
+- **Mother's Day pre-selected in the Occasion dropdown**: Whoever built this knows what week it is. I didn't have to scroll through a list of 20 occasions. That's thoughtful.
+- **ZIP Code + Occasion search form above the fold**: This is how I shop — I know I need same-day delivery and I have the recipient's ZIP ready to go. This form is practically reading my mind.
+- **Teal hero color**: Seasonal, fresh, distinctive. Doesn't feel like a generic e-commerce page.
 
 ## 4. What's Weak
 
-- **Cookie modal blocking everything:** This is the biggest problem I can see. The entire below-the-fold experience — product imagery, promos, seasonal messaging — is buried behind a consent wall. On mobile, that wall is enormous. I'm annoyed before I've seen a single flower.
-- **No Passport/loyalty callout:** I'm a Passport member. I shop here repeatedly for exactly this kind of occasion. There is zero acknowledgment of that relationship — no "Welcome back," no member perks strip, nothing.
-- **No offer or urgency visible:** Mother's Day is days away. There's no "Order by [date] for guaranteed delivery," no "Free delivery with Passport," no "20% off today." None of the urgency that would make me act now instead of closing the tab.
-- **No warmth or imagery:** The above-the-fold experience is entirely utilitarian — a teal bar and a search form. For a sympathy-and-celebration gift site, this is ice cold.
+- **Cookie consent modal covering ~70% of the page**: This is the first thing I'm dealing with before I even see a product. It's a wall of legal text with a [+] Feedback widget overlapping it, making it look even messier.
+- **No offer or promo visible above the fold**: I'm a Passport member — I expect to see my free-shipping perk somewhere. There's nothing.
+- **No trust signals or social proof**: No "4.8 stars, 2M+ orders" badge or any reassurance before I hand over my ZIP and occasion.
+- **No urgency cue for Mother's Day**: It's May 3rd. Mother's Day is days away. A countdown or "Order by Sunday, May 10" would get me moving. None of that is visible.
+- **Chat widget overlapping the cookie modal**: The "Chat" button and the [+] Feedback badge are stacked on top of the cookie consent text, making the modal look broken even though it isn't.
 
 ## 5. Recommendations
 
-- **Dismiss the cookie modal by default on return visits** (or shrink it to a slim banner) — a Passport member who's visited before should not face a full-screen gate.
-- **Add a Passport welcome strip above the search form:** "You're a Passport member — free same-day delivery included." One line. It would make me feel seen and push me straight to search.
-- **Surface a delivery deadline immediately:** Beneath the Search button, add something like "Order by Saturday for Mother's Day delivery" in a contrasting color — this is the single biggest conversion lever for occasion buyers.
-- **Swap the blank teal background for a lifestyle hero image** that shows behind the search form — even a blurred bouquet would add warmth and signal this is a real gift destination, not a form to fill out.
+- **Add a Mother's Day countdown banner above the hero**: "Order by May 10 for guaranteed delivery" in red — I would tap immediately. Same-day sympathy delivery is literally my use case; tell me the deadline.
+- **Move the Passport member free-shipping callout into the hero**: Put a small badge or line under the search button: "Passport members: free shipping included." I'm already a member — remind me why that's valuable.
+- **Reduce the cookie modal to a slim bottom banner**: A full-screen interstitial before I see a single product is friction I don't need. A slim sticky bar at the bottom ("We use cookies — Continue") keeps me on the page mentally.
+- **Add a one-tap shortcut row**: Below the search form, three chips: "Sympathy," "Birthday," "Mother's Day." I don't always want to type — let me tap my occasion and get moving.
 
 ## 6. Bottom Line
 
-I'd tap "Continue" on the cookie modal and keep going because Mother's Day is coming and I need flowers — but this site is doing nothing to make me feel like they've earned my loyalty or that I need to act right now.
+I'd close the cookie modal and actually use that search form — the Mother's Day pre-selection earned my good faith — but the site is working harder than it needs to against itself right out of the gate.
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `Find the Perfect Gift`
-- **Hero image:** No imagery — plain teal/dark background with a ZIP code and Occasion search form; cookie consent modal covers everything below
-- **Primary CTA:** `Search` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `8`, Relevance to you `6`, Visual hierarchy `7`, On-brand `4`
+- **Hero image:** Teal/dark green solid color block — no flowers, no lifestyle imagery, no model. Clean but anonymous.
+- **Primary CTA:** `Search` — visible above the fold? yes (partially obscured by cookie modal but present)
+- **Scores (1-10):** Clarity `8`, Relevance to you `8`, Visual hierarchy `7`, On-brand `7`
 - **Strengths:**
-  - The occasion selector pre-set to Mother's Day is a genuinely smart touch that saves me a step
-  - "Find the Perfect Gift" is clear and unintimidating for a medium-tech shopper like me
+  - The search form does heavy lifting — ZIP + Occasion is exactly the decision tree I run when buying gifts
+  - "Mother's Day" pre-selected signals the brand knows its calendar
 - **Weaknesses:**
-  - Zero emotional warmth — no flowers, no lifestyle image, no "for mom" language — this could be a utility bill site
-  - Cookie modal dominating the viewport means the actual brand experience is invisible on first load
+  - No floral imagery in the hero at all — for a flower company, that's a missed emotional beat
+  - Cookie modal immediately undercuts the clean hierarchy
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** None visible
-- **Urgency / scarcity:** None visible — no delivery deadline, no countdown, no "order by" messaging
-- **Loyalty hooks:** None visible — Passport membership is not acknowledged anywhere above the fold
-- **Honesty check:** Can't evaluate promos because the modal hides them — which is itself a friction pattern. I shouldn't have to click past a wall to find out if there's an offer I care about.
+- **Active promos:** None visible — modal covers everything below the search form
+- **Urgency / scarcity:** None visible — no countdown, no "order by" deadline, no limited-stock copy
+- **Loyalty hooks:** None visible — Passport member perks are nowhere on screen
+- **Honesty check:** Nothing manipulative visible, but the cookie modal's [+] Feedback badge overlapping its own body text looks sloppy and could erode trust at first glance
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: "Find the Perfect Gift" + Mother's Day occasion = directly on target for my shopping reason today
-- + Easy to reach my category: Occasion dropdown pre-set to Mother's Day, ZIP field ready — two taps to results
-- − Eye-catching imagery in my category: No product imagery visible at all; cookie modal blocks everything
-- − Promo banner I would use: No promos visible above the fold
-- − Page renders cleanly: Cookie consent modal covers the entire content area on mobile — significant friction on first load
-- − Imagery includes someone like me: No lifestyle or model imagery visible
-- + Copy register matches mine: "Find the Perfect Gift" and "Search" are plain, clear, no jargon
-- − Trust signals visible: None — no reviews, no "guaranteed delivery," no Passport badge
-- − New/hot rail in my category: Not visible due to modal
-- − No dark patterns: Full-screen cookie modal on mobile is a dark-pattern-adjacent blocker
-- **Score:** `4/10`
-- **Rationale:** The occasion-aware search form is genuinely useful and keeps me from bouncing immediately, but the cookie modal wipes out any emotional hook or discovery experience that would make me want to explore further.
+- + Hero relates to my focus area: "Find the Perfect Gift" + Mother's Day pre-selected is exactly my shopping mode
+- + Easy to reach my category: Occasion dropdown and ZIP field are immediately accessible — one of the cleaner "get me to the thing" UX patterns I've seen
+- − Eye-catching imagery in my category: No flowers visible at all in the hero; just a teal color block
+- − Promo banner I would use: Covered entirely by the cookie modal
+- − Page renders cleanly: The cookie modal overlapping the [+] Feedback badge looks like a layout glitch even though it isn't
+- − Imagery includes someone like me: No people, no lifestyle scenes visible
+- + Copy register matches mine: "Find the Perfect Gift" is plain English, no jargon — I can read this at 7am before coffee
+- − Trust signals visible: None — no review badges, no "10M+ happy customers"
+- − New / hot rail in my category: Completely obscured
+- − No dark patterns: The full-screen cookie modal is exactly the kind of thing that makes me pause before I've seen a single product
+
+**Score:** `4/10`
+**Rationale:** The search form interaction is genuinely useful and the Mother's Day pre-selection earns real goodwill, but the cookie wall wipes out nearly every other engagement signal before I can see the store.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "Search" is generic — it's a starting point, not a "Shop Mother's Day Bouquets" pull
-- + Unambiguous CTA copy: "Search" is simple and clear, no ambiguity
-- − Active price reduction or member pricing: Not visible
-- − Time-bounded credible deadline: No "order by" date visible — critical for occasion buyers
-- − Reachable free-shipping threshold: Not visible; my Passport benefit isn't even mentioned
-- − Specific product page one tap away: No — I have to fill out the form first, then browse
-- − Sizing/fit info accessible: N/A for flowers, but delivery window info is missing
-- − Returns/exchanges mentioned: Not visible
-- − Reviews/ratings visible: Not visible
-- − Trust/security signals: Not visible
-- **Score:** `2/10`
-- **Rationale:** Basically the only conversion signal present is a clear Search button — everything else that would tip me from browsing to buying (deadlines, member perks, social proof) is hidden behind the cookie modal or absent entirely.
+- + CTA in my category: The "Search" button tied to Mother's Day + ZIP is a direct path to purchase
+- + Unambiguous CTA copy: "Search" is about as clear as it gets
+- − Active price reduction or member pricing: Nothing visible
+- − Time-bounded credible deadline: No "order by Sunday" or countdown — a huge miss this close to Mother's Day
+- − Reachable free-shipping threshold: No threshold visible — as a Passport member I expect this front and center
+- − Specific product page one tap away: Cookie modal blocks the path entirely
+- − Sizing / fit info accessible: N/A for flowers
+- − Returns / exchanges mentioned: Nothing visible
+- − Reviews / ratings visible: Nothing visible
+- − Trust / security signals: Nothing visible
+
+**Score:** `3/10`
+**Rationale:** The search form architecture is solid and I'd use it, but the complete absence of urgency copy, pricing incentives, or trust signals — all buried by the modal — means I'm converting on inertia (I already know I need flowers) rather than anything this homepage did to earn it.
 
 ## 11. Evidence
 
-- **Header:** 1800flowers.com logo, hamburger menu, search icon, account icon, cart icon — minimal and functional
-- **Hero / primary value prop:** Teal band with "Find the Perfect Gift" headline; ZIP Code input field + Occasion dropdown (pre-set to Mother's Day) + full-width Search button
-- **Cookie consent modal:** Full-screen overlay reading "We Use Cookies" with paragraph-length legal copy, a [+] Feedback tab on the right edge, and a full-width "Continue" button at the bottom
-- **Chat button:** Visible in bottom-right corner over the cookie modal
-- **All other modules (promotional banners, product rails, seasonal content, loyalty section, footer):** Completely obscured by the cookie consent modal — not scoreable from this screenshot
-- **Bugs / friction:** Cookie modal on mobile occupies nearly the entire viewport, making it impossible to preview any homepage content before consenting; no workaround visible
+- **Hero / primary value prop:** Teal background panel, white text "Find the Perfect Gift," no imagery
+- **Search form module:** ZIP Code text input + Occasion dropdown (pre-set to "Mother's Day") + large "Search" button
+- **Cookie consent modal:** Full-screen overlay — "We Use Cookies" heading, legal body text, [+] Feedback badge overlapping text, "Continue" button at bottom
+- **Persistent chat widget:** "Chat" button pinned bottom-right, visible behind/alongside the cookie modal
+- **Navigation bar:** Hamburger menu icon, search icon, 1-800-Flowers logo (center), account icon, cart icon — all above the hero
+- **Bugs / friction:** [+] Feedback badge visually collides with cookie modal body text, creating appearance of a broken layout; zero content below the hero fold is visible due to cookie modal
 ## Recent history
 
 - [[2026-05-02-homepage-www.1800flowers.com-rosalie-bloom-1800flowers-fap6e]] — 7/10 (2026-05-02)

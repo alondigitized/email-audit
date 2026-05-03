@@ -3,152 +3,159 @@ slug: 2026-05-03-homepage-www.nike.com-zane-stride-nike-fap6e
 type: site
 date: 2026-05-03
 persona: zane-stride-nike-fap6e
-score: "5/10"
+score: "6/10"
 sender: www.nike.com
 subject: Homepage snapshot · www.nike.com · 2026-05-03
-tags: [site-journey, score-5, sender/www-nike-com]
+tags: [site-journey, score-6, sender/www-nike-com]
 ---
 # Homepage snapshot · www.nike.com · 2026-05-03
-**Score:** 5/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 6/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Nike's homepage right now is The A'ja Wilson Show — literally. Full-bleed hero, late-night city skyline, pink A'Two on the desk, very editorial, very hype. Brand is clearly in lifestyle-launch mode, not performance-running mode. As someone who just got done syncing my NRC data and is here to scope the latest ZoomX tech, this misses me cold above the fold.
-- **5/10**
-- + One unmistakable CTA above the fold: "Explore" button is clearly visible
-- + Visual hierarchy is clean — swoosh, hero, headline, CTA. Eye knows where to go
-- + No render bugs — everything crisp and loaded
-- + Page reflects a current launch ("The A'ja Wilson Show" / A'Two) — not stale
-- − Hero copy and imagery don't speak to me as a male runner. This is a WNBA athlete on a talk-show set
-- − No returning-shopper hook. No "Welcome back, Zane" or Member balance
-- − Zero concrete offer above the fold. No %, no threshold, nothing
-- − Loyalty/membership completely absent above the fold
-- − Demographic signals are off — female athlete, basketball context, not 25-miles-a-week runner
+- Nike is leading with the ACG Zegama Trail launch — cinematic dark hero, motion-blur aesthetic, the whole "we make trail gear now" flex. The brand presence is unmistakably Nike and the production value is high, but this homepage is pitching me trail hiking shoes when I'm here for road performance and NRC-linked drops. Cool launch, wrong guy.
+- **6/10**
+- + Primary CTA visible above the fold — "Shop" button, clear pill shape
+- + Visual hierarchy nails it — "CREATURE COMFORT" in heavy white type over a dark moody hero, eye goes straight there
+- + No render bugs — intentional dark/motion-blur aesthetic, clean layout, no overlap issues
+- + Demographic signals lean young/athletic/Gen Z — the cinematic campaign tone reads right for my age group
+- + Current campaign — ACG Zegama Trail is a real moment right now, not a stale holdover
+- + Offer feels honest — no manipulative fine print, product copy is direct ("Soft Shoes for hard trails")
+- − Hero doesn't speak to MY focus area — trail ACG is not road racing, no Vaporfly/ZoomX energy, no NRC mention
+- − Zero loyalty or Member hook above the fold — I have free shipping perks and I'd want to know my status
+- − No concrete dollar-off or member-exclusive pricing visible
+- − No returning-shopper signal (recently-viewed, rewards balance, etc.)
 
 ## What's working
 
-- **The A'ja Wilson hero is visually striking** — pink shoe pops against the dark city skyline, high production value, the kind of shot that stops the scroll
-- **"Perform on Air in the new A'Two"** — tight copy, performance framing, doesn't drown you in marketing words
-- **Clean mobile nav** — swoosh, search, account, bag, hamburger. No clutter, every icon where I expect it
-- **"Explore" CTA placement** — centered below the copy, obvious target for a thumb tap
-- **Current campaign** — this is clearly tied to a live product launch, not something recycled from six months ago
+- **"CREATURE COMFORT" headline** — bold, weird, memorable. Gen Z-coded copy that makes you stop scrolling and actually read the sub-head.
+- **"Watch ►" CTA alongside "Shop"** — gives me a content path and a buy path simultaneously. Very Nike. Very 2026. I'd probably hit Watch first.
+- **Carousel/video carousel format** — pause button bottom right signals this is a video-backed hero, which is the right move for a product launch aimed at my generation.
+- **Sub-copy specificity** — "Discover the ACG Zegama Trail" names the actual product. Not vague, not lifestyle-speak.
+- **Mobile-first layout** — full-bleed hero, pill buttons centered and thumb-reachable, the whole thing feels built for the phone-first session I'm in.
 
 ## What's weak
 
-- **Wrong category for me, full stop** — basketball shoe launch above the fold when I'm here for ZoomX Vaporfly restocks or the next Pegasus colorway
-- **No Member hook** — I have free shipping and early access as a Member and there's zero signal of that; I might as well be anonymous
-- **"Explore" is vague** — explore what? Explore the shoe? The campaign? Takes an extra beat to commit to the tap
-- **Zero price or offer signal** — no free-shipping callout, no member pricing badge, nothing that makes me feel like opening the app was worth it vs. just Googling
-- **No running-category entry point** — the nav is icon-only; to get to Running I have to dig into the hamburger. One more tap than it should be
+- **Trail ACG is not my aisle** — I'm a road runner chasing PR pace. ZoomX Vaporfly, Pegasus, NRC race prep — that's why I open Nike.com. This hero sends me nowhere near that.
+- **Zero Member / NikePlus surface** — I'm a Member-first buyer; free shipping with Member is literally part of my purchase calculus. No badge, no balance, no recognition that I exist as a returning customer.
+- **No concrete offer** — "Discover the ACG Zegama Trail" is not a deal. No price, no member discount, no first-look drop callout. Nike could easily say "Member Early Access" here.
+- **Dark hero hides the shoe** — I genuinely cannot see the Zegama Trail shoe in this image. Motion-blurred foliage looks cool but I don't know what the product looks like without tapping Shop.
+- **Nav requires effort to reach my category** — hamburger only; no shortcut to Men's Running or Performance. One extra tap in the wrong direction for me.
 
 ## Recommendations
 
-- **Add a persistent Member strip** above or below the hero — even a one-line "Free shipping for Members" gives me a reason to feel rewarded for being logged in
-- **Swap or layer a secondary module below the fold** with a running-specific teaser — a "Top Picks for Runners" rail or a Vaporfly/Pegasus card keeps performance runners engaged without touching the hero
-- **Sharpen the CTA copy** — "Shop A'Two" or "Get the A'Two" instead of "Explore" removes the ambiguity and maps to a specific conversion action
-- **Surface a running shortcut in the nav** — a visible "Running" quick-link icon next to the hamburger (the way Snkrs surfaces drops) gets me one tap to my category instead of two
+- **Surface a Member status chip in the nav bar** — drop a small "Hi, Zane | Member" or rewards-balance badge next to the profile icon; it costs one line of code and immediately tells me this homepage knows me.
+- **Rotate the second carousel slide to a road-running story** — the dots show 5 slides; one of them should be Vaporfly/NRC/race season to recapture runners like me who scrolled past the trail hero.
+- **Make the shoe visible** — pull a clean product shot of the Zegama Trail into the lower third of the hero so I know what I'm shopping without having to tap. Right now it's pure vibes, zero product.
+- **Add a Member-exclusive callout to the CTA** — swap "Shop" for "Shop Member Early Access" or badge the button. Costs nothing, activates the exact behavior Nike wants from its loyalty tier.
 
 ## Full review
 ## 1. Executive Summary
 
-Nike's homepage right now is The A'ja Wilson Show — literally. Full-bleed hero, late-night city skyline, pink A'Two on the desk, very editorial, very hype. Brand is clearly in lifestyle-launch mode, not performance-running mode. As someone who just got done syncing my NRC data and is here to scope the latest ZoomX tech, this misses me cold above the fold.
+Nike is leading with the ACG Zegama Trail launch — cinematic dark hero, motion-blur aesthetic, the whole "we make trail gear now" flex. The brand presence is unmistakably Nike and the production value is high, but this homepage is pitching me trail hiking shoes when I'm here for road performance and NRC-linked drops. Cool launch, wrong guy.
 
 ## 2. Business Impact Score (1-10)
 
-**5/10**
-
-- + One unmistakable CTA above the fold: "Explore" button is clearly visible
-- + Visual hierarchy is clean — swoosh, hero, headline, CTA. Eye knows where to go
-- + No render bugs — everything crisp and loaded
-- + Page reflects a current launch ("The A'ja Wilson Show" / A'Two) — not stale
-- − Hero copy and imagery don't speak to me as a male runner. This is a WNBA athlete on a talk-show set
-- − No returning-shopper hook. No "Welcome back, Zane" or Member balance
-- − Zero concrete offer above the fold. No %, no threshold, nothing
-- − Loyalty/membership completely absent above the fold
-- − Demographic signals are off — female athlete, basketball context, not 25-miles-a-week runner
+**6/10**
+- + Primary CTA visible above the fold — "Shop" button, clear pill shape
+- + Visual hierarchy nails it — "CREATURE COMFORT" in heavy white type over a dark moody hero, eye goes straight there
+- + No render bugs — intentional dark/motion-blur aesthetic, clean layout, no overlap issues
+- + Demographic signals lean young/athletic/Gen Z — the cinematic campaign tone reads right for my age group
+- + Current campaign — ACG Zegama Trail is a real moment right now, not a stale holdover
+- + Offer feels honest — no manipulative fine print, product copy is direct ("Soft Shoes for hard trails")
+- − Hero doesn't speak to MY focus area — trail ACG is not road racing, no Vaporfly/ZoomX energy, no NRC mention
+- − Zero loyalty or Member hook above the fold — I have free shipping perks and I'd want to know my status
+- − No concrete dollar-off or member-exclusive pricing visible
+- − No returning-shopper signal (recently-viewed, rewards balance, etc.)
 
 ## 3. What's Working
 
-- **The A'ja Wilson hero is visually striking** — pink shoe pops against the dark city skyline, high production value, the kind of shot that stops the scroll
-- **"Perform on Air in the new A'Two"** — tight copy, performance framing, doesn't drown you in marketing words
-- **Clean mobile nav** — swoosh, search, account, bag, hamburger. No clutter, every icon where I expect it
-- **"Explore" CTA placement** — centered below the copy, obvious target for a thumb tap
-- **Current campaign** — this is clearly tied to a live product launch, not something recycled from six months ago
+- **"CREATURE COMFORT" headline** — bold, weird, memorable. Gen Z-coded copy that makes you stop scrolling and actually read the sub-head.
+- **"Watch ►" CTA alongside "Shop"** — gives me a content path and a buy path simultaneously. Very Nike. Very 2026. I'd probably hit Watch first.
+- **Carousel/video carousel format** — pause button bottom right signals this is a video-backed hero, which is the right move for a product launch aimed at my generation.
+- **Sub-copy specificity** — "Discover the ACG Zegama Trail" names the actual product. Not vague, not lifestyle-speak.
+- **Mobile-first layout** — full-bleed hero, pill buttons centered and thumb-reachable, the whole thing feels built for the phone-first session I'm in.
 
 ## 4. What's Weak
 
-- **Wrong category for me, full stop** — basketball shoe launch above the fold when I'm here for ZoomX Vaporfly restocks or the next Pegasus colorway
-- **No Member hook** — I have free shipping and early access as a Member and there's zero signal of that; I might as well be anonymous
-- **"Explore" is vague** — explore what? Explore the shoe? The campaign? Takes an extra beat to commit to the tap
-- **Zero price or offer signal** — no free-shipping callout, no member pricing badge, nothing that makes me feel like opening the app was worth it vs. just Googling
-- **No running-category entry point** — the nav is icon-only; to get to Running I have to dig into the hamburger. One more tap than it should be
+- **Trail ACG is not my aisle** — I'm a road runner chasing PR pace. ZoomX Vaporfly, Pegasus, NRC race prep — that's why I open Nike.com. This hero sends me nowhere near that.
+- **Zero Member / NikePlus surface** — I'm a Member-first buyer; free shipping with Member is literally part of my purchase calculus. No badge, no balance, no recognition that I exist as a returning customer.
+- **No concrete offer** — "Discover the ACG Zegama Trail" is not a deal. No price, no member discount, no first-look drop callout. Nike could easily say "Member Early Access" here.
+- **Dark hero hides the shoe** — I genuinely cannot see the Zegama Trail shoe in this image. Motion-blurred foliage looks cool but I don't know what the product looks like without tapping Shop.
+- **Nav requires effort to reach my category** — hamburger only; no shortcut to Men's Running or Performance. One extra tap in the wrong direction for me.
 
 ## 5. Recommendations
 
-- **Add a persistent Member strip** above or below the hero — even a one-line "Free shipping for Members" gives me a reason to feel rewarded for being logged in
-- **Swap or layer a secondary module below the fold** with a running-specific teaser — a "Top Picks for Runners" rail or a Vaporfly/Pegasus card keeps performance runners engaged without touching the hero
-- **Sharpen the CTA copy** — "Shop A'Two" or "Get the A'Two" instead of "Explore" removes the ambiguity and maps to a specific conversion action
-- **Surface a running shortcut in the nav** — a visible "Running" quick-link icon next to the hamburger (the way Snkrs surfaces drops) gets me one tap to my category instead of two
+- **Surface a Member status chip in the nav bar** — drop a small "Hi, Zane | Member" or rewards-balance badge next to the profile icon; it costs one line of code and immediately tells me this homepage knows me.
+- **Rotate the second carousel slide to a road-running story** — the dots show 5 slides; one of them should be Vaporfly/NRC/race season to recapture runners like me who scrolled past the trail hero.
+- **Make the shoe visible** — pull a clean product shot of the Zegama Trail into the lower third of the hero so I know what I'm shopping without having to tap. Right now it's pure vibes, zero product.
+- **Add a Member-exclusive callout to the CTA** — swap "Shop" for "Shop Member Early Access" or badge the button. Costs nothing, activates the exact behavior Nike wants from its loyalty tier.
 
 ## 6. Bottom Line
 
-I'd tap Explore out of curiosity for the shoe, but if there's no running content in the next scroll I'm bouncing back to the NRC app to check my training plan.
+I'm tapping Watch out of curiosity for the cinematic content, but I'm not converting on trail shoes today — I'll hunt for the Vaporfly tab through the hamburger and go from there.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `THE A'JA WILSON SHOW` / `Perform on Air in the new A'Two.`
-- **Hero image:** A'ja Wilson (WNBA athlete) seated on a desk in front of a lit-up city skyline at night, wearing all-black Nike gear, with a pink Nike A'Two shoe and a basketball visible on the desk beside her
-- **Primary CTA:** `Explore` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `7`, Relevance to me `2`, Visual hierarchy `8`, On-brand `9`
+- **Hero copy (verbatim):** `CREATURE COMFORT` / `Soft Shoes for hard trails. Discover the ACG Zegama Trail.`
+- **Hero image:** Extreme motion-blur dark scene — looks like shredded foliage or feathers mid-air over a forest trail, no visible shoe
+- **Primary CTA:** `Shop` — visible above the fold? **yes** (also `Watch ►` as a secondary CTA)
+- **Scores (1-10):** Clarity `7`, Relevance to me `4`, Visual hierarchy `8`, On-brand `9`
 - **Strengths:**
-  - Cinematic production — the dark skyline + pink shoe color story is genuinely arresting on a small screen
-  - Hierarchy is textbook: logo → image → headline → subhead → CTA, no eye confusion
+  - Typography is aggressive and immediate — "CREATURE COMFORT" lands hard, hierarchy is textbook Nike
+  - Dual CTA pattern (Shop + Watch) is smart; gives me a content-first entry point before asking for money
 - **Weaknesses:**
-  - Near-zero relevance to my running use case; this is a basketball athlete in a lifestyle concept
-  - "Explore" doesn't tell me what I'm getting into — commit to product or don't
+  - The blurred image doesn't show the actual shoe at all; pure mood, zero product comprehension
+  - A road runner like me sees "hard trails" and mentally files this under "not for me" before reading further
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** None visible above the fold
-- **Urgency / scarcity:** None — no countdown, no "limited colorway," no "ends tonight"
-- **Loyalty hooks:** None visible — no Member badge, no rewards balance, no early-access callout
-- **Honesty check:** Nothing manipulative visible — no fake timers, no dark patterns. The absence of offers is honest, just not useful
+- **Active promos:** None visible — no percentage-off, no threshold discount, no member pricing
+- **Urgency / scarcity:** None — no countdown, no "limited stock," no "drops in X hours"
+- **Loyalty hooks:** None visible — NikePlus / Member tier not surfaced anywhere above the fold
+- **Honesty check:** All clean — no dark patterns, no buried asterisks, no fake scarcity. The copy is straightforward. Main critique is not manipulation, it's just absence of offer.
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: Basketball launch, not running — total miss for my use case
-- − Easy to reach my category: Hamburger-only nav; Running is at least two taps away
-- − Eye-catching imagery in my category: Pink basketball shoe doesn't catch my eye as a runner
-- − Promo banner I would use: No promo banner visible at all
-- + Page renders cleanly: Everything loads sharp, no jank visible
-- − Imagery includes someone like me: Female WNBA athlete ≠ 26-year-old male runner posting Strava splits
-- + Copy register matches mine: "Perform on Air" is tight, minimal, Gen Z-appropriate energy
-- − Trust signals visible: No free-returns badge, no review count, nothing
-- − New / hot rail in my category: Nothing running-specific visible
-- + No dark patterns: Clean load, no forced modal or interstitial
+- − Hero relates to my focus area: Trail ACG launch, I run road — not my zone
+- − Easy to reach my category: Hamburger-only nav, no direct tap to Men's Running
+- − Eye-catching imagery in my category: Motion-blur forest scene, no road/track/NRC energy
+- − Promo banner I would use: No promo visible whatsoever
+- + Page renders cleanly: Dark aesthetic is intentional, no layout shifts or broken assets
+- − Imagery includes someone like me: No person in the hero at all, just environmental blur
+- + Copy register matches mine: "Creature Comfort" / "Soft Shoes for hard trails" is punchy, Gen Z direct — I like the voice
+- − Trust signals visible: No review counts, no badges, nothing
+- − New/hot rail in my category: Not visible above fold
+- + No dark patterns: No modal popups, no newsletter intercept, clean load
 - **Score:** `4/10` — should equal 1 + count of "+" bullets above.
-- **Rationale:** The page is clean and the copy register is right for my generation, but three out of ten signals hit; everything running-specific is absent, and the hero category is a straight miss.
+- **Rationale:** The page renders cleanly and the copy voice is right for my generation, but almost nothing on this first screen targets a road runner — no Member callout, no running-performance hook, and no visible product in the hero make it easy to bounce to a competitor's app.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "Explore" leads to A'ja Wilson/basketball, not running
-- − Unambiguous CTA copy: "Explore" is vague — doesn't name the product or action
-- − Active price reduction or member pricing: None visible
-- − Time-bounded credible deadline: None visible
-- − Reachable free-shipping threshold: Not mentioned anywhere above the fold
-- + Specific product page one tap away: "Explore" does go directly to the A'Two product — one tap to a product page
-- − Sizing / fit info accessible: Not visible on this screen
+- − CTA in my category: "Shop" goes to ACG Zegama Trail, not my road running aisle
+- + Unambiguous CTA copy: "Shop" is direct and clear — no confusion about what the button does
+- − Active price reduction or member pricing: Nothing visible
+- − Time-bounded credible deadline: No urgency cue at all
+- − Reachable free-shipping threshold: Not surfaced (I have Member free shipping but it's not shown)
+- + Specific product page one tap away: "Shop" button likely drops me straight to the Zegama Trail PDP
+- − Sizing / fit info accessible: Not visible above fold
 - − Returns / exchanges mentioned: Not visible
 - − Reviews / ratings visible: Not visible
-- − Trust / security signals: None visible
-- **Score:** `2/10` — should equal 1 + count of "+" bullets.
-- **Rationale:** The only conversion lift is that "Explore" maps to an actual product — everything else that would push me toward tapping Add to Cart (member pricing, free shipping, reviews, fit info) is invisible above the fold.
+- − Trust / security signals: Not visible
+- **Score:** `3/10` — should equal 1 + count of "+" bullets.
+- **Rationale:** Two things work — the CTA is clear and it's probably one tap to the product page — but without member pricing, an offer, or any trust scaffolding, there's nothing anchoring me to the checkout path, especially when the product isn't even in my category.
 
 ## 11. Evidence
 
-- **Hero / primary value prop:** Full-bleed editorial hero — A'ja Wilson on a talk-show desk against a nighttime NYC skyline; headline "THE A'JA WILSON SHOW"; subhead "Perform on Air in the new A'Two."; white "Explore" pill button centered below
-- **Navigation bar:** Nike swoosh (top left); search icon, profile/account icon, bag/cart icon, hamburger menu (top right) — icon-only, no visible category labels
-- **Pink strip at bottom edge:** A sliver of pink content is visible at the very bottom of the viewport, suggesting a second module begins just below the fold — content unclear from this screenshot
-- **Bugs / friction / clarity issues:** None visible — layout is clean, no overlapping elements, no placeholder text, no broken images detected in this viewport
+- **Hero / primary value prop:** Full-bleed dark video/image carousel — "CREATURE COMFORT" headline, ACG Zegama Trail sub-copy, Shop + Watch CTAs
+- **Carousel navigation:** 5-dot indicator at bottom, pause button bottom-right, suggests autoplay video carousel
+- **Featured categories:** Not visible above fold — only the hero is in view
+- **Promotional banners or strips:** None visible
+- **Loyalty / rewards section:** Absent entirely from above-the-fold view
+- **Editorial / lifestyle modules:** Hero is editorial in nature but purely environmental — no athlete, no split-screen, no NRC integration
+- **New-arrivals or best-seller rails:** Not visible — requires scrolling
+- **Footer credibility:** Not visible in this viewport
+- **Nav elements visible:** Nike swoosh (top left), search icon, profile icon, bag icon, hamburger menu (top right)
+- **Bugs / friction visible:** None — the dark blur is clearly intentional cinematography, not a broken asset; layout is clean and text is legible against the dark background
 ## Recent history
 
 - [[2026-05-02-homepage-www.nike.com-zane-stride-nike-fap6e]] — 4/10 (2026-05-02)

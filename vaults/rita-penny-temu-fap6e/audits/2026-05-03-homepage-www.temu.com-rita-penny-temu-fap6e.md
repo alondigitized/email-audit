@@ -12,170 +12,149 @@ tags: [site-journey, score-4, sender/www-temu-com]
 **Score:** 4/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Okay, so Temu is doing its usual thing — hitting me with Lightning deals right up front, free shipping at the very top, which honestly I expect at this point. This feels like that chaotic dollar-store energy I'm here for, but the homepage is a little all over the place — garden beds front and center, a weirdly specific thing pre-loaded in the search bar, and a scam-warning banner that made me do a double-take before I even got to browse. It's got the bones of a slot machine, but right now it's dealing from a messy deck.
+- Okay so I open Temu and the first thing I see is a raised garden bed. An *ad* for a raised garden bed. That's not what I'm here for — I'm here to spin the wheel and find the $3 kitchen gadget that breaks in two weeks but absolutely did not cost me $3. The Lightning deals banner is there, which is my whole reason for being on this app, but it's cut off and I can't read what the deal actually is. Classic Temu — it's all promise and chaos.
 - **4/10**
-- + "Lightning deals" banner directly speaks to my deal-hunting, slot-machine mentality — this is my jam
-- + "Free shipping — Excludes local items" is a concrete, visible offer above the fold
-- + Garden beds are seasonally on-point for May (spring planting season)
-- − No returning-shopper hook: no rewards balance, no "welcome back Rita," no loyalty badge
-- − No single unmistakable primary CTA button — "Lightning deals" is cut off and there's no clear tap target
-- − Visual hierarchy is noisy: scam-warning banner, truncated nav tabs, pre-filled search with "clear bra" competing for attention
-- − No demographic signal that targets me specifically — nothing for a 40-something bargain-hunting woman
-- − Loyalty or membership benefits: completely invisible above the fold
-- − The scam warning ("Be wary of messages about delivery issues claiming...") is jarring upfront
-- − Offer honesty: "Excludes local items" asterisk on free shipping and truncated promo text feel like buried fine print
+- + Lightning deals banner directly speaks to bargain-hunter persona like me
+- + "Free shipping" is the first thing I see — that's a concrete offer above the fold
+- + Garden beds in May = seasonally appropriate, I'll give it that
+- − No returning-shopper hook: no rewards balance, no "welcome back Rita," no spin-the-wheel visible
+- − No unmistakable CTA button — where do I tap to get the deals?
+- − Right-side text cutoff on multiple elements ("Secure priv...", "Limite...") looks like a render issue
+- − No demographic signal — nothing that says "hey Gen X bargain queen, this is for you"
+- − Loyalty/membership completely absent above the fold
+- − Offer doesn't feel fully honest — "Free shipping - Excludes local items" is a caveat right in the header
+- − That scam warning banner ("Be wary of messages about delivery issues claimi...") is a yellow flag — it's trust-building but also alarming
 
 ## What's working
 
-- **"⚡ Lightning deals" banner** — that red strip with the bolt is exactly the kind of "hurry up and click" energy I respond to. That's my spinning wheel.
-- **Free shipping callout at the very top** — I don't even need to hunt for it. That truck icon and text is the first thing I see, and for a weekly $20 haul, free shipping makes or breaks a cart.
-- **"5-Star Rated" navigation tab** — I trust the crowd. Knowing there's a curated best-of section is reassuring for someone who ends up returning half her hauls.
-- **Garden beds product image** — the colors pop. Even if I'm not gardening, that bright, lush photo makes me stop scrolling.
+- **"Lightning deals" banner** — the red/pink strip with the bolt icon is exactly why I open this app. It hits my slot-machine brain immediately.
+- **Free shipping callout** — pinned at the very top, first thing I see. That's smart. Shipping cost is the #1 thing that makes me abandon a cart.
+- **"Best-Selling Items" and "5-Star Rated" tabs** — these are the filters I actually use. I want to know what other people are mass-buying for $4.
+- **Search bar pre-filled with "squishes"** — honestly that's cute and on-brand for Temu's chaotic product catalog energy.
 
 ## What's weak
 
-- **Search bar pre-filled with "clear bra"** — that is jarring and confusing. Was someone else using my phone? Did the app cache a search? It makes the homepage feel like I landed in someone else's session.
-- **Scam warning banner** — "Be wary of messages about delivery issues claiming..." as one of the first things I read immediately puts me on edge. I get that Temu is trying to protect me, but leading with a fraud alert before I've even browsed is a terrible first impression.
-- **"Lightning deals — Limite..." is truncated** — the banner is cut off. I can't read what's limited, when it ends, or how much off. The urgency cue is there but the payoff is missing.
-- **No spinning-wheel or gamification above the fold** — Temu is famous for its scratch games and reward wheels. I downloaded this app for that slot-machine dopamine hit. Zero sign of it here.
-- **No returning-shopper hook** — I shop here every week. I want to see my points balance, a "you left this in your cart" nudge, something that says Temu knows me.
+- **The hero image is a paid AD** — a raised garden bed with an "AD" badge in the corner. That's not a curated deal, that's an ad slot, and I know it. It kills trust and momentum instantly.
+- **Text cutoff everywhere** — "Secure priv...", "Be wary of messages about delivery issues claimi...", "Lightning deals — Limite..." — whatever is on the right side of this screen is invisible. Feels broken.
+- **No spin wheel, no gamification visible** — the spinning wheel / mystery box / free gift mechanics are Temu's biggest hook for people like me. None of it is showing up above the fold.
+- **Scam warning is alarming** — I get why Temu put it there, but opening an app and immediately seeing "Be wary of messages about delivery issues" makes me wonder if my last order is getting scammed, not if I should shop more.
+- **No prices, no discount percentages** — the Lightning deals banner promises something but shows me nothing. I need to see "87% off" to feel the dopamine hit.
 
 ## Recommendations
 
-- **Move the scam warning to a dismissible tooltip or help center link**, not a prominent banner on the homepage. It poisons the first impression. A small shield icon in the footer or account menu is enough.
-- **Surface the gamification above the fold** — the spinning reward wheel, scratch cards, or credit balance. That's the reason I open this app daily. It should be the second thing I see after free shipping.
-- **Fix or clear the pre-filled search term** — "clear bra" should not appear in the search bar on a fresh homepage visit. Audit whether app state is bleeding between sessions.
-- **Expand the "Lightning deals" banner to show a timer and one teaser deal** — even a single "Raised garden bed — $6.99" with a countdown would make me tap immediately.
+- **Replace the ad-slot hero with a personalized deal rail** — show me the spinning wheel or "Today's $1 finds" front and center. That's the hook. An AD for a garden bed is the opposite of that.
+- **Fix the viewport clipping** — the right side of almost every banner is cut off. It makes the whole page look broken. Adjust padding or shrink text so the full offer is readable on mobile.
+- **Surface the rewards/gamification above the fold** — if I have coins, a spin available, or a free gift waiting, tell me that the second I open the app. That's why I keep coming back.
+- **Put a specific deal with a number on the Lightning deals banner** — "Lightning deals — Up to 90% off, ends in 2h" beats "Lightning deals — Limite..." every single time.
 
 ## Full review
 ## 1. Executive Summary
 
-Okay, so Temu is doing its usual thing — hitting me with Lightning deals right up front, free shipping at the very top, which honestly I expect at this point. This feels like that chaotic dollar-store energy I'm here for, but the homepage is a little all over the place — garden beds front and center, a weirdly specific thing pre-loaded in the search bar, and a scam-warning banner that made me do a double-take before I even got to browse. It's got the bones of a slot machine, but right now it's dealing from a messy deck.
-
----
+Okay so I open Temu and the first thing I see is a raised garden bed. An *ad* for a raised garden bed. That's not what I'm here for — I'm here to spin the wheel and find the $3 kitchen gadget that breaks in two weeks but absolutely did not cost me $3. The Lightning deals banner is there, which is my whole reason for being on this app, but it's cut off and I can't read what the deal actually is. Classic Temu — it's all promise and chaos.
 
 ## 2. Business Impact Score (1-10)
 
 **4/10**
 
-- + "Lightning deals" banner directly speaks to my deal-hunting, slot-machine mentality — this is my jam
-- + "Free shipping — Excludes local items" is a concrete, visible offer above the fold
-- + Garden beds are seasonally on-point for May (spring planting season)
-- − No returning-shopper hook: no rewards balance, no "welcome back Rita," no loyalty badge
-- − No single unmistakable primary CTA button — "Lightning deals" is cut off and there's no clear tap target
-- − Visual hierarchy is noisy: scam-warning banner, truncated nav tabs, pre-filled search with "clear bra" competing for attention
-- − No demographic signal that targets me specifically — nothing for a 40-something bargain-hunting woman
-- − Loyalty or membership benefits: completely invisible above the fold
-- − The scam warning ("Be wary of messages about delivery issues claiming...") is jarring upfront
-- − Offer honesty: "Excludes local items" asterisk on free shipping and truncated promo text feel like buried fine print
-
----
+- + Lightning deals banner directly speaks to bargain-hunter persona like me
+- + "Free shipping" is the first thing I see — that's a concrete offer above the fold
+- + Garden beds in May = seasonally appropriate, I'll give it that
+- − No returning-shopper hook: no rewards balance, no "welcome back Rita," no spin-the-wheel visible
+- − No unmistakable CTA button — where do I tap to get the deals?
+- − Right-side text cutoff on multiple elements ("Secure priv...", "Limite...") looks like a render issue
+- − No demographic signal — nothing that says "hey Gen X bargain queen, this is for you"
+- − Loyalty/membership completely absent above the fold
+- − Offer doesn't feel fully honest — "Free shipping - Excludes local items" is a caveat right in the header
+- − That scam warning banner ("Be wary of messages about delivery issues claimi...") is a yellow flag — it's trust-building but also alarming
 
 ## 3. What's Working
 
-- **"⚡ Lightning deals" banner** — that red strip with the bolt is exactly the kind of "hurry up and click" energy I respond to. That's my spinning wheel.
-- **Free shipping callout at the very top** — I don't even need to hunt for it. That truck icon and text is the first thing I see, and for a weekly $20 haul, free shipping makes or breaks a cart.
-- **"5-Star Rated" navigation tab** — I trust the crowd. Knowing there's a curated best-of section is reassuring for someone who ends up returning half her hauls.
-- **Garden beds product image** — the colors pop. Even if I'm not gardening, that bright, lush photo makes me stop scrolling.
-
----
+- **"Lightning deals" banner** — the red/pink strip with the bolt icon is exactly why I open this app. It hits my slot-machine brain immediately.
+- **Free shipping callout** — pinned at the very top, first thing I see. That's smart. Shipping cost is the #1 thing that makes me abandon a cart.
+- **"Best-Selling Items" and "5-Star Rated" tabs** — these are the filters I actually use. I want to know what other people are mass-buying for $4.
+- **Search bar pre-filled with "squishes"** — honestly that's cute and on-brand for Temu's chaotic product catalog energy.
 
 ## 4. What's Weak
 
-- **Search bar pre-filled with "clear bra"** — that is jarring and confusing. Was someone else using my phone? Did the app cache a search? It makes the homepage feel like I landed in someone else's session.
-- **Scam warning banner** — "Be wary of messages about delivery issues claiming..." as one of the first things I read immediately puts me on edge. I get that Temu is trying to protect me, but leading with a fraud alert before I've even browsed is a terrible first impression.
-- **"Lightning deals — Limite..." is truncated** — the banner is cut off. I can't read what's limited, when it ends, or how much off. The urgency cue is there but the payoff is missing.
-- **No spinning-wheel or gamification above the fold** — Temu is famous for its scratch games and reward wheels. I downloaded this app for that slot-machine dopamine hit. Zero sign of it here.
-- **No returning-shopper hook** — I shop here every week. I want to see my points balance, a "you left this in your cart" nudge, something that says Temu knows me.
-
----
+- **The hero image is a paid AD** — a raised garden bed with an "AD" badge in the corner. That's not a curated deal, that's an ad slot, and I know it. It kills trust and momentum instantly.
+- **Text cutoff everywhere** — "Secure priv...", "Be wary of messages about delivery issues claimi...", "Lightning deals — Limite..." — whatever is on the right side of this screen is invisible. Feels broken.
+- **No spin wheel, no gamification visible** — the spinning wheel / mystery box / free gift mechanics are Temu's biggest hook for people like me. None of it is showing up above the fold.
+- **Scam warning is alarming** — I get why Temu put it there, but opening an app and immediately seeing "Be wary of messages about delivery issues" makes me wonder if my last order is getting scammed, not if I should shop more.
+- **No prices, no discount percentages** — the Lightning deals banner promises something but shows me nothing. I need to see "87% off" to feel the dopamine hit.
 
 ## 5. Recommendations
 
-- **Move the scam warning to a dismissible tooltip or help center link**, not a prominent banner on the homepage. It poisons the first impression. A small shield icon in the footer or account menu is enough.
-- **Surface the gamification above the fold** — the spinning reward wheel, scratch cards, or credit balance. That's the reason I open this app daily. It should be the second thing I see after free shipping.
-- **Fix or clear the pre-filled search term** — "clear bra" should not appear in the search bar on a fresh homepage visit. Audit whether app state is bleeding between sessions.
-- **Expand the "Lightning deals" banner to show a timer and one teaser deal** — even a single "Raised garden bed — $6.99" with a countdown would make me tap immediately.
-
----
+- **Replace the ad-slot hero with a personalized deal rail** — show me the spinning wheel or "Today's $1 finds" front and center. That's the hook. An AD for a garden bed is the opposite of that.
+- **Fix the viewport clipping** — the right side of almost every banner is cut off. It makes the whole page look broken. Adjust padding or shrink text so the full offer is readable on mobile.
+- **Surface the rewards/gamification above the fold** — if I have coins, a spin available, or a free gift waiting, tell me that the second I open the app. That's why I keep coming back.
+- **Put a specific deal with a number on the Lightning deals banner** — "Lightning deals — Up to 90% off, ends in 2h" beats "Lightning deals — Limite..." every single time.
 
 ## 6. Bottom Line
 
-I'd scroll past the scam-warning panic and tap Lightning Deals — but Temu's hiding the spinning wheel and I came here specifically for that hit.
-
----
+I'd tap "Lightning deals" mostly out of reflex, but that AD garden bed hero almost made me close the app out of pure disorientation.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `⚡ Lightning deals   Limite`
-- **Hero image:** Two galvanized oval raised garden beds filled with colorful flowers and leafy vegetables; a partially visible black-and-yellow product at the right edge
-- **Primary CTA:** `Lightning deals` — visible above the fold? **yes** (but text is cut off)
-- **Scores (1-10):** Clarity `4`, Relevance to you `6`, Visual hierarchy `5`, On-brand `7`
+- **Hero copy (verbatim):** `⚡ Lightning deals   Limite` (cut off)
+- **Hero image:** A large raised metal garden bed planter filled with colorful flowers and leafy vegetables — marked "AD" in the top right corner
+- **Primary CTA:** No visible button — `Lightning deals` banner is the closest thing, but it's a banner strip, not a button — visible above the fold? yes (barely)
+- **Scores (1-10):** Clarity `3`, Relevance to you `4`, Visual hierarchy `5`, On-brand `6`
 - **Strengths:**
-  - The red banner with the lightning bolt is high-contrast and immediately draws the eye
-  - Garden beds are seasonally relevant for May and the photography is vivid
+  - Lightning deals banner uses urgency color (hot red/pink) and a bolt icon — catches my eye
+  - Free shipping at the very top is the right priority placement
 - **Weaknesses:**
-  - The CTA text is truncated — I can't read what's "limited" about the deal
-  - The scam-warning banner sits directly above the hero and kills the excitement before it starts
-
----
+  - The actual hero content is a paid garden bed ad, not a deal — that's a fundamental mismatch
+  - Multiple elements are cut off on the right, making the page feel broken on mobile
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** Free shipping (excludes local items), Lightning deals
-- **Urgency / scarcity:** "Lightning deals — Limite..." — deadline text is cut off, urgency is implied but not readable
-- **Loyalty hooks:** None visible above the fold
-- **Honesty check:** The "Excludes local items" caveat on free shipping is fine but easy to miss. The truncated Lightning deals copy makes me wonder what I'm not seeing. The scam warning banner is the biggest trust disruptor — it reads like the brand is anxious, not confident.
-
----
+- **Active promos:** Free shipping (excludes local items), Lightning deals (specifics cut off)
+- **Urgency / scarcity:** "Lightning deals — Limite..." suggests time/quantity limit but text is cropped — no timer, no countdown visible, no "ends in Xh" copy readable
+- **Loyalty hooks:** None visible above the fold — no coin balance, no rewards points, no spin wheel, no free gift CTA
+- **Honesty check:** "Free shipping - Excludes local items" is a caveat right in the header strip — it's disclosed but the exclusion is in smaller text. The scam warning ("Be wary of messages about delivery issues") is responsible but creates anxiety. The AD garden bed passing as hero content is a dark pattern — casual shoppers may not clock the "AD" badge.
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: "Lightning deals" is exactly the bargain-hunting signal I'm here for
-- − Easy to reach my category: "Best-Selling Items" tab is visible but no category grid I can tap to find my bargains directly
-- + Eye-catching imagery in my category: The colorful garden bed photo pops even if gardening isn't my thing — visually I'd pause
-- + Promo banner I would use: Lightning deals — yes, absolutely, that's my trigger
-- − Page renders cleanly: Pre-filled "clear bra" in the search, truncated nav tabs, cut-off promo text — this feels glitchy
-- − Imagery includes someone like me: Zero people in the shot, just products
-- − Copy register matches mine: The scam warning is alarmist and tone-deaf for a casual shopping session
-- + Trust signals visible: "5-Star Rated" tab, "Why choose Temu?", "Secure priv..." text — enough to feel safer
-- + New / hot rail in my category: "Best-Selling Items" tab and Lightning deals together serve this role
-- − No dark patterns: No forced modal, but the scam warning banner feels manipulative-adjacent — anxiety-inducing before I've done anything
+- − Hero relates to my focus area: Lightning deals banner yes, but the actual hero image is a garden bed ad — not why I'm here
+- − Easy to reach my category: Search bar is visible but no category nav or quick-links to deals/hauls sections
+- − Eye-catching imagery in my category: The garden bed is visually lush but it's an ad for something I didn't come to buy
+- + Promo banner I would use: Lightning deals — yes, that's my whole deal
+- − Page renders cleanly: Text cutoff on the right across multiple elements reads as broken
+- − Imagery includes someone like me: No people in the image at all
+- + Copy register matches mine: "Lightning deals," "Best-Selling Items," "5-Star Rated" — these are plain, direct, zero fluff. Gen X approved.
+- + Trust signals visible: "5-Star Rated" tab, "Why choose Temu?" shield, "Secure priv..." (partial)
+- + New/hot rail in my category: "Best-Selling Items" tab is right there in the header
+- − No dark patterns: The AD garden bed is undisclosed native advertising, the scam banner creates anxiety, and "Limite..." FOMO copy is cut off so I can't even act on it
 
-**Score:** `6/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** Lightning deals is a strong pull for someone who treats Temu like a slot machine, but the pre-filled search term and upfront scam warning introduce enough friction that I'd scroll cautiously rather than enthusiastically.
-
----
+**Score:** `5/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The Lightning deals banner is genuinely compelling for a bargain-hunter like me and gets my finger twitching, but the broken viewport rendering and the ad-as-hero pattern undercut the momentum. I'd scroll, but reluctantly.
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: Lightning deals exists and covers all categories including the $1 finds I love
-- − Unambiguous CTA copy: The button text is literally cut off — I can't read the full call to action
-- + Active price reduction or member pricing: Lightning deals implies discounts; free shipping is confirmed
-- − Time-bounded credible deadline: "Limite..." is cut off — I can see urgency was intended but can't read the deadline
-- + Reachable free-shipping threshold: "Free shipping" shows at top with no visible minimum — for my $20 hauls this is reachable
-- + Specific product page one tap away: Garden bed images are visible and likely tappable as product cards
-- − Sizing / fit info accessible: Not visible or applicable for what's shown
-- − Returns / exchanges mentioned: Nothing visible
-- + Reviews / ratings visible: "5-Star Rated" tab is a trust signal in the nav
-- + Trust / security signals: "Secure priv..." and "Why choose Temu?" section are partially visible
+- − CTA in my category: No category-specific CTA button visible — just a vague banner
+- − Unambiguous CTA copy: "Lightning deals" is intriguing but not a call to action — there's no "Shop Now" or "Grab It" button
+- − Active price reduction or member pricing: No prices, no percentages, no dollar amounts visible anywhere on screen
+- + Time-bounded credible deadline: "Limite..." implies a time/quantity cap on Lightning deals — Temu's deals are genuinely time-limited so I believe it
+- − Reachable free-shipping threshold: "Free shipping" is mentioned but no order minimum amount is visible
+- + Specific product page one tap away: The garden bed AD is tappable and leads somewhere specific (even if I don't want a garden bed)
+- − Sizing/fit info accessible: Not applicable to most of what I buy, and not visible anyway
+- − Returns/exchanges: Not mentioned anywhere above the fold
+- − Reviews/ratings: "5-Star Rated" is a brand-level claim, not product reviews — doesn't count
+- − Trust/security signals: "Secure priv..." is cut off and unreadable — doesn't land
 
-**Score:** `6/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** Free shipping and the Lightning deals hook would normally push me to tap, but the truncated CTA and missing returns info leave me half-convinced — I'd browse but I'm not one tap from buying.
-
----
+**Score:** `3/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The page gets me curious about what the Lightning deals actually are, but nothing on screen gives me a reason to pull out my card right now — no prices, no product ratings, no "add to cart" path visible whatsoever.
 
 ## 11. Evidence
 
-- **Free shipping strip** — very top of screen, truck icon + "Free shipping / Excludes local items"
-- **Navigation tabs** — Temu logo with US flag, "Best-Selling Items," "5-Star Rated," and a third tab cut off at right edge
-- **Search bar** — full-width, pre-filled with "clear bra" (appears to be a leftover or cached search, not placeholder text)
-- **"Why choose Temu?" + "Secure priv..." green bar** — trust/credibility strip below search
-- **Scam warning notification bar** — bell icon + "Be wary of messages about delivery issues claimin..." — text truncated
-- **"⚡ Lightning deals — Limite..." red banner** — high-contrast promotional strip, text cut off at right edge
-- **Raised garden bed product cards** — two galvanized oval planters with flowers and vegetables, spring lifestyle photography
-- **Partially visible product at right edge** — black and yellow item, identity unclear due to crop
-- **Bugs / friction visible:** (1) "clear bra" pre-filled in search bar is confusing and looks like a session/state bug; (2) Multiple nav and banner elements are truncated at the right edge of the viewport; (3) Scam warning banner is a significant UX disturbance before any browsing begins
+- **Top announcement bar:** "Free shipping — Excludes local items" with truck icon
+- **Header / tab bar:** Temu logo (US flag), "Best-Selling Items" tab, "5-Star Rated" tab, third tab cut off on right
+- **Search bar:** Visible with placeholder/pre-fill text "squishes" and a search icon
+- **Trust/security strip (green):** "✓ Why choose Temu?" and "🔒 Secure priv..." — right side cut off
+- **Scam warning banner (green, notification icon):** "Be wary of messages about delivery issues claimi..." — cut off
+- **Lightning deals promotional banner (red/pink):** "⚡ Lightning deals — Limite..." — cut off on the right
+- **Hero product image (AD):** Large raised metal garden bed planter with colorful flowers and vegetables; "AD" badge visible top right of image
+- **Bugs / friction / clarity issues:** Right-side text clipping affects at least 4 separate UI elements; "AD" label present on hero image (native ad disclosure but easy to miss); no visible prices, CTAs, or discount percentages on entire visible screen
 ## Recent history
 
 - [[2026-05-02-homepage-www.temu.com-rita-penny-temu-fap6e]] — 8/10 (2026-05-02)

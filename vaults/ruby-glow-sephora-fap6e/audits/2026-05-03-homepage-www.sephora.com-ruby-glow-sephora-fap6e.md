@@ -3,160 +3,180 @@ slug: 2026-05-03-homepage-www.sephora.com-ruby-glow-sephora-fap6e
 type: site
 date: 2026-05-03
 persona: ruby-glow-sephora-fap6e
-score: "8/10"
+score: "9/10"
 sender: www.sephora.com
 subject: Homepage snapshot · www.sephora.com · 2026-05-03
-tags: [site-journey, score-8, sender/www-sephora-com]
+tags: [site-journey, score-9, sender/www-sephora-com]
 ---
 # Homepage snapshot · www.sephora.com · 2026-05-03
-**Score:** 8/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 9/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Sephora knows the assignment — the second I open this, I see my points, my rewards language, and a clean Mother's Day push that's perfectly timed. It reads like a prestige beauty destination that's deep in the gifting season right now, and the 4X points hook is exactly the kind of thing that makes me tap before I even think about it.
-- **8/10**
-- + Returning-shopper hook: "Sign In for FREE Shipping" + 4X points callout + Beauty Insider badge in hero — I felt seen immediately
-- + Two concrete offers above fold: SCENTSYAY code for free fragrance sample ($50 min), BESTSCENTS code for 4X points on fragrance gifts
-- + Primary CTA visible: "SHOP NOW ▶" is right there in the hero; "Sign In" button top right
-- + Visual hierarchy: Hero completely dominates, eye lands on the Mother's Day gift sets instantly
-- + No render bugs: Screenshot is clean, no broken images or layout shifts
-- + Current campaign: Mother's Day (4/30–5/10) is perfectly timed for May 3
-- + Loyalty benefits without scroll: 4X points and free-shipping sign-in hook both appear above the fold
-- − Hero speaks to my focus area: Gift set flatlay ≠ new mascara drop — this is speaking to me as a gift-giver, not a beauty junkie hunting launches
-- − Demographic signals: No lifestyle model or person visible matching my age/vibe — pure product flatlay
-- − Offer feels honest: The `*Terms apply` and `††` footnotes are small enough on mobile that they read like fine print, not plain disclosure
+- Okay, Sephora is doing what Sephora does — they opened with Mother's Day and they are *not* playing around. Gift sets front and center, 4X points on fragrance, a free sample code in the banner... this is a site that knows its Beauty Insiders are the ones buying Mom's Jo Malone and then sneaking a Prada bottle for themselves while they're at it. The loyalty hooks are immediate and the timing is exactly right — five days to Mother's Day.
+- **9/10**
+- + Hero speaks to my persona: Mother's Day fragrance gift sets with Beauty Insider exclusivity — this is *exactly* what I'm browsing for right now
+- + Returning-shopper hook: "Sign In for FREE Shipping" banner plus "Beauty Insiders only" callout on the hero is a clear member pull
+- + Concrete offer above the fold: "Free\* Fragrance Sample Set" with $50 threshold and code SCENTSYAY in the announcement bar
+- + Clear CTA above fold: "SHOP NOW ▶" is visible and clickable
+- + Visual hierarchy: four stacked bars (announcement, header, sign-in, nav) is busy but the hero still commands attention
+- + No render bugs: page looks clean, no broken images or layout shifts
+- + Demographic signals match: beauty/fragrance product focus is my entire personality, so yes
+- + Current campaign/season: Mother's Day promo runs 4/30–5/10, today is May 3rd — perfectly timed
+- + Loyalty visible without scrolling: "Beauty Insiders only" on the hero image, sign-in hook in the header area
+- − Offer feels honest: "Beauty Insiders only" exclusion is buried in small print at the bottom of the hero image, asterisks on the sample set offer are tiny — docking this one
 
 ## What's working
 
-- **The 4X points callout with BESTSCENTS code** — as a Rouge member this is exactly the language that makes me stop scrolling. Specific multiplier, specific code, specific dates. Perfect.
-- **"Sign In for FREE Shipping" nudge** — passive but effective. It's frictionless and reminds me my account has perks without being pushy.
-- **The top promo banner** — SCENTSYAY is a cute, on-brand code and the free fragrance sample hook is genuinely motivating for $50 min spend. I'm definitely spending $50.
-- **Navigation row** — "New" tab is front and center in the nav. One tap to new launches is exactly where I live.
-- **AI Beauty tab with "NEW" badge** in the bottom nav — I immediately noticed it. Sephora leaning into AI tools is right in my wheelhouse as a high-tech-comfort shopper.
+- **The announcement bar code (SCENTSYAY)** is doing heavy lifting — a free fragrance sample set with a $50 threshold is exactly my kind of "technically free money" math, and I already know I'm spending $50.
+- **Mother's Day 4X points + code BESTSCENTS** — the dates 4/30 to 5/10 are right there. I know the window, I know the stakes. This is urgency done right for a Beauty Insider who lives by the points calendar.
+- **Beauty Insider exclusivity callout** on the hero — seeing "Beauty Insiders only" makes me feel like I'm in the club. That's a retention signal that works on me every time.
+- **Navigation bar** shows Makeup, Skincare, Fragrance all in one tap — I can bounce to any of my categories without hunting.
+- **Jo Malone + Prada in the hero image** — those are aspirational brands I genuinely shop. This isn't drugstore filler imagery.
 
 ## What's weak
 
-- **The hero is entirely gift-giving, not self-purchase** — as a Beauty Insider who tracks launches for myself, the "gifts she'll love" copy positions me as the buyer for someone else, not the recipient of something new and exciting. I feel like the site isn't talking *to* me.
-- **No new-arrivals signal above the fold** — I know Sephora drops new product constantly. I shouldn't have to tap into "New" to find out what launched this week. Even a small "just dropped" badge or rail would hook me harder.
-- **Product flatlay with no lifestyle/model energy** — the Mother's Day hero is a pretty product arrangement on pink, but it has zero aspirational pull for me. I want to see what the product does on a real person.
-- **No review counts or star ratings anywhere visible** — for a beauty purchase, social proof is everything. The hero products have no ratings visible. I can't validate quality before tapping.
-- **The "†† exclusions/terms apply. Beauty Insiders only." disclaimer** at the bottom of the hero image is tiny on mobile — it's technically there but I nearly missed it.
+- **No model or lifestyle shot** — it's all product flat-lay. For a beauty brand targeting someone who scrolls Sephora for the "vibe" as much as the product, a person wearing the look or spritzing the fragrance would land harder.
+- **"Sign In for FREE Shipping" doesn't state the threshold** — I have to guess whether free shipping starts at $25 or $50 or Rouge only. That uncertainty is friction.
+- **Hero CTA is generic** — "SHOP NOW ▶" could be on any page of any site. "Shop Beauty Insider Deals" or "Shop 4X Points Gifts" would feel targeted and urgent.
+- **The second carousel card is almost entirely off-screen** — I can see the edge of something ("Ha..." / "Ne...") but it's invisible. That's wasted real estate; I don't even know there's more to swipe.
+- **Fine print asterisks are tiny** — the "Exclusions/terms apply. Beauty Insiders only" disclaimer at the bottom of the hero image is hard to read on mobile. That's the kind of thing that makes me feel slightly bait-and-switched when I tap through and find I don't qualify for something.
 
 ## Recommendations
 
-- **Swap the full-flatlay hero for a lifestyle split** — left side: woman (29-ish, fun makeup look) unwrapping or gifting; right side: the product set. Keep the pink but give me a person to project onto.
-- **Add a "New This Week" chip or badge** to the hero or just below it — even one product teaser like "Charlotte Tilbury Pillow Talk Lip Duo — just dropped" would keep me on the page rather than tapping to New tab myself.
-- **Surface my rewards balance on the sign-in nudge** — instead of generic "Sign In for FREE Shipping," push "You have 1,240 points — sign in to see your Rogue rewards." Now I'm invested.
-- **Add at least one product with visible star rating** to the hero or just below — one "4.8 ★ (2.4k reviews)" on the featured gift set changes the conversion math completely.
+- **Swap the flat-lay hero for a lifestyle shot** — show a person in their 20s–30s actually unwrapping or gifting a Sephora set. The products are beautiful but a face + story creates the emotional pull that converts browsers.
+- **Make the free-shipping threshold explicit** — change "Sign In for FREE Shipping" to "Sign In → Free Shipping on $50+" so I know instantly whether I qualify and what I need to spend.
+- **Rewrite the CTA to match the campaign** — "Shop 4X Points Gifts" or "Score Free Fragrance" ties the button to the specific offers already in the hero and banner, instead of the forgettable "SHOP NOW."
+- **Reveal the second carousel card** — even nudging the first card slightly left so the second is 10–15% visible signals there's more to swipe and drives carousel engagement.
 
 ## Full review
 ## 1. Executive Summary
 
-Sephora knows the assignment — the second I open this, I see my points, my rewards language, and a clean Mother's Day push that's perfectly timed. It reads like a prestige beauty destination that's deep in the gifting season right now, and the 4X points hook is exactly the kind of thing that makes me tap before I even think about it.
+Okay, Sephora is doing what Sephora does — they opened with Mother's Day and they are *not* playing around. Gift sets front and center, 4X points on fragrance, a free sample code in the banner... this is a site that knows its Beauty Insiders are the ones buying Mom's Jo Malone and then sneaking a Prada bottle for themselves while they're at it. The loyalty hooks are immediate and the timing is exactly right — five days to Mother's Day.
+
+---
 
 ## 2. Business Impact Score (1-10)
 
-**8/10**
+**9/10**
 
-- + Returning-shopper hook: "Sign In for FREE Shipping" + 4X points callout + Beauty Insider badge in hero — I felt seen immediately
-- + Two concrete offers above fold: SCENTSYAY code for free fragrance sample ($50 min), BESTSCENTS code for 4X points on fragrance gifts
-- + Primary CTA visible: "SHOP NOW ▶" is right there in the hero; "Sign In" button top right
-- + Visual hierarchy: Hero completely dominates, eye lands on the Mother's Day gift sets instantly
-- + No render bugs: Screenshot is clean, no broken images or layout shifts
-- + Current campaign: Mother's Day (4/30–5/10) is perfectly timed for May 3
-- + Loyalty benefits without scroll: 4X points and free-shipping sign-in hook both appear above the fold
-- − Hero speaks to my focus area: Gift set flatlay ≠ new mascara drop — this is speaking to me as a gift-giver, not a beauty junkie hunting launches
-- − Demographic signals: No lifestyle model or person visible matching my age/vibe — pure product flatlay
-- − Offer feels honest: The `*Terms apply` and `††` footnotes are small enough on mobile that they read like fine print, not plain disclosure
+- + Hero speaks to my persona: Mother's Day fragrance gift sets with Beauty Insider exclusivity — this is *exactly* what I'm browsing for right now
+- + Returning-shopper hook: "Sign In for FREE Shipping" banner plus "Beauty Insiders only" callout on the hero is a clear member pull
+- + Concrete offer above the fold: "Free\* Fragrance Sample Set" with $50 threshold and code SCENTSYAY in the announcement bar
+- + Clear CTA above fold: "SHOP NOW ▶" is visible and clickable
+- + Visual hierarchy: four stacked bars (announcement, header, sign-in, nav) is busy but the hero still commands attention
+- + No render bugs: page looks clean, no broken images or layout shifts
+- + Demographic signals match: beauty/fragrance product focus is my entire personality, so yes
+- + Current campaign/season: Mother's Day promo runs 4/30–5/10, today is May 3rd — perfectly timed
+- + Loyalty visible without scrolling: "Beauty Insiders only" on the hero image, sign-in hook in the header area
+- − Offer feels honest: "Beauty Insiders only" exclusion is buried in small print at the bottom of the hero image, asterisks on the sample set offer are tiny — docking this one
+
+---
 
 ## 3. What's Working
 
-- **The 4X points callout with BESTSCENTS code** — as a Rouge member this is exactly the language that makes me stop scrolling. Specific multiplier, specific code, specific dates. Perfect.
-- **"Sign In for FREE Shipping" nudge** — passive but effective. It's frictionless and reminds me my account has perks without being pushy.
-- **The top promo banner** — SCENTSYAY is a cute, on-brand code and the free fragrance sample hook is genuinely motivating for $50 min spend. I'm definitely spending $50.
-- **Navigation row** — "New" tab is front and center in the nav. One tap to new launches is exactly where I live.
-- **AI Beauty tab with "NEW" badge** in the bottom nav — I immediately noticed it. Sephora leaning into AI tools is right in my wheelhouse as a high-tech-comfort shopper.
+- **The announcement bar code (SCENTSYAY)** is doing heavy lifting — a free fragrance sample set with a $50 threshold is exactly my kind of "technically free money" math, and I already know I'm spending $50.
+- **Mother's Day 4X points + code BESTSCENTS** — the dates 4/30 to 5/10 are right there. I know the window, I know the stakes. This is urgency done right for a Beauty Insider who lives by the points calendar.
+- **Beauty Insider exclusivity callout** on the hero — seeing "Beauty Insiders only" makes me feel like I'm in the club. That's a retention signal that works on me every time.
+- **Navigation bar** shows Makeup, Skincare, Fragrance all in one tap — I can bounce to any of my categories without hunting.
+- **Jo Malone + Prada in the hero image** — those are aspirational brands I genuinely shop. This isn't drugstore filler imagery.
+
+---
 
 ## 4. What's Weak
 
-- **The hero is entirely gift-giving, not self-purchase** — as a Beauty Insider who tracks launches for myself, the "gifts she'll love" copy positions me as the buyer for someone else, not the recipient of something new and exciting. I feel like the site isn't talking *to* me.
-- **No new-arrivals signal above the fold** — I know Sephora drops new product constantly. I shouldn't have to tap into "New" to find out what launched this week. Even a small "just dropped" badge or rail would hook me harder.
-- **Product flatlay with no lifestyle/model energy** — the Mother's Day hero is a pretty product arrangement on pink, but it has zero aspirational pull for me. I want to see what the product does on a real person.
-- **No review counts or star ratings anywhere visible** — for a beauty purchase, social proof is everything. The hero products have no ratings visible. I can't validate quality before tapping.
-- **The "†† exclusions/terms apply. Beauty Insiders only." disclaimer** at the bottom of the hero image is tiny on mobile — it's technically there but I nearly missed it.
+- **No model or lifestyle shot** — it's all product flat-lay. For a beauty brand targeting someone who scrolls Sephora for the "vibe" as much as the product, a person wearing the look or spritzing the fragrance would land harder.
+- **"Sign In for FREE Shipping" doesn't state the threshold** — I have to guess whether free shipping starts at $25 or $50 or Rouge only. That uncertainty is friction.
+- **Hero CTA is generic** — "SHOP NOW ▶" could be on any page of any site. "Shop Beauty Insider Deals" or "Shop 4X Points Gifts" would feel targeted and urgent.
+- **The second carousel card is almost entirely off-screen** — I can see the edge of something ("Ha..." / "Ne...") but it's invisible. That's wasted real estate; I don't even know there's more to swipe.
+- **Fine print asterisks are tiny** — the "Exclusions/terms apply. Beauty Insiders only" disclaimer at the bottom of the hero image is hard to read on mobile. That's the kind of thing that makes me feel slightly bait-and-switched when I tap through and find I don't qualify for something.
+
+---
 
 ## 5. Recommendations
 
-- **Swap the full-flatlay hero for a lifestyle split** — left side: woman (29-ish, fun makeup look) unwrapping or gifting; right side: the product set. Keep the pink but give me a person to project onto.
-- **Add a "New This Week" chip or badge** to the hero or just below it — even one product teaser like "Charlotte Tilbury Pillow Talk Lip Duo — just dropped" would keep me on the page rather than tapping to New tab myself.
-- **Surface my rewards balance on the sign-in nudge** — instead of generic "Sign In for FREE Shipping," push "You have 1,240 points — sign in to see your Rogue rewards." Now I'm invested.
-- **Add at least one product with visible star rating** to the hero or just below — one "4.8 ★ (2.4k reviews)" on the featured gift set changes the conversion math completely.
+- **Swap the flat-lay hero for a lifestyle shot** — show a person in their 20s–30s actually unwrapping or gifting a Sephora set. The products are beautiful but a face + story creates the emotional pull that converts browsers.
+- **Make the free-shipping threshold explicit** — change "Sign In for FREE Shipping" to "Sign In → Free Shipping on $50+" so I know instantly whether I qualify and what I need to spend.
+- **Rewrite the CTA to match the campaign** — "Shop 4X Points Gifts" or "Score Free Fragrance" ties the button to the specific offers already in the hero and banner, instead of the forgettable "SHOP NOW."
+- **Reveal the second carousel card** — even nudging the first card slightly left so the second is 10–15% visible signals there's more to swipe and drives carousel engagement.
+
+---
 
 ## 6. Bottom Line
 
-I'm staying — the 4X points hook got me — but I'm heading straight to the New tab, not the Mother's Day sets.
+I'm absolutely staying and tapping "SHOP NOW" because 4X points on fragrance with a free sample set is basically Sephora whispering my name — but they left at least two easy wins on the table.
+
+---
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Mother's Day Value Sets — Get 4X points†† on fragrance gifts she'll love with code BESTSCENTS from 4/30 to 5/10.`
-- **Hero image:** Pink-background product flatlay featuring Prada fragrance, multiple pink-boxed gift sets, and a beauty collection panel; small circular "Beauty Insider" badge stamp overlay
+- **Hero copy (verbatim):** `Mother's Day Value Sets` / `Get 4X points†† on fragrance gifts she'll love with code BESTSCENTS from 4/30 to 5/10.`
+- **Hero image:** Flat-lay of Mother's Day gift sets — Prada fragrance bottle, Jo Malone pink box, assorted beauty items on a pink/floral background with a circular "Beauty Insider" badge
 - **Primary CTA:** `SHOP NOW ▶` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `8`, Relevance to me `5`, Visual hierarchy `8`, On-brand `9`
+- **Scores (1-10):** Clarity `8`, Relevance to me `9`, Visual hierarchy `7`, On-brand `9`
 - **Strengths:**
-  - The points multiplier and code are legible and specific — no vague "earn more" language
-  - Gift set imagery is polished and high-end, consistent with Sephora's brand aesthetic
+  - Copy is specific — code, date range, and point multiplier all visible in one glance
+  - Product selection (Jo Malone, Prada) signals aspirational but reachable luxury, exactly my register
 - **Weaknesses:**
-  - "Gifts she'll love" copy addresses me as a gift-buyer, not a beauty lover treating herself
-  - Flatlay-only hero means zero emotional resonance — no model, no aspiration, no "I want that look"
+  - No human element — products without context feel like a catalog, not a vibe
+  - "Beauty Insiders only" disclaimer is small-print at the bottom; could sting non-Insiders who tap through
+
+---
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** Free Fragrance Sample Set with $50+ spend (code: SCENTSYAY), 4X Beauty Insider points on fragrance gifts (code: BESTSCENTS), Sign In for FREE Shipping
-- **Urgency / scarcity:** Date window "from 4/30 to 5/10" creates mild urgency — no countdown timer visible, no "ends tonight" language
-- **Loyalty hooks:** 4X points callout is Beauty Insider-specific; "Beauty Insider" badge visible in hero; Sign In framing implies member perks
-- **Honesty check:** The `*Terms apply` on the top banner and `††` footnote in the hero are small on mobile but present — technically disclosed, but a tap-through is required to understand the exclusions; "†† exclusions/terms apply. Beauty Insiders only." appears in very small text at the hero bottom
+- **Active promos:** Free Fragrance Sample Set with $50 min spend (code SCENTSYAY), 4X points on fragrance gifts (code BESTSCENTS), Free Shipping for signed-in members
+- **Urgency / scarcity:** Date range "from 4/30 to 5/10" on the 4X points offer — no countdown timer visible, but the Mother's Day deadline is an implicit urgency signal
+- **Loyalty hooks:** "Beauty Insiders only" on hero image, "Sign In for FREE Shipping" in the sticky member bar
+- **Honesty check:** The "Beauty Insiders only" exclusion is visible but small — someone not in the program could tap through and feel misled. The asterisk on "Free\* Fragrance Sample Set" in the announcement bar is tiny; "$50 min. spend" is readable but only if you look closely
+
+---
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: Partially — I love fragrance and would stack the 4X points for a mom gift, but the hero isn't serving me new launches or mascara energy
-- + Easy to reach my category: "New" and "Makeup" tabs are both visible in the nav row, one tap away
-- − Eye-catching imagery in my category: The hero is gift sets and fragrance, not the makeup/mascara content I'm here for
-- + Promo banner I would use: Absolutely — SCENTSYAY for a free fragrance sample on a $50 spend is easy money, and BESTSCENTS 4X on fragrance is a no-brainer if I'm buying for my mom
-- + Page renders cleanly: Screenshot shows no layout issues, broken images, or overlap — it's crisp
-- − Imagery includes someone like me: No lifestyle model anywhere above the fold — purely product flatlay with no human reference
-- + Copy register matches mine: "She'll love," "fragrance gifts," "Beauty Insider" — it's casual, warm, and Millennial-legible without being pandering
-- − Trust signals visible: No star ratings, no review counts, no free-returns badge above fold; only the brand's own loyalty language
-- − New / hot rail in my category: Nothing — the hero is entirely Mother's Day gifting, no "just dropped" or trending Makeup content
-- + No dark patterns: No forced interstitial, no countdown pressure, no guilt-trip copy — the nudges are present but low-friction
+- + Hero relates to my focus area: Mother's Day fragrance and beauty gift sets are 100% my shopping zone right now
+- + Easy to reach my category: Makeup, Skincare, Fragrance all visible in the nav bar in one tap
+- + Eye-catching imagery in my category: Jo Malone and Prada products are genuinely aspirational and eye-stopping for me
+- + Promo banner I would use: SCENTSYAY free sample set — yes, I am copying that code immediately
+- + Page renders cleanly: No layout shifts, broken images, or performance red flags visible
+- − Imagery includes someone like me: No person in the hero — all product flat-lay, no lifestyle or model shot
+- + Copy register matches mine: "Gifts she'll love" is warm and readable, not clinical or over-cutesy
+- − Trust signals visible: No review counts, ratings, or return policy badges above the fold
+- + New/hot rail in my category: Partially visible second carousel card suggests more content, though it's almost completely off-screen
+- + No dark patterns: No forced modal, no aggressive pop-up — sign-in prompt is gentle
 
-**Score:** `6/10`
-**Rationale:** The nav accessibility and promo relevance keep me engaged enough to stay, but missing new-arrivals signal and no human imagery in my category means I'm tapping into the nav immediately rather than staying in the hero experience.
+**Score:** `8/10` — should equal 1 + count of "+" bullets above (7 "+" = 8 total).
+**Rationale:** The combination of Beauty Insider exclusivity language, aspirational fragrance brands, and an immediately actionable promo code hits almost every engagement trigger I have — the only real miss is the lack of a human face in the hero and no trust badges visible.
+
+---
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "SHOP NOW" links to Mother's Day Value Sets — not to Makeup or new launches, which is where my wallet actually lives
-- + Unambiguous CTA copy: "SHOP NOW ▶" is direct and clear, no mystery about what happens next
-- + Active price reduction or member pricing: 4X points with BESTSCENTS is real and meaningful for a Rouge member — that's effectively a 4X earn rate on my next redemption
-- + Time-bounded credible deadline: "4/30 to 5/10" is a specific, credible window with a readable end date
-- − Reachable free-shipping threshold: "Sign In for FREE Shipping" is vague — no dollar threshold shown, and I can't tell if this is a perk I already have as Rouge or something I need to unlock
-- − Specific product page one tap away: "SHOP NOW" goes to a category/collection page, not a single product with its own PDP
-- − Sizing / fit info accessible: N/A for beauty — and notably no shade range, swatch count, or formula info visible on the featured products
-- − Returns / exchanges mentioned: Not visible above the fold at all
-- − Reviews / ratings visible on featured products: None — not a single star rating on the gift sets in the hero
-- − Trust / security signals: No secure checkout badge, no pay-later option, no return policy mention above the fold
+- + CTA in my category: "SHOP NOW ▶" leads to Mother's Day fragrance value sets — directly in my lane
+- + Unambiguous CTA copy: "SHOP NOW" is clear, no ambiguity about what happens when I tap
+- + Active price reduction or member pricing: 4X points with code BESTSCENTS is real loyalty-member value
+- + Time-bounded credible deadline: "4/30 to 5/10" is specific, and with today being May 3rd, there's real urgency
+- − Reachable free-shipping threshold: "Sign In for FREE Shipping" gives no dollar threshold — I don't know if I qualify without clicking
+- + Specific product page one tap away: "SHOP NOW ▶" appears to go directly to the value sets collection
+- − Sizing/fit info accessible: Not applicable for beauty, and nothing visible anyway
+- − Returns/exchanges mentioned: Not visible above the fold
+- − Reviews/ratings visible: No star ratings or review counts on any featured product
+- − Trust/security signals: No secure checkout badge, pay-later option, or guarantee seal visible
 
-**Score:** `4/10`
-**Rationale:** The points multiplier and the explicit date window are the only real conversion levers visible — everything else that would tip me into tapping "add to cart" (reviews, product specificity, shipping clarity) requires scrolling or a separate tap.
+**Score:** `6/10` — 1 base + 5 "+" bullets.
+**Rationale:** The loyalty points offer with a hard deadline is genuinely compelling and I would tap through, but the absence of reviews, return info, and free-shipping clarity all create friction between browse and cart — Sephora leaves real conversion points on the table above the fold.
+
+---
 
 ## 11. Evidence
 
-- **Promotional top banner:** "Free* Fragrance Sample Set! Try must-haves with $50 min. spend. *Terms apply. Use code SCENTSYAY ▶"
-- **Header bar:** SEPHORA wordmark logo (black), search bar (rounded pill), wishlist heart icon, shopping cart icon
-- **Sign-in nudge strip:** "Sign In for FREE Shipping 🚚 / Don't have an account? Create an account" | black "Sign In" button
-- **Navigation row (tab strip):** Shop My Store | New | Makeup | Skincare | Fragrance (additional tabs cut off right)
-- **Hero module — Mother's Day campaign:** Pink background product flatlay; Prada fragrance bottle visible; multiple pink gift box sets; right-side panel partially visible with additional product collection; "BEAUTY INSIDER" circular badge stamp overlay; copy: "Mother's Day Value Sets / Get 4X points†† on fragrance gifts she'll love / with code BESTSCENTS from 4/30 to 5/10. / SHOP NOW ▶"; footnote in very small text: "†† Exclusions/terms apply. Beauty Insiders only."
-- **Partially visible right panel:** Second carousel/hero slide partially visible — shows "Ha" and what appears to be "Ne / Da" text, suggesting a "New Drops" or similar secondary slide
-- **Bottom navigation bar:** Home | Shop | Offers | Me | My Store | AI Beauty (with "NEW" badge pill)
-- **Bugs / friction / clarity issues visible:** The "††" fine print text at the hero base is extremely small on mobile — easy to miss; the second hero slide is cropped and partially unreadable, creating visual ambiguity about additional content
+- **Announcement bar:** "Free\* Fragrance Sample Set! Try must-haves with $50 min. spend. \*Terms apply. Use code SCENTSYAY ▶"
+- **Header:** Sephora wordmark, search bar, wishlist icon, cart icon
+- **Sticky member bar:** "Sign In for FREE Shipping 🚚 / Don't have an account? Create an account" — black "Sign In" button
+- **Category nav bar:** Shop My Store | New | Makeup | Skincare | Fragrance (tabs partially cut off on right)
+- **Hero module:** Mother's Day Value Sets flat-lay (Jo Malone, Prada, assorted gift sets) with "Beauty Insider" circular badge, pink/floral background; copy "Get 4X points†† on fragrance gifts she'll love with code BESTSCENTS from 4/30 to 5/10."; CTA "SHOP NOW ▶"; small disclaimer "[Exclusions/terms apply. Beauty Insiders only]"
+- **Partially visible second carousel card:** Edge of a second hero tile visible on the right — copy begins with "Ha..." and "Ne..." — content unreadable
+- **Bottom navigation bar:** Home | Shop | Offers | Me | My Store | AI Beauty (with "NEW" badge)
+- **Bugs / friction:** Second carousel card nearly entirely off-screen with no visual indicator (dot, arrow) that it exists; fine-print disclaimers on both the announcement bar and hero image are very small on mobile; free-shipping threshold is not stated numerically
 ## Recent history
 
 - [[2026-05-02-homepage-www.sephora.com-ruby-glow-sephora-fap6e]] — 6/10 (2026-05-02)

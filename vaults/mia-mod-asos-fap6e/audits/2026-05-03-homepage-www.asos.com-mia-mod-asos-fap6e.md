@@ -3,155 +3,155 @@ slug: 2026-05-03-homepage-www.asos.com-mia-mod-asos-fap6e
 type: site
 date: 2026-05-03
 persona: mia-mod-asos-fap6e
-score: "6/10"
+score: "8/10"
 sender: www.asos.com
 subject: Homepage snapshot · www.asos.com · 2026-05-03
-tags: [site-journey, score-6, sender/www-asos-com]
+tags: [site-journey, score-8, sender/www-asos-com]
 ---
 # Homepage snapshot · www.asos.com · 2026-05-03
-**Score:** 6/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 8/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Okay so this is… stripped back. Like, really stripped back. ASOS is showing me a split editorial hero — one girl in a red jacket and black beret, one guy in a black-and-white polo — and two big generic buttons. That's it above the fold. It reads more like a brand wallpaper than a shop, and as someone who comes here specifically to find new denim or plan my next festival look, there's zero to grab onto.
-- **6/10**
-- + Primary CTA is visible: "SHOP WOMENS" button is clear and above the fold
-- + Visual hierarchy works: split hero draws the eye, two buttons tell me what to do next
-- + No render bugs: the page looks clean and sharp on mobile
-- + Demographic match: the female model is young and dressed with attitude — fits my age bracket
-- + Page looks current: no stale seasonal banners, styling reads contemporary
-- + Offer feels honest: "New here? Get your first-timer discount" isn't shady, just irrelevant to me
-- − No hero copy that speaks to my focus area (festival, denim, Gen Z lifestyle) — purely generic
-- − Zero returning-shopper hook — as an ASOS Premier member I'm invisible here
-- − No concrete offer with a specific % or £ amount above the fold
-- − No loyalty or Premier membership callout whatsoever
+- ASOS is doing that classic editorial split-screen moment — fashion brand trying to look more magazine than shop. Right now it's pushing the basics hard: "you exist, pick a lane, click in." As a Premier member who already knows the site, it feels a bit like they forgot I exist and went full new-customer acquisition mode instead.
+- **8/10**
+- + Hero imagery explicitly speaks to my persona — young, editorial, fashion-forward woman in a bold red jacket and beret is *very* me
+- − No returning-shopper hook visible — zero Premier badge, no loyalty CTA, no "welcome back" energy
+- − No concrete offer above the fold — no % off, no threshold shown
+- + "SHOP WOMENS" is an unmistakable primary CTA, white pill button with clean black type
+- + Visual hierarchy is clear — hero → asos wordmark → CTAs, the eye lands exactly where they want
+- + No render bugs — clean split, images load, nav icons crisp
+- + Demographic signals match — that model is dressed like someone going to a market in Shoreditch, not a 50-year-old on a golf course
+- + Page feels seasonally current — the palette and styling aren't stale
+- − Loyalty / Premier benefits not visible without scrolling
+- + No bait-and-switch visible — CTAs are honest and direct
 
 ## What's working
 
-- **The split-hero format** is punchy on mobile — the red jacket against the monochrome male shot creates visual contrast that stops the scroll at least for a second.
-- **"SHOP WOMENS" button** is large, high-contrast, and immediately tappable — no hunting required.
-- **"Download our app" banner** at the bottom at least gestures toward engagement and hints at exclusive drops, which is relevant to me.
-- **Clean nav strip** (hamburger, search, account, wishlist, bag) gives me escape routes without clutter.
+- **The hero split** — woman left in colour, man right in greyscale creates instant contrast and gives me something to look at. The red jacket is genuinely great visual anchor.
+- **"SHOP WOMENS" button** — zero ambiguity. I tap it, I'm in women's. That's exactly what I want on mobile, not a slow nav dig.
+- **Minimal nav bar** — hamburger, search, account, wishlist, bag. Five taps max to do anything. Good mobile discipline.
+- **The asos wordmark over the hero** — brand confidence, no fussy tagline cluttering the image.
 
 ## What's weak
 
-- **No Premier membership recognition** — I pay for Premier and the first thing I see after the hero is "New here? Get your first-timer discount." That stings. I'm not new. Where's my member banner?
-- **Zero campaign narrative** — no headline copy on the hero at all, just the ASOS logo. I don't know if there's a sale, a new collection drop, a collab, anything. It's a billboard with no poster.
-- **"New here?" banner is wasted real estate for me** — this is the most prominent promotional slot below the hero and it speaks exclusively to first-timers.
-- **No category specificity** — I shop denim and festival looks, but "SHOP WOMENS" covers everything from maternity to office wear. Nothing points me toward what I actually came for.
-- **No urgency or newness signal** — no "new in," no "trending this week," no countdown. Nothing makes me feel like I need to move.
+- **No Premier/loyalty hook** — I pay for Premier, I want to feel like a VIP the second the page loads. There's nothing here for me as a returning member.
+- **"New here? Get your first-timer discount"** — that banner is visible at the bottom and it's actively irrelevant to me. It's almost insulting — I've been ordering here for years.
+- **No category specificity** — no Denim, no Festival Outfits, no New In This Week. Just a binary male/female split. I came here to hunt something specific and the homepage gives me nothing to latch onto.
+- **No offer mechanics** — no "Premier members get free next-day," no "sale on now," nothing that creates a reason to tap *now* vs. tomorrow.
+- **Greyscale male half dulls the energy** — the colour vs. greyscale choice reads unintentional more than editorial, like one image hadn't loaded.
 
 ## Recommendations
 
-- **Add a Premier member welcome strip** — even one line ("Welcome back, Mia. Free next-day on everything.") would make me feel seen and remind me why I pay for the subscription.
-- **Put a headline on the hero** — even something like "Festival season starts here" or "New denim just dropped" would give me a reason to tap rather than wonder what ASOS is pushing this week.
-- **Replace the "New here?" below-fold banner for logged-in users** — surface a personalised hook ("New in your saved brands" or "Back in stock: your wishlist") instead of a first-timer offer I can never use.
-- **Add a "New In" or trending category strip** below the hero — a horizontal scroll of category tiles (Dresses, Denim, Festival, Shoes) would let me self-sort in one tap without going through the full nav.
+- **Add a Premier member strip above the hero** — something like "Hey, Premier. Free next-day on everything. Always." One line. That's the hook I need as a returning customer.
+- **Swap the binary SHOP WOMENS / SHOP MENS layout for a trend-led hero** — "Denim Edits Just Dropped" or "Festival Season Starts Here" with a direct category link converts better than a generic gender split.
+- **Give the "New Here" banner a returning-member counterpart** — segment by login state and show me "Back Already? Here's What's New Since Your Last Order" instead.
+- **Add a sale or clearance strip** — even "Up to 70% off in the sale" in a thin banner above the nav. Something that triggers a reason to browse *today*.
 
 ## Full review
 ## 1. Executive Summary
 
-Okay so this is… stripped back. Like, really stripped back. ASOS is showing me a split editorial hero — one girl in a red jacket and black beret, one guy in a black-and-white polo — and two big generic buttons. That's it above the fold. It reads more like a brand wallpaper than a shop, and as someone who comes here specifically to find new denim or plan my next festival look, there's zero to grab onto.
+ASOS is doing that classic editorial split-screen moment — fashion brand trying to look more magazine than shop. Right now it's pushing the basics hard: "you exist, pick a lane, click in." As a Premier member who already knows the site, it feels a bit like they forgot I exist and went full new-customer acquisition mode instead.
 
 ## 2. Business Impact Score (1-10)
 
-**6/10**
+**8/10**
 
-- + Primary CTA is visible: "SHOP WOMENS" button is clear and above the fold
-- + Visual hierarchy works: split hero draws the eye, two buttons tell me what to do next
-- + No render bugs: the page looks clean and sharp on mobile
-- + Demographic match: the female model is young and dressed with attitude — fits my age bracket
-- + Page looks current: no stale seasonal banners, styling reads contemporary
-- + Offer feels honest: "New here? Get your first-timer discount" isn't shady, just irrelevant to me
-- − No hero copy that speaks to my focus area (festival, denim, Gen Z lifestyle) — purely generic
-- − Zero returning-shopper hook — as an ASOS Premier member I'm invisible here
-- − No concrete offer with a specific % or £ amount above the fold
-- − No loyalty or Premier membership callout whatsoever
+- + Hero imagery explicitly speaks to my persona — young, editorial, fashion-forward woman in a bold red jacket and beret is *very* me
+- − No returning-shopper hook visible — zero Premier badge, no loyalty CTA, no "welcome back" energy
+- − No concrete offer above the fold — no % off, no threshold shown
+- + "SHOP WOMENS" is an unmistakable primary CTA, white pill button with clean black type
+- + Visual hierarchy is clear — hero → asos wordmark → CTAs, the eye lands exactly where they want
+- + No render bugs — clean split, images load, nav icons crisp
+- + Demographic signals match — that model is dressed like someone going to a market in Shoreditch, not a 50-year-old on a golf course
+- + Page feels seasonally current — the palette and styling aren't stale
+- − Loyalty / Premier benefits not visible without scrolling
+- + No bait-and-switch visible — CTAs are honest and direct
 
 ## 3. What's Working
 
-- **The split-hero format** is punchy on mobile — the red jacket against the monochrome male shot creates visual contrast that stops the scroll at least for a second.
-- **"SHOP WOMENS" button** is large, high-contrast, and immediately tappable — no hunting required.
-- **"Download our app" banner** at the bottom at least gestures toward engagement and hints at exclusive drops, which is relevant to me.
-- **Clean nav strip** (hamburger, search, account, wishlist, bag) gives me escape routes without clutter.
+- **The hero split** — woman left in colour, man right in greyscale creates instant contrast and gives me something to look at. The red jacket is genuinely great visual anchor.
+- **"SHOP WOMENS" button** — zero ambiguity. I tap it, I'm in women's. That's exactly what I want on mobile, not a slow nav dig.
+- **Minimal nav bar** — hamburger, search, account, wishlist, bag. Five taps max to do anything. Good mobile discipline.
+- **The asos wordmark over the hero** — brand confidence, no fussy tagline cluttering the image.
 
 ## 4. What's Weak
 
-- **No Premier membership recognition** — I pay for Premier and the first thing I see after the hero is "New here? Get your first-timer discount." That stings. I'm not new. Where's my member banner?
-- **Zero campaign narrative** — no headline copy on the hero at all, just the ASOS logo. I don't know if there's a sale, a new collection drop, a collab, anything. It's a billboard with no poster.
-- **"New here?" banner is wasted real estate for me** — this is the most prominent promotional slot below the hero and it speaks exclusively to first-timers.
-- **No category specificity** — I shop denim and festival looks, but "SHOP WOMENS" covers everything from maternity to office wear. Nothing points me toward what I actually came for.
-- **No urgency or newness signal** — no "new in," no "trending this week," no countdown. Nothing makes me feel like I need to move.
+- **No Premier/loyalty hook** — I pay for Premier, I want to feel like a VIP the second the page loads. There's nothing here for me as a returning member.
+- **"New here? Get your first-timer discount"** — that banner is visible at the bottom and it's actively irrelevant to me. It's almost insulting — I've been ordering here for years.
+- **No category specificity** — no Denim, no Festival Outfits, no New In This Week. Just a binary male/female split. I came here to hunt something specific and the homepage gives me nothing to latch onto.
+- **No offer mechanics** — no "Premier members get free next-day," no "sale on now," nothing that creates a reason to tap *now* vs. tomorrow.
+- **Greyscale male half dulls the energy** — the colour vs. greyscale choice reads unintentional more than editorial, like one image hadn't loaded.
 
 ## 5. Recommendations
 
-- **Add a Premier member welcome strip** — even one line ("Welcome back, Mia. Free next-day on everything.") would make me feel seen and remind me why I pay for the subscription.
-- **Put a headline on the hero** — even something like "Festival season starts here" or "New denim just dropped" would give me a reason to tap rather than wonder what ASOS is pushing this week.
-- **Replace the "New here?" below-fold banner for logged-in users** — surface a personalised hook ("New in your saved brands" or "Back in stock: your wishlist") instead of a first-timer offer I can never use.
-- **Add a "New In" or trending category strip** below the hero — a horizontal scroll of category tiles (Dresses, Denim, Festival, Shoes) would let me self-sort in one tap without going through the full nav.
+- **Add a Premier member strip above the hero** — something like "Hey, Premier. Free next-day on everything. Always." One line. That's the hook I need as a returning customer.
+- **Swap the binary SHOP WOMENS / SHOP MENS layout for a trend-led hero** — "Denim Edits Just Dropped" or "Festival Season Starts Here" with a direct category link converts better than a generic gender split.
+- **Give the "New Here" banner a returning-member counterpart** — segment by login state and show me "Back Already? Here's What's New Since Your Last Order" instead.
+- **Add a sale or clearance strip** — even "Up to 70% off in the sale" in a thin banner above the nav. Something that triggers a reason to browse *today*.
 
 ## 6. Bottom Line
 
-I'd tap "SHOP WOMENS" out of habit, but this homepage gave me nothing to be excited about — if ASOS weren't already my go-to, I'd have bounced.
+I'd tap SHOP WOMENS because that's just muscle memory at this point, but this homepage gave me absolutely no reason to feel excited about doing it — it's airport terminal, not shop floor.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `asos` (logo only — no headline copy)
-- **Hero image:** Split screen — left: young woman in bold red blazer-style jacket and black structured beret, colour photo; right: young man in black-and-white colour-block polo, desaturated/monochrome treatment
-- **Primary CTA:** `SHOP WOMENS` — visible above the fold? yes
-- **Scores (1-10):** Clarity `7`, Relevance to you `4`, Visual hierarchy `7`, On-brand `7`
+- **Hero copy (verbatim):** `asos` (wordmark only — no supporting headline or tagline visible)
+- **Hero image:** Split editorial — left: young woman in red collarless jacket, black structured beret, gold earrings; right: young man in black-and-white colour-block polo, greyscale treatment
+- **Primary CTA:** `SHOP WOMENS` — visible above the fold? **yes**
+- **Scores (1-10):** Clarity `9`, Relevance to you `7`, Visual hierarchy `8`, On-brand `8`
 - **Strengths:**
-  - High visual contrast between the two panels makes the hero pop on a small mobile screen
-  - CTA buttons are large, white, and unmissable against the dark imagery
+  - The red jacket is a genuine visual stop-point on a phone screen — high contrast, fashion-forward
+  - CTA button placement directly beneath the wordmark creates a natural eye path
 - **Weaknesses:**
-  - No copy means no story — I have no idea what campaign this is or why I should care right now
-  - Neither model nor styling signals festival wear or denim specifically, which is why I'm here
+  - No supporting copy whatsoever — the wordmark alone doesn't communicate what's new, what's on sale, or why I should shop today
+  - Greyscale male half feels mismatched and slightly unfinished next to the vivid female side
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** "New here? Get your first-timer discount" (no amount shown), "Download our app for exclusive discounts and the latest drops"
-- **Urgency / scarcity:** None visible — no countdown timers, no "ends tonight," no low-stock copy
-- **Loyalty hooks:** None — no Premier member callout, no rewards balance, no member-pricing badge
-- **Honesty check:** The "first-timer discount" isn't manipulative but it's contextually tone-deaf for a logged-in returning subscriber. The app download banner promises "exclusive discounts" without specifying what — minor vagueness but not a red flag.
+- **Active promos:** "New here? Get your first-timer discount" (partial text visible, no % stated), "Download our app for exclusive discounts and the latest drops"
+- **Urgency / scarcity:** None visible — no countdown timer, no "ends tonight," no limited-stock copy
+- **Loyalty hooks:** None — no Premier callout, no rewards balance, no member pricing above fold
+- **Honesty check:** The first-timer discount is shown without a percentage, which feels intentionally vague. The app download CTA promises "exclusive discounts" but doesn't say what they are — mild FOMO play but not manipulative enough to flag seriously.
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: Generic split womenswear/menswear — nothing points to festival, denim, or a specific trend I care about
-- − Easy to reach my category: Hamburger nav is present but categories are hidden; "SHOP WOMENS" is one tap but drops me into all of womenswear, not denim or festival
-- − Eye-catching imagery in my category: The red blazer is editorial but it's not festival or denim styling — misses my specific hook
-- − Promo banner I would use: "New here" offer is for first-timers; app download is generic — neither applies to me right now
-- + Page renders cleanly: No layout shift, no broken images, crisp on mobile
-- + Imagery includes someone like me: Young woman in bold, fashion-forward clothes — age and attitude track
-- − Copy register matches mine: Barely any copy at all; "SHOP WOMENS" is functional but not Gen Z-native
-- − Trust signals visible: No review counts, no free-returns badge, no Premier callout
-- − New / hot rail in my category: Nothing visible — no trending, new-in, or category rail
-- + No dark patterns: No forced modal, no pop-up, no bait-and-switch — the page is clean
-- **Score:** `3/10` — should equal 1 + count of "+" bullets above.
-- **Rationale:** The page is clean and doesn't annoy me, but it gives me almost no reason to stay — no category hook, no promo I can use, no signal that anything new or exciting is happening right now.
+- + Hero relates to my focus area: Editorial fashion imagery is squarely in my wheelhouse — I shop ASOS for the trend pieces, and this feels trend-led
+- + Easy to reach my category: "SHOP WOMENS" is one tap, can't get simpler than that
+- + Eye-catching imagery in my category: The woman in red is genuinely arresting on a small screen, I'd look twice
+- − Promo banner I would use: "New here?" doesn't apply to me as a returning Premier customer — net negative engagement
+- + Page renders cleanly: No layout shift, no broken images, text is crisp, icons load
+- + Imagery includes someone like me: Young, fashion-forward woman, looks early-to-mid 20s, not a blank model in basics
+- + Copy register matches mine: Direct, uncluttered, no cringe millennial-speak or overwrought Gen Z try-hard copy
+- − Trust signals visible: No free-returns callout, no review counts, no "10m+ customers" badge above fold
+- − New/hot rail in my category: Nothing visible — no "New In Women's This Week" strip or carousel
+- + No dark patterns: No forced modal, no cookie wall obscuring content, clean load
+
+**Score:** `7/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The clean editorial hero and frictionless "SHOP WOMENS" CTA are strong enough to keep me from bouncing, but the total absence of anything specifically for me as a Premier member or a denim/festival shopper means I'm engaging on autopilot, not excitement.
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: "SHOP WOMENS" is in my gender category, even if not my specific niche
-- + Unambiguous CTA copy: "SHOP WOMENS" is perfectly clear — no guessing
-- − Active price reduction or member pricing: No offer visible for me; first-timer discount is inaccessible
-- − Time-bounded credible deadline: No urgency copy anywhere above the fold
-- − Reachable free-shipping threshold: My Premier free delivery isn't acknowledged — no threshold shown either
-- − Specific product page one tap away: "SHOP WOMENS" goes to a category, not a product; nothing specific to click into
-- − Sizing / fit info accessible: Not mentioned on this screen
-- − Returns / exchanges mentioned: Not visible
-- − Reviews / ratings visible: None on this screen
-- − Trust / security signals: No secure checkout badge, no pay-later option mentioned
-- **Score:** `3/10` — should equal 1 + count of "+" bullets.
-- **Rationale:** Two generic CTAs are all I have to work with — there's no product, no offer, no urgency, and no Premier acknowledgement to pull me toward actually tapping into a cart flow.
+- + CTA in my category: "SHOP WOMENS" is exactly my category, one tap away
+- + Unambiguous CTA copy: "SHOP WOMENS" — no vague "explore" or "discover," this is direct
+- − Active price reduction or member pricing: Nothing — no sale % visible, no Premier pricing badge
+- − Time-bounded credible deadline: No urgency mechanism visible at all
+- − Reachable free-shipping threshold: My Premier covers free next-day but it's not stated anywhere above fold — a missed reassurance
+- − Specific product page one tap away: "SHOP WOMENS" takes me to a category page, not a product — that's two more taps minimum to cart
+- − Sizing / fit info accessible: Not visible — would need to go deep into a PDP
+- − Returns / exchanges mentioned: Nothing — no "free returns" callout, which ASOS used to plaster everywhere
+- − Reviews / ratings visible: No product imagery, no ratings, nothing
+- − Trust / security signals: No secure checkout badge, no pay-later option (Klarna etc.) referenced
+
+**Score:** `3/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The homepage gives me two clear entry points but zero commercial pressure to act — no sale, no deadline, no "free returns," no Premier flex. I'll browse because I'm already here, not because this homepage converted me.
 
 ## 11. Evidence
 
-Visible modules in scroll order:
-- **Nav strip:** Hamburger menu left, ASOS wordmark logo centre, search / account / wishlist / bag icons right — clean mobile treatment
-- **Hero (split-screen):** Full-width two-panel image — woman in red jacket + black beret (left, colour); man in black-and-white polo (right, desaturated); ASOS logo centred over the join; no headline copy
-- **Dual CTA buttons:** Two full-width white buttons overlaid on lower hero — "SHOP WOMENS" (top) and "SHOP MENS" (bottom)
-- **Below-fold left banner:** Black tile — "New here? Get your first-timer discount" (copy truncated at bottom of screenshot)
-- **Below-fold right banner:** Black tile — "Download our app for exclusive discounts and the latest drops" (copy also partially truncated)
-- **Bugs / friction:** No visible render bugs; however the two below-fold banners are cut off at the bottom of the viewport with no visual affordance to scroll — a new visitor might not realise there's more content below
+- **Hero / primary value prop:** Full-bleed split portrait — woman in red jacket (colour) / man in polo (greyscale); asos wordmark centred over join; no body copy or campaign headline
+- **Primary CTAs:** Two stacked white pill buttons — "SHOP WOMENS" and "SHOP MENS" — centred below the wordmark
+- **Navigation bar:** Black bar at top — hamburger ≡, asos logo, search 🔍, account 👤, wishlist ♡, bag 🛍 — standard mobile iconography, no Premier indicator
+- **Below-fold banners (partially visible):** Left card: "New here? Get your first-timer discount" on dark background; Right card: "Download our app for exclusive discounts and the latest drops" on dark background
+- **Bugs / friction / clarity issues:** None visible — no broken images, no overlapping elements, no placeholder text. The greyscale vs. colour split *could* be mistaken for a failed image load on a bad connection, but it appears intentional.
 ## Recent history
 
 - [[2026-05-02-homepage-www.asos.com-mia-mod-asos-fap6e]] — 5/10 (2026-05-02)

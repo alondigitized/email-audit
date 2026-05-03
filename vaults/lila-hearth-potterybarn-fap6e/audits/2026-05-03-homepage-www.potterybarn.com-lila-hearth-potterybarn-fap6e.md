@@ -12,150 +12,144 @@ tags: [site-journey, score-5, sender/www-potterybarn-com]
 **Score:** 5/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- I opened Pottery Barn's site and the first thing I got was a full-screen pop-up before I could see a single product. The sweepstakes pitch — win $1,500 toward an "outdoor refresh" — is on-brand for the season and the imagery is genuinely pretty (pool-adjacent wicker furniture, very second-home aspirational), but I came here to shop, not to hand over my cell number. The actual homepage is completely obscured, so I'm essentially reviewing a lightbox, not a homepage.
+- Pottery Barn is a brand I already love and trust — this is literally where I'm outfitting the second home — but the first thing I see when I land on the site is a full-screen signup modal blocking everything. The lifestyle image inside the modal is beautiful (that linen sofa, the floral throw pillows — yes, please), but I can't see a single product, a sale, or a way to shop until I either sign up or dismiss it. It reads like a brand that's more interested in capturing my contact info than helping me redecorate.
 - **5/10**
-- + Hero imagery matches my focus area: poolside outdoor furniture is exactly the second-home vibe — score point
-- + Visual hierarchy is clear within the modal: image → headline → body → form flows naturally — score point
-- + Season is right: outdoor living in May is timely, not stale — score point
-- + "Design Crew can help bring it to life, from furniture to finishing touches" copy resonates with how I actually shop — score point
-- − No returning-shopper hook visible: no rewards balance, no member CTA, no recently-viewed
-- − No concrete discount offer: $1,500 sweepstakes prize ≠ an actual offer for me today
-- − No unambiguous shop CTA above the fold: nowhere to tap "Shop Outdoor" or anything like that
-- − Loyalty / membership: completely invisible
-- − Demographics are vague: no age/lifestyle signal specifically for a millennial second-home buyer
-- − Fine print is heavy: two dense paragraphs of SMS consent legalese bury the "enter" action
+- + Hero imagery speaks to my persona: the sofa/living room lifestyle scene is dead-on for second-home decorating
+- + Visual hierarchy is clear: image, headline, form fields, CTA all stack logically in the modal
+- + No render bugs: the modal itself is clean and well-composed
+- + Demographic signals match: linen sofa, floral pillows, layered textiles — this is exactly my aesthetic
+- − No returning-shopper hook: no rewards balance, no "welcome back," no loyalty CTA
+- − No concrete offer: "exclusive savings" is vague — no %, no $, no threshold
+- − No shopping CTA above the fold: the only button is "SIGN UP NOW" for email/SMS, not a path to browse
+- − Page reflects no seasonal campaign: the modal is evergreen lead-gen, tells me nothing about what's new for spring
+- − Loyalty/membership benefits not visible: I'm a Williams-Sonoma rewards member but I see zero benefit acknowledgment
+- − Offer honesty: two dense paragraphs of TCPA legal fine print about auto-dialing feels aggressive for a premium lifestyle brand
 
 ## What's working
 
-- **Outdoor lifestyle imagery** — the rattan lounge chairs and side table by a pool is aspirational and matches exactly the kind of piece I'm sourcing for my second home right now
-- **"Design Crew" mention** — calling out white-glove design help inside a sweepstakes entry feels premium and signals that PB does more than just sell product
-- **Seasonal alignment** — an outdoor living promotion landing in early May is well-timed; I'm actively in this buying mode
-- **Clean modal render** — no broken images, no overlapping text, the close button is clearly marked
+- **The lifestyle image in the modal:** White linen sofa, layered colorful floral pillows, warm natural light from a big window — that image made me stop. It speaks directly to the way I want the second home to feel.
+- **Williams-Sonoma brand mention in the fine print:** I'm already in the WS rewards ecosystem, so seeing that family of brands mentioned is a quiet trust signal — I know this brand.
+- **The CHAT button:** Visible in the corner. I actually use in-store consults, so knowing live help is a tap away matters to me.
+- **The "Find out first" framing:** "New arrivals, exclusive savings & more" is an aspirational, not pushy, headline — it almost makes the ask feel worthwhile.
 
 ## What's weak
 
-- **The modal itself is the entire homepage** — I cannot see a single category, hero offer, or navigation link; the whole experience is blocked
-- **Sweepstakes entry asks for SMS consent before I've browsed anything** — that's an enormous ask for someone who just landed on the page cold
-- **No shop CTA anywhere visible** — there's no "Shop Outdoor" or even a nav pill to tap if I immediately decide this sweepstakes isn't for me
-- **No loyalty hook** — I have a Williams-Sonoma Key Rewards account and there's zero acknowledgment of that here
-- **Legal text is intimidating** — two paragraphs of TCPA boilerplate directly beneath the value prop tanks the vibe
+- **The modal itself:** Blocking the entire homepage on first load on mobile is my biggest friction point. I came here to shop, not to hand over my phone number before I've seen a single product.
+- **Zero specific offer:** "Exclusive savings" is meaningless without a number. Is it 10%? 20%? Free shipping? I'm not giving out my mobile number for a vague promise.
+- **No shopping CTA visible:** There is no "Shop Now," no category shortcut, nothing that takes me to furniture, bedding, or textiles above the fold. The only action is the signup form.
+- **Dense legal fine print:** Two paragraphs of "automatic telephone dialing system" and "artificial or prerecorded voice" language, in tiny gray text, immediately below the charming headline — it undercuts the premium feel completely.
+- **Navigation invisible:** The Baby/Kids/Teen/Dorm nav bar at the very top is barely legible behind the modal. I can't see a path to Living Room, Bedroom, or anything I actually shop.
 
 ## Recommendations
 
-- **Trigger the sweepstakes modal on exit-intent or after 10 seconds**, not on page load — let me see the homepage first, then earn my attention
-- **Add a "No thanks, shop outdoor furniture" text link** beneath the email field so I have a frictionless path to the actual catalog even if I skip the sweepstakes
-- **Surface the Key Rewards / loyalty CTA in a persistent header bar** so returning Williams-Sonoma brand customers know their account is recognized
-- **Trim the consent copy** to a single sentence with a link to full terms — the wall of TCPA text is killing the aspirational mood the imagery creates
+- **Swap the blocking modal for a slide-in drawer or banner:** Let me see the homepage first. Trigger the signup nudge after I've scrolled one product section — I'm more likely to sign up once I'm already excited about what I see.
+- **Put a real number in the offer:** "Get 15% off your first order when you join" is a CTA I'd fill out. "Exclusive savings & more" is not.
+- **Add a rewards/member recognition layer for returning visitors:** If I'm already cookied from Williams-Sonoma or a previous Pottery Barn visit, greet me with my rewards balance or a "welcome back" — don't treat me like a cold lead.
+- **Surface a seasonal editorial hook in the modal image:** A caption like "New Spring Arrivals — Linen, Rattan & More" overlaid on that beautiful sofa image would make the lifestyle shot do double duty as a catalog pull.
 
 ## Full review
 ## 1. Executive Summary
 
-I opened Pottery Barn's site and the first thing I got was a full-screen pop-up before I could see a single product. The sweepstakes pitch — win $1,500 toward an "outdoor refresh" — is on-brand for the season and the imagery is genuinely pretty (pool-adjacent wicker furniture, very second-home aspirational), but I came here to shop, not to hand over my cell number. The actual homepage is completely obscured, so I'm essentially reviewing a lightbox, not a homepage.
+Pottery Barn is a brand I already love and trust — this is literally where I'm outfitting the second home — but the first thing I see when I land on the site is a full-screen signup modal blocking everything. The lifestyle image inside the modal is beautiful (that linen sofa, the floral throw pillows — yes, please), but I can't see a single product, a sale, or a way to shop until I either sign up or dismiss it. It reads like a brand that's more interested in capturing my contact info than helping me redecorate.
 
 ## 2. Business Impact Score (1-10)
 
 **5/10**
 
-- + Hero imagery matches my focus area: poolside outdoor furniture is exactly the second-home vibe — score point
-- + Visual hierarchy is clear within the modal: image → headline → body → form flows naturally — score point
-- + Season is right: outdoor living in May is timely, not stale — score point
-- + "Design Crew can help bring it to life, from furniture to finishing touches" copy resonates with how I actually shop — score point
-- − No returning-shopper hook visible: no rewards balance, no member CTA, no recently-viewed
-- − No concrete discount offer: $1,500 sweepstakes prize ≠ an actual offer for me today
-- − No unambiguous shop CTA above the fold: nowhere to tap "Shop Outdoor" or anything like that
-- − Loyalty / membership: completely invisible
-- − Demographics are vague: no age/lifestyle signal specifically for a millennial second-home buyer
-- − Fine print is heavy: two dense paragraphs of SMS consent legalese bury the "enter" action
+- + Hero imagery speaks to my persona: the sofa/living room lifestyle scene is dead-on for second-home decorating
+- + Visual hierarchy is clear: image, headline, form fields, CTA all stack logically in the modal
+- + No render bugs: the modal itself is clean and well-composed
+- + Demographic signals match: linen sofa, floral pillows, layered textiles — this is exactly my aesthetic
+- − No returning-shopper hook: no rewards balance, no "welcome back," no loyalty CTA
+- − No concrete offer: "exclusive savings" is vague — no %, no $, no threshold
+- − No shopping CTA above the fold: the only button is "SIGN UP NOW" for email/SMS, not a path to browse
+- − Page reflects no seasonal campaign: the modal is evergreen lead-gen, tells me nothing about what's new for spring
+- − Loyalty/membership benefits not visible: I'm a Williams-Sonoma rewards member but I see zero benefit acknowledgment
+- − Offer honesty: two dense paragraphs of TCPA legal fine print about auto-dialing feels aggressive for a premium lifestyle brand
 
 ## 3. What's Working
 
-- **Outdoor lifestyle imagery** — the rattan lounge chairs and side table by a pool is aspirational and matches exactly the kind of piece I'm sourcing for my second home right now
-- **"Design Crew" mention** — calling out white-glove design help inside a sweepstakes entry feels premium and signals that PB does more than just sell product
-- **Seasonal alignment** — an outdoor living promotion landing in early May is well-timed; I'm actively in this buying mode
-- **Clean modal render** — no broken images, no overlapping text, the close button is clearly marked
+- **The lifestyle image in the modal:** White linen sofa, layered colorful floral pillows, warm natural light from a big window — that image made me stop. It speaks directly to the way I want the second home to feel.
+- **Williams-Sonoma brand mention in the fine print:** I'm already in the WS rewards ecosystem, so seeing that family of brands mentioned is a quiet trust signal — I know this brand.
+- **The CHAT button:** Visible in the corner. I actually use in-store consults, so knowing live help is a tap away matters to me.
+- **The "Find out first" framing:** "New arrivals, exclusive savings & more" is an aspirational, not pushy, headline — it almost makes the ask feel worthwhile.
 
 ## 4. What's Weak
 
-- **The modal itself is the entire homepage** — I cannot see a single category, hero offer, or navigation link; the whole experience is blocked
-- **Sweepstakes entry asks for SMS consent before I've browsed anything** — that's an enormous ask for someone who just landed on the page cold
-- **No shop CTA anywhere visible** — there's no "Shop Outdoor" or even a nav pill to tap if I immediately decide this sweepstakes isn't for me
-- **No loyalty hook** — I have a Williams-Sonoma Key Rewards account and there's zero acknowledgment of that here
-- **Legal text is intimidating** — two paragraphs of TCPA boilerplate directly beneath the value prop tanks the vibe
+- **The modal itself:** Blocking the entire homepage on first load on mobile is my biggest friction point. I came here to shop, not to hand over my phone number before I've seen a single product.
+- **Zero specific offer:** "Exclusive savings" is meaningless without a number. Is it 10%? 20%? Free shipping? I'm not giving out my mobile number for a vague promise.
+- **No shopping CTA visible:** There is no "Shop Now," no category shortcut, nothing that takes me to furniture, bedding, or textiles above the fold. The only action is the signup form.
+- **Dense legal fine print:** Two paragraphs of "automatic telephone dialing system" and "artificial or prerecorded voice" language, in tiny gray text, immediately below the charming headline — it undercuts the premium feel completely.
+- **Navigation invisible:** The Baby/Kids/Teen/Dorm nav bar at the very top is barely legible behind the modal. I can't see a path to Living Room, Bedroom, or anything I actually shop.
 
 ## 5. Recommendations
 
-- **Trigger the sweepstakes modal on exit-intent or after 10 seconds**, not on page load — let me see the homepage first, then earn my attention
-- **Add a "No thanks, shop outdoor furniture" text link** beneath the email field so I have a frictionless path to the actual catalog even if I skip the sweepstakes
-- **Surface the Key Rewards / loyalty CTA in a persistent header bar** so returning Williams-Sonoma brand customers know their account is recognized
-- **Trim the consent copy** to a single sentence with a link to full terms — the wall of TCPA text is killing the aspirational mood the imagery creates
+- **Swap the blocking modal for a slide-in drawer or banner:** Let me see the homepage first. Trigger the signup nudge after I've scrolled one product section — I'm more likely to sign up once I'm already excited about what I see.
+- **Put a real number in the offer:** "Get 15% off your first order when you join" is a CTA I'd fill out. "Exclusive savings & more" is not.
+- **Add a rewards/member recognition layer for returning visitors:** If I'm already cookied from Williams-Sonoma or a previous Pottery Barn visit, greet me with my rewards balance or a "welcome back" — don't treat me like a cold lead.
+- **Surface a seasonal editorial hook in the modal image:** A caption like "New Spring Arrivals — Linen, Rattan & More" overlaid on that beautiful sofa image would make the lifestyle shot do double duty as a catalog pull.
 
 ## 6. Bottom Line
 
-I'd tap the X, land on whatever the actual homepage looks like, and hope it earns back the goodwill this pop-up just burned.
+I'd tap the X, dismiss this modal, and then actually browse — because I know and love this brand — but most people without that prior loyalty would just leave.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Outdoor Living Sweepstakes — Enter for a chance to win $1,500 toward your outdoor refresh. Our Design Crew can help bring it to life, from furniture to finishing touches.`
-- **Hero image:** Overhead poolside lifestyle scene — wicker/rattan lounge chairs and a round side table styled with throw pillows and small decor objects on a stone patio
-- **Primary CTA:** `Email Address*` (implied form submit) — yes, technically above the fold, but it's a sweepstakes entry field, not a shop CTA
-- **Scores (1-10):** Clarity `7`, Relevance to you `6`, Visual hierarchy `7`, On-brand `8`
+- **Hero copy (verbatim):** `Find out first: New arrivals, exclusive savings & more.`
+- **Hero image:** Cream linen sofa with colorful floral accent pillows, layered throw, side table with fruit bowl, framed wall art, and sunlit window — a full living room lifestyle scene
+- **Primary CTA:** `SIGN UP NOW` — visible above the fold? yes (partially, at the bottom edge of the modal)
+- **Scores (1-10):** Clarity `6`, Relevance to you `8`, Visual hierarchy `7`, On-brand `7`
 - **Strengths:**
-  - Imagery is genuinely beautiful and matches my taste level and shopping mode
-  - "Design Crew" language elevates it above a generic giveaway
+  - The lifestyle image is pitch-perfect for my second-home decorating mindset — I could screenshot that sofa and send it to my interior designer
+  - "Find out first" is smart positioning that makes me feel like an insider, not a marketing target
 - **Weaknesses:**
-  - No way to shop from this screen without dismissing the modal first
-  - The $1,500 prize is compelling but buried under two paragraphs of legal text before I even get to the input field
+  - The CTA is for list-building, not shopping — it converts me to a lead, not a customer
+  - The legal disclaimer block immediately after the headline is tonally jarring for a $300-throw brand
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** Outdoor Living Sweepstakes (prize: $1,500 toward an outdoor refresh)
-- **Urgency / scarcity:** None visible — no countdown timer, no "ends Sunday," no limited-entry language
-- **Loyalty hooks:** None — no Key Rewards callout, no member pricing, no "sign in to earn entries"
-- **Honesty check:** The dual opt-in buried in fine print (email marketing AND SMS marketing consent in one form) feels like a data-grab dressed up as a giveaway; savvy shoppers will read that legalese and close the modal immediately
+- **Active promos:** None with specific values — "exclusive savings" only (no % or $)
+- **Urgency / scarcity:** None visible — no countdown, no "ends tonight," no limited-stock language
+- **Loyalty hooks:** Williams-Sonoma brands mentioned only in fine print (legal context, not marketing); no rewards CTA, no member pricing badge
+- **Honesty check:** The TCPA fine print referencing "automatic telephone dialing system" and "artificial or prerecorded voice" immediately after a soft headline is a bait-and-switch in tone. I understand it's legally required, but leading with it this prominently feels off for a brand I pay a premium to trust.
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: outdoor living for a second home is exactly where my head is right now
-- − Easy to reach my category: navigation is partially visible at the top (Baby, Kids, Teen, Dorm…) but the modal cuts it off and none of those labels are relevant to me
-- + Eye-catching imagery in my category: the poolside wicker furniture vignette is scroll-stopping
-- − Promo banner I would use: a sweepstakes requiring SMS opt-in is not something I'd engage with on a cold visit
-- + Page renders cleanly: the modal itself is clean, no layout issues
-- − Imagery includes someone like me: no people in the scene at all, just furniture
-- + Copy register matches mine: "from furniture to finishing touches" is exactly how I think about decorating
-- − Trust signals visible: none — no review counts, no free-shipping mention, no returns policy
-- − New / hot rail in my category: entirely hidden behind the modal
-- − No dark patterns: the full-screen on-load modal IS a dark pattern; it gates the entire homepage
-
-**Score:** `5/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The imagery and copy voice are genuinely on point for me, but a full-screen sweepstakes modal that blocks all navigation and asks for SMS consent before I've seen a single product is a significant friction spike.
+- + Hero relates to my focus area: The sofa + pillows + layered textiles are exactly the second-home vibe I'm chasing
+- − Easy to reach my category: Nav bar (Baby/Kids/Teen/Dorm) is barely visible; Living Room, Bedroom, and Outdoor — where I actually shop — are not accessible at all
+- + Eye-catching imagery in my category: That linen sofa image genuinely stopped my scroll instinct
+- − Promo banner I would use: No specific offer visible — nothing worth engaging with
+- − Page renders cleanly: The modal blocking the full homepage on mobile is friction, not clean rendering
+- − Imagery includes someone like me: No person in the image — beautiful room but no aspirational human presence
+- + Copy register matches mine: "Find out first" is millennial-friendly aspiration without being cloying
+- + Trust signals visible: Williams-Sonoma brand family reference is a meaningful trust anchor for me personally
+- − New/hot rail in my category: Completely blocked by modal — I have no idea what's new
+- − No dark patterns: This IS a dark pattern — a full-screen interstitial on first load is textbook friction
+- **Score:** `5/10` — should equal 1 + count of "+" bullets above.
+- **Rationale:** The sofa image and brand trust almost rescue this, but the forced modal makes engagement feel like a transaction rather than an invitation to browse.
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: the sweepstakes IS positioned around outdoor living, which is my category — partial credit
-- + Unambiguous CTA copy: "Enter for a chance to win $1,500" is clear about what I'm doing
-- − Active price reduction or member pricing: not present — sweepstakes ≠ discount
-- − Time-bounded credible deadline: no end date visible anywhere
-- − Reachable free-shipping threshold: not mentioned
-- − Specific product page one tap away: the actual catalog is completely hidden
-- − Sizing / fit info accessible: not applicable and not visible anyway
-- − Returns / exchanges mentioned: not visible
-- − Reviews / ratings visible: not visible
-- − Trust / security signals: not visible
-
-**Score:** `3/10` — should equal 1 + count of "+" bullets.
-**Rationale:** The sweepstakes entry itself is clear and theoretically actionable, but there is zero path to an actual purchase conversion from this screen — no product, no price, no cart.
+- − CTA in my category: No shopping CTA visible — the only button drives email/SMS signup
+- − Unambiguous CTA copy: "SIGN UP NOW" is clear but routes to lead capture, not a product or category
+- − Active price reduction or member pricing: No specific discount shown
+- − Time-bounded credible deadline: No urgency cue of any kind
+- − Reachable free-shipping threshold: Not visible anywhere on screen
+- − Specific product page one tap away: Nothing — the modal blocks all product access
+- − Sizing/fit info accessible: N/A for home decor, but zero product info visible regardless
+- − Returns/exchanges mentioned: Not visible
+- − Reviews/ratings visible: Not visible
+- + Trust/security signals: The Williams-Sonoma brand mention and Pottery Barn's established reputation carry inherent trust for a returning customer like me
+- **Score:** `2/10` — should equal 1 + count of "+" bullets.
+- **Rationale:** The modal is a conversion wall, not a conversion path — I see one button and it asks me to sign up, not to shop; almost every conversion signal is absent from the visible viewport.
 
 ## 11. Evidence
 
-- **Modal / sweepstakes overlay (full viewport):** Outdoor Living Sweepstakes hero — dominates 100% of the visible screen
-- **Hero image module:** Poolside rattan furniture lifestyle photo — wicker lounge chairs, round side table, throw pillows, stone patio
-- **Sweepstakes copy block:** Headline, body, and $1,500 prize callout with Design Crew mention
-- **Email capture field:** Single `Email Address*` input field for sweepstakes entry
-- **Legal consent copy:** Two dense paragraphs of TCPA/SMS marketing and email marketing opt-in language
-- **Close button:** X visible in the top-right corner of the modal
-- **Chat button:** Floating chat icon visible in the bottom-right corner
-- **Partial navigation bar:** Partially visible at top of screen — labels include Baby, Kids, Teen, Dorm, Business to Business, and a truncated label beginning with "Willia…" — no home furnishings nav visible
-- **Bugs / friction:** The entire homepage is obscured — this is effectively a 0% homepage view for anyone who closes the modal; the navigation bar context is cut off and unreadable
+- **Modal overlay (full viewport):** Lifestyle image of linen sofa + colorful floral pillows, Pottery Barn logo, "Find out first" headline, dense TCPA legal fine print (2 paragraphs), Email Address* field, Mobile Number* field, SIGN UP NOW button (partially clipped at bottom edge), X close button (top right corner)
+- **CHAT button:** Floating in bottom-right corner, visible over the modal
+- **Top navigation bar (barely visible behind modal):** Baby | Kids | Teen | Dorm | Business to Business | Williams... — none of the relevant living/bedroom/outdoor categories are legible
+- **Background hero (partially obscured):** A reddish/terracotta-toned hero image is faintly visible beneath the modal — impossible to read copy or identify the campaign
+- **Bugs / friction:** Full-screen interstitial modal on mobile first load blocks 100% of homepage content — no product, no sale, no navigation is accessible without dismissing or submitting the form; this is the dominant UX issue in the screenshot
 ## Recent history
 
 - [[2026-05-02-homepage-www.potterybarn.com-lila-hearth-potterybarn-fap6e]] — 7/10 (2026-05-02)

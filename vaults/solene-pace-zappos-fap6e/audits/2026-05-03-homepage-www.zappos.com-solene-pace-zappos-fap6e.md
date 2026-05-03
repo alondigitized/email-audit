@@ -12,144 +12,147 @@ tags: [site-journey, score-7, sender/www-zappos-com]
 **Score:** 7/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Zappos is leading with a Mother's Day gifting angle right now — "SHE DESERVES IT / Mother's Day Edit" — which, fine, it's May, but this feels more like a prompt for me to buy for someone else when I'm really here to browse for myself. The brand looks clean and confident, and "way better than flowers" is actually a line I'd text a friend. I just wish they'd led with literally any reason for *me* to feel like a VIP shopper instead of a gift-giver.
+- Okay, Zappos is in their sneaker era and they want me to know it — big, bold, colorful shoes scattered across the hero like confetti, tagline doing the heavy lifting of "So. Many. Sneakers." The brand reads clean and energetic, which I appreciate, but above the fold it's all vibe and zero logistics. For someone who built her entire shopping identity around free returns and overnight shipping, there's nothing here yet that reminds me why I chose Zappos over every other sneaker site.
 - **7/10**
-- + Hero imagery speaks to my persona: two women in an active lifestyle scene, female-focused copy, age-appropriate
-- + Clear primary CTA: "SHOP NOW" button is visible, high contrast, can't miss it
-- + Visual hierarchy: big headline, subhead, button — eye goes straight down the page
-- + No render bugs: clean layout, no broken elements
-- + Demographic signals match: female, active, millennial lifestyle
-- + Page reflects current campaign/season: Mother's Day is timely for early May
-- + Offer feels honest: "way better than flowers" is cheeky but not manipulative
-- − No returning-shopper hook: no loyalty balance, no "welcome back," no recently-viewed
-- − No concrete %/$ offer above the fold: top banner teases sandals but drops no deal
-- − No loyalty/membership callout without scrolling
+- + hero imagery (colorful, trend-forward sneakers) isn't off-target for a 39yo who owns 40 pairs — demographic match is at least not hostile
+- + one unmistakable primary CTA visible above fold: the yellow "SHOP NOW" button, hard to miss
+- + visual hierarchy is sharp — bold headline on green background, contrasting yellow button, eye goes exactly where they want it
+- + no render bugs — layout is clean, images are crisp, nothing broken
+- + "Sandals for Spring" banner reflects current season, not a stale winter campaign
+- + offer feels honest — nothing manipulative, no buried asterisks visible
+- − no returning-shopper hook — no loyalty balance, no recently-viewed, no "welcome back" signal
+- − no concrete %/$ offer above fold — "Sandals for Spring" is a category push, not a deal
+- − loyalty/membership completely invisible above the fold
+- − hero doesn't *explicitly* speak to me — it's sneakers for everyone, not sneakers for a 39-year-old woman who hates stores
 
 ## What's working
 
-- **"Way better than flowers" subhead** — this is the copy that actually gets me. It's confident, a little sarcastic, exactly my humor register. A millennial woman wrote that line.
-- **Mother's Day timing** — the edit is legitimately well-timed (it's May), and the "SHE DESERVES IT" framing works as a permission slip to buy *for myself* too if I squint at it right.
-- **The yoga lifestyle shot** — two women doing yoga, white sneakers placed deliberately on the mat. Athletic life, active footwear — that's my world. I notice the shoes even though they're not the hero.
-- **Top banner** — "Sandals for Spring" at least signals what the season priority is. I came for shoes, and they're immediately talking about shoes.
+- **The sneaker collage** — red, green, and mustard shoes arranged on a clean white background creates visual texture without feeling busy; I actually stopped to look
+- **The yellow "SHOP NOW" button** — high contrast against the green hero, impossible to miss; this is how you do a mobile CTA
+- **"So. Many. Sneakers." headline** — short, confident, self-aware; that em-dash in the Spring Sandals banner even got a small laugh out of me ("Groundbreaking—we know.")
+- **Clean mobile layout** — header with search, cart, and hamburger is exactly where I expect it; no friction just getting oriented
 
 ## What's weak
 
-- **No free returns callout above the fold** — this is the single biggest miss for me personally. Zappos' entire superpower is free returns and free overnight shipping, and I can't see it anywhere. I *know* it exists, but a first-screen reminder would have me clicking immediately instead of hesitating.
-- **Hamburger-only nav** — on mobile, there's zero visible category navigation. No "Women's" or "Sneakers" or "Sandals" chips. One tap to my category should not require opening a menu.
-- **No price signals** — I need to know there's a deal, a threshold, or a member perk. Nothing. Just vibes.
-- **The shoes in the hero are props, not the star** — white sneakers sitting beside a yoga mat are background noise. As someone who is absolutely buying the shoes, I want to *see* the shoes.
-- **No loyalty hook** — I have a Zappos VIP account. Nothing on this screen acknowledges that I exist or that I have benefits waiting.
+- **Zero mention of free returns or free shipping** — this is Zappos's entire superpower and it's invisible above the fold; I literally built my buy-3-return-2 habit around this feature and they're not selling it to me at all
+- **No personalization signal** — I've shopped here before; nothing acknowledges that, no recently-viewed items, no "pick up where you left off"
+- **The top banner is a missed opportunity** — "Sandals for Spring. Groundbreaking—we know." is cute copy but there's no offer attached; a cheeky tone without a payoff is just noise
+- **No human in the imagery** — it's all product, no lifestyle; at 39 I want to see how these shoes look *on someone*, not just floating in a studio
+- **Hamburger-only navigation** — I can't see any category shortcuts, so if I don't want sneakers right now I have to dig into the menu
 
 ## Recommendations
 
-- **Add a persistent free returns + free overnight shipping badge** beneath the logo or in the sticky header — one line, always visible. This is Zappos' whole identity and it should never hide.
-- **Swap the "Mother's Day Edit" to dual-purpose framing** — something like "Treat Yourself (or Someone Else)" so I don't feel like I've wandered into a gift-guide instead of a shoe store.
-- **Drop a horizontal category pill-nav below the hero** — Women, Sneakers, Sandals, Sale — so I can route myself in one tap without opening the hamburger.
-- **Surface a concrete offer in the banner** — even "Free overnight shipping, always" or a "20% off select styles" line changes the energy from editorial to transactional, which is what I'm here for.
+- **Put the free returns/overnight shipping promise in the hero or the banner** — swap "Groundbreaking—we know." for "Free overnight. Free returns. Always." — that's the actual reason I'm here, not at DSW
+- **Add a personalized rail below the fold** — "Based on your last order" or "Sizes in your history" would keep me scrolling instead of bouncing to a second tab
+- **Swap at least one sneaker in the collage for a lifestyle shot** — show a woman in her 30s walking in the mustard pair; I need to picture my life in the shoe, not just the shoe on a white background
+- **Wire the Spring Sandals banner to an actual offer** — "Free overnight on sandals this week" turns a decoration into a driver; right now it's a headline with nowhere to go
 
 ## Full review
 ## 1. Executive Summary
 
-Zappos is leading with a Mother's Day gifting angle right now — "SHE DESERVES IT / Mother's Day Edit" — which, fine, it's May, but this feels more like a prompt for me to buy for someone else when I'm really here to browse for myself. The brand looks clean and confident, and "way better than flowers" is actually a line I'd text a friend. I just wish they'd led with literally any reason for *me* to feel like a VIP shopper instead of a gift-giver.
+Okay, Zappos is in their sneaker era and they want me to know it — big, bold, colorful shoes scattered across the hero like confetti, tagline doing the heavy lifting of "So. Many. Sneakers." The brand reads clean and energetic, which I appreciate, but above the fold it's all vibe and zero logistics. For someone who built her entire shopping identity around free returns and overnight shipping, there's nothing here yet that reminds me why I chose Zappos over every other sneaker site.
 
 ## 2. Business Impact Score (1-10)
 
 **7/10**
-- + Hero imagery speaks to my persona: two women in an active lifestyle scene, female-focused copy, age-appropriate
-- + Clear primary CTA: "SHOP NOW" button is visible, high contrast, can't miss it
-- + Visual hierarchy: big headline, subhead, button — eye goes straight down the page
-- + No render bugs: clean layout, no broken elements
-- + Demographic signals match: female, active, millennial lifestyle
-- + Page reflects current campaign/season: Mother's Day is timely for early May
-- + Offer feels honest: "way better than flowers" is cheeky but not manipulative
-- − No returning-shopper hook: no loyalty balance, no "welcome back," no recently-viewed
-- − No concrete %/$ offer above the fold: top banner teases sandals but drops no deal
-- − No loyalty/membership callout without scrolling
+
+- + hero imagery (colorful, trend-forward sneakers) isn't off-target for a 39yo who owns 40 pairs — demographic match is at least not hostile
+- + one unmistakable primary CTA visible above fold: the yellow "SHOP NOW" button, hard to miss
+- + visual hierarchy is sharp — bold headline on green background, contrasting yellow button, eye goes exactly where they want it
+- + no render bugs — layout is clean, images are crisp, nothing broken
+- + "Sandals for Spring" banner reflects current season, not a stale winter campaign
+- + offer feels honest — nothing manipulative, no buried asterisks visible
+- − no returning-shopper hook — no loyalty balance, no recently-viewed, no "welcome back" signal
+- − no concrete %/$ offer above fold — "Sandals for Spring" is a category push, not a deal
+- − loyalty/membership completely invisible above the fold
+- − hero doesn't *explicitly* speak to me — it's sneakers for everyone, not sneakers for a 39-year-old woman who hates stores
 
 ## 3. What's Working
 
-- **"Way better than flowers" subhead** — this is the copy that actually gets me. It's confident, a little sarcastic, exactly my humor register. A millennial woman wrote that line.
-- **Mother's Day timing** — the edit is legitimately well-timed (it's May), and the "SHE DESERVES IT" framing works as a permission slip to buy *for myself* too if I squint at it right.
-- **The yoga lifestyle shot** — two women doing yoga, white sneakers placed deliberately on the mat. Athletic life, active footwear — that's my world. I notice the shoes even though they're not the hero.
-- **Top banner** — "Sandals for Spring" at least signals what the season priority is. I came for shoes, and they're immediately talking about shoes.
+- **The sneaker collage** — red, green, and mustard shoes arranged on a clean white background creates visual texture without feeling busy; I actually stopped to look
+- **The yellow "SHOP NOW" button** — high contrast against the green hero, impossible to miss; this is how you do a mobile CTA
+- **"So. Many. Sneakers." headline** — short, confident, self-aware; that em-dash in the Spring Sandals banner even got a small laugh out of me ("Groundbreaking—we know.")
+- **Clean mobile layout** — header with search, cart, and hamburger is exactly where I expect it; no friction just getting oriented
 
 ## 4. What's Weak
 
-- **No free returns callout above the fold** — this is the single biggest miss for me personally. Zappos' entire superpower is free returns and free overnight shipping, and I can't see it anywhere. I *know* it exists, but a first-screen reminder would have me clicking immediately instead of hesitating.
-- **Hamburger-only nav** — on mobile, there's zero visible category navigation. No "Women's" or "Sneakers" or "Sandals" chips. One tap to my category should not require opening a menu.
-- **No price signals** — I need to know there's a deal, a threshold, or a member perk. Nothing. Just vibes.
-- **The shoes in the hero are props, not the star** — white sneakers sitting beside a yoga mat are background noise. As someone who is absolutely buying the shoes, I want to *see* the shoes.
-- **No loyalty hook** — I have a Zappos VIP account. Nothing on this screen acknowledges that I exist or that I have benefits waiting.
+- **Zero mention of free returns or free shipping** — this is Zappos's entire superpower and it's invisible above the fold; I literally built my buy-3-return-2 habit around this feature and they're not selling it to me at all
+- **No personalization signal** — I've shopped here before; nothing acknowledges that, no recently-viewed items, no "pick up where you left off"
+- **The top banner is a missed opportunity** — "Sandals for Spring. Groundbreaking—we know." is cute copy but there's no offer attached; a cheeky tone without a payoff is just noise
+- **No human in the imagery** — it's all product, no lifestyle; at 39 I want to see how these shoes look *on someone*, not just floating in a studio
+- **Hamburger-only navigation** — I can't see any category shortcuts, so if I don't want sneakers right now I have to dig into the menu
 
 ## 5. Recommendations
 
-- **Add a persistent free returns + free overnight shipping badge** beneath the logo or in the sticky header — one line, always visible. This is Zappos' whole identity and it should never hide.
-- **Swap the "Mother's Day Edit" to dual-purpose framing** — something like "Treat Yourself (or Someone Else)" so I don't feel like I've wandered into a gift-guide instead of a shoe store.
-- **Drop a horizontal category pill-nav below the hero** — Women, Sneakers, Sandals, Sale — so I can route myself in one tap without opening the hamburger.
-- **Surface a concrete offer in the banner** — even "Free overnight shipping, always" or a "20% off select styles" line changes the energy from editorial to transactional, which is what I'm here for.
+- **Put the free returns/overnight shipping promise in the hero or the banner** — swap "Groundbreaking—we know." for "Free overnight. Free returns. Always." — that's the actual reason I'm here, not at DSW
+- **Add a personalized rail below the fold** — "Based on your last order" or "Sizes in your history" would keep me scrolling instead of bouncing to a second tab
+- **Swap at least one sneaker in the collage for a lifestyle shot** — show a woman in her 30s walking in the mustard pair; I need to picture my life in the shoe, not just the shoe on a white background
+- **Wire the Spring Sandals banner to an actual offer** — "Free overnight on sandals this week" turns a decoration into a driver; right now it's a headline with nowhere to go
 
 ## 6. Bottom Line
 
-I'd scroll — the copy earns it — but I'd feel zero urgency and probably bounce before converting because nothing on this first screen reminded me that Zappos is where I buy three sizes and return two for free with zero drama.
+I'd tap "Shop Now" because the sneakers genuinely caught my eye, but if I don't see the free-returns badge in the next three seconds of scrolling, I'm gone — I need to know my buy-3-return-2 strategy is still fully supported before I commit.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `SHE DESERVES IT / Mother's Day Edit`
-- **Hero image:** Two women (appears to be mother and daughter) doing yoga inversions on colorful exercise mats, with white sneakers placed alongside the mat — warm, active lifestyle scene
+- **Hero copy (verbatim):** `So. Many. Sneakers.` / `From laid-back classics to bold colorways— there's a pair for every vibe.`
+- **Hero image:** Three floating sneakers — red (left), green with white "m" branding (center), and mustard/gum-sole (lower center) — arranged on a clean white background above a bright green hero panel
 - **Primary CTA:** `SHOP NOW` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `8`, Relevance to me `5`, Visual hierarchy `8`, On-brand `7`
+- **Scores (1-10):** Clarity `8`, Relevance to you `5`, Visual hierarchy `9`, On-brand `8`
 - **Strengths:**
-  - Clean, confident layout — the headline hierarchy is excellent on mobile
-  - "Way better than flowers" subhead earns genuine goodwill
+  - The green-background + yellow-button contrast is genuinely excellent mobile design; the CTA pops
+  - The headline is punchy and self-aware — it earns the scroll without overselling
 - **Weaknesses:**
-  - Campaign frames me as a gift-buyer, not a shoe-buyer for myself
-  - Shoes are incidental props in the image rather than the product being sold to me
+  - "A pair for every vibe" is so broad it says nothing to me specifically; I need a reason to choose *this* session
+  - No returns, no shipping, no sizing help — the three things that actually close the deal for how I shop
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** "Sandals for Spring" (category nudge in top banner, no price attached)
-- **Urgency / scarcity:** None visible — no countdown, no "ends Sunday," no stock warning
-- **Loyalty hooks:** None visible above the fold — no VIP callout, no rewards balance, no member pricing
-- **Honesty check:** Nothing manipulative visible. "Way better than flowers" is playful puffery, not bait-and-switch. The absence of a deal is a miss, not a dark pattern.
+- **Active promos:** "Sandals for Spring" (category push only, no discount attached)
+- **Urgency / scarcity:** None visible — no countdown, no "ends tonight," no limited-stock copy
+- **Loyalty hooks:** None visible above the fold — no rewards balance, no member badge, no VIP callout
+- **Honesty check:** Nothing manipulative here; the lack of urgency cues is actually refreshing, but the flip side is there's nothing compelling me to act *now* either
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: Women in active wear, shoes visible in scene — I'm a shoe person, I'll engage
-- − Easy to reach my category: Hamburger only, no category chips or quick-nav visible
-- + Eye-catching imagery in my category: Lifestyle scene is appealing; I notice the sneakers even if they're not the star
-- − Promo banner I would use: "Sandals for Spring" is directional, not a deal — no hook
-- + Page renders cleanly: No layout shift, no broken images, tight mobile presentation
-- + Imagery includes someone like me: Active women, millennial energy, age-appropriate
-- + Copy register matches mine: "Way better than flowers" hits exactly my sarcasm register
-- − Trust signals visible: No free returns badge, no review count, no shipping callout
-- − New / hot rail in my category: Not visible above fold — it might exist below but I can't see it
-- + No dark patterns: No forced modal, no cookie wall interrupting the page
-- **Score:** `6/10`
-- **Rationale:** The copy voice and lifestyle imagery earn my scroll, but the missing navigation and zero trust signals mean I'm doing extra work to get anywhere — and I have a short fuse for friction.
+- + Hero relates to my focus area: I own 40 pairs of shoes and I'm always looking; sneakers are in scope
+- − Easy to reach my category: Hamburger-only nav means I'd have to tap and dig — no quick-category shortcuts visible
+- + Eye-catching imagery in my category: The sneaker collage is genuinely good; the color variety pulled my attention
+- − Promo banner I would use: "Sandals for Spring" with no discount attached does nothing for me
+- + Page renders cleanly: No layout shift, no broken images, smooth and sharp
+- − Imagery includes someone like me: No people at all — just floating product shots
+- + Copy register matches mine: "Laid-back classics to bold colorways" and the self-aware banner copy feel age-appropriate and not try-hard
+- − Trust signals visible: No review counts, no free-returns badge, no "365-day returns" — Zappos's biggest card is face-down
+- − New / hot rail in my category: Only the hero is visible; no category rail, no trending shoes strip
+- + No dark patterns: No forced modal, no aggressive pop-up, nothing making me want to close the tab
+
+**Score:** `6/10`
+**Rationale:** The sneaker collage and clean copy keep me from bouncing immediately, but the total absence of the free-returns/free-shipping promise — the *reason* I'm on Zappos instead of any other site — means I'm engaged on thin ice.
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: "SHOP NOW" routes to the Mother's Day Edit — shoes, broadly — close enough
-- + Unambiguous CTA copy: "SHOP NOW" is exactly what it says, no ambiguity
-- − Active price reduction or member pricing: Nothing visible — no %, no $, no VIP rate
-- − Time-bounded credible deadline: Mother's Day implies urgency but there's no date or countdown
-- − Reachable free-shipping threshold: Not mentioned anywhere on this screen
-- − Specific product page one tap away: CTA goes to a collection edit, not a product
-- − Sizing / fit info accessible: Not visible
-- − Returns / exchanges mentioned: Nowhere above the fold — this is a crime for Zappos specifically
-- − Reviews / ratings visible: No product cards, no star ratings
-- − Trust / security signals: None visible on this screen
-- **Score:** `3/10`
-- **Rationale:** The two things Zappos does better than anyone — free returns and free overnight shipping — are completely invisible on this screen, which means the one thing that would push me to convert without hesitation is not here.
+- + CTA in my category: The "Shop Now" points to sneakers; I'm a shoe person, so directionally yes
+- + Unambiguous CTA copy: "Shop Now" is clear; no "Discover" or "Explore the Journey" nonsense
+- − Active price reduction or member pricing: Nothing — no discount, no member price, no sale badge
+- − Time-bounded credible deadline: Zero urgency signals
+- − Reachable free-shipping threshold: Free shipping isn't even mentioned on screen — I'd have to already know
+- − Specific product page one tap away: The CTA goes to a category grid, not a product; that's one more tap before I'm even looking at sizes
+- − Sizing / fit info accessible: Nowhere in view
+- − Returns / exchanges mentioned: Completely absent — this is the single biggest miss for how I shop; I need to know I can order three sizes
+- − Reviews / ratings visible: No product cards, no star ratings, nothing
+- − Trust / security signals: Nothing — no secure checkout badge, no pay-later mention, no SSL callout
+
+**Score:** `3/10`
+**Rationale:** The CTA is clear and I can find shoes if I tap, but Zappos has stripped out every signal that actually closes me — free returns, overnight shipping, size range flexibility — and without those, this feels like any other shoe site asking me to just trust them.
 
 ## 11. Evidence
 
-- **Top announcement strip:** "Sandals for Spring. Groundbreaking —we know. Shop Now" — category callout, no offer
-- **Global nav bar:** Zappos wordmark (left), search icon, cart icon, hamburger menu (right) — mobile-only nav, no visible categories
-- **Hero module:** Full-bleed lifestyle photo — two women doing yoga on colorful mats, white sneakers staged at the edge; overlaid copy "SHE DESERVES IT / Mother's Day Edit"
-- **Subheadline text block:** "Handpicked for every mom— and way better than flowers." — editorial tone, below the hero image
-- **Primary CTA button:** "SHOP NOW" — dark maroon/plum, full-width, bottom of first screen
-- **Bugs / friction / clarity issues:** None visible — no broken images, no overlapping text, no placeholder content. The single UX friction point is structural: no category nav and no trust-signal strip forces extra work on a platform where those signals are table stakes.
+- **Top announcement banner:** Black text on light strip — "Sandals for Spring. Groundbreaking—we know. Shop Now" with "Shop Now" as a text link
+- **Header bar:** Zappos wordmark left, search icon + cart icon + hamburger menu right — standard mobile nav, no category shortcuts
+- **Hero image panel:** Three floating sneaker product shots (red, green, mustard) on white background, arranged in a diagonal-ish cluster
+- **Hero text block (green background):** Large bold "So. Many. Sneakers." headline + "From laid-back classics to bold colorways— there's a pair for every vibe." body copy
+- **Primary CTA button:** Yellow/gold "SHOP NOW" button — high contrast, centered, above the fold
+- **Bugs / friction / clarity issues:** None visible — page is clean; the only issue is strategic (missing free returns/shipping copy), not technical
 ## Recent history
 
 - [[2026-05-02-homepage-www.zappos.com-solene-pace-zappos-fap6e]] — 6/10 (2026-05-02)

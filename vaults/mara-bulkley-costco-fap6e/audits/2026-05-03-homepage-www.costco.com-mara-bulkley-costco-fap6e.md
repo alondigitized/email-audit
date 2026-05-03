@@ -3,161 +3,162 @@ slug: 2026-05-03-homepage-www.costco.com-mara-bulkley-costco-fap6e
 type: site
 date: 2026-05-03
 persona: mara-bulkley-costco-fap6e
-score: "6/10"
+score: "7/10"
 sender: www.costco.com
 subject: Homepage snapshot · www.costco.com · 2026-05-03
-tags: [site-journey, score-6, sender/www-costco-com]
+tags: [site-journey, score-7, sender/www-costco-com]
 ---
 # Homepage snapshot · www.costco.com · 2026-05-03
-**Score:** 6/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 7/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- This is the utility-first, no-frills Costco I know — it's showing me my warehouse, my membership tier hours, and a banner that screams something's ending tomorrow, but it's not showing me *what*. As a Saturday warehouse runner who treats this site like a pre-trip checklist, the personalization is there in skeleton form but the homepage doesn't do enough to pull me in or direct me fast.
-- **6/10**
-- + Returning-shopper hook: "My Warehouse — Burbank" with Executive Member hours is genuinely useful and clearly pulling from my account
-- + Primary CTA above fold: "Shop Now!" in the urgency banner is visible and tappable
-- + No render bugs: page looks clean, no obvious breakage
-- + Current campaign: "Select In-Warehouse and Online Savings End Tomorrow" signals live event, not stale creative
-- + Loyalty/membership visible: Executive Member hours called out, "Member Only" strip starting below fold
-- + Offer honest: no bait-and-switch language visible
-- − Hero copy/imagery speaks to my persona: "This Week's Featured Items" and "What's New" tiles are generic — zero household-of-five lifestyle energy
-- − Concrete offer (specific %/$): "savings" without numbers is a tease, not an offer
-- − Clear visual hierarchy: warehouse hours block competes with the carousel and the urgency banner
-- − Demographic signals: no one like me anywhere on screen
+- This is exactly what I expect from Costco's app — functional, no-frills, and member-first. It knows my warehouse (Burbank), it knows my delivery zip, and it's already pushing member-only savings before I've scrolled an inch. What I don't love is that the first thing my eyes hit is a charity banner for kids ("Make Big Change For All Kids") instead of something telling me what's actually on sale this week. I came here to stock the house, not to feel guilty.
+- **7/10**
+- + Returning-shopper hook: "My Warehouse: Burbank, Open until 6PM" + delivery location 91201 — the site clearly knows me
+- − Hero copy doesn't speak to my persona: "Make Big Change For All Kids" is cause-marketing, not "here's what to load in your cart Saturday"
+- − No concrete offer with a specific %/$ amount above the fold — "Select Offers End Today!" tells me nothing specific
+- + Primary CTA: "Shop" button is clearly visible and unambiguous
+- + Visual hierarchy: banner → logo/nav → search → location → tiles flows cleanly
+- + No render bugs: page is crisp, nothing broken or overlapping
+- − Demographic signals: zero imagery or copy aimed at a household operator buying in volume
+- + Current campaign reflected: "Select Offers End Today!" signals live urgency
+- + Loyalty/membership benefits visible without scrolling: "Member-Only Savings — & Everyday Values" is on screen
+- + Offer feels honest: no asterisks, no manipulative countdown with fake urgency
 
 ## What's working
 
-- **"My Warehouse — Burbank" block** — Immediately tells me my location is recognized, shows Executive Member hours separate from Gold Star. That 9 AM vs 10 AM distinction matters when I'm timing a Saturday run with three kids in the car.
-- **"Select In-Warehouse and Online Savings End Tomorrow" banner** — The word "tomorrow" creates real urgency for a monthly stock-up shopper. I want to know what's on sale before my run.
-- **"This Week's Featured Items" tile** — Even generic, this is the right mental model for how I shop Costco. I want the weekly curated haul, not a brand story.
-- **"What's New" tile** — Kirkland loyalists like me want to know when something's changed in the lineup. This is the right category of information.
-- **Clean mobile layout** — Search bar prominent, no pop-overs blocking me, no interstitial. I can get where I'm going.
+- **"My Warehouse: Burbank, Open until 6PM"** — as someone who times Saturday runs, knowing my warehouse hours without tapping anything is genuinely useful
+- **Delivery Location: 91201** — already set; I don't have to re-enter my zip to check if something ships to me
+- **"Select Offers End Today!"** in bold red — creates real urgency; I know Costco's coupon cycles and this banner tells me I need to check now before I miss the window
+- **"Member-Only Savings — & Everyday Values"** section — this is the exact reason I have a membership; seeing it immediately reinforces why I'm here
+- **Search bar is prominent** — I shop with a list, and being able to type "Kirkland olive oil" immediately without hunting for a search icon is exactly how I operate
 
 ## What's weak
 
-- **"Select In-Warehouse and Online Savings End Tomorrow" — no specifics** — What savings? What categories? This is the equivalent of someone texting "there's a deal" without telling me what store. I'm not motivated to tap without a number.
-- **No household or bulk-buying imagery** — Zero visual cues for someone stocking a house of five. No pallets, no jumbo packs, no family-of-five energy anywhere. The Costco storefront thumbnail is the store exterior, not product.
-- **Carousel with four dots but only two tiles visible** — What's on slides 3 and 4? This feels like buried inventory. On mobile, carousels are already engagement killers.
-- **"Member Only" text cut off at bottom** — The most relevant thing for a 2% Executive member is teased but unreadable. That should not be off-screen.
-- **No reward balance or 2% cashback callout** — I check my reward total before I decide how much to spend. It's nowhere visible.
+- **Top banner wastes the prime real estate** — "Make Big Change For All Kids" may be admirable, but as the very first thing on the page it tells me nothing about what I'm here to buy; I have to process charity messaging before I can get to groceries
+- **"This Week's Featured Items" tile shows a Costco storefront photo** — that's a building, not a product; I need to see the rotisserie chicken, the paper towels, the Kirkland olive oil — something that triggers my shopping brain
+- **"What's New" tile uses a megaphone icon** — again, an icon instead of a product photo; tells me nothing about what's actually new
+- **No specific deal info above the fold** — "Member-Only Savings" is enticing but without a dollar figure or category name I'm clicking blind
+- **The carousel (4 dots visible) is invisible in effect** — I'd never know there were 3 more slides unless I happened to notice the dots
 
 ## Recommendations
 
-- **Replace the vague banner with a category-specific offer:** "Members Save Up to 25% on Kirkland Essentials — Ends Tomorrow" would make me tap immediately. I need a number and a category.
-- **Surface the 2% reward balance in the header or "My Warehouse" block:** One line — "Your Executive Reward: $148.20" — turns this from a generic storefront into a personal dashboard and directly informs my spend ceiling for the trip.
-- **Swap the Costco storefront thumbnail for a product shot:** Show a Kirkland olive oil 3-pack or a 36-roll paper towel bundle — the visual language of the warehouse run, not the parking lot.
-- **Promote the carousel to a horizontal scroll strip with visible tiles:** Show me all four featured items without requiring swipes. I'm in planning mode, not browsing mode.
+- **Replace the charity banner with a member-deal callout** — move "Make Big Change" to a smaller footer badge; put the top of the page to work with "Member savings this week: up to 30% off household essentials" or equivalent
+- **Swap the Costco storefront photo in the Featured Items tile with an actual product image** — a shot of the coupon book open to a page of deals, or literally anything with a price tag, would pull my finger to tap
+- **Add a "Your next 2% check" micro-widget** — even a static "Your Executive Reward: keep spending" nudge would reinforce membership value for members like me who track the reward
+- **Show the coupon book categories explicitly** — instead of "Member-Only Savings" as a generic header, list two or three category names ("Grocery, Electronics, Home") so I know at a glance whether this week's book covers what I need
 
 ## Full review
 ## 1. Executive Summary
 
-This is the utility-first, no-frills Costco I know — it's showing me my warehouse, my membership tier hours, and a banner that screams something's ending tomorrow, but it's not showing me *what*. As a Saturday warehouse runner who treats this site like a pre-trip checklist, the personalization is there in skeleton form but the homepage doesn't do enough to pull me in or direct me fast.
+This is exactly what I expect from Costco's app — functional, no-frills, and member-first. It knows my warehouse (Burbank), it knows my delivery zip, and it's already pushing member-only savings before I've scrolled an inch. What I don't love is that the first thing my eyes hit is a charity banner for kids ("Make Big Change For All Kids") instead of something telling me what's actually on sale this week. I came here to stock the house, not to feel guilty.
 
 ## 2. Business Impact Score (1-10)
 
-**6/10**
+**7/10**
 
-- + Returning-shopper hook: "My Warehouse — Burbank" with Executive Member hours is genuinely useful and clearly pulling from my account
-- + Primary CTA above fold: "Shop Now!" in the urgency banner is visible and tappable
-- + No render bugs: page looks clean, no obvious breakage
-- + Current campaign: "Select In-Warehouse and Online Savings End Tomorrow" signals live event, not stale creative
-- + Loyalty/membership visible: Executive Member hours called out, "Member Only" strip starting below fold
-- + Offer honest: no bait-and-switch language visible
-- − Hero copy/imagery speaks to my persona: "This Week's Featured Items" and "What's New" tiles are generic — zero household-of-five lifestyle energy
-- − Concrete offer (specific %/$): "savings" without numbers is a tease, not an offer
-- − Clear visual hierarchy: warehouse hours block competes with the carousel and the urgency banner
-- − Demographic signals: no one like me anywhere on screen
+- + Returning-shopper hook: "My Warehouse: Burbank, Open until 6PM" + delivery location 91201 — the site clearly knows me
+- − Hero copy doesn't speak to my persona: "Make Big Change For All Kids" is cause-marketing, not "here's what to load in your cart Saturday"
+- − No concrete offer with a specific %/$ amount above the fold — "Select Offers End Today!" tells me nothing specific
+- + Primary CTA: "Shop" button is clearly visible and unambiguous
+- + Visual hierarchy: banner → logo/nav → search → location → tiles flows cleanly
+- + No render bugs: page is crisp, nothing broken or overlapping
+- − Demographic signals: zero imagery or copy aimed at a household operator buying in volume
+- + Current campaign reflected: "Select Offers End Today!" signals live urgency
+- + Loyalty/membership benefits visible without scrolling: "Member-Only Savings — & Everyday Values" is on screen
+- + Offer feels honest: no asterisks, no manipulative countdown with fake urgency
 
 ## 3. What's Working
 
-- **"My Warehouse — Burbank" block** — Immediately tells me my location is recognized, shows Executive Member hours separate from Gold Star. That 9 AM vs 10 AM distinction matters when I'm timing a Saturday run with three kids in the car.
-- **"Select In-Warehouse and Online Savings End Tomorrow" banner** — The word "tomorrow" creates real urgency for a monthly stock-up shopper. I want to know what's on sale before my run.
-- **"This Week's Featured Items" tile** — Even generic, this is the right mental model for how I shop Costco. I want the weekly curated haul, not a brand story.
-- **"What's New" tile** — Kirkland loyalists like me want to know when something's changed in the lineup. This is the right category of information.
-- **Clean mobile layout** — Search bar prominent, no pop-overs blocking me, no interstitial. I can get where I'm going.
+- **"My Warehouse: Burbank, Open until 6PM"** — as someone who times Saturday runs, knowing my warehouse hours without tapping anything is genuinely useful
+- **Delivery Location: 91201** — already set; I don't have to re-enter my zip to check if something ships to me
+- **"Select Offers End Today!"** in bold red — creates real urgency; I know Costco's coupon cycles and this banner tells me I need to check now before I miss the window
+- **"Member-Only Savings — & Everyday Values"** section — this is the exact reason I have a membership; seeing it immediately reinforces why I'm here
+- **Search bar is prominent** — I shop with a list, and being able to type "Kirkland olive oil" immediately without hunting for a search icon is exactly how I operate
 
 ## 4. What's Weak
 
-- **"Select In-Warehouse and Online Savings End Tomorrow" — no specifics** — What savings? What categories? This is the equivalent of someone texting "there's a deal" without telling me what store. I'm not motivated to tap without a number.
-- **No household or bulk-buying imagery** — Zero visual cues for someone stocking a house of five. No pallets, no jumbo packs, no family-of-five energy anywhere. The Costco storefront thumbnail is the store exterior, not product.
-- **Carousel with four dots but only two tiles visible** — What's on slides 3 and 4? This feels like buried inventory. On mobile, carousels are already engagement killers.
-- **"Member Only" text cut off at bottom** — The most relevant thing for a 2% Executive member is teased but unreadable. That should not be off-screen.
-- **No reward balance or 2% cashback callout** — I check my reward total before I decide how much to spend. It's nowhere visible.
+- **Top banner wastes the prime real estate** — "Make Big Change For All Kids" may be admirable, but as the very first thing on the page it tells me nothing about what I'm here to buy; I have to process charity messaging before I can get to groceries
+- **"This Week's Featured Items" tile shows a Costco storefront photo** — that's a building, not a product; I need to see the rotisserie chicken, the paper towels, the Kirkland olive oil — something that triggers my shopping brain
+- **"What's New" tile uses a megaphone icon** — again, an icon instead of a product photo; tells me nothing about what's actually new
+- **No specific deal info above the fold** — "Member-Only Savings" is enticing but without a dollar figure or category name I'm clicking blind
+- **The carousel (4 dots visible) is invisible in effect** — I'd never know there were 3 more slides unless I happened to notice the dots
 
 ## 5. Recommendations
 
-- **Replace the vague banner with a category-specific offer:** "Members Save Up to 25% on Kirkland Essentials — Ends Tomorrow" would make me tap immediately. I need a number and a category.
-- **Surface the 2% reward balance in the header or "My Warehouse" block:** One line — "Your Executive Reward: $148.20" — turns this from a generic storefront into a personal dashboard and directly informs my spend ceiling for the trip.
-- **Swap the Costco storefront thumbnail for a product shot:** Show a Kirkland olive oil 3-pack or a 36-roll paper towel bundle — the visual language of the warehouse run, not the parking lot.
-- **Promote the carousel to a horizontal scroll strip with visible tiles:** Show me all four featured items without requiring swipes. I'm in planning mode, not browsing mode.
+- **Replace the charity banner with a member-deal callout** — move "Make Big Change" to a smaller footer badge; put the top of the page to work with "Member savings this week: up to 30% off household essentials" or equivalent
+- **Swap the Costco storefront photo in the Featured Items tile with an actual product image** — a shot of the coupon book open to a page of deals, or literally anything with a price tag, would pull my finger to tap
+- **Add a "Your next 2% check" micro-widget** — even a static "Your Executive Reward: keep spending" nudge would reinforce membership value for members like me who track the reward
+- **Show the coupon book categories explicitly** — instead of "Member-Only Savings" as a generic header, list two or three category names ("Grocery, Electronics, Home") so I know at a glance whether this week's book covers what I need
 
 ## 6. Bottom Line
 
-I'd tap "Shop Now" to find out what's ending tomorrow, but I'm doing it out of habit and FOMO, not because this page earned it.
+I'm staying — I came here with a list and I know where the deals are — but Costco left real engagement on the table by opening with a charity ask instead of leading with the savings I drove my membership for.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Select In-Warehouse and Online Savings End Tomorrow, Shop Now!`
-- **Hero image:** No lifestyle imagery; the carousel shows a Costco warehouse exterior thumbnail for "This Week's Featured Items" and a red megaphone graphic for "What's New"
-- **Primary CTA:** `Shop Now!` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `6`, Relevance to you `5`, Visual hierarchy `5`, On-brand `8`
+- **Hero copy (verbatim):** `Make Big Change For All Kids`
+- **Hero image:** No product imagery — top banner is text-only on a blue background; the dominant visual below nav is a photo of a Costco warehouse exterior (storefront) inside the "This Week's Featured Items" tile
+- **Primary CTA:** `Shop` — visible above the fold? yes (hamburger-style button, top left)
+- **Scores (1-10):** Clarity `7`, Relevance to you `3`, Visual hierarchy `6`, On-brand `6`
 - **Strengths:**
-  - Urgency language ("End Tomorrow") is direct and time-anchored — right instinct for a warehouse-event shopper
-  - "Shop Now!" is a clear, tappable CTA without ambiguous microcopy
+  - Navigation structure (Shop, Search, Account, Cart) is immediately legible and functional
+  - Warehouse/delivery personalization is visible without any extra taps
 - **Weaknesses:**
-  - No product or category specificity — "savings" on what exactly?
-  - The warehouse exterior photo is the weakest possible visual for inspiring a stock-up trip
+  - Charity headline as the first piece of copy means the page opens on a non-commercial note when I'm in a shopping mindset
+  - No product image, no price, no category — the "hero zone" communicates nothing about what I'd actually buy
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** "Select In-Warehouse and Online Savings" (category unspecified), "Member Only" offers (partially visible, no details)
-- **Urgency / scarcity:** "End Tomorrow" in the top banner; no countdown timer
-- **Loyalty hooks:** Executive Member hours (9 AM vs 10 AM) called out in My Warehouse block; "Member Only" strip beginning below fold
-- **Honesty check:** The "End Tomorrow" urgency is credible for Costco's cycle, but "Select Savings" without specifics edges toward vagueness. Nothing manipulative, but also nothing specific enough to feel truly trustworthy.
+- **Active promos:** "Select Offers End Today!" (urgency strip in red bold), "Member-Only Savings — & Everyday Values" (with coupon book image)
+- **Urgency / scarcity:** "Select Offers End Today!" — yes, creates urgency, but no specific end time or countdown visible
+- **Loyalty hooks:** "Member-Only Savings & Everyday Values" section is visible on screen — directly speaks to my executive membership value
+- **Honesty check:** Nothing manipulative visible; "Select Offers End Today!" is a standard Costco coupon-cycle message I recognize as legitimate; no buried asterisks or exclusionary fine print visible at this screen depth
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: "Featured Items" is generically relevant but no household/bulk signal
-- − Easy to reach my category: "Shop" hamburger requires a tap to expand; no category shortcuts visible
-- − Eye-catching imagery in my category: Costco exterior thumbnail doesn't show Kirkland goods or bulk product
-- + Promo banner I would use: "In-Warehouse and Online Savings End Tomorrow" — yes, I run a Saturday trip around this
-- + Page renders cleanly: no layout shift, no broken images, clean mobile spacing
-- − Imagery includes someone like me: no people visible anywhere on screen
-- + Copy register matches mine: straightforward, no retail-speak fluff, executive-member language I recognize
-- − Trust signals visible: Executive Member hours shown, but no ratings, badge, or return policy callout
-- − New/hot rail in my category: "What's New" tile exists but not scoped to household/bulk
-- + No dark patterns: no modal, no forced email gate, no fake countdown clock
+- − Hero relates to my focus area: "Make Big Change For All Kids" is charity, not bulk household goods
+- + Easy to reach my category: Search bar is prominent; "Shop" button is one tap to categories
+- − Eye-catching imagery in my category: Costco storefront photo and megaphone icon don't show food, household staples, or anything I'd impulse-click
+- + Promo banner I would use: "Select Offers End Today!" and "Member-Only Savings" are directly in my wheelhouse
+- + Page renders cleanly: no visible layout issues, no overlapping elements, no placeholder images
+- − Imagery includes someone like me: no people visible at all — just a building, an icon, and a coupon book
+- + Copy register matches mine: direct and functional ("This Week's Featured Items," "Select Offers End Today!") — not cutesy, not overly technical
+- + Trust signals visible: My Warehouse hours (Burbank, open until 6PM) is a real-world reliability signal I value
+- − New/hot rail in my category: "What's New" tile exists but shows zero product information
+- + No dark patterns: no forced modals, no guilt-trip popups, no auto-added items
 
-**Score:** `5/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The page is clean and honest, and the warehouse-personalization block is a genuine differentiator — but with no product imagery, no category shortcuts, and no specific deal visible, there's not enough pull to make me scroll with intent rather than habit.
+**Score:** `6/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The membership personalization (warehouse, zip) and urgency promo keep me from bouncing immediately, but the complete absence of product imagery means nothing is triggering my "oh I need to check if this is on sale" reflex that Costco usually fires in me the second I walk in the door.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "Shop Now!" links to savings broadly, not to household/Kirkland/bulk
-- + Unambiguous CTA copy: "Shop Now!" is clear
-- − Active price reduction or member pricing: banner implies it but shows no number
-- + Time-bounded credible deadline: "End Tomorrow" is a real deadline I believe
-- − Reachable free-shipping threshold: not visible
-- + Specific product page one tap away: "This Week's Featured Items" tile gets me to curated deals in one tap
-- − Sizing/fit info accessible: N/A for my category; not visible regardless
-- − Returns/exchanges mentioned: not visible
-- − Reviews/ratings visible: none on screen
-- − Trust/security signals: no secure-checkout badge, no "free returns" note visible
+- − CTA in my category: No category-specific CTA visible — "Shop" opens a menu, not a direct path to groceries or household
+- + Unambiguous CTA copy: "Shop" and "This Week's Featured Items" are clear action tiles
+- + Active price reduction or member pricing: "Member-Only Savings" is explicitly visible
+- + Time-bounded credible deadline: "Select Offers End Today!" — I believe this; Costco's coupon cycle is real
+- − Reachable free-shipping threshold: no free-shipping info visible at this depth
+- + Specific product one tap away: "This Week's Featured Items" is one tap to presumably a deals page
+- − Sizing/fit info accessible: not applicable to how I shop Costco, and nothing visible either way
+- − Returns/exchanges mentioned: not visible on screen
+- − Reviews/ratings visible: no product ratings shown at this depth
+- − Trust/security signals: no checkout-level trust badges, no pay-later options visible
 
-**Score:** `4/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The time-bound urgency and direct "Shop Now!" CTA are doing real work, but without a specific deal, a free-shipping number, or any social proof, I'm going in blind — and I've got a household of five to budget for, so I need the information before I commit.
+**Score:** `5/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The urgency and member pricing cues are real and they work on me, but the homepage stops short of the one thing that would push me to cart — an actual product with a price, right here, right now. I need to tap through at least two more screens before I can convert, and that friction is real.
 
 ## 11. Evidence
 
-- **Hero / primary value prop:** Royal blue urgency banner — "Select In-Warehouse and Online Savings End Tomorrow, Shop Now!"
-- **Personalized warehouse block:** "My Warehouse — Burbank" with Executive Member (9 AM) and Gold Star & Business (10 AM) hours; Delivery Location 91201
-- **Navigation strip:** Costco logo, Warehouses icon, Account icon, Cart icon; "Shop" hamburger + Search bar below
-- **Carousel (slide 1):** "This Week's Featured Items" — Costco storefront thumbnail, red Costco logo badge
-- **Carousel (slide 2):** "What's New" — red background, megaphone graphic
-- **Carousel pagination:** 4 dots visible; slides 3 and 4 not shown
-- **Promotional strip beginning:** "Select Offers End Tomorrow!" in red, "Member Only" text partially visible below fold
-- **Feedback tab:** Vertical "Feedback" tab on right edge
-- **Bugs / friction:** No bugs visible; carousel hides potentially relevant slides 3–4 behind swipe; "Member Only" content cut off at bottom edge requiring scroll to see
+- **Top alert banner:** "Make Big Change For All Kids" — blue background, full-width, text-only
+- **Primary navigation bar:** Costco Wholesale logo (red/blue), Warehouses, Account, Cart icons
+- **Shop + Search module:** Hamburger "Shop" button (blue) + "Search Costco" input field with magnifying glass
+- **Personalization strip:** "My Warehouse — Burbank, Open until 6PM" (left) + "Delivery Location — 91201" (right, with box icon)
+- **Content tiles (carousel, 4 slides):** "This Week's Featured Items" (Costco storefront thumbnail, red banner) + "What's New" (red megaphone icon on white)
+- **Carousel navigation dots:** 4 dots visible; only first is active — slides 2–4 are invisible without swiping
+- **Urgency strip:** "Select Offers End Today!" — bold red text, high contrast
+- **Member savings section (partially visible):** Coupon book image + "Member-Only Savings — & Everyday Values" banner in red
+- **Feedback tab:** Vertical "Feedback" button on right edge (partially visible) — minor visual clutter
+- **Bugs/friction:** No hard bugs; the carousel dot indicators are so small they're effectively invisible for a medium-tech-comfort user; the storefront photo in "Featured Items" communicates nothing actionable
 ## Recent history
 
 - [[2026-05-02-homepage-www.costco.com-mara-bulkley-costco-fap6e]] — 8/10 (2026-05-02)

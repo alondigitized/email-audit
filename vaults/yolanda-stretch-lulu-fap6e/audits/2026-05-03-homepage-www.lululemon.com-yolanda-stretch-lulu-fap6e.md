@@ -3,159 +3,178 @@ slug: 2026-05-03-homepage-www.lululemon.com-yolanda-stretch-lulu-fap6e
 type: site
 date: 2026-05-03
 persona: yolanda-stretch-lulu-fap6e
-score: "7/10"
+score: "8/10"
 sender: www.lululemon.com
 subject: Homepage snapshot · www.lululemon.com · 2026-05-03
-tags: [site-journey, score-7, sender/www-lululemon-com]
+tags: [site-journey, score-8, sender/www-lululemon-com]
 ---
 # Homepage snapshot · www.lululemon.com · 2026-05-03
-**Score:** 7/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 8/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- This is lululemon doing what lululemon does — clean, premium, aspirational — but right now they're fully in Mother's Day mode and I walked in as a yoga teacher looking to restock on ABC pants and check the We Made Too Much section. The campaign is pretty, the woman in the hero looks like she could be a studio regular of mine, but this page is shopping-gifting energy, not shopping-for-myself energy. It's not a miss, it's just not exactly my moment.
-- **7/10**
-- − Hero explicitly speaks to my focus area: "Mom's an icon" is a Mother's Day campaign, not yoga or studio lifestyle — doesn't hit my use case
-- − Returning-shopper hook: no rewards balance, no "welcome back," no loyalty callout above the fold
-- + Concrete offer above fold: "Get 15% off regular-priced items. Sign Up" is right there in the top banner
-- + Unmistakable primary CTA: "Shop Women's What's New" button is large, clear, and above the fold
-- + Visual hierarchy: logo → search → hero → CTAs, the eye flows naturally
-- + No render bugs: page is clean, no broken images or layout issues
-- + Demographic signals match: the woman in the hero is visibly 30s, athletic, braids and hoops — she looks like someone I'd see in my studio
-- + Current campaign/season: Mother's Day is May, this is timely
-- − Loyalty/membership visible without scrolling: nothing about the Lululemon membership program above the fold
-- + Offer feels honest: 15% off is a real, stated number — no asterisks or exclusions visible
+- Okay, lululemon is doing Mother's Day right now — "Mom's an icon" is the whole vibe above the fold, with a gift-guide CTA alongside the women's new arrivals button. As a brand, this reads exactly like lulu: clean, confident, premium without being cold. But as someone who comes here to restock my Define jacket or check We Made Too Much, I'm slightly out of phase with the gifting push — I'm shopping *for* me, not for my mom.
+- **8/10**
+- + Hero copy/imagery speaks to persona: partial — "Mom's an icon" targets millennial women broadly, and I *am* a millennial woman, but the gifting frame misses my actual use case (shopping for my own practice gear). I'll give the point since the copy and purple palette still feel like they're talking to me, not past me.
+- − Returning-shopper hook: no loyalty balance, no recently-viewed, no member-price badge visible anywhere above the fold.
+- + Concrete offer above fold: YES — "Get 15% off regular-priced items. Sign Up" in the top banner, specific and legible.
+- + Primary CTA visible: YES — "Shop Women's What's New" is a clear pill button, unmissable.
+- + Visual hierarchy clear: YES — headline → subhead → two CTAs, the eye moves naturally top to bottom.
+- + No render bugs: YES — page looks crisp, no broken elements visible.
+- + Demographic signals match: YES — 31-year-old woman, millennial, active lifestyle; purple palette and "every move" copy fits.
+- + Current campaign/season: YES — Mother's Day is May 11, 2026, so this is exactly the right week.
+- − Loyalty/membership benefits: not visible above the fold — the "Sign Up" is promo-linked, not membership-positioned.
+- + Offer feels honest: YES — "15% off regular-priced items" is straightforward, no asterisk burying exclusions in sight.
 
 ## What's working
 
-- **The 15% off sign-up banner** — dismissible (there's an X), prominent, and as someone who already has an account I appreciate that it's not screaming at me forever.
-- **"Shop Women's What's New" CTA** — that's actually where I'd go. I don't need the Gift Guide, but What's New is exactly the WMTM-adjacent mindset I'm in.
-- **Hero casting** — the close-up of a 30-something woman in a light lululemon layer with braids and earrings is on-brand for me. She looks like my Saturday 9am flow class.
-- **Search bar placement** — full-width, high up, immediately visible. As someone who knows exactly what I want (ABC pants, Define jacket), I'll use this first.
-- **Two CTAs with different intent** — "Shop Women's What's New" vs. "Explore the Gift Guide" lets me self-sort immediately. That's smart.
+- **"Get 15% off regular-priced items. Sign Up" banner** — this is the first thing my eye hits. A specific percentage is infinitely better than a vague "join our list." I'm already a member but this would absolutely grab someone who isn't.
+- **Dual CTAs ("Shop Women's What's New" / "Explore the Gift Guide")** — smart split. One button for me-shopping, one for gift-giving. Covers both audiences without forcing a choice at the hero level.
+- **Full-width search bar** — as a high-tech-comfort mobile shopper, I often come in knowing exactly what I want (ABC Pant ribbed, 7/8 length). A prominent search bar is the fastest path from intent to PDP and lulu nails this placement.
+- **Purple/blue abstract hero palette** — it's moody, premium, and very on-brand. The close-up fabric texture gives it a tactile quality that reminds me why I love the product.
+- **Mother's Day timing** — hitting this campaign May 3 with a week to go before the holiday is exactly the right window. The campaign is timely, not stale.
 
 ## What's weak
 
-- **"Mom's an icon" hero copy** — I get it, it's Mother's Day, but I came here to shop for myself. This sends me into gift-buying brain when I'm in self-care brain.
-- **No navigation categories visible** — just the hamburger icon. On mobile I can't see a quick-tap path to Yoga, Pants, or Sale without opening the menu. That's friction.
-- **No loyalty callout** — I've been a lululemon customer for years. There's no "hi, here's your member status" or even an ambassador/member badge. They know who I am when I'm logged in; lean into it.
-- **Second CTA competes with itself** — "Explore the Gift Guide" is a dead end for me right now. It dilutes the main shopping action.
-- **No product shown** — the hero is a tight face crop. I can barely tell what she's wearing. If you're going to inspire me to shop, show me the jacket or the pants in motion.
+- **"Mom's an icon" hero doesn't pull me toward my own cart** — I'm 31 and shopping for my studio wardrobe, not building a gift basket. The entire hero is gift-framed, which means I feel like a secondary audience right now.
+- **No loyalty/membership hook above the fold** — lululemon has a membership program and this would be the perfect moment to surface it ("Members get early access to We Made Too Much" or a rewards balance for logged-in users). Nothing like that here.
+- **No visibility of Like New or sustainability cues** — as someone who actively uses the Like New take-back program, I'd love to see even a single badge or callout that signals this brand shares my values. Completely absent above the fold.
+- **Hero subtext "Our designs draw inspiration from every move" is vague** — this could appear on literally any activewear brand's homepage. It doesn't reinforce any specific product story or technical feature that makes lulu worth the premium.
+- **No urgency/deadline on the 15% offer** — "Sign Up" for 15% off with no deadline sits flat. Is this permanent? Today only? The lack of a time boundary reduces the pull to act immediately.
 
 ## Recommendations
 
-- **Swap the tight face crop for a lifestyle shot** — show the woman in a Define jacket walking into a studio or doing a morning flow. Keep the "Mom's an icon" copy but let the product breathe in the frame.
-- **Add a sticky quick-nav strip below the search bar** — four tappable chips: Yoga · Pants · Jackets · Sale. Gets me to my category in one tap instead of opening the hamburger.
-- **Surface member pricing or loyalty tier** — if I'm logged in, show "Member exclusive: 15% off" instead of the generic sign-up offer. It makes me feel seen.
-- **Retire or de-prioritize the Gift Guide CTA** — or move it below the primary shop CTA so the page hierarchy is unambiguous.
+- **Add a logged-in state / returning-member hook** — if I'm already in the app or a recognized session, surface my rewards points balance or "Welcome back, Yolanda — here's what's new in We Made Too Much." Right now, first-time and returning shoppers see identical screens.
+- **Swap the subhead for a product-specific line** — replace "Our designs draw inspiration from every move" with something like "New Define Jacket colorways — just dropped" or "ABC Pants: now in ribbed." Give me a reason to tap that "What's New" button *right now*, not just in theory.
+- **Add a slim Like New / sustainability strip below the hero** — a single-line callout ("Already love lulu? Take back, trade up with Like New →") rewards loyal customers and communicates brand values without disrupting the Mother's Day campaign above it.
+- **Put a deadline on the 15% offer** — even "Offer ends May 11" anchors urgency to the Mother's Day calendar and makes the promo feel intentional rather than evergreen.
 
 ## Full review
 ## 1. Executive Summary
 
-This is lululemon doing what lululemon does — clean, premium, aspirational — but right now they're fully in Mother's Day mode and I walked in as a yoga teacher looking to restock on ABC pants and check the We Made Too Much section. The campaign is pretty, the woman in the hero looks like she could be a studio regular of mine, but this page is shopping-gifting energy, not shopping-for-myself energy. It's not a miss, it's just not exactly my moment.
+Okay, lululemon is doing Mother's Day right now — "Mom's an icon" is the whole vibe above the fold, with a gift-guide CTA alongside the women's new arrivals button. As a brand, this reads exactly like lulu: clean, confident, premium without being cold. But as someone who comes here to restock my Define jacket or check We Made Too Much, I'm slightly out of phase with the gifting push — I'm shopping *for* me, not for my mom.
+
+---
 
 ## 2. Business Impact Score (1-10)
 
-**7/10**
-- − Hero explicitly speaks to my focus area: "Mom's an icon" is a Mother's Day campaign, not yoga or studio lifestyle — doesn't hit my use case
-- − Returning-shopper hook: no rewards balance, no "welcome back," no loyalty callout above the fold
-- + Concrete offer above fold: "Get 15% off regular-priced items. Sign Up" is right there in the top banner
-- + Unmistakable primary CTA: "Shop Women's What's New" button is large, clear, and above the fold
-- + Visual hierarchy: logo → search → hero → CTAs, the eye flows naturally
-- + No render bugs: page is clean, no broken images or layout issues
-- + Demographic signals match: the woman in the hero is visibly 30s, athletic, braids and hoops — she looks like someone I'd see in my studio
-- + Current campaign/season: Mother's Day is May, this is timely
-- − Loyalty/membership visible without scrolling: nothing about the Lululemon membership program above the fold
-- + Offer feels honest: 15% off is a real, stated number — no asterisks or exclusions visible
+**8/10**
+
+- + Hero copy/imagery speaks to persona: partial — "Mom's an icon" targets millennial women broadly, and I *am* a millennial woman, but the gifting frame misses my actual use case (shopping for my own practice gear). I'll give the point since the copy and purple palette still feel like they're talking to me, not past me.
+- − Returning-shopper hook: no loyalty balance, no recently-viewed, no member-price badge visible anywhere above the fold.
+- + Concrete offer above fold: YES — "Get 15% off regular-priced items. Sign Up" in the top banner, specific and legible.
+- + Primary CTA visible: YES — "Shop Women's What's New" is a clear pill button, unmissable.
+- + Visual hierarchy clear: YES — headline → subhead → two CTAs, the eye moves naturally top to bottom.
+- + No render bugs: YES — page looks crisp, no broken elements visible.
+- + Demographic signals match: YES — 31-year-old woman, millennial, active lifestyle; purple palette and "every move" copy fits.
+- + Current campaign/season: YES — Mother's Day is May 11, 2026, so this is exactly the right week.
+- − Loyalty/membership benefits: not visible above the fold — the "Sign Up" is promo-linked, not membership-positioned.
+- + Offer feels honest: YES — "15% off regular-priced items" is straightforward, no asterisk burying exclusions in sight.
+
+---
 
 ## 3. What's Working
 
-- **The 15% off sign-up banner** — dismissible (there's an X), prominent, and as someone who already has an account I appreciate that it's not screaming at me forever.
-- **"Shop Women's What's New" CTA** — that's actually where I'd go. I don't need the Gift Guide, but What's New is exactly the WMTM-adjacent mindset I'm in.
-- **Hero casting** — the close-up of a 30-something woman in a light lululemon layer with braids and earrings is on-brand for me. She looks like my Saturday 9am flow class.
-- **Search bar placement** — full-width, high up, immediately visible. As someone who knows exactly what I want (ABC pants, Define jacket), I'll use this first.
-- **Two CTAs with different intent** — "Shop Women's What's New" vs. "Explore the Gift Guide" lets me self-sort immediately. That's smart.
+- **"Get 15% off regular-priced items. Sign Up" banner** — this is the first thing my eye hits. A specific percentage is infinitely better than a vague "join our list." I'm already a member but this would absolutely grab someone who isn't.
+- **Dual CTAs ("Shop Women's What's New" / "Explore the Gift Guide")** — smart split. One button for me-shopping, one for gift-giving. Covers both audiences without forcing a choice at the hero level.
+- **Full-width search bar** — as a high-tech-comfort mobile shopper, I often come in knowing exactly what I want (ABC Pant ribbed, 7/8 length). A prominent search bar is the fastest path from intent to PDP and lulu nails this placement.
+- **Purple/blue abstract hero palette** — it's moody, premium, and very on-brand. The close-up fabric texture gives it a tactile quality that reminds me why I love the product.
+- **Mother's Day timing** — hitting this campaign May 3 with a week to go before the holiday is exactly the right window. The campaign is timely, not stale.
+
+---
 
 ## 4. What's Weak
 
-- **"Mom's an icon" hero copy** — I get it, it's Mother's Day, but I came here to shop for myself. This sends me into gift-buying brain when I'm in self-care brain.
-- **No navigation categories visible** — just the hamburger icon. On mobile I can't see a quick-tap path to Yoga, Pants, or Sale without opening the menu. That's friction.
-- **No loyalty callout** — I've been a lululemon customer for years. There's no "hi, here's your member status" or even an ambassador/member badge. They know who I am when I'm logged in; lean into it.
-- **Second CTA competes with itself** — "Explore the Gift Guide" is a dead end for me right now. It dilutes the main shopping action.
-- **No product shown** — the hero is a tight face crop. I can barely tell what she's wearing. If you're going to inspire me to shop, show me the jacket or the pants in motion.
+- **"Mom's an icon" hero doesn't pull me toward my own cart** — I'm 31 and shopping for my studio wardrobe, not building a gift basket. The entire hero is gift-framed, which means I feel like a secondary audience right now.
+- **No loyalty/membership hook above the fold** — lululemon has a membership program and this would be the perfect moment to surface it ("Members get early access to We Made Too Much" or a rewards balance for logged-in users). Nothing like that here.
+- **No visibility of Like New or sustainability cues** — as someone who actively uses the Like New take-back program, I'd love to see even a single badge or callout that signals this brand shares my values. Completely absent above the fold.
+- **Hero subtext "Our designs draw inspiration from every move" is vague** — this could appear on literally any activewear brand's homepage. It doesn't reinforce any specific product story or technical feature that makes lulu worth the premium.
+- **No urgency/deadline on the 15% offer** — "Sign Up" for 15% off with no deadline sits flat. Is this permanent? Today only? The lack of a time boundary reduces the pull to act immediately.
+
+---
 
 ## 5. Recommendations
 
-- **Swap the tight face crop for a lifestyle shot** — show the woman in a Define jacket walking into a studio or doing a morning flow. Keep the "Mom's an icon" copy but let the product breathe in the frame.
-- **Add a sticky quick-nav strip below the search bar** — four tappable chips: Yoga · Pants · Jackets · Sale. Gets me to my category in one tap instead of opening the hamburger.
-- **Surface member pricing or loyalty tier** — if I'm logged in, show "Member exclusive: 15% off" instead of the generic sign-up offer. It makes me feel seen.
-- **Retire or de-prioritize the Gift Guide CTA** — or move it below the primary shop CTA so the page hierarchy is unambiguous.
+- **Add a logged-in state / returning-member hook** — if I'm already in the app or a recognized session, surface my rewards points balance or "Welcome back, Yolanda — here's what's new in We Made Too Much." Right now, first-time and returning shoppers see identical screens.
+- **Swap the subhead for a product-specific line** — replace "Our designs draw inspiration from every move" with something like "New Define Jacket colorways — just dropped" or "ABC Pants: now in ribbed." Give me a reason to tap that "What's New" button *right now*, not just in theory.
+- **Add a slim Like New / sustainability strip below the hero** — a single-line callout ("Already love lulu? Take back, trade up with Like New →") rewards loyal customers and communicates brand values without disrupting the Mother's Day campaign above it.
+- **Put a deadline on the 15% offer** — even "Offer ends May 11" anchors urgency to the Mother's Day calendar and makes the promo feel intentional rather than evergreen.
+
+---
 
 ## 6. Bottom Line
 
-I'd tap "Shop Women's What's New" and keep going — lululemon earns the click on brand trust alone — but this page isn't really trying to sell me anything, it's trying to get me to buy my mom something.
+I'd scroll past the hero and go straight to "Shop Women's What's New" — the brand feels right, the offer is real, but I'm doing this for me, not for a gift, so I need the next screen to meet me where I actually shop.
+
+---
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `Mom's an icon. Our designs draw inspiration from every move.`
-- **Hero image:** Close-up face portrait of a 30s woman with braids and hoop earrings, wearing a light-colored lululemon piece, likely a jacket or sweatshirt — product is not clearly visible
+- **Hero image:** Abstract close-up of purple and blue fabric or textile — no model or person visible, purely textural and color-driven.
 - **Primary CTA:** `Shop Women's What's New` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `8`, Relevance to you `5`, Visual hierarchy `8`, On-brand `9`
+- **Scores (1-10):** Clarity `8`, Relevance to me `5`, Visual hierarchy `9`, On-brand `9`
 - **Strengths:**
-  - Copy is short, punchy, and emotionally resonant for the Mother's Day audience
-  - Two CTAs give me a clean choice without overwhelming the page
+  - Visual hierarchy is near-perfect on mobile — headline is large and legible, two pill CTAs are well-spaced and thumb-friendly.
+  - The purple/blue palette is unmistakably lululemon and the close-up fabric texture is evocative without being busy.
 - **Weaknesses:**
-  - The tight face crop hides the actual product — I can't see what she's wearing well enough to want it
-  - "Gift Guide" as a secondary CTA pulls attention away from the self-purchase path I'm on
+  - The gift-frame ("Mom's an icon," "Explore the Gift Guide") means this hero is pitching me as a gift-buyer, not a self-purchaser — I'm immediately not the main character.
+  - No model, no person, no lifestyle scene — the abstract background is premium-feeling but gives me zero social proof or aspiration to anchor my own purchase decision.
+
+---
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** "Get 15% off regular-priced items" (sign-up offer in top banner)
-- **Urgency / scarcity:** None visible — no countdown timer, no "ends Sunday," no limited-stock language
-- **Loyalty hooks:** None visible above the fold — no member pricing badge, no rewards balance, no "welcome back" language
-- **Honesty check:** The 15% off appears to be a sign-up/email-capture offer, not a blanket sitewide sale — that's a meaningful distinction that isn't immediately clear. If I'm already signed up and click it, I might be disappointed. Minor bait risk here.
+- **Active promos:** 15% off regular-priced items (requires Sign Up)
+- **Urgency / scarcity:** None visible — no countdown, no "ends today," no "limited quantities"
+- **Loyalty hooks:** None visible — no member pricing badge, no rewards callout, no "Members get early access" language
+- **Honesty check:** The "Sign Up" framing on the 15% off is slightly ambiguous — is this a newsletter signup or an account creation? That distinction matters and it's not clear from the banner text. Otherwise nothing feels manipulative or buried.
+
+---
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: "Mom's an icon" is Mother's Day campaign, not yoga/studio lifestyle
-- − Easy to reach my category: hamburger-only nav, no quick-tap chips to Yoga or Pants
-- − Eye-catching imagery in my category: the hero is a face crop, product is barely visible
-- + Promo banner I would use: 15% off is real and I'd factor it in even as an existing customer
-- + Page renders cleanly: no layout shift, no broken images, clean mobile render
-- + Imagery includes someone like me: the model reads 30s, athletic, lululemon lifestyle
-- + Copy register matches mine: aspirational but not try-hard, the tone is right for my age bracket
-- − Trust signals visible: no reviews, no free-returns badge, no "as seen in" — nothing
-- − New/hot rail in my category: no product rail at all above the fold
-- + No dark patterns: banner is dismissible, no forced modal, clear CTAs
-- **Score:** `6/10`
-- **Rationale:** Brand trust carries me past the fold, but the Mother's Day framing and the buried navigation create real friction for a self-purchase trip — I'm scrolling, not bouncing, but I'm doing extra work to find what I came for.
+- − Hero relates to my focus area: the hero is a Mother's Day gift campaign; my focus is restocking my own studio wardrobe — I'm off-center from the main message.
+- + Easy to reach my category: "Shop Women's What's New" is one tap from the hero, and the search bar is instantly accessible if I know what I want.
+- + Eye-catching imagery in my category: the purple/blue abstract palette is distinctly lululemon-coded and does catch the eye even without a product shot.
+- + Promo banner I would use: 15% off regular-priced items — yes, I'd sign up for that, especially if it stacks with a new Define colorway.
+- + Page renders cleanly: no layout shift, no broken images, no overlapping text — the page is clean.
+- − Imagery includes someone like me: no person is visible in the hero at all — it's fully abstract/textural.
+- + Copy register matches mine: "Mom's an icon" is warm and millennial-toned; "every move" resonates with an active lifestyle. The register is right even if the framing is slightly off.
+- − Trust signals visible: no review counts, no free-returns badge, no "as seen in" credibility markers above the fold.
+- − New/hot rail in my category: nothing visible in this viewport — no product rail, no "just dropped" strip.
+- + No dark patterns: the promo banner has a clear dismiss X, no forced modal, no overlay blocking the content.
+
+**Score:** `6/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The page is clean and on-brand, and the search bar + "What's New" CTA give me a clear path to what I actually came for — but the Mother's Day gift frame and absence of any product rail or trust signal above the fold means the homepage is mostly holding pattern until I scroll.
+
+---
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "Shop Women's What's New" is broad, not yoga- or pants-specific
-- + Unambiguous CTA copy: "Shop Women's What's New" tells me exactly where I'm going
-- + Active price reduction or member pricing: 15% off banner is present
-- − Time-bounded credible deadline: no urgency language anywhere visible
-- − Reachable free-shipping threshold: not mentioned above the fold
-- − Specific product page one tap away: I need at least two taps to reach a product detail page
-- − Sizing / fit info accessible: not visible
-- − Returns / exchanges mentioned: not visible
-- − Reviews / ratings visible: not visible
-- − Trust / security signals: not visible above the fold
-- **Score:** `3/10`
-- **Rationale:** The homepage gets me curious enough to tap through, but it gives me almost nothing to close on — no product, no price, no fit details, no social proof. Conversion will happen because I already know the brand, not because this page earned it.
+- + CTA in my category: "Shop Women's What's New" is exactly my lane — women's activewear, new arrivals.
+- + Unambiguous CTA copy: "Shop Women's What's New" tells me precisely what happens when I tap — no vague "Discover" or "Explore More" fuzziness.
+- + Active price reduction or member pricing: 15% off regular-priced items is visible and legible.
+- − Time-bounded credible deadline: no expiry date on the 15% offer, no countdown, no "ends Mother's Day" anchor — the urgency is completely absent.
+- − Reachable free-shipping threshold: free-shipping terms are not visible anywhere above the fold.
+- + Specific product page one tap away: "Shop Women's What's New" is a direct one-tap path to the category page.
+- − Sizing / fit info accessible: nothing visible — no size guide link, no "find your fit" callout (relevant since I fit-test in store).
+- − Returns / exchanges mentioned: not visible above the fold.
+- − Reviews / ratings visible: no star ratings or review counts on any featured product.
+- − Trust / security signals: no secure-checkout badge, no pay-later option callout, no free-returns assurance above the fold.
+
+**Score:** `5/10` — should equal 1 + count of "+" bullets above.
+**Rationale:** The clear CTA and visible discount give me a reason to tap, but everything that would seal the deal — a deadline, free shipping, trust signals, reviews — is missing from this screen, which means the real conversion work is happening further down the funnel, not here.
+
+---
 
 ## 11. Evidence
 
-- **Top promo banner:** "Get 15% off regular-priced items. Sign Up" — dismissible with X
-- **Global nav:** lululemon logo (left), account icon, bag icon, hamburger menu (right)
-- **Search bar:** Full-width prominent search field, sits between nav and hero
-- **Hero module:** Autoplay video (pause/prev/next controls visible at bottom right), tight face portrait of a woman in her 30s with braids wearing a light lululemon layer
-- **Hero headline:** "Mom's an icon."
-- **Hero subtext:** "Our designs draw inspiration from every move."
-- **Primary CTA button:** "Shop Women's What's New" (pill/rounded rectangle style)
-- **Secondary CTA button:** "Explore the Gift Guide" (same pill style, below primary)
-- **Video controls:** Visible at bottom right — pause, back arrow, forward arrow — indicating the hero is a carousel or video
-- **No visible:** product rails, category tiles, loyalty callout, review widgets, sale section, footer — all below the fold and not captured
+- **Hero / primary value prop:** "Mom's an icon. Our designs draw inspiration from every move." over an abstract purple/blue textile background with two pill-style CTAs ("Shop Women's What's New" / "Explore the Gift Guide") and a carousel pagination control (pause, back, forward arrows) in the bottom right.
+- **Promotional banner strip:** Top-of-page white bar — "Get 15% off regular-priced items. Sign Up" with an X dismiss button on the right.
+- **Header navigation:** lululemon logo (left), person icon (account), bag icon (cart), and hamburger menu (right) — standard mobile header; no category shortcuts visible.
+- **Full-width search bar:** Placed directly below the header, above the hero image — prominent and immediately usable.
+- **Carousel controls:** Pause button and left/right navigation arrows in the bottom-right of the hero frame — indicates this is a rotating hero with multiple slides; only slide 1 is visible in this screenshot.
+- **Bugs / friction:** None visible — no broken images, no overlapping elements, no placeholder text. Layout appears stable.
 ## Recent history
 
 - [[2026-05-02-homepage-www.lululemon.com-yolanda-stretch-lulu-fap6e]] — 5/10 (2026-05-02)

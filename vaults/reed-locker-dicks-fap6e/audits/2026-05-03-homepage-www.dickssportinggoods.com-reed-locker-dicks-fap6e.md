@@ -12,149 +12,146 @@ tags: [site-journey, score-1, sender/www-dickssportinggoods-com]
 **Score:** 1/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Dick's Sporting Goods greeted me with a full site error — the entire homepage failed to load, showing nothing but a branded "Oops, Something Went Wrong" card on a gray background. There's no merchandise, no hero, no nav, no promos — just a logo and an apology message telling me to come back in 12 hours. That's a hard stop before I even get started.
+- I pulled up Dick's on my phone to check cleats before my son's tournament this weekend, and I got an error page. Not a maintenance banner, not a "we'll be right back" with a countdown — just a raw error card with an IP address printed at the bottom like I accidentally wandered into a server room. Whatever Dick's is as a brand, right now they're a brick wall.
 - **1/10**
-- − Hero copy or imagery explicitly speaks to your persona: no hero at all — site is down
-- − Returning-shopper hook visible: none
+- − Hero copy/imagery speaks to my persona: no hero, no copy, no imagery
+- − Returning-shopper hook visible: nothing
 - − Concrete offer above the fold: none
 - − Unmistakable primary CTA: none
-- − Visual hierarchy clear: only an error card; nothing to guide the eye
-- − No render bugs: **fails** — the entire page is a render failure (error code visible: `0.23a7cb17.1777782255.1dc2cf78 IP: 47.41.15.19`)
-- − Demographic signals match persona: n/a — nothing rendered
-- − Page reflects current campaign/season: none
+- − Visual hierarchy is clear: there is no commerce hierarchy at all
+- − No render bugs: **FAILS** — the page IS the bug; error message with a raw error ID and IP address
+- − Demographic signals match persona: N/A
+- − Page reflects current campaign/season: nothing
 - − Loyalty/membership benefits visible: none
-- − Offer feels honest: n/a — no offer present
-- + The only point I'm giving is the starting baseline (1), because the logo did render correctly.
+- − Offer feels honest: N/A
+- Start at 1. Zero additional criteria met. Score stays at 1.
 
 ## What's working
 
-- **Logo renders cleanly** — the Dick's Sporting Goods badge is crisp and recognizable, so I at least know I'm on the right site.
-- **Error message is polite and readable** — "We appreciate your patience and understanding" is a better tone than a raw HTTP 500. At least they're not screaming stack traces at me.
+- The Dick's logo renders correctly — at least I know I'm at the right domain and not some phishing dead-end.
 
 ## What's weak
 
-- **No homepage at all** — I'm a dad who just drove three kids to tournaments this weekend and I need cleats resupplied. This is a dead end.
-- **12-hour recovery window is alarming** — "Please try again after 12 hours" is a brick wall. That's not maintenance mode copy, that's a crisis. It signals the brand isn't on top of their uptime.
-- **Error code dumped in plain sight** — `Error: 0.23a7cb17.1777782255.1dc2cf78 IP: 47.41.15.19` is exposed to every visitor. Technical garbage that means nothing to me as a shopper and looks sloppy.
-- **No fallback content whatsoever** — no cached product tiles, no "shop our app" redirect, no store-locator link, nothing. A retailer this size should have *something* to catch a visitor when the main experience is down.
-- **No mobile app prompt** — this would be the one reasonable save. "Download our app to keep shopping" would at least give me somewhere to go.
+- **The entire homepage is a 503-style error card.** Zero commerce, zero content, zero navigation.
+- **The error message exposes internal infrastructure info** — "Error: 0.23a7cb17.1777836178.237654e4 IP: 47.41.15.19" is printed in bold on the page. That's a raw edge-node or CDN identifier exposed to every customer who hits this. Not a great look.
+- **"Try again after 12 hours"** — twelve hours is an eternity when I need to order before Saturday's game. That messaging sends me straight to Amazon or Nike.com.
+- **No fallback path offered** — no phone number, no store locator link, no "shop in the app instead," nothing. Dead end.
 
 ## Recommendations
 
-- **Ship a degraded-mode fallback page immediately** — even static HTML with a "Browse our top categories" grid and a store locator keeps shoppers from walking away permanently. This is table stakes for a $12B retailer.
-- **Remove the raw error code from the user-facing message** — it serves no customer purpose and makes the brand look technically careless. Log it server-side.
-- **Add an app / alternative channel CTA** — "Shop the Dick's app while we fix this" with a download badge is a one-week ship that rescues otherwise-lost sessions.
-- **Replace the 12-hour copy with a countdown or "back soon" message** — "Try again in a few minutes" with a reload button converts more returning visitors than a vague half-day estimate.
+- **Replace the raw error card with a branded maintenance page** — show the logo, a brief human message ("We'll be back shortly"), and a link to the store locator or the DSG app so customers have somewhere to go.
+- **Strip the internal error ID and IP from the customer-facing message** — that's a support-ticket detail, not a homepage headline.
+- **Surface a ScoreCard / app CTA on the fallback page** — even during an outage, a "Download the app" button keeps me in the funnel instead of sending me to a competitor.
+- **Set a realistic time estimate or drop the timeline entirely** — "12 hours" is a conversion killer. Say "We're working on it" with no clock if you can't commit to faster.
 
 ## Full review
 ## 1. Executive Summary
 
-Dick's Sporting Goods greeted me with a full site error — the entire homepage failed to load, showing nothing but a branded "Oops, Something Went Wrong" card on a gray background. There's no merchandise, no hero, no nav, no promos — just a logo and an apology message telling me to come back in 12 hours. That's a hard stop before I even get started.
+I pulled up Dick's on my phone to check cleats before my son's tournament this weekend, and I got an error page. Not a maintenance banner, not a "we'll be right back" with a countdown — just a raw error card with an IP address printed at the bottom like I accidentally wandered into a server room. Whatever Dick's is as a brand, right now they're a brick wall.
 
 ## 2. Business Impact Score (1-10)
 
 **1/10**
 
-- − Hero copy or imagery explicitly speaks to your persona: no hero at all — site is down
-- − Returning-shopper hook visible: none
+- − Hero copy/imagery speaks to my persona: no hero, no copy, no imagery
+- − Returning-shopper hook visible: nothing
 - − Concrete offer above the fold: none
 - − Unmistakable primary CTA: none
-- − Visual hierarchy clear: only an error card; nothing to guide the eye
-- − No render bugs: **fails** — the entire page is a render failure (error code visible: `0.23a7cb17.1777782255.1dc2cf78 IP: 47.41.15.19`)
-- − Demographic signals match persona: n/a — nothing rendered
-- − Page reflects current campaign/season: none
+- − Visual hierarchy is clear: there is no commerce hierarchy at all
+- − No render bugs: **FAILS** — the page IS the bug; error message with a raw error ID and IP address
+- − Demographic signals match persona: N/A
+- − Page reflects current campaign/season: nothing
 - − Loyalty/membership benefits visible: none
-- − Offer feels honest: n/a — no offer present
+- − Offer feels honest: N/A
 
-  + The only point I'm giving is the starting baseline (1), because the logo did render correctly.
+Start at 1. Zero additional criteria met. Score stays at 1.
 
 ## 3. What's Working
 
-- **Logo renders cleanly** — the Dick's Sporting Goods badge is crisp and recognizable, so I at least know I'm on the right site.
-- **Error message is polite and readable** — "We appreciate your patience and understanding" is a better tone than a raw HTTP 500. At least they're not screaming stack traces at me.
+- The Dick's logo renders correctly — at least I know I'm at the right domain and not some phishing dead-end.
 
 ## 4. What's Weak
 
-- **No homepage at all** — I'm a dad who just drove three kids to tournaments this weekend and I need cleats resupplied. This is a dead end.
-- **12-hour recovery window is alarming** — "Please try again after 12 hours" is a brick wall. That's not maintenance mode copy, that's a crisis. It signals the brand isn't on top of their uptime.
-- **Error code dumped in plain sight** — `Error: 0.23a7cb17.1777782255.1dc2cf78 IP: 47.41.15.19` is exposed to every visitor. Technical garbage that means nothing to me as a shopper and looks sloppy.
-- **No fallback content whatsoever** — no cached product tiles, no "shop our app" redirect, no store-locator link, nothing. A retailer this size should have *something* to catch a visitor when the main experience is down.
-- **No mobile app prompt** — this would be the one reasonable save. "Download our app to keep shopping" would at least give me somewhere to go.
+- **The entire homepage is a 503-style error card.** Zero commerce, zero content, zero navigation.
+- **The error message exposes internal infrastructure info** — "Error: 0.23a7cb17.1777836178.237654e4 IP: 47.41.15.19" is printed in bold on the page. That's a raw edge-node or CDN identifier exposed to every customer who hits this. Not a great look.
+- **"Try again after 12 hours"** — twelve hours is an eternity when I need to order before Saturday's game. That messaging sends me straight to Amazon or Nike.com.
+- **No fallback path offered** — no phone number, no store locator link, no "shop in the app instead," nothing. Dead end.
 
 ## 5. Recommendations
 
-- **Ship a degraded-mode fallback page immediately** — even static HTML with a "Browse our top categories" grid and a store locator keeps shoppers from walking away permanently. This is table stakes for a $12B retailer.
-- **Remove the raw error code from the user-facing message** — it serves no customer purpose and makes the brand look technically careless. Log it server-side.
-- **Add an app / alternative channel CTA** — "Shop the Dick's app while we fix this" with a download badge is a one-week ship that rescues otherwise-lost sessions.
-- **Replace the 12-hour copy with a countdown or "back soon" message** — "Try again in a few minutes" with a reload button converts more returning visitors than a vague half-day estimate.
+- **Replace the raw error card with a branded maintenance page** — show the logo, a brief human message ("We'll be back shortly"), and a link to the store locator or the DSG app so customers have somewhere to go.
+- **Strip the internal error ID and IP from the customer-facing message** — that's a support-ticket detail, not a homepage headline.
+- **Surface a ScoreCard / app CTA on the fallback page** — even during an outage, a "Download the app" button keeps me in the funnel instead of sending me to a competitor.
+- **Set a realistic time estimate or drop the timeline entirely** — "12 hours" is a conversion killer. Say "We're working on it" with no clock if you can't commit to faster.
 
 ## 6. Bottom Line
 
-I'm gone — I'm opening Field & Stream or Public Lands right now because I need those cleats before Saturday.
+I'm closing the tab and texting my wife to check Amazon — I need those cleats before Saturday and Dick's just told me to come back in half a day.
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `Oops, Something Went Wrong.`
-- **Hero image:** No image — plain white error card on gray background
-- **Primary CTA:** None — no button visible; no visible CTA at all
-- **Scores (1-10):** Clarity `1`, Relevance to you `1`, Visual hierarchy `2`, On-brand `2`
+- **Hero image:** none — blank light-gray page background with a white card centered on screen
+- **Primary CTA:** none — visible above the fold? no
+- **Scores (1-10):** Clarity `2`, Relevance to you `1`, Visual hierarchy `2`, On-brand `1`
 - **Strengths:**
-  - Logo is legible and correctly placed
-  - Error text is readable and not a raw stack trace
+  - The error card is visually contained and doesn't shatter the layout further
 - **Weaknesses:**
-  - Zero merchandise, zero navigation, zero CTA — the "hero" is literally an apology
-  - No way forward; dead-end experience with no path to conversion
+  - No commerce content whatsoever; the "hero" is an outage notice
+  - Exposes raw technical identifiers (error hash + IP) that erode trust
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** None — page did not render
-- **Urgency / scarcity:** None — only urgency is the error recovery window ("try again after 12 hours"), which works against the brand
-- **Loyalty hooks:** None visible — ScoreCard rewards program completely absent
-- **Honesty check:** Showing a raw internal error code (`0.23a7cb17... IP: 47.41.15.19`) to end users is an accidental disclosure. Not malicious, but it is sloppy and exposes infrastructure detail.
+- **Active promos:** none
+- **Urgency / scarcity:** "Please try accessing the site again after 12 hours" — this is anti-urgency; it tells me to leave and come back tomorrow
+- **Loyalty hooks:** none visible
+- **Honesty check:** Exposing "IP: 47.41.15.19" and a hashed error ID to end customers feels sloppy rather than manipulative, but it does undermine confidence in the platform's professionalism.
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: No hero exists; site is down
-- − Easy to reach my category: No navigation rendered at all
-- − Eye-catching imagery in my category: Zero imagery loaded
-- − Promo banner I would use: No banners visible
-- − Page renders cleanly: Hard fail — full site error with exposed error code
-- − Imagery includes someone like me: No imagery whatsoever
-- − Copy register matches mine: Error copy is polite but irrelevant to shopping
-- − Trust signals visible: None — no reviews, badges, or returns language
-- − New / hot rail in my category: Nothing rendered
-- − No dark patterns: Technically no dark patterns, but a hard wall is worse
+- − Hero relates to my focus area: no hero exists, let alone one for team sports / cleat shopping
+- − Easy to reach my category: no navigation visible at all
+- − Eye-catching imagery in my category: none
+- − Promo banner I would use: none
+- − Page renders cleanly: NO — the entire page is an error state
+- − Imagery includes someone like me: none
+- − Copy register matches mine: the message is generic corporate; no personality
+- − Trust signals visible: none
+- − New/hot rail in my category: none
+- − No dark patterns: technically no dark patterns, but an exposed server IP and a 12-hour wait message are their own kind of friction
 
-**Score:** `1/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** There is literally nothing to engage with. The site failed to serve any content, so I scored the minimum baseline. The polite tone of the error message is the only softening factor — it didn't earn any rubric points.
+**Score:** `1/10` — zero "+" signals beyond the base point.
+
+**Rationale:** There is literally nothing on this page that creates engagement. Every criterion fails because there's no commerce surface to interact with — just an error card and a long wait window.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: No CTA of any kind
-- − Unambiguous CTA copy: None present
-- − Active price reduction or member pricing: None visible
-- − Time-bounded credible deadline: None
-- − Reachable free-shipping threshold: Not displayed
-- − Specific product page one tap away: No navigation, no products
-- − Sizing / fit info accessible: Completely absent
-- − Returns / exchanges mentioned: Not present
-- − Reviews / ratings visible: None
-- − Trust / security signals: None
+- − CTA in my category: none
+- − Unambiguous CTA copy: none
+- − Active price reduction or member pricing: none
+- − Time-bounded credible deadline: none
+- − Reachable free-shipping threshold: none visible
+- − Specific product page one tap away: none
+- − Sizing / fit info accessible: none
+- − Returns / exchanges mentioned: none
+- − Reviews / ratings visible: none
+- − Trust / security signals: none — if anything, the raw IP display does the opposite
 
-**Score:** `1/10` — baseline only; zero rubric criteria met.
-**Rationale:** I cannot convert on a page with no products, no CTAs, and no path forward. The only way this ends is me going to a competitor.
+**Score:** `1/10` — no "+" signals.
+
+**Rationale:** There is no path to conversion. The page is a full stop — no cart, no category, no CTA, nothing. A customer with purchase intent in hand walks away empty.
 
 ## 11. Evidence
 
-Visible modules in the screenshot (in scroll order):
+Visible modules on the page (in order):
 
-- **Error card / "hero":** White centered box with Dick's logo, blue "Oops, Something Went Wrong." headline, two lines of recovery copy, and a raw error code string
-- **Background:** Solid light gray (#f3f3f3-ish) fill extending the full viewport height — nothing else loaded
-- **Bugs / friction / clarity issues visible:**
-  - Full site outage — homepage did not render any retail content
-  - Raw internal error token and IP address visible to end users: `Error: 0.23a7cb17.1777782255.1dc2cf78 IP: 47.41.15.19`
-  - "Try again after 12 hours" messaging — extreme recovery window with no countdown or reload mechanism
-  - No fallback navigation, no app redirect, no store locator — complete dead end for the visitor
+- **Dick's Sporting Goods logo** — centered in a white card, renders correctly
+- **Error heading** — "Oops, Something Went Wrong." in blue, ~H1 size
+- **Body copy line 1** — "We are working on the problem. Please try accessing the site again after 12 hours."
+- **Body copy line 2** — "We appreciate your patience and understanding."
+- **Error ID / IP block** — bold text: "Error: 0.23a7cb17.1777836178.237654e4 IP: 47.41.15.19"
+- **Background** — full-page light gray (#f4f4f4 approx.), empty below the card for the entire scroll length
+- **Bugs / friction:** The page IS the bug — a site-wide outage error served as the homepage, with internal infrastructure metadata (error hash, IP address) exposed to end users and no recovery path (no store locator, no app link, no contact number).
 ## Recent history
 
 - [[2026-05-02-homepage-www.dickssportinggoods.com-reed-locker-dicks-fap6e]] — 1/10 (2026-05-02)

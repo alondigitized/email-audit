@@ -3,154 +3,162 @@ slug: 2026-05-03-homepage-www.amazon.com-sage-prime-amazon-fap6e
 type: site
 date: 2026-05-03
 persona: sage-prime-amazon-fap6e
-score: "6/10"
+score: "4/10"
 sender: www.amazon.com
 subject: Homepage snapshot · www.amazon.com · 2026-05-03
-tags: [site-journey, score-6, sender/www-amazon-com]
+tags: [site-journey, score-4, sender/www-amazon-com]
 ---
 # Homepage snapshot · www.amazon.com · 2026-05-03
-**Score:** 6/10 · **Type:** Site journey · **2026-05-03**
+**Score:** 4/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- Amazon's homepage right now is basically a Prime recruitment billboard — which is a little confusing when I'm already a Prime member and have been for years. There's a timely "Designer gifts for Mom" module that tells me Mother's Day is on the brain, but the above-the-fold experience is laser-focused on getting non-members to subscribe rather than giving me — a loyal, high-frequency buyer — anything to click on. It looks clean and instantly recognizable as Amazon, but it's not speaking to me at all.
-- **6/10**
-- + Unmistakable primary CTA above fold: "Join Prime" yellow button is hard to miss
-- + Visual hierarchy is clear: blue hero dominates, yellow button pops, product grid follows naturally
-- + Demographic signal lands: "Designer gifts for Mom" is perfectly timed (Mother's Day is next week)
-- + Page reflects current season: May = Mother's Day, gift guide front and center
-- + Offer feels honest: "Terms apply." is visible, nothing buried or bait-and-switch
-- − Hero copy targets non-members; as an existing Prime member, "Join Prime" is dead-on-arrival for me
-- − No returning-shopper hook whatsoever: no recently-viewed, no account greeting, no "welcome back"
-- − No concrete offer with a specific dollar or percent value above the fold
-- − Text in hero is visibly truncated: "Fast, free shipp..." — render gap on the right edge
-- − No loyalty or membership rewards visible for existing Prime members
+- Okay, I recognize this brand — it's my utility app that I basically live inside — but this homepage is treating me like a stranger. The whole above-the-fold is a "Join Prime" pitch, which is wild because I've been a Prime member for years. Below that, there's a "Beauty routine essentials" grid that's fine, but nothing here knows who I am. It feels like I landed on the logged-out version by accident.
+- **4/10**
+- + One concrete offer above the fold: "fast, free shipping" is legible in the hero
+- + One unmistakable primary CTA: the yellow "Join Prime" button is impossible to miss
+- + Visual hierarchy is clear: blue hero dominates, yellow button pops against it
+- + Page reflects a neutral/evergreen campaign (not stale seasonal copy)
+- − Hero copy targets non-members, not me — I'm already Prime; this CTA is completely wrong for my session
+- − Zero returning-shopper hook: no "Hi Sage," no recently viewed, no Subscribe & Save callout
+- − No loyalty/membership benefits for existing members — ironic given the hero subject
+- − Hero text is cut off on the right edge ("Fast, free shipp…", "plus streaming") — layout is cropped
+- − No demographic signals for suburban mom-of-two lifestyle
+- − Offer is not persona-targeted; it's pure acquisition mode
 
 ## What's working
 
-- **"Designer gifts for Mom" module** — perfect timing. I actually need to buy something for my mother-in-law this week. The Cartier and Gucci thumbnails look polished and gift-worthy. This is the most relevant thing I see.
-- **Yellow "Join Prime" button** — even though the CTA doesn't apply to me, the button is high-contrast and impossible to miss. Good CTA design mechanics.
-- **Recognized brand / trusted chrome** — Amazon logo, familiar layout, location detection ("Monterey … 91754") — my brain is already comfortable. Zero friction in trusting the page.
-- **Mother's Day timing** — the gift guide placement aligns to where I actually am mentally this week.
+- **Yellow "Join Prime" button** — even though it's the wrong CTA for me, it's visually excellent. High contrast against the blue, centered, unmissable.
+- **"Beauty routine essentials" module** — I do buy skincare and makeup through Amazon, and the product tiles (lipstick, serum, pump lotion, fragrance) are clean and shoppable. This is a category I'd tap.
+- **Delivery location in the header** ("Delivering to Monterey … 91754") — I appreciate that even without a full login it's holding my location. That's the utility I expect.
+- **Navigation bar is flat and fast** — "All," "Amazon Haul," "Medical Care," "Amazon Basics" are right there without hunting.
 
 ## What's weak
 
-- **Hero is wasted on me** — the entire above-the-fold real estate is a Prime acquisition pitch. I joined years ago. This hero is a no-op for probably a large share of mobile visitors. It doesn't surface a deal, a category, or anything to shop.
-- **Truncated hero text** — "Fast, free shipp…" is clipped on the right edge. Even if it's a crop artifact, it looks unfinished on my phone screen.
-- **Nav bar choices feel random** — "Amazon Haul," "Medical Care," "Amazon Basics" are my top three? No shortcut to household essentials, Subscribe & Save, or even a search prompt. These don't match how I actually use the app.
-- **No personalization signal at all** — Amazon knows everything about me and shows me… a Prime sign-up screen. No recent order, no "Back in stock," no Lightning Deal. That's a miss.
-- **Luxury gift rail without price anchoring** — Cartier and Gucci tiles with no prices visible makes me feel like I've landed in the wrong aisle. She's my mother-in-law, not a Mariano's shopper. I'd need to tap through to know if anything's in range.
+- **The entire hero is a Prime acquisition pitch** — I'm already a member. This should be showing me Lightning Deals, my Subscribe & Save renewals, or "back in stock" items, not selling me a subscription I have.
+- **No personalization above the fold** — no account greeting, no recently viewed products, no "Your cart has items." This feels like a cold session, not my daily utility.
+- **Hero text is cropped** — "Fast, free shipp…" and "plus streaming" are visibly cut off on the right. On a phone during school pickup, that's a janky first impression.
+- **Navigation doesn't surface my entry points** — "Amazon Haul" and "Amazon Basics" are there, but I want Household, Grocery, or Subscribe & Save. Those aren't visible.
+- **No urgency or deals above the fold** — no Lightning Deal timer, no "ends today," nothing that makes me feel the immediacy I'm used to from Amazon.
 
 ## Recommendations
 
-- **Swap the Prime acquisition hero for a signed-in personalized hero**: if I'm logged in, show me a Lightning Deal strip or a "Back in stock" nudge — not a membership pitch I can't act on. Reserve the Join Prime hero for genuinely unauthenticated sessions.
-- **Add a visible price range or filter to the "Designer gifts for Mom" rail** — e.g., "Gifts under $50 / $100 / $200" chips below the heading. Right now I can't tell if the Gucci bag is $80 or $800 without tapping.
-- **Surface one Subscribe & Save or household-staples shortcut in the top nav** — replacing or supplementing "Amazon Haul" with something like "Your Subscriptions" or "Household" would cut directly to my dominant use case.
-- **Fix the hero text overflow** — "Fast, free shipp…" needs to either wrap properly or be shortened. Even on mobile, cut-off hero copy signals carelessness.
+- **Swap the hero for a returning-member experience** — if there's a login session, show "Welcome back, Sage — here's what's ending soon in your Lightning Deals" or a Subscribe & Save reminder. Reserve the Join Prime hero strictly for unauthenticated users.
+- **Fix the hero text overflow on mobile** — "Fast, free shipp…" is not a complete sentence. Truncate to fit the viewport or use a two-line layout that doesn't clip.
+- **Add a deal-urgency strip** — a thin banner below the nav saying "Today's Deals — 6 hrs left" would take 10 minutes to ship and would immediately pull me into the purchase funnel.
+- **Surface a household/essentials quick-link** in the horizontal nav — one "Household" or "Subscribe & Save" chip next to Amazon Haul would capture exactly how I shop this app.
 
 ## Full review
 ## 1. Executive Summary
 
-Amazon's homepage right now is basically a Prime recruitment billboard — which is a little confusing when I'm already a Prime member and have been for years. There's a timely "Designer gifts for Mom" module that tells me Mother's Day is on the brain, but the above-the-fold experience is laser-focused on getting non-members to subscribe rather than giving me — a loyal, high-frequency buyer — anything to click on. It looks clean and instantly recognizable as Amazon, but it's not speaking to me at all.
+Okay, I recognize this brand — it's my utility app that I basically live inside — but this homepage is treating me like a stranger. The whole above-the-fold is a "Join Prime" pitch, which is wild because I've been a Prime member for years. Below that, there's a "Beauty routine essentials" grid that's fine, but nothing here knows who I am. It feels like I landed on the logged-out version by accident.
 
 ## 2. Business Impact Score (1-10)
 
-**6/10**
+**4/10**
 
-- + Unmistakable primary CTA above fold: "Join Prime" yellow button is hard to miss
-- + Visual hierarchy is clear: blue hero dominates, yellow button pops, product grid follows naturally
-- + Demographic signal lands: "Designer gifts for Mom" is perfectly timed (Mother's Day is next week)
-- + Page reflects current season: May = Mother's Day, gift guide front and center
-- + Offer feels honest: "Terms apply." is visible, nothing buried or bait-and-switch
-- − Hero copy targets non-members; as an existing Prime member, "Join Prime" is dead-on-arrival for me
-- − No returning-shopper hook whatsoever: no recently-viewed, no account greeting, no "welcome back"
-- − No concrete offer with a specific dollar or percent value above the fold
-- − Text in hero is visibly truncated: "Fast, free shipp..." — render gap on the right edge
-- − No loyalty or membership rewards visible for existing Prime members
+- + One concrete offer above the fold: "fast, free shipping" is legible in the hero
+- + One unmistakable primary CTA: the yellow "Join Prime" button is impossible to miss
+- + Visual hierarchy is clear: blue hero dominates, yellow button pops against it
+- + Page reflects a neutral/evergreen campaign (not stale seasonal copy)
+- − Hero copy targets non-members, not me — I'm already Prime; this CTA is completely wrong for my session
+- − Zero returning-shopper hook: no "Hi Sage," no recently viewed, no Subscribe & Save callout
+- − No loyalty/membership benefits for existing members — ironic given the hero subject
+- − Hero text is cut off on the right edge ("Fast, free shipp…", "plus streaming") — layout is cropped
+- − No demographic signals for suburban mom-of-two lifestyle
+- − Offer is not persona-targeted; it's pure acquisition mode
 
 ## 3. What's Working
 
-- **"Designer gifts for Mom" module** — perfect timing. I actually need to buy something for my mother-in-law this week. The Cartier and Gucci thumbnails look polished and gift-worthy. This is the most relevant thing I see.
-- **Yellow "Join Prime" button** — even though the CTA doesn't apply to me, the button is high-contrast and impossible to miss. Good CTA design mechanics.
-- **Recognized brand / trusted chrome** — Amazon logo, familiar layout, location detection ("Monterey … 91754") — my brain is already comfortable. Zero friction in trusting the page.
-- **Mother's Day timing** — the gift guide placement aligns to where I actually am mentally this week.
+- **Yellow "Join Prime" button** — even though it's the wrong CTA for me, it's visually excellent. High contrast against the blue, centered, unmissable.
+- **"Beauty routine essentials" module** — I do buy skincare and makeup through Amazon, and the product tiles (lipstick, serum, pump lotion, fragrance) are clean and shoppable. This is a category I'd tap.
+- **Delivery location in the header** ("Delivering to Monterey … 91754") — I appreciate that even without a full login it's holding my location. That's the utility I expect.
+- **Navigation bar is flat and fast** — "All," "Amazon Haul," "Medical Care," "Amazon Basics" are right there without hunting.
 
 ## 4. What's Weak
 
-- **Hero is wasted on me** — the entire above-the-fold real estate is a Prime acquisition pitch. I joined years ago. This hero is a no-op for probably a large share of mobile visitors. It doesn't surface a deal, a category, or anything to shop.
-- **Truncated hero text** — "Fast, free shipp…" is clipped on the right edge. Even if it's a crop artifact, it looks unfinished on my phone screen.
-- **Nav bar choices feel random** — "Amazon Haul," "Medical Care," "Amazon Basics" are my top three? No shortcut to household essentials, Subscribe & Save, or even a search prompt. These don't match how I actually use the app.
-- **No personalization signal at all** — Amazon knows everything about me and shows me… a Prime sign-up screen. No recent order, no "Back in stock," no Lightning Deal. That's a miss.
-- **Luxury gift rail without price anchoring** — Cartier and Gucci tiles with no prices visible makes me feel like I've landed in the wrong aisle. She's my mother-in-law, not a Mariano's shopper. I'd need to tap through to know if anything's in range.
+- **The entire hero is a Prime acquisition pitch** — I'm already a member. This should be showing me Lightning Deals, my Subscribe & Save renewals, or "back in stock" items, not selling me a subscription I have.
+- **No personalization above the fold** — no account greeting, no recently viewed products, no "Your cart has items." This feels like a cold session, not my daily utility.
+- **Hero text is cropped** — "Fast, free shipp…" and "plus streaming" are visibly cut off on the right. On a phone during school pickup, that's a janky first impression.
+- **Navigation doesn't surface my entry points** — "Amazon Haul" and "Amazon Basics" are there, but I want Household, Grocery, or Subscribe & Save. Those aren't visible.
+- **No urgency or deals above the fold** — no Lightning Deal timer, no "ends today," nothing that makes me feel the immediacy I'm used to from Amazon.
 
 ## 5. Recommendations
 
-- **Swap the Prime acquisition hero for a signed-in personalized hero**: if I'm logged in, show me a Lightning Deal strip or a "Back in stock" nudge — not a membership pitch I can't act on. Reserve the Join Prime hero for genuinely unauthenticated sessions.
-- **Add a visible price range or filter to the "Designer gifts for Mom" rail** — e.g., "Gifts under $50 / $100 / $200" chips below the heading. Right now I can't tell if the Gucci bag is $80 or $800 without tapping.
-- **Surface one Subscribe & Save or household-staples shortcut in the top nav** — replacing or supplementing "Amazon Haul" with something like "Your Subscriptions" or "Household" would cut directly to my dominant use case.
-- **Fix the hero text overflow** — "Fast, free shipp…" needs to either wrap properly or be shortened. Even on mobile, cut-off hero copy signals carelessness.
+- **Swap the hero for a returning-member experience** — if there's a login session, show "Welcome back, Sage — here's what's ending soon in your Lightning Deals" or a Subscribe & Save reminder. Reserve the Join Prime hero strictly for unauthenticated users.
+- **Fix the hero text overflow on mobile** — "Fast, free shipp…" is not a complete sentence. Truncate to fit the viewport or use a two-line layout that doesn't clip.
+- **Add a deal-urgency strip** — a thin banner below the nav saying "Today's Deals — 6 hrs left" would take 10 minutes to ship and would immediately pull me into the purchase funnel.
+- **Surface a household/essentials quick-link** in the horizontal nav — one "Household" or "Subscribe & Save" chip next to Amazon Haul would capture exactly how I shop this app.
 
 ## 6. Bottom Line
 
-I'd scroll past the Prime hero immediately and tap into the Mother's Day gift guide — so I stay on the page, but only because of that one module, not because Amazon earned it with this experience.
+I'd keep browsing because this is Amazon and I need paper towels, but the homepage did nothing to earn that scroll — it just survived on brand inertia.
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `Fast, free shipp` / `plus streaming` *(text visibly clipped on right edge)*
-- **Hero image:** Solid blue background with no product or lifestyle imagery — text-only hero
+- **Hero copy (verbatim):** `Fast, free shipp[ing] / plus streaming` (right edge cut off)
+- **Hero image:** Solid royal blue background — no lifestyle imagery, no model, no product; purely typographic with the yellow CTA button
 - **Primary CTA:** `Join Prime` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `5`, Relevance to you `2`, Visual hierarchy `7`, On-brand `7`
+- **Scores (1-10):** Clarity `6`, Relevance to you `2`, Visual hierarchy `8`, On-brand `7`
 - **Strengths:**
-  - High-contrast yellow button on blue field — CTA is unmissable
-  - Amazon's brand color palette makes this feel instantly trustworthy
+  - High-contrast yellow button on blue is visually excellent — the CTA hierarchy is textbook
+  - Clean, uncluttered layout; eye lands on the button immediately
 - **Weaknesses:**
-  - Zero imagery — a text-only hero feels cold and generic on mobile
-  - CTA is irrelevant to existing Prime members; no fallback message for the majority of logged-in visitors
+  - "Join Prime" is wrong for a logged-in or returning member — this hero should be context-aware
+  - Text is clipped on the right side; the headline is incomplete as rendered in the screenshot
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** Fast, free shipping + streaming bundled into Prime pitch (no specific % or $ off)
-- **Urgency / scarcity:** None visible — no countdown, no "ends tonight," no limited-stock language
-- **Loyalty hooks:** None for existing members — the page shows a Prime acquisition CTA but no rewards balance, no Prime Day teaser, no member-exclusive pricing badge
-- **Honesty check:** "Terms apply." is present and visible — no red flags. The truncated text is a UX failure, not a dark pattern. The luxury gift rail without visible prices creates mild sticker-shock anxiety but isn't manipulative.
+- **Active promos:** "Fast, free shipping plus streaming" (Prime pitch only)
+- **Urgency / scarcity:** None visible — no countdown timers, no "ends today," no limited-stock copy
+- **Loyalty hooks:** The Prime hero is technically a loyalty pitch, but it's acquisition-framed, not member-benefit-framed; no Subscribe & Save, no Prime Day teaser, no member-exclusive badge
+- **Honesty check:** The "Terms apply." line under the CTA is small but visible and feels appropriately disclosed — no bait-and-switch, just a standard legal note
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: Prime pitch is irrelevant — I'm already a member, this is dead air for me
-- − Easy to reach my category: Top nav shows Haul / Medical Care / Basics — no household, no Subscribe & Save shortcut
-- + Eye-catching imagery in my category: "Designer gifts for Mom" — Cartier, Gucci tiles catch my eye; Mother's Day is genuinely on my mind
-- − Promo banner I would use: No promo visible that applies to me as an existing member
-- − Page renders cleanly: Hero text truncated ("Fast, free shipp…") — visible clipping on right edge
-- − Imagery includes someone like me: No lifestyle photography at all — no mom, no family scene, just product tiles
-- + Copy register matches mine: "Designer gifts for Mom" is warm, direct, and hits the right register
-- − Trust signals visible: Amazon's own brand provides ambient trust, but no explicit review counts or badges visible above scroll
-- + New / hot rail in my category: Mother's Day gift guide is seasonal and timely — this is exactly the kind of content I'd tap
-- + No dark patterns: Page is clean; "Terms apply." is visible; no forced modals or countdown manipulation
-- **Score:** `5/10` — should equal 1 + count of "+" bullets above.
-- **Rationale:** The "Designer gifts for Mom" module rescues my engagement — it's timely and relevant. But the hero burns half the above-the-fold real estate on a message I can't act on, and the nav doesn't surface my actual use case.
+- + Hero relates to my focus area: Partial — Prime is core to how I shop, but this is a sales pitch, not a member feature
+- − Easy to reach my category: Nav shows Amazon Haul/Medical Care/Basics — no Household, Grocery, or Subscribe & Save shortcut
+- + Eye-catching imagery in my category: The beauty essentials grid has real product photos that would make me pause
+- − Promo banner I would use: No deals, no Lightning Deal strip, nothing time-sensitive for me
+- + Page renders cleanly: Layout is mostly clean, though hero text clips at right edge
+- − Imagery includes someone like me: No people anywhere in the screenshot — just products on a blue background
+- + Copy register matches mine: Direct and clear — not overly cute or overly technical
+- − Trust signals visible: No star ratings, review counts, or policy badges visible in this viewport
+- − New / hot rail in my category: No new arrivals or bestsellers rail visible
+- + No dark patterns: No forced modal, no aggressive overlay, no fake countdown
+
+**Score:** `5/10` — should equal 1 + count of "+" bullets above.
+
+**Rationale:** The beauty module is the one genuinely sticky element — product imagery that's relevant to how I shop. But the lack of personalization, deals, or category shortcuts means I'm doing all the work to get to what I came for.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: "Join Prime" is not in my shopping category — I need household goods or Mother's Day gifts, not a subscription I already have
-- + Unambiguous CTA copy: "Join Prime" is crystal clear, even if wrong audience
-- − Active price reduction or member pricing: None visible — no % off, no "member price" badge
-- − Time-bounded credible deadline: No countdown, no "offer ends" language
-- − Reachable free-shipping threshold: Free shipping is implied by Prime pitch but no dollar threshold shown; for me as a member, this is already unlocked and unstated
-- + Specific product page one tap away: The Cartier and Gucci tiles in the gift module appear directly tappable to a product or category
-- − Sizing / fit info accessible: Not applicable to what's visible; no size/fit signals on any module
-- − Returns / exchanges mentioned: Not visible above fold
-- − Reviews / ratings visible: No star ratings or review counts on any product tile shown
-- − Trust / security signals: No secure-checkout badge, no "free returns" callout visible
-- **Score:** `3/10` — should equal 1 + count of "+" bullets above.
-- **Rationale:** The only conversion pull is the gift module letting me tap directly to a product — everything else is either an irrelevant CTA or missing entirely (no pricing, no reviews, no returns info). If I convert, it'll be despite the homepage, not because of it.
+- − CTA in my category: "Join Prime" is not a household/cart CTA — it's the wrong conversion goal for me
+- + Unambiguous CTA copy: "Join Prime" is perfectly clear, even if it's irrelevant
+- − Active price reduction or member pricing: None visible
+- − Time-bounded credible deadline: No deadline or urgency cue present
+- + Reachable free-shipping threshold: "Fast, free shipping" implies Prime-covered free shipping, which I already have
+- + Specific product page one tap away: Beauty product tiles look tappable and would go to a product or subcategory
+- − Sizing / fit info accessible: N/A for beauty products but not relevant here
+- − Returns / exchanges mentioned: Not visible in this viewport
+- − Reviews / ratings visible on featured products: No star ratings on the beauty grid tiles
+- − Trust / security signals: No secure checkout badge, no "free returns" label visible
+
+**Score:** `4/10` — should equal 1 + count of "+" bullets.
+
+**Rationale:** The beauty grid is one tap to a product, which is a genuine conversion path for me, but almost everything else in this viewport is optimized for a stranger, not a repeat buyer with a full cart history.
 
 ## 11. Evidence
 
-- **Hero / primary value prop:** Blue full-width banner — "Fast, free shipp[ing] / plus streaming" with yellow "Join Prime" button and "Terms apply." sub-copy
-- **Top navigation strip:** Hamburger "All," "Amazon Haul," "Medical Care ▾," "Amazon Basics" — four visible items
-- **Location bar:** "Delivering to Monterey … 91754 / Update location" with pin icon
-- **Featured category module:** "Designer gifts for Mom" — product tile grid with Cartier (gold belt/cuff), Gucci (pink quilted crossbody), Louis Vuitton bag (partially visible), jewelry item (partially visible)
-- **Partially visible adjacent module:** Content labeled "Th…" beginning to appear on the right edge — scroll/carousel not yet fully in view
-- **Bugs / friction:** Hero text clipped mid-word ("Fast, free shipp…") on right edge of viewport — layout overflow or screenshot crop that exposes a real mobile rendering gap
+- **Hero / primary value prop:** Blue full-width banner — "Fast, free shipp[ing] / plus streaming" with yellow "Join Prime" button and "Terms apply." subtext
+- **Navigation bar:** Hamburger "All" menu, then "Amazon Haul," "Medical Care ▼," "Amazon Basics" — horizontal scroll implied (right edge cut off)
+- **Header utility bar:** Amazon logo top-left, "Delivering to Monterey … 91754 — Update location," search bar with "All" category selector
+- **Featured category module — "Beauty routine essentials":** 2×2 grid showing Makeup (lip product), Skincare (serum bottle), a pump dispenser (likely body care), and a fragrance bottle — partially cut off on right
+- **Partially visible module to the right of beauty grid:** Another category tile visible at right edge, label cut off ("De…")
+- **"Cart" label** partially visible at bottom right — suggests bottom navigation tab bar
+- **Bugs / friction visible:**
+  - Hero headline text cropped: "Fast, free shipp…" and "plus streaming" are cut off on the right edge of the viewport
+  - Right side of navigation bar is cut off
+  - Right-side category module is cut off — unclear what it is
 ## Recent history
 
 - [[2026-05-02-homepage-www.amazon.com-sage-prime-amazon-fap6e]] — 4/10 (2026-05-02)
