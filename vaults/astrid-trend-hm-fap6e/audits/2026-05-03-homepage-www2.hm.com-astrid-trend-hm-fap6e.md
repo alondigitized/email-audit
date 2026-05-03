@@ -12,118 +12,115 @@ tags: [site-journey, score-1, sender/www2-hm-com]
 **Score:** 1/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- I literally cannot even get in — the page served me an **"Access Denied"** error from Akamai's edge network instead of the H&M homepage. There is zero brand experience here: no imagery, no offers, no nav, nothing. As far as my phone is concerned, H&M's site does not exist right now.
+- Okay so I literally cannot shop here right now — what loaded on my phone is a big bold **"Access Denied"** error from Akamai's CDN, not H&M's actual homepage. No hero, no product, no nothing. From where I'm sitting this isn't a brand experience, it's a wall. Whatever geo-blocking or bot-detection H&M has set up just treated me like a crawler and slammed the door.
 - **1/10**
-- − Hero copy or imagery speaks to my persona: no hero at all, just a system error
+- − Hero copy or imagery speaks to my persona: no content loaded at all
 - − Returning-shopper hook visible: none
 - − Concrete offer above the fold: none
 - − Unmistakable primary CTA: none
-- − Visual hierarchy clear: none — a plain text error page
-- − No render bugs: the page IS a bug (access denied from CDN)
-- − Demographic signals match my persona: none
-- − Page reflects current campaign/season: none
-- − Loyalty/membership benefits visible: none
-- − Offer feels honest: N/A — no offer exists
-- Score starts at 1; zero additional signals fire. **1/10**.
+- − Clear visual hierarchy: none — just a plain error string
+- − No render bugs: FAIL — the entire page is a CDN block error (`Access Denied`, Reference `#18.9a0ed217.1777831265.30c877a2`)
+- − Demographic signals match my persona: irrelevant, nothing rendered
+- − Current campaign/season reflected: nothing rendered
+- − Loyalty/membership benefits: nothing rendered
+- − Honest offer: nothing rendered
+- Score starts at 1, zero criteria TRUE. **1/10.**
 
 ## What's working
 
-- Nothing. The page rendered quickly — I'll give it that — but "fast to a wall" is not a win.
+- Nothing. The page that rendered is an Akamai EdgeSuite access denial. There are zero brand elements to evaluate positively.
 
 ## What's weak
 
-- **The entire experience:** The CDN (Akamai edgesuite) is blocking my request outright. The error reads: *"You don't have permission to access 'http://www2.hm.com/en_us/index.html' on this server."* That's a hard bounce before a single pixel of brand UI loads.
-- **No fallback or graceful redirect:** No branded error page, no "try hm.com instead," no customer-service link. Just a reference number and a blank white void.
-- **Zero trust signals:** A user hitting this on mobile would assume the site is down or sketchy — not a great look for a brand that wants me to drop $60 on a haul.
+- **Full page block** — the CDN returned HTTP 403 and rendered a plain-text error page. No stylesheet, no imagery, no H&M branding whatsoever.
+- **Zero error recovery UX** — no redirect suggestion, no "try again" link, no friendly copy. Just raw server language (`Reference #18.9a0ed217...`) that means nothing to a shopper.
+- **Trust completely destroyed** — if I hit this on my phone, my first instinct is the site is down or my account is flagged. I'm not coming back today.
 
 ## Recommendations
 
-- **Fix the CDN allowlist / geo-routing rule** so mobile user agents on the www2 subdomain aren't blocked at the edge — this is table stakes, ship it today.
-- **Add a branded 403 page** with a redirect to `www.hm.com` and a link to the app; even error states should reinforce brand identity.
-- **Set up uptime monitoring on www2** specifically — if this subdomain is meant to serve traffic and it's silently returning 403s, you're losing real customers with no alerting.
-- **Audit the Akamai config** for www2 vs www routing — the reference ID (`#18.47d7ce17.1777777247.35745055`) suggests a WAF or access-control rule is misfiring, likely on specific IP ranges or user-agent strings.
+- **Fix the CDN access control rules** — legitimate mobile browser user-agents are getting blocked. Akamai's bot-management rules are firing on real shoppers.
+- **If a block must happen, serve a branded error page** — show the H&M logo, a short "something went wrong" message, and a retry CTA. Don't expose raw EdgeSuite reference IDs.
+- **Add a fallback redirect** — `www2.hm.com` should 301 to `www.hm.com` rather than hard-blocking. The www2 subdomain blocking real traffic is a configuration problem that needs to be caught in monitoring.
 
 ## Full review
 ## 1. Executive Summary
 
-I literally cannot even get in — the page served me an **"Access Denied"** error from Akamai's edge network instead of the H&M homepage. There is zero brand experience here: no imagery, no offers, no nav, nothing. As far as my phone is concerned, H&M's site does not exist right now.
+Okay so I literally cannot shop here right now — what loaded on my phone is a big bold **"Access Denied"** error from Akamai's CDN, not H&M's actual homepage. No hero, no product, no nothing. From where I'm sitting this isn't a brand experience, it's a wall. Whatever geo-blocking or bot-detection H&M has set up just treated me like a crawler and slammed the door.
 
 ## 2. Business Impact Score (1-10)
 
 **1/10**
 
-- − Hero copy or imagery speaks to my persona: no hero at all, just a system error
+- − Hero copy or imagery speaks to my persona: no content loaded at all
 - − Returning-shopper hook visible: none
 - − Concrete offer above the fold: none
 - − Unmistakable primary CTA: none
-- − Visual hierarchy clear: none — a plain text error page
-- − No render bugs: the page IS a bug (access denied from CDN)
-- − Demographic signals match my persona: none
-- − Page reflects current campaign/season: none
-- − Loyalty/membership benefits visible: none
-- − Offer feels honest: N/A — no offer exists
+- − Clear visual hierarchy: none — just a plain error string
+- − No render bugs: FAIL — the entire page is a CDN block error (`Access Denied`, Reference `#18.9a0ed217.1777831265.30c877a2`)
+- − Demographic signals match my persona: irrelevant, nothing rendered
+- − Current campaign/season reflected: nothing rendered
+- − Loyalty/membership benefits: nothing rendered
+- − Honest offer: nothing rendered
 
-Score starts at 1; zero additional signals fire. **1/10**.
+Score starts at 1, zero criteria TRUE. **1/10.**
 
 ## 3. What's Working
 
-- Nothing. The page rendered quickly — I'll give it that — but "fast to a wall" is not a win.
+- Nothing. The page that rendered is an Akamai EdgeSuite access denial. There are zero brand elements to evaluate positively.
 
 ## 4. What's Weak
 
-- **The entire experience:** The CDN (Akamai edgesuite) is blocking my request outright. The error reads: *"You don't have permission to access 'http://www2.hm.com/en_us/index.html' on this server."* That's a hard bounce before a single pixel of brand UI loads.
-- **No fallback or graceful redirect:** No branded error page, no "try hm.com instead," no customer-service link. Just a reference number and a blank white void.
-- **Zero trust signals:** A user hitting this on mobile would assume the site is down or sketchy — not a great look for a brand that wants me to drop $60 on a haul.
+- **Full page block** — the CDN returned HTTP 403 and rendered a plain-text error page. No stylesheet, no imagery, no H&M branding whatsoever.
+- **Zero error recovery UX** — no redirect suggestion, no "try again" link, no friendly copy. Just raw server language (`Reference #18.9a0ed217...`) that means nothing to a shopper.
+- **Trust completely destroyed** — if I hit this on my phone, my first instinct is the site is down or my account is flagged. I'm not coming back today.
 
 ## 5. Recommendations
 
-- **Fix the CDN allowlist / geo-routing rule** so mobile user agents on the www2 subdomain aren't blocked at the edge — this is table stakes, ship it today.
-- **Add a branded 403 page** with a redirect to `www.hm.com` and a link to the app; even error states should reinforce brand identity.
-- **Set up uptime monitoring on www2** specifically — if this subdomain is meant to serve traffic and it's silently returning 403s, you're losing real customers with no alerting.
-- **Audit the Akamai config** for www2 vs www routing — the reference ID (`#18.47d7ce17.1777777247.35745055`) suggests a WAF or access-control rule is misfiring, likely on specific IP ranges or user-agent strings.
+- **Fix the CDN access control rules** — legitimate mobile browser user-agents are getting blocked. Akamai's bot-management rules are firing on real shoppers.
+- **If a block must happen, serve a branded error page** — show the H&M logo, a short "something went wrong" message, and a retry CTA. Don't expose raw EdgeSuite reference IDs.
+- **Add a fallback redirect** — `www2.hm.com` should 301 to `www.hm.com` rather than hard-blocking. The www2 subdomain blocking real traffic is a configuration problem that needs to be caught in monitoring.
 
 ## 6. Bottom Line
 
-I bounced immediately — there is literally nothing to browse, and I'm not going to troubleshoot H&M's server config on my lunch break.
+I'm gone — you can't browse a page that won't load, and there's zero reason for me to stick around staring at "Access Denied."
 
 ## 7. Hero & Above-the-Fold Analysis
 
 - **Hero copy (verbatim):** `Access Denied`
-- **Hero image:** None — blank white page
-- **Primary CTA:** None — visible above the fold? no
+- **Hero image:** None — blank white page with plain black system text
+- **Primary CTA:** None — visible above the fold? **no**
 - **Scores (1-10):** Clarity `1`, Relevance to you `1`, Visual hierarchy `1`, On-brand `1`
-- **Strengths:**
-  - The error message is at least technically legible
+- **Strengths:** None observable.
 - **Weaknesses:**
-  - This is a raw Akamai system error, not an H&M page — no brand presence whatsoever
-  - No redirect or recovery path offered
+  - The only visible "headline" is a CDN error message — no brand identity whatsoever
+  - No recovery path; a confused shopper has no next step
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** none
+- **Active promos:** none — page did not render
 - **Urgency / scarcity:** none
 - **Loyalty hooks:** none
-- **Honesty check:** The error itself is the problem — it feels like the site is broken or blocking me, which erodes trust before any shopping even starts.
+- **Honesty check:** The raw Akamai reference URL (`https://errors.edgesuite.net/18.9a0ed217.1777831265.30c877a2`) is exposed to end users — that's a technical leak that looks sketchy and erodes trust instantly
 
 ## 9. Engagement Likelihood
 
-- − Hero relates to my focus area: no hero, no fashion content, nothing
-- − Easy to reach my category: no navigation exists
-- − Eye-catching imagery in my category: no imagery at all
-- − Promo banner I would use: no banners
-- − Page renders cleanly: fails — a CDN 403 error is a hard render failure
-- − Imagery includes someone like me: no imagery
-- − Copy register matches mine: the only copy is a system error message
+- − Hero relates to my focus area: no content rendered
+- − Easy to reach my category: no nav rendered
+- − Eye-catching imagery in my category: none
+- − Promo banner I would use: none
+- − Page renders cleanly: hard no — full CDN block, Access Denied
+- − Imagery includes someone like me: none
+- − Copy register matches mine: the only copy is server error text — not my vibe
 - − Trust signals visible: none
 - − New / hot rail in my category: none
-- − No dark patterns: technically no dark patterns, but a blank error wall is worse
+- − No dark patterns: a full access denial is about as dark as it gets for a shopper
 
-**Score:** `1/10` — every signal is absent.
-- **Rationale:** A CDN block page is the worst possible engagement outcome — I have nothing to interact with and no reason to stay.
+**Score:** `1/10` — zero "+" bullets, floor score.
+**Rationale:** There is nothing to engage with. A CDN wall is an immediate bounce trigger for any mobile shopper, let alone a Gen Z one who will just open Zara next.
 
 ## 10. Conversion Likelihood
 
-- − CTA in my category: none
+- − CTA in my category: none rendered
 - − Unambiguous CTA copy: none
 - − Active price reduction or member pricing: none
 - − Time-bounded credible deadline: none
@@ -132,21 +129,21 @@ I bounced immediately — there is literally nothing to browse, and I'm not goin
 - − Sizing / fit info accessible: none
 - − Returns / exchanges mentioned: none
 - − Reviews / ratings visible: none
-- − Trust / security signals: none
+- − Trust / security signals: none — the opposite, a server-level rejection
 
-**Score:** `1/10` — no conversion signals present.
-- **Rationale:** There is no product, no offer, no CTA — conversion is impossible from this state.
+**Score:** `1/10` — zero "+" bullets.
+**Rationale:** Conversion is impossible when the page won't load. No product, no CTA, no path to cart.
 
 ## 11. Evidence
 
-Visible modules on the page (in scroll order):
+Visible modules in the screenshot (in full-page order):
 
-- **"Access Denied" header** — large bold system-generated heading, not H&M branded
-- **Error body text** — *"You don't have permission to access 'http://www2.hm.com/en_us/index.html' on this server."*
-- **Reference ID** — `#18.47d7ce17.1777777247.35745055` (Akamai CDN error reference)
-- **Error URL** — `https://errors.edgesuite.net/18.47d7ce17.1777777247.35745055`
-- **Blank white space** — rest of the viewport is empty
-- **Bugs / friction:** The entire page is a bug — CDN/WAF access denial served instead of the homepage; no brand UI loaded; no fallback redirect; no branded error state.
+- **Access Denied heading** — large bold `<h1>` system text, no H&M styling
+- **Error body copy** — `You don't have permission to access "http://www2.hm.com/en_us/index.html" on this server.`
+- **Reference ID** — `Reference #18.9a0ed217.1777831265.30c877a2`
+- **Akamai EdgeSuite error URL** — `https://errors.edgesuite.net/18.9a0ed217.1777831265.30c877a2`
+- **Remainder of viewport** — completely blank white, no footer, no nav, no imagery
+- **Bug / friction:** The entire homepage is a hard CDN 403 block. No H&M brand elements loaded. This is a critical render failure that would register as a full bounce for any real user hitting this URL.
 ## Recent history
 
 - [[2026-05-02-homepage-www2.hm.com-astrid-trend-hm-fap6e]] — 1/10 (2026-05-02)
