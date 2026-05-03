@@ -12,148 +12,168 @@ tags: [site-journey, score-9, sender/www-williams-sonoma-com]
 **Score:** 9/10 · **Type:** Site journey · **2026-05-03**
 ## Executive summary
 
-- This feels like my store — a "Spring Cookware Event" headline with 60% off top brands is exactly the kind of thing that makes me stop scrolling and start budgeting. Williams-Sonoma is clearly leading with their cookware season right now, which, as someone who just spent twenty minutes debating a Le Creuset braiser color, is well-timed. The tone is polished and unfussy, which is on-brand for what I'd expect when I pull up their site.
+- They got me at "Spring Cookware Event." Williams-Sonoma feels exactly like what it is — a heritage brand that knows its customer — and this homepage is pushing a big cookware sale with Le Creuset front and center. For someone who graduated from registry gifts to intentional additions, this feels like they opened my kitchen cabinet and wrote a headline about it.
 - **9/10**
-- + Hero copy matches my focus area: "Spring Cookware Event" is a direct hit for a weekend baker who still treats herself to Le Creuset.
-- − No returning-shopper hook: no rewards balance, no "welcome back," no recently-viewed nudge.
-- + Concrete offer above fold: "Up to 60% off top brands + free shipping" is specific and useful.
-- + Primary CTA visible: "SHOP NOW" button in dark contrast on the hero card.
-- + Visual hierarchy is clear: sage-green hero card draws the eye first, product deal card second — easy to parse on a phone.
-- + No render bugs: page is clean and legible; nothing overlapping or broken.
-- + Demographic signals match: no sneakers, no "20-something lifestyle" — this is a cookware store acting like a cookware store.
-- + Current campaign/season: "Spring" in early May reads as right on time, not stale.
-- − Loyalty/membership not visible: no rewards callout above the fold.
-- + Offer feels honest: the Le Creuset deal shows the exact "WAS $460 → Now $289.95" — transparent, no asterisk games.
+- + Hero copy explicitly speaks to my persona: "SPRING COOKWARE EVENT" is the exact category I live in — I have three Le Creusets already and would happily add a fourth
+- − No returning-shopper hook: no loyalty rewards balance, no "welcome back," no recently-viewed; I'm treated like a stranger
+- + Concrete offer above the fold: "UP TO 60% OFF TOP BRANDS + FREE SHIPPING" — specific enough to stop me mid-scroll
+- + Unmistakable primary CTA: white "SHOP NOW" button on sage green, no ambiguity
+- + Visual hierarchy is clear: sage hero dominates, eye goes headline → subline → button → product deal below
+- + No render bugs: clean layout, no broken images, no overlapping copy
+- + Demographic signals match: cookware and "top brands" language reads like it was written for a home cook who reads *Cooks Illustrated*, not a college kid outfitting a dorm
+- + Current campaign/season: "SPRING" cookware event in May — timely, not stale
+- − Loyalty/membership benefits not visible: no Key Rewards callout above the fold
+- + Offer feels honest: the Le Creuset deal shows a real was/now price ($460 → $289.95), no asterisks cluttering the screen
 
 ## What's working
 
-- **"Spring Cookware Event" hero headline** — hits my category with zero effort. I bake and cook, this is my language, and 60% off is a number I take seriously.
-- **Le Creuset featured product deal** — naming the specific product (Signature Enameled Cast Iron Deep Round Oven, 6½-Qt.) with a before/after price is exactly how to get me to tap. I've been eyeing that oven. Seeing $289.95 vs. $460 with a "LIMITED TIME DEAL" label makes it feel like I'm catching something real.
-- **Free shipping callout** — the pill badge directly above the product deal reinforces the value stack right at the point where I'd be considering my cart.
-- **Clean mobile layout** — the search bar is prominent, navigation is accessible via hamburger, and the text is big enough to read without pinching. Nothing fights for my attention.
+- **"SPRING COOKWARE EVENT" hero**: hits my category without me doing any work — I came here for cookware and the homepage opened on it
+- **Sage green palette**: warm, kitchen-adjacent color feels like it belongs on a cookbook cover; right emotional register for a weekend baker
+- **Le Creuset featured deal**: showing the specific product name, size (6½-Qt.), and the real was/now price ($460 → $289.95) is exactly how I like to evaluate a purchase — no guessing
+- **"LIMITED TIME DEAL" + "FREE SHIPPING" badge**: the combination of urgency and a logistics incentive is genuinely useful; I always calculate shipping into a kitchen purchase
+- **Search bar prominent above the fold**: medium-tech-comfort me appreciates having a direct search box rather than having to navigate a mega-menu first
 
 ## What's weak
 
-- **No lifestyle imagery in the hero** — the sage-green banner is text-only. I'd love to see a Le Creuset on a copper-accented stovetop, a casserole dish pulled from the oven, something tactile. As a visual shopper, a color block alone doesn't make me hungry to browse.
-- **No loyalty or rewards hook** — I've almost certainly shopped here before. Where's my account balance, my member discount, any acknowledgment that I'm a returning customer? Gap in the experience.
-- **"Up to 60% off" hedge** — "up to" does the usual work of setting expectations that may disappoint. No floor stated, no specific featured category anchor. Am I saving 60% on a $15 utensil or a $400 pot?
-- **"Limited Time Deal" without a date or timer** — this could end in two hours or two weeks; I have no way of knowing. That vagueness takes urgency down a notch.
-- **No product imagery on the Le Creuset card** — the deal section is text-and-price only. A photo of that specific dutch oven would close more taps.
+- **No loyalty callout**: I'm a repeat Williams-Sonoma shopper and I have Key Rewards. The fact that I see zero mention of my status or points balance makes this feel like a mass-blast, not a relationship
+- **"Up to 60% off" qualifier**: "up to" on a sale banner always makes me suspicious — what's actually 60% off vs. 15%? The fine print concern is in my head before I even tap
+- **No lifestyle imagery**: the hero is sage green text on a sage green background — beautiful, but no copper pot on a butcher block, no steam rising off a braise. For a brand this aspirational, I want to *feel* the kitchen
+- **No second CTA path visible**: it's all pointing to the event sale; if I came to browse new arrivals or check a specific registry item, there's no obvious lane for that above the fold
 
 ## Recommendations
 
-- **Add a lifestyle photo to the hero** — swap the sage color block for a styled kitchen shot: the pot on a gas range, natural light, copper accents. Keep the headline overlay. This is a one-week art-direction swap and it would do serious work for buyers like me.
-- **Drop a countdown on the Le Creuset deal** — "Offer ends Sunday" or a 3-day timer would turn "hmm, I should look" into "I'm tapping now." The "LIMITED TIME DEAL" label is already there; give it teeth.
-- **Add a thumbnail of the product to the deal card** — even a small square photo of the Deep Round Oven. I want to see the color before I commit to a tap.
-- **Surface a rewards/loyalty nudge above the fold** — one line: "Earn points on this purchase" or "You have X points to redeem." For a returning customer on mobile, this is almost free retention.
+- **Add a loyalty/rewards ribbon** just above or below the hero: "You have 842 Key Rewards points — shop the event to unlock a bonus." One line. It closes the "am I a valued customer?" gap immediately.
+- **Swap the flat-color hero for a lifestyle shot**: copper pots, a round Dutch oven on a flame, fresh herbs — something that makes me smell the braise. Keep the type overlay but give me a visual reason to feel something.
+- **Anchor "up to 60% off" with a floor**: "20%–60% off" or "most items 30%+ off" reads as more honest and reduces the mental tax of wondering if anything real is actually discounted.
+- **Add a "New Arrivals in Cookware" text link or small secondary banner**: not everyone comes to the homepage chasing a sale; give the browsers a lane.
 
 ## Full review
 ## 1. Executive Summary
 
-This feels like my store — a "Spring Cookware Event" headline with 60% off top brands is exactly the kind of thing that makes me stop scrolling and start budgeting. Williams-Sonoma is clearly leading with their cookware season right now, which, as someone who just spent twenty minutes debating a Le Creuset braiser color, is well-timed. The tone is polished and unfussy, which is on-brand for what I'd expect when I pull up their site.
+They got me at "Spring Cookware Event." Williams-Sonoma feels exactly like what it is — a heritage brand that knows its customer — and this homepage is pushing a big cookware sale with Le Creuset front and center. For someone who graduated from registry gifts to intentional additions, this feels like they opened my kitchen cabinet and wrote a headline about it.
+
+---
 
 ## 2. Business Impact Score (1-10)
 
 **9/10**
 
-- + Hero copy matches my focus area: "Spring Cookware Event" is a direct hit for a weekend baker who still treats herself to Le Creuset.
-- − No returning-shopper hook: no rewards balance, no "welcome back," no recently-viewed nudge.
-- + Concrete offer above fold: "Up to 60% off top brands + free shipping" is specific and useful.
-- + Primary CTA visible: "SHOP NOW" button in dark contrast on the hero card.
-- + Visual hierarchy is clear: sage-green hero card draws the eye first, product deal card second — easy to parse on a phone.
-- + No render bugs: page is clean and legible; nothing overlapping or broken.
-- + Demographic signals match: no sneakers, no "20-something lifestyle" — this is a cookware store acting like a cookware store.
-- + Current campaign/season: "Spring" in early May reads as right on time, not stale.
-- − Loyalty/membership not visible: no rewards callout above the fold.
-- + Offer feels honest: the Le Creuset deal shows the exact "WAS $460 → Now $289.95" — transparent, no asterisk games.
+- + Hero copy explicitly speaks to my persona: "SPRING COOKWARE EVENT" is the exact category I live in — I have three Le Creusets already and would happily add a fourth
+- − No returning-shopper hook: no loyalty rewards balance, no "welcome back," no recently-viewed; I'm treated like a stranger
+- + Concrete offer above the fold: "UP TO 60% OFF TOP BRANDS + FREE SHIPPING" — specific enough to stop me mid-scroll
+- + Unmistakable primary CTA: white "SHOP NOW" button on sage green, no ambiguity
+- + Visual hierarchy is clear: sage hero dominates, eye goes headline → subline → button → product deal below
+- + No render bugs: clean layout, no broken images, no overlapping copy
+- + Demographic signals match: cookware and "top brands" language reads like it was written for a home cook who reads *Cooks Illustrated*, not a college kid outfitting a dorm
+- + Current campaign/season: "SPRING" cookware event in May — timely, not stale
+- − Loyalty/membership benefits not visible: no Key Rewards callout above the fold
+- + Offer feels honest: the Le Creuset deal shows a real was/now price ($460 → $289.95), no asterisks cluttering the screen
+
+---
 
 ## 3. What's Working
 
-- **"Spring Cookware Event" hero headline** — hits my category with zero effort. I bake and cook, this is my language, and 60% off is a number I take seriously.
-- **Le Creuset featured product deal** — naming the specific product (Signature Enameled Cast Iron Deep Round Oven, 6½-Qt.) with a before/after price is exactly how to get me to tap. I've been eyeing that oven. Seeing $289.95 vs. $460 with a "LIMITED TIME DEAL" label makes it feel like I'm catching something real.
-- **Free shipping callout** — the pill badge directly above the product deal reinforces the value stack right at the point where I'd be considering my cart.
-- **Clean mobile layout** — the search bar is prominent, navigation is accessible via hamburger, and the text is big enough to read without pinching. Nothing fights for my attention.
+- **"SPRING COOKWARE EVENT" hero**: hits my category without me doing any work — I came here for cookware and the homepage opened on it
+- **Sage green palette**: warm, kitchen-adjacent color feels like it belongs on a cookbook cover; right emotional register for a weekend baker
+- **Le Creuset featured deal**: showing the specific product name, size (6½-Qt.), and the real was/now price ($460 → $289.95) is exactly how I like to evaluate a purchase — no guessing
+- **"LIMITED TIME DEAL" + "FREE SHIPPING" badge**: the combination of urgency and a logistics incentive is genuinely useful; I always calculate shipping into a kitchen purchase
+- **Search bar prominent above the fold**: medium-tech-comfort me appreciates having a direct search box rather than having to navigate a mega-menu first
+
+---
 
 ## 4. What's Weak
 
-- **No lifestyle imagery in the hero** — the sage-green banner is text-only. I'd love to see a Le Creuset on a copper-accented stovetop, a casserole dish pulled from the oven, something tactile. As a visual shopper, a color block alone doesn't make me hungry to browse.
-- **No loyalty or rewards hook** — I've almost certainly shopped here before. Where's my account balance, my member discount, any acknowledgment that I'm a returning customer? Gap in the experience.
-- **"Up to 60% off" hedge** — "up to" does the usual work of setting expectations that may disappoint. No floor stated, no specific featured category anchor. Am I saving 60% on a $15 utensil or a $400 pot?
-- **"Limited Time Deal" without a date or timer** — this could end in two hours or two weeks; I have no way of knowing. That vagueness takes urgency down a notch.
-- **No product imagery on the Le Creuset card** — the deal section is text-and-price only. A photo of that specific dutch oven would close more taps.
+- **No loyalty callout**: I'm a repeat Williams-Sonoma shopper and I have Key Rewards. The fact that I see zero mention of my status or points balance makes this feel like a mass-blast, not a relationship
+- **"Up to 60% off" qualifier**: "up to" on a sale banner always makes me suspicious — what's actually 60% off vs. 15%? The fine print concern is in my head before I even tap
+- **No lifestyle imagery**: the hero is sage green text on a sage green background — beautiful, but no copper pot on a butcher block, no steam rising off a braise. For a brand this aspirational, I want to *feel* the kitchen
+- **No second CTA path visible**: it's all pointing to the event sale; if I came to browse new arrivals or check a specific registry item, there's no obvious lane for that above the fold
+
+---
 
 ## 5. Recommendations
 
-- **Add a lifestyle photo to the hero** — swap the sage color block for a styled kitchen shot: the pot on a gas range, natural light, copper accents. Keep the headline overlay. This is a one-week art-direction swap and it would do serious work for buyers like me.
-- **Drop a countdown on the Le Creuset deal** — "Offer ends Sunday" or a 3-day timer would turn "hmm, I should look" into "I'm tapping now." The "LIMITED TIME DEAL" label is already there; give it teeth.
-- **Add a thumbnail of the product to the deal card** — even a small square photo of the Deep Round Oven. I want to see the color before I commit to a tap.
-- **Surface a rewards/loyalty nudge above the fold** — one line: "Earn points on this purchase" or "You have X points to redeem." For a returning customer on mobile, this is almost free retention.
+- **Add a loyalty/rewards ribbon** just above or below the hero: "You have 842 Key Rewards points — shop the event to unlock a bonus." One line. It closes the "am I a valued customer?" gap immediately.
+- **Swap the flat-color hero for a lifestyle shot**: copper pots, a round Dutch oven on a flame, fresh herbs — something that makes me smell the braise. Keep the type overlay but give me a visual reason to feel something.
+- **Anchor "up to 60% off" with a floor**: "20%–60% off" or "most items 30%+ off" reads as more honest and reduces the mental tax of wondering if anything real is actually discounted.
+- **Add a "New Arrivals in Cookware" text link or small secondary banner**: not everyone comes to the homepage chasing a sale; give the browsers a lane.
+
+---
 
 ## 6. Bottom Line
 
-I'd keep browsing — the Le Creuset deal got me, and "60% off top brands" is the kind of headline I was hoping to see when I opened the app.
+I'm keeping browsing — honestly, the Le Creuset price alone is going to pull me into the event — but I'm slightly annoyed they didn't acknowledge I've been a customer for years.
+
+---
 
 ## 7. Hero & Above-the-Fold Analysis
 
-- **Hero copy (verbatim):** `SPRING COOKWARE EVENT / UP TO 60% OFF TOP BRANDS + FREE SHIPPING`
-- **Hero image:** Flat sage-green color field — no product or lifestyle photography, text only
+- **Hero copy (verbatim):** `SPRING COOKWARE EVENT` / `UP TO 60% OFF TOP BRANDS + FREE SHIPPING`
+- **Hero image:** Flat sage-green background with white serif headline and subline — no model, no product, no lifestyle scene
 - **Primary CTA:** `SHOP NOW` — visible above the fold? **yes**
-- **Scores (1-10):** Clarity `9`, Relevance to you `9`, Visual hierarchy `8`, On-brand `8`
+- **Scores (1-10):** Clarity `9`, Relevance to you `10`, Visual hierarchy `8`, On-brand `8`
 - **Strengths:**
-  - Headline is unambiguous and category-perfect for me; no guessing what the event is.
-  - Strong value proposition stacked in one line (discount + free shipping together).
+  - Headline is unambiguous — cookware, sale, free shipping, done in six words
+  - Sage green is warm and kitchen-coded without being clichéd
 - **Weaknesses:**
-  - No photography makes the hero feel like a promotional insert rather than an invitation to linger.
-  - "Up to 60%" without a floor feels hedged; a second line naming a featured brand (e.g., "Le Creuset, All-Clad, Staub") would lock confidence.
+  - Zero imagery makes the hero feel more like a promotional email than a destination homepage
+  - "Up to 60%" plants a nagging discount-quality question before I've tapped anything
+
+---
 
 ## 8. Promotional & Urgency Cues
 
-- **Active promos:** Up to 60% off top brands, Free shipping (hero), $289.95 deal on Le Creuset 6½-Qt. Dutch Oven (was $460)
-- **Urgency / scarcity:** "LIMITED TIME DEAL" label — no timer, no specific end date
-- **Loyalty hooks:** None visible above the fold; no rewards, no member pricing badge
-- **Honesty check:** The before/after pricing on the Le Creuset feels clean and straightforward. The "up to 60%" language is standard industry hedge but not deceptive. No manipulative countdown or fake scarcity language — I appreciate that.
+- **Active promos:** "Up to 60% off top brands," "Free shipping" (event-level), Le Creuset 6½-Qt. Dutch Oven $289.95 (was $460)
+- **Urgency / scarcity:** "LIMITED TIME DEAL" label — no countdown timer, no end date specified
+- **Loyalty hooks:** None visible above the fold; account icon in header only
+- **Honesty check:** "Up to 60%" is the usual hedge that creates expectation vs. reality risk; the Le Creuset was/now pricing looks credible and clean, no buried asterisks visible
+
+---
 
 ## 9. Engagement Likelihood
 
-- + Hero relates to my focus area: "Spring Cookware Event" is my exact shopping domain — I'm staying.
-- + Easy to reach my category: Search bar is front and center, hamburger nav accessible; one tap to cookware.
-- − Eye-catching imagery in my category: Hero is text-only on a color block; no product or lifestyle photo to pull me in visually.
-- + Promo banner I would use: 60% off cookware brands is something I'd click on a Tuesday afternoon with coffee.
-- + Page renders cleanly: No layout issues, legible text, buttons aligned — clean mobile render.
-- − Imagery includes someone like me: No people visible at all, no lifestyle context, no styled scene.
-- + Copy register matches mine: Direct, clean, not precious or over-designed. Reads like a confident store, not a startup.
-- + Trust signals visible: Free shipping badge, specific before/after pricing on a named product — credible.
-- − New/hot rail in my category: Can't confirm — a product row is barely visible at the bottom edge but it's cut off and unidentifiable.
-- + No dark patterns: No modal, no forced sign-up, no sticky banner blocking the page. Clean entry.
+- + Hero relates to my focus area: "Spring Cookware Event" — I am literally a cookware person, this is as on-target as it gets
+- + Easy to reach my category: the hero IS my category; search bar is prominent if I want to go deeper
+- + Eye-catching imagery in my category: the Le Creuset product listing below the hero with real pricing caught my eye immediately
+- + Promo banner I would use: 60% off + free shipping on cookware is a banner I'd clip if it came in the mail, let alone on a screen
+- + Page renders cleanly: no layout shift, no broken images, clean mobile typography
+- − Imagery includes someone like me: no person visible anywhere — no home cook, no kitchen scene, no lifestyle signal
+- + Copy register matches mine: "Top Brands," "Enameled Cast Iron," "Signature" — this reads like a catalog, not a flash-sale site; right register for me
+- + Trust signals visible: "FREE SHIPPING" badge, real was/now pricing — enough to feel like a legitimate offer
+- + New/hot rail in my category: Le Creuset featured deal counts; partial product images visible at bottom suggest more below
+- + No dark patterns: no forced modal, no countdown-timer anxiety, no aggressive pop-up visible
 
-**Score:** `7/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The event headline and honest deal pricing are doing the heavy lifting; what's missing is visual warmth — no lifestyle imagery or a person who looks like they just pulled a roast out of the oven, which would have pushed me into a real scroll.
+**Score:** `9/10`
+**Rationale:** Nine of ten engagement signals fire — the only miss is the absence of lifestyle imagery or anyone who looks like me. The cookware-event hero is nearly perfect targeting for a 44-year-old baker; I'd absolutely scroll past the first screen.
+
+---
 
 ## 10. Conversion Likelihood
 
-- + CTA in my category: "SHOP NOW" on a cookware event is exactly the right category tap for me.
-- + Unambiguous CTA copy: "SHOP NOW" is clear enough, though "Shop the Event" would feel less generic.
-- + Active price reduction or member pricing: The Le Creuset drop from $460 to $289.95 is a real number — that moves me.
-- − Time-bounded credible deadline: "LIMITED TIME DEAL" with no date or timer; I can't tell if this ends tonight or next month.
-- − Reachable free-shipping threshold: Free shipping is advertised but no cart threshold is stated — I don't know if a single item qualifies or if I need to spend $100+.
-- + Specific product page one tap away: The Le Creuset deal card has its own "SHOP NOW" — I can go directly to that product in one tap.
-- − Sizing / fit info accessible: N/A for cookware, but quart size is already in the name — not a friction point here.
-- − Returns / exchanges mentioned: Nothing visible above the fold.
-- − Reviews / ratings visible: No star ratings or review counts on the featured deal.
-- − Trust / security signals: No "secure checkout," no pay-later badge, no satisfaction guarantee copy above the fold.
+- + CTA in my category: both "SHOP NOW" buttons point directly to cookware — zero friction to get to relevant product
+- + Unambiguous CTA copy: "SHOP NOW" is blunt and clear; no "discover" or "explore" softness
+- + Active price reduction or member pricing: Le Creuset at $289.95 down from $460 is a real-money reduction I can calculate immediately
+- − Time-bounded credible deadline: "LIMITED TIME DEAL" with no date or countdown gives me no reason to buy today vs. Thursday
+- + Reachable free-shipping threshold: free shipping is offered as part of the event, not gated behind a threshold I have to hit — this removes a friction point entirely
+- + Specific product page one tap away: the Le Creuset listing with "SHOP NOW" is one tap to product detail
+- + Sizing/fit info accessible: "6½-Qt." is visible inline — as a baker I know exactly what that means for a braise or a sourdough bake
+- − Returns/exchanges mentioned: not visible in the screenshot
+- − Reviews/ratings visible: no star ratings or review counts on the featured product
+- − Trust/security signals: no secure-checkout badge, no pay-later mention, no satisfaction guarantee visible
 
-**Score:** `5/10` — should equal 1 + count of "+" bullets above.
-**Rationale:** The Le Creuset deal at $289.95 is genuinely tempting and one tap away, but the missing free-shipping threshold and absent reviews mean I'd be clicking through on faith — which I might do here because I trust this brand, but the page isn't doing that work for me.
+**Score:** `7/10`
+**Rationale:** The Le Creuset deal does a lot of heavy lifting — real price, real size, one tap to buy — but the lack of a deadline, no reviews, and no returns mention leave me with homework to do before I'd actually complete the purchase.
+
+---
 
 ## 11. Evidence
 
-- **Hero / primary value prop:** Sage-green hero card with serif headline "SPRING COOKWARE EVENT," sub-copy "UP TO 60% OFF TOP BRANDS + FREE SHIPPING," and a dark "SHOP NOW" button.
-- **Top navigation bar:** Three text tabs visible — "Williams Sonoma Home," "Business to Business," and a third (appears to be "Pottery" — likely Pottery Barn link, partially visible).
-- **Global header:** Hamburger menu (left), search icon, "WILLIAMS SONOMA" logotype (centered), account icon, and cart icon.
-- **Search bar:** Prominent white search field with placeholder text "What can we help you find?" and a search icon button.
-- **Featured product deal card:** White card below the hero. Badge: "| FREE SHIPPING." Label: "LIMITED TIME DEAL." Price: "Now $289.95" in red; "WAS $460" in gray strikethrough. Product name: "Le Creuset Signature Enameled Cast Iron Deep Round Oven, 6½-Qt." CTA: dark "SHOP NOW" button.
-- **Partial product rail (bottom edge):** Tops of what appear to be product thumbnails are visible at the very bottom of the screenshot — content unidentifiable.
-- **Bugs / friction / clarity issues:** None visible. No broken images, no overlapping text, no layout shift artifacts. The only friction is the absence of photography and the vague "LIMITED TIME" framing.
+- **Top navigation strip:** Williams Sonoma Home | Business to Business | Pottery — brand family switcher
+- **Global header:** hamburger menu, search icon, WILLIAMS SONOMA wordmark, account icon, cart icon
+- **Prominent search bar:** "What can we help you find?" — full-width below the header
+- **Hero module:** Sage-green banner, "SPRING COOKWARE EVENT" headline, "UP TO 60% OFF TOP BRANDS + FREE SHIPPING" subline, white "SHOP NOW" button
+- **Featured deal module (below hero):** "FREE SHIPPING" badge | "LIMITED TIME DEAL" label | "Now $289.95 / WAS $460" pricing | "Le Creuset Signature Enameled Cast Iron Deep Round Oven, 6½-Qt." product name | dark "SHOP NOW" button
+- **Partial product rail (bottom of viewport):** Multiple product images beginning to appear — not fully visible, likely a category or sale grid
+- **Bugs/friction/clarity issues:** None visible; no render errors, no overlapping elements, no broken images observed in the viewport
 ## Recent history
 
 - [[2026-05-02-homepage-www.williams-sonoma.com-iris-linen-williamssonoma-fap6e]] — 8/10 (2026-05-02)
