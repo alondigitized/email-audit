@@ -133,7 +133,14 @@ export const INDUSTRY_COLOR: Record<Industry, string> = {
 
 // Strip TLD suffixes, www., punctuation, and trailing marketing tokens
 // ("plus", "stores", "sale", "rewards") so "SKECHERS PLUS" and
-// "www.skechers.com" both resolve to "skechers".
+// "www.skechers.com" both resolve to "skechers". Exported for the
+// brand-mode chart so the stacking key matches what the industry map
+// is keyed on.
+export function brandKeyOf(name: string | null | undefined): string {
+  if (!name) return "";
+  return canonicalize(name);
+}
+
 function canonicalize(name: string): string {
   let s = name.toLowerCase().trim();
   s = s.replace(/^https?:\/\//, "");
