@@ -14,83 +14,53 @@ import {
 } from "recharts";
 import type { AuditSummary } from "@/lib/types";
 import { localDateKey, startOfLocalDay } from "@/lib/dates";
+import {
+  INDUSTRY_COLOR,
+  INDUSTRY_ORDER,
+  type Industry,
+  industryOf,
+} from "@/lib/industry";
 
 const DEFAULT_DAYS = 14;
-const MAX_BRANDS = 6;
-const OTHER_BUCKET = "Other";
-
-// Observable 10 palette. First MAX_BRANDS colors go to top senders in
-// alphabetical order; "Other" always gets the neutral gray at the end so
-// tiny long-tail stacks visually fade.
-const PALETTE = [
-  "#4269d0",
-  "#efb118",
-  "#ff725c",
-  "#3ca951",
-  "#a463f2",
-  "#6cc5b0",
-  "#97bbf5",
-  "#ff8ab7",
-  "#9c6b4e",
-];
-const OTHER_COLOR = "#9498a0";
 
 type DayBucket = {
   date: string;
   label: string;
-  [sender: string]: string | number;
+  [industry: string]: string | number;
 };
 
-function normalizeSender(name: string | undefined | null): string {
-  return (name ?? "").trim();
-}
-
-// Pick the top-N senders/brands over the days window. Counts every
-// audit type unless the caller passes a channel filter. Buckets sort
-// alphabetically for stable color assignment across renders.
-function pickSenders(
+// Pick the industries that actually appear in the window so the legend
+// doesn't show empty buckets. Order is canonical (INDUSTRY_ORDER) so
+// color-to-industry stays stable across renders even when a bucket
+// drops in/out as filters change.
+function pickIndustries(
   audits: AuditSummary[],
   days: number,
   channel: string | null
-): string[] {
+): Industry[] {
   const today = startOfLocalDay(new Date());
   const start = new Date(today);
   start.setDate(start.getDate() - (days - 1));
 
-  const counts = new Map<string, number>();
+  const present = new Set<Industry>();
   for (const a of audits) {
     if (channel && (a.type ?? "email") !== channel) continue;
     if (!a.timestamp_iso) continue;
     const ts = new Date(a.timestamp_iso);
     if (Number.isNaN(ts.getTime())) continue;
     if (ts < start) continue;
-    const key = normalizeSender(a.from_display_name);
-    if (!key) continue;
-    counts.set(key, (counts.get(key) ?? 0) + 1);
+    present.add(industryOf(a.from_display_name));
   }
-
-  const top = [...counts.entries()]
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .slice(0, MAX_BRANDS)
-    .map(([name]) => name)
-    .sort((a, b) => a.localeCompare(b));
-
-  return [...top, OTHER_BUCKET];
-}
-
-function colorFor(senderOrder: string[], sender: string): string {
-  if (sender === OTHER_BUCKET) return OTHER_COLOR;
-  const idx = senderOrder.indexOf(sender);
-  return PALETTE[idx % PALETTE.length];
+  return INDUSTRY_ORDER.filter((i) => present.has(i));
 }
 
 function buildData(
   audits: AuditSummary[],
-  senderOrder: string[],
+  industries: Industry[],
   days: number,
   channel: string | null
 ): DayBucket[] {
-  const topSet = new Set(senderOrder.filter((s) => s !== OTHER_BUCKET));
+  const known = new Set(industries);
   const today = startOfLocalDay(new Date());
   const start = new Date(today);
   start.setDate(start.getDate() - (days - 1));
@@ -108,7 +78,7 @@ function buildData(
         day: "numeric",
       }),
     };
-    for (const s of senderOrder) row[s] = 0;
+    for (const ind of industries) row[ind] = 0;
     indexByKey.set(key, out.length);
     out.push(row);
   }
@@ -120,9 +90,9 @@ function buildData(
     if (Number.isNaN(ts.getTime())) continue;
     const idx = indexByKey.get(localDateKey(ts));
     if (idx === undefined) continue;
-    const raw = normalizeSender(a.from_display_name);
-    const bucket = raw && topSet.has(raw) ? raw : OTHER_BUCKET;
-    out[idx][bucket] = (out[idx][bucket] as number) + 1;
+    const ind = industryOf(a.from_display_name);
+    if (!known.has(ind)) continue;
+    out[idx][ind] = (out[idx][ind] as number) + 1;
   }
 
   return out;
@@ -157,9 +127,9 @@ function windowLabel(days: number): string {
   return `last ${days} days`;
 }
 
-function dayTotal(d: DayBucket, senderOrder: string[]): number {
+function dayTotal(d: DayBucket, industries: Industry[]): number {
   let sum = 0;
-  for (const s of senderOrder) sum += d[s] as number;
+  for (const ind of industries) sum += d[ind] as number;
   return sum;
 }
 
@@ -177,16 +147,16 @@ export function ActivityChart({
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const senderOrder = pickSenders(audits, days, channel);
-  const data = buildData(audits, senderOrder, days, channel);
-  const total = data.reduce((s, d) => s + dayTotal(d, senderOrder), 0);
+  const industries = pickIndustries(audits, days, channel);
+  const data = buildData(audits, industries, days, channel);
+  const total = data.reduce((s, d) => s + dayTotal(d, industries), 0);
   const peak = data.reduce(
-    (m, d) => Math.max(m, dayTotal(d, senderOrder)),
+    (m, d) => Math.max(m, dayTotal(d, industries)),
     0
   );
-  const totalsBySender = senderOrder.reduce(
-    (acc, s) => {
-      acc[s] = data.reduce((sum, d) => sum + (d[s] as number), 0);
+  const totalsByIndustry = industries.reduce(
+    (acc, ind) => {
+      acc[ind] = data.reduce((sum, d) => sum + (d[ind] as number), 0);
       return acc;
     },
     {} as Record<string, number>
@@ -262,24 +232,24 @@ export function ActivityChart({
               wrapperStyle={{ fontSize: 12, paddingTop: 4 }}
               iconType="square"
               formatter={(value: string) => {
-                const n = totalsBySender[value] ?? 0;
+                const n = totalsByIndustry[value] ?? 0;
                 return `${value} (${n})`;
               }}
             />
-            {senderOrder.map((sender, i) => (
+            {industries.map((ind, i) => (
               <Bar
-                key={sender}
-                dataKey={sender}
+                key={ind}
+                dataKey={ind}
                 stackId="a"
-                fill={colorFor(senderOrder, sender)}
+                fill={INDUSTRY_COLOR[ind]}
                 cursor="pointer"
                 onClick={handleBarClick}
-                radius={i === senderOrder.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
+                radius={i === industries.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
               >
                 {data.map((d) => (
                   <Cell
                     key={d.date}
-                    fill={fillForBar(d.date, colorFor(senderOrder, sender))}
+                    fill={fillForBar(d.date, INDUSTRY_COLOR[ind])}
                   />
                 ))}
               </Bar>
