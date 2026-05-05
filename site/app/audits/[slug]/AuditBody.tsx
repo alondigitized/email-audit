@@ -492,7 +492,7 @@ export async function AuditBody({
         tabs={[
           {
             id: "content",
-            label: "Content Review",
+            label: audit.inventory ? "Inventory Review" : "Content Review",
             content: (
               <div className="flex flex-col gap-5">
                 {audit.inventory && (
