@@ -13,6 +13,7 @@ const PUBLIC_PREFIXES = [
   "/terms", // public-facing legal page; must be reachable pre-signup
   "/privacy",
   "/scoring", // public methodology / rubric explainer
+  "/share/", // tokenized public audit reports — auth bypassed, ACL is on the token
   "/r/", // referral landing pages
   "/waitlist-status",
   "/auth/verify", // two-step magic-link confirm page
@@ -37,9 +38,22 @@ const LOCK_BYPASS_PREFIXES = [
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (PUBLIC_EXACT.has(pathname)) return NextResponse.next();
+  // Forward the path so the root layout can decide between full chrome
+  // (auth users) and the slim share-page chrome. Read in app/layout.tsx
+  // via `headers()`.
+  const passthrough = NextResponse.next({
+    request: {
+      headers: (() => {
+        const h = new Headers(request.headers);
+        h.set("x-pathname", pathname);
+        return h;
+      })(),
+    },
+  });
+
+  if (PUBLIC_EXACT.has(pathname)) return passthrough;
   for (const p of PUBLIC_PREFIXES) {
-    if (pathname.startsWith(p)) return NextResponse.next();
+    if (pathname.startsWith(p)) return passthrough;
   }
 
   const session = await auth();
@@ -91,7 +105,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  return passthrough;
 }
 
 export const config = {

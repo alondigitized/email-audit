@@ -813,3 +813,29 @@ export const userAppAccess = pgTable(
     pk: primaryKey({ columns: [t.userId, t.appKey] }),
   })
 );
+
+// Public share tokens for audit reports. Row present = the audit can be
+// viewed at /share/<token> by anyone with the link. Token is opaque
+// (24-char nanoid) so URLs don't leak slug naming and tokens can be
+// revoked later by setting revoked_at. v1 mints one token per audit
+// per creator and is idempotent — re-clicking "Copy share link"
+// returns the same token until revoked. References reactions.slug (the
+// audit slug under the v3 split) so the token cleans up if the audit
+// is deleted.
+export const auditShareTokens = pgTable(
+  "audit_share_token",
+  {
+    token: text("token").primaryKey(),
+    auditSlug: text("audit_slug")
+      .notNull()
+      .references(() => reactions.slug, { onDelete: "cascade" }),
+    createdBy: text("created_by")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    revokedAt: timestamp("revoked_at", { mode: "date" }),
+  },
+  (t) => ({
+    auditIdx: index("audit_share_token_audit_idx").on(t.auditSlug),
+  })
+);
