@@ -549,25 +549,32 @@ export async function AuditBody({
                 },
               ]
             : []),
-          {
-            id: "technical",
-            label: "Technical",
-            content: (
-              <div className="flex flex-col gap-5">
-                <ReviewPane
-                  markdown={technical}
-                  isSiteJourney={isSiteJourney}
-                  hasImage={hasImage}
-                  heroUrl={heroUrl}
-                  webviewUrl={assets.webview_url}
-                  journeySteps={journeySteps}
-                  stepUrls={stepUrls}
-                />
-                {perfSteps.length > 0 && <PerfTable steps={perfSteps} />}
-                <QaCard qa={qa} />
-              </div>
-            ),
-          },
+          // Inventory audits don't carry technical content (no QA findings,
+          // no perf metrics, and the producer doesn't emit a Technical
+          // markdown section), so the tab would render empty. Hide it.
+          ...(audit.inventory
+            ? []
+            : [
+                {
+                  id: "technical",
+                  label: "Technical",
+                  content: (
+                    <div className="flex flex-col gap-5">
+                      <ReviewPane
+                        markdown={technical}
+                        isSiteJourney={isSiteJourney}
+                        hasImage={hasImage}
+                        heroUrl={heroUrl}
+                        webviewUrl={assets.webview_url}
+                        journeySteps={journeySteps}
+                        stepUrls={stepUrls}
+                      />
+                      {perfSteps.length > 0 && <PerfTable steps={perfSteps} />}
+                      <QaCard qa={qa} />
+                    </div>
+                  ),
+                },
+              ]),
         ]}
       />
     </>
