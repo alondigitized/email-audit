@@ -36,17 +36,16 @@ export default async function RootLayout({
     return (
       <html lang="en" className={inter.className}>
         <body>
-          <header className="border-b border-gray-200 bg-white">
-            <div className="max-w-[980px] mx-auto px-5 py-4 flex items-center justify-between">
-              <Link href="/" className="inline-block">
-                <Wordmark size="sm" />
-              </Link>
-              <span className="text-[11px] uppercase tracking-wide text-muted">
-                Shared report
-              </span>
-            </div>
-          </header>
           <main className="max-w-[980px] mx-auto px-5 pt-8 pb-16 overflow-x-hidden">
+            {/* Static logo — non-clickable so a public viewer can't
+                accidentally bounce out of the shared report into the
+                authed app. Center-aligned to match the rest of the site. */}
+            <div className="mb-5 pt-2 text-center">
+              <Wordmark />
+              <div className="text-[11px] uppercase tracking-wide text-muted mt-3">
+                Shared report
+              </div>
+            </div>
             {children}
           </main>
           <footer className="max-w-[980px] mx-auto px-5 py-6 mt-12 border-t border-gray-200 text-xs text-muted flex items-center justify-between">
