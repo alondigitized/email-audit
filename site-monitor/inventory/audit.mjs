@@ -455,43 +455,19 @@ function buildCsv(plps) {
   return rows.join('\n') + '\n';
 }
 
-// Markdown summary table — prepended to the narrative so it shows up at
-// the top of the audit detail page's Content Review tab without needing
-// any consumer-side rendering changes.
-function buildSummaryTable(plps, totals) {
-  const lines = [];
+// Headline summary — one line at the top of the narrative. The
+// per-category breakdown previously rendered here as a markdown
+// table is now drawn as a visual heatmap by the audit detail page
+// (InventoryCoverageMatrix), so the producer no longer ships the
+// table to avoid duplication.
+function buildSummaryTable(_plps, totals) {
   const pct = (totals.avg_size_coverage * 100).toFixed(1);
-  lines.push(`## Inventory summary`);
-  lines.push('');
-  lines.push(`**${totals.styles} styles · ${totals.variants} (color, width) variants · ${pct}% avg size coverage**`);
-  lines.push('');
-  lines.push('| Category | Styles | Variants | Coverage | Widths | Worst-missing sizes |');
-  lines.push('|---|---:|---:|---:|---|---|');
-  for (const p of plps) {
-    if (p.error) {
-      lines.push(`| ${p.category} | — | — | — | — | _PLP fetch failed_ |`);
-      continue;
-    }
-    let n = 0, cov = 0, denom = 0;
-    const widths = new Set();
-    const missing = new Map();
-    for (const s of p.styles) {
-      for (const v of s.variants) {
-        n++;
-        if (v.width) widths.add(v.width);
-        if (v.total_count > 0) { cov += v.available_count / v.total_count; denom++; }
-        for (const sz of v.sizes) {
-          if (!sz.available) missing.set(sz.size, (missing.get(sz.size) ?? 0) + 1);
-        }
-      }
-    }
-    const cPct = denom > 0 ? `${(cov / denom * 100).toFixed(0)}%` : '—';
-    const top3 = [...missing.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3)
-      .map(([sz, cnt]) => `${sz}×${cnt}`).join(', ');
-    lines.push(`| ${p.category} | ${p.styles.length} | ${n} | ${cPct} | ${[...widths].join(', ') || '—'} | ${top3 || '—'} |`);
-  }
-  lines.push('');
-  return lines.join('\n');
+  return [
+    '## Inventory summary',
+    '',
+    `**${totals.styles} styles · ${totals.variants} (color, width) variants · ${pct}% avg size coverage**`,
+    '',
+  ].join('\n');
 }
 
 async function uploadCsv(slug, csv) {

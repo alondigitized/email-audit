@@ -1,7 +1,7 @@
 import { eq as drizzleEq } from "drizzle-orm";
 import { db, reactions, personas as personasTable } from "@/lib/db/client";
 import type { AuditData, JourneyStep, PerfStep } from "@/lib/types";
-import { splitReview } from "@/lib/types";
+import { splitReview, stripInventorySummary } from "@/lib/types";
 import type { ReviewSections } from "@/lib/schema/audit";
 import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
 import { ReviewContent } from "@/components/ReviewContent";
@@ -13,6 +13,7 @@ import { TabNav } from "@/components/TabNav";
 import { CollapsibleReview } from "./CollapsibleReview";
 import { RewritesPanel } from "./RewritesPanel";
 import { InventoryPane } from "./InventoryPane";
+import { InventoryCoverageMatrix } from "./InventoryHeatmap";
 
 // Body of the audit detail page — everything below the back-link / share
 // row. Used by both the authed `/audits/[slug]` route and the public
@@ -296,7 +297,14 @@ export async function AuditBody({
   const hasImage = !!(assets.render_image || assets.render_image_key);
   const journeySteps = assets.journey_steps || [];
   const perfSteps = audit.performance?.steps || [];
-  const { content, technical } = splitReview(review.raw_markdown);
+  const split = splitReview(review.raw_markdown);
+  // For inventory audits, the producer prepends a markdown summary
+  // table. We replace it with the visual coverage matrix below, so
+  // strip the textual block out of the rendered content.
+  const content = audit.inventory
+    ? stripInventorySummary(split.content)
+    : split.content;
+  const technical = split.technical;
 
   const { heroUrl, stepUrls } = await resolveAllImageUrls(audit);
 
@@ -486,17 +494,27 @@ export async function AuditBody({
             id: "content",
             label: "Content Review",
             content: (
-              <ReviewPane
-                markdown={content}
-                sections={review.sections as ReviewSections}
-                channel={audit.type ?? "email"}
-                isSiteJourney={isSiteJourney}
-                hasImage={hasImage}
-                heroUrl={heroUrl}
-                webviewUrl={assets.webview_url}
-                journeySteps={journeySteps}
-                stepUrls={stepUrls}
-              />
+              <div className="flex flex-col gap-5">
+                {audit.inventory && (
+                  <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm overflow-hidden">
+                    <InventoryCoverageMatrix
+                      inventory={audit.inventory}
+                      totals
+                    />
+                  </div>
+                )}
+                <ReviewPane
+                  markdown={content}
+                  sections={review.sections as ReviewSections}
+                  channel={audit.type ?? "email"}
+                  isSiteJourney={isSiteJourney}
+                  hasImage={hasImage}
+                  heroUrl={heroUrl}
+                  webviewUrl={assets.webview_url}
+                  journeySteps={journeySteps}
+                  stepUrls={stepUrls}
+                />
+              </div>
             ),
           },
           ...(audit.inventory
