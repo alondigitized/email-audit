@@ -12,7 +12,7 @@ import { scoreLabels } from "@/lib/score-labels";
 import { TabNav } from "@/components/TabNav";
 import { CollapsibleReview } from "./CollapsibleReview";
 import { RewritesPanel } from "./RewritesPanel";
-import { InventoryPane } from "./InventoryPane";
+import { InventoryVariantDetail } from "./InventoryPane";
 import { InventoryCoverageMatrix } from "./InventoryHeatmap";
 
 // Body of the audit detail page — everything below the back-link / share
@@ -488,21 +488,36 @@ export async function AuditBody({
           })()}
       </div>
 
-      <TabNav
-        tabs={[
-          {
-            id: "content",
-            label: audit.inventory ? "Inventory Review" : "Content Review",
-            content: (
-              <div className="flex flex-col gap-5">
-                {audit.inventory && (
-                  <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm overflow-hidden">
-                    <InventoryCoverageMatrix
-                      inventory={audit.inventory}
-                      totals
-                    />
-                  </div>
-                )}
+      {audit.inventory ? (
+        // Single-page layout for inventory audits — no tabs. The
+        // content is linear (matrix → narrative → variant detail) and
+        // tab-flipping was hiding the relationship between the persona's
+        // take and the underlying data. Rewrites + Technical have no
+        // surface here so they're omitted.
+        <div className="flex flex-col gap-5">
+          <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm overflow-hidden">
+            <InventoryCoverageMatrix inventory={audit.inventory} totals />
+          </div>
+          {content && (
+            <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm">
+              <ReviewContent markdown={content} />
+            </div>
+          )}
+          <div className="bg-white border border-gray-200 rounded-[20px] p-6 shadow-sm overflow-hidden">
+            <InventoryVariantDetail
+              inventory={audit.inventory}
+              signedScreenshotUrls={variantScreenshotUrls}
+              csvUrl={inventoryCsvUrl}
+            />
+          </div>
+        </div>
+      ) : (
+        <TabNav
+          tabs={[
+            {
+              id: "content",
+              label: "Content Review",
+              content: (
                 <ReviewPane
                   markdown={content}
                   sections={review.sections as ReviewSections}
@@ -514,69 +529,47 @@ export async function AuditBody({
                   journeySteps={journeySteps}
                   stepUrls={stepUrls}
                 />
-              </div>
-            ),
-          },
-          ...(audit.inventory
-            ? [
-                {
-                  id: "inventory",
-                  label: `Variants (${audit.inventory.totals.variants})`,
-                  content: (
-                    <InventoryPane
-                      inventory={audit.inventory}
-                      signedScreenshotUrls={variantScreenshotUrls}
-                      csvUrl={inventoryCsvUrl}
-                    />
-                  ),
-                },
-              ]
-            : []),
-          ...(showRewrites && audit.persona
-            ? [
-                {
-                  id: "rewrites",
-                  label: rewrites
-                    ? `Rewrites (${rewrites.alternatives.length})`
-                    : "Rewrites",
-                  content: (
-                    <RewritesPanel
-                      slug={audit.slug}
-                      personaName={personaDisplayName}
-                      rewrites={rewrites}
-                    />
-                  ),
-                },
-              ]
-            : []),
-          // Inventory audits don't carry technical content (no QA findings,
-          // no perf metrics, and the producer doesn't emit a Technical
-          // markdown section), so the tab would render empty. Hide it.
-          ...(audit.inventory
-            ? []
-            : [
-                {
-                  id: "technical",
-                  label: "Technical",
-                  content: (
-                    <div className="flex flex-col gap-5">
-                      <ReviewPane
-                        markdown={technical}
-                        isSiteJourney={isSiteJourney}
-                        hasImage={hasImage}
-                        heroUrl={heroUrl}
-                        webviewUrl={assets.webview_url}
-                        journeySteps={journeySteps}
-                        stepUrls={stepUrls}
+              ),
+            },
+            ...(showRewrites && audit.persona
+              ? [
+                  {
+                    id: "rewrites",
+                    label: rewrites
+                      ? `Rewrites (${rewrites.alternatives.length})`
+                      : "Rewrites",
+                    content: (
+                      <RewritesPanel
+                        slug={audit.slug}
+                        personaName={personaDisplayName}
+                        rewrites={rewrites}
                       />
-                      {perfSteps.length > 0 && <PerfTable steps={perfSteps} />}
-                      <QaCard qa={qa} />
-                    </div>
-                  ),
-                },
-              ]),
-        ]}
-      />
+                    ),
+                  },
+                ]
+              : []),
+            {
+              id: "technical",
+              label: "Technical",
+              content: (
+                <div className="flex flex-col gap-5">
+                  <ReviewPane
+                    markdown={technical}
+                    isSiteJourney={isSiteJourney}
+                    hasImage={hasImage}
+                    heroUrl={heroUrl}
+                    webviewUrl={assets.webview_url}
+                    journeySteps={journeySteps}
+                    stepUrls={stepUrls}
+                  />
+                  {perfSteps.length > 0 && <PerfTable steps={perfSteps} />}
+                  <QaCard qa={qa} />
+                </div>
+              ),
+            },
+          ]}
+        />
+      )}
     </>
   );
 }
