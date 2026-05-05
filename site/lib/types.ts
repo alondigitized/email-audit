@@ -40,25 +40,30 @@ export function splitReview(rawMarkdown: string): SplitReview {
   };
 }
 
-// Inventory audits prepend a "## Inventory summary" markdown block (the
-// header line, an optional bold totals line, and a category × size
-// table). On the audit detail page we replace that with a visual
-// heatmap, so strip the block from the markdown before render. The
-// fence is delimited by the next heading or end-of-string.
+// Inventory audits prepend a "## Inventory summary" markdown block to
+// the persona narrative. On the audit detail page the visual heatmap
+// supersedes the block, so strip it before render — but only the
+// block: keep everything that follows (the persona's prose narrative
+// often does NOT start with a heading, so we can't use the next-##
+// heading as the terminator without eating the narrative).
 //
-// Only matches the literal heading the producer uses ("## Inventory
-// summary"), so non-inventory reviews pass through untouched.
+// The block is exactly:
+//   ## Inventory summary
+//   <blank line>
+//   **<totals headline>**         (optional)
+//   <blank line>
+//   | Category | ... |             (optional, old audits only)
+//   |---|---:|...|
+//   | <row> |                      (zero+ data rows)
+//   <trailing blank line>
+//
+// We match that shape and replace it with empty. Anything after — the
+// narrative — is preserved as-is.
 export function stripInventorySummary(content: string): string {
-  const startIdx = content.indexOf("## Inventory summary");
-  if (startIdx === -1) return content;
-  const after = content.slice(startIdx + 1);
-  const nextHeadingRel = after.search(/\n##\s/);
-  const endIdx =
-    nextHeadingRel === -1
-      ? content.length
-      : startIdx + 1 + nextHeadingRel + 1; // keep the leading newline of next heading
-  return (
-    content.slice(0, startIdx).trimEnd() +
-    (endIdx < content.length ? "\n\n" + content.slice(endIdx).trimStart() : "")
-  ).trim();
+  return content
+    .replace(
+      /^[\s\n]*##\s+Inventory summary\s*\n+(?:\*\*[^\n]*\*\*\s*\n+)?(?:\|[^\n]*\n+)*/,
+      ""
+    )
+    .trim();
 }
