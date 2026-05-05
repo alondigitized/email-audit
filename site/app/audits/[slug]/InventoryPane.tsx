@@ -1,5 +1,9 @@
 import type { InventoryAudit } from "@/lib/schema/audit";
-import { InventoryHeatmap, parseStyleSku } from "./InventoryHeatmap";
+import {
+  InventoryCoverageMatrix,
+  InventoryVariantMatrix,
+  parseStyleSku,
+} from "./InventoryHeatmap";
 
 type Inventory = InventoryAudit;
 
@@ -58,7 +62,12 @@ function pctClass(pct: number): string {
   return "bg-rose-50 text-rose-800 border-rose-200";
 }
 
-export function InventoryPane({
+// Variant-detail block used inside the consolidated single-page
+// inventory layout. Drops the redundant "X variants across Y
+// categories" header line — the totals already render in the
+// coverage-matrix card above this block. Includes the per-variant ×
+// size heatmap, then the existing mobile cards / desktop table.
+export function InventoryVariantDetail({
   inventory,
   signedScreenshotUrls,
   csvUrl,
@@ -72,11 +81,7 @@ export function InventoryPane({
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-        <div className="text-sm text-muted">
-          {rows.length} variant{rows.length === 1 ? "" : "s"} across{" "}
-          {inventory.totals.plps_audited} categories — click a row for the PDP
-          screenshot.
-        </div>
+        <h3 className="text-sm font-semibold m-0">Variant detail</h3>
         {csvUrl && (
           <a
             href={csvUrl}
@@ -87,11 +92,13 @@ export function InventoryPane({
         )}
       </div>
 
-      <InventoryHeatmap inventory={inventory} />
+      <div className="mb-6">
+        <InventoryVariantMatrix inventory={inventory} />
+      </div>
 
-      <h3 className="text-sm font-semibold mb-3 mt-2">
-        Detail — every variant
-      </h3>
+      <h4 className="text-xs uppercase tracking-wide text-muted mb-3 mt-2">
+        Every variant — click a row for the PDP screenshot
+      </h4>
 
       {/* Mobile: stacked cards */}
       <ul className="sm:hidden flex flex-col gap-3">
@@ -220,6 +227,24 @@ export function InventoryPane({
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+// Legacy export — kept so any external import path still resolves. The
+// consolidated layout in AuditBody calls InventoryVariantDetail directly
+// and stacks the coverage matrix in its own card above.
+export function InventoryPane(props: {
+  inventory: Inventory;
+  signedScreenshotUrls: Record<string, string>;
+  csvUrl: string | null;
+}) {
+  return (
+    <div>
+      <InventoryCoverageMatrix inventory={props.inventory} totals />
+      <div className="mt-6">
+        <InventoryVariantDetail {...props} />
       </div>
     </div>
   );

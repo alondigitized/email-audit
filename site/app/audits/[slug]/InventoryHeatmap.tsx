@@ -214,88 +214,104 @@ export function InventoryCoverageMatrix({
   );
 }
 
-export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
+// Per-variant × size grid, extracted so the consolidated single-page
+// inventory layout can drop it inside the variant-detail block without
+// duplicating the category × size matrix above it.
+export function InventoryVariantMatrix({
+  inventory,
+}: {
+  inventory: InventoryAudit;
+}) {
   const sizeAxis = sizeAxisOf(inventory);
   if (sizeAxis.length === 0) return null;
   const detail = buildDetailRows(inventory);
 
   return (
+    <section>
+      <h3 className="text-sm font-semibold mb-1">
+        Coverage by variant × size
+      </h3>
+      <p className="text-xs text-muted mb-3">
+        One row per (style, color, width). Green = in stock, rose = out of
+        stock, gray = size not offered for this variant.
+      </p>
+      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+        <table className="text-[10px] border-separate border-spacing-0.5">
+          <thead>
+            <tr>
+              <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
+              {sizeAxis.map((s) => (
+                <th
+                  key={s}
+                  className="text-center font-normal text-muted whitespace-nowrap w-5"
+                >
+                  {s}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {detail.map((row, i) => {
+              const sizeStateMap = new Map<string, "available" | "unavailable">();
+              for (const s of row.variant.sizes) {
+                sizeStateMap.set(
+                  s.size,
+                  s.available ? "available" : "unavailable"
+                );
+              }
+              const label = `${row.plp} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
+              return (
+                <tr key={i}>
+                  <td
+                    className="text-right pr-2 text-[10px] text-gray-700 whitespace-nowrap max-w-[260px] overflow-hidden text-ellipsis"
+                    title={label}
+                  >
+                    {(() => {
+                      const sku = parseStyleSku(row.variant.pdp_url);
+                      return (
+                        <>
+                          <span className="font-mono text-muted">
+                            {sku ?? `#${row.styleRank}`}
+                          </span>{" "}
+                          <span className="font-medium">{row.color}</span>
+                          {row.width ? (
+                            <span className="text-muted"> {row.width}</span>
+                          ) : null}
+                        </>
+                      );
+                    })()}
+                  </td>
+                  {sizeAxis.map((sz) => {
+                    const state = sizeStateMap.get(sz) ?? "missing";
+                    const cellLabel = `${label} · ${sz}: ${state}`;
+                    return (
+                      <td
+                        key={sz}
+                        title={cellLabel}
+                        className={`w-5 h-3.5 rounded-[2px] ${binaryClass(state)}`}
+                      />
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+// Legacy combined view — both matrices stacked. Preserved for any
+// caller that still composes it; new code should reach for the two
+// extracted exports directly so callers control spacing.
+export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
+  const sizeAxis = sizeAxisOf(inventory);
+  if (sizeAxis.length === 0) return null;
+  return (
     <div className="mb-6 space-y-6">
       <InventoryCoverageMatrix inventory={inventory} />
-
-      {/* Detail — Variant × Size, binary green/red/gray */}
-      <section>
-        <h3 className="text-sm font-semibold mb-1">
-          Coverage by variant × size
-        </h3>
-        <p className="text-xs text-muted mb-3">
-          One row per (style, color, width). Green = in stock, rose = out of
-          stock, gray = size not offered for this variant.
-        </p>
-        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-          <table className="text-[10px] border-separate border-spacing-0.5">
-            <thead>
-              <tr>
-                <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
-                {sizeAxis.map((s) => (
-                  <th
-                    key={s}
-                    className="text-center font-normal text-muted whitespace-nowrap w-5"
-                  >
-                    {s}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {detail.map((row, i) => {
-                const sizeStateMap = new Map<string, "available" | "unavailable">();
-                for (const s of row.variant.sizes) {
-                  sizeStateMap.set(
-                    s.size,
-                    s.available ? "available" : "unavailable"
-                  );
-                }
-                const label = `${row.plp} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
-                return (
-                  <tr key={i}>
-                    <td
-                      className="text-right pr-2 text-[10px] text-gray-700 whitespace-nowrap max-w-[260px] overflow-hidden text-ellipsis"
-                      title={label}
-                    >
-                      {(() => {
-                        const sku = parseStyleSku(row.variant.pdp_url);
-                        return (
-                          <>
-                            <span className="font-mono text-muted">
-                              {sku ?? `#${row.styleRank}`}
-                            </span>{" "}
-                            <span className="font-medium">{row.color}</span>
-                            {row.width ? (
-                              <span className="text-muted"> {row.width}</span>
-                            ) : null}
-                          </>
-                        );
-                      })()}
-                    </td>
-                    {sizeAxis.map((sz) => {
-                      const state = sizeStateMap.get(sz) ?? "missing";
-                      const cellLabel = `${label} · ${sz}: ${state}`;
-                      return (
-                        <td
-                          key={sz}
-                          title={cellLabel}
-                          className={`w-5 h-3.5 rounded-[2px] ${binaryClass(state)}`}
-                        />
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <InventoryVariantMatrix inventory={inventory} />
     </div>
   );
 }
