@@ -111,8 +111,9 @@ function buildDetailRows(inventory: InventoryAudit): DetailRow[] {
   return out;
 }
 
-export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
-  // Canonical size axis: union of every size seen across the audit, sorted.
+// Canonical size axis used by both heatmap views — extracted so callers
+// can render the category and variant matrices independently.
+function sizeAxisOf(inventory: InventoryAudit): string[] {
   const seen = new Set<string>();
   for (const plp of inventory.plps) {
     if (plp.error) continue;
@@ -122,70 +123,105 @@ export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
       }
     }
   }
-  const sizeAxis = sortSizes([...seen]);
-  if (sizeAxis.length === 0) return null;
+  return sortSizes([...seen]);
+}
 
+// Category × size visual replacement for the markdown "Inventory summary"
+// table. Renders alone (no surrounding chrome) so the same component
+// works at the top of Content Review and inside the Variants tab.
+export function InventoryCoverageMatrix({
+  inventory,
+  totals,
+}: {
+  inventory: InventoryAudit;
+  // Render the headline "N styles · N variants · X% coverage" line above
+  // the matrix. Off in the Variants tab where the same numbers appear in
+  // the surrounding header copy.
+  totals?: boolean;
+}) {
+  const sizeAxis = sizeAxisOf(inventory);
+  if (sizeAxis.length === 0) return null;
   const { plps, cells } = buildAggregate(inventory, sizeAxis);
+  const t = inventory.totals;
+  const pct = (t.avg_size_coverage * 100).toFixed(0);
+
+  return (
+    <section>
+      <h3 className="text-sm font-semibold mb-1">
+        Coverage by category × size
+      </h3>
+      {totals && (
+        <p className="text-xs mb-2">
+          <span className="font-semibold tabular-nums">{t.styles}</span>{" "}
+          styles ·{" "}
+          <span className="font-semibold tabular-nums">{t.variants}</span>{" "}
+          (color, width) variants ·{" "}
+          <span className="font-semibold tabular-nums">{pct}%</span> avg size
+          coverage
+        </p>
+      )}
+      <p className="text-xs text-muted mb-3">
+        Each cell = % of variants in that category where the size is in
+        stock. Vertical bands = sizes that are dead across the catalog;
+        horizontal bands = categories that are thin everywhere.
+      </p>
+      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+        <table className="text-[10px] border-separate border-spacing-0.5">
+          <thead>
+            <tr>
+              <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
+              {sizeAxis.map((s) => (
+                <th
+                  key={s}
+                  className="text-center font-normal text-muted whitespace-nowrap w-7"
+                >
+                  {s}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {plps.map((plp) => {
+              const sizeMap = cells.get(plp)!;
+              return (
+                <tr key={plp}>
+                  <td className="text-right pr-2 font-medium text-gray-800 whitespace-nowrap text-xs">
+                    {plp}
+                  </td>
+                  {sizeAxis.map((sz) => {
+                    const c = sizeMap.get(sz)!;
+                    const has = c.total > 0;
+                    const pct = has ? c.available / c.total : 0;
+                    const label = has
+                      ? `${plp} · ${sz}: ${c.available}/${c.total} (${(pct * 100).toFixed(0)}%)`
+                      : `${plp} · ${sz}: not offered`;
+                    return (
+                      <td
+                        key={sz}
+                        title={label}
+                        className={`w-7 h-6 rounded-[3px] ${coverageClass(pct, has)}`}
+                      />
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <Legend />
+    </section>
+  );
+}
+
+export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
+  const sizeAxis = sizeAxisOf(inventory);
+  if (sizeAxis.length === 0) return null;
   const detail = buildDetailRows(inventory);
 
   return (
     <div className="mb-6 space-y-6">
-      {/* Aggregate — PLP × Size, color = % of variants where size is in stock */}
-      <section>
-        <h3 className="text-sm font-semibold mb-1">
-          Coverage by category × size
-        </h3>
-        <p className="text-xs text-muted mb-3">
-          Each cell = % of variants in that category where the size is in
-          stock. Vertical bands = sizes that are dead across the catalog;
-          horizontal bands = categories that are thin everywhere.
-        </p>
-        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-          <table className="text-[10px] border-separate border-spacing-0.5">
-            <thead>
-              <tr>
-                <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
-                {sizeAxis.map((s) => (
-                  <th
-                    key={s}
-                    className="text-center font-normal text-muted whitespace-nowrap w-7"
-                  >
-                    {s}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {plps.map((plp) => {
-                const sizeMap = cells.get(plp)!;
-                return (
-                  <tr key={plp}>
-                    <td className="text-right pr-2 font-medium text-gray-800 whitespace-nowrap text-xs">
-                      {plp}
-                    </td>
-                    {sizeAxis.map((sz) => {
-                      const c = sizeMap.get(sz)!;
-                      const has = c.total > 0;
-                      const pct = has ? c.available / c.total : 0;
-                      const label = has
-                        ? `${plp} · ${sz}: ${c.available}/${c.total} (${(pct * 100).toFixed(0)}%)`
-                        : `${plp} · ${sz}: not offered`;
-                      return (
-                        <td
-                          key={sz}
-                          title={label}
-                          className={`w-7 h-6 rounded-[3px] ${coverageClass(pct, has)}`}
-                        />
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <Legend />
-      </section>
+      <InventoryCoverageMatrix inventory={inventory} />
 
       {/* Detail — Variant × Size, binary green/red/gray */}
       <section>
