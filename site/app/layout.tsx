@@ -6,6 +6,7 @@ import "./globals.css";
 import { TopNav } from "@/components/TopNav";
 import { TrialBanner } from "@/components/TrialBanner";
 import { Footer } from "@/components/Footer";
+import { Wordmark } from "@/components/Wordmark";
 import { currentUser } from "@/lib/dal";
 import { isAppEnabled } from "@/lib/apps";
 
@@ -37,11 +38,8 @@ export default async function RootLayout({
         <body>
           <header className="border-b border-gray-200 bg-white">
             <div className="max-w-[980px] mx-auto px-5 py-4 flex items-center justify-between">
-              <Link
-                href="/"
-                className="text-base font-bold tracking-tight text-ink"
-              >
-                etell
+              <Link href="/" className="inline-block">
+                <Wordmark size="sm" />
               </Link>
               <span className="text-[11px] uppercase tracking-wide text-muted">
                 Shared report
