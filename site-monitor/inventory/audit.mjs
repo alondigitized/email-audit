@@ -59,7 +59,7 @@ function arg(name, dflt) {
 }
 const PERSONA_SLUG = arg('--persona', 'ivy-inventory');
 const MAX_PLPS = Number(arg('--max-plps', '0')) || null;       // null = all
-const MAX_STYLES = Number(arg('--max-styles', '3'));
+const MAX_STYLES = Number(arg('--max-styles', '12'));
 const MAX_COLORS = Number(arg('--max-colors', '0')) || null;   // null = all
 const MAX_WIDTHS = Number(arg('--max-widths', '0')) || null;   // null = all
 const DRY_RUN = flag('--dry-run');
