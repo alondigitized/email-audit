@@ -42,9 +42,6 @@ export default async function RootLayout({
                 authed app. Center-aligned to match the rest of the site. */}
             <div className="mb-5 pt-2 text-center">
               <Wordmark />
-              <div className="text-[11px] uppercase tracking-wide text-muted mt-3">
-                Shared report
-              </div>
             </div>
             {children}
           </main>
