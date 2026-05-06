@@ -193,8 +193,17 @@ export function parseReviewSections(reviewText) {
     if (!line || line === '---') continue;
     if (line.startsWith('**WALKER AUDIT') || line.startsWith('*Received:')) continue;
 
+    // Canonicalize the heading line for the SECTION_HEADINGS lookup:
+    //   - drop the leading "## 2. " (heading marks + section number)
+    //   - drop a trailing parenthetical qualifier ("(1-10)",
+    //     "(persona-grounded)", etc.) — the LLM emits these freely
+    //     and a fixed map can't enumerate every variant; a heading
+    //     like "Business Impact Score (1-10)" should match
+    //     "business impact score"
+    //   - lowercase and strip a trailing colon
     const cleaned = line
       .replace(/^#{1,3}\s*\d*\.?\s*/, '')
+      .replace(/\s*\([^)]*\)\s*$/, '')
       .trim()
       .toLowerCase()
       .replace(/:$/, '');
