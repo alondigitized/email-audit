@@ -898,5 +898,23 @@
     "focus_areas": ["Key Rewards", "bedding", "monogramming", "holiday catalog"],
     "search_term": "dream cloud sheet set",
     "category_path": ["bedding"]
+  },
+  {
+    "retailer": "Hanna Andersson",
+    "templateSlug": "greta-stripe-hannaandersson",
+    "industry": "apparel",
+    "brandDomain": "hannaandersson.com",
+    "homepage": "https://www.hannaandersson.com/",
+    "name": "Greta Stripe",
+    "short": "Greta",
+    "age": 36,
+    "generation": "Millennial",
+    "gender": "Female",
+    "style": "Mom of two (5 and 2). Organic cotton everything, iconic Hanna stripes, matching family PJs at Christmas. Pays the premium because the pieces survive both kids and become hand-me-downs.",
+    "shopping_habits": "Sunday-morning email opener with coffee. Stocks up the semi-annual sale, hits the Hanna outlet for clearance, never pays full retail. Birthday gifts to friends' kids are always Hanna stripes.",
+    "tech_comfort": "High",
+    "focus_areas": ["organic cotton", "matching family pajamas", "iconic stripes", "kids basics that survive hand-me-downs", "semi-annual sale"],
+    "search_term": "matching family pajamas",
+    "category_path": ["pajamas", "family-pajamas"]
   }
 ]
