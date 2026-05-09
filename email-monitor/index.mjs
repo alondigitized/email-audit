@@ -20,6 +20,11 @@ import { scheduleEngagement } from '../audit-pipeline/engagement.mjs';
 import { runAutoConfirm } from '../audit-pipeline/auto-confirm.mjs';
 import { mirrorReflectionsToVault } from '../audit-pipeline/mirror-reflections.mjs';
 import { mirrorSynthesesToVault } from '../audit-pipeline/mirror-syntheses.mjs';
+import {
+  listIndustryPersonasForBrand,
+  publishIndustryReaction,
+  flattenPersonaProfileForPrompt,
+} from '../audit-pipeline/industry-fanout.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -576,6 +581,88 @@ function mergeReviews(contentReview, technicalReview) {
   ].join('\n');
 }
 
+// Fan out the brand audit to any active industry personas matching the
+// brand's tenant + industry. For each, regenerate a content review with
+// the industry persona's voice, reuse the (persona-agnostic) technical
+// review, and persist via publishIndustryReaction.
+//
+// Best-effort per industry persona — one persona's failure doesn't block
+// the others. Skips silently if the brand persona has no matching industry
+// personas (the common case during rollout).
+async function fanoutIndustryAudits({
+  brandPersonaSlug,
+  brandAuditSlug,
+  fullMessage,
+  qaReport,
+  rendered,
+  technicalReview,
+  artifactDir,
+  messageId,
+}) {
+  const matches = await listIndustryPersonasForBrand(brandPersonaSlug);
+  if (matches.length === 0) return;
+
+  const repoRoot = path.dirname(__dirname);
+
+  for (const persona of matches) {
+    const flat = flattenPersonaProfileForPrompt(
+      persona.slug,
+      persona.name,
+      persona.profile
+    );
+    if (!flat) {
+      log('industry fanout skipped (no identity)', {
+        slug: brandAuditSlug,
+        industry: persona.slug,
+      });
+      continue;
+    }
+
+    try {
+      let contentReview = '';
+      if (rendered) {
+        contentReview = await generateReview(
+          buildContentPrompt(fullMessage, rendered, flat),
+          { images: [rendered], label: `industry-${persona.short ?? persona.slug}` }
+        );
+      } else {
+        log('industry fanout: no screenshot, technical-only', {
+          slug: brandAuditSlug,
+          industry: persona.slug,
+        });
+      }
+      const merged = contentReview
+        ? mergeReviews(contentReview, technicalReview)
+        : technicalReview;
+
+      const result = await publishIndustryReaction({
+        brandPersonaSlug,
+        brandAuditSlug,
+        industryPersona: persona,
+        reviewText: merged,
+        qaReport,
+        msg: fullMessage,
+        artifactDir,
+        messageId,
+        repoRoot,
+      });
+      log('industry fanout published', {
+        brand: brandPersonaSlug,
+        brandSlug: brandAuditSlug,
+        industry: persona.slug,
+        auditSlug: result.auditSlug,
+      });
+    } catch (err) {
+      log('industry fanout: persona failed (non-fatal)', {
+        brand: brandPersonaSlug,
+        brandSlug: brandAuditSlug,
+        industry: persona.slug,
+        error: String(err).slice(0, 500),
+      });
+    }
+  }
+}
+
 async function saveArtifacts(msg) {
   fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
   const slug = `${dateSlug(msg.created_at)}-${slugify(msg.subject)}`;
@@ -958,6 +1045,28 @@ async function processMessage(client, state, inboxId, persona, message, source =
       log('site publish failed (non-fatal)', { id, inbox: inboxId, error: String(err).slice(0, 500) });
     }
 
+    if (published) {
+      try {
+        await fanoutIndustryAudits({
+          brandPersonaSlug: persona,
+          brandAuditSlug: artifacts.slug,
+          fullMessage,
+          qaReport,
+          rendered,
+          technicalReview,
+          artifactDir: artifacts.dir,
+          messageId: fullMessage.messageId || fullMessage.message_id || null,
+        });
+      } catch (err) {
+        log('industry fanout failed (non-fatal)', {
+          id,
+          inbox: inboxId,
+          persona,
+          error: String(err).slice(0, 500),
+        });
+      }
+    }
+
     markSeen(state, inboxId, id);
     log('message completed', { id, inbox: inboxId, persona, source, slug: artifacts.slug, rendered: !!rendered, published });
   } catch (err) {
@@ -1096,6 +1205,27 @@ async function processCloudflareEmail(row) {
         id,
         error: String(err).slice(0, 500),
       });
+    }
+
+    if (published) {
+      try {
+        await fanoutIndustryAudits({
+          brandPersonaSlug: personaSlug,
+          brandAuditSlug: artifacts.slug,
+          fullMessage: msg,
+          qaReport,
+          rendered,
+          technicalReview,
+          artifactDir: artifacts.dir,
+          messageId: row.message_id || null,
+        });
+      } catch (err) {
+        log('industry fanout failed (non-fatal)', {
+          id,
+          persona: personaSlug,
+          error: String(err).slice(0, 500),
+        });
+      }
     }
 
     const { markEmailMessageProcessed } = await import(
