@@ -244,12 +244,20 @@ export type PersonaLastStatus = {
 // scripts/promote-personas-to-templates.ts one-shot for Walker/Martha/Calvin).
 // is_active=false hides a template from the picker without deleting it
 // (preserves provenance for already-forked instances).
+// Persona kind. 'brand' is the default — a single-brand customer persona
+// with its own inbox. 'industry' is a cross-brand lens persona that has no
+// inbox of its own; the producer fans out a parallel audit to it whenever
+// a same-industry brand persona's email lands. See lib/db/schema.ts notes
+// on personas.industry for the matching rule.
+export const personaKindEnum = pgEnum("persona_kind", ["brand", "industry"]);
+
 export const personaTemplates = pgTable("persona_template", {
   id: uuid("id").primaryKey().defaultRandom(),
   slug: text("slug").unique().notNull(),
   name: text("name").notNull(),
   short: text("short").notNull(),
   industry: text("industry").notNull(),
+  kind: personaKindEnum("kind").notNull().default("brand"),
   profile: jsonb("profile").$type<PersonaProfile>(),
   lastStatus: jsonb("last_status").$type<PersonaLastStatus>(),
   isActive: boolean("is_active").default(true).notNull(),
@@ -276,6 +284,13 @@ export const personas = pgTable("persona", {
   templateSlug: text("template_slug").references(() => personaTemplates.slug, {
     onDelete: "set null",
   }),
+  kind: personaKindEnum("kind").notNull().default("brand"),
+  // Set when kind='industry'. The industry tag this persona lenses across.
+  // Producer fan-out matches: every email that lands for a brand persona
+  // whose template.industry == this column triggers a parallel audit on
+  // this persona. Brand-kind personas leave this null and derive their
+  // industry from their template via JOIN.
+  industry: text("industry"),
 });
 
 // Concierge queue: when a tenant signs up at /signup but no persona_template

@@ -103,6 +103,8 @@ export default async function EditPersonaPage({
         short={persona.short}
         profile={persona.profile}
         lastStatus={persona.lastStatus}
+        kind={persona.kind}
+        industry={persona.industry}
         error={error}
         saved={saved}
       />

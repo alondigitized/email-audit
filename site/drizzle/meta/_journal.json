@@ -183,6 +183,13 @@
       "when": 1778004884294,
       "tag": "0025_eager_redwing",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1778307145958,
+      "tag": "0026_new_garia",
+      "breakpoints": true
     }
   ]
 }

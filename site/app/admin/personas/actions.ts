@@ -141,9 +141,23 @@ export async function createPersonaAction(
   const name = s(fd, "name") ?? slug;
   const short = s(fd, "short") ?? name.split(/\s+/)[0] ?? slug;
 
-  await db
-    .insert(personas)
-    .values({ slug, name, short, profile, tenantId: admin.tenantId ?? null });
+  const kind = (s(fd, "kind") === "industry" ? "industry" : "brand") as
+    | "brand"
+    | "industry";
+  const industry = s(fd, "industry") ?? null;
+  if (kind === "industry" && !industry) {
+    return { ok: false, error: "Industry kind requires an industry tag." };
+  }
+
+  await db.insert(personas).values({
+    slug,
+    name,
+    short,
+    profile,
+    tenantId: admin.tenantId ?? null,
+    kind,
+    industry: kind === "industry" ? industry : null,
+  });
 
   revalidatePath("/admin/personas");
   revalidatePath("/admin");
@@ -192,9 +206,23 @@ export async function upsertPersonaAction(
   const name = s(fd, "name") ?? row.name;
   const short = s(fd, "short") ?? row.short;
 
+  const kind = (s(fd, "kind") === "industry" ? "industry" : "brand") as
+    | "brand"
+    | "industry";
+  const industry = s(fd, "industry") ?? null;
+  if (kind === "industry" && !industry) {
+    return { ok: false, error: "Industry kind requires an industry tag." };
+  }
+
   await db
     .update(personas)
-    .set({ name, short, profile })
+    .set({
+      name,
+      short,
+      profile,
+      kind,
+      industry: kind === "industry" ? industry : null,
+    })
     .where(eq(personas.id, row.id));
 
   // Fire-and-forget URL validation. Runs AFTER the save returns so a

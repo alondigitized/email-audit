@@ -1,6 +1,7 @@
 import type { PersonaProfile } from "@/lib/schema/persona";
 import type { PersonaLastStatus } from "@/lib/db/schema";
 import { buildJourneySteps } from "@/lib/journey-preview";
+import { KNOWN_INDUSTRIES } from "@/lib/industries";
 
 // Server-rendered, uncontrolled form. Submit posts to the action passed
 // in via `action`. Used by both edit (/[slug]) and create (/new) pages —
@@ -16,6 +17,8 @@ export function PersonaForm({
   short,
   profile,
   lastStatus,
+  kind,
+  industry,
   error,
   saved,
 }: {
@@ -26,6 +29,8 @@ export function PersonaForm({
   short?: string;
   profile?: PersonaProfile | null;
   lastStatus?: PersonaLastStatus | null;
+  kind?: "brand" | "industry";
+  industry?: string | null;
   error?: string;
   saved?: boolean;
 }) {
@@ -48,6 +53,33 @@ export function PersonaForm({
       )}
 
       <Section title="Identity" subtitle="How the persona speaks and what they care about. Edit anything here and the chat picks it up on the next turn.">
+        <Row>
+          <Field label="Kind" hint="Brand: single-brand customer with own inbox. Industry: cross-brand lens (no inbox; gets fan-out audits from same-industry brand personas).">
+            <select
+              name="kind"
+              defaultValue={kind ?? "brand"}
+              className={inputCls}
+            >
+              <option value="brand">Brand</option>
+              <option value="industry">Industry</option>
+            </select>
+          </Field>
+          <Field label="Industry" hint="Required for kind=industry. Matches persona_template.industry on the brand side.">
+            <input
+              type="text"
+              name="industry"
+              defaultValue={industry ?? ""}
+              placeholder="e.g. apparel, electronics, beauty"
+              list="known-industries"
+              className={inputCls}
+            />
+            <datalist id="known-industries">
+              {KNOWN_INDUSTRIES.map((i) => (
+                <option key={i} value={i} />
+              ))}
+            </datalist>
+          </Field>
+        </Row>
         <Row>
           <Field label="Slug" hint="URL-safe, lowercase. Cannot change after create.">
             <input
