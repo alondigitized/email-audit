@@ -21,12 +21,14 @@ type SectionKey = keyof ReviewSections;
 // `recommendations` keys (the producer rebrand re-headed the prose, not
 // the storage), so labels here read v2 terminology while legacy `bottom_line`
 // + `whats_working` + `whats_weak` + `evidence` still render when present.
+//
+// Funnel IA (2026-05-10) — Subject + Preview no longer get their own
+// top-level sections. They're rendered inline inside Open Likelihood
+// because they're the *inputs* the inbox shows the user before they
+// decide whether to open. Click Likelihood stays standalone since its
+// inputs (hero, CTA, layout) don't have an equivalent scored grid.
 function sectionsForChannel(channel: AuditChannel) {
   const l = scoreLabels(channel);
-  const subjectLabel =
-    channel === "site" ? "Hero & above-the-fold" : "Subject";
-  const previewLabel =
-    channel === "site" ? "Promo & urgency cues" : "Preview";
   return [
     { key: "executive_summary" as SectionKey, label: "Take" },
     { key: "stood_out" as SectionKey, label: "What stood out" },
@@ -37,12 +39,19 @@ function sectionsForChannel(channel: AuditChannel) {
     { key: "business_impact_score" as SectionKey, label: "Business impact score" },
     { key: "open_likelihood" as SectionKey, label: `${l.firstStep} likelihood` },
     { key: "click_likelihood" as SectionKey, label: `${l.secondStep} likelihood` },
-    { key: "subject_line" as SectionKey, label: subjectLabel },
-    { key: "preview_text" as SectionKey, label: previewLabel },
     // Legacy v1 closers — render when present.
     { key: "bottom_line" as SectionKey, label: "Bottom line" },
     { key: "evidence" as SectionKey, label: "Evidence" },
   ];
+}
+
+// Sub-labels used when subject_line + preview_text get rendered inline
+// inside Open Likelihood. Email channel labels them as Subject + Preview;
+// site channel reuses the slots for hero / promo blocks.
+function subSectionLabels(channel: AuditChannel) {
+  return channel === "site"
+    ? { subject: "Hero & above-the-fold", preview: "Promo & urgency cues" }
+    : { subject: "Subject", preview: "Preview" };
 }
 
 // One-line preview shown next to the section title in the collapsed
@@ -100,6 +109,7 @@ export function CollapsibleReview({
   channel: AuditChannel;
 }) {
   const order = sectionsForChannel(channel);
+  const sub = subSectionLabels(channel);
 
   return (
     <div className="flex flex-col gap-2">
@@ -112,6 +122,13 @@ export function CollapsibleReview({
           key === "business_impact_score" ||
           key === "open_likelihood" ||
           key === "click_likelihood";
+
+        // Open Likelihood nests Subject + Preview inline — they're its
+        // upstream inputs from the inbox view.
+        const subjectLines =
+          key === "open_likelihood" ? (sections.subject_line ?? []) : [];
+        const previewLines =
+          key === "open_likelihood" ? (sections.preview_text ?? []) : [];
 
         return (
           <details
@@ -145,6 +162,30 @@ export function CollapsibleReview({
             </summary>
             <div className="px-4 pb-4 prose prose-sm max-w-none overflow-hidden prose-headings:mt-3 prose-headings:mb-1.5 prose-h2:text-sm prose-h3:text-sm prose-p:my-2 prose-li:my-0.5 prose-ul:my-1.5">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+              {(subjectLines.length > 0 || previewLines.length > 0) && (
+                <div className="mt-3 pt-3 border-t border-gray-100 flex flex-col gap-3">
+                  {subjectLines.length > 0 && (
+                    <div>
+                      <div className="text-[11px] font-semibold uppercase tracking-wide text-muted mb-1">
+                        {sub.subject}
+                      </div>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {subjectLines.join("\n")}
+                      </ReactMarkdown>
+                    </div>
+                  )}
+                  {previewLines.length > 0 && (
+                    <div>
+                      <div className="text-[11px] font-semibold uppercase tracking-wide text-muted mb-1">
+                        {sub.preview}
+                      </div>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {previewLines.join("\n")}
+                      </ReactMarkdown>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </details>
         );
