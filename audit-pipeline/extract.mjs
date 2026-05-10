@@ -226,6 +226,15 @@ export function parseReviewSections(reviewText) {
     if (mapped) { current = mapped; continue; }
     if (cleaned.startsWith('recommendation')) { current = 'recommendations'; continue; }
 
+    // Stop at the Technical Audit boundary. mergeReviews glues the
+    // persona's content review and the persona-agnostic technical
+    // review with `---` + `## Technical Audit`. Without this guard
+    // every technical section ("### Link & Tracking Issues" etc.)
+    // tail-dumps into whatever the last persona-side section was —
+    // historically `evidence`, post-v2 IA `preview_text` — corrupting
+    // its structured data.
+    if (cleaned === 'technical audit') break;
+
     // Skip bare heading lines that weren't matched above.
     if (/^#{1,3}\s/.test(line)) continue;
 
