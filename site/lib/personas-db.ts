@@ -80,6 +80,8 @@ export type PersonaRecord = {
   profile: PersonaProfile | null;
   lastStatus: PersonaLastStatus | null;
   tenantId: string | null;
+  kind: "brand" | "industry";
+  industry: string | null;
 };
 
 function logDrift(slug: string, err: unknown) {
@@ -136,6 +138,8 @@ const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
       profile: personas.profile,
       lastStatus: personas.lastStatus,
       tenantId: personas.tenantId,
+      kind: personas.kind,
+      industry: personas.industry,
     })
     .from(personas)
     .orderBy(asc(personas.slug));
@@ -147,6 +151,8 @@ const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
     profile: parseMaybeProfile(r.slug, r.profile),
     lastStatus: r.lastStatus ?? null,
     tenantId: r.tenantId ?? null,
+    kind: r.kind,
+    industry: r.industry ?? null,
   }));
 });
 
@@ -167,6 +173,8 @@ export const getPersonaBySlug = cache(
         profile: personas.profile,
         lastStatus: personas.lastStatus,
         tenantId: personas.tenantId,
+        kind: personas.kind,
+        industry: personas.industry,
       })
       .from(personas)
       .where(eq(personas.slug, slug))
@@ -182,6 +190,8 @@ export const getPersonaBySlug = cache(
       profile: parseMaybeProfile(r.slug, r.profile),
       lastStatus: r.lastStatus ?? null,
       tenantId: r.tenantId ?? null,
+      kind: r.kind,
+      industry: r.industry ?? null,
     };
   }
 );
