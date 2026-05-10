@@ -1,0 +1,200 @@
+import { eq, and, isNull, desc } from "drizzle-orm";
+import {
+  db,
+  podcastSubscriptions,
+  reactions,
+  experiences,
+} from "@/lib/db/client";
+
+// Token alphabet: 0/O/1/l/I excluded so a copy-paste mistype doesn't
+// silently land the user at a different feed. 28 chars at 32-symbol
+// alphabet ≈ 140 bits of entropy.
+const TOKEN_ALPHABET = "abcdefghijkmnpqrstuvwxyz23456789";
+function nano(n = 28): string {
+  const buf = crypto.getRandomValues(new Uint8Array(n));
+  let out = "";
+  for (let i = 0; i < n; i++) out += TOKEN_ALPHABET[buf[i] % TOKEN_ALPHABET.length];
+  return out;
+}
+
+export type PodcastFeedItem = {
+  slug: string;
+  subject: string;
+  preheader: string | null;
+  fromDisplay: string;
+  receivedAt: Date;
+  audio: {
+    key: string;
+    duration_sec: number;
+  };
+  score: string | null;
+};
+
+/**
+ * Mint a new podcast subscription token for (user, persona). Idempotent:
+ * returns the existing un-revoked token when one is already on file —
+ * podcast apps cache the feed URL so churning tokens would unsubscribe
+ * the user from their own feed. Pass `force: true` to rotate.
+ */
+export async function mintPodcastToken(args: {
+  userId: string;
+  personaSlug: string;
+  force?: boolean;
+}): Promise<string> {
+  if (!args.force) {
+    const [existing] = await db
+      .select({ token: podcastSubscriptions.token })
+      .from(podcastSubscriptions)
+      .where(
+        and(
+          eq(podcastSubscriptions.userId, args.userId),
+          eq(podcastSubscriptions.personaSlug, args.personaSlug),
+          isNull(podcastSubscriptions.revokedAt)
+        )
+      )
+      .orderBy(desc(podcastSubscriptions.createdAt))
+      .limit(1);
+    if (existing) return existing.token;
+  }
+  const token = nano();
+  await db.insert(podcastSubscriptions).values({
+    userId: args.userId,
+    personaSlug: args.personaSlug,
+    token,
+  });
+  return token;
+}
+
+/**
+ * Resolve a podcast token to its (user, persona). Returns null when the
+ * token is unknown OR revoked OR the persona slug in the URL doesn't
+ * match the one the token was minted for. Callers MUST pass the URL's
+ * persona slug so a leaked token doesn't unlock other persona feeds.
+ */
+export async function resolvePodcastToken(args: {
+  token: string;
+  personaSlug: string;
+}): Promise<{ userId: string; personaSlug: string } | null> {
+  const [row] = await db
+    .select({
+      userId: podcastSubscriptions.userId,
+      personaSlug: podcastSubscriptions.personaSlug,
+      revokedAt: podcastSubscriptions.revokedAt,
+    })
+    .from(podcastSubscriptions)
+    .where(eq(podcastSubscriptions.token, args.token))
+    .limit(1);
+  if (!row) return null;
+  if (row.revokedAt) return null;
+  if (row.personaSlug !== args.personaSlug) return null;
+  return { userId: row.userId, personaSlug: row.personaSlug };
+}
+
+/**
+ * Pull the persona's recent audio-ready reactions ordered most-recent
+ * first. Excludes rows without `review_data.audio.key` so a podcast
+ * client never sees an enclosure with no MP3 behind it.
+ */
+export async function listPodcastItems(args: {
+  personaSlug: string;
+  limit?: number;
+}): Promise<PodcastFeedItem[]> {
+  const rows = await db
+    .select({
+      slug: reactions.slug,
+      score: reactions.score,
+      reviewData: reactions.reviewData,
+      subject: experiences.emailData,
+      receivedAt: experiences.receivedAt,
+    })
+    .from(reactions)
+    .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
+    .where(eq(reactions.personaSlug, args.personaSlug))
+    .orderBy(desc(experiences.receivedAt))
+    .limit(args.limit ?? 50);
+
+  const items: PodcastFeedItem[] = [];
+  for (const r of rows) {
+    const audio = (r.reviewData as { audio?: PodcastFeedItem["audio"] })
+      ?.audio;
+    if (!audio?.key) continue;
+    const email =
+      (r.subject as {
+        subject?: string;
+        preheader?: string | null;
+        from_display_name?: string;
+      }) ?? {};
+    items.push({
+      slug: r.slug,
+      subject: email.subject ?? "(no subject)",
+      preheader: email.preheader ?? null,
+      fromDisplay: email.from_display_name ?? "",
+      receivedAt: r.receivedAt,
+      audio: { key: audio.key, duration_sec: audio.duration_sec ?? 0 },
+      score: r.score ?? null,
+    });
+  }
+  return items;
+}
+
+/**
+ * Serialize a PodcastFeedItem set as RSS 2.0 + iTunes namespace. Items
+ * use the server-proxied audio URL so the R2 key stays private.
+ */
+export function buildRssXml(args: {
+  personaSlug: string;
+  personaName: string;
+  personaShort: string;
+  token: string;
+  origin: string;
+  items: PodcastFeedItem[];
+}): string {
+  const { origin, personaSlug, token } = args;
+  const feedUrl = `${origin}/feed/${personaSlug}/${token}.rss`;
+  const channelTitle = `${args.personaName} — etell audits`;
+  const channelDesc = `${args.personaShort}'s persona-voiced read on every email landing in the inbox. Generated by etell.app.`;
+  const xmlEscape = (s: string) =>
+    s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+  const itemsXml = args.items
+    .map((it) => {
+      const audioUrl = `${origin}/feed/${personaSlug}/${token}/audio/${it.slug}.mp3`;
+      const pubDate = it.receivedAt.toUTCString();
+      const desc =
+        `${it.fromDisplay ? `${it.fromDisplay} · ` : ""}${it.preheader ?? ""}\n\nFull audit: ${origin}/audits/${it.slug}`.trim();
+      const durMin = Math.floor(it.audio.duration_sec / 60);
+      const durSec = it.audio.duration_sec % 60;
+      const durStr = `${durMin}:${String(durSec).padStart(2, "0")}`;
+      return `    <item>
+      <title>${xmlEscape(it.subject)}</title>
+      <description>${xmlEscape(desc)}</description>
+      <pubDate>${pubDate}</pubDate>
+      <guid isPermaLink="false">etell:${it.slug}</guid>
+      <link>${origin}/audits/${it.slug}</link>
+      <itunes:duration>${durStr}</itunes:duration>
+      <enclosure url="${audioUrl}" type="audio/mpeg" length="0"/>
+    </item>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${xmlEscape(channelTitle)}</title>
+    <link>${origin}/chat/${personaSlug}</link>
+    <description>${xmlEscape(channelDesc)}</description>
+    <language>en-US</language>
+    <atom:link href="${feedUrl}" rel="self" type="application/rss+xml"/>
+    <itunes:author>${xmlEscape(args.personaName)}</itunes:author>
+    <itunes:summary>${xmlEscape(channelDesc)}</itunes:summary>
+    <itunes:explicit>false</itunes:explicit>
+${itemsXml}
+  </channel>
+</rss>
+`;
+}

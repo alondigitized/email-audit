@@ -338,6 +338,32 @@ export const userPersonas = pgTable(
   })
 );
 
+// Per-(user, persona) podcast subscription. Mints a long-lived token
+// the user pastes into their podcast app as the RSS feed URL. Token is
+// URL-safe ASCII; revoke by setting revokedAt rather than deleting so
+// audit logs remain. Podcast apps don't support cookies/oauth, hence
+// the unauthenticated bearer-in-URL pattern — token leak is contained
+// per (user, persona) and revocable.
+export const podcastSubscriptions = pgTable(
+  "podcast_subscription",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    personaSlug: text("persona_slug").notNull(),
+    token: text("token").unique().notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    revokedAt: timestamp("revoked_at", { mode: "date" }),
+  },
+  (t) => ({
+    userPersonaIdx: index("podcast_subscription_user_persona_idx").on(
+      t.userId,
+      t.personaSlug
+    ),
+  })
+);
+
 // Rate-limit ledger for magic-link requests. One row per attempt
 // regardless of outcome. Keyed twice — once by sha256(email), once by
 // source IP — so we can throttle both burst-from-one-sender and

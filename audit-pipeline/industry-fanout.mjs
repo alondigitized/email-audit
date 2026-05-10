@@ -28,6 +28,7 @@ import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 import { buildAuditData } from './extract.mjs';
 import { extractMediaKeys, parseScore } from './publish.mjs';
 import { writeVaultNote } from './vault-writer.mjs';
+import { generateAndPublishAudio } from './audio-publish.mjs';
 
 function db() {
   const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
@@ -291,6 +292,22 @@ export async function publishIndustryReaction({
     } catch (err) {
       console.warn('industry-fanout: vault write failed', String(err).slice(0, 200));
     }
+  }
+
+  // 4) Audio. Best-effort — same semantics as vault writes. Each
+  // industry persona gets their own MP3 in the industry voice; the
+  // brand audit's MP3 already landed via the brand-side hook in
+  // email-monitor.
+  try {
+    await generateAndPublishAudio({
+      slug: auditSlug,
+      persona: industryPersona.slug,
+      sections: data.review?.sections ?? {},
+      email: data.email ?? {},
+      artifactDir,
+    });
+  } catch (err) {
+    console.warn('industry-fanout: audio generation failed', String(err).slice(0, 200));
   }
 
   return { auditSlug, reactionId };

@@ -48,6 +48,19 @@ export const predictionsSchema = z
   })
   .partial();
 
+// Persona-voiced audio narration of the review (Take + What stood out +
+// What I'd change). Set by audit-pipeline/audio-publish.mjs after a
+// successful Google TTS synthesis; null when GOOGLE_TTS_API_KEY isn't
+// configured or the audit's prose sections were too thin to narrate.
+export const reviewAudioSchema = z.object({
+  key: z.string(), // R2 object key, e.g. audits/<slug>/audio.mp3
+  voice: z.string(), // Google TTS voice id, e.g. en-US-Neural2-D
+  rate: z.number(), // Speaking rate used at synthesis time
+  duration_sec: z.number(),
+  char_count: z.number(),
+  generated_at: z.string(), // ISO timestamp
+});
+
 export const reviewSectionsSchema = z
   .object({
     // V2 IA (audit-ia-refactor 2026-05-10):
@@ -206,6 +219,7 @@ export const auditDataSchema = z.object({
     raw_markdown: z.string(),
     sections: reviewSectionsSchema,
     predictions: predictionsSchema.nullable().optional(),
+    audio: reviewAudioSchema.nullable().optional(),
   }),
   qa: qaReportSchema.nullable(),
   assets: z.object({
