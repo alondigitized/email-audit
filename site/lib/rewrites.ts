@@ -79,7 +79,14 @@ function buildPrompt({
       ? audit.review.sections.whats_weak
       : audit.review.sections?.stood_out ?? [];
   const weak = weakSrc.length ? weakSrc.join("\n- ") : "(none recorded)";
-  const recs = audit.review.sections?.recommendations?.join("\n- ") ?? "(none)";
+  // Recommendations now also hold "Subject Alt A/B" + "Preheader Alt A/B"
+  // lines (v2 IA). Don't feed those back to the model — re-showing the
+  // model its own alt rewrites confuses the structured-output call and
+  // bloats the prompt. Keep only the actionable recommendation lines.
+  const recLines = (audit.review.sections?.recommendations ?? []).filter(
+    (l) => !/\*\*(?:subject|preheader)\s+alt\b/i.test(l)
+  );
+  const recs = recLines.length ? recLines.join("\n- ") : "(none)";
 
   const dims = dimensionsForChannel(channel);
   const dimList = dims.map((d) => `- ${d}`).join("\n");
@@ -136,13 +143,39 @@ export async function generateRewrites({
 }): Promise<Rewrites> {
   const channel = (audit.type ?? "email") as "email" | "site";
   const prompt = buildPrompt({ audit, persona, channel });
-  const { object } = await generateObject({
-    model: researchModel(),
-    schema: llmRewriteOutputSchema,
-    prompt,
-    maxOutputTokens: 1500,
-    temperature: 0.7,
-  });
+
+  // Structured-output via local LLMs is flaky on long prompts — the model
+  // occasionally wraps the JSON in markdown fences or trails prose past
+  // the closing brace, both of which fail schema validation. Retry once
+  // with an explicit JSON-only nudge before giving up.
+  let object: { alternatives: RewriteAlternative[] };
+  try {
+    const r = await generateObject({
+      model: researchModel(),
+      schema: llmRewriteOutputSchema,
+      prompt,
+      maxOutputTokens: 3000,
+      temperature: 0.7,
+    });
+    object = r.object;
+  } catch (firstErr) {
+    const stricterPrompt =
+      prompt +
+      "\n\nIMPORTANT: Output ONLY a JSON object matching the schema. No prose, no markdown fences, no preamble. Start with { and end with }.";
+    const r = await generateObject({
+      model: researchModel(),
+      schema: llmRewriteOutputSchema,
+      prompt: stricterPrompt,
+      maxOutputTokens: 3000,
+      temperature: 0.3,
+    });
+    object = r.object;
+    console.warn(
+      `[rewrites] generateObject retry succeeded after: ${
+        firstErr instanceof Error ? firstErr.message.slice(0, 160) : "unknown"
+      }`
+    );
+  }
 
   // Filter out alternatives whose dimension doesn't apply to the channel
   // (model occasionally generates a "subject" rewrite for a homepage).
