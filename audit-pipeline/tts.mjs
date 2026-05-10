@@ -1,47 +1,81 @@
-// Google Cloud Text-to-Speech wrapper for the audit pipeline.
+// Piper TTS wrapper for the audit pipeline.
 //
-// Auth: API key in GOOGLE_TTS_API_KEY. Restrict the key to the
-// "Cloud Text-to-Speech API" service in the Google Cloud Console and
-// add a referrer/IP allowlist if exposed beyond this daemon.
+// Piper is a local neural TTS binary (https://github.com/rhasspy/piper).
+// We shell out to it from the producer daemon — no API keys, no
+// per-character cost, no PII leaving the Mac mini.
 //
-// Voice strategy: each persona gets a stable Google Neural2 voice based
-// on identity (gender + age bucket). The mapping lives in
-// VOICE_BY_GENDER_AGE; persona profiles may override via
-// profile.tts = { voice: "en-US-Neural2-X", rate: 1.05 }.
+// Setup (one-time on the host that runs the daemon):
 //
-// Text shape: we only narrate the persona's prose sections
-// (executive_summary / stood_out / recommendations) — the scores card is
-// tabular data that doesn't read well aloud. The markdownToSpoken
-// stripper produces inbox-clean speech: heading prefixes dropped, bullet
-// dashes dropped, score notations like `**X/10**` expanded to "X out of
-// ten", code spans flattened.
+//   brew install piper-tts ffmpeg
+//   mkdir -p ~/.local/share/piper-voices && cd ~/.local/share/piper-voices
 //
-// Char budget: Google's text:synthesize endpoint caps a single request
-// at 5000 chars. We truncate at 4500 to leave headroom for SSML
-// expansion. A 4500-char persona-voiced prose block produces ~4.5 min
-// of audio at speaking_rate=1.0 — fine for a commute.
+//   # Download the en_US voices the persona map below references.
+//   # Each voice is two files: .onnx (model) + .onnx.json (config).
+//   #
+//   #   huggingface.co/rhasspy/piper-voices/tree/main/en/en_US
+//   #
+//   # Curl pairs example:
+//   for v in amy-medium kristin-medium kathleen-low ryan-high joe-medium norman-medium; do
+//     curl -LO "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/${v%-*}/${v##*-}/en_US-${v}.onnx"
+//     curl -LO "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/${v%-*}/${v##*-}/en_US-${v}.onnx.json"
+//   done
+//
+// Env:
+//   PIPER_BIN          path to the piper binary (default /opt/homebrew/bin/piper)
+//   PIPER_VOICES_DIR   dir holding the .onnx + .onnx.json files
+//                      (default ~/.local/share/piper-voices)
+//   FFMPEG_BIN         path to ffmpeg (default /opt/homebrew/bin/ffmpeg)
+//
+// Voice selection: each persona's profile.identity (gender + age) maps
+// to a Piper voice name via VOICE_BY_GENDER_AGE. profile.tts.voice
+// overrides the default — set it to a piper voice id like
+// `en_US-amy-medium` to pin.
 
-const TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
-const CHAR_BUDGET = 4500;
+import { execFile } from 'child_process';
+import { promisify } from 'util';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 
-// Default Neural2 voices keyed by (gender, age bucket). Picked for
-// distinguishability so a podcast feed mixing personas doesn't sound
-// like one narrator reading multiple parts.
+const execFileAsync = promisify(execFile);
+
+// The piper-tts pip wheel installs the entrypoint into the user's
+// Python `bin/` dir. On macOS w/ system Python 3.9 that's
+// ~/Library/Python/3.9/bin/piper. Override via PIPER_BIN if you used
+// a venv, pipx, or a different Python.
+const PIPER_BIN =
+  process.env.PIPER_BIN ||
+  `${process.env.HOME}/Library/Python/3.9/bin/piper`;
+const FFMPEG_BIN = process.env.FFMPEG_BIN || '/opt/homebrew/bin/ffmpeg';
+const VOICES_DIR =
+  process.env.PIPER_VOICES_DIR ||
+  path.join(os.homedir(), '.local', 'share', 'piper-voices');
+
+const CHAR_BUDGET = 4500; // ~4-5 min audio at default length-scale
+
+// Piper voice picks for each gender × age bucket. Names follow the
+// rhasspy/piper-voices repo convention: en_US-<speaker>-<quality>.
 //
-// Each tuple maps to the persona's likely voice profile:
-//   Male voices:   D (mid-30s warm), I (older measured), J (younger crisp)
-//   Female voices: F (mid-30s warm), C (older measured), H (younger bright)
-//   Neutral/other: A (default neutral male), E (default neutral female)
+//   amy-medium       — female, mid-30s warm
+//   kristin-medium   — female, mid-30s warm alt (used for mid bucket)
+//   kathleen-low     — female, older measured
+//   ryan-high        — male, younger crisp
+//   joe-medium       — male, mid-range
+//   norman-medium    — male, older measured
+//   lessac-medium    — neutral female, very clear (fallback)
+//
+// All voices ship at 22.05 kHz mono. Length-scale > 1 slows the read,
+// < 1 speeds it up — inverse of our rate axis. We map rate → 1/rate.
 const VOICE_BY_GENDER_AGE = {
-  'female:young':  { voice: 'en-US-Neural2-H', rate: 1.10 },
-  'female:mid':    { voice: 'en-US-Neural2-F', rate: 1.00 },
-  'female:older':  { voice: 'en-US-Neural2-C', rate: 0.95 },
-  'male:young':    { voice: 'en-US-Neural2-J', rate: 1.10 },
-  'male:mid':      { voice: 'en-US-Neural2-D', rate: 1.00 },
-  'male:older':    { voice: 'en-US-Neural2-I', rate: 0.95 },
-  'other:young':   { voice: 'en-US-Neural2-A', rate: 1.05 },
-  'other:mid':     { voice: 'en-US-Neural2-A', rate: 1.00 },
-  'other:older':   { voice: 'en-US-Neural2-A', rate: 0.95 },
+  'female:young':  { voice: 'en_US-amy-medium',      rate: 1.05 },
+  'female:mid':    { voice: 'en_US-kristin-medium',  rate: 1.00 },
+  'female:older':  { voice: 'en_US-kathleen-low',    rate: 0.95 },
+  'male:young':    { voice: 'en_US-ryan-high',       rate: 1.05 },
+  'male:mid':      { voice: 'en_US-joe-medium',      rate: 1.00 },
+  'male:older':    { voice: 'en_US-norman-medium',   rate: 0.95 },
+  'other:young':   { voice: 'en_US-lessac-medium',   rate: 1.05 },
+  'other:mid':     { voice: 'en_US-lessac-medium',   rate: 1.00 },
+  'other:older':   { voice: 'en_US-lessac-medium',   rate: 0.95 },
 };
 
 function ageBucket(age) {
@@ -59,7 +93,7 @@ function normalizeGender(g) {
 }
 
 /**
- * Pick a Google voice for a persona. Honors profile.tts override; falls
+ * Pick a Piper voice for a persona. Honors profile.tts override; falls
  * back to the gender × age-bucket default. Returns { voice, rate }.
  */
 export function pickVoice(personaProfile) {
@@ -77,16 +111,10 @@ export function pickVoice(personaProfile) {
  * sections 1-3 of the v2 IA are narrated (Take / What stood out /
  * What I'd change). Score blocks, subject grid, preview grid all drop —
  * they're visual.
- *
- * Input: parsed sections dict from audit-pipeline/extract.mjs.
- * Output: plain-text string suitable for Google TTS `input.text`.
  */
 export function buildSpokenScript({ persona, sections, email }) {
   const lines = [];
 
-  // One-sentence opener so the listener knows what they're hearing.
-  // Persona's short name + brand + subject keeps the feed scannable in
-  // a podcast app's queue.
   const who = persona?.short ?? persona?.name ?? 'I';
   const brand = email?.from_display_name ?? '';
   const subject = email?.subject ?? '';
@@ -121,8 +149,6 @@ export function buildSpokenScript({ persona, sections, email }) {
 
   let text = lines.join('\n').trim();
   if (text.length > CHAR_BUDGET) {
-    // Truncate at a sentence boundary near the budget so we don't cut a
-    // word mid-syllable.
     const sliced = text.slice(0, CHAR_BUDGET);
     const lastStop = Math.max(
       sliced.lastIndexOf('. '),
@@ -136,72 +162,121 @@ export function buildSpokenScript({ persona, sections, email }) {
 
 function stripMarkdown(s) {
   return s
-    // Score notations: `**3/10**` → "three out of ten" feels too kitschy;
-    // just drop to "3 out of 10" so the TTS reads it cleanly.
     .replace(/\*\*(\d+(?:\.\d+)?)\s*\/\s*10\*\*/g, '$1 out of 10')
     .replace(/(\d+(?:\.\d+)?)\s*\/\s*10/g, '$1 out of 10')
-    // Bold/italic markers — keep the inner text, drop the asterisks.
     .replace(/\*\*([^*]+)\*\*/g, '$1')
     .replace(/\*([^*]+)\*/g, '$1')
-    // Inline code: keep the text without backticks; TTS will read it.
     .replace(/`([^`]+)`/g, '$1')
-    // Links: keep the visible text only.
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    // Bullet leaders.
     .replace(/^\s*[-*]\s+/gm, '')
-    // Numbered list leaders.
     .replace(/^\s*\d+\.\s+/gm, '')
-    // Collapse multi-blank lines and tighten whitespace.
     .replace(/\n{2,}/g, '\n')
     .replace(/[ \t]+/g, ' ')
     .trim();
 }
 
-/**
- * Synthesize MP3 from text. Returns { buffer, voice, rate } or null if
- * GOOGLE_TTS_API_KEY is unset (producer treats null as "skip audio").
- *
- * Throws on API errors so the caller's try/catch logs cleanly.
- */
-export async function synthesizeMp3({ text, voice, rate }) {
-  const apiKey = process.env.GOOGLE_TTS_API_KEY;
-  if (!apiKey) return null;
-  if (!text || !text.trim()) return null;
-
-  const body = {
-    input: { text },
-    voice: { languageCode: 'en-US', name: voice },
-    audioConfig: { audioEncoding: 'MP3', speakingRate: rate ?? 1.0 },
-  };
-  const res = await fetch(`${TTS_URL}?key=${encodeURIComponent(apiKey)}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const detail = await res.text().catch(() => '');
-    throw new Error(
-      `google tts ${res.status}: ${detail.slice(0, 300)}`
-    );
-  }
-  const json = await res.json();
-  const audioB64 = json.audioContent;
-  if (typeof audioB64 !== 'string') {
-    throw new Error('google tts: missing audioContent in response');
-  }
-  return {
-    buffer: Buffer.from(audioB64, 'base64'),
-    voice,
-    rate: rate ?? 1.0,
-  };
+function voicePath(voiceId) {
+  return path.join(VOICES_DIR, `${voiceId}.onnx`);
 }
 
 /**
- * Approximate audio duration in seconds from char count + speaking rate.
- * Google's Neural2 voices hit ~15 chars/sec at rate=1.0 in English. We
- * use this for the RSS <itunes:duration> tag and the player UI — exact
- * length comes from the MP3 itself but most podcast apps tolerate
- * mp3-vs-rss mismatch.
+ * Synthesize MP3 from text via Piper + ffmpeg. Returns
+ * { buffer, voice, rate } or null if Piper isn't configured or the
+ * voice model is missing.
+ *
+ * Pipeline:
+ *   echo "..." | piper --model VOICE.onnx --output-raw --length-scale L
+ *               | ffmpeg -f s16le -ar 22050 -ac 1 -i - -codec:a libmp3lame -qscale:a 4 -
+ *
+ * Piper's raw PCM is 22050 Hz mono S16LE; ffmpeg transcodes in-place
+ * with no temp files. -qscale:a 4 ≈ 128 kbps VBR, fine for spoken word.
+ */
+export async function synthesizeMp3({ text, voice, rate }) {
+  if (!ttsConfigured()) return null;
+  if (!text || !text.trim()) return null;
+
+  const modelPath = voicePath(voice);
+  if (!fs.existsSync(modelPath)) {
+    throw new Error(
+      `piper: voice model missing — expected ${modelPath}. ` +
+        `Download from huggingface.co/rhasspy/piper-voices.`
+    );
+  }
+  if (!fs.existsSync(`${modelPath}.json`)) {
+    throw new Error(`piper: voice config missing — expected ${modelPath}.json`);
+  }
+
+  // length-scale is the inverse of our rate axis (rate 1.10 = faster =
+  // shorter audio = length-scale 0.91). Piper clamps anyway.
+  const lengthScale = (1 / (rate || 1.0)).toFixed(3);
+
+  const piper = execFile(
+    PIPER_BIN,
+    ['--model', modelPath, '--output-raw', '--length-scale', lengthScale],
+    { maxBuffer: 1024 * 1024 * 200 }
+  );
+  const ffmpeg = execFile(
+    FFMPEG_BIN,
+    [
+      '-hide_banner',
+      '-loglevel', 'error',
+      '-f', 's16le',
+      '-ar', '22050',
+      '-ac', '1',
+      '-i', 'pipe:0',
+      '-codec:a', 'libmp3lame',
+      '-qscale:a', '4',
+      '-f', 'mp3',
+      'pipe:1',
+    ],
+    { maxBuffer: 1024 * 1024 * 200, encoding: 'buffer' }
+  );
+
+  // Pipe piper stdout → ffmpeg stdin.
+  piper.stdout.pipe(ffmpeg.stdin);
+  piper.stdin.write(text);
+  piper.stdin.end();
+
+  // Collect mp3 bytes off ffmpeg stdout.
+  const chunks = [];
+  ffmpeg.stdout.on('data', (b) => chunks.push(b));
+
+  const piperErr = collectStderr(piper);
+  const ffmpegErr = collectStderr(ffmpeg);
+
+  const [piperCode, ffmpegCode] = await Promise.all([
+    new Promise((res) => piper.on('close', res)),
+    new Promise((res) => ffmpeg.on('close', res)),
+  ]);
+
+  if (piperCode !== 0) {
+    throw new Error(
+      `piper exited ${piperCode}: ${(await piperErr).slice(0, 400)}`
+    );
+  }
+  if (ffmpegCode !== 0) {
+    throw new Error(
+      `ffmpeg exited ${ffmpegCode}: ${(await ffmpegErr).slice(0, 400)}`
+    );
+  }
+
+  const buffer = Buffer.concat(chunks);
+  if (buffer.length === 0) throw new Error('piper/ffmpeg produced empty mp3');
+  return { buffer, voice, rate: rate ?? 1.0 };
+}
+
+function collectStderr(child) {
+  return new Promise((res) => {
+    const parts = [];
+    child.stderr.on('data', (b) => parts.push(b));
+    child.on('close', () => res(Buffer.concat(parts).toString('utf8')));
+  });
+}
+
+/**
+ * Approximate audio duration in seconds. Piper at length-scale 1.0
+ * produces ~15 chars/sec of speech — same as Google Neural2, so the
+ * estimate carries over.
  */
 export function estimateDuration(text, rate = 1.0) {
   if (!text) return 0;
@@ -209,6 +284,15 @@ export function estimateDuration(text, rate = 1.0) {
   return Math.round(text.length / charsPerSec);
 }
 
+/**
+ * True when the Piper binary is on disk and at least one voice model
+ * lives in VOICES_DIR. Cheap fs.existsSync stat; the daemon caller
+ * skips audio generation cleanly when this returns false so the
+ * pipeline never crashes on a misconfigured host.
+ */
 export function ttsConfigured() {
-  return !!process.env.GOOGLE_TTS_API_KEY;
+  if (!fs.existsSync(PIPER_BIN)) return false;
+  if (!fs.existsSync(FFMPEG_BIN)) return false;
+  if (!fs.existsSync(VOICES_DIR)) return false;
+  return true;
 }
