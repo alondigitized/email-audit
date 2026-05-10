@@ -120,6 +120,18 @@ function stripPreamble(reviewText) {
 // normalized (trim, lowercase, trailing colon removed, leading "#/number"
 // stripped). Supports both straight and curly apostrophes.
 const SECTION_HEADINGS = new Map([
+  // V2 IA (audit-ia-refactor 2026-05-10): "Take" replaces Executive Summary +
+  // Bottom Line; "What stood out" replaces What's Working/Weak + Evidence;
+  // "What I'd change" maps to recommendations.
+  ['take', 'executive_summary'],
+  ['my take', 'executive_summary'],
+  ['what stood out', 'stood_out'],
+  ['stood out', 'stood_out'],
+  ["what i'd change", 'recommendations'],
+  ['what i\u2019d change', 'recommendations'],
+  ['what i would change', 'recommendations'],
+  // V1 keys retained for legacy audits \u2014 re-extracts of pre-refactor
+  // reviews still parse cleanly.
   ['executive summary', 'executive_summary'],
   ['business impact score', 'business_impact_score'],
   ['business impact', 'business_impact_score'],
@@ -135,6 +147,7 @@ const SECTION_HEADINGS = new Map([
   ['subject', 'subject_line'],
   ['preview text analysis', 'preview_text'],
   ['preview text', 'preview_text'],
+  ['preview', 'preview_text'],
   ['preheader analysis', 'preview_text'],
   ['preheader', 'preview_text'],
   ['preheader text', 'preview_text'],
@@ -178,6 +191,7 @@ export function parseReviewSections(reviewText) {
     business_impact_score: [],
     whats_working: [],
     whats_weak: [],
+    stood_out: [],
     recommendations: [],
     bottom_line: [],
     subject_line: [],
@@ -211,6 +225,15 @@ export function parseReviewSections(reviewText) {
     const mapped = SECTION_HEADINGS.get(cleaned);
     if (mapped) { current = mapped; continue; }
     if (cleaned.startsWith('recommendation')) { current = 'recommendations'; continue; }
+
+    // Stop at the Technical Audit boundary. mergeReviews glues the
+    // persona's content review and the persona-agnostic technical
+    // review with `---` + `## Technical Audit`. Without this guard
+    // every technical section ("### Link & Tracking Issues" etc.)
+    // tail-dumps into whatever the last persona-side section was —
+    // historically `evidence`, post-v2 IA `preview_text` — corrupting
+    // its structured data.
+    if (cleaned === 'technical audit') break;
 
     // Skip bare heading lines that weren't matched above.
     if (/^#{1,3}\s/.test(line)) continue;

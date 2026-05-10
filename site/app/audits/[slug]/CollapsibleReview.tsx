@@ -12,38 +12,35 @@ import { scoreLabels } from "@/lib/score-labels";
 
 type SectionKey = keyof ReviewSections;
 
-// Display order (canonical) and channel-aware labels. The narrative
-// data layer keeps neutral keys (subject_line, open_likelihood, etc.)
-// so we route through scoreLabels to surface the right user-facing
-// labels per channel.
+// Display order (canonical) and channel-aware labels.
+//
+// V2 IA (audit-ia-refactor 2026-05-10) — the producer prompt now writes
+// "Take" / "What stood out" / "What I'd change" instead of the older
+// Executive Summary / What's Working / What's Weak / Bottom Line / Evidence
+// stack. Both v1 and v2 audits share the same `executive_summary` and
+// `recommendations` keys (the producer rebrand re-headed the prose, not
+// the storage), so labels here read v2 terminology while legacy `bottom_line`
+// + `whats_working` + `whats_weak` + `evidence` still render when present.
 function sectionsForChannel(channel: AuditChannel) {
   const l = scoreLabels(channel);
-  if (channel === "site") {
-    return [
-      { key: "executive_summary" as SectionKey, label: "Executive summary" },
-      { key: "business_impact_score" as SectionKey, label: "Business impact score" },
-      { key: "whats_working" as SectionKey, label: "What's working" },
-      { key: "whats_weak" as SectionKey, label: "What's weak" },
-      { key: "recommendations" as SectionKey, label: "Recommendations" },
-      { key: "bottom_line" as SectionKey, label: "Bottom line" },
-      { key: "subject_line" as SectionKey, label: "Hero & above-the-fold" },
-      { key: "preview_text" as SectionKey, label: "Promo & urgency cues" },
-      { key: "open_likelihood" as SectionKey, label: `${l.firstStep} likelihood` },
-      { key: "click_likelihood" as SectionKey, label: `${l.secondStep} likelihood` },
-      { key: "evidence" as SectionKey, label: "Evidence" },
-    ];
-  }
+  const subjectLabel =
+    channel === "site" ? "Hero & above-the-fold" : "Subject";
+  const previewLabel =
+    channel === "site" ? "Promo & urgency cues" : "Preview";
   return [
-    { key: "executive_summary" as SectionKey, label: "Executive summary" },
-    { key: "business_impact_score" as SectionKey, label: "Business impact score" },
+    { key: "executive_summary" as SectionKey, label: "Take" },
+    { key: "stood_out" as SectionKey, label: "What stood out" },
+    // Legacy v1 split — only render when present (v2 audits leave these empty).
     { key: "whats_working" as SectionKey, label: "What's working" },
     { key: "whats_weak" as SectionKey, label: "What's weak" },
-    { key: "recommendations" as SectionKey, label: "Recommendations" },
-    { key: "bottom_line" as SectionKey, label: "Bottom line" },
-    { key: "subject_line" as SectionKey, label: "Subject line analysis" },
-    { key: "preview_text" as SectionKey, label: "Preview text analysis" },
+    { key: "recommendations" as SectionKey, label: "What I'd change" },
+    { key: "business_impact_score" as SectionKey, label: "Business impact score" },
     { key: "open_likelihood" as SectionKey, label: `${l.firstStep} likelihood` },
     { key: "click_likelihood" as SectionKey, label: `${l.secondStep} likelihood` },
+    { key: "subject_line" as SectionKey, label: subjectLabel },
+    { key: "preview_text" as SectionKey, label: previewLabel },
+    // Legacy v1 closers — render when present.
+    { key: "bottom_line" as SectionKey, label: "Bottom line" },
     { key: "evidence" as SectionKey, label: "Evidence" },
   ];
 }
@@ -67,10 +64,13 @@ function previewFor(key: SectionKey, lines: string[]): string {
     key === "whats_working" ||
     key === "whats_weak" ||
     key === "recommendations" ||
-    key === "evidence"
+    key === "evidence" ||
+    key === "stood_out"
   ) {
     const bullets = lines.filter((l) => /^[-*]\s/.test(l)).length;
-    return `${bullets} ${bullets === 1 ? "point" : "points"}`;
+    if (bullets > 0) return `${bullets} ${bullets === 1 ? "point" : "points"}`;
+    // V2 stood_out / take are prose, not bullets — fall through to the
+    // first-line preview below so the chip says something useful.
   }
 
   // Default: first non-bullet, non-heading line; trim hard.
@@ -82,9 +82,15 @@ function previewFor(key: SectionKey, lines: string[]): string {
     .slice(0, 110);
 }
 
-// Default-open: executive summary + bottom line are short enough that
-// expanding by default is friendlier than yet another click.
-const DEFAULT_OPEN: SectionKey[] = ["executive_summary", "bottom_line"];
+// Default-open: the persona's prose sections — Take + What stood out +
+// What I'd change. Bottom line stays open for legacy audits where Take
+// is shorter. Score blocks stay collapsed (they're skim-only, dense data).
+const DEFAULT_OPEN: SectionKey[] = [
+  "executive_summary",
+  "stood_out",
+  "recommendations",
+  "bottom_line",
+];
 
 export function CollapsibleReview({
   sections,
