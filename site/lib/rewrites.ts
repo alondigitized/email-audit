@@ -71,7 +71,14 @@ function buildPrompt({
 
   const score = audit.review.score;
   const summary = audit.review.sections?.executive_summary?.join(" ") ?? "";
-  const weak = audit.review.sections?.whats_weak?.join("\n- ") ?? "(none recorded)";
+  // V2 audits collapse What's Weak into the prose "What stood out" block.
+  // Prefer whats_weak when present (legacy), else fall through to stood_out
+  // so the rewrite prompt always has signal to work from.
+  const weakSrc =
+    audit.review.sections?.whats_weak?.length
+      ? audit.review.sections.whats_weak
+      : audit.review.sections?.stood_out ?? [];
+  const weak = weakSrc.length ? weakSrc.join("\n- ") : "(none recorded)";
   const recs = audit.review.sections?.recommendations?.join("\n- ") ?? "(none)";
 
   const dims = dimensionsForChannel(channel);

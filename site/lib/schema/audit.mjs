@@ -50,7 +50,15 @@ export const predictionsSchema = z
 
 export const reviewSectionsSchema = z
   .object({
+    // V2 IA (audit-ia-refactor 2026-05-10):
+    //   take         -> stored under executive_summary key for back-compat;
+    //                   semantically the new sharper opener+judgement.
+    //   stood_out    -> NEW key, replaces whats_working + whats_weak (legacy
+    //                   keys retained so old audits still render).
+    //   recommendations -> shared key (was always present), now also holds
+    //                   the subject/preheader Alt A/B lines.
     executive_summary: z.array(z.string()),
+    stood_out: z.array(z.string()),
     business_impact_score: z.array(z.string()),
     whats_working: z.array(z.string()),
     whats_weak: z.array(z.string()),
