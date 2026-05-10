@@ -190,6 +190,13 @@
       "when": 1778307145958,
       "tag": "0026_new_garia",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1778448885766,
+      "tag": "0027_fine_vargas",
+      "breakpoints": true
     }
   ]
 }

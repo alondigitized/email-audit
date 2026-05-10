@@ -6,6 +6,7 @@ import { eq, sql as dsql } from "drizzle-orm";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/dal";
 import { db, personas, reactions, personaTemplates } from "@/lib/db/client";
+import { mintPodcastToken } from "@/lib/podcast";
 import {
   personaProfileSchema,
   type PersonaProfile,
@@ -594,4 +595,30 @@ async function validateAndStoreJourneyUrls(
     .update(personas)
     .set({ lastStatus: nextStatus })
     .where(eq(personas.id, row[0].id));
+}
+
+// ─── Podcast subscription ──────────────────────────────────────────────────
+//
+// Mint (or return the existing) podcast RSS feed URL for the calling
+// admin + persona. Returns the full /feed/<slug>/<token>.rss URL,
+// rendered absolute so the admin can paste it straight into a podcast
+// app without guessing the origin.
+
+export async function mintPodcastUrlAction(
+  fd: FormData
+): Promise<ActionResult & { url?: string }> {
+  const admin = await requireAdmin();
+  const slugParsed = SlugSchema.safeParse(fd.get("slug"));
+  if (!slugParsed.success) return { ok: false, error: "Invalid slug." };
+  const slug = slugParsed.data;
+
+  const token = await mintPodcastToken({
+    userId: admin.id,
+    personaSlug: slug,
+  });
+
+  const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "https://www.etell.app";
+  const url = `${origin}/feed/${slug}/${token}.rss`;
+  revalidatePath(`/admin/personas/${slug}`);
+  return { ok: true, slug, url };
 }

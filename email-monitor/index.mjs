@@ -25,6 +25,7 @@ import {
   publishIndustryReaction,
   flattenPersonaProfileForPrompt,
 } from '../audit-pipeline/industry-fanout.mjs';
+import { generateAndPublishAudio } from '../audit-pipeline/audio-publish.mjs';
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -1047,6 +1048,30 @@ async function processMessage(client, state, inboxId, persona, message, source =
     }
 
     if (published) {
+      // Audio generation runs BEFORE industry fanout so the brand audit
+      // has its MP3 ready quickly; fanout audio is generated per
+      // industry persona inside fanoutIndustryAudits.
+      try {
+        const auditDataPath = path.join(artifacts.dir, 'audit-data.json');
+        if (fs.existsSync(auditDataPath)) {
+          const data = JSON.parse(fs.readFileSync(auditDataPath, 'utf8'));
+          await generateAndPublishAudio({
+            slug: artifacts.slug,
+            persona,
+            sections: data.review?.sections ?? {},
+            email: data.email ?? {},
+            artifactDir: artifacts.dir,
+          });
+        }
+      } catch (err) {
+        log('audio generation failed (non-fatal)', {
+          id,
+          inbox: inboxId,
+          persona,
+          error: String(err).slice(0, 500),
+        });
+      }
+
       try {
         await fanoutIndustryAudits({
           brandPersonaSlug: persona,
@@ -1209,6 +1234,26 @@ async function processCloudflareEmail(row) {
     }
 
     if (published) {
+      try {
+        const auditDataPath = path.join(artifacts.dir, 'audit-data.json');
+        if (fs.existsSync(auditDataPath)) {
+          const data = JSON.parse(fs.readFileSync(auditDataPath, 'utf8'));
+          await generateAndPublishAudio({
+            slug: artifacts.slug,
+            persona: personaSlug,
+            sections: data.review?.sections ?? {},
+            email: data.email ?? {},
+            artifactDir: artifacts.dir,
+          });
+        }
+      } catch (err) {
+        log('audio generation failed (non-fatal)', {
+          id,
+          persona: personaSlug,
+          error: String(err).slice(0, 500),
+        });
+      }
+
       try {
         await fanoutIndustryAudits({
           brandPersonaSlug: personaSlug,

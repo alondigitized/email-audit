@@ -14,6 +14,7 @@ const PUBLIC_PREFIXES = [
   "/privacy",
   "/scoring", // public methodology / rubric explainer
   "/share/", // tokenized public audit reports — auth bypassed, ACL is on the token
+  "/feed/", // tokenized podcast RSS feeds + audio enclosures — auth bypassed, ACL is on the token
   "/r/", // referral landing pages
   "/waitlist-status",
   "/auth/verify", // two-step magic-link confirm page

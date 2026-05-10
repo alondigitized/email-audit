@@ -18,6 +18,7 @@ import {
   qaCheckSchema,
   qaReportSchema,
   qaSummarySchema,
+  reviewAudioSchema,
   reviewSectionsSchema,
   inventoryAuditSchema,
   inventoryPlpSchema,
@@ -42,6 +43,7 @@ export {
   qaCheckSchema,
   qaReportSchema,
   qaSummarySchema,
+  reviewAudioSchema,
   reviewSectionsSchema,
   inventoryAuditSchema,
   inventoryPlpSchema,
@@ -67,3 +69,4 @@ export type AuditSummary = z.infer<typeof auditSummarySchema>;
 export type InventoryAudit = z.infer<typeof inventoryAuditSchema>;
 export type InventoryVariant = z.infer<typeof inventoryVariantSchema>;
 export type AutoConfirm = z.infer<typeof autoConfirmSchema>;
+export type ReviewAudio = z.infer<typeof reviewAudioSchema>;

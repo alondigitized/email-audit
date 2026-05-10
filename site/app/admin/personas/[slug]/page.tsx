@@ -11,6 +11,7 @@ import {
 } from "@/lib/db/client";
 import { PersonaForm } from "../PersonaForm";
 import { ChecklistSection } from "../ChecklistSection";
+import { PodcastPanel } from "../PodcastPanel";
 import {
   upsertPersonaAndRedirect,
   deletePersonaAndRedirect,
@@ -28,7 +29,8 @@ export default async function EditPersonaPage({
   params: Promise<{ slug: string }>;
   searchParams: Promise<Search>;
 }) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const adminUserId = admin.id;
   const { slug } = await params;
   const sp = await searchParams;
   const persona = await getPersonaBySlug(slug);
@@ -94,6 +96,8 @@ export default async function EditPersonaPage({
           score: a.score ?? null,
         }))}
       />
+
+      <PodcastPanel slug={persona.slug} adminUserId={adminUserId} />
 
       <PersonaForm
         mode="edit"
