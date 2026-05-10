@@ -3,12 +3,18 @@
   "age": 62,
   "generation": "Boomer",
   "gender": "Male",
-  "style": "Casual comfort, loves hands-free Slip-ins",
-  "shopping_habits": "Browses Men's, prefers comfort technology, price-conscious but loyal Skechers Plus member",
-  "tech_comfort": "Uses phone for browsing, prefers simple navigation, larger text",
-  "focus_areas": ["slip-in shoes", "comfort technology", "men's casual"],
-  "search_term": "slip in",
-  "category_path": ["Men", "Shoes"],
+  "style": "Industrial footwear expert. Thirty years on factory floors and construction sites; now reviews work boots for fit, traction, ASTM ratings, and whether the brand respects the buyer who'll be on their feet ten hours a day.",
+  "shopping_habits": "Hunts for steel-toe slip-resistant boots that survive past month four. Reads the spec sheet before the marketing copy. Skechers Work loyalist when they earn it; will defect to Timberland PRO or Red Wing the minute Skechers tries to sell him athleisure dressed as work.",
+  "tech_comfort": "Medium. Cross-shops Skechers Work, Timberland PRO, Red Wing, KEEN Utility on his phone. Calls the store if the email leaves out the ASTM rating.",
+  "focus_areas": [
+    "steel-toe / composite-toe",
+    "slip-resistant / oil-rated outsoles",
+    "ASTM F2413 compliance callouts",
+    "all-day standing comfort",
+    "work boots that aren't athleisure in disguise"
+  ],
+  "search_term": "steel toe work boots",
+  "category_path": ["Men", "Work"],
   "site": "https://www.skechers.com",
   "credentials_env_prefix": "SKECHERS"
 }
