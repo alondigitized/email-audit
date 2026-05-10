@@ -11,7 +11,7 @@
 // of the app uses (LLM_BASE_URL). Cost = $0 against Ollama; model
 // quality on qwen2.5:14b is solid for short copy variants.
 
-import { generateObject } from "ai";
+import { generateObject, generateText } from "ai";
 import { z } from "zod";
 import { researchModel } from "@/lib/chat/provider";
 import type { AuditData } from "@/lib/schema/audit";
@@ -34,11 +34,68 @@ export const rewritesSchema = z.object({
 export type Rewrites = z.infer<typeof rewritesSchema>;
 export type RewriteAlternative = z.infer<typeof rewriteAlternativeSchema>;
 
-// Internal — what we ask the model for. Strips the metadata fields
-// (generated_at, baseline_score) we add server-side.
+// LOOSE schema we ask the model for. Local LLMs frequently break the
+// strict types: predicted_score comes back as "8" (string) or "8/10"
+// instead of number 8, alternative.text overflows 280 chars on hero
+// dimension, dimension values arrive as "headline" or "title" instead
+// of one of our enums. We coerce + truncate everything in
+// normalizeAlternative() before persisting to the strict
+// rewritesSchema, so the model only has to be roughly right.
+const looseAlternativeSchema = z
+  .object({
+    dimension: z.string(),
+    text: z.string(),
+    predicted_score: z.union([z.number(), z.string()]),
+    rationale: z.string().optional().default(""),
+  })
+  .passthrough();
 const llmRewriteOutputSchema = z.object({
-  alternatives: z.array(rewriteAlternativeSchema).min(1).max(12),
+  alternatives: z.array(looseAlternativeSchema).min(1).max(20),
 });
+
+// Map common synonyms the model emits to our canonical dimensions.
+const DIMENSION_ALIASES: Record<string, RewriteAlternative["dimension"]> = {
+  subject: "subject",
+  "subject line": "subject",
+  preheader: "preheader",
+  "preheader text": "preheader",
+  preview: "preheader",
+  hero: "hero",
+  headline: "hero",
+  title: "hero",
+  "hero copy": "hero",
+  cta: "cta",
+  button: "cta",
+  "cta button": "cta",
+  "call to action": "cta",
+};
+
+function normalizeAlternative(
+  raw: z.infer<typeof looseAlternativeSchema>,
+  channel: "email" | "site"
+): RewriteAlternative | null {
+  const dimKey = String(raw.dimension ?? "").trim().toLowerCase();
+  const dimension = DIMENSION_ALIASES[dimKey];
+  if (!dimension) return null;
+  if (!dimensionsForChannel(channel).includes(dimension)) return null;
+
+  let score: number;
+  if (typeof raw.predicted_score === "number") {
+    score = raw.predicted_score;
+  } else {
+    const m = String(raw.predicted_score).match(/(-?\d+(?:\.\d+)?)/);
+    if (!m) return null;
+    score = Number(m[1]);
+  }
+  if (!Number.isFinite(score)) return null;
+  score = Math.max(1, Math.min(10, score));
+
+  const text = String(raw.text ?? "").trim().slice(0, 280);
+  if (!text) return null;
+  const rationale = String(raw.rationale ?? "").trim().slice(0, 400);
+
+  return { dimension, text, predicted_score: score, rationale };
+}
 
 function dimensionsForChannel(channel: "email" | "site"): RewriteAlternative["dimension"][] {
   // Email surface = inbox-side decisions. Web surface = on-page decisions.
@@ -144,11 +201,18 @@ export async function generateRewrites({
   const channel = (audit.type ?? "email") as "email" | "site";
   const prompt = buildPrompt({ audit, persona, channel });
 
-  // Structured-output via local LLMs is flaky on long prompts — the model
-  // occasionally wraps the JSON in markdown fences or trails prose past
-  // the closing brace, both of which fail schema validation. Retry once
-  // with an explicit JSON-only nudge before giving up.
-  let object: { alternatives: RewriteAlternative[] };
+  // Three-tier fallback for structured output. Local LLMs through
+  // Ollama frequently break native generateObject schema validation —
+  // most commonly returning predicted_score as a string ("8" or "8/10"),
+  // wrapping JSON in markdown fences, or overflowing text length caps.
+  //
+  //   Attempt 1: generateObject in JSON mode (no native tool call —
+  //              qwen2.5 tool-calls aren't supported by all backends)
+  //   Attempt 2: generateText + manual JSON.parse with the same loose
+  //              schema; tolerates fenced markdown around the JSON.
+  let rawAlternatives: z.infer<typeof looseAlternativeSchema>[] = [];
+  let lastErr: unknown = null;
+
   try {
     const r = await generateObject({
       model: researchModel(),
@@ -157,29 +221,54 @@ export async function generateRewrites({
       maxOutputTokens: 3000,
       temperature: 0.7,
     });
-    object = r.object;
-  } catch (firstErr) {
-    const stricterPrompt =
-      prompt +
-      "\n\nIMPORTANT: Output ONLY a JSON object matching the schema. No prose, no markdown fences, no preamble. Start with { and end with }.";
-    const r = await generateObject({
-      model: researchModel(),
-      schema: llmRewriteOutputSchema,
-      prompt: stricterPrompt,
-      maxOutputTokens: 3000,
-      temperature: 0.3,
-    });
-    object = r.object;
-    console.warn(
-      `[rewrites] generateObject retry succeeded after: ${
-        firstErr instanceof Error ? firstErr.message.slice(0, 160) : "unknown"
-      }`
+    rawAlternatives = r.object.alternatives;
+  } catch (e1) {
+    lastErr = e1;
+    try {
+      const stricter =
+        prompt +
+        '\n\nIMPORTANT: Output ONLY a single JSON object of shape {"alternatives":[...]}.\nNo markdown fences, no commentary. Each alternative is {"dimension":<string>,"text":<string>,"predicted_score":<number 1-10>,"rationale":<string>}.';
+      const { text } = await generateText({
+        model: researchModel(),
+        prompt: stricter,
+        maxOutputTokens: 3000,
+        temperature: 0.3,
+      });
+      // Strip ```json ... ``` fences if the model added them, then take
+      // the substring from the first { to the matching last } so any
+      // trailing prose is ignored.
+      const cleaned = text.replace(/```(?:json)?\s*/gi, "").replace(/```\s*$/g, "");
+      const start = cleaned.indexOf("{");
+      const end = cleaned.lastIndexOf("}");
+      if (start < 0 || end <= start) {
+        throw new Error("no JSON braces in fallback response");
+      }
+      const parsed = JSON.parse(cleaned.slice(start, end + 1));
+      const validated = llmRewriteOutputSchema.parse(parsed);
+      rawAlternatives = validated.alternatives;
+      console.warn(
+        `[rewrites] generateObject failed, generateText fallback succeeded: ${
+          e1 instanceof Error ? e1.message.slice(0, 200) : "unknown"
+        }`
+      );
+    } catch (e2) {
+      const msg1 = lastErr instanceof Error ? lastErr.message : String(lastErr);
+      const msg2 = e2 instanceof Error ? e2.message : String(e2);
+      throw new Error(
+        `rewrite generation failed; primary=${msg1.slice(0, 200)}; fallback=${msg2.slice(0, 200)}`
+      );
+    }
+  }
+
+  const alternatives = rawAlternatives
+    .map((a) => normalizeAlternative(a, channel))
+    .filter((a): a is RewriteAlternative => a !== null);
+  if (alternatives.length === 0) {
+    throw new Error(
+      "rewrite generation produced no usable alternatives after normalization"
     );
   }
 
-  // Filter out alternatives whose dimension doesn't apply to the channel
-  // (model occasionally generates a "subject" rewrite for a homepage).
-  const valid = new Set(dimensionsForChannel(channel));
   const baseline = (() => {
     const m = String(audit.review.score).match(/^\s*(\d+(?:\.\d+)?)\s*\//);
     return m ? Number(m[1]) : null;
@@ -188,6 +277,6 @@ export async function generateRewrites({
     generated_at: new Date().toISOString(),
     channel,
     baseline_score: baseline,
-    alternatives: object.alternatives.filter((a) => valid.has(a.dimension)),
+    alternatives,
   };
 }
