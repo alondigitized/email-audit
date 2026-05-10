@@ -33,6 +33,7 @@
 
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import crypto from 'crypto';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -184,12 +185,16 @@ function voicePath(voiceId) {
  * { buffer, voice, rate } or null if Piper isn't configured or the
  * voice model is missing.
  *
- * Pipeline:
- *   echo "..." | piper --model VOICE.onnx --output-raw --length-scale L
- *               | ffmpeg -f s16le -ar 22050 -ac 1 -i - -codec:a libmp3lame -qscale:a 4 -
+ * Pipeline uses a temp WAV file between piper and ffmpeg rather than a
+ * live stream. The Node child_process pipe between two execFile spawns
+ * corrupts long PCM streams — symptomatic output is clipped near 0 dB
+ * with constant max-volume samples instead of speech. Routing through
+ * a temp file is a couple of disk writes and adds no perceptible
+ * latency (the WAV is ~5 MB / 5 min audio).
  *
- * Piper's raw PCM is 22050 Hz mono S16LE; ffmpeg transcodes in-place
- * with no temp files. -qscale:a 4 ≈ 128 kbps VBR, fine for spoken word.
+ * Piper writes its native sample rate to the WAV header so ffmpeg
+ * doesn't need to be told — that also fixes the kathleen-low 16 kHz
+ * voice that the raw-S16LE pipeline misinterpreted.
  */
 export async function synthesizeMp3({ text, voice, rate }) {
   if (!ttsConfigured()) return null;
@@ -207,62 +212,52 @@ export async function synthesizeMp3({ text, voice, rate }) {
   }
 
   // length-scale is the inverse of our rate axis (rate 1.10 = faster =
-  // shorter audio = length-scale 0.91). Piper clamps anyway.
+  // shorter audio = length-scale 0.91).
   const lengthScale = (1 / (rate || 1.0)).toFixed(3);
 
-  const piper = execFile(
-    PIPER_BIN,
-    ['--model', modelPath, '--output-raw', '--length-scale', lengthScale],
-    { maxBuffer: 1024 * 1024 * 200 }
-  );
-  const ffmpeg = execFile(
-    FFMPEG_BIN,
-    [
-      '-hide_banner',
-      '-loglevel', 'error',
-      '-f', 's16le',
-      '-ar', '22050',
-      '-ac', '1',
-      '-i', 'pipe:0',
-      '-codec:a', 'libmp3lame',
-      '-qscale:a', '4',
-      '-f', 'mp3',
-      'pipe:1',
-    ],
-    { maxBuffer: 1024 * 1024 * 200, encoding: 'buffer' }
-  );
+  const stem = `etell-tts-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
+  const wavPath = path.join(os.tmpdir(), `${stem}.wav`);
 
-  // Pipe piper stdout → ffmpeg stdin.
-  piper.stdout.pipe(ffmpeg.stdin);
-  piper.stdin.write(text);
-  piper.stdin.end();
-
-  // Collect mp3 bytes off ffmpeg stdout.
-  const chunks = [];
-  ffmpeg.stdout.on('data', (b) => chunks.push(b));
-
-  const piperErr = collectStderr(piper);
-  const ffmpegErr = collectStderr(ffmpeg);
-
-  const [piperCode, ffmpegCode] = await Promise.all([
-    new Promise((res) => piper.on('close', res)),
-    new Promise((res) => ffmpeg.on('close', res)),
-  ]);
-
-  if (piperCode !== 0) {
-    throw new Error(
-      `piper exited ${piperCode}: ${(await piperErr).slice(0, 400)}`
+  try {
+    // Step 1: piper text→WAV. Pass text on stdin; --output-file writes
+    // a proper RIFF WAV with sample-rate metadata.
+    const piper = execFile(
+      PIPER_BIN,
+      ['--model', modelPath, '--output-file', wavPath, '--length-scale', lengthScale],
+      { maxBuffer: 1024 * 1024 * 16 }
     );
-  }
-  if (ffmpegCode !== 0) {
-    throw new Error(
-      `ffmpeg exited ${ffmpegCode}: ${(await ffmpegErr).slice(0, 400)}`
-    );
-  }
+    const piperErr = collectStderr(piper);
+    piper.stdin.write(text);
+    piper.stdin.end();
+    const piperCode = await new Promise((res) => piper.on('close', res));
+    if (piperCode !== 0) {
+      throw new Error(
+        `piper exited ${piperCode}: ${(await piperErr).slice(0, 400)}`
+      );
+    }
 
-  const buffer = Buffer.concat(chunks);
-  if (buffer.length === 0) throw new Error('piper/ffmpeg produced empty mp3');
-  return { buffer, voice, rate: rate ?? 1.0 };
+    // Step 2: ffmpeg WAV→MP3. Reads the WAV header so we don't have to
+    // guess sample rate / channels / endianness.
+    const { stdout: mp3 } = await execFileAsync(
+      FFMPEG_BIN,
+      [
+        '-hide_banner',
+        '-loglevel', 'error',
+        '-y',
+        '-i', wavPath,
+        '-codec:a', 'libmp3lame',
+        '-qscale:a', '4',
+        '-f', 'mp3',
+        'pipe:1',
+      ],
+      { maxBuffer: 1024 * 1024 * 200, encoding: 'buffer' }
+    );
+    const buffer = Buffer.isBuffer(mp3) ? mp3 : Buffer.from(mp3);
+    if (buffer.length === 0) throw new Error('ffmpeg produced empty mp3');
+    return { buffer, voice, rate: rate ?? 1.0 };
+  } finally {
+    try { fs.unlinkSync(wavPath); } catch {}
+  }
 }
 
 function collectStderr(child) {
