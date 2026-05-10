@@ -147,6 +147,7 @@ const SECTION_HEADINGS = new Map([
   ['subject', 'subject_line'],
   ['preview text analysis', 'preview_text'],
   ['preview text', 'preview_text'],
+  ['preview', 'preview_text'],
   ['preheader analysis', 'preview_text'],
   ['preheader', 'preview_text'],
   ['preheader text', 'preview_text'],
