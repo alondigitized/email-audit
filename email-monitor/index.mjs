@@ -462,21 +462,26 @@ function buildContentPrompt(msg, screenshotPath, persona = null) {
     'means almost every signal above is present.',
     '── END RUBRIC ──────────────────────────────────────────────────',
     '',
-    'Use this exact review structure. Sections 1-3 are PROSE for a reader',
-    'on their commute (audio-friendly). Sections 4-8 are STRUCTURED DATA',
-    'for cross-audit aggregation — be precise, no extra prose.',
+    'Use this exact review structure. Sections 1-4 are PROSE / bullets for',
+    'a reader on their commute (audio-friendly). Sections 5-9 are STRUCTURED',
+    'DATA for cross-audit aggregation — be precise, no extra prose.',
     '',
-    '## 1. Take',
+    '## 1. Overview',
     persona
-      ? "Two or three short paragraphs, first person. Lead with your gut reaction; end with a clear judgement (would you click? forward to a friend? mark as read?). Punchy and opinionated — this is the part someone will remember from your review. Don't repeat the subject line back; assume the reader sees it on the page."
+      ? "Two or three short paragraphs, first person. Lead with your gut reaction; end with a clear judgement (would you click? forward to a friend? mark as read?). Punchy and opinionated. Don't repeat the subject line back; assume the reader sees it on the page."
       : 'Two or three short paragraphs, opinionated. Lead with the strongest read; end with a clear judgement. No fluff.',
     '',
-    '## 2. What stood out',
+    '## 2. What worked',
     persona
-      ? "One prose block, first person. Interleave wins and misses — the things that pulled you toward this email and the things that pushed you away. Be specific about what you SEE: hero copy, offer, modules, demographic signals, trust cues. Not a list of bullets — a paragraph or two of evidence-backed observations in your voice."
-      : 'One prose block. Interleave wins and misses with specific evidence from the render — hero copy, offer, modules, demographic signals, trust cues. Not a list of bullets — a paragraph or two of observations.',
+      ? 'Bulleted list of specific wins from the rendered image — hero copy, offer clarity, demographic signals that matched you, trust cues, layout decisions. Each bullet a short sentence in your voice. 2-5 items.'
+      : 'Bulleted list of specific wins observable in the render. Each bullet a short sentence. 2-5 items.',
     '',
-    "## 3. What I'd change",
+    "## 3. What didn't",
+    persona
+      ? 'Bulleted list of specific misses — friction, irrelevance, broken hierarchy, mismatched offer, demographic signals that pushed you away. Each bullet a short sentence in your voice. 2-5 items. If genuinely nothing missed, say so in one line rather than padding.'
+      : 'Bulleted list of specific misses observable in the render. Each bullet a short sentence. 2-5 items.',
+    '',
+    "## 4. What I'd change",
     'Ordered, concrete rewrite suggestions — most-impactful first. Lead with whatever single change would lift this email the most. Include the alt subject lines and alt preheaders in this section as called-out lines:',
     '   - **Subject Alt A:** `<alternative phrasing for A/B test>`',
     '   - **Subject Alt B:** `<second alternative>`',
@@ -484,29 +489,29 @@ function buildContentPrompt(msg, screenshotPath, persona = null) {
     '   - **Preheader Alt B:** `<second alternative>`',
     'Recommendations over root-cause theory. Each item should be something a marketer could ship next send.',
     '',
-    '## 4. Business Impact Score (1-10)',
+    '## 5. Business Impact Score (1-10)',
     'Apply the Business Impact rubric above. Write `**X/10**` on its own line, then a sub-bullet listing the rubric criteria that were TRUE. Score must equal 1 + the count.',
     '',
-    '## 5. Open Likelihood (persona-grounded)',
+    '## 6. Open Likelihood (persona-grounded)',
     'Apply the Open Likelihood rubric. Layout exactly:',
     '   - **Score:** `X/10`',
     '   - **Signals counted:** name each rubric criterion that was TRUE.',
     '   - **Rationale:** 1-2 sentences calling out the strongest signals.',
     '',
-    '## 6. Click-Through Likelihood (persona-grounded)',
+    '## 7. Click-Through Likelihood (persona-grounded)',
     'Apply the Click Likelihood rubric. Layout exactly:',
     '   - **Score:** `X/10`',
     '   - **Signals counted:** name each rubric criterion that was TRUE.',
     '   - **Rationale:** 1-2 sentences — what pulled you toward the click or away from it.',
     '',
-    '## 7. Subject',
+    '## 8. Subject',
     'Compact, structured block (no prose) so the dashboard can aggregate across many emails:',
     '   - **Subject:** `<verbatim subject line>`',
     '   - **Length:** <char count>',
     '   - **Scores (1-10):** Clarity `X`, Curiosity `X`, Personalization `X`, Urgency `X`, Specificity `X`',
     '   Honest scores — most subject lines are 4-7. Reserve 8+ for genuinely excellent.',
     '',
-    '## 8. Preview',
+    '## 9. Preview',
     'Compact, structured block (no prose). The preview text is what inbox clients show next to the subject line.',
     '   - **Preview:** `<verbatim preview text; write "(none / leaking junk)" if missing or obviously unintended>`',
     '   - **Length:** <char count>',
@@ -515,8 +520,8 @@ function buildContentPrompt(msg, screenshotPath, persona = null) {
     '',
     'Style requirements:',
     persona
-      ? '- Sections 1-3: first person ("I", "me") — this is YOUR reaction.'
-      : '- Sections 1-3: direct, opinionated, no hedging.',
+      ? '- Sections 1-4: first person ("I", "me") — this is YOUR reaction.'
+      : '- Sections 1-4: direct, opinionated, no hedging.',
     persona
       ? '- Voice must match your persona\'s age, generation, and shopping habits — a 34-year-old mom does not sound like a 62-year-old retiree.'
       : '- Opinionated with substance.',

@@ -502,30 +502,22 @@ export async function AuditBody({
       </div>
 
       {audioUrl && audioMeta && (
-        <div className="bg-white border border-gray-200 rounded-[20px] p-4 shadow-sm mb-5 flex items-center gap-3">
-          <span
-            aria-hidden
-            className="shrink-0 w-9 h-9 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm"
+        <div className="bg-white border border-gray-200 rounded-[20px] p-4 shadow-sm mb-5">
+          <div className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Listen
+          </div>
+          <audio
+            controls
+            preload="none"
+            src={audioUrl}
+            className="w-full mt-1"
           >
-            ▶
-          </span>
-          <div className="flex-1 min-w-0">
-            <div className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Listen
-            </div>
-            <audio
-              controls
-              preload="none"
-              src={audioUrl}
-              className="w-full mt-1"
-            >
-              Your browser doesn't support inline audio.
-            </audio>
-            <div className="text-[11px] text-muted mt-1">
-              {Math.floor(audioMeta.duration_sec / 60)}:
-              {String(audioMeta.duration_sec % 60).padStart(2, "0")} ·{" "}
-              {audioMeta.voice}
-            </div>
+            Your browser doesn't support inline audio.
+          </audio>
+          <div className="text-[11px] text-muted mt-1">
+            {Math.floor(audioMeta.duration_sec / 60)}:
+            {String(audioMeta.duration_sec % 60).padStart(2, "0")} ·{" "}
+            {audioMeta.voice}
           </div>
         </div>
       )}
