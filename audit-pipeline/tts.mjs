@@ -124,18 +124,28 @@ export function buildSpokenScript({ persona, sections, email }) {
     lines.push('');
   }
 
-  const take = (sections.executive_summary ?? []).join(' ');
+  const overview = (sections.executive_summary ?? []).join(' ');
+  const worked = (sections.whats_working ?? []).join(' ');
+  const didnt = (sections.whats_weak ?? []).join(' ');
+  // V2-window fallback when the audit was produced under the brief
+  // "What stood out" shape — narrate it as one block when present.
   const stoodOut =
-    (sections.stood_out ?? []).join(' ') ||
-    [
-      ...(sections.whats_working ?? []),
-      ...(sections.whats_weak ?? []),
-    ].join(' '); // legacy v1 fallback
+    !worked && !didnt ? (sections.stood_out ?? []).join(' ') : '';
   const changes = (sections.recommendations ?? []).join(' ');
 
-  if (take) {
-    lines.push('My take.');
-    lines.push(stripMarkdown(take));
+  if (overview) {
+    lines.push('Overview.');
+    lines.push(stripMarkdown(overview));
+    lines.push('');
+  }
+  if (worked) {
+    lines.push('What worked.');
+    lines.push(stripMarkdown(worked));
+    lines.push('');
+  }
+  if (didnt) {
+    lines.push("What didn't.");
+    lines.push(stripMarkdown(didnt));
     lines.push('');
   }
   if (stoodOut) {

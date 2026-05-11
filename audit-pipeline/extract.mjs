@@ -120,9 +120,17 @@ function stripPreamble(reviewText) {
 // normalized (trim, lowercase, trailing colon removed, leading "#/number"
 // stripped). Supports both straight and curly apostrophes.
 const SECTION_HEADINGS = new Map([
-  // V2 IA (audit-ia-refactor 2026-05-10): "Take" replaces Executive Summary +
-  // Bottom Line; "What stood out" replaces What's Working/Weak + Evidence;
-  // "What I'd change" maps to recommendations.
+  // V3 IA (audit-ia-v3-overview 2026-05-11): Overview / What worked /
+  // What didn't / What I'd change. Splits the previous v2 "What stood
+  // out" prose back into wins + misses for skimmability.
+  ['overview', 'executive_summary'],
+  ['what worked', 'whats_working'],
+  ["what didn't", 'whats_weak'],
+  ['what didn\u2019t', 'whats_weak'],
+  ['what did not work', 'whats_weak'],
+  // V2 IA (audit-ia-refactor 2026-05-10) \u2014 short-lived intermediate
+  // shape with "Take" + "What stood out". Kept for the small set of
+  // audits produced during that window.
   ['take', 'executive_summary'],
   ['my take', 'executive_summary'],
   ['what stood out', 'stood_out'],

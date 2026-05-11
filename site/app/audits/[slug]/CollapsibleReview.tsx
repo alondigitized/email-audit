@@ -30,13 +30,14 @@ type SectionKey = keyof ReviewSections;
 function sectionsForChannel(channel: AuditChannel) {
   const l = scoreLabels(channel);
   return [
-    { key: "executive_summary" as SectionKey, label: "Take" },
+    { key: "executive_summary" as SectionKey, label: "Overview" },
+    { key: "whats_working" as SectionKey, label: "What worked" },
+    { key: "whats_weak" as SectionKey, label: "What didn't" },
+    // Intermediate v2 IA — short-lived "stood out" block kept rendering
+    // for the small window of audits produced under it.
     { key: "stood_out" as SectionKey, label: "What stood out" },
-    // Legacy v1 split — only render when present (v2 audits leave these empty).
-    { key: "whats_working" as SectionKey, label: "What's working" },
-    { key: "whats_weak" as SectionKey, label: "What's weak" },
     { key: "recommendations" as SectionKey, label: "What I'd change" },
-    { key: "business_impact_score" as SectionKey, label: "Business impact score" },
+    { key: "business_impact_score" as SectionKey, label: "Business impact" },
     { key: "open_likelihood" as SectionKey, label: `${l.firstStep} likelihood` },
     { key: "click_likelihood" as SectionKey, label: `${l.secondStep} likelihood` },
     // Legacy v1 closers — render when present.
@@ -138,7 +139,7 @@ export function CollapsibleReview({
           >
             <summary className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer list-none select-none rounded-2xl group-open:rounded-b-none">
               <div className="flex items-baseline gap-3 min-w-0">
-                <span className="text-sm font-semibold text-gray-900">
+                <span className="text-sm font-semibold text-gray-900 whitespace-nowrap shrink-0">
                   {label}
                 </span>
                 {preview && (
