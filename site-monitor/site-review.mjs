@@ -68,7 +68,6 @@ const CLAUDE_EFFORT = process.env.CLAUDE_EFFORT || 'high';
 const OPENCLAW_PROFILE = process.env.OPENCLAW_PROFILE || 'walker';
 const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG_PATH || '/Users/alontsang/.openclaw-walker/openclaw.json';
 const OPENCLAW_STATE_DIR = process.env.OPENCLAW_STATE_DIR || '/Users/alontsang/.openclaw-walker';
-const TELEGRAM_TARGET = process.env.TELEGRAM_TARGET;
 const SITE_BASE_URL = process.env.SITE_BASE_URL || 'https://email-audit-git-main-alons-projects-c876f5a6.vercel.app';
 const GH_TOKEN = process.env.GH_TOKEN || '';
 
@@ -577,12 +576,6 @@ function openclawExec(commandArgs, maxBuffer = 1024 * 1024 * 10) {
   });
 }
 
-async function sendTelegramText(text) {
-  if (!TELEGRAM_TARGET) return;
-  const args = ['message', 'send', '--channel', 'telegram', '--target', TELEGRAM_TARGET, '--message', text];
-  await openclawExec(args, 1024 * 1024 * 5);
-}
-
 async function generateReview(message, { images = [], label = 'review' } = {}) {
   const args = ['-p', '--model', CLAUDE_MODEL, '--effort', CLAUDE_EFFORT, '--no-session-persistence', '--permission-mode', 'bypassPermissions'];
   const addedDirs = new Set();
@@ -1011,14 +1004,6 @@ async function main() {
     score,
     steps: steps.map(s => ({ label: s.label, status: s.status, perf: s.perf })),
   }, null, 2));
-
-  // Step 4: Telegram notification
-  const detailUrl = `${SITE_BASE_URL}/audits/${slug}`;
-  try {
-    await sendTelegramText(`Site Journey: ${persona.name} on ${new URL(persona.site).hostname}\nScore: ${score}\n${detailUrl}`);
-  } catch (err) {
-    log('Telegram notification failed (non-fatal)', { error: String(err).slice(0, 500) });
-  }
 
   log('Site journey complete', { slug, score, published, steps: steps.length });
 }
