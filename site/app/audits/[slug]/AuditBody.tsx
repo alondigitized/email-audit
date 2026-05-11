@@ -503,22 +503,18 @@ export async function AuditBody({
 
       {audioUrl && audioMeta && (
         <div className="bg-white border border-gray-200 rounded-[20px] p-4 shadow-sm mb-5">
-          <div className="text-xs font-semibold uppercase tracking-wide text-muted">
-            Listen
+          <div className="flex items-baseline justify-between gap-3 mb-1">
+            <div className="text-xs font-semibold uppercase tracking-wide text-muted">
+              Listen
+            </div>
+            <div className="text-[11px] text-muted tabular-nums">
+              {Math.floor(audioMeta.duration_sec / 60)}:
+              {String(audioMeta.duration_sec % 60).padStart(2, "0")}
+            </div>
           </div>
-          <audio
-            controls
-            preload="none"
-            src={audioUrl}
-            className="w-full mt-1"
-          >
+          <audio controls preload="none" src={audioUrl} className="w-full">
             Your browser doesn't support inline audio.
           </audio>
-          <div className="text-[11px] text-muted mt-1">
-            {Math.floor(audioMeta.duration_sec / 60)}:
-            {String(audioMeta.duration_sec % 60).padStart(2, "0")} ·{" "}
-            {audioMeta.voice}
-          </div>
         </div>
       )}
 
