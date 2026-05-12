@@ -134,9 +134,3 @@ Category links and size-filtered links include `?src=template` or size parameter
 - **Moderate:** 4 images confirmed missing alt text — including the hero image and multiple unnamed utility icons. Images-off rendering is silent.
 - **Moderate:** Plain text body is 71% raw URLs with no readable narrative — fails accessibility, plain-text clients, and any spam filter that scores on plain-text quality.
 - **Low:** SPF/DKIM authentication status unverified via AgentMail relay — worth confirming deliverability posture for the welcome trigger series.
-## Recent history
-
-- [[2026-03-16-it-s-back-in-stock-at-skechers-com]] — 5/10 (2026-03-13)
-- [[2026-03-16-you-ve-still-got-20-off]] — 5/10 (2026-03-12)
-- [[2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh]] — 7/10 (2026-03-12)
-

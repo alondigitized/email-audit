@@ -227,9 +227,3 @@ The campaign ID `PRO_US_NA_U_BUNDLE_NONPURCH_EN_03272026` is correctly set in th
 | **Medium** | `-webkit-text-size-adjust: none` | Change to `100%` |
 | **Low** | 26 CTA destination URLs not probed | Run pre-send click-trace validation against all encoded links |
 | **Low** | UTM passthrough unverifiable via encrypted `qs=` | Spot-check decoded destinations in staging |
-## Recent history
-
-- [[2026-03-29-test-pro-us-na-u-bundle-retail-en-03272026easy-on-price-big-on-comfort]] — 5/10 (2026-03-26)
-- [[2026-03-29-test-pro-us-na-u-bundle-full-en-03272026-v3your-go-to-comfort-times-two]] — 5/10 (2026-03-26)
-- [[2026-03-29-this-is-perfect-for-you]] — 6/10 (2026-03-26)
-

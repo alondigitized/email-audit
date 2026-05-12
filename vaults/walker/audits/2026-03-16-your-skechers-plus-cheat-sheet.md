@@ -126,9 +126,3 @@ All CTAs route through `click.emails.skechers.com` tracked links. QA probes rece
 - **[WARN] Missing alt text** on two images including the primary content image (`49468f73...`) — if images block, these offer no fallback context.
 - **[WARN] One tracking pixel** using `http://www.ink1000.com` — third-party HTTP pixel; potential privacy/rendering flag.
 - **QA pass rate: 14%** — low signal-to-noise on warnings, but the two FAIL-level issues (personalization, plain text) and the HTTP infrastructure problem are genuine production concerns.
-## Recent history
-
-- [[2026-03-16-your-20-off-welcome-offer-is-waiting]] — 5/10 (2026-03-13)
-- [[2026-03-16-it-s-back-in-stock-at-skechers-com]] — 5/10 (2026-03-13)
-- [[2026-03-16-you-ve-still-got-20-off]] — 5/10 (2026-03-12)
-

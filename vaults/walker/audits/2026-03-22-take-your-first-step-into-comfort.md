@@ -121,9 +121,3 @@ The Spring Forward BOGO offer is strong and the comfort-technology merchandising
 | **Utility / secondary modules** | SMS opt-in, iOS + Android app download, Curbside Pickup, Afterpay, Store Locator, social follows. Full utility coverage — this layer is well executed. |
 | **Email-to-site continuity** | `?src=Q1SPRINGFORWARD2026` applied consistently across all CTAs — solid campaign-level attribution. Technology modules route to `prefn1=technologyFeatureName` filtered pages, which is a high-confidence landing surface. Sitewide offer CTA and technology modules feel slightly disconnected in intent. |
 | **Bugs / friction / clarity issues** | **CRITICAL:** Preview text field unpopulated — raw `view.emails.skechers.com` URL renders as inbox preview in major clients. Direct open-rate impact. **SYSTEMIC:** 15 image assets served over HTTP (`image.emails.skechers.com`) — unresolved across all campaigns reviewed. Tracking pixel (`o.gif`) missing alt text and served over HTTP. Two additional images missing alt text. No deliverability authentication data available via AgentMail relay. |
-## Recent history
-
-- [[2026-03-20-newest-drop-this-is-only-the-start]] — 6/10 (2026-03-20)
-- [[2026-03-20-more-skechers-plus-benefits-are-waiting]] — 5/10 (2026-03-20)
-- [[2026-03-19-complete-your-profile-to-earn-50-adiclub-points]] — 4/10 (2026-03-19)
-

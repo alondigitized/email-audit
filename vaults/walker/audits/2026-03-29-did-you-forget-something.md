@@ -216,9 +216,3 @@ Landing page alignment (abandoned cart deep-link vs. generic homepage) is unveri
 | Low | Preheader spacer chars | Replace `U+00AD` soft hyphens with `U+034F` only to avoid visible dash artifacts |
 | Low | Empty `<title>` | Populate with campaign name or brand name |
 | Low | DMARC subdomain policy | Verify `msgs.skechers.com` is covered by org-level DMARC policy |
-## Recent history
-
-- [[2026-03-29-back-to-the-70s-with-handball-spezial]] — 4/10 (2026-03-28)
-- [[2026-03-29-the-messi-collection]] — 5/10 (2026-03-28)
-- [[2026-03-29-test-mkg-us-na-u-best-gender-en-03292026the-styles-everyone-s-searching-for]] — 5.5/10 (2026-03-27)
-

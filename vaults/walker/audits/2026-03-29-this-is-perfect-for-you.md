@@ -186,9 +186,3 @@ All destination URLs are wrapped in Attentive's click tracker, so final UTM para
 | Low | Standardize preheader padding to a single invisible-character type |
 | Verify | Confirm unsubscribe link, physical address, and SPF/DKIM/DMARC pass in raw headers |
 | Verify | Confirm UTM parameters survive the Attentive redirect chain to skechers.com |
-## Recent history
-
-- [[2026-03-29-fwd-welcome-to-skechers]] — 1/10 (2026-03-26)
-- [[2026-03-29-your-first-pair-starts-here-try-our-best-sellers-at-bogo-50-off]] — 6/10 (2026-03-26)
-- [[2026-03-29-it-s-back-in-stock-at-skechers-com]] — 5/10 (2026-03-26)
-

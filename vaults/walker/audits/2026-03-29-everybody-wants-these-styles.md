@@ -197,9 +197,3 @@ All CTAs use SFMC click-redirect URLs (`click.emails.skechers.com/?qs=...` — A
 | **Medium** | 4 images missing `alt` text | Add descriptive alt text for `49468f73`, `00100b23`, `fc08601a` PNGs; decorative-only images can use `alt=""` |
 | **Low** | Malformed `<meta>` IE compat tag | Add `http-equiv="X-UA-Compatible"` attribute |
 | **Low** | UTM chain unverifiable from source | Sample 2–3 decoded redirect URLs post-send to confirm UTM params reach destination pages |
-## Recent history
-
-- [[2026-03-29-did-you-forget-something]] — 6/10 (2026-03-28)
-- [[2026-03-29-back-to-the-70s-with-handball-spezial]] — 4/10 (2026-03-28)
-- [[2026-03-29-the-messi-collection]] — 5/10 (2026-03-28)
-

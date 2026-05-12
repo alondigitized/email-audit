@@ -131,9 +131,3 @@ CTA destination names (Jamaica Federation Jerseys, FIFA World Cup collection, st
 - [WARN] "Display images to show real-time content" is a visible fallback label for the dynamic content block — user-facing text should be replaced with brand copy
 - [WARN] Asterisk on availability claim has no corresponding footnote in the email body
 - SPF/DKIM authentication status unknown via AgentMail relay — cannot confirm deliverability posture
-## Recent history
-
-- [[2026-03-19-last-call-to-use-your-20-off-welcome-offer]] — 4/10 (2026-03-18)
-- [[2026-03-19-we-re-taking-00s-running-style-to-the-streets]] — 6/10 (2026-03-18)
-- [[2026-03-18-most-iconic-jerseys-from-the-past-decades]] — 6/10 (2026-03-18)
-

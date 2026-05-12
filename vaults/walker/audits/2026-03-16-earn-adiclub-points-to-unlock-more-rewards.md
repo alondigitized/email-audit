@@ -146,9 +146,3 @@ Cannot be fully evaluated due to 403s on tracking links during QA probing (expec
 - Missing alt text on all major images — no fallback for image-blocked environments
 - Plain text body >70% raw encoded URLs — text version effectively unusable
 - Apparent template variable leak: `%%=Replace(@linkCoreMetrics,` visible in plain text — unrendered AMPscript/personalization tag exposed to recipients
-## Recent history
-
-- [[2026-03-16-your-skechers-plus-cheat-sheet]] — 5.5/10 (2026-03-14)
-- [[2026-03-16-your-20-off-welcome-offer-is-waiting]] — 5/10 (2026-03-13)
-- [[2026-03-16-it-s-back-in-stock-at-skechers-com]] — 5/10 (2026-03-13)
-

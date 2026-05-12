@@ -122,9 +122,3 @@ This email does one important thing well — it uses real personalization infras
 - **[WARN]** Hero DaVinci block missing alt text — no fallback if live render fails or images are disabled.
 - **[WARN]** Open-tracking beacon also missing alt text and served over HTTP.
 - **[WARN]** SPF/DKIM authentication status unverifiable via this relay.
-## Recent history
-
-- [[2026-03-20-more-skechers-plus-benefits-are-waiting]] — 5/10 (2026-03-20)
-- [[2026-03-19-complete-your-profile-to-earn-50-adiclub-points]] — 4/10 (2026-03-19)
-- [[2026-03-19-made-for-match-days-and-fans-everywhere-jamaica-home-away-jerseys]] — 6/10 (2026-03-19)
-

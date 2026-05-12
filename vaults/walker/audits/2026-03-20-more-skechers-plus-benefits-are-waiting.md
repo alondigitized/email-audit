@@ -192,9 +192,3 @@ UTM parameters on final destination URLs cannot be confirmed without probing the
 | **Medium** | Unverified link destinations | Spot-probe REDEEM, SHOP MORE SAVE MORE, and product tile redirect targets |
 | **Low** | Third-party open pixel (`ink1000.com`) | Confirm vendor authorization; consider consolidating to first-party ESP pixel |
 | **Low** | `o.gif` missing alt attribute | Add `alt=""` explicitly to mark as decorative |
-## Recent history
-
-- [[2026-03-19-complete-your-profile-to-earn-50-adiclub-points]] — 4/10 (2026-03-19)
-- [[2026-03-19-made-for-match-days-and-fans-everywhere-jamaica-home-away-jerseys]] — 6/10 (2026-03-19)
-- [[2026-03-19-last-call-to-use-your-20-off-welcome-offer]] — 4/10 (2026-03-18)
-

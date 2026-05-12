@@ -120,9 +120,3 @@ Primary CTA and nav links use `?src=template` UTM parameters. Comfort tech links
 - "SHOP OUR TOP COLLECTIONS" CTA link resolves to invalid URL type — dead click
 - Tracking pixel (`o.gif`) served over HTTP with no alt text — minor but adds to the HTTP signal
 - SPF/DKIM authentication status unverified via AgentMail relay — deliverability unknown
-## Recent history
-
-- [[2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh]] — 7/10 (2026-03-12)
-- [[2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun]] — 6/10 (2026-03-12)
-- [[2026-03-12-welcome-to-skechers-fresh]] — 5/10 (2026-03-11)
-

@@ -119,9 +119,3 @@ Campaign parameter structure (`TRG_US_EN_BROWSEINSTOCK_1_03202025`) suggests pro
 - Preheader div uses `display:none !important` with an inline override pattern; verify this doesn't suppress preheader in some Outlook builds.
 - Krux match beacons using `width="0" height="0"` with `display:none` — standard, but verify these don't trigger security filters in corporate mail environments.
 - No `alt` text visible on tracking pixel — minor, but contributes to spam scoring in aggressive filters.
-## Recent history
-
-- [[2026-03-16-you-ve-still-got-20-off]] — 5/10 (2026-03-12)
-- [[2026-03-12-thanks-for-completing-your-skechers-plus-account-fresh]] — 7/10 (2026-03-12)
-- [[2026-03-12-these-were-a-match-made-in-heaven-for-you-rerun]] — 6/10 (2026-03-12)
-

@@ -130,9 +130,3 @@ Strong concept, broken ship. The strategic use of a points incentive to drive pr
 - Duplicate rendering: value prop block, both CTA buttons, and social footer all appear to repeat
 - Plain-text: 70%+ URL content, effectively inaccessible as a fallback
 - Missing alt text on multiple images including the hero GIF — accessibility gap
-## Recent history
-
-- [[2026-03-19-made-for-match-days-and-fans-everywhere-jamaica-home-away-jerseys]] — 6/10 (2026-03-19)
-- [[2026-03-19-last-call-to-use-your-20-off-welcome-offer]] — 4/10 (2026-03-18)
-- [[2026-03-19-we-re-taking-00s-running-style-to-the-streets]] — 6/10 (2026-03-18)
-
