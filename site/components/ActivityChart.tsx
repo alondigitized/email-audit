@@ -221,6 +221,7 @@ export function ActivityChart({
             />
             <Tooltip
               cursor={{ fill: "rgba(0,0,0,0.04)" }}
+              wrapperStyle={{ zIndex: 50, pointerEvents: "none" }}
               contentStyle={{
                 background: "#fff",
                 border: "1px solid #e5e7eb",
