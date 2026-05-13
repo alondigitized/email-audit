@@ -2,95 +2,76 @@
 kind: synthesis
 persona: walker
 brand: emails.skechers.com
-reactions: 178
-through: 2026-04-30T13:07:08.000Z
+reactions: 200
+through: 2026-05-12T13:11:54.000Z
 created_at: 2026-05-01T18:19:23.162Z
-updated_at: 2026-05-01T18:19:23.162Z
+updated_at: 2026-05-13T18:19:01.709Z
 ---
 
-# ## Email Review: "Your First Pair Just Became 2 — BOGO 50% Off!" (Skechers)
+# ### Summary and Recommendations
 
----
+The "Tell us more about you!" email from SKECHERS PLUS has several technical issues that need to be addressed before deployment. The primary concerns are broken links, missing plain-text alternative, HTTP image sources, and empty merge tokens. Here's a detailed breakdown of the issues and recommendations:
 
-### 1. Executive Summary
+#### 1. Link & Tracking Issues
+- **[FAIL] iGoDigital recommendation links — ASCII encoding error (3 links)**
+  - **Recommendation:** Ensure all URLs are properly URL-encoded to avoid truncations or non-ASCII characters. The `item=pr…` parameter should be fully expanded and encoded.
 
-Skechers leads with a strong promotional offer — Buy One, Get One 50% Off — but buries it under three clinical size-chart tables that consume the majority of the email. The hero communicates the deal clearly, but every module below it shifts into utility mode with zero product photography anywhere in the send. For a BOGO promotion, this email should be driving desire; instead, it reads like a sizing reference guide with a discount attached.
+- **[WARN] click.emails.skechers.com links returning 400 (3 links)**
+  - **Recommendation:** Verify that the tracking link tokens are correctly generated for production deployment. Ensure that any test/seed sends do not interfere with live deployments.
 
----
+- **[WARN] Main CTA links rate-limited (429)**
+  - **Recommendation:** This is a probe-side issue and does not indicate broken links. Confirm that the destination URLs work as expected in production environments.
 
-### 2. Business Impact Score
+#### 2. Rendering & Accessibility
+- **[FAIL] Plain-text alternative missing**
+  - **Recommendation:** Add a plain-text version of the email to ensure deliverability and accessibility for text-only clients.
 
-**5 / 10**
+- **[WARN] Pervasive HTTP image sources (10 images)**
+  - **Recommendation:** Update all image URLs to use HTTPS. This will prevent blocking by modern email clients that enforce secure content loading.
 
-The offer is compelling and correctly placed above the fold. Everything after it works against conversion.
+- **[WARN] Open pixel over HTTP**
+  - **Recommendation:** Serve tracking pixels over HTTPS and add an `alt` attribute if necessary for accessibility.
 
----
+- **[WARN] Missing `alt` text on 4 images**
+  - **Recommendation:** Add `alt=""` attributes to all images that lack them. This ensures that broken image states are handled gracefully.
 
-### 3. What's Working
+#### 3. Personalization & Merge Tokens
+- **[FAIL] Empty greeting slot**
+  - **Recommendation:** Define a fallback value for the greeting merge token (e.g., "Hi there,") in the ESP template to avoid empty slots.
 
-- **Hero headline is unambiguous.** "BUY ONE, GET ONE 50% OFF" is large, bold, and instantly legible.
-- **Dual CTAs at hero level.** "SHOP NOW" and "FIND A STORE" cover both online and in-store intent — smart omnichannel split.
-- **Spring Sale framing** with a mint/floral background is seasonally appropriate and visually distinct from everyday sends.
-- **Utility footer is complete.** App download, Afterpay, Curbside Pickup, and Find a Store are all cleanly laid out with icons — low friction for in-store shoppers.
+- **[INFO]** Verify that subscriber identifiers are dynamically substituted.
+  - **Recommendation:** Ensure dynamic substitution of `mi_u=8107766165` parameter to prevent hardcoded values from test records.
 
----
+#### 4. Compliance
+- **[WARN] Authentication-Results header not available**
+  - **Recommendation:** Verify SPF and DKIM authentication results against actual delivered message headers before deployment.
 
-### 4. What's Weak
+### Additional Recommendations
 
-- **No product photography.** The entire email contains zero shoe images, which is critical for driving desire during a BOGO promotion.
-- **Three size-chart tables dominate the body.** Women’s, Men’s, and Kids’ size grids occupy the middle third of the email, killing purchase momentum.
-- **Size charts are disconnected from the offer.** Each size grid has its own "SHOP NOW" button but lacks product context or visual hooks.
-- **No Skechers Plus mention.** For a non-purchaser segment, there is no loyalty enrollment incentive to drive first-time conversions.
-- **No personalization or segmentation.** The email reads as a blast with no reference to subscriber behavior or preferences.
+1. **Reorder or Remove the App Download Module:**
+   - Ensure that the app download module is placed after the profile completion CTA or removed entirely to avoid diluting focus.
 
----
+2. **Cut Inconsistent Product Recommendation Module:**
+   - Remove the product recommendation module since it undermines the email's primary goal of collecting preference data.
 
-### 5. Recommendations
+3. **Trim Utility Bar:**
+   - Reduce the utility bar to essential elements (e.g., "Find a Store") and remove redundant options like Curbside Pickup, AfterPay, etc.
 
-1. **Add product photography and visual hooks.**
-   - Insert high-quality images of popular styles in the BOGO promotion above the size charts.
-   - Use visual elements like hero banners, category highlights, or lifestyle shots to drive desire.
+4. **Add Progress Indicator:**
+   - Include a progress indicator above the CTA to personalize the email for members who have partially completed their profile.
 
-2. **Reorganize content for conversion flow.**
-   - Move the size charts below the product photography and offer details.
-   - Ensure each section builds on the previous one, creating a seamless path to purchase.
+### Final Checklist
 
-3. **Integrate Skechers Plus upsell module.**
-   - Place a brief Skechers Plus enrollment module between the hero and utility footer.
-   - Offer free shipping or other incentives for first-time purchases.
+- Ensure all URLs are properly encoded.
+- Verify tracking link tokens for production deployment.
+- Add plain-text alternative and HTTPS images.
+- Update `alt` attributes on images.
+- Define fallback values for merge tokens.
+- Verify dynamic substitution of subscriber identifiers.
+- Confirm SPF/DKIM authentication results.
+- Reorder or remove the app download module.
+- Remove inconsistent product recommendation module.
+- Trim utility bar to essential elements.
+- Add a progress indicator above the CTA.
 
-4. **Personalize the email content.**
-   - Use subscriber data to tailor product recommendations, such as recent views or favorites.
-   - Include personalized CTAs like "Shop Your Favorites" or "Discover New Arrivals."
-
-5. **Optimize hero CTA placement and messaging.**
-   - Ensure dual CTAs are prominent and clear (e.g., "SHOP NOW" for online and "FIND A STORE" for in-store).
-   - Consider adding a secondary call-to-action like "VIEW BOGO STYLES" to guide users directly to the offer.
-
-6. **Enhance utility footer with additional options.**
-   - Include links to customer service, FAQs, or return policies to address purchase concerns.
-   - Add social media follow buttons for broader engagement.
-
----
-
-### 6. Bottom Line
-
-The email has a strong starting point with its clear BOGO offer but fails to capitalize on the promotional opportunity due to lack of product visuals and misplaced utility content. By integrating high-quality images, optimizing conversion flow, and adding personalization elements, this email can significantly improve its performance and drive higher conversions.
-
----
-
-### 7. Evidence
-
-| Dimension | Finding |
-|---|---|
-| **Overall purpose** | Promotional acquisition email — drive non-purchasers to convert during the BOGO 50% Off sale (valid dates not specified). |
-| **Hero / primary value prop** | "BUY ONE, GET ONE 50% OFF" is clear and prominent. Dual CTAs cover both online and in-store intent. |
-| **Membership / benefits section** | Absent — no Skechers Plus mention or enrollment incentive for first-time purchases. |
-| **Product discoverability / recommendation modules** | None — zero product photography, category highlights, or personalized recommendations. Size charts dominate the body. |
-| **Utility / secondary modules** | Complete utility footer with app download, Afterpay, Curbside Pickup, and Find a Store options. |
-| **Email-to-site continuity** | Dual CTAs are consistent across online and in-store experiences but lack product context. |
-| **Bugs / friction / clarity issues** | No deliverability authentication data available via AgentMail relay. Size charts disconnected from offer and lack visual hooks. |
-
----
-
-By addressing these weaknesses, the email can better align with subscriber expectations and drive higher conversion rates during the BOGO promotion period.
+By addressing these issues, the email will be more effective in driving profile completion and maintaining high standards of technical performance.
