@@ -72,7 +72,7 @@ function TwoColLayout({
     <div
       className={
         hasImage
-          ? "grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1"
+          ? "grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-5 max-md:grid-cols-1"
           : ""
       }
     >
@@ -148,7 +148,7 @@ function ReviewPane({
       );
     }
     return (
-      <div className="grid grid-cols-[1.25fr_.9fr] gap-5 max-md:grid-cols-1">
+      <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-5 max-md:grid-cols-1">
         {card}
         <JourneyGallery steps={journeySteps} stepUrls={stepUrls} />
       </div>
