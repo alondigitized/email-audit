@@ -640,35 +640,43 @@ async function main() {
   log('run complete');
 }
 
+// Fallback when the LLM call fails. Mirrors the v2 narrative shape
+// (three H3 sections, no score line) so the renderer behaves the same
+// way whether Ollama answered or not.
 function buildFallbackNarrative(plps, totals) {
-  const pct = (totals.avg_size_coverage * 100).toFixed(1);
-  const lines = [
-    `# Skechers Women's Inventory Audit`,
-    ``,
-    `Audited ${totals.plps_audited} categories, ${totals.styles} styles, ${totals.variants} (style, color, width) variants.`,
-    `Average size coverage: ${pct}% per variant.`,
-    ``,
-    `## Per-category breakdown`,
-    ``,
-  ];
+  // Find the worst-coverage category as the fallback priority gap.
+  let worst = null;
   for (const p of plps) {
-    if (p.error) {
-      lines.push(`- **${p.category}** — failed: ${p.error}`);
-      continue;
-    }
-    let v = 0;
+    if (p.error) continue;
     let cov = 0;
     let denom = 0;
     for (const s of p.styles) {
       for (const x of s.variants) {
-        v++;
-        if (x.total_count > 0) { cov += x.available_count / x.total_count; denom++; }
+        if (x.total_count > 0) {
+          cov += x.available_count / x.total_count;
+          denom++;
+        }
       }
     }
-    const cPct = denom > 0 ? ((cov / denom) * 100).toFixed(0) : '—';
-    lines.push(`- **${p.category}** — ${p.styles.length} styles, ${v} variants, ${cPct}% avg size coverage`);
+    const pct = denom > 0 ? cov / denom : 0;
+    if (!worst || pct < worst.pct) worst = { category: p.category, pct };
   }
-  lines.push('', `**${pct}% / 10**`);
+
+  const lines = [
+    '### Reading the matrix',
+    '',
+    `Narrative generation failed; falling back to a flat summary. Coverage averages ${(totals.avg_size_coverage * 100).toFixed(1)}% across ${totals.styles} styles in ${totals.plps_audited} categories.`,
+    '',
+    '### Priority gap',
+    '',
+    worst
+      ? `${worst.category} is the thinnest category at ${(worst.pct * 100).toFixed(0)}% size coverage. Refer to the matrix above for the exact size gaps.`
+      : 'No category-level data available.',
+    '',
+    '### What to restock',
+    '',
+    '- Refer to the matrix above and the variant detail card below for restock priorities.',
+  ];
   return lines.join('\n');
 }
 
