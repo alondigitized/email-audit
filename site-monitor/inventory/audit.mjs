@@ -663,15 +663,15 @@ function buildFallbackNarrative(plps, totals) {
   }
 
   const lines = [
-    '### Reading the matrix',
+    '### Coverage read',
     '',
     `Narrative generation failed; falling back to a flat summary. Coverage averages ${(totals.avg_size_coverage * 100).toFixed(1)}% across ${totals.styles} styles in ${totals.plps_audited} categories.`,
     '',
-    '### Priority gap',
+    '### Worst offenders',
     '',
     worst
-      ? `${worst.category} is the thinnest category at ${(worst.pct * 100).toFixed(0)}% size coverage. Refer to the matrix above for the exact size gaps.`
-      : 'No category-level data available.',
+      ? `- **${worst.category}** is the thinnest category at ${(worst.pct * 100).toFixed(0)}% size coverage. See the matrix above for the exact size gaps.`
+      : '- No category-level data available.',
     '',
     '### What to restock',
     '',

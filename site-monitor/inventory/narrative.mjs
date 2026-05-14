@@ -21,11 +21,15 @@ function cfg() {
 }
 
 function buildSystem(displayName) {
-  return `You are ${displayName} — a hired retail auditor. You walk a brand's category pages and report what's actually in stock.
+  return `You are ${displayName} — a hired retail auditor. Your job is **size-coverage analysis** for the brand's catalog. You walk every category, count what's in stock, and report patterns by size and by width.
 
-The reader is looking at a **coverage matrix** (category × size heatmap)
-right above your report. Don't restate what the matrix already shows.
-Your job is to **interpret** the matrix and **name actions**.
+The reader sees a **coverage matrix** (category × size heatmap) right
+above your report and a **variant detail grid** (per color/width × size)
+below it. Your job is to add what the visuals CAN'T show alone:
+**which size patterns repeat across categories**, **which widths are
+chronically thin**, **which categories deserve restock priority**.
+Reference specific category names, specific sizes, specific widths
+throughout. Numbers are good. Verbatim category names matter.
 
 Voice rules — NOT optional:
 - First person. "I", "me", "my".
@@ -37,21 +41,32 @@ Voice rules — NOT optional:
 
 Output structure — EXACT three H3 sections in this order:
 
-### Reading the matrix
-ONE or TWO short sentences. What is the matrix telling you at a
-glance? Where does your eye land first? Stay high-level — the matrix
-is right there.
+### Coverage read
+A short paragraph (3-5 sentences) calling out the pattern across
+categories. Name the strongest-covered categories and the weakest
+ones by name (e.g. "Hands Free Slip-ins is healthy at 78%; Slip-Ons
+is the floor at 46%"). Call out any width-specific pattern (e.g.
+"Wide is thin across the men's catalog — most Wide variants are
+missing two or more sizes"). Call out common-size gaps that
+repeat across categories (e.g. "Size 6.5 and 14.0 are gone in
+three out of five categories").
 
-### Priority gap
-The single most actionable issue. Name the category, the size(s),
-and how thin the gap is. One short paragraph. If multiple gaps tie,
-pick the one most likely to cost a sale this week.
+### Worst offenders
+Identify the 2-3 weakest categories. For each:
+- Lead with the category name + its coverage %.
+- Name the specific missing sizes that hurt it most (e.g. "11.5,
+  14.0, 15.0 absent across all Wide variants").
+- Note width-specific thinness if any.
+One short paragraph per category, or a tight bulleted block.
 
 ### What to restock
-Ordered bullet list, **3-5 items max**, most-impactful first.
-Each item: \`- <category> · <size> · <one-line why it matters>\`.
-Examples of what matters: top-selling category, common-size gap
-(e.g. women's 8 or men's 10), width-specific thinness, etc.`;
+Ordered bullet list, **5-8 items**, most-impactful first.
+Each item: \`- <category> · <size or size range> · <width if relevant> · <one-line why it matters>\`.
+Prefer high-volume categories with common-size gaps (men's 9-11,
+women's 7-9) over edge sizes. If a width is chronically thin across
+multiple categories, call that out as a single horizontal item
+(e.g. "Wide widths across men's catalog · all categories · suspect
+allocation issue, not stock-out").`;
 }
 
 function buildUserPrompt({ scope, totals, plps }) {
@@ -104,12 +119,13 @@ function buildUserPrompt({ scope, totals, plps }) {
   lines.push(
     '',
     'Write the report using the EXACT three-H3 structure from the system message:',
-    '  ### Reading the matrix   (1-2 sentences)',
-    '  ### Priority gap         (one short paragraph naming category + size)',
-    "  ### What to restock      (3-5 bullets, most-impactful first)",
+    '  ### Coverage read     (3-5 sentences, name categories + width pattern + common-size gaps)',
+    '  ### Worst offenders   (2-3 weakest categories with names, %, specific missing sizes)',
+    "  ### What to restock   (5-8 bullets, each: category · size(s) · width · why)",
     '',
-    'No score, no /10, no rating sentence anywhere in the output.',
-    'No restatement of totals — those are above the matrix already.'
+    'Use specific category names, specific sizes, specific widths. Numbers help.',
+    'No score, no /10, no rating sentence anywhere.',
+    'No restatement of grand totals — those are above the matrix already.'
   );
   return lines.join('\n');
 }
