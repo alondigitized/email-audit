@@ -95,7 +95,7 @@ function ReviewPane({
 }: {
   markdown: string | null;
   sections?: ReviewSections | null;
-  channel?: "email" | "site" | null;
+  channel?: "email" | "site" | "inventory" | null;
   isSiteJourney: boolean;
   hasImage: boolean;
   heroUrl: string | null;
@@ -293,7 +293,14 @@ export async function AuditBody({
   showRewrites: boolean;
 }) {
   const { email, review, qa, assets } = audit;
-  const isSiteJourney = audit.type === "site";
+  // "Site Journey" is the hero label/chrome treatment used for both
+  // homepage-walkthrough audits (type='site') and inventory audits
+  // (type='inventory') because both came from a Playwright session
+  // rather than an inbox-delivered email. Distinct downstream logic
+  // (matrix, variant detail, CSV) keys off `audit.inventory` instead
+  // of the type flag.
+  const isSiteJourney =
+    audit.type === "site" || audit.type === "inventory";
   const hasImage = !!(assets.render_image || assets.render_image_key);
   const journeySteps = assets.journey_steps || [];
   const perfSteps = audit.performance?.steps || [];

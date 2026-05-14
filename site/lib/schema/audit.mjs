@@ -199,7 +199,12 @@ export const inventoryAuditSchema = z.object({
 
 // ─── Root schemas ──────────────────────────────────────────────────────────
 
-export const auditTypeSchema = z.enum(['email', 'site']);
+// Audit types. Each one has a distinct producer + prompt + hero-visual
+// rendering contract — see site/lib/schema/audit-types.md before adding
+// or refactoring a type. Promoting inventory from "type=site with the
+// inventory column populated" to a first-class type means refactors of
+// email/site IA can't silently leave inventory behind.
+export const auditTypeSchema = z.enum(['email', 'site', 'inventory']);
 
 export const auditDataSchema = z.object({
   schema_version: z.number(),
