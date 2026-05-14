@@ -91,7 +91,7 @@ export default async function EditPersonaPage({
         lastStatus={persona.lastStatus}
         recentAudits={recentAudits.map((a) => ({
           slug: a.slug,
-          type: (a.type ?? "email") as "email" | "site",
+          type: (a.type ?? "email") as "email" | "site" | "inventory",
           timestamp: a.timestamp,
           score: a.score ?? null,
         }))}
@@ -254,7 +254,7 @@ function StatusPanel({
   lastStatus: { last_audit_at?: string | null; last_cookies_at?: string | null; url_validation?: { at: string; results: Array<{ step_id: string; url: string; status: number | "error" }> } | null } | null;
   recentAudits: Array<{
     slug: string;
-    type: "email" | "site";
+    type: "email" | "site" | "inventory";
     timestamp: Date;
     score: string | null;
   }>;
@@ -299,7 +299,9 @@ function StatusPanel({
                     className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold border ${
                       a.type === "site"
                         ? "bg-sky-50 text-sky-800 border-sky-200"
-                        : "bg-gray-100 text-gray-700 border-gray-200"
+                        : a.type === "inventory"
+                          ? "bg-amber-50 text-amber-800 border-amber-200"
+                          : "bg-gray-100 text-gray-700 border-gray-200"
                     }`}
                   >
                     {a.type}

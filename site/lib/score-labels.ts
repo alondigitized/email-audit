@@ -4,18 +4,27 @@
 // language. The presentation layer reads `audit.type` and renders
 // channel-appropriate labels via this helper.
 //
-// Email      → "Open"   / "Click"      (compact: "O" / "Cl")
-// Site/Web   → "Engage" / "Conversion" (compact: "E" / "Cv")
+// Email      → "Open"     / "Click"      (compact: "O"  / "Cl")
+// Site/Web   → "Engage"   / "Conversion" (compact: "E"  / "Cv")
+// Inventory  → "Discover" / "Pick"       (compact: "D"  / "P")
 //
 // "Engage" replaces "Visit" because the persona is already on the
 // homepage — the question is whether they scroll or interact, not
 // whether they show up. Conversion = clicked a CTA, added to cart,
 // signed up, etc.
 //
-// Business impact / overall is the same across both channels — it's the
+// Inventory has its own funnel because the persona is a secret-shopper
+// scanning a category page (Discover = did they find a style worth
+// considering) then a PDP (Pick = was the size/color they need
+// available). open_likelihood / click_likelihood are usually null on
+// inventory audits since the producer doesn't emit predictions — but
+// the labels are wired so that any predictions a future inventory
+// prompt does write get sensible labels.
+//
+// Business impact / overall is the same across all channels — it's the
 // 1-10 number that already lives in `review.score`.
 
-export type AuditChannel = "email" | "site" | undefined | null;
+export type AuditChannel = "email" | "site" | "inventory" | undefined | null;
 
 export type ScoreLabels = {
   // Pretty label for the 1-10 score badge ("Business impact" everywhere).
@@ -28,6 +37,15 @@ export type ScoreLabels = {
 };
 
 export function scoreLabels(channel: AuditChannel): ScoreLabels {
+  if (channel === "inventory") {
+    return {
+      business: "Business impact",
+      firstStep: "Discover",
+      firstStepShort: "D",
+      secondStep: "Pick",
+      secondStepShort: "P",
+    };
+  }
   if (channel === "site") {
     return {
       business: "Business impact",

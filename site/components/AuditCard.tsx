@@ -118,6 +118,11 @@ export function AuditCard({ audit }: { audit: AuditSummary }) {
             Web
           </span>
         )}
+        {audit.type === "inventory" && (
+          <span className="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700">
+            Inventory
+          </span>
+        )}
         <span>{audit.from_display_name}</span>
         <span className="text-line">&middot;</span>
         <span>{datetime}</span>

@@ -583,7 +583,10 @@ async function main() {
   const auditData = {
     schema_version: 1,
     slug,
-    type: 'site',
+    // First-class type so refactors of email/site audit IA can't
+    // silently skip the inventory branch. See
+    // site/lib/schema/audit-types.md for the audit type contract.
+    type: 'inventory',
     persona: PERSONA_SLUG,
     email: {
       subject: `${PERSONA.subjectPrefix} · ${todayUtcSlug()}`,
