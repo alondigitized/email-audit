@@ -117,35 +117,35 @@ function ReviewPane({
   );
 
   if (isSiteJourney) {
+    // Single-hero homepage audit (no per-step gallery). Render side-by-
+    // side like email audits — review on the left, captured homepage
+    // screenshot on the right — so behavior matches user expectations
+    // across audit types on desktop.
     if (journeySteps.length === 0) {
-      return (
-        <div className="flex flex-col gap-5">
-          {card}
-          {heroUrl && (
-            <div className="bg-white border border-gray-200 rounded-[20px] p-3 shadow-sm">
-              <div className="text-[11px] uppercase tracking-wide text-muted px-2 py-1">
-                Proof — homepage as captured
-              </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={heroUrl}
-                alt="Homepage screenshot captured at audit time"
-                className="w-full rounded-2xl border border-gray-100"
-              />
-              {webviewUrl && (
-                <a
-                  href={webviewUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center text-sm text-muted mt-2 hover:text-ink transition-colors"
-                >
-                  Open live site &rarr;
-                </a>
-              )}
-            </div>
+      const hero = heroUrl ? (
+        <div className="bg-white border border-gray-200 rounded-[20px] p-3 shadow-sm">
+          <div className="text-[11px] uppercase tracking-wide text-muted px-2 py-1">
+            Proof — homepage as captured
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={heroUrl}
+            alt="Homepage screenshot captured at audit time"
+            className="w-full rounded-2xl border border-gray-100"
+          />
+          {webviewUrl && (
+            <a
+              href={webviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-center text-sm text-muted mt-2 hover:text-ink transition-colors"
+            >
+              Open live site &rarr;
+            </a>
           )}
         </div>
-      );
+      ) : null;
+      return <TwoColLayout hasImage={!!heroUrl} left={card} right={hero} />;
     }
     return (
       <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-5 max-md:grid-cols-1">
