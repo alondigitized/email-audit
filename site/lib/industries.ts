@@ -8,6 +8,7 @@
 // persist (this list is advisory, not enforced).
 
 export const KNOWN_INDUSTRIES = [
+  "airlines",
   "apparel",
   "apparel-dtc",
   "apparel-home",
@@ -30,6 +31,8 @@ export const KNOWN_INDUSTRIES = [
   "home-cooking",
   "home-furniture",
   "home-improvement",
+  "hospitality",
+  "hotels",
   "intimates",
   "jewelry",
   "luxury-fashion",
@@ -45,6 +48,7 @@ export const KNOWN_INDUSTRIES = [
   "sporting-goods",
   "subscription-box",
   "toys",
+  "travel-booking",
   "tv-shopping",
   "ultra-cheap-marketplace",
   "ultra-fast-fashion",

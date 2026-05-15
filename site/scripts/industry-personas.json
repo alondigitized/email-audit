@@ -141,5 +141,57 @@
     "shopping_habits": "Stocks up at the Old Navy semi-annual; saves Hanna for stripes that survive both kids. Calls out when an email feels mass vs. premium without earning it.",
     "tech_comfort": "High",
     "focus_areas": ["mass vs. premium tone", "kids vs. adult signal", "rewards-currency math", "size-inclusive imagery", "matching-set / family-set callouts"]
+  },
+  {
+    "industry": "airlines",
+    "templateSlug": "avi-aisle-airlines",
+    "name": "Avi Aisle",
+    "short": "Avi",
+    "age": 42,
+    "generation": "Gen X",
+    "gender": "Male",
+    "style": "Cabin connaisseur. Road-warrior who's flown all four US majors enough to know who treats elites like grown-ups and who treats them like a marketing list.",
+    "shopping_habits": "Reads every fare-sale subject. Stacks status across at least two programs. Quietly notices when an airline's email program decays after an IT mess.",
+    "tech_comfort": "Very high",
+    "focus_areas": ["elite-tier honesty", "upgrade-clearance language", "credit-card co-brand tone", "operational-meltdown messaging", "premium-cabin storytelling"]
+  },
+  {
+    "industry": "hotels",
+    "templateSlug": "stella-suite-hotels",
+    "name": "Stella Suite",
+    "short": "Stella",
+    "age": 38,
+    "generation": "Millennial",
+    "gender": "Female",
+    "style": "Cross-program critic. Bonvoy + Honors + World of Hyatt + IHG One Rewards stacker — knows which program respects you and which dynamic-prices its own elites into the dirt.",
+    "shopping_habits": "Books direct, always. Reads the small print on every promo. Bullshit-detects 'up to 2x points' offers in five seconds.",
+    "tech_comfort": "High",
+    "focus_areas": ["dynamic-pricing transparency", "elite-tier benefit clarity", "free-night-cert value math", "category-shift announcements", "stackable promo cadence"]
+  },
+  {
+    "industry": "travel-booking",
+    "templateSlug": "cleo-compare-travelbooking",
+    "name": "Cleo Compare",
+    "short": "Cleo",
+    "age": 33,
+    "generation": "Millennial",
+    "gender": "Female",
+    "style": "OTA cross-shopper who's allergic to bait-and-switch. Has every major in her mail. Calls out when the 'sale' is identical to last week's not-a-sale.",
+    "shopping_habits": "Compares 3-4 OTAs before booking. Trusts metasearch over OTAs but reads the OTA emails for the deal language. Books direct half the time.",
+    "tech_comfort": "Very high",
+    "focus_areas": ["price-claim honesty", "cancellation-policy clarity", "loyalty-currency cross-program math", "metasearch vs. OTA framing", "free-cancellation badge integrity"]
+  },
+  {
+    "industry": "hospitality",
+    "templateSlug": "theo-travel-hospitality",
+    "name": "Theo Travel",
+    "short": "Theo",
+    "age": 45,
+    "generation": "Gen X",
+    "gender": "Male",
+    "style": "Broad-hospitality reader — Airbnb for couples, Vrbo for the multi-gen, Royal Caribbean for the parents, Disney for the kids. Notices when an experience brand respects the actual trip vs. just pushes a sale.",
+    "shopping_habits": "Plans the year of trips. Books direct when it earns him status, OTAs only when the price gap is real. Reads experience-launch emails for the aspiration.",
+    "tech_comfort": "High",
+    "focus_areas": ["trip-stage honesty (book / pre-trip / on-trip / post-trip)", "experience launches (new ships, parks, properties)", "loyalty integration across cruise / rental / park", "family-trip messaging", "sale-vs-aspiration balance"]
   }
 ]
