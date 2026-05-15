@@ -125,7 +125,7 @@ async function generateReview(message, { images = [], label = 'review' } = {}) {
 // — the rubric is identical to the daemon's so backfill audits are
 // directly comparable to live ones. If you change the live prompt,
 // re-paste here.
-function buildContentPrompt(msg, persona) {
+function buildContentPrompt(msg, persona, categoryContext = null) {
   const from = msg.from_ || msg.from || '';
   const subject = msg.subject || '(no subject)';
   const preheader = msg.preview || '';
@@ -138,8 +138,26 @@ function buildContentPrompt(msg, persona) {
     'The attached image is a screenshot of the email exactly as it rendered in your inbox. Base your review on what you SEE in the rendered image — not on HTML source.',
     '',
   ];
+  const categoryBlock =
+    Array.isArray(categoryContext) && categoryContext.length > 0
+      ? [
+          '── CATEGORY CONTEXT — your recent reads on other brands ──',
+          'These are the most recent emails YOU audited from competitors in this category. Use them as concrete reference points — name specific brands by name in your review, compare directly, and credit who is doing it better or worse on the same beats.',
+          '',
+          ...categoryContext.map((c) => {
+            const score = c.score ? ` · scored ${c.score}/10` : '';
+            const take = c.take ? ` — ${c.take}` : '';
+            return `- **${c.brand}**: "${c.subject}"${score}${take}`;
+          }),
+          '── END CATEGORY CONTEXT ──',
+          '',
+          'Weave 2-3 specific competitor comparisons by name into your review. Vague "competitors do this better" is not enough.',
+          '',
+        ]
+      : [];
   return [
     ...personaPreamble,
+    ...categoryBlock,
     `From: ${from}`,
     `Subject: ${subject}`,
     preheader ? `Preheader: ${preheader}` : null,
@@ -304,7 +322,19 @@ async function main() {
           `\n[${total}] ${ip.slug} <- ${brandAuditSlug}`
         );
         const images = fs.existsSync(screenshot) ? [screenshot] : [];
-        const contentReview = await generateReview(buildContentPrompt(msg, flat), {
+        // Pull cross-brand context for this industry persona so the
+        // backfill review can cite specific competitors, matching the
+        // live daemon's behavior.
+        let categoryContext = [];
+        try {
+          const { getCategoryContextForIndustryPersona } = await import('./industry-fanout.mjs');
+          categoryContext = await getCategoryContextForIndustryPersona({
+            industryPersonaSlug: ip.slug,
+            excludeBrandDomain: exp.brand_domain ?? null,
+            limit: 8,
+          });
+        } catch {}
+        const contentReview = await generateReview(buildContentPrompt(msg, flat, categoryContext), {
           images,
           label: `industry-${ip.short ?? ip.slug}`,
         });

@@ -24,6 +24,7 @@ import {
   listIndustryPersonasForBrand,
   publishIndustryReaction,
   flattenPersonaProfileForPrompt,
+  getCategoryContextForIndustryPersona,
 } from '../audit-pipeline/industry-fanout.mjs';
 import { generateAndPublishAudio } from '../audit-pipeline/audio-publish.mjs';
 
@@ -371,7 +372,7 @@ async function loadPersona(slug) {
   }
 }
 
-function buildContentPrompt(msg, screenshotPath, persona = null) {
+function buildContentPrompt(msg, screenshotPath, persona = null, categoryContext = null) {
   const from = msg.from_ || msg.from || '';
   const subject = msg.subject || '(no subject)';
   const preview = msg.preview || '';
@@ -409,6 +410,38 @@ function buildContentPrompt(msg, screenshotPath, persona = null) {
         '',
       ].filter(Boolean)
     : [];
+
+  // Industry-persona only: a compact list of the persona's most recent
+  // audits across OTHER brands in the category. Passing this in turns
+  // the review from "this email in isolation" into "this email vs. its
+  // category peers", which is what an industry critic is supposed to
+  // produce. Brand personas pass categoryContext=null and the block
+  // collapses to nothing.
+  const categoryBlock =
+    Array.isArray(categoryContext) && categoryContext.length > 0
+      ? [
+          '',
+          '── CATEGORY CONTEXT — your recent reads on other brands ──',
+          'These are the most recent emails YOU audited from competitors',
+          'in this category. Use them as concrete reference points — name',
+          'specific brands by name in your review, compare directly, and',
+          "credit who's doing it better or worse on the same beats.",
+          '',
+          ...categoryContext.map((c) => {
+            const score = c.score ? ` · scored ${c.score}/10` : '';
+            const take = c.take ? ` — ${c.take}` : '';
+            return `- **${c.brand}**: "${c.subject}"${score}${take}`;
+          }),
+          '── END CATEGORY CONTEXT ──',
+          '',
+          'In your review, weave in at least 2-3 specific competitor',
+          'comparisons by name. Examples: "Sephora opens cleaner than',
+          'this", "Ulta would have buried the offer below the fold",',
+          '"this is the third time this month Crocs ran the same hero".',
+          'Make the comparisons land — vague "competitors do this better"',
+          'is not enough.',
+        ]
+      : [];
 
   const parts = [
     ...personaPreamble,
@@ -528,6 +561,7 @@ function buildContentPrompt(msg, screenshotPath, persona = null) {
     '- Only flag visual bugs you can actually see in the screenshot (broken images, overlapping text, empty fields, etc.)',
     '- Do NOT speculate about HTML issues, merge tokens, or code-level problems you cannot see',
     ...personaLens,
+    ...categoryBlock,
     `From: ${from}`,
     `Subject: ${subject}`,
     preview ? `Preview: ${shorten(preview, 500)}` : '',
@@ -625,11 +659,35 @@ async function fanoutIndustryAudits({
       continue;
     }
 
+    // Pull the persona's recent audits across OTHER brands in the
+    // category so the prompt can ground comparisons in actual prior
+    // reads. Best-effort — falls back to no context on query failure.
+    let categoryContext = [];
+    try {
+      const brandDomain = (() => {
+        const fromAddr = String(fullMessage.from_ || fullMessage.from || '');
+        const m =
+          fromAddr.match(/[<\s]([^<>\s@]+@([^<>\s]+))[>\s]?$/) ||
+          fromAddr.match(/^([^<>\s@]+@([^<>\s]+))$/);
+        return m ? m[2].toLowerCase().replace(/[>\s].*$/, '') : null;
+      })();
+      categoryContext = await getCategoryContextForIndustryPersona({
+        industryPersonaSlug: persona.slug,
+        excludeBrandDomain: brandDomain,
+        limit: 8,
+      });
+    } catch (err) {
+      log('industry fanout: category context fetch failed (non-fatal)', {
+        industry: persona.slug,
+        error: String(err).slice(0, 200),
+      });
+    }
+
     try {
       let contentReview = '';
       if (rendered) {
         contentReview = await generateReview(
-          buildContentPrompt(fullMessage, rendered, flat),
+          buildContentPrompt(fullMessage, rendered, flat, categoryContext),
           { images: [rendered], label: `industry-${persona.short ?? persona.slug}` }
         );
       } else {
