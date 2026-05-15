@@ -25,6 +25,8 @@ import {
   publishIndustryReaction,
   flattenPersonaProfileForPrompt,
   getCategoryContextForIndustryPersona,
+  getBrandHistoryForPersona,
+  registrableDomain,
 } from '../audit-pipeline/industry-fanout.mjs';
 import { generateAndPublishAudio } from '../audit-pipeline/audio-publish.mjs';
 
@@ -372,7 +374,13 @@ async function loadPersona(slug) {
   }
 }
 
-function buildContentPrompt(msg, screenshotPath, persona = null, categoryContext = null) {
+function buildContentPrompt(
+  msg,
+  screenshotPath,
+  persona = null,
+  categoryContext = null,
+  brandHistoryContext = null
+) {
   const from = msg.from_ || msg.from || '';
   const subject = msg.subject || '(no subject)';
   const preview = msg.preview || '';
@@ -410,6 +418,33 @@ function buildContentPrompt(msg, screenshotPath, persona = null, categoryContext
         '',
       ].filter(Boolean)
     : [];
+
+  // Brand-history block — used on BOTH brand and industry paths. The
+  // persona's most-recent reads of the SAME brand let the prompt notice
+  // cadence ("third cart-abandon this week"), repeated creative ("same
+  // hero as Tuesday"), and escalating discounts the way a real
+  // subscriber would. Pass [] to skip.
+  const brandHistoryBlock =
+    Array.isArray(brandHistoryContext) && brandHistoryContext.length > 0
+      ? [
+          '',
+          '── BRAND HISTORY — recent emails from this brand you have audited ──',
+          'Most-recent first. Notice cadence, repeated creative, escalating',
+          "offers, or beats the brand keeps hitting. Reference at least one",
+          'specific prior send by date or subject when relevant — that is',
+          'what a real subscriber would do.',
+          '',
+          ...brandHistoryContext.map((c) => {
+            const d = c.received_at
+              ? new Date(c.received_at).toISOString().slice(0, 10)
+              : '';
+            const score = c.score ? ` · ${c.score}/10` : '';
+            const take = c.take ? ` — ${c.take}` : '';
+            return `- ${d} · "${c.subject}"${score}${take}`;
+          }),
+          '── END BRAND HISTORY ──',
+        ]
+      : [];
 
   // Industry-persona only: a compact list of the persona's most recent
   // audits across OTHER brands in the category. Passing this in turns
@@ -561,6 +596,7 @@ function buildContentPrompt(msg, screenshotPath, persona = null, categoryContext
     '- Only flag visual bugs you can actually see in the screenshot (broken images, overlapping text, empty fields, etc.)',
     '- Do NOT speculate about HTML issues, merge tokens, or code-level problems you cannot see',
     ...personaLens,
+    ...brandHistoryBlock,
     ...categoryBlock,
     `From: ${from}`,
     `Subject: ${subject}`,
@@ -659,21 +695,22 @@ async function fanoutIndustryAudits({
       continue;
     }
 
-    // Pull the persona's recent audits across OTHER brands in the
-    // category so the prompt can ground comparisons in actual prior
-    // reads. Best-effort — falls back to no context on query failure.
+    // Extract the brand domain once and reuse for both context fetches.
+    const fanoutBrandDomain = (() => {
+      const fromAddr = String(fullMessage.from_ || fullMessage.from || '');
+      const m =
+        fromAddr.match(/[<\s]([^<>\s@]+@([^<>\s]+))[>\s]?$/) ||
+        fromAddr.match(/^([^<>\s@]+@([^<>\s]+))$/);
+      return m ? m[2].toLowerCase().replace(/[>\s].*$/, '') : null;
+    })();
+
+    // Cross-brand category context — recent reads from OTHER brands
+    // in the same industry.
     let categoryContext = [];
     try {
-      const brandDomain = (() => {
-        const fromAddr = String(fullMessage.from_ || fullMessage.from || '');
-        const m =
-          fromAddr.match(/[<\s]([^<>\s@]+@([^<>\s]+))[>\s]?$/) ||
-          fromAddr.match(/^([^<>\s@]+@([^<>\s]+))$/);
-        return m ? m[2].toLowerCase().replace(/[>\s].*$/, '') : null;
-      })();
       categoryContext = await getCategoryContextForIndustryPersona({
         industryPersonaSlug: persona.slug,
-        excludeBrandDomain: brandDomain,
+        excludeBrandDomain: fanoutBrandDomain,
         limit: 8,
       });
     } catch (err) {
@@ -683,11 +720,37 @@ async function fanoutIndustryAudits({
       });
     }
 
+    // Same-brand history for the industry persona too — they've seen
+    // many sends from THIS brand and should notice cadence + repeated
+    // creative alongside cross-brand comparisons.
+    let brandHistoryContext = [];
+    try {
+      if (fanoutBrandDomain) {
+        brandHistoryContext = await getBrandHistoryForPersona({
+          personaSlug: persona.slug,
+          brandDomain: fanoutBrandDomain,
+          excludeMessageId: messageId,
+          limit: 4,
+        });
+      }
+    } catch (err) {
+      log('industry fanout: brand history fetch failed (non-fatal)', {
+        industry: persona.slug,
+        error: String(err).slice(0, 200),
+      });
+    }
+
     try {
       let contentReview = '';
       if (rendered) {
         contentReview = await generateReview(
-          buildContentPrompt(fullMessage, rendered, flat, categoryContext),
+          buildContentPrompt(
+            fullMessage,
+            rendered,
+            flat,
+            categoryContext,
+            brandHistoryContext
+          ),
           { images: [rendered], label: `industry-${persona.short ?? persona.slug}` }
         );
       } else {
@@ -1066,6 +1129,35 @@ async function processMessage(client, state, inboxId, persona, message, source =
     ]);
     const qaContext = buildQaSummaryForPrompt(qaReport);
 
+    // Pull the persona's recent reads from THIS brand so the prompt
+    // can notice cadence, repeated creative, escalating discounts —
+    // the things a real subscriber's brain remembers. Best-effort.
+    let brandHistoryContext = [];
+    try {
+      const fromAddr = String(fullMessage.from_ || fullMessage.from || '');
+      const m =
+        fromAddr.match(/[<\s]([^<>\s@]+@([^<>\s]+))[>\s]?$/) ||
+        fromAddr.match(/^([^<>\s@]+@([^<>\s]+))$/);
+      const brandDomain = m
+        ? m[2].toLowerCase().replace(/[>\s].*$/, '')
+        : null;
+      if (brandDomain) {
+        brandHistoryContext = await getBrandHistoryForPersona({
+          personaSlug: persona,
+          brandDomain,
+          excludeMessageId:
+            fullMessage.messageId || fullMessage.message_id || null,
+          limit: 6,
+        });
+      }
+    } catch (err) {
+      log('brand history fetch failed (non-fatal)', {
+        id,
+        persona,
+        error: String(err).slice(0, 200),
+      });
+    }
+
     // Step 2: Run content + technical reviews in parallel
     let contentReview, technicalReview;
     if (rendered) {
@@ -1073,7 +1165,16 @@ async function processMessage(client, state, inboxId, persona, message, source =
       // Content review gets the persona identity so the voice matches the inbox's owner.
       const personaIdentity = await loadPersona(persona);
       [contentReview, technicalReview] = await Promise.all([
-        generateReview(buildContentPrompt(fullMessage, rendered, personaIdentity), { images: [rendered], label: 'content-review' }),
+        generateReview(
+          buildContentPrompt(
+            fullMessage,
+            rendered,
+            personaIdentity,
+            null, // categoryContext — industry-only
+            brandHistoryContext
+          ),
+          { images: [rendered], label: 'content-review' }
+        ),
         generateReview(buildTechnicalPrompt(fullMessage, qaContext), { label: 'technical-review' }),
       ]);
     } else {
@@ -1237,14 +1338,47 @@ async function processCloudflareEmail(row) {
     ]);
     const qaContext = buildQaSummaryForPrompt(qaReport);
 
+    // Brand history for the Cloudflare-routed brand persona path —
+    // same purpose as the AgentMail path above.
+    let brandHistoryContext = [];
+    try {
+      const fromAddr = String(msg.from_ || msg.from || '');
+      const m =
+        fromAddr.match(/[<\s]([^<>\s@]+@([^<>\s]+))[>\s]?$/) ||
+        fromAddr.match(/^([^<>\s@]+@([^<>\s]+))$/);
+      const brandDomain = m
+        ? m[2].toLowerCase().replace(/[>\s].*$/, '')
+        : null;
+      if (brandDomain) {
+        brandHistoryContext = await getBrandHistoryForPersona({
+          personaSlug,
+          brandDomain,
+          excludeMessageId: row.message_id || null,
+          limit: 6,
+        });
+      }
+    } catch (err) {
+      log('brand history fetch failed (non-fatal)', {
+        id,
+        persona: personaSlug,
+        error: String(err).slice(0, 200),
+      });
+    }
+
     let contentReview, technicalReview;
     if (rendered) {
       const personaIdentity = await loadPersona(personaSlug);
       [contentReview, technicalReview] = await Promise.all([
-        generateReview(buildContentPrompt(msg, rendered, personaIdentity), {
-          images: [rendered],
-          label: 'content-review',
-        }),
+        generateReview(
+          buildContentPrompt(
+            msg,
+            rendered,
+            personaIdentity,
+            null,
+            brandHistoryContext
+          ),
+          { images: [rendered], label: 'content-review' }
+        ),
         generateReview(buildTechnicalPrompt(msg, qaContext), {
           label: 'technical-review',
         }),

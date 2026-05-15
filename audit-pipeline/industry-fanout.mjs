@@ -145,6 +145,92 @@ export async function getCategoryContextForIndustryPersona({
 }
 
 /**
+ * Strip a sender domain down to its registrable root so subdomain
+ * variations of the same brand collapse together. Skechers, for
+ * example, sends from both `emails.skechers.com` and `msgs.skechers.com`
+ * — both should match "Skechers" in brand-history lookups.
+ *
+ * Simple two-label heuristic — works for .com/.net/.org/.io and similar.
+ * Doesn't handle multi-label TLDs (e.g. .co.uk) precisely; fine for our
+ * current US-retail catalog.
+ */
+export function registrableDomain(fullDomain) {
+  if (!fullDomain) return null;
+  const parts = String(fullDomain).toLowerCase().split('.').filter(Boolean);
+  if (parts.length < 2) return fullDomain.toLowerCase();
+  return parts.slice(-2).join('.');
+}
+
+/**
+ * Pull a persona's most-recent audits from the SAME brand. Used by the
+ * brand-persona path so the persona's review can notice cadence,
+ * repeated creative, escalating discounts, and "this is the third
+ * cart-abandon this week" patterns — the way a real subscriber would.
+ *
+ * Match collapses subdomains via registrableDomain — so emails.skechers.com
+ * and msgs.skechers.com are both "Skechers". The current send is
+ * excluded by message_id when provided.
+ *
+ * Returns [] when there's no history (newly subscribed persona).
+ */
+export async function getBrandHistoryForPersona({
+  personaSlug,
+  brandDomain,
+  excludeMessageId = null,
+  limit = 6,
+}) {
+  if (!personaSlug || !brandDomain) return [];
+  const root = registrableDomain(brandDomain);
+  if (!root) return [];
+  const sql = db();
+  const rows = excludeMessageId
+    ? await sql`
+        SELECT e.brand_domain                                AS brand_domain,
+               e.email_data->>'from_display_name'            AS brand_name,
+               e.email_data->>'subject'                      AS subject,
+               r.score::text                                 AS score,
+               e.received_at                                 AS received_at,
+               r.review_data->'sections'->'executive_summary' AS exec_summary
+        FROM reaction r
+        JOIN experience e ON e.id = r.experience_id
+        WHERE r.persona_slug = ${personaSlug}
+          AND e.type = 'email'
+          AND e.brand_domain LIKE ${'%' + root}
+          AND COALESCE(e.message_id, '') <> ${excludeMessageId}
+        ORDER BY e.received_at DESC
+        LIMIT ${limit}
+      `
+    : await sql`
+        SELECT e.brand_domain                                AS brand_domain,
+               e.email_data->>'from_display_name'            AS brand_name,
+               e.email_data->>'subject'                      AS subject,
+               r.score::text                                 AS score,
+               e.received_at                                 AS received_at,
+               r.review_data->'sections'->'executive_summary' AS exec_summary
+        FROM reaction r
+        JOIN experience e ON e.id = r.experience_id
+        WHERE r.persona_slug = ${personaSlug}
+          AND e.type = 'email'
+          AND e.brand_domain LIKE ${'%' + root}
+        ORDER BY e.received_at DESC
+        LIMIT ${limit}
+      `;
+  return rows.map((r) => {
+    const exec = Array.isArray(r.exec_summary) ? r.exec_summary.join(' ') : '';
+    const take = exec ? exec.slice(0, 220).replace(/\s+/g, ' ').trim() : null;
+    const when = r.received_at ? new Date(r.received_at) : null;
+    return {
+      brand: r.brand_name || r.brand_domain,
+      brand_domain: r.brand_domain,
+      subject: r.subject || '',
+      score: r.score || null,
+      take,
+      received_at: when,
+    };
+  });
+}
+
+/**
  * Reshape a persona DB row's profile into the flat shape buildContentPrompt
  * in email-monitor expects (mirrors loadPersona's path-2 reshaping).
  */
