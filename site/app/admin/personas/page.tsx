@@ -120,6 +120,7 @@ export default async function AdminPersonasPage() {
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold flex items-center gap-2 flex-wrap">
                       <span>{p.name}</span>
+                      <KindBadge kind={p.kind} />
                       {p.profile?.status === "draft" && (
                         <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">
                           DRAFT
@@ -258,6 +259,7 @@ export default async function AdminPersonasPage() {
                         <div className="min-w-0">
                           <div className="font-semibold truncate flex items-center gap-2">
                             <span>{p.name}</span>
+                            <KindBadge kind={p.kind} />
                             {p.profile?.status === "draft" && (
                               <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">
                                 DRAFT
@@ -321,5 +323,20 @@ export default async function AdminPersonasPage() {
         </table>
       </div>
     </div>
+  );
+}
+
+function KindBadge({ kind }: { kind: "brand" | "industry" }) {
+  if (kind === "industry") {
+    return (
+      <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-violet-50 text-violet-800 border border-violet-200">
+        Industry
+      </span>
+    );
+  }
+  return (
+    <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-gray-100 text-gray-700 border border-gray-200">
+      Brand
+    </span>
   );
 }
