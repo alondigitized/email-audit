@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { eq, asc, desc } from "drizzle-orm";
+import { eq, asc, desc, ne, and, notInArray, sql } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import {
   db,
@@ -105,6 +105,30 @@ export default async function TenantDetail({
     .leftJoin(personas, eq(personas.slug, tenantPersonaGrants.personaSlug))
     .where(eq(tenantPersonaGrants.tenantId, id))
     .orderBy(asc(tenantPersonaGrants.personaSlug));
+
+  // Personas eligible to grant: any active persona NOT owned by this
+  // tenant AND not already granted. Sorted by name for human scan.
+  const alreadyGrantedSlugs = grantRows.map((g) => g.personaSlug);
+  const grantableRows = await db
+    .select({
+      slug: personas.slug,
+      name: personas.name,
+      short: personas.short,
+      ownerTenantId: personas.tenantId,
+      kind: personas.kind,
+    })
+    .from(personas)
+    .where(
+      and(
+        // Don't list this tenant's own personas — they already see them.
+        ne(personas.tenantId, id),
+        // Exclude already-granted slugs.
+        alreadyGrantedSlugs.length > 0
+          ? notInArray(personas.slug, alreadyGrantedSlugs)
+          : sql`TRUE`
+      )
+    )
+    .orderBy(asc(personas.name));
 
   const recentAudits = await db
     .select({
@@ -404,18 +428,32 @@ export default async function TenantDetail({
             Grant a persona (read-only)
           </label>
           <div className="flex gap-2 flex-wrap sm:flex-nowrap">
-            <input
+            <select
               id="grant-persona-slug"
               name="personaSlug"
-              type="text"
-              placeholder="rosie-coupon-kohls"
               required
-              pattern="^[a-z0-9-]+$"
-              className="flex-1 min-w-[200px] py-1.5 px-2 border border-gray-200 rounded-lg text-sm font-mono"
-            />
+              defaultValue=""
+              disabled={grantableRows.length === 0}
+              className="flex-1 min-w-[200px] py-1.5 px-2 border border-gray-200 rounded-lg text-sm disabled:bg-gray-50 disabled:text-muted"
+            >
+              <option value="" disabled>
+                {grantableRows.length === 0
+                  ? "No personas available to grant"
+                  : "Select a persona…"}
+              </option>
+              {grantableRows.map((p) => (
+                <option key={p.slug} value={p.slug}>
+                  {p.name}
+                  {p.kind === "industry" ? " · industry" : ""}
+                  {" · "}
+                  {p.slug}
+                </option>
+              ))}
+            </select>
             <button
               type="submit"
-              className="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-semibold whitespace-nowrap"
+              disabled={grantableRows.length === 0}
+              className="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-semibold whitespace-nowrap disabled:bg-gray-300"
             >
               Grant
             </button>
