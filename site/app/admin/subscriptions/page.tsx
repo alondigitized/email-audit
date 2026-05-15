@@ -1,4 +1,4 @@
-import { eq, desc, inArray } from "drizzle-orm";
+import { eq, inArray, asc, sql } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import { db, subscriptionJobs, tenants } from "@/lib/db/client";
 import { markJobDoneFormAction } from "./actions";
@@ -45,7 +45,18 @@ async function loadJobs(): Promise<Row[]> {
         "failed",
       ])
     )
-    .orderBy(desc(subscriptionJobs.createdAt));
+    // Action items at the top; subscribed rows sink to the bottom.
+    // Within each group sort by brand domain alphabetically so the
+    // queue is predictable to scan rather than churn-ordered.
+    .orderBy(
+      sql`CASE
+        WHEN ${subscriptionJobs.status} IN ('queued','manual_pending') THEN 0
+        WHEN ${subscriptionJobs.status} = 'failed' THEN 1
+        WHEN ${subscriptionJobs.status} IN ('manual_done','auto_succeeded') THEN 2
+        ELSE 3
+      END`,
+      asc(subscriptionJobs.brandDomain)
+    );
   return rows;
 }
 
