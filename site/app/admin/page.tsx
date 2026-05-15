@@ -54,6 +54,7 @@ export default async function AdminPage() {
           <h1 className="text-2xl font-bold mt-1 mb-2">Admin</h1>
           <nav className="flex flex-wrap gap-x-4 gap-y-2">
             {[
+              ["/admin/reports", "Reports"],
               ["/admin/tenants", "Tenants"],
               ["/admin/waitlist", "Waitlist"],
               ["/admin/laptop-queue", "Laptop queue"],
