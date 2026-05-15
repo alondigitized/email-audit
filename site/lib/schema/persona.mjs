@@ -61,6 +61,23 @@ export const personaOnboardingSchema = z.record(
   z.enum(['pending', 'done', 'skipped'])
 );
 
+// Which audit producers should iterate this persona. Each producer
+// daemon filters its persona list by this set so a persona shows up in
+// exactly the audit types it's authored for.
+//
+//   'email'     — inbox-driven brand-experience audits (email-monitor)
+//   'site'      — homepage-walkthrough audits (site-monitor/homepage)
+//   'inventory' — category × size coverage audits (site-monitor/inventory)
+//
+// Defaults to ['email', 'site'] on legacy rows (the historical implicit
+// behavior — every active persona with a journey.site was caught by the
+// homepage sweep, every persona with an inbox by the email monitor).
+// Inventory personas declare ['inventory'] so they don't get walked
+// through the homepage even though they have journey.site set.
+//
+// See site/lib/schema/audit-types.md for the full audit-type contract.
+export const personaAuditKindSchema = z.enum(['email', 'site', 'inventory']);
+
 // ─── Root schema ───────────────────────────────────────────────────────────
 
 export const personaProfileSchema = z.object({
@@ -80,6 +97,10 @@ export const personaProfileSchema = z.object({
   // and the default /admin/personas list view. Missing status on legacy
   // rows means active.
   status: z.enum(["draft", "active"]).default("active"),
+  // Audit producers that should pick this persona up. See
+  // personaAuditKindSchema above for the contract. Missing on legacy
+  // rows; consumers should treat missing as ['email', 'site'].
+  audit_kinds: z.array(personaAuditKindSchema).optional(),
 });
 
 export function parsePersonaProfile(input) {

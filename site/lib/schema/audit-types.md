@@ -10,11 +10,26 @@ content, sections, scoring, or rendering must update this table.**
 
 ## The matrix
 
-| Type | Producer | Prompt lives in | Persona-voice prose? | Hero visual | Renders via | What it answers |
-|---|---|---|---|---|---|---|
-| `email` | `email-monitor/index.mjs` | `buildContentPrompt` | yes — Overview / Worked / Didn't / I'd change | screenshot of rendered email | `CollapsibleReview` | Would *this persona* open + click this email? |
-| `site` | `site-monitor/site-review.mjs` | `generateReview` content prompt | yes — same Overview/Worked/Didn't/I'd change shape | screenshot strip per journey step | `CollapsibleReview` + journey strip | What did this persona experience walking through this homepage? |
-| `inventory` | `site-monitor/inventory/audit.mjs` | inline narrative prompt | **caption-style**, short — interprets the matrix | **coverage matrix (category × size heatmap)** + variant grid + CSV | matrix card + narrative card + variant card (NOT CollapsibleReview) | What's missing from this category's size run that a merchandiser should restock? |
+| Type | Producer | Prompt lives in | Persona-voice prose? | Hero visual | Renders via | What it answers | Personas iterated |
+|---|---|---|---|---|---|---|---|
+| `email` | `email-monitor/index.mjs` | `buildContentPrompt` | yes — Overview / Worked / Didn't / I'd change | screenshot of rendered email | `CollapsibleReview` | Would *this persona* open + click this email? | every active persona with `profile.audit_kinds` including `'email'` (default for legacy rows) |
+| `site` | `site-monitor/homepage/sweep.mjs` + `site-monitor/site-review.mjs` | `generateReview` content prompt | yes — same Overview/Worked/Didn't/I'd change shape | screenshot strip per journey step | `CollapsibleReview` + journey strip | What did this persona experience walking through this homepage? | every active persona with `profile.journey.site` set AND `profile.audit_kinds` including `'site'` (default for legacy rows). See `audit-pipeline/publish.mjs::listActivePersonasWithSite`. |
+| `inventory` | `site-monitor/inventory/audit.mjs` | inline narrative prompt | **caption-style**, short — interprets the matrix | **coverage matrix (category × size heatmap)** + variant grid + CSV | matrix card + narrative card + variant card (NOT CollapsibleReview) | What's missing from this category's size run that a merchandiser should restock? | the four hard-coded inventory personas (`ivy-inventory`, `ian-inventory`, `ida-inventory`, `ike-inventory`), each stamped `profile.audit_kinds: ['inventory']` so the email + homepage producers leave them alone. |
+
+## Audit-kind opt-in
+
+Personas declare which producers iterate them via `profile.audit_kinds`
+(see `site/lib/schema/persona.mjs::personaAuditKindSchema`). The field is
+optional — when missing, legacy back-compat says **`['email', 'site']`**
+(the historical implicit behavior). Set it explicitly for any persona
+that wants in or out of a non-default producer.
+
+| Persona type | `profile.audit_kinds` |
+|---|---|
+| Brand-customer persona with inbox + homepage | omit (legacy default) or `['email', 'site']` |
+| Brand-customer persona, email-only | `['email']` |
+| Industry-critic persona (no inbox) | omit — industry personas don't have a journey.site so the sweep already skips them |
+| Inventory-producer persona | `['inventory']` (mandatory; without this they get caught by the homepage sweep too) |
 
 ## Why these are different (not "one prompt with flags")
 
@@ -44,6 +59,7 @@ rendering, **check each row** of this table:
 - [ ] **Score labels** — `site/lib/score-labels.ts` covers the type?
 - [ ] **TTS narration** — `audit-pipeline/tts.mjs::buildSpokenScript` narrates the right sections?
 - [ ] **Schema** — `site/lib/schema/audit.mjs::reviewSectionsSchema` includes any new keys?
+- [ ] **`audit_kinds` opt-in** — if you're adding a new producer or a new persona shape, does the persona-list query for the new producer filter on `profile.audit_kinds`?
 - [ ] **This doc** — table updated to reflect the new state?
 
 ## Adding a fourth audit type
@@ -51,7 +67,9 @@ rendering, **check each row** of this table:
 If you're adding a new audit type:
 
 1. Add it to `auditTypeSchema` enum in `site/lib/schema/audit.mjs`. TypeScript will then list every site that branches on type — fix each one.
-2. Add a row to the matrix above.
-3. Decide whether it uses `CollapsibleReview` (prose-first) or builds its own rendering surface (visualization-first).
-4. Add score labels in `site/lib/score-labels.ts` if the funnel steps differ from open/click or engage/conversion.
-5. Add the producer's prompt to the refactor checklist.
+2. Add it to `personaAuditKindSchema` enum in `site/lib/schema/persona.mjs` so personas can opt in via `profile.audit_kinds`.
+3. Add a row to the matrix above. Specify which personas the producer iterates and how the new field gates it.
+4. Decide whether it uses `CollapsibleReview` (prose-first) or builds its own rendering surface (visualization-first).
+5. Add score labels in `site/lib/score-labels.ts` if the funnel steps differ from open/click or engage/conversion.
+6. Add the producer's prompt to the refactor checklist.
+7. Backfill `audit_kinds` on existing personas if the new type should default-on for them; otherwise leave it opt-in.
