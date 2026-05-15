@@ -260,7 +260,14 @@ export async function listActivePersonasWithSite() {
       profile: r.profile,
       site: r.profile?.journey?.site ?? null,
     }))
-    .filter((p) => p.site && /^https?:\/\//.test(p.site));
+    .filter((p) => p.site && /^https?:\/\//.test(p.site))
+    // Inventory-producer personas (ivy/ian/ida/ike-inventory) have a
+    // journey.site set so the inventory daemon's Playwright can reach
+    // skechers.com — but they're NOT homepage-walkthrough personas.
+    // The homepage sweep daemon called listActivePersonasWithSite() to
+    // build its persona list and accidentally produced type='site'
+    // homepage audits for them every day. Exclude here at the source.
+    .filter((p) => !/-inventory$/.test(p.slug));
 }
 
 /**
