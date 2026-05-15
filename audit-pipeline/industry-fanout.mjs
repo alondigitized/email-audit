@@ -72,6 +72,79 @@ export async function listIndustryPersonasForBrand(brandPersonaSlug) {
 }
 
 /**
+ * Pull the industry persona's most-recent audit per OTHER brand in the
+ * category. Returns a compact list the daemon can paste into the prompt
+ * so the persona can name competitors by their last send instead of
+ * hand-waving.
+ *
+ * One row per distinct brand_domain (excluding the brand being audited
+ * right now). Most-recent reaction wins per brand. Capped at `limit`
+ * brands by recency.
+ *
+ * Returns [] when the persona has no prior cross-brand audits — common
+ * for newly seeded industry personas. The caller renders an empty
+ * Category context block which is fine.
+ */
+export async function getCategoryContextForIndustryPersona({
+  industryPersonaSlug,
+  excludeBrandDomain = null,
+  limit = 8,
+}) {
+  if (!industryPersonaSlug) return [];
+  const sql = db();
+  const rows = excludeBrandDomain
+    ? await sql`
+        SELECT DISTINCT ON (e.brand_domain)
+               e.brand_domain                                  AS brand_domain,
+               e.email_data->>'from_display_name'              AS brand_name,
+               e.email_data->>'subject'                        AS subject,
+               r.score::text                                   AS score,
+               e.received_at                                   AS received_at,
+               r.review_data->'sections'->'executive_summary'  AS exec_summary
+        FROM reaction r
+        JOIN experience e ON e.id = r.experience_id
+        WHERE r.persona_slug = ${industryPersonaSlug}
+          AND e.type = 'email'
+          AND e.brand_domain IS NOT NULL
+          AND e.brand_domain <> ${excludeBrandDomain}
+        ORDER BY e.brand_domain, e.received_at DESC
+        LIMIT 200
+      `
+    : await sql`
+        SELECT DISTINCT ON (e.brand_domain)
+               e.brand_domain                                  AS brand_domain,
+               e.email_data->>'from_display_name'              AS brand_name,
+               e.email_data->>'subject'                        AS subject,
+               r.score::text                                   AS score,
+               e.received_at                                   AS received_at,
+               r.review_data->'sections'->'executive_summary'  AS exec_summary
+        FROM reaction r
+        JOIN experience e ON e.id = r.experience_id
+        WHERE r.persona_slug = ${industryPersonaSlug}
+          AND e.type = 'email'
+          AND e.brand_domain IS NOT NULL
+        ORDER BY e.brand_domain, e.received_at DESC
+        LIMIT 200
+      `;
+  // Re-sort by recency across brands (DISTINCT ON forces brand-domain
+  // ordering above; we want most-recent-first overall) and cap.
+  rows.sort((a, b) => new Date(b.received_at) - new Date(a.received_at));
+  const trimmed = rows.slice(0, limit);
+  return trimmed.map((r) => {
+    const exec = Array.isArray(r.exec_summary) ? r.exec_summary.join(' ') : '';
+    const take = exec ? exec.slice(0, 220).replace(/\s+/g, ' ').trim() : null;
+    return {
+      brand: r.brand_name || r.brand_domain,
+      brand_domain: r.brand_domain,
+      subject: r.subject || '',
+      score: r.score || null,
+      take,
+      received_at: r.received_at,
+    };
+  });
+}
+
+/**
  * Reshape a persona DB row's profile into the flat shape buildContentPrompt
  * in email-monitor expects (mirrors loadPersona's path-2 reshaping).
  */
