@@ -6,6 +6,7 @@ import {
   tenants,
   users,
   personas,
+  personaTemplates,
   reactions,
   experiences,
   tenantPersonaGrants,
@@ -107,7 +108,11 @@ export default async function TenantDetail({
     .orderBy(asc(tenantPersonaGrants.personaSlug));
 
   // Personas eligible to grant: any active persona NOT owned by this
-  // tenant AND not already granted. Sorted by name for human scan.
+  // tenant AND not already granted. Industry tag comes from the
+  // persona's own industry column (for industry-kind personas) or its
+  // template (for brand-kind personas) — COALESCE picks whichever
+  // exists. Sorted by industry then name so the dropdown reads as
+  // grouped buckets when scanned linearly.
   const alreadyGrantedSlugs = grantRows.map((g) => g.personaSlug);
   const grantableRows = await db
     .select({
@@ -116,19 +121,27 @@ export default async function TenantDetail({
       short: personas.short,
       ownerTenantId: personas.tenantId,
       kind: personas.kind,
+      industry: sql<
+        string | null
+      >`COALESCE(${personas.industry}, ${personaTemplates.industry})`,
     })
     .from(personas)
+    .leftJoin(
+      personaTemplates,
+      eq(personaTemplates.slug, personas.templateSlug)
+    )
     .where(
       and(
-        // Don't list this tenant's own personas — they already see them.
         ne(personas.tenantId, id),
-        // Exclude already-granted slugs.
         alreadyGrantedSlugs.length > 0
           ? notInArray(personas.slug, alreadyGrantedSlugs)
           : sql`TRUE`
       )
     )
-    .orderBy(asc(personas.name));
+    .orderBy(
+      sql`COALESCE(${personas.industry}, ${personaTemplates.industry}) NULLS LAST`,
+      asc(personas.name)
+    );
 
   const recentAudits = await db
     .select({
@@ -428,28 +441,44 @@ export default async function TenantDetail({
             Grant a persona (read-only)
           </label>
           <div className="flex gap-2 flex-wrap sm:flex-nowrap">
-            <select
+            {/* <input list="..."> + <datalist> gives us a typeahead-
+                searchable picker that's zero-JS and validates against
+                the option set via the pattern attribute (slug shape).
+                The value posted is the persona slug — option labels
+                surface industry + display name for human scan. */}
+            <input
               id="grant-persona-slug"
               name="personaSlug"
+              list="grantable-personas"
+              type="text"
               required
-              defaultValue=""
-              disabled={grantableRows.length === 0}
-              className="flex-1 min-w-[200px] py-1.5 px-2 border border-gray-200 rounded-lg text-sm disabled:bg-gray-50 disabled:text-muted"
-            >
-              <option value="" disabled>
-                {grantableRows.length === 0
+              autoComplete="off"
+              spellCheck={false}
+              pattern="^[a-z0-9-]+$"
+              placeholder={
+                grantableRows.length === 0
                   ? "No personas available to grant"
-                  : "Select a persona…"}
-              </option>
-              {grantableRows.map((p) => (
-                <option key={p.slug} value={p.slug}>
-                  {p.name}
-                  {p.kind === "industry" ? " · industry" : ""}
-                  {" · "}
-                  {p.slug}
-                </option>
-              ))}
-            </select>
+                  : "Type or pick a persona slug…"
+              }
+              disabled={grantableRows.length === 0}
+              className="flex-1 min-w-[200px] py-1.5 px-2 border border-gray-200 rounded-lg text-sm font-mono disabled:bg-gray-50 disabled:text-muted"
+            />
+            <datalist id="grantable-personas">
+              {grantableRows.map((p) => {
+                const industry = p.industry
+                  ? `${p.industry}${p.kind === "industry" ? " (industry)" : ""}`
+                  : p.kind === "industry"
+                    ? "industry"
+                    : "—";
+                return (
+                  <option
+                    key={p.slug}
+                    value={p.slug}
+                    label={`${p.name} · ${industry}`}
+                  />
+                );
+              })}
+            </datalist>
             <button
               type="submit"
               disabled={grantableRows.length === 0}
