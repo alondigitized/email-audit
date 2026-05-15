@@ -243,6 +243,21 @@ export async function upsertExperienceAndReaction({
  * homepage-sweep daemon. Filtering on JSON `profile.status` tolerates
  * legacy rows where `status` is missing (treat as active).
  */
+/**
+ * Active personas the homepage-sweep daemon should walk through.
+ *
+ * Inclusion rules:
+ *   - profile.status is 'active' (or missing — legacy rows default to active)
+ *   - profile.journey.site is a valid URL
+ *   - profile.audit_kinds includes 'site' (or audit_kinds missing — legacy
+ *     rows default to ['email', 'site'] for back-compat)
+ *
+ * The audit_kinds opt-out is what keeps inventory-producer personas
+ * (ivy/ian/ida/ike-inventory) — which carry journey.site so the
+ * inventory daemon's Playwright can reach skechers.com — out of the
+ * homepage sweep. See site/lib/schema/persona.mjs::personaAuditKindSchema
+ * and site/lib/schema/audit-types.md for the full contract.
+ */
 export async function listActivePersonasWithSite() {
   const sql = db();
   const rows = await sql`
@@ -261,13 +276,14 @@ export async function listActivePersonasWithSite() {
       site: r.profile?.journey?.site ?? null,
     }))
     .filter((p) => p.site && /^https?:\/\//.test(p.site))
-    // Inventory-producer personas (ivy/ian/ida/ike-inventory) have a
-    // journey.site set so the inventory daemon's Playwright can reach
-    // skechers.com — but they're NOT homepage-walkthrough personas.
-    // The homepage sweep daemon called listActivePersonasWithSite() to
-    // build its persona list and accidentally produced type='site'
-    // homepage audits for them every day. Exclude here at the source.
-    .filter((p) => !/-inventory$/.test(p.slug));
+    .filter((p) => {
+      const kinds = p.profile?.audit_kinds;
+      // Missing audit_kinds = legacy persona → default to email+site for
+      // back-compat (existing brand personas keep getting homepage audits
+      // without an explicit field).
+      if (!Array.isArray(kinds)) return true;
+      return kinds.includes('site');
+    });
 }
 
 /**
