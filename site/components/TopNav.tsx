@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { SignOutButton } from "./SignOutButton";
 import { Wordmark } from "./Wordmark";
 
@@ -23,6 +24,7 @@ export function TopNav({
   hasTenant?: boolean;
 }) {
   const pathname = usePathname() || "/";
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Auth-flow / wizard routes — fully hidden header so the user focuses on
   // the form/funnel.
@@ -60,34 +62,87 @@ export function TopNav({
   }
 
   const tabs: Tab[] = [...BASE_TABS];
-  // Chat tab: shown to non-admins only when the app flag is on AND they own
-  // a persona. Shown to admins regardless, with an "(off)" suffix when the
-  // flag is off so they can still validate before flipping the public switch.
   if (chatEnabled && hasPersonas) {
     tabs.push({ href: "/chat", label: "Chat" });
   } else if (isAdmin && hasPersonas) {
     tabs.push({ href: "/chat", label: "Chat", suffix: "(off)" });
   }
-  // Analysis is admin-curated for now — no user-facing way to create one,
-  // so non-admins just see "No analyses yet". Hide the tab from them.
   if (isAdmin) {
     tabs.push({ href: "/analysis", label: "Analysis" });
     tabs.push({ href: "/admin", label: "Admin" });
   }
-  // Team tab: any tenant member sees it (read-only roster for members,
-  // owner controls for owners). Admins also see it for their own tenant.
   if (hasTenant) {
     tabs.push({ href: "/account/team", label: "Team" });
   }
 
   return (
     <>
-      <div className="mb-5 pt-2 text-center">
+      {/* Mobile header — hamburger on the left, centered wordmark, no
+          inline tabs (they overflowed once we grew past 4-5 of them).
+          Hamburger opens the drawer below the bar with the same tabs
+          stacked vertically + Sign out at the bottom. */}
+      <div className="sm:hidden mb-5 pt-2 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => setDrawerOpen((v) => !v)}
+          aria-label={drawerOpen ? "Close menu" : "Open menu"}
+          aria-expanded={drawerOpen}
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 active:bg-gray-200 -ml-2"
+        >
+          <span aria-hidden className="block w-6">
+            <span className="block h-0.5 bg-gray-900 mb-1.5 rounded" />
+            <span className="block h-0.5 bg-gray-900 mb-1.5 rounded" />
+            <span className="block h-0.5 bg-gray-900 rounded" />
+          </span>
+        </button>
+        <Link href="/" className="inline-block" onClick={() => setDrawerOpen(false)}>
+          <Wordmark />
+        </Link>
+        {/* Right-side spacer to balance the hamburger so the wordmark
+            stays optically centered. */}
+        <span aria-hidden className="w-10" />
+      </div>
+
+      {drawerOpen && (
+        <div className="sm:hidden mb-5 -mt-3 bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+          <ul className="flex flex-col">
+            {tabs.map((tab) => {
+              const active = isActive(tab.href);
+              return (
+                <li key={tab.href} className="border-b border-gray-100 last:border-0">
+                  <Link
+                    href={tab.href}
+                    onClick={() => setDrawerOpen(false)}
+                    className={`block px-4 py-3 text-sm font-semibold ${
+                      active
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-800 hover:bg-gray-50"
+                    }`}
+                  >
+                    {tab.label}
+                    {tab.suffix && (
+                      <span className="ml-1 text-[10px] font-normal opacity-70">
+                        {tab.suffix}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+            <li className="border-t border-gray-100 px-4 py-3 flex justify-end">
+              <SignOutButton />
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {/* Desktop / tablet header — unchanged */}
+      <div className="hidden sm:block mb-5 pt-2 text-center">
         <Link href="/" className="inline-block">
           <Wordmark />
         </Link>
       </div>
-      <nav className="flex items-center justify-between mb-6">
+      <nav className="hidden sm:flex items-center justify-between mb-6">
         <div className="flex gap-1">
           {tabs.map((tab) => {
             const active = isActive(tab.href);
