@@ -12,102 +12,86 @@ tags: [email, score-5, sender/nike]
 **Score:** 5/10 · **Type:** Email audit · **2026-05-16**
 ## Executive summary
 
-- This is a second Nike OTP email on the same day — same subject, same template, same stripped-down design as the send audited earlier today. It's a user-triggered transactional email, not a marketing email, so the rubric scores will be structurally low: there's no offer, no CTA, no creative ambition to evaluate. The only question worth asking is whether it does its one job — deliver the code clearly and without confusion.
-- It does. The code `14155270` is large, centered, and impossible to miss. The 15-minute expiry warning is bolded and appropriately placed below the code. The "ignore this email" safety copy is a good-faith inclusion. There's nothing broken.
-- The notable signal here is cadence: two OTP emails with the identical subject line within the same day is unusual. Either the user requested the code twice (forgot the first, timed out, or hit resend), or there's an account security event worth a second look. Nike doesn't flag this possibility in the email itself, which is the one real miss for a triggered transactional template.
+- This is the second Nike OTP email from the same date — 2026-05-16 — carrying a different code (14155270 vs the prior send). Same template, same sender, same subject line, different digits. Two verification requests in one day from the same account suggests either a failed first attempt, a session timeout, or someone testing access. Regardless of the cause, Nike's job here was to deliver a code fast and clearly. It did that.
+- There is nothing to critique as a marketing email because this is not one. No offer, no CTA, no hero image, no product. The entire email exists to surface one 8-digit number in large, legible type above a 15-minute expiry warning. It accomplishes its one job without friction.
+- Compared to the earlier send today, this is functionally identical. The only difference is the code value. Nike is deploying a stripped, correct transactional template — minimal chrome, no promotional contamination, no broken assets.
 
 ## What's working
 
-- OTP code is set in large, bold type — immediately readable at a glance, even on mobile.
-- Expiry window ("15 minutes") is bolded and front-of-mind directly under the code.
-- "Ignore this email" safety copy is present and correctly positioned — reduces confusion if the user didn't initiate this.
-- Renders cleanly — no broken images, no layout issues, no truncation.
+- Code is immediately visible — large, bold, centered, impossible to miss
+- 15-minute expiry is explicitly stated and bolded, reducing confusion
+- Clean Nike-only branding (swoosh, Nike.com footer) without promotional noise
+- Footer includes Privacy Policy and Get Help — standard trust signals for a transactional send
+- No render bugs: layout holds, no broken images, no overlapping elements
 
 ## What's weak
 
-- No security nudge for a second same-day OTP send — if someone else is requesting codes on your account, Nike gives no hint of it.
-- Footer links to `Nike.com` but no direct link to account security or "wasn't you? secure your account" CTA.
-- Preview text almost certainly repeats or leaks body copy rather than adding useful context — this is the same template limitation flagged in the prior audit.
-- Subject line is identical to the earlier same-day send: impossible to distinguish the two in an inbox without checking timestamps.
+- Subject line is identical to the earlier send today — a subscriber glancing at their inbox sees two "Here's your one-time code" threads from Nike with no distinguishing signal
+- No "Did you request this?" secondary message — standard security hygiene that Nike omits here
+- Sender address (`nike@notifications.nike.com`) is not the primary Nike address, which could cause a brief moment of phishing doubt for cautious users
 
 ## Recommendations
 
-- 1. **Add a "Wasn't you? Secure your account" link** below the ignore copy — standard practice for OTP emails and a meaningful trust signal, especially on a repeated same-day send.
-- 2. **Differentiate subject on resend** — if the user hits "resend," the subject should become `Here's your new one-time code` or include a sequence indicator so the inbox doesn't look like a dupe.
-- 3. **Preheader should be functional** — something like `Expires in 15 min · Requested at [time]` adds timestamp context that would distinguish multiple codes in an inbox.
-- **Subject Alt A:** `Your new Nike verification code (expires in 15 min)`
-- **Subject Alt B:** `Nike Member code — resent by request`
-- **Preheader Alt A:** `Expires in 15 minutes. Didn't request this? Secure your account.`
-- **Preheader Alt B:** `One-time code for your Nike Member profile — expires soon.`
+- 1. **Differentiate the subject when multiple OTPs fire in one session.** Two identical subjects on the same day creates inbox ambiguity. A simple addition like "Here's your new one-time code" or appending "(2nd request)" would help a user know which thread is active.
+- 2. **Add a "Didn't request this? Secure your account" line** beneath the expiry notice — one sentence with a link. Industry standard for OTP emails.
+- 3. **Subject Alt A:** `Your new Nike verification code`
+- 4. **Subject Alt B:** `Nike code: use this one (previous expired)`
+- 5. **Preheader Alt A:** `Your Nike Member profile code — expires in 15 min`
+- 6. **Preheader Alt B:** `New code requested — the previous one is no longer valid`
 
 ## Full review
 ## 1. Overview
 
-This is a second Nike OTP email on the same day — same subject, same template, same stripped-down design as the send audited earlier today. It's a user-triggered transactional email, not a marketing email, so the rubric scores will be structurally low: there's no offer, no CTA, no creative ambition to evaluate. The only question worth asking is whether it does its one job — deliver the code clearly and without confusion.
+This is the second Nike OTP email from the same date — 2026-05-16 — carrying a different code (14155270 vs the prior send). Same template, same sender, same subject line, different digits. Two verification requests in one day from the same account suggests either a failed first attempt, a session timeout, or someone testing access. Regardless of the cause, Nike's job here was to deliver a code fast and clearly. It did that.
 
-It does. The code `14155270` is large, centered, and impossible to miss. The 15-minute expiry warning is bolded and appropriately placed below the code. The "ignore this email" safety copy is a good-faith inclusion. There's nothing broken.
+There is nothing to critique as a marketing email because this is not one. No offer, no CTA, no hero image, no product. The entire email exists to surface one 8-digit number in large, legible type above a 15-minute expiry warning. It accomplishes its one job without friction.
 
-The notable signal here is cadence: two OTP emails with the identical subject line within the same day is unusual. Either the user requested the code twice (forgot the first, timed out, or hit resend), or there's an account security event worth a second look. Nike doesn't flag this possibility in the email itself, which is the one real miss for a triggered transactional template.
-
----
+Compared to the earlier send today, this is functionally identical. The only difference is the code value. Nike is deploying a stripped, correct transactional template — minimal chrome, no promotional contamination, no broken assets.
 
 ## 2. What worked
 
-- OTP code is set in large, bold type — immediately readable at a glance, even on mobile.
-- Expiry window ("15 minutes") is bolded and front-of-mind directly under the code.
-- "Ignore this email" safety copy is present and correctly positioned — reduces confusion if the user didn't initiate this.
-- Renders cleanly — no broken images, no layout issues, no truncation.
-
----
+- Code is immediately visible — large, bold, centered, impossible to miss
+- 15-minute expiry is explicitly stated and bolded, reducing confusion
+- Clean Nike-only branding (swoosh, Nike.com footer) without promotional noise
+- Footer includes Privacy Policy and Get Help — standard trust signals for a transactional send
+- No render bugs: layout holds, no broken images, no overlapping elements
 
 ## 3. What didn't
 
-- No security nudge for a second same-day OTP send — if someone else is requesting codes on your account, Nike gives no hint of it.
-- Footer links to `Nike.com` but no direct link to account security or "wasn't you? secure your account" CTA.
-- Preview text almost certainly repeats or leaks body copy rather than adding useful context — this is the same template limitation flagged in the prior audit.
-- Subject line is identical to the earlier same-day send: impossible to distinguish the two in an inbox without checking timestamps.
-
----
+- Subject line is identical to the earlier send today — a subscriber glancing at their inbox sees two "Here's your one-time code" threads from Nike with no distinguishing signal
+- No "Did you request this?" secondary message — standard security hygiene that Nike omits here
+- Sender address (`nike@notifications.nike.com`) is not the primary Nike address, which could cause a brief moment of phishing doubt for cautious users
 
 ## 4. What I'd change
 
-1. **Add a "Wasn't you? Secure your account" link** below the ignore copy — standard practice for OTP emails and a meaningful trust signal, especially on a repeated same-day send.
-2. **Differentiate subject on resend** — if the user hits "resend," the subject should become `Here's your new one-time code` or include a sequence indicator so the inbox doesn't look like a dupe.
-3. **Preheader should be functional** — something like `Expires in 15 min · Requested at [time]` adds timestamp context that would distinguish multiple codes in an inbox.
-
-- **Subject Alt A:** `Your new Nike verification code (expires in 15 min)`
-- **Subject Alt B:** `Nike Member code — resent by request`
-- **Preheader Alt A:** `Expires in 15 minutes. Didn't request this? Secure your account.`
-- **Preheader Alt B:** `One-time code for your Nike Member profile — expires soon.`
+1. **Differentiate the subject when multiple OTPs fire in one session.** Two identical subjects on the same day creates inbox ambiguity. A simple addition like "Here's your new one-time code" or appending "(2nd request)" would help a user know which thread is active.
+2. **Add a "Didn't request this? Secure your account" line** beneath the expiry notice — one sentence with a link. Industry standard for OTP emails.
+3. **Subject Alt A:** `Your new Nike verification code`
+4. **Subject Alt B:** `Nike code: use this one (previous expired)`
+5. **Preheader Alt A:** `Your Nike Member profile code — expires in 15 min`
+6. **Preheader Alt B:** `New code requested — the previous one is no longer valid`
 
 ---
 
 ## 5. Business Impact Score (1-10)
 
 **5/10**
-
 - Sender is a brand you recognize / are subscribed to ✓
 - Visual hierarchy is clear — the eye lands on the code immediately ✓
 - No render bugs ✓
-- Offer feels honest (no manipulation, clean transactional copy) ✓
-
----
+- Offer feels honest — no deception, no buried conditions ✓
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Sender display name recognizable; subject is concrete; subject under ~50 chars (26 chars); no spam signals; cadence feels right (user-triggered, always the right moment).
-- **Rationale:** You open this because you requested the code — not because the subject is compelling. The 26-char subject is clean and mobile-friendly, but zero curiosity or urgency lives in the line itself.
-
----
+- **Score:** 8/10
+- **Signals counted:** Sender display name recognizable, subject is concrete, preview text is real copy, preview complements (does not repeat) subject, subject under 50 chars (26), no spam signals, cadence feels right (triggered transactional — expected)
+- **Rationale:** You open this because you need the code; the subject does nothing to impede that impulse. The only miss is zero personalization and no urgency signal in the subject itself.
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 3/10
-- **Signals counted:** Brand voice consistent and trusted; no friction (code immediately visible, clean layout).
-- **Rationale:** There is no CTA to click — the entire job of this email is to display a number. The rubric doesn't reward what isn't there, and correctly so.
-
----
+- **Score:** 4/10
+- **Signals counted:** Offer is time-bounded with credible deadline (15 min, bolded), brand voice consistent and trusted, no friction (no view-in-browser gate, no broken images)
+- **Rationale:** There is no CTA to click — the entire interaction is read-and-type. The score reflects what the rubric can measure, not user failure. The email does what it needs to without a click.
 
 ## 8. Subject
 
@@ -115,84 +99,83 @@ The notable signal here is cadence: two OTP emails with the identical subject li
 - **Length:** 26 chars
 - **Scores (1-10):** Clarity `9`, Curiosity `2`, Personalization `1`, Urgency `5`, Specificity `7`
 
----
-
 ## 9. Preview
 
-- **Preview:** `(not visible in render — likely leaking body copy or "View in browser" junk based on identical template from prior same-day send)`
-- **Length:** unknown
-- **Scores (1-10):** Complements subject `3`, Specificity `2`, Clarity `3`, Inbox-fit `2`
+- **Preview:** `Your Nike Member profile code Here's the one-time verification code you requested:`
+- **Length:** ~82 chars (inferred from visible body copy; inbox client will truncate to ~90)
+- **Scores (1-10):** Complements subject `6`, Specificity `5`, Clarity `8`, Inbox-fit `6`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — Nike One-Time Code Email
+## Technical Audit — Nike "Here's your one-time code"
 
 ### 1. Technical Summary
 
-Transactional OTP email using a standard XHTML 1.0 Strict / table-based template. Two hard failures — no plain-text fallback and an HTTP-only tracking pixel — plus relay-level header gaps that leave SPF/DKIM status unverifiable.
+This is a transactional OTP email built on a table-based XHTML 1.0 Strict foundation with Foundation for Emails responsive grid. The automated QA pipeline flagged two hard failures and three warnings, with the most critical being a missing unsubscribe mechanism and absent plain-text fallback.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**[FAIL] Tracking pixel served over HTTP**
-```
-src: http://url3775.click.notifications.nike.com/wf/open?upn=u001.unHJZyh6Rw...
-```
-Non-HTTPS image sources are blocked by default in Gmail, Outlook (2013+), and Apple Mail on iOS 15+. The open-tracking pixel will silently fail for most recipients.
+**Pixel tracker uses HTTP (not HTTPS)**
+- `src: http://url3775.click.notifications.nike.com/wf/open?upn=u001.unHJZyh6RwckUCFFVJt0ZOu1UjslD60fxdUH5dKFep5Yfpn0qOh5L9pX6Nb`
+- Modern clients (Gmail, Apple Mail) block mixed-content HTTP resources. The open-tracking pixel will be silently suppressed in most environments, making open-rate data unreliable for this send.
 
-**No other link issues detected.** Click-redirect domain (`url3775.click.notifications.nike.com`) is consistent with Nike's ESP infrastructure. No broken or mismatched hrefs visible in the truncated source.
+**No issues found** with click-tracking link structure (truncated HTML did not expose broken hrefs).
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**[WARN] Tracking pixel missing `alt` attribute**
-The open-pixel `<img>` element carries no `alt=""`. While a blank alt is appropriate for decorative/tracking images, the attribute must be explicitly present to pass accessibility validators and avoid broken-image icon rendering in image-off environments.
+**Missing alt text on tracking pixel**
+- The open-pixel `<img>` has no `alt` attribute. While a blank `alt=""` is acceptable for decorative/tracking pixels, its absence causes screen readers to announce the raw URL string.
+- Evidence: QA flag on `http://url3775.click.notifications.nike.com/wf/open?upn=…`
 
-**No other rendering issues found.** Responsive breakpoints at 640px are correctly implemented via `@media only screen and (max-width:640px)`. VML namespaces present for Outlook. Font stack falls back gracefully if `Nike Futura` woff2 fails to load.
+**Custom web font via `@font-face`**
+- Nike Futura is loaded from `https://www.nike.com/assets/ncss/2.2/dotcom/fonts/`. Outlook (Windows) and most mobile clients will ignore this entirely and fall back to the stack's default. No fallback font-family is declared in the truncated source — verify a safe web-safe fallback (`Arial`, `Helvetica`) is present in the inline `font-family` declarations.
+
+**No issues found** with responsive grid implementation or VML conditionals (standard Foundation for Emails patterns observed).
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-No unrendered merge tokens visible in the truncated source (e.g., no `{{code}}`, `*|OTP|*`, or `%TOKEN%` literals). The one-time code appears to have been injected server-side prior to send. Cannot fully verify without the complete HTML, but no evidence of broken substitution.
+No unrendered merge tokens (e.g., `{{first_name}}`, `%7C*TO_FNAME*%7C`) visible in the truncated source. OTP code rendering cannot be confirmed from the truncated HTML — no issues flagged but full source should be verified to ensure the code block has a fallback for null/empty token state.
 
 ---
 
-### 5. Compliance (CAN-SPAM / Unsubscribe / Authentication)
+### 5. Compliance
 
-**[EXEMPTION — NOT A FAILURE] No unsubscribe link in body**
-QA flagged this as `[FAIL]`, but this is a purely transactional authentication email (OTP/account security). CAN-SPAM Section 7 exempts transactional messages from the opt-out requirement. The flag is a false positive for this message type; no remediation needed.
+**[FAIL] No unsubscribe link detected in body**
+- CAN-SPAM §5(a)(3) requires a clear, functioning opt-out mechanism in every commercial email. The QA scanner found none. Even for transactional OTP emails, if any commercial content exists alongside the code, this is a violation.
+- If this is purely transactional (OTP only, zero marketing content), CAN-SPAM exempts it — but the classification must be confirmed. If any promotional copy is present in the untruncated source, the failure stands.
 
-**[WARN] List-Unsubscribe and List-Unsubscribe-Post headers not captured**
-```
-List-Unsubscribe: <not found>
-List-Unsubscribe-Post: <not found>  (RFC 8058 one-click)
-```
-QA notes these may be absent due to AgentMail relay not forwarding them. Absent headers on a transactional OTP are acceptable, but if this template is ever repurposed for promotional sends, both headers become mandatory for Gmail/Yahoo bulk sender compliance (Feb 2024 requirements).
+**[WARN] List-Unsubscribe and List-Unsubscribe-Post headers absent**
+- The AgentMail relay may not be forwarding these headers. Without `List-Unsubscribe-Post` (RFC 8058), Gmail and Apple Mail cannot render their native one-click unsubscribe UI. This increases spam complaint risk even for transactional mail.
 
 **[WARN] Authentication-Results header not found**
-SPF/DKIM/DMARC pass status cannot be confirmed via the relay. Sending domain is `notifications.nike.com` — Nike's production DNS almost certainly has valid records, but the audit cannot attest to delivery-time authentication from available data.
+- SPF/DKIM/DMARC pass/fail status is unknown due to relay header stripping. Sending domain `notifications.nike.com` almost certainly has DMARC enforcement, but confirmation requires raw header inspection outside the AgentMail relay.
 
 ---
 
-### 6. Email-to-Site Continuity (UTM / Landing Page)
+### 6. Email-to-Site Continuity
 
-No issues found. This is a self-contained transactional email; the OTP code is the payload and no CTA links to a landing page. UTM attribution is not applicable. The redirect domain (`click.notifications.nike.com`) is consistent with Nike's ESP click-tracking infrastructure.
+No action CTAs are visible in the truncated source beyond the OTP code itself, which is expected for this email type. No UTM parameters to audit. If the email contains any "Shop Now" or secondary links in the untruncated footer (common in Nike transactional templates), those should be verified for `utm_source=email&utm_medium=transactional` tagging.
 
 ---
 
 ### 7. Recommendations
 
 | Priority | Issue | Action |
-|---|---|---|
-| High | HTTP tracking pixel | Change open-pixel `src` scheme to `https://` — one character fix, eliminates blocking by all major clients |
-| High | No plain-text fallback (0 chars) | Generate a plain-text part with the OTP code and basic instructions; required for deliverability to some corporate MTAs and accessibility tools |
-| Low | Tracking pixel missing `alt=""` | Add `alt=""` explicitly to the `<img>` tag |
-| Info | Auth header visibility via relay | Confirm SPF/DKIM/DMARC pass with a direct header capture (e.g., `Authentication-Results` in raw source from Gmail); not actionable without relay fix |
+|----------|-------|--------|
+| **High** | HTTP open-tracking pixel | Update pixel URL to HTTPS at the ESP/template level |
+| **High** | Missing plain-text fallback (0 chars) | Generate a minimal text/plain MIME part with the OTP code — required for deliverability and accessibility |
+| **Medium** | Unsubscribe link absent | Confirm transactional classification; add opt-out if any commercial content exists |
+| **Medium** | List-Unsubscribe headers stripped by relay | Configure AgentMail to pass through `List-Unsubscribe` and `List-Unsubscribe-Post` headers from the upstream ESP |
+| **Low** | Tracking pixel alt attribute | Set `alt=""` explicitly to suppress screen reader announcement |
+| **Low** | Font fallback verification | Confirm inline `font-family` stacks include `Arial` or `Helvetica` after `Nike Futura` |
 ## Recent history
 
 - [[2026-05-16-here-s-your-one-time-code-lqbjdn-itycjcnne4jgfoa-g]] — 2/10 (2026-05-16)
