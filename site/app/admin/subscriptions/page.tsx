@@ -2,6 +2,7 @@ import { eq, inArray, asc, sql } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
 import { db, subscriptionJobs, tenants, experiences } from "@/lib/db/client";
 import { markJobDoneFormAction } from "./actions";
+import { CopyEmailButton } from "./CopyEmailButton";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Subscriptions · admin · etell" };
@@ -206,9 +207,11 @@ export default async function SubscriptionsPage() {
                       <dt className="text-muted w-16 shrink-0">Persona</dt>
                       <dd className="font-mono break-all">{r.personaSlug}</dd>
                     </div>
-                    <div className="flex gap-2">
-                      <dt className="text-muted w-16 shrink-0">Inbox</dt>
-                      <dd className="font-mono break-all">{r.inboxAddress}</dd>
+                    <div className="flex gap-2 items-start">
+                      <dt className="text-muted w-16 shrink-0 mt-0.5">Inbox</dt>
+                      <dd className="flex-1 min-w-0">
+                        <CopyEmailButton email={r.inboxAddress} />
+                      </dd>
                     </div>
                     <div className="flex gap-2">
                       <dt className="text-muted w-16 shrink-0">Tenant</dt>
@@ -298,8 +301,8 @@ export default async function SubscriptionsPage() {
                         )}
                       </td>
                       <td className="px-4 py-3 font-mono text-xs">{r.personaSlug}</td>
-                      <td className="px-4 py-3 font-mono text-xs">
-                        {r.inboxAddress}
+                      <td className="px-4 py-3">
+                        <CopyEmailButton email={r.inboxAddress} />
                       </td>
                       <td className="px-4 py-3 font-mono text-xs text-muted">
                         {r.tenantSlug}
