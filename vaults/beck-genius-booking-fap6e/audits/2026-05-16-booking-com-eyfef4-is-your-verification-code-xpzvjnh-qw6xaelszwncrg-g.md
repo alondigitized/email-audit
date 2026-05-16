@@ -12,75 +12,75 @@ tags: [email, score-2, sender/booking-com]
 **Score:** 2/10 · **Type:** Email audit · **2026-05-16**
 ## Executive summary
 
-- This is a Booking.com account verification email sent to a persona address (`beck-genius-booking-fap6e@etell.app`). It is purely transactional — the only job it has is to deliver the code `EYFEF4` clearly and fast. On that narrow mission, it succeeds: the code is large, centered, and impossible to miss.
-- That said, the email is completely impersonal. No first name, just "Hi," — which reads as a mild UX miss on a product that knows signup context. The copy is boilerplate Booking.com standard, nothing surprising or memorable. The design is clean but minimal to the point of sterile.
-- Verdict: functional transactional email doing exactly what it needs to. Scoring it against marketing rubrics will unsurprisingly produce low numbers — that's appropriate, not a knock on the email.
+- This is a transactional email, not a marketing email — it's a one-time verification code sent to complete account creation on Booking.com. The entire email is utilitarian by design: show the code, explain the rules, get out. There's no offer, no campaign, no selling. Evaluating it on a marketing rubric is an awkward fit, but on the core job of a transactional email — deliver the code clearly and build trust — it does its job competently.
+- The rendered email is clean, scannable, and free of visual bugs. The code `EYFEF4` is the largest element on the page, which is exactly right. The address sent to (`beck-genius-booking-fap6e@etell.app`) is visible in the body copy, which provides useful confirmation for the recipient that the right account is being activated.
+- This is not a marketing email. Scores below are adjusted to reflect that context honestly.
 
 ## What's working
 
-- **Code is unmissable.** `EYFEF4` is rendered large, bold, centered — the eye lands there immediately.
-- **Expiry is explicit.** "Expires after 10 minutes" and "can only be used once" are both stated clearly above the fold.
-- **Security guidance is present.** "Don't share this code with anyone else" and the "if you didn't request this" escape hatch are both there — reducing support burden.
-- **Brand trust signals work.** Booking.com logo, blue header, legal footer with Amsterdam address — looks legitimate, not phishing.
+- **Code is the dominant visual element** — large, centered, bold; impossible to miss.
+- **Expiry and security warning are clear** — "expires after 10 minutes" and "don't share this code" are both present and readable.
+- **Escape hatch is visible** — "If you didn't request this, you can ignore this email" reduces anxiety for accidental triggers.
+- **No render bugs** — layout is clean, no broken images, no text overflow.
+- **Legal links in footer are properly rendered** — Terms and Privacy Statement are linked, footer includes physical address (CAN-SPAM / GDPR compliance signal).
 
 ## What's weak
 
-- **No first name.** Just "Hi," — Booking.com has the name at signup, this is a miss.
-- **Persona email address is exposed verbatim.** The body reads "requested a verification code for beck-genius-booking-fap6e@etell.app" — showing the raw auto-generated address is awkward and could confuse a real user.
-- **No CTA button.** There is no "Open the app" or "Continue signing up" button — the user is expected to memorize or copy-paste the code manually with zero next-step guidance.
-- **Zero warmth or brand personality.** The copy is entirely functional. A single welcoming line ("You're almost in — welcome to Booking.com") would cost nothing and set a better first impression for new account creation.
+- **No personalization by name** — the greeting is just "Hi," with no first name. The email address is shown but feels mechanical.
+- **Not a marketing email** — applying a promotional rubric here is mostly N/A; all the scoring categories for offers, CTAs, and demographic targeting simply don't apply.
+- **No next-step guidance post-verification** — after entering the code, there's no nudge about what the account unlocks or what to do next.
+- **Subject line leaks the code** — `EYFEF4 is your verification code` puts the OTP in the subject, which is visible in push notifications and inbox previews, a mild security consideration.
 
 ## Recommendations
 
-- 1. **Add a first name** — replace "Hi," with "Hi [Name]," — this is table-stakes for triggered email in 2026.
-- 2. **Add a "Back to Booking.com" CTA button** — transactional email that ends with no next step leaves the user stranded; a button returning them to the signup flow reduces drop-off.
-- 3. **Soften the address display** — show "your email address" or just omit the literal string rather than printing the raw inbox address.
-- 4. **Add one line of welcome copy** — "You're one step away from booking your next trip" makes this a brand moment, not just a code delivery.
-- **Subject Alt A:** `Your Booking.com code: EYFEF4`
-- **Subject Alt B:** `EYFEF4 — verify your Booking.com account`
-- **Preheader Alt A:** `Valid for 10 minutes. Don't share it with anyone.`
-- **Preheader Alt B:** `Use this code to finish creating your account — expires soon.`
+- 1. **Move the code out of the subject line.** Putting the OTP in the subject exposes it in lock-screen notifications and email previews. A subject like "Your Booking.com verification code is ready" is safer.
+- 2. **Add a name to the greeting.** Even "Hi there" is warmer than "Hi," — if a name is available, use it.
+- 3. **Add a brief post-activation prompt.** One short line like "Once you're in, you can save your payment details and start booking" reduces drop-off after account creation.
+- **Subject Alt A:** `Your Booking.com sign-in code (expires in 10 min)`
+- **Subject Alt B:** `Verify your Booking.com account`
+- **Preheader Alt A:** `Enter EYFEF4 to complete your account setup — expires in 10 minutes.`
+- **Preheader Alt B:** `Your one-time code is waiting. Don't share it with anyone.`
 
 ## Full review
 ## 1. Overview
 
-This is a Booking.com account verification email sent to a persona address (`beck-genius-booking-fap6e@etell.app`). It is purely transactional — the only job it has is to deliver the code `EYFEF4` clearly and fast. On that narrow mission, it succeeds: the code is large, centered, and impossible to miss.
+This is a transactional email, not a marketing email — it's a one-time verification code sent to complete account creation on Booking.com. The entire email is utilitarian by design: show the code, explain the rules, get out. There's no offer, no campaign, no selling. Evaluating it on a marketing rubric is an awkward fit, but on the core job of a transactional email — deliver the code clearly and build trust — it does its job competently.
 
-That said, the email is completely impersonal. No first name, just "Hi," — which reads as a mild UX miss on a product that knows signup context. The copy is boilerplate Booking.com standard, nothing surprising or memorable. The design is clean but minimal to the point of sterile.
+The rendered email is clean, scannable, and free of visual bugs. The code `EYFEF4` is the largest element on the page, which is exactly right. The address sent to (`beck-genius-booking-fap6e@etell.app`) is visible in the body copy, which provides useful confirmation for the recipient that the right account is being activated.
 
-Verdict: functional transactional email doing exactly what it needs to. Scoring it against marketing rubrics will unsurprisingly produce low numbers — that's appropriate, not a knock on the email.
+This is not a marketing email. Scores below are adjusted to reflect that context honestly.
 
 ---
 
 ## 2. What worked
 
-- **Code is unmissable.** `EYFEF4` is rendered large, bold, centered — the eye lands there immediately.
-- **Expiry is explicit.** "Expires after 10 minutes" and "can only be used once" are both stated clearly above the fold.
-- **Security guidance is present.** "Don't share this code with anyone else" and the "if you didn't request this" escape hatch are both there — reducing support burden.
-- **Brand trust signals work.** Booking.com logo, blue header, legal footer with Amsterdam address — looks legitimate, not phishing.
+- **Code is the dominant visual element** — large, centered, bold; impossible to miss.
+- **Expiry and security warning are clear** — "expires after 10 minutes" and "don't share this code" are both present and readable.
+- **Escape hatch is visible** — "If you didn't request this, you can ignore this email" reduces anxiety for accidental triggers.
+- **No render bugs** — layout is clean, no broken images, no text overflow.
+- **Legal links in footer are properly rendered** — Terms and Privacy Statement are linked, footer includes physical address (CAN-SPAM / GDPR compliance signal).
 
 ---
 
 ## 3. What didn't
 
-- **No first name.** Just "Hi," — Booking.com has the name at signup, this is a miss.
-- **Persona email address is exposed verbatim.** The body reads "requested a verification code for beck-genius-booking-fap6e@etell.app" — showing the raw auto-generated address is awkward and could confuse a real user.
-- **No CTA button.** There is no "Open the app" or "Continue signing up" button — the user is expected to memorize or copy-paste the code manually with zero next-step guidance.
-- **Zero warmth or brand personality.** The copy is entirely functional. A single welcoming line ("You're almost in — welcome to Booking.com") would cost nothing and set a better first impression for new account creation.
+- **No personalization by name** — the greeting is just "Hi," with no first name. The email address is shown but feels mechanical.
+- **Not a marketing email** — applying a promotional rubric here is mostly N/A; all the scoring categories for offers, CTAs, and demographic targeting simply don't apply.
+- **No next-step guidance post-verification** — after entering the code, there's no nudge about what the account unlocks or what to do next.
+- **Subject line leaks the code** — `EYFEF4 is your verification code` puts the OTP in the subject, which is visible in push notifications and inbox previews, a mild security consideration.
 
 ---
 
 ## 4. What I'd change
 
-1. **Add a first name** — replace "Hi," with "Hi [Name]," — this is table-stakes for triggered email in 2026.
-2. **Add a "Back to Booking.com" CTA button** — transactional email that ends with no next step leaves the user stranded; a button returning them to the signup flow reduces drop-off.
-3. **Soften the address display** — show "your email address" or just omit the literal string rather than printing the raw inbox address.
-4. **Add one line of welcome copy** — "You're one step away from booking your next trip" makes this a brand moment, not just a code delivery.
+1. **Move the code out of the subject line.** Putting the OTP in the subject exposes it in lock-screen notifications and email previews. A subject like "Your Booking.com verification code is ready" is safer.
+2. **Add a name to the greeting.** Even "Hi there" is warmer than "Hi," — if a name is available, use it.
+3. **Add a brief post-activation prompt.** One short line like "Once you're in, you can save your payment details and start booking" reduces drop-off after account creation.
 
-- **Subject Alt A:** `Your Booking.com code: EYFEF4`
-- **Subject Alt B:** `EYFEF4 — verify your Booking.com account`
-- **Preheader Alt A:** `Valid for 10 minutes. Don't share it with anyone.`
-- **Preheader Alt B:** `Use this code to finish creating your account — expires soon.`
+   - **Subject Alt A:** `Your Booking.com sign-in code (expires in 10 min)`
+   - **Subject Alt B:** `Verify your Booking.com account`
+   - **Preheader Alt A:** `Enter EYFEF4 to complete your account setup — expires in 10 minutes.`
+   - **Preheader Alt B:** `Your one-time code is waiting. Don't share it with anyone.`
 
 ---
 
@@ -88,101 +88,106 @@ Verdict: functional transactional email doing exactly what it needs to. Scoring 
 
 **2/10**
 
-- Sender is a brand I recognize (Booking.com) ✓
-- No render bugs visible ✓
+- Sender is a brand I recognize / am subscribed to ✓
+- No render bugs ✓
 
-(All other criteria don't apply: no offer, no CTA, no demographic targeting, no loyalty, no seasonal hook — this is transactional.)
+*All other criteria (offer, CTA, visual hierarchy for a promo, demographic fit, campaign/season relevance, loyalty benefits, promotional honesty) are N/A — this is a transactional OTP email with no commercial intent.*
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 4/10
-- **Signals counted:** Sender display name is recognizable; subject is concrete (contains the code verbatim); subject is under 50 chars; no spam signals.
-- **Rationale:** The subject line contains the actual code, which is a strong open driver if you're mid-signup. Outside that context, nothing about this subject line creates curiosity or urgency beyond utility.
+- **Score:** 5/10
+- **Signals counted:** Sender display name is recognizable; subject is concrete (specific code + action); subject is relevant (account verification); no spam signals; time-bounded urgency that feels credible.
+- **Rationale:** The sender name and the concrete subject ("EYFEF4 is your verification code") make this an obvious open — you triggered it yourself. The urgency is real (10-minute expiry). Scores are capped because personalization, preview text quality, and cadence signals don't meaningfully apply to triggered transactional mail.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 1/10
-- **Signals counted:** None of the click rubric criteria apply — there is no CTA button, no offer, no product link, no reviews, and no time-bounded deal.
-- **Rationale:** There is literally nothing to click except the footer links. The absence of a "Return to signup" button is the single biggest miss for a transactional email designed to complete an account creation flow.
+- **Score:** 2/10**
+- **Signals counted:** No friction — no "view in browser" block, no broken images; brand voice is consistent and trusted.
+- **Rationale:** There is no CTA to click — the user copies the code and uses it elsewhere. The low score isn't a failure; there's simply nothing to click in this email by design.
 
 ---
 
 ## 8. Subject
 
 - **Subject:** `Booking.com – EYFEF4 is your verification code`
-- **Length:** 44 chars
-- **Scores (1-10):** Clarity `9`, Curiosity `2`, Personalization `2`, Urgency `4`, Specificity `9`
+- **Length:** 42 chars
+- **Scores (1-10):** Clarity `9`, Curiosity `2`, Personalization `3`, Urgency `5`, Specificity `9`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — no visible preheader; inbox would pull body copy ("Verify email and create an account" or "Hi,") as fallback.
-- **Length:** 0 (intentional)
-- **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `1`, Inbox-fit `1`
+- **Preview:** `(none / leaking junk)` — no explicit preheader set; inbox clients would pull the first body text: `"Verify email and create an account Hi, You just requested a verification code for beck-genius…"`
+- **Length:** ~80 chars pulled from body
+- **Scores (1-10):** Complements subject `4`, Specificity `5`, Clarity `6`, Inbox-fit `3`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — Booking.com Verification Code Email
+## Technical Audit — Booking.com Verification Email
 
 ### 1. Technical Summary
 
-This is a transactional OTP email rendered from Booking.com's bulk sending infrastructure (Singapore relay, `s.sg.booking.com`). The email has three hard failures — empty greeting token, missing plain-text fallback, and no unsubscribe body link — plus a mixed-content issue on the open-pixel tracker.
+This is a transactional OTP email (verification code `EYFEF4`). Three hard failures are present: an unrendered merge token, a missing plain-text part, and an HTTP tracking pixel. Compliance flags are expected for a transactional send but warrant documentation.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**No issues with destination links.** No CTAs with broken hrefs were detected.
+**[FAIL] Tracking pixel over HTTP**
+The open-tracking beacon uses a non-HTTPS URL:
+```
+src: http://s.sg.booking.com/wf/open?upn=u001.qawu87W0Bu6336LtdPDgQ6IPDPO7UpWExXNqxImBkMYfFgTeHxcsGuVO5b5o5I6sbM6RqujTTervyo9
+```
+Gmail and Outlook 365 proxy images over HTTPS; a plain `http://` src will either be blocked by stricter clients or silently upgraded, making open-rate data unreliable. It also surfaces a browser security warning if the email is viewed in a web client that renders mixed content warnings.
 
-**Open-pixel tracker uses HTTP, not HTTPS:**
-- `src: http://s.sg.booking.com/wf/open?upn=u001.qawu87W0Bu...`
-- Many clients (Gmail, Outlook, Apple Mail) block or proxy HTTP image loads. The open event will not fire reliably — open-rate data for this send is unreliable.
+**[WARN] No UTM parameters visible on tracked links** — could not confirm from truncated source whether action links carry campaign attribution (see §6).
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**[FAIL] Plain-text fallback is 0 characters.** Deliverability risk: spam filters penalize missing text parts, and some enterprise mail gateways (Outlook on Exchange) prefer or require a text/plain MIME part.
+**[WARN] Two images lack `alt` text:**
+- `default_avatar_icon_64x64.png` — decorative avatar, acceptable to leave `alt=""` but must be explicitly set; absent `alt` attribute causes screen readers to announce the filename.
+- Open-tracking pixel — should carry `alt=""` and `role="presentation"` to suppress reader announcement.
 
-**[WARN] Two images missing `alt` text:**
-- `default_avatar_icon_64x64.png` — decorative, acceptable without alt, but should carry `alt=""`
-- Open-pixel `src` — should carry `alt=""` explicitly to suppress broken-image UI in image-off clients
-
-**CSS hover states** (`.button:hover`, `.button-cancel:hover`) are present but non-functional in all major email clients. No rendering defect, but dead code.
+**No issues found** with responsive breakpoints (`@media` blocks at 480 px and 580 px are present), `#outlook a` reset, `-webkit-text-size-adjust`, or table-based layout structure.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**[FAIL] Empty greeting slot confirmed by QA scan:**
-- Greeting renders as `"Hi ,"` — the name merge token resolved to an empty string.
-- Root cause is likely a missing fallback in the template: e.g., `{{first_name | default: ""}}` with no fallback value, rather than `{{first_name | default: "there"}}`.
-- For a verification email this is low-stakes UX friction, but it is a visible rendering defect.
+**[FAIL] Empty greeting slot**
+QA confirms the greeting renders as `"Hi ,"` — the recipient name merge token resolved to an empty string. The OTP code (`EYFEF4`) appears correctly injected in the subject and presumably the body, so this is isolated to the name field. Likely cause: account was created without a display name and the template lacks a fallback (e.g., `{{first_name | default: "there"}}`).
 
 ---
 
 ### 5. Compliance
 
-**[FAIL] No unsubscribe link found in email body.** CAN-SPAM §5(a)(3) requires a functioning opt-out mechanism in every commercial email. Transactional/OTP emails have a narrow exemption, but Booking.com's infrastructure likely classifies this as commercial (account creation flow). If the exemption does not apply, this is a compliance gap.
+**Transactional exemption applies:** Verification/OTP emails are exempt from CAN-SPAM's unsubscribe requirement because they are not commercial messages. The QA failures below are expected for this email type and not violations in context.
 
-**[WARN] `List-Unsubscribe` header not captured** by the AgentMail relay. Could be a relay stripping issue rather than a sending-side omission — cannot confirm absence at the MTA level from this data alone.
+| Check | Status | Note |
+|---|---|---|
+| `List-Unsubscribe` header | WARN — not captured | Expected absent for transactional; AgentMail relay may strip it |
+| `List-Unsubscribe-Post` (RFC 8058) | WARN — not captured | Same — not required for transactional |
+| Unsubscribe link in body | FAIL — absent | CAN-SPAM exempt for transactional sends |
+| Plain-text fallback | **FAIL** — 0 chars | Not exempt; missing `text/plain` part degrades deliverability and violates RFC 2822 MIME best practices regardless of email type |
+| `Authentication-Results` header | WARN — not found | SPF/DKIM status unknown via AgentMail relay; Booking.com's infra almost certainly signs outbound, but relay is not forwarding the header |
 
-**[WARN] `List-Unsubscribe-Post` (RFC 8058) not found.** Gmail and Yahoo require one-click unsubscribe for bulk senders (≥5k/day). Missing this header degrades sender reputation scoring at both providers.
-
-**[WARN] `Authentication-Results` header not captured.** SPF/DKIM/DMARC pass/fail status is unknown from this sample. The sending domain (`booking.com`) almost certainly has DMARC enforcement, but the relay capture gap means we cannot verify alignment.
+**The plain-text failure is the only compliance-adjacent issue that applies unconditionally to transactional email.**
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-No destination links were present in the truncated source — this email's sole function is OTP delivery, not click-through. UTM attribution is not applicable.
+No action links are visible in the truncated source beyond the tracking pixel. For a pure verification code email (user reads the code, enters it manually), there is no landing page flow to audit. If the email contains a "Verify my account" button not present in the truncated portion, UTM parameters on that link should be confirmed separately.
+
+**No issues found** that can be confirmed from available source.
 
 ---
 
@@ -190,10 +195,8 @@ No destination links were present in the truncated source — this email's sole 
 
 | Priority | Issue | Fix |
 |---|---|---|
-| High | Empty name merge token | Add fallback: `{{first_name \| default: "there"}}` or equivalent |
-| High | Plain-text fallback absent | Generate a minimal text/plain MIME part with the OTP code and sender info |
-| High | Open-pixel HTTP src | Change tracker URL scheme to `https://` at the ESP/template level |
-| Medium | Unsubscribe body link | Add footer unsubscribe link or confirm transactional exemption is documented |
-| Medium | `List-Unsubscribe-Post` header | Add RFC 8058 one-click header at ESP config level |
-| Low | Alt text on decorative images | Set `alt=""` explicitly on avatar and pixel images |
-| Info | Verify relay header capture | Confirm `List-Unsubscribe` and `Authentication-Results` are not being stripped by the AgentMail relay before treating as sending-side failures |
+| P0 | Empty name merge token | Add a fallback: `{{first_name \| default: ""}}` or `{{first_name \| default: "there"}}` — whichever matches brand voice |
+| P0 | Tracking pixel over HTTP | Change `http://s.sg.booking.com/wf/open?...` to `https://` — contact ESP or switch to an HTTPS-capable open-tracking endpoint |
+| P1 | Plain-text fallback absent | Generate a `text/plain` MIME part with at minimum: sender, code, expiry notice, and support URL |
+| P2 | Missing `alt` attributes | Set `alt=""` on avatar and tracking pixel images; add `role="presentation"` to the pixel |
+| P3 | `Authentication-Results` transparency | Configure AgentMail relay to pass through or re-emit SPF/DKIM results for auditability |
