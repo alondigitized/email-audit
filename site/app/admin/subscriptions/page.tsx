@@ -1,6 +1,6 @@
 import { eq, inArray, asc, sql } from "drizzle-orm";
 import { requireAdmin } from "@/lib/dal";
-import { db, subscriptionJobs, tenants } from "@/lib/db/client";
+import { db, subscriptionJobs, tenants, experiences } from "@/lib/db/client";
 import { markJobDoneFormAction } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -16,12 +16,20 @@ type Row = {
   attempts: number;
   lastError: string | null;
   createdAt: Date;
+  lastSeenAt: Date | null;
+  emailsFromBrand: number;
 };
 
 async function loadJobs(): Promise<Row[]> {
   // `queued` and `auto_succeeded` are legacy values from the auto-subscribe
   // era — kept in the inArray so historical rows still render. New jobs land
   // at `manual_pending` directly.
+  //
+  // Two correlated subqueries surface "is this subscription actually
+  // delivering mail" — the most useful audit signal once a subscription
+  // is marked done. subscription_job.brand_domain stores the root
+  // (skechers.com); experience.brand_domain stores the full sender
+  // subdomain (emails.skechers.com). Match by suffix.
   const rows = await db
     .select({
       id: subscriptionJobs.id,
@@ -33,6 +41,20 @@ async function loadJobs(): Promise<Row[]> {
       attempts: subscriptionJobs.attempts,
       lastError: subscriptionJobs.lastError,
       createdAt: subscriptionJobs.createdAt,
+      lastSeenAt: sql<Date | null>`(
+        SELECT MAX(${experiences.receivedAt})
+        FROM ${experiences}
+        WHERE ${experiences.personaSlug} = ${subscriptionJobs.personaSlug}
+          AND ${experiences.brandDomain} LIKE '%' || ${subscriptionJobs.brandDomain}
+          AND ${experiences.type} = 'email'
+      )`,
+      emailsFromBrand: sql<number>`COALESCE((
+        SELECT COUNT(*)::int
+        FROM ${experiences}
+        WHERE ${experiences.personaSlug} = ${subscriptionJobs.personaSlug}
+          AND ${experiences.brandDomain} LIKE '%' || ${subscriptionJobs.brandDomain}
+          AND ${experiences.type} = 'email'
+      ), 0)`,
     })
     .from(subscriptionJobs)
     .innerJoin(tenants, eq(tenants.id, subscriptionJobs.tenantId))
@@ -73,6 +95,56 @@ function statusPill(status: string): { label: string; cls: string } {
     default:
       return { label: status, cls: "bg-gray-100 text-gray-700" };
   }
+}
+
+// Render the "Mail flowing?" cell — what an admin auditing
+// subscriptions actually wants to see at a glance:
+//   • green pill + relative date when mail arrived recently
+//   • amber when mail has been seen but is going stale (>14d)
+//   • red when the subscription is marked done but nothing has
+//     arrived since (or worse, never arrived)
+//   • gray "—" before the subscription is even done
+function freshnessCell(args: {
+  status: string;
+  lastSeenAt: Date | null;
+  emailsFromBrand: number;
+}): { label: string; sub: string | null; cls: string } {
+  const { status, lastSeenAt, emailsFromBrand } = args;
+  const subscribed = status === "manual_done" || status === "auto_succeeded";
+  if (!subscribed && emailsFromBrand === 0) {
+    return { label: "—", sub: null, cls: "text-muted" };
+  }
+  if (lastSeenAt) {
+    const days = Math.floor(
+      (Date.now() - new Date(lastSeenAt).getTime()) / 86_400_000
+    );
+    const sub = `${emailsFromBrand} email${emailsFromBrand === 1 ? "" : "s"}`;
+    if (days <= 7) {
+      return {
+        label: days <= 0 ? "today" : `${days}d ago`,
+        sub,
+        cls: "bg-emerald-50 text-emerald-800 border-emerald-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+      };
+    }
+    if (days <= 21) {
+      return {
+        label: `${days}d ago`,
+        sub,
+        cls: "bg-amber-50 text-amber-800 border-amber-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+      };
+    }
+    return {
+      label: `${days}d ago`,
+      sub,
+      cls: "bg-rose-50 text-rose-800 border-rose-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+    };
+  }
+  // Subscribed but no mail ever — likely a bad subscription
+  return {
+    label: "no mail yet",
+    sub: null,
+    cls: "bg-rose-50 text-rose-800 border-rose-200 border px-1.5 py-0.5 rounded text-[11px] font-semibold",
+  };
 }
 
 export default async function SubscriptionsPage() {
@@ -142,6 +214,28 @@ export default async function SubscriptionsPage() {
                       <dt className="text-muted w-16 shrink-0">Tenant</dt>
                       <dd className="font-mono text-muted">{r.tenantSlug}</dd>
                     </div>
+                    <div className="flex gap-2 items-baseline">
+                      <dt className="text-muted w-16 shrink-0">Mail</dt>
+                      <dd>
+                        {(() => {
+                          const f = freshnessCell({
+                            status: r.status,
+                            lastSeenAt: r.lastSeenAt,
+                            emailsFromBrand: r.emailsFromBrand,
+                          });
+                          return (
+                            <span className="inline-flex items-baseline gap-1.5">
+                              <span className={f.cls}>{f.label}</span>
+                              {f.sub && (
+                                <span className="text-muted text-[11px]">
+                                  · {f.sub}
+                                </span>
+                              )}
+                            </span>
+                          );
+                        })()}
+                      </dd>
+                    </div>
                   </dl>
                   {r.lastError && (
                     <div className="mt-2 text-[11px] text-rose-700 italic break-words">
@@ -174,6 +268,7 @@ export default async function SubscriptionsPage() {
                   <th className="px-4 py-3 font-medium">Inbox</th>
                   <th className="px-4 py-3 font-medium">Tenant</th>
                   <th className="px-4 py-3 font-medium">Status</th>
+                  <th className="px-4 py-3 font-medium">Mail flowing?</th>
                   <th className="px-4 py-3 font-medium">Action</th>
                 </tr>
               </thead>
@@ -215,6 +310,25 @@ export default async function SubscriptionsPage() {
                         >
                           {pill.label}
                         </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        {(() => {
+                          const f = freshnessCell({
+                            status: r.status,
+                            lastSeenAt: r.lastSeenAt,
+                            emailsFromBrand: r.emailsFromBrand,
+                          });
+                          return (
+                            <div className="flex flex-col gap-0.5">
+                              <span className={f.cls}>{f.label}</span>
+                              {f.sub && (
+                                <span className="text-[11px] text-muted">
+                                  {f.sub}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </td>
                       <td className="px-4 py-3">
                         {showMarkDone && (
