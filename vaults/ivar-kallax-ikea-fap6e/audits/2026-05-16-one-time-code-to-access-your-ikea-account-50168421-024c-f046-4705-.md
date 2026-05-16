@@ -3,111 +3,114 @@ slug: 2026-05-16-one-time-code-to-access-your-ikea-account-50168421-024c-f046-47
 type: email
 date: 2026-05-16
 persona: ivar-kallax-ikea-fap6e
-score: "5/10"
+score: "3/10"
 sender: no.reply@ikea.com
 subject: One-time code to access your IKEA account.
-tags: [email, score-5, sender/no-reply-ikea-com]
+tags: [email, score-3, sender/no-reply-ikea-com]
 ---
 # One-time code to access your IKEA account.
-**Score:** 5/10 · **Type:** Email audit · **2026-05-16**
+**Score:** 3/10 · **Type:** Email audit · **2026-05-16**
 ## Executive summary
 
-- This is a transactional authentication email, not a marketing send. IKEA is delivering a six-digit one-time passcode triggered by a user login request. Reviewing it through a marketing rubric is a mismatch by design — there is no offer, no CTA button, no persuasion needed. The email exists to do one job: put a code in front of the user fast.
-- On that narrow brief, it succeeds cleanly. The code is the largest element on the page, immediately visible, and the security warning ("valid only for 5 minutes") is present and readable. No clutter, no confusion.
-- The only marketing lens worth applying here is brand consistency. "Hej" as a greeting is on-brand for IKEA, and the footer is complete with socials and legal links. This is a functional, no-frills transactional send. It should not be scored like a promotional email, but the rubric is applied honestly below.
+- This is not a marketing email. It's a triggered transactional send — an OTP/authentication email delivering a six-digit login code. IKEA executes it cleanly and without drama: the code is enormous, the instructions are one sentence, and the expiry window is stated plainly. There is nothing to argue about here. The job of this email is to get the code into the user's hands before 5 minutes elapse, and the design is entirely subordinate to that goal.
+- Applying a promotional marketing rubric to this email is like reviewing a boarding pass on its storytelling. Most scoring criteria simply don't fire — no offer, no CTA button, no demographic targeting — because none of those belong here. Scores reflect that reality honestly.
+- The one notable design choice worth flagging: IKEA uses its Swedish "Hej" opener, which is charming brand voice for a welcome email but slightly dissonant for an urgent security-adjacent transactional message. It's a minor point; it doesn't harm delivery of the code.
 
 ## What's working
 
-- **Code is unmissable.** The OTP `727867` is rendered in a large, bold typeface — the only element that demands attention, which is exactly right.
-- **"Hej" greeting is on-brand.** Maintains IKEA's Swedish-inflected voice even in a utility email.
-- **Security note is present and clear.** "Do not share this" + "valid only for 5 minutes" is plainly stated, not buried.
-- **No render bugs.** Logo, code, footer, and social icons all rendered cleanly.
+- **Code legibility is excellent.** The six-digit code is rendered in a very large, bold typeface — impossible to miss or misread.
+- **Expiry is stated clearly and prominently.** "Valid only for 5 minutes" is in the body, not buried in fine print.
+- **Security hygiene copy is present.** "Please do not share this with anyone" sets the right tone without being alarmist.
+- **No visual noise.** White background, no banners, no promotional modules fighting for attention — the code is the only thing on screen.
+- **Brand is unambiguous.** IKEA logo at top, signed "Sincerely, IKEA," and repeated in the footer. No spoofing ambiguity.
 
 ## What's weak
 
-- **No personalization.** "Hej" with no name — a missed opportunity to confirm the account owner's identity and add a layer of anti-phishing reassurance.
-- **No CTA button to return to the flow.** If the user opened this email in a different app or tab, there's no "Return to IKEA" button to get them back to where they need to enter the code.
-- **Footer social links are noise here.** Pinterest and YouTube icons in a time-sensitive auth email add visual clutter with zero functional value.
-- **Subject has a trailing period.** Minor but sloppy: "One-time code to access your IKEA account." — the period is unconventional for a subject line.
+- **No personalization.** "Hej" with no name. For an account-access email, including the account email address or first name would add a quick phishing-resistance signal.
+- **No secondary action for "I didn't request this."** Standard security practice is a "Didn't request this? Secure your account" link — it's absent.
+- **"Hej" feels off-register.** Casual Swedish greeting is IKEA's charm move in marketing; in a security-adjacent transactional, a neutral "Hello" would be more appropriate.
+- **Footer social links are unnecessary friction.** Facebook/Instagram/Pinterest/X/YouTube links have no place in an OTP email and add visual weight to a message that should be laser-focused.
 
 ## Recommendations
 
-- 1. **Add a "Return to sign-in" button.** The single highest-impact change: a clear button that deep-links back to the IKEA login page. Reduces friction for any user who opened the email on a different device.
-- 2. **Personalize the greeting.** "Hej, Alon" instead of "Hej" — this also doubles as a subtle phishing signal ("if your name is wrong, someone else requested this").
-- 3. **Strip the social footer.** Remove Facebook/Instagram/Pinterest/X/YouTube icons entirely. They're a distraction in a 5-minute countdown context.
-- 4. **Drop the trailing period from the subject.**
-- **Subject Alt A:** `Your IKEA one-time code: 727867`
-- **Subject Alt B:** `IKEA sign-in code (expires in 5 min)`
-- **Preheader Alt A:** `Enter this code to access your account. Do not share it with anyone.`
-- **Preheader Alt B:** `727867 — valid for 5 minutes. Didn't request this? Ignore.`
+- 1. **Add a "Didn't request this?" line** — most critical safety gap. One line: "Didn't request this code? [Secure your account →]" This is table-stakes for auth emails.
+- 2. **Personalize the greeting** — "Hej, alondigitized@gmail.com" or "Hej, Alon" adds a fast phishing-resistance cue and costs nothing.
+- 3. **Swap "Hej" for "Hello"** — or at minimum "Hej [Name]" — to match the security context better.
+- 4. **Strip the social media footer icons** — they serve no purpose here and dilute the urgency of the 5-minute window.
+- **Subject Alt A:** `727867 is your IKEA login code`
+- **Subject Alt B:** `Your IKEA one-time code (expires in 5 min)`
+- **Preheader Alt A:** `Enter this code to access your account. Valid for 5 minutes.`
+- **Preheader Alt B:** `Didn't request this? Secure your account immediately.`
 
 ## Full review
 ## 1. Overview
 
-This is a transactional authentication email, not a marketing send. IKEA is delivering a six-digit one-time passcode triggered by a user login request. Reviewing it through a marketing rubric is a mismatch by design — there is no offer, no CTA button, no persuasion needed. The email exists to do one job: put a code in front of the user fast.
+This is not a marketing email. It's a triggered transactional send — an OTP/authentication email delivering a six-digit login code. IKEA executes it cleanly and without drama: the code is enormous, the instructions are one sentence, and the expiry window is stated plainly. There is nothing to argue about here. The job of this email is to get the code into the user's hands before 5 minutes elapse, and the design is entirely subordinate to that goal.
 
-On that narrow brief, it succeeds cleanly. The code is the largest element on the page, immediately visible, and the security warning ("valid only for 5 minutes") is present and readable. No clutter, no confusion.
+Applying a promotional marketing rubric to this email is like reviewing a boarding pass on its storytelling. Most scoring criteria simply don't fire — no offer, no CTA button, no demographic targeting — because none of those belong here. Scores reflect that reality honestly.
 
-The only marketing lens worth applying here is brand consistency. "Hej" as a greeting is on-brand for IKEA, and the footer is complete with socials and legal links. This is a functional, no-frills transactional send. It should not be scored like a promotional email, but the rubric is applied honestly below.
+The one notable design choice worth flagging: IKEA uses its Swedish "Hej" opener, which is charming brand voice for a welcome email but slightly dissonant for an urgent security-adjacent transactional message. It's a minor point; it doesn't harm delivery of the code.
 
 ---
 
 ## 2. What worked
 
-- **Code is unmissable.** The OTP `727867` is rendered in a large, bold typeface — the only element that demands attention, which is exactly right.
-- **"Hej" greeting is on-brand.** Maintains IKEA's Swedish-inflected voice even in a utility email.
-- **Security note is present and clear.** "Do not share this" + "valid only for 5 minutes" is plainly stated, not buried.
-- **No render bugs.** Logo, code, footer, and social icons all rendered cleanly.
+- **Code legibility is excellent.** The six-digit code is rendered in a very large, bold typeface — impossible to miss or misread.
+- **Expiry is stated clearly and prominently.** "Valid only for 5 minutes" is in the body, not buried in fine print.
+- **Security hygiene copy is present.** "Please do not share this with anyone" sets the right tone without being alarmist.
+- **No visual noise.** White background, no banners, no promotional modules fighting for attention — the code is the only thing on screen.
+- **Brand is unambiguous.** IKEA logo at top, signed "Sincerely, IKEA," and repeated in the footer. No spoofing ambiguity.
 
 ---
 
 ## 3. What didn't
 
-- **No personalization.** "Hej" with no name — a missed opportunity to confirm the account owner's identity and add a layer of anti-phishing reassurance.
-- **No CTA button to return to the flow.** If the user opened this email in a different app or tab, there's no "Return to IKEA" button to get them back to where they need to enter the code.
-- **Footer social links are noise here.** Pinterest and YouTube icons in a time-sensitive auth email add visual clutter with zero functional value.
-- **Subject has a trailing period.** Minor but sloppy: "One-time code to access your IKEA account." — the period is unconventional for a subject line.
+- **No personalization.** "Hej" with no name. For an account-access email, including the account email address or first name would add a quick phishing-resistance signal.
+- **No secondary action for "I didn't request this."** Standard security practice is a "Didn't request this? Secure your account" link — it's absent.
+- **"Hej" feels off-register.** Casual Swedish greeting is IKEA's charm move in marketing; in a security-adjacent transactional, a neutral "Hello" would be more appropriate.
+- **Footer social links are unnecessary friction.** Facebook/Instagram/Pinterest/X/YouTube links have no place in an OTP email and add visual weight to a message that should be laser-focused.
 
 ---
 
 ## 4. What I'd change
 
-1. **Add a "Return to sign-in" button.** The single highest-impact change: a clear button that deep-links back to the IKEA login page. Reduces friction for any user who opened the email on a different device.
-2. **Personalize the greeting.** "Hej, Alon" instead of "Hej" — this also doubles as a subtle phishing signal ("if your name is wrong, someone else requested this").
-3. **Strip the social footer.** Remove Facebook/Instagram/Pinterest/X/YouTube icons entirely. They're a distraction in a 5-minute countdown context.
-4. **Drop the trailing period from the subject.**
+1. **Add a "Didn't request this?" line** — most critical safety gap. One line: "Didn't request this code? [Secure your account →]" This is table-stakes for auth emails.
+2. **Personalize the greeting** — "Hej, alondigitized@gmail.com" or "Hej, Alon" adds a fast phishing-resistance cue and costs nothing.
+3. **Swap "Hej" for "Hello"** — or at minimum "Hej [Name]" — to match the security context better.
+4. **Strip the social media footer icons** — they serve no purpose here and dilute the urgency of the 5-minute window.
 
-- **Subject Alt A:** `Your IKEA one-time code: 727867`
-- **Subject Alt B:** `IKEA sign-in code (expires in 5 min)`
-- **Preheader Alt A:** `Enter this code to access your account. Do not share it with anyone.`
-- **Preheader Alt B:** `727867 — valid for 5 minutes. Didn't request this? Ignore.`
+- **Subject Alt A:** `727867 is your IKEA login code`
+- **Subject Alt B:** `Your IKEA one-time code (expires in 5 min)`
+- **Preheader Alt A:** `Enter this code to access your account. Valid for 5 minutes.`
+- **Preheader Alt B:** `Didn't request this? Secure your account immediately.`
 
 ---
 
 ## 5. Business Impact Score (1-10)
 
-**5/10**
+**3/10**
 
-- Sender is a recognized brand (IKEA)
-- Visual hierarchy is clear — code is the unambiguous hero
-- No render bugs
-- Offer feels honest — transactional, no bait-and-switch
+- Sender is a brand you recognize / are subscribed to ✓
+- Visual hierarchy is clear — eye lands on the code first ✓
+- No render bugs ✓
+
+*(All promotional/offer/demographic criteria are inapplicable to this transactional send.)*
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
 - **Score:** 8/10
-- **Signals counted:** Sender display name recognizable; subject is concrete; subject is relevant (user triggered this); subject is under 50 chars (43 chars); no spam signals; time-bounded urgency implied by OTP nature; cadence is right (triggered send, not batch promo)
-- **Rationale:** A user who just requested an OTP will open this immediately — the subject is specific enough that it's self-qualifying. The only drag is absence of visible preview text complementing the subject.
+- **Signals counted:** Sender display name recognizable (IKEA); subject is concrete; subject is relevant (if you just tried to log in, this is the email you want); subject is under 50 chars (41 chars); no spam signals; time-bounded urgency implied by "one-time"; cadence feels right (triggered/expected send).
+- **Rationale:** The subject does exactly what a transactional subject should — it tells you precisely what's inside and why it matters right now. Open rate for triggered OTP emails is near-100% by definition; the subject doesn't hurt it.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 5/10**
-- **Signals counted:** Hero (the code) is visible without scrolling; offer is time-bounded with a credible deadline (5 minutes); brand voice is consistent; no friction on opening
-- **Rationale:** There is no CTA button to click, which structurally caps the score. The email accomplishes its goal (show a code) but does nothing to send the user back to where they need to use it.
+- **Score:** 3/10
+- **Signals counted:** Hero content (the code) is visible without scrolling; offer is time-bounded with a credible deadline (5 min); brand voice is consistent and trusted.
+- **Rationale:** There is no CTA to click — that's correct design for this email type. The user's "click" happens off-email, back at the IKEA login screen. Low score reflects rubric inapplicability, not execution failure.
 
 ---
 
@@ -115,84 +118,87 @@ The only marketing lens worth applying here is brand consistency. "Hej" as a gre
 
 - **Subject:** `One-time code to access your IKEA account.`
 - **Length:** 43 chars
-- **Scores (1-10):** Clarity `10`, Curiosity `2`, Personalization `2`, Urgency `6`, Specificity `9`
+- **Scores (1-10):** Clarity `9`, Curiosity `2`, Personalization `1`, Urgency `6`, Specificity `8`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — preview text not visible in render; IKEA likely has no explicit preheader set, meaning inbox clients will pull the first line of body copy ("Enter the below six-digits…"), which is functional but unoptimized
+- **Preview:** `(none visible in render — not shown in screenshot)`
 - **Length:** n/a
-- **Scores (1-10):** Complements subject `3`, Specificity `3`, Clarity `3`, Inbox-fit `2`
+- **Scores (1-10):** Complements subject `n/a`, Specificity `n/a`, Clarity `n/a`, Inbox-fit `n/a`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — IKEA One-Time Code Email
+## Technical Audit: IKEA One-Time Code Email
 
 ### 1. Technical Summary
 
-This is a transactional OTP email, not a commercial marketing message — a distinction that affects CAN-SPAM applicability. Two confirmed HTML bugs (malformed Content-Type charset and relative font URLs) will cause silent failures across most clients; compliance flags from the QA relay are largely expected for transactional mail but warrant documentation.
+This is a transactional OTP/authentication email, not a marketing email — several QA compliance flags are inapplicable to this email class. Two rendering defects (broken relative font paths, blocked external stylesheet) are confirmed in the HTML source.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**External font stylesheet — blocking load**
-```
-<link rel="stylesheet" href="https://www.ikea.com/global/assets/fonts/en/fonts.css">
-```
-Most email clients block external CSS. This load will silently fail in Gmail, Outlook.com, and Apple Mail without fallback impact — the inline `@font-face` declarations serve as the actual fallback, so functional risk is low, but the request is wasted.
-
-**No UTM parameters visible in truncated source.**
-Not applicable for a transactional OTP email — expected.
+**No issues found** in visible source. No tracking pixels or redirect-wrapped links are present in the truncated HTML, consistent with a transactional send. Full source should be verified for any `click.ikea.com` or ESP redirect links.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Bug (confirmed): Malformed `Content-Type` meta tag**
+**[FAIL] Relative font paths will not resolve in any email client.**
+
+```css
+@font-face {
+  src: url(Longproof/Fonts/NotoIKEALatin-Regular.woff) format('woff');
+}
+```
+
+`Longproof/Fonts/` is a relative path with no base URL. Email clients have no document root to resolve against — all four `@font-face` declarations will silently fail. The email will fall back to system fonts.
+
+**[WARN] External stylesheet blocked by major clients.**
+
+```html
+<link rel="stylesheet" href="https://www.ikea.com/global/assets/fonts/en/fonts.css">
+```
+
+Gmail, Outlook.com, and Yahoo strip `<link>` tags entirely. Any styles in that file are not applied for the majority of recipients.
+
+**[INFO] Malformed `Content-Type` meta tag.**
+
 ```html
 <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
 ```
-Missing semicolon — should be `content="text/html; charset=UTF-8"`. Some clients (particularly older Outlook and Lotus Notes variants) may misparse charset and fall back to a default encoding, potentially garbling non-ASCII characters.
 
-**Bug (confirmed): Relative `@font-face` source URLs**
-```css
-src:url(Longproof/Fonts/NotoIKEALatin-Regular.woff) format('woff')
-```
-All four `NotoIKEALatin` declarations use relative paths. Email clients have no base URL to resolve these — all four font loads will silently 404. The fallback chain will engage (system sans-serif), but the failure is unintentional. The base64-inlined `Noto IKEA` declaration lower in the `<style>` block will load correctly; those two families appear to be redundant declarations of the same typeface.
+Missing semicolon — correct form is `text/html; charset=UTF-8`. Most clients tolerate this but it is technically malformed.
 
-**VML namespaces and Outlook conditional comments are present** — Outlook rendering path is covered.
-
-**`lang="en-US"` set on `<html>`** — screen reader language declaration correct.
-
-**`format-detection: telephone=no`** — prevents iOS auto-linking of OTP digits, which is correct behavior for this email type.
+**[INFO] `lang="en-US"` present** — correct for screen reader accessibility.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-HTML source is truncated before the body content; the OTP token itself is not visible in the supplied excerpt. Cannot confirm whether the merge token is correctly substituted or left as a raw placeholder (e.g., `{{otp_code}}`). Verify in a rendered test send that the code renders as a numeric string, not an unresolved token.
+Cannot fully evaluate — HTML is truncated before the OTP code block is visible. Verify that:
+- The one-time code is injected via a server-side merge token, not hardcoded
+- Token has a defined expiry communicated in the body copy
 
 ---
 
-### 5. Compliance (CAN-SPAM / Unsubscribe / Authentication)
+### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
 
-**Transactional classification context:** Under CAN-SPAM, a message whose primary purpose is to provide an access code a user explicitly requested is classified as transactional/relationship content. The unsubscribe and physical address requirements apply to commercial email; they do not apply here. The QA tool's `[FAIL]` and `[WARN]` flags for these fields are false positives for this email type.
+**Context: this is a transactional email.** CAN-SPAM Section 7 exempts transactional messages from the opt-out requirement. The QA `[FAIL] No unsubscribe link` and `[WARN] List-Unsubscribe` findings are **not violations** for an OTP email.
 
-**Authentication — genuinely unknown (QA: `[WARN]`)**
-```
-Authentication-Results header not found: Expected via AgentMail relay — SPF/DKIM status unknown
-```
-This is a real gap in observability, not a false positive. For an account-security email (OTP), SPF/DKIM alignment is critical — a failed or missing DKIM signature increases likelihood of spam folder placement or client security warnings precisely when the user needs to trust the message. Verify DKIM signing is active on `no.reply@ikea.com` and that the AgentMail relay is not stripping the `Authentication-Results` header before capture.
+**[WARN] Physical mailing address** — CAN-SPAM's physical address requirement (15 U.S.C. § 7704(a)(5)) applies to all commercial email, including transactional. If IKEA's physical address is absent from the full email body, this is a real gap.
+
+**[WARN] Authentication-Results not captured** — SPF/DKIM status is unknown through the AgentMail relay. Given that `no.reply@ikea.com` is a high-value domain (phishing target), DMARC alignment should be confirmed separately via `dig TXT _dmarc.ikea.com`.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-Not applicable — OTP emails carry no CTA links to instrument. If the email contains a "Sign in to IKEA" fallback link (common in OTP flows), confirm it carries no UTM parameters (correct — UTMs on security emails corrupt attribution and can appear suspicious to users).
+No UTM parameters expected or needed for an OTP email. Any "visit IKEA" links in the full body should carry at minimum `utm_source=email&utm_medium=transactional` for analytics continuity, but this is not a compliance issue.
 
 ---
 
@@ -200,8 +206,8 @@ Not applicable — OTP emails carry no CTA links to instrument. If the email con
 
 | Priority | Issue | Fix |
 |---|---|---|
-| P1 | Relative `@font-face` URLs silently failing | Convert all four `Longproof/Fonts/NotoIKEALatin-*.woff` paths to absolute `https://` URLs, or remove the redundant declarations entirely since the base64-inlined variant already loads |
-| P1 | DKIM/SPF authentication status unverified | Confirm signing is active; investigate whether AgentMail relay strips `Authentication-Results` before archival |
-| P2 | Malformed Content-Type charset | Change `content="text/html charset=UTF-8"` → `content="text/html; charset=UTF-8"` |
-| P3 | External font CSS load | Remove the `<link rel="stylesheet">` to `fonts.css` — it is blocked by most clients and the inline declarations already handle the font stack |
-| Info | QA compliance FAILs | Flag to QA tool maintainer: unsubscribe/physical-address checks should be suppressed for transactional email classifications |
+| High | Relative font paths break rendering | Convert to absolute CDN URLs or inline as base64 (one font already is — apply consistently) |
+| High | External `<link>` stylesheet stripped | Inline all critical styles; move font-stack fallbacks into the `<style>` block |
+| Medium | Physical address visibility | Confirm IKEA's address appears in full email body; add to footer if absent |
+| Low | Content-Type meta semicolon | `text/html; charset=UTF-8` |
+| Low | DMARC alignment | Verify `_dmarc.ikea.com` TXT record and confirm `p=reject` or `p=quarantine` |
