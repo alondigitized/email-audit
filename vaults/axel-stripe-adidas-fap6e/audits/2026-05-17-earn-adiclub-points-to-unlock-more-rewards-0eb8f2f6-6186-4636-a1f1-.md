@@ -12,75 +12,81 @@ tags: [email, score-7, sender/adidas]
 **Score:** 7/10 · **Type:** Email audit · **2026-05-17**
 ## Executive summary
 
-- This is the second email in adidas's adiClub onboarding sequence — two days after the welcome send on May 15th that confirmed enrollment. Where the welcome email celebrated the unlock, this one shifts to mechanics: how points work, how to earn them, and a 50-point carrot to complete your profile. That's a logical cadence. The progression from celebration → education → action is sound onboarding playbook.
-- The problem is execution. The email asks for a non-trivial behavioral commitment (completing a profile) but never earns it. The 50-point incentive floats in isolation — there's no anchor showing what 50 points is worth, what tier they move you toward, or what you could redeem them for. That makes the CTA feel like a chore rather than a reward. The "HOW ADICLUB POINTS WORK" explainer section adds length without urgency.
-- This email is competent but passive. It educates without converting. A subscriber who was warm from the welcome send is now being handed a homework assignment.
+- This is the second email in adidas's new-member onboarding sequence — the welcome landed May 15 ("Welcome to adiClub! Explore your rewards"), and now two days later comes the activation nudge: complete your profile, earn 50 bonus points. That's a sensible drip cadence and the brief is clear. The email does exactly what it's supposed to do structurally.
+- The problem is execution is flat. The 50-point profile-completion hook — which is the actual action-driver — is buried in the body copy rather than leading the headline. "UNLOCK MORE REWARDS WITH POINTS" reads like a category header, not an offer. A subscriber scanning on mobile will absorb the program education and skip the thing that would actually get them to tap.
+- The "HOW ADICLUB POINTS WORK" mid-section is genuinely useful for a new member, and the three-icon "More Ways to Earn" grid is clean. But the email is functionally two emails jammed together: a behavior activation (complete profile) and a loyalty education primer. Neither gets full weight.
 
 ## What's working
 
-- **Clear visual hierarchy**: "UNLOCK MORE REWARDS WITH POINTS" lands as the hero, the CTA button is prominent and unambiguous.
-- **Logical follow-on from the welcome send**: Fits the onboarding arc cleanly — the May 15th email enrolled you, this one puts you to work.
-- **Three earning modes are concrete**: Make a Purchase (10 pts/$1), Review a Product (50 pts), Stay Active (running app) — each has a specific action and point value.
-- **CTA copy is strong**: "COMPLETE MY PROFILE" is a verb + noun that tells you exactly what happens next.
-- **No render bugs**: Clean layout, no broken images, no overlapping text.
+- **Clean visual hierarchy in the hero** — the adiclub wordmark, large headline, and button stack reads top-to-bottom without confusion.
+- **"COMPLETE MY PROFILE" CTA is specific and action-oriented** — verb + noun, nothing vague.
+- **"More Ways to Earn" grid is scannable** — three rows with icons and concrete point values (10 pts/$1, 50 pts/review, running app) give the member a clear mental model.
+- **No render bugs** — layout holds, images load, text doesn't overlap.
+- **Logical follow-up to the May 15 welcome** — the drip timing (2 days) is appropriate for a triggered onboarding sequence.
 
 ## What's weak
 
-- **The 50-point incentive is unanchored**: "Earn an additional 50 points" means nothing if you don't know what 50 points unlocks. No redemption framing, no tier context.
-- **"Hello," without a name**: The personalization slot is empty — first-name merge is table stakes for a loyalty program email.
-- **No urgency**: The profile-completion offer has no deadline, no scarcity signal. There's zero reason to act today vs. next month.
-- **"SHOP NOW" secondary CTA is orphaned**: It links to no specific category, no featured product — it's a generic escape hatch that dilutes focus.
-- **The explainer section reads like a FAQ insert**: "Level points determine your membership tier" is onboarding copy that belongs in a dedicated program guide, not a conversion email.
+- **"Hello," without a name is a personalization whiff** — adidas clearly has the member's name; skipping it makes this feel like a broadcast blast.
+- **The 50-point offer is hidden in paragraph copy** — the single biggest click-motivator doesn't appear until the third sentence of body text, never surfaces in a callout or visual, and disappears entirely from the CTA.
+- **No urgency anywhere** — the profile-completion incentive has no deadline, so there's zero reason to act now vs. next week.
+- **Headline is a program description, not an offer** — "UNLOCK MORE REWARDS WITH POINTS" could be the section header of a help center article; it doesn't sell anything.
+- **"SHOP NOW" secondary CTA goes nowhere specific** — no category, no product, no current promotion tied to it.
 
 ## Recommendations
 
-- 1. **Anchor the 50 points to something real.** Add a line like "50 points = halfway to your first rewards voucher" or show a progress bar reflecting current standing. This is the single change that would most lift profile-completion rate.
-- 2. **Add the subscriber's first name.** "Hello, [First Name]" → fix the merge token. No excuse for an empty salutation in a CRM with enrollment data.
-- 3. **Put a deadline on the profile bonus.** "Complete by May 31 to claim your 50 bonus points" creates the urgency this email completely lacks.
-- 4. **Cut or collapse the "HOW ADICLUB POINTS WORK" section.** Move it to a dedicated onboarding drip or a link. It adds scroll without advancing the one ask: complete the profile.
-- 5. **Replace the orphaned "SHOP NOW" with a product recommendation seeded by signup data.** If the subscriber indicated a category at enrollment, surface one relevant product. If not, default to bestsellers.
+- 1. **Rewrite the headline around the 50-point hook.** "Complete your profile — grab 50 free points" is a concrete offer. The current headline is a category claim. Swap it.
+- 2. **Add a visual callout for the 50-point offer** — pull it out of body copy into a colored badge or breakout box. New members respond to explicit milestone markers.
+- 3. **Add a soft deadline** — "Offer expires in 7 days" or "Limited-time bonus" beside the CTA. Even a soft deadline doubles urgency without being dishonest.
+- 4. **Personalize the greeting** — "Hello, Alon," is one mail-merge tag away and materially improves perceived relevance.
+- 5. **Make "SHOP NOW" earn its spot** — tie it to a current offer, a category, or remove it entirely rather than pointing to a generic homepage.
 - **Subject Alt A:** `Complete your profile, earn 50 bonus points`
-- **Subject Alt B:** `Your 50 free points are waiting — one step to claim`
-- **Preheader Alt A:** `Takes 2 minutes. Gets you closer to your first reward.`
-- **Preheader Alt B:** `50 points unlock faster. Here's how to grab yours.`
+- **Subject Alt B:** `50 points waiting — finish your adiClub profile`
+- **Preheader Alt A:** `Takes 2 minutes. Points land instantly.`
+- **Preheader Alt B:** `Personalize your experience and get your first reward.`
 
 ## Full review
 ## 1. Overview
 
-This is the second email in adidas's adiClub onboarding sequence — two days after the welcome send on May 15th that confirmed enrollment. Where the welcome email celebrated the unlock, this one shifts to mechanics: how points work, how to earn them, and a 50-point carrot to complete your profile. That's a logical cadence. The progression from celebration → education → action is sound onboarding playbook.
+This is the second email in adidas's new-member onboarding sequence — the welcome landed May 15 ("Welcome to adiClub! Explore your rewards"), and now two days later comes the activation nudge: complete your profile, earn 50 bonus points. That's a sensible drip cadence and the brief is clear. The email does exactly what it's supposed to do structurally.
 
-The problem is execution. The email asks for a non-trivial behavioral commitment (completing a profile) but never earns it. The 50-point incentive floats in isolation — there's no anchor showing what 50 points is worth, what tier they move you toward, or what you could redeem them for. That makes the CTA feel like a chore rather than a reward. The "HOW ADICLUB POINTS WORK" explainer section adds length without urgency.
+The problem is execution is flat. The 50-point profile-completion hook — which is the actual action-driver — is buried in the body copy rather than leading the headline. "UNLOCK MORE REWARDS WITH POINTS" reads like a category header, not an offer. A subscriber scanning on mobile will absorb the program education and skip the thing that would actually get them to tap.
 
-This email is competent but passive. It educates without converting. A subscriber who was warm from the welcome send is now being handed a homework assignment.
+The "HOW ADICLUB POINTS WORK" mid-section is genuinely useful for a new member, and the three-icon "More Ways to Earn" grid is clean. But the email is functionally two emails jammed together: a behavior activation (complete profile) and a loyalty education primer. Neither gets full weight.
+
+---
 
 ## 2. What worked
 
-- **Clear visual hierarchy**: "UNLOCK MORE REWARDS WITH POINTS" lands as the hero, the CTA button is prominent and unambiguous.
-- **Logical follow-on from the welcome send**: Fits the onboarding arc cleanly — the May 15th email enrolled you, this one puts you to work.
-- **Three earning modes are concrete**: Make a Purchase (10 pts/$1), Review a Product (50 pts), Stay Active (running app) — each has a specific action and point value.
-- **CTA copy is strong**: "COMPLETE MY PROFILE" is a verb + noun that tells you exactly what happens next.
-- **No render bugs**: Clean layout, no broken images, no overlapping text.
+- **Clean visual hierarchy in the hero** — the adiclub wordmark, large headline, and button stack reads top-to-bottom without confusion.
+- **"COMPLETE MY PROFILE" CTA is specific and action-oriented** — verb + noun, nothing vague.
+- **"More Ways to Earn" grid is scannable** — three rows with icons and concrete point values (10 pts/$1, 50 pts/review, running app) give the member a clear mental model.
+- **No render bugs** — layout holds, images load, text doesn't overlap.
+- **Logical follow-up to the May 15 welcome** — the drip timing (2 days) is appropriate for a triggered onboarding sequence.
+
+---
 
 ## 3. What didn't
 
-- **The 50-point incentive is unanchored**: "Earn an additional 50 points" means nothing if you don't know what 50 points unlocks. No redemption framing, no tier context.
-- **"Hello," without a name**: The personalization slot is empty — first-name merge is table stakes for a loyalty program email.
-- **No urgency**: The profile-completion offer has no deadline, no scarcity signal. There's zero reason to act today vs. next month.
-- **"SHOP NOW" secondary CTA is orphaned**: It links to no specific category, no featured product — it's a generic escape hatch that dilutes focus.
-- **The explainer section reads like a FAQ insert**: "Level points determine your membership tier" is onboarding copy that belongs in a dedicated program guide, not a conversion email.
+- **"Hello," without a name is a personalization whiff** — adidas clearly has the member's name; skipping it makes this feel like a broadcast blast.
+- **The 50-point offer is hidden in paragraph copy** — the single biggest click-motivator doesn't appear until the third sentence of body text, never surfaces in a callout or visual, and disappears entirely from the CTA.
+- **No urgency anywhere** — the profile-completion incentive has no deadline, so there's zero reason to act now vs. next week.
+- **Headline is a program description, not an offer** — "UNLOCK MORE REWARDS WITH POINTS" could be the section header of a help center article; it doesn't sell anything.
+- **"SHOP NOW" secondary CTA goes nowhere specific** — no category, no product, no current promotion tied to it.
+
+---
 
 ## 4. What I'd change
 
-1. **Anchor the 50 points to something real.** Add a line like "50 points = halfway to your first rewards voucher" or show a progress bar reflecting current standing. This is the single change that would most lift profile-completion rate.
-2. **Add the subscriber's first name.** "Hello, [First Name]" → fix the merge token. No excuse for an empty salutation in a CRM with enrollment data.
-3. **Put a deadline on the profile bonus.** "Complete by May 31 to claim your 50 bonus points" creates the urgency this email completely lacks.
-4. **Cut or collapse the "HOW ADICLUB POINTS WORK" section.** Move it to a dedicated onboarding drip or a link. It adds scroll without advancing the one ask: complete the profile.
-5. **Replace the orphaned "SHOP NOW" with a product recommendation seeded by signup data.** If the subscriber indicated a category at enrollment, surface one relevant product. If not, default to bestsellers.
+1. **Rewrite the headline around the 50-point hook.** "Complete your profile — grab 50 free points" is a concrete offer. The current headline is a category claim. Swap it.
+2. **Add a visual callout for the 50-point offer** — pull it out of body copy into a colored badge or breakout box. New members respond to explicit milestone markers.
+3. **Add a soft deadline** — "Offer expires in 7 days" or "Limited-time bonus" beside the CTA. Even a soft deadline doubles urgency without being dishonest.
+4. **Personalize the greeting** — "Hello, Alon," is one mail-merge tag away and materially improves perceived relevance.
+5. **Make "SHOP NOW" earn its spot** — tie it to a current offer, a category, or remove it entirely rather than pointing to a generic homepage.
 
 - **Subject Alt A:** `Complete your profile, earn 50 bonus points`
-- **Subject Alt B:** `Your 50 free points are waiting — one step to claim`
-- **Preheader Alt A:** `Takes 2 minutes. Gets you closer to your first reward.`
-- **Preheader Alt B:** `50 points unlock faster. Here's how to grab yours.`
+- **Subject Alt B:** `50 points waiting — finish your adiClub profile`
+- **Preheader Alt A:** `Takes 2 minutes. Points land instantly.`
+- **Preheader Alt B:** `Personalize your experience and get your first reward.`
 
 ---
 
@@ -88,131 +94,139 @@ This email is competent but passive. It educates without converting. A subscribe
 
 **7/10**
 
-- Subject/hero explicitly references adiClub (the subscriber's loyalty focus area)
-- Sender (adidas) is recognized and subscribed to
-- Concrete incentive visible: 50 bonus points for profile completion
-- Primary CTA is unambiguous: "COMPLETE MY PROFILE →"
-- Visual hierarchy is clear — headline and CTA land above the fold
-- No render bugs observed
-- Email reflects current onboarding campaign (logical follow-on, not stale)
-
-*(Demographic signals from the lifestyle image are too small to assess clearly; offer lacks a deadline; no loyalty-tier progress context visible)*
+- Sender is a brand I recognize and am subscribed to ✓
+- One concrete offer visible (50 points for profile completion) ✓
+- Primary CTA is unambiguous ("COMPLETE MY PROFILE") ✓
+- Visual hierarchy is clear — hero headline and button read first ✓
+- No render bugs ✓
+- Loyalty / member benefits explicitly visible ✓
+- Offer feels honest — no fine print games, straightforward points mechanic ✓
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
 - **Score:** 6/10
-- **Signals counted:** Sender display name recognizable (adidas), subject is relevant to persona's focus area (adiClub member), subject is concrete enough (mentions points + rewards), subject is under 50 chars (42 chars), no spam signals (no ALL CAPS, no excessive punctuation), preview text appears to be real copy.
-- **Rationale:** adidas is a recognized sender and the subject is directly relevant to a new adiClub member. What it lacks is personalization (no name hint), any time-bounded urgency, and the subject's benefit ("unlock more rewards") is vague enough to feel like every other loyalty nurture ever sent.
+- **Signals counted:** Sender display name recognizable (adidas), subject relevant to persona's focus area (adiClub member), subject under 50 chars (41 chars), no spam signals, cadence feels right (day-2 of triggered welcome series).
+- **Rationale:** A new adiClub member will likely open because it's day 2 and the brand is fresh. But the subject line is generic loyalty-program language with no number, no urgency, and no personalization — a non-new-member would probably defer it.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 5/10
-- **Signals counted:** Hero offer visible without scrolling, CTA in subscriber's focus area (loyalty/profile), CTA copy is specific (verb + noun), brand voice is consistent and trusted, no significant friction in the layout.
-- **Rationale:** The CTA is clear and the layout is clean, but the ask — complete your profile — competes against inertia with no deadline and no tangible reward context. Knowing 50 points exist doesn't tell me what they're worth, which is exactly the motivation gap that kills mid-funnel loyalty emails.
+- **Score:** 6/10
+- **Signals counted:** Hero offer visible without scrolling on mobile, primary CTA in focus area (loyalty profile), CTA copy is specific (verb + noun), brand voice consistent and trusted, no friction / clean render.
+- **Rationale:** "COMPLETE MY PROFILE" is clear and the action is low-effort — that pulls toward the click. But the 50-point incentive isn't surfaced visually above the fold and there's no deadline, so the temptation to "do it later" is strong.
 
 ---
 
 ## 8. Subject
 
 - **Subject:** `Earn adiClub points to unlock more rewards`
-- **Length:** 42 chars
-- **Scores (1-10):** Clarity `7`, Curiosity `4`, Personalization `2`, Urgency `2`, Specificity `5`
+- **Length:** 41 chars
+- **Scores (1-10):** Clarity `7`, Curiosity `3`, Personalization `3`, Urgency `2`, Specificity `4`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — the visible email body opens with a bare "Hello," and no dedicated preheader is set; inbox clients are likely pulling "Hello, As an adiClub member, you can now start earning points…" which repeats the subject's premise rather than extending it.
-- **Length:** ~80 chars (estimated from body fallback)
-- **Scores (1-10):** Complements subject `3`, Specificity `3`, Clarity `5`, Inbox-fit `2`
+- **Preview:** `(not visible in render — likely leaks opening body copy: "Hello, As an adiClub member, you can now start earning points...")`
+- **Length:** ~70 chars estimated
+- **Scores (1-10):** Complements subject `3`, Specificity `3`, Clarity `4`, Inbox-fit `3`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — adidas "Earn adiClub Points" Email
+## Technical Audit — adidas "Earn adiClub points" Email
+
+---
 
 ### 1. Technical Summary
 
-Multiple broken font assets (403s) and HTTP image sources will degrade rendering across clients; a staging image domain leaked into production and an unfilled merge token creates a broken greeting. Compliance headers were not captured by the relay, leaving one-click unsubscribe status unverifiable.
+Standard HTML 4.01 Transitional email with table-based layout and two custom webfonts loaded from an AWS S3 EU bucket. No critical rendering blockers found in the visible source, but several infrastructure and compliance items require confirmation against the full HTML and delivery headers.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**[FAIL] Critical — 1 broken CTA link (403)**
-- "Learn more about points" resolves to `https://go.adidas.com/ihha/kbqustlc?...` and returned 403. This is a live revenue-impacting break on the primary loyalty CTA.
+**Custom font CDN cross-region latency (low severity)**
+All four `@font-face` declarations pull from `s3-eu-west-1.amazonaws.com`:
+```
+https://s3-eu-west-1.amazonaws.com/adidas-adl/foundation/dist/...
+```
+For a US-targeted send, this adds unnecessary round-trip latency on font resolution. Most email clients won't render the font until it resolves or times out. The `mso-font-alt: Arial` fallback is present, which mitigates client-side rendering stalls, but the EU bucket is still suboptimal.
 
-**[WARN] 23 tracking links skipped**
-- Click-redirect domains were not probed. These should be spot-checked manually or via an authenticated probe against `go.adidas.com`.
+**Click-tracking and image-tracking URLs** — *Cannot verify from truncated source.* Full HTML must be checked for:
+- Redirect wrapper domains (e.g. `click.us-news.adidas.com`) using HTTPS
+- Open-tracking pixel (1×1 `<img>`) present and correctly scoped
+- Unsubscribe link click-tracking not stripping the `List-Unsubscribe` header value
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**[FAIL] 8 broken font assets (403)**
-All `@font-face` sources at `s3-eu-west-1.amazonaws.com/adidas-adl/...` return 403. Both weights of `AdihausDIN` and `AdineuePRO` will silently fall back to the declared `mso-font-alt: Arial`. This affects all clients that load external fonts (Gmail Android, Apple Mail, Outlook 365 web).
+**`font-display: swap` in `@font-face`** — Not honored by any major email client; declarative font loading APIs are stripped or ignored by Gmail, Outlook, and Apple Mail. The declaration is harmless but effectively dead code in this context.
 
-**[FAIL] Staging image domain in production**
-Multiple images are served from `image.staging.link.adidas.com` instead of `image.link.adidas.com`:
-- `2373748f-...b.gif` (appears 4×)
-- `18ab33b9-...jpg`, `e75976a4-...jpg`, `ec73d063-...jpg`, `edd36963-...jpg`, `030e5634-...jpg`, `57944e05-...jpg`, `ccad242a-...jpg`, `10c0b56b-...jpg`
+**Duplicate `@media (max-width:639px)` block** — The stylesheet contains two separate `@media screen and (max-width:639px)` blocks. While not invalid CSS, some older email preprocessors and Gmail's CSS inliner may merge these inconsistently. Consolidate into one block.
 
-Staging assets may be behind auth, rate-limited, or purged on environment reset — any of which would silently break those images in production sends.
+**`!important` density** — The mobile block uses `!important` on nearly every rule (expected for email), but the specificity is high enough that any inline-style overrides at the component level will be silently dropped. Flag for QA if any dynamic content modules inject inline styles.
 
-**[WARN] HTTP (non-HTTPS) image sources — 3 instances**
-- `http://image.link.adidas.com/.../b0c011a2-...jpg` ("arrow", referenced twice)
-- `http://image.link.adidas.com/.../37231f63-...gif`
+**Alt text** — *Cannot verify from truncated source.* All `<img>` tags must have non-empty `alt` attributes, especially product and hero images, for screen-reader compliance and image-blocked rendering in Outlook.
 
-Gmail and Outlook proxy images over HTTPS; a mixed-content HTTP source will be blocked or replaced with a broken image icon in strict clients.
-
-**[WARN] 12 images missing `alt` text**
-All staging-domain images and the two HTTP GIFs lack `alt` attributes. Screen readers will skip them entirely; images-off clients will show blank space with no label.
+**Missing `<meta name="viewport">`** — Not visible in the `<head>`. While many ESPs inject this, its absence in source means Outlook Mobile and some Android clients may not trigger the 639px breakpoint correctly.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**[FAIL] Empty greeting — unfilled name token**
-QA detected a greeting rendered as `"Hi ,"` — the first-name merge field was not substituted before send. This is a data-pipeline or send-time rendering failure, not a template authoring issue; the slot exists but the value was empty.
+*Cannot confirm from truncated source.* The HTML must be scanned for:
+- Unfilled tokens in the format `{{first_name}}`, `[FNAME]`, `%FIRST_NAME%`, or ESP-specific syntax
+- Conditional blocks (`%%[ IF ... ]%%` for SFMC or equivalent) that may render incorrectly if segment logic misfired
+- Any hardcoded point balance or tier name that should be a dynamic merge field
 
 ---
 
 ### 5. Compliance
 
-**[WARN] `List-Unsubscribe` header not confirmed**
-Header was not detected by the AgentMail relay. If absent from the raw SMTP envelope, this violates Gmail/Yahoo bulk-sender requirements (enforced for >5 k/day senders). Verify against raw message headers, not the relay capture.
+**Sending domain:** `us-news.adidas.com`
 
-**[WARN] `List-Unsubscribe-Post` (RFC 8058) not confirmed**
-One-click unsubscribe (required by Gmail/Yahoo since Feb 2024 for bulk senders) could not be verified. Same caveat — check raw headers.
+Authentication headers (SPF, DKIM, DMARC) cannot be assessed from HTML source alone — must be pulled from raw email headers (`Authentication-Results` field). Confirm:
+- `dkim=pass` for `us-news.adidas.com` or aligned parent domain `adidas.com`
+- `spf=pass` for the envelope-from domain
+- DMARC policy at `_dmarc.adidas.com` is `p=reject` or `p=quarantine`
 
-**[WARN] `Authentication-Results` header missing from relay capture**
-SPF/DKIM pass/fail status is unknown. The sending domain `us-news.adidas.com` should show a passing DKIM signature aligned to `adidas.com`; confirm via MX Toolbox or raw header inspection.
+**CAN-SPAM footer** — *Cannot verify from truncated source.* Required elements:
+- Physical mailing address of the sender
+- Clear "unsubscribe" mechanism with ≤10-business-day processing commitment
+- Honest subject line (present: "Earn adiClub points to unlock more rewards" — no deception flagged)
+
+**List-Unsubscribe header** — Must be present in SMTP headers as both `mailto:` and `https:` (one-click per RFC 8058) for Gmail/Yahoo bulk sender compliance (enforced for >5k/day senders since Feb 2024).
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-The broken "Learn more about points" CTA (`go.adidas.com/ihha/kbqustlc`) carries `cm_mmc` and `af_*` AppsFlyer attribution params. Because the link itself 403s, attribution is entirely lost for clicks on this send — no UTM data will reach the landing page, and AppsFlyer reengagement will not fire. All other 23 tracked links were skipped and cannot be assessed.
+*Cannot verify from truncated source.* All CTA links must be inspected for:
+- **UTM parameters:** `utm_source=email&utm_medium=email&utm_campaign=adiclub-points` (or equivalent) on every click URL
+- **Consistent campaign slug** across all links in the email — mismatched `utm_campaign` values fragment attribution
+- **Landing page alignment:** The destination page should reference the same offer (adiClub points / rewards tier unlock); a generic PDP or homepage would represent a funnel break
+- **HTTPS enforcement** on all links — no HTTP redirects that could trigger browser security warnings
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Issue | Action |
-|----------|-------|--------|
-| P0 | "Learn more about points" CTA returns 403 | Re-provision the `go.adidas.com` short link before any resend |
-| P0 | Empty `Hi ,` greeting | Audit the name-field extraction step in the send pipeline; add a non-empty guard or fallback (`Hi there,`) |
-| P0 | 8 staging image domains in production HTML | Replace all `image.staging.link.adidas.com` URLs with `image.link.adidas.com` equivalents |
-| P1 | 8 broken font 403s | Re-upload assets to S3 with public-read ACL, or migrate to a CDN with appropriate CORS headers |
-| P1 | 3 HTTP image sources | Upgrade to HTTPS: `http://image.link.adidas.com/...` → `https://image.link.adidas.com/...` |
-| P1 | Missing `List-Unsubscribe` / `List-Unsubscribe-Post` | Confirm headers in raw SMTP envelope; add if absent to maintain Gmail/Yahoo compliance |
-| P2 | 12 images without `alt` text | Add descriptive `alt` to all content images; decorators can use `alt=""` |
-| P2 | DKIM/SPF unverifiable | Pull raw headers from a seed inbox and confirm `Authentication-Results: dkim=pass` aligned to `adidas.com` |
+| Priority | Action |
+|---|---|
+| High | Pull raw headers and verify DKIM, SPF, DMARC pass for `us-news.adidas.com` |
+| High | Confirm `List-Unsubscribe` header includes one-click `https:` method |
+| High | Scan full HTML for unfilled merge tokens before confirming send |
+| Medium | Migrate font assets to a US-region CDN or Akamai/CloudFront endpoint to reduce EU latency |
+| Medium | Consolidate duplicate `@media (max-width:639px)` blocks into one |
+| Medium | Add `<meta name="viewport" content="width=device-width, initial-scale=1">` to `<head>` |
+| Low | Audit all `<img>` alt attributes in full source |
+| Low | Verify UTM params are consistent and present on every click link |
 ## Recent history
 
 - [[2026-05-15-welcome-to-adiclub-explore-your-rewards]] — 9/10 (2026-05-15)
