@@ -13,6 +13,7 @@ import {
   DATE_RANGE_PRESETS,
 } from "./DateRangeSelector";
 import { ChannelSelector, auditMatchesChannel } from "./ChannelSelector";
+import { IndustrySelector, auditMatchesIndustry } from "./IndustrySelector";
 
 // Brand identity comes from the audit row's `from_display_name` (e.g.
 // "Skechers"). Some senders share a display name across orgs (rare),
@@ -27,6 +28,7 @@ function brandKey(label: string): string {
 // values are dropped from the URL so the default state is `/`.
 const PARAM_RANGE = "r";
 const PARAM_CHANNEL = "c";
+const PARAM_INDUSTRY = "i";
 const PARAM_PERSONA = "p";
 const PARAM_BRAND = "b";
 const PARAM_DAY = "d";
@@ -46,6 +48,9 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   const [selectedChannel, setSelectedChannel] = useState<string | null>(
     () => searchParams.get(PARAM_CHANNEL)
   );
+  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(
+    () => searchParams.get(PARAM_INDUSTRY)
+  );
   const [selectedPersona, setSelectedPersona] = useState<string | null>(
     () => searchParams.get(PARAM_PERSONA)
   );
@@ -64,6 +69,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     const next = new URLSearchParams();
     if (selectedRange) next.set(PARAM_RANGE, selectedRange);
     if (selectedChannel) next.set(PARAM_CHANNEL, selectedChannel);
+    if (selectedIndustry) next.set(PARAM_INDUSTRY, selectedIndustry);
     if (selectedPersona) next.set(PARAM_PERSONA, selectedPersona);
     if (selectedBrand) next.set(PARAM_BRAND, selectedBrand);
     if (selectedDate) next.set(PARAM_DAY, selectedDate);
@@ -75,6 +81,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   }, [
     selectedRange,
     selectedChannel,
+    selectedIndustry,
     selectedPersona,
     selectedBrand,
     selectedDate,
@@ -97,21 +104,31 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
     );
   }, [rangeScopedAudits, selectedChannel]);
 
+  // Industry narrows further before persona + brand facet. Picking
+  // "beauty" trims persona / brand dropdowns to just the personas
+  // and brands tagged in beauty.
+  const industryScopedAudits = useMemo(() => {
+    if (!selectedIndustry) return channelScopedAudits;
+    return channelScopedAudits.filter((a) =>
+      auditMatchesIndustry(a, selectedIndustry)
+    );
+  }, [channelScopedAudits, selectedIndustry]);
+
   // Faceted scoping: each filter's dropdown options reflect "what's
   // pickable given every OTHER active filter". So picking brand=DSW
   // narrows the persona dropdown to only personas with DSW audits, and
   // vice-versa. The visible list applies both.
   const personaPool = useMemo(() => {
-    if (!selectedBrand) return channelScopedAudits;
-    return channelScopedAudits.filter(
+    if (!selectedBrand) return industryScopedAudits;
+    return industryScopedAudits.filter(
       (a) => brandKey(a.from_display_name ?? "") === selectedBrand
     );
-  }, [channelScopedAudits, selectedBrand]);
+  }, [industryScopedAudits, selectedBrand]);
 
   const brandPool = useMemo(() => {
-    if (!selectedPersona) return channelScopedAudits;
-    return channelScopedAudits.filter((a) => a.persona === selectedPersona);
-  }, [channelScopedAudits, selectedPersona]);
+    if (!selectedPersona) return industryScopedAudits;
+    return industryScopedAudits.filter((a) => a.persona === selectedPersona);
+  }, [industryScopedAudits, selectedPersona]);
 
   const availablePersonas = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
@@ -151,7 +168,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   }, [brandPool]);
 
   const visibleAudits = useMemo(() => {
-    let list = channelScopedAudits;
+    let list = industryScopedAudits;
     if (selectedPersona) list = list.filter((a) => a.persona === selectedPersona);
     if (selectedBrand) {
       list = list.filter(
@@ -159,7 +176,7 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
       );
     }
     return list;
-  }, [channelScopedAudits, selectedPersona, selectedBrand]);
+  }, [industryScopedAudits, selectedPersona, selectedBrand]);
 
   return (
     <>
@@ -182,6 +199,19 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
           selected={selectedChannel}
           onSelect={(key) => {
             setSelectedChannel(key);
+            setSelectedDate(null);
+          }}
+        />
+        <IndustrySelector
+          audits={channelScopedAudits}
+          selected={selectedIndustry}
+          onSelect={(key) => {
+            setSelectedIndustry(key);
+            // Persona + brand may not survive an industry change;
+            // clear them so the dropdowns repopulate from the new
+            // category scope.
+            setSelectedPersona(null);
+            setSelectedBrand(null);
             setSelectedDate(null);
           }}
         />

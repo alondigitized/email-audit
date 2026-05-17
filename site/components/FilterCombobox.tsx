@@ -81,7 +81,12 @@ export function FilterCombobox({
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs font-semibold uppercase tracking-wide text-muted">
+      {/* The uppercase WHEN/CHANNEL/INDUSTRY/PERSONA/BRAND labels are
+          useful on desktop but eat vertical space on mobile (each filter
+          ends up on its own row). Hide them below sm: so the pills wrap
+          inline as chips; the pill itself already shows "All <thing>"
+          when nothing is selected. */}
+      <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wide text-muted">
         {filterLabel}
       </span>
       <div className="relative" ref={containerRef}>
