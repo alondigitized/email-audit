@@ -1,5 +1,11 @@
 import { inArray, desc, eq, and } from "drizzle-orm";
-import { db, experiences, reactions } from "@/lib/db/client";
+import {
+  db,
+  experiences,
+  reactions,
+  personas,
+  personaTemplates,
+} from "@/lib/db/client";
 import {
   auditDataSchema,
   type AuditData,
@@ -85,7 +91,8 @@ function joinedRowToAuditData(row: {
 
 function toSummary(
   data: AuditData,
-  personaBySlug: Map<string, PersonaRecord>
+  personaBySlug: Map<string, PersonaRecord>,
+  industryBySlug: Map<string, string>
 ): AuditSummary {
   const persona = data.persona ? personaBySlug.get(data.persona) : undefined;
   return {
@@ -103,16 +110,41 @@ function toSummary(
     persona_color: data.persona
       ? personaColor(data.persona, persona?.profile ?? null)
       : null,
+    industry: data.persona ? industryBySlug.get(data.persona) ?? null : null,
     open_likelihood: data.review.predictions?.open_likelihood?.score ?? null,
     click_likelihood: data.review.predictions?.click_likelihood?.score ?? null,
   };
+}
+
+// Build a persona-slug → industry map. Combines:
+//   - persona.industry (set on industry-kind personas directly)
+//   - persona_template.industry (fallback for brand-kind personas)
+// via COALESCE so each persona has a single industry tag for filter UI.
+async function loadIndustryBySlug(): Promise<Map<string, string>> {
+  const rows = await db
+    .select({
+      slug: personas.slug,
+      industry: personas.industry,
+      templateIndustry: personaTemplates.industry,
+    })
+    .from(personas)
+    .leftJoin(
+      personaTemplates,
+      eq(personaTemplates.slug, personas.templateSlug)
+    );
+  const out = new Map<string, string>();
+  for (const r of rows) {
+    const ind = r.industry ?? r.templateIndustry ?? null;
+    if (ind) out.set(r.slug, ind);
+  }
+  return out;
 }
 
 export async function getAuditIndexForUser(
   personaSlugs: string[]
 ): Promise<AuditSummary[]> {
   if (personaSlugs.length === 0) return [];
-  const [rows, allPersonas] = await Promise.all([
+  const [rows, allPersonas, industryBySlug] = await Promise.all([
     db
       .select({
         slug: reactions.slug,
@@ -130,12 +162,13 @@ export async function getAuditIndexForUser(
       .where(inArray(reactions.personaSlug, personaSlugs))
       .orderBy(desc(experiences.receivedAt)),
     getAllPersonas(),
+    loadIndustryBySlug(),
   ]);
   const personaBySlug = new Map(allPersonas.map((p) => [p.slug, p]));
   const out: AuditSummary[] = [];
   for (const r of rows) {
     const data = joinedRowToAuditData(r);
-    if (data) out.push(toSummary(data, personaBySlug));
+    if (data) out.push(toSummary(data, personaBySlug, industryBySlug));
   }
   return out;
 }

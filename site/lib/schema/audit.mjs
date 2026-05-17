@@ -259,6 +259,11 @@ export const auditSummarySchema = z.object({
   persona_name: z.string().nullable().optional(),
   persona_short: z.string().nullable().optional(),
   persona_color: z.string().nullable().optional(),
+  // Industry tag resolved server-side via COALESCE(persona.industry,
+  // persona_template.industry). Surfaces in the audit list filter UI
+  // so users can narrow by category. Nullable for legacy rows that
+  // predate the audit-types refactor.
+  industry: z.string().nullable().optional(),
   open_likelihood: z.number().nullable().optional(),
   click_likelihood: z.number().nullable().optional(),
 });
