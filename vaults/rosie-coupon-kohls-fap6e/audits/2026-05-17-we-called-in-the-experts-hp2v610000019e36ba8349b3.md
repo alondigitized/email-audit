@@ -3,263 +3,233 @@ slug: 2026-05-17-we-called-in-the-experts-hp2v610000019e36ba8349b3
 type: email
 date: 2026-05-17
 persona: rosie-coupon-kohls-fap6e
-score: "7/10"
+score: "8/10"
 sender: Sephora Insider
 subject: WE CALLED IN THE EXPERTS 🤝🏽
-tags: [email, score-7, sender/sephora-insider]
+tags: [email, score-8, sender/sephora-insider]
 ---
 # WE CALLED IN THE EXPERTS 🤝🏽
-**Score:** 7/10 · **Type:** Email audit · **2026-05-17**
+**Score:** 8/10 · **Type:** Email audit · **2026-05-17**
 ## Executive summary
 
-- This is Sephora's "the Chat" editorial newsletter format — a pure content play with no discount, no promo code, and no time-bound offer. Two expert spotlights anchor it: a slow-beauty ritual breakdown from "Cream Alfre" (Eternal Glow founder) and makeup tips from artist Fara Homidi. The Beauty Insider tier bar appears in the footer as a loyalty signal, but there's nothing actionable for a member to redeem.
-- The contrast with the May 14 send — a tight, personalized 10% off welcome email with a hard expiry date — is stark. That one had commercial intent on every pixel. This one is a magazine editorial in email form. It's not bad at what it does, but what it does is build brand affinity, not drive transactions. If the send list is the same promotional list that just got the welcome discount, there's a frequency mismatch: subscribers primed for deals get handed a content piece instead.
-- The ICYMI section about a Warriors Dance Team partnership is the biggest odd note — a regional sports tie-in dropped into a slow-beauty routine email without any thematic bridge. It reads like a leftover from a different send.
+- Sephora's "the Chat" editorial format is on full display here — two well-chosen expert profiles (Crown Affair founder Dianna Cohen on slow-beauty rituals, makeup artist Fara Homidi on technique) with clean visual hierarchy and a consistent luxury-adjacent editorial voice. The content is genuinely good. The execution around *getting people to open it* is where the send falls flat.
+- The subject "WE CALLED IN THE EXPERTS" is all-caps in a way that reads like a shouted sales pitch when the actual content is refined and thoughtful — that's a dissonance that will cost opens. More critically, this lands just three days after the 10% off triggered welcome (May 14), so the cadence is compressing fast. A beauty-curious subscriber who just received a discount welcome email may feel like this is noise rather than signal. Nothing in the body compensates with a member-only hook, early-access angle, or even a product drop — it's pure editorial, which is valid but requires a better subject to earn the open.
+- The email delivers on what it promises once you're inside it. It just doesn't do enough to earn the open in the first place.
 
 ## What's working
 
-- **Dual expert format is well-paced.** Two distinct voices — a founder and a makeup artist — give the email editorial variety without feeling scattered.
-- **Pull-quote layout for the tips is scannable.** The indented quote blocks in the "Romanticize Your Routine" section let a skimmer absorb the advice without reading every word.
-- **Beauty Insider tier bar in footer** reinforces loyalty status and keeps Sephora's ecosystem top of mind even in a no-offer send.
-- **"3 Makeup Tips, 1 Brilliant Artist" section headline** is the strongest copy in the email — specific, confident, and curiosity-generating.
-- **Clean render** — no broken images, no overlapping text, no lorem ipsum visible anywhere.
+- **Expert framing with real quotes** — the Dianna Cohen pullquotes are specific ("I use a lymphatic draining tool and moisturize my body before every shower") and create genuine trust signals for a beauty audience.
+- **Two-section editorial structure** works well — routine tips followed by artist technique tips gives the email logical progression without feeling scattered.
+- **CTA copy is above average** — "BUILD YOUR ZEN ROUTINE+" and "SHE SPILLS MORE HERE+" are verbs-plus-nouns that communicate destination, unlike the generic "Discover More" standard.
+- **Product imagery is contextual** — Crown Affair bottles appear alongside the founder's quotes, which ties editorial credibility directly to shoppable product.
+- **Beauty Insider section maintained** — keeping loyalty program visibility in a content-only email reinforces program membership even without a promotional offer.
 
 ## What's weak
 
-- **Subject is ALL CAPS** — "WE CALLED IN THE EXPERTS" — which reads as a spam/urgency flag and doesn't match the calm, editorial tone of the actual content.
-- **No offer whatsoever** — subscribers who opened expecting a deal (per the cadence from May 8 and May 14) get zero commercial payoff.
-- **"SHE SPILLS MORE HERE+" and "BUILD YOUR ZEN ROUTINE +"** are text links styled as micro-CTAs, not buttons — easy to miss on mobile and low-contrast against the background.
-- **ICYMI / Warriors Dance Team section is tonally disconnected.** A regional sports partnership buried inside a slow-beauty ritual email has no setup and will confuse most readers.
-- **No personalization** — a jarring step down from the "Take 10% off, Rosie" send just three days prior, which used the recipient's first name in the subject.
+- **ALL CAPS subject line** is the most avoidable self-inflicted wound — it signals discount/urgency email when the content is editorial and thoughtful, and triggers spam-signal heuristics.
+- **No member-exclusive hook** — after a 10% off welcome email three days ago, Beauty Insider subscribers have a calibrated expectation. Pure editorial with no loyalty angle feels like a step backward in perceived value.
+- **Preheader/preview text is a logistics mismatch** — the delivery promotion banner at the top of the email is what inbox clients surface as preview text. "Easy Same Day Delivery…" next to "WE CALLED IN THE EXPERTS" tells subscribers nothing about why to open.
+- **ICYMI section is vague and cut-off** — the "new glam stores to celebrity P.E.P. boutique" copy reads as half-finished. It's the weakest section and dilutes the otherwise focused expert narrative.
+- **Cadence compression** — four emails in 17 days (May 1, 8, 14, 17) is reaching fatigue territory, especially when this one has no offer to justify the inbox interruption.
 
 ## Recommendations
 
-- 1. **Fix the subject line casing and specificity.** ALL CAPS is the single biggest open-rate liability here. Drop to title or sentence case and name the experts or the angle.
-- **Subject Alt A:** `Fara Homidi's 3 makeup tips (they're very good)`
-- **Subject Alt B:** `The gua sha founder's morning routine, decoded`
-- 2. **Rewrite the preheader to complement, not repeat.** The top-banner preheader text is too small to read in the render — if it's just "view in browser" junk, fix it immediately.
-- **Preheader Alt A:** `Slow beauty rituals + the makeup finish trick you're probably missing.`
-- **Preheader Alt B:** `Two experts. Five minutes of reading. Dramatically better skin.`
-- 3. **Convert the "+" text links to actual buttons** — at minimum for "Build Your Zen Routine" and "She Spills More Here." Text links on a white background in a narrow column are functionally invisible on mobile.
-- 4. **Cut the ICYMI Warriors block entirely or move it to a dedicated partnership email.** It breaks the beauty-ritual-to-makeup-tips flow and wastes scroll real estate on a non-core message.
-- 5. **Add a soft offer tail.** Even a "Shop the products from this issue" grid with direct product links at the bottom would convert the editorial into a revenue-contributing send without undermining the editorial tone.
+- 1. **Fix the subject — drop the ALL CAPS.** This is the single highest-leverage change. Sentence case or mixed case with a specific expert name would perform better. The handshake emoji tone-inclusion is a smart choice that gets undercut by the shouty caps.
+- **Subject Alt A:** `Dianna Cohen's slow-beauty rituals are inside 🌿`
+- **Subject Alt B:** `The experts weighed in. Here's what they do.`
+- 2. **Rewrite the preheader to match the editorial mood** — pull a specific quote fragment or tease the second content block to create a story arc between subject and preview.
+- **Preheader Alt A:** `Crown Affair's founder shares the ritual she swears by`
+- **Preheader Alt B:** `Slow beauty tips + 3 makeup tricks from a top artist`
+- 3. **Add a single Beauty Insider peg to the top of the email** — even something like "Insider members: these are the products they actually use" creates a reason for a loyalty member to feel this was sent *for* them specifically, not to a general list.
+- 4. **Cut or sharpen the ICYMI section** — as rendered it reads unfinished. Either complete the thought (what's the P.E.P. boutique?), replace it with a third expert voice, or drop it entirely and let the two main sections breathe.
 
 ## Full review
 ## 1. Overview
 
-This is Sephora's "the Chat" editorial newsletter format — a pure content play with no discount, no promo code, and no time-bound offer. Two expert spotlights anchor it: a slow-beauty ritual breakdown from "Cream Alfre" (Eternal Glow founder) and makeup tips from artist Fara Homidi. The Beauty Insider tier bar appears in the footer as a loyalty signal, but there's nothing actionable for a member to redeem.
+Sephora's "the Chat" editorial format is on full display here — two well-chosen expert profiles (Crown Affair founder Dianna Cohen on slow-beauty rituals, makeup artist Fara Homidi on technique) with clean visual hierarchy and a consistent luxury-adjacent editorial voice. The content is genuinely good. The execution around *getting people to open it* is where the send falls flat.
 
-The contrast with the May 14 send — a tight, personalized 10% off welcome email with a hard expiry date — is stark. That one had commercial intent on every pixel. This one is a magazine editorial in email form. It's not bad at what it does, but what it does is build brand affinity, not drive transactions. If the send list is the same promotional list that just got the welcome discount, there's a frequency mismatch: subscribers primed for deals get handed a content piece instead.
+The subject "WE CALLED IN THE EXPERTS" is all-caps in a way that reads like a shouted sales pitch when the actual content is refined and thoughtful — that's a dissonance that will cost opens. More critically, this lands just three days after the 10% off triggered welcome (May 14), so the cadence is compressing fast. A beauty-curious subscriber who just received a discount welcome email may feel like this is noise rather than signal. Nothing in the body compensates with a member-only hook, early-access angle, or even a product drop — it's pure editorial, which is valid but requires a better subject to earn the open.
 
-The ICYMI section about a Warriors Dance Team partnership is the biggest odd note — a regional sports tie-in dropped into a slow-beauty routine email without any thematic bridge. It reads like a leftover from a different send.
+The email delivers on what it promises once you're inside it. It just doesn't do enough to earn the open in the first place.
 
 ---
 
 ## 2. What worked
 
-- **Dual expert format is well-paced.** Two distinct voices — a founder and a makeup artist — give the email editorial variety without feeling scattered.
-- **Pull-quote layout for the tips is scannable.** The indented quote blocks in the "Romanticize Your Routine" section let a skimmer absorb the advice without reading every word.
-- **Beauty Insider tier bar in footer** reinforces loyalty status and keeps Sephora's ecosystem top of mind even in a no-offer send.
-- **"3 Makeup Tips, 1 Brilliant Artist" section headline** is the strongest copy in the email — specific, confident, and curiosity-generating.
-- **Clean render** — no broken images, no overlapping text, no lorem ipsum visible anywhere.
+- **Expert framing with real quotes** — the Dianna Cohen pullquotes are specific ("I use a lymphatic draining tool and moisturize my body before every shower") and create genuine trust signals for a beauty audience.
+- **Two-section editorial structure** works well — routine tips followed by artist technique tips gives the email logical progression without feeling scattered.
+- **CTA copy is above average** — "BUILD YOUR ZEN ROUTINE+" and "SHE SPILLS MORE HERE+" are verbs-plus-nouns that communicate destination, unlike the generic "Discover More" standard.
+- **Product imagery is contextual** — Crown Affair bottles appear alongside the founder's quotes, which ties editorial credibility directly to shoppable product.
+- **Beauty Insider section maintained** — keeping loyalty program visibility in a content-only email reinforces program membership even without a promotional offer.
 
 ---
 
 ## 3. What didn't
 
-- **Subject is ALL CAPS** — "WE CALLED IN THE EXPERTS" — which reads as a spam/urgency flag and doesn't match the calm, editorial tone of the actual content.
-- **No offer whatsoever** — subscribers who opened expecting a deal (per the cadence from May 8 and May 14) get zero commercial payoff.
-- **"SHE SPILLS MORE HERE+" and "BUILD YOUR ZEN ROUTINE +"** are text links styled as micro-CTAs, not buttons — easy to miss on mobile and low-contrast against the background.
-- **ICYMI / Warriors Dance Team section is tonally disconnected.** A regional sports partnership buried inside a slow-beauty ritual email has no setup and will confuse most readers.
-- **No personalization** — a jarring step down from the "Take 10% off, Rosie" send just three days prior, which used the recipient's first name in the subject.
+- **ALL CAPS subject line** is the most avoidable self-inflicted wound — it signals discount/urgency email when the content is editorial and thoughtful, and triggers spam-signal heuristics.
+- **No member-exclusive hook** — after a 10% off welcome email three days ago, Beauty Insider subscribers have a calibrated expectation. Pure editorial with no loyalty angle feels like a step backward in perceived value.
+- **Preheader/preview text is a logistics mismatch** — the delivery promotion banner at the top of the email is what inbox clients surface as preview text. "Easy Same Day Delivery…" next to "WE CALLED IN THE EXPERTS" tells subscribers nothing about why to open.
+- **ICYMI section is vague and cut-off** — the "new glam stores to celebrity P.E.P. boutique" copy reads as half-finished. It's the weakest section and dilutes the otherwise focused expert narrative.
+- **Cadence compression** — four emails in 17 days (May 1, 8, 14, 17) is reaching fatigue territory, especially when this one has no offer to justify the inbox interruption.
 
 ---
 
 ## 4. What I'd change
 
-1. **Fix the subject line casing and specificity.** ALL CAPS is the single biggest open-rate liability here. Drop to title or sentence case and name the experts or the angle.
-   - **Subject Alt A:** `Fara Homidi's 3 makeup tips (they're very good)`
-   - **Subject Alt B:** `The gua sha founder's morning routine, decoded`
+1. **Fix the subject — drop the ALL CAPS.** This is the single highest-leverage change. Sentence case or mixed case with a specific expert name would perform better. The handshake emoji tone-inclusion is a smart choice that gets undercut by the shouty caps.
+   - **Subject Alt A:** `Dianna Cohen's slow-beauty rituals are inside 🌿`
+   - **Subject Alt B:** `The experts weighed in. Here's what they do.`
 
-2. **Rewrite the preheader to complement, not repeat.** The top-banner preheader text is too small to read in the render — if it's just "view in browser" junk, fix it immediately.
-   - **Preheader Alt A:** `Slow beauty rituals + the makeup finish trick you're probably missing.`
-   - **Preheader Alt B:** `Two experts. Five minutes of reading. Dramatically better skin.`
+2. **Rewrite the preheader to match the editorial mood** — pull a specific quote fragment or tease the second content block to create a story arc between subject and preview.
+   - **Preheader Alt A:** `Crown Affair's founder shares the ritual she swears by`
+   - **Preheader Alt B:** `Slow beauty tips + 3 makeup tricks from a top artist`
 
-3. **Convert the "+" text links to actual buttons** — at minimum for "Build Your Zen Routine" and "She Spills More Here." Text links on a white background in a narrow column are functionally invisible on mobile.
+3. **Add a single Beauty Insider peg to the top of the email** — even something like "Insider members: these are the products they actually use" creates a reason for a loyalty member to feel this was sent *for* them specifically, not to a general list.
 
-4. **Cut the ICYMI Warriors block entirely or move it to a dedicated partnership email.** It breaks the beauty-ritual-to-makeup-tips flow and wastes scroll real estate on a non-core message.
-
-5. **Add a soft offer tail.** Even a "Shop the products from this issue" grid with direct product links at the bottom would convert the editorial into a revenue-contributing send without undermining the editorial tone.
+4. **Cut or sharpen the ICYMI section** — as rendered it reads unfinished. Either complete the thought (what's the P.E.P. boutique?), replace it with a third expert voice, or drop it entirely and let the two main sections breathe.
 
 ---
 
 ## 5. Business Impact Score (1-10)
 
-**7/10**
+**8/10**
 
-- ✅ Hero copy explicitly references persona's focus area (beauty routines, makeup technique)
-- ✅ Sender is recognized and subscribed-to (Sephora Beauty Insider)
-- ✅ Visual hierarchy is clear — eye lands on "Romanticize Your Routine" hero first
-- ✅ No render bugs — clean layout throughout
-- ✅ Demographic signals match — beauty-focused content, feminine lifestyle imagery
-- ✅ Email reflects current season/campaign feel (not stale)
-- ✅ Loyalty/member tier bar visible (Insider / VIB / Rouge)
-- ❌ No concrete offer (no %/$ off, no promo code, no free shipping)
-- ❌ Primary CTAs are text links, not unambiguous buttons
-- ❌ No offer to evaluate for honesty/transparency
+- Subject/hero copy references persona focus area (beauty routines, slow-beauty rituals)
+- Sender is recognized (Sephora Beauty Insider)
+- Primary CTA is unambiguous ("BUILD YOUR ZEN ROUTINE+" — direction is clear)
+- Visual hierarchy is clear — hero section dominates, eye lands on "Romanticize Your Routine" first
+- No render bugs — clean render, no overlapping text, no broken images
+- Demographic signals match — beauty-focused imagery, founder/artist profiles aligned to a female beauty audience
+- Beauty Insider loyalty section visible in the email body
+- *Misses:* no concrete offer (no %/$ off, BOGO, free shipping); no current-season/campaign signal; no offer to evaluate for honesty
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
 - **Score:** 5/10
-- **Signals counted:** Sender display name recognizable (Sephora Insider); subject is relevant to persona's focus area (expert beauty advice); subject is under ~50 chars (~27 chars); cadence feels varied (content email after promo, not the 4th identical deal).
-- **Rationale:** The ALL CAPS format is the primary drag — it reads promotional/urgent, which creates a mismatch when the inbox shows no concrete deal. "WE CALLED IN THE EXPERTS" is also vague; it doesn't tell you which experts, in what domain, or why today. The May 14 "Take 10% off, Rosie" had a name and a number; this has neither.
+- **Signals counted:** Sender display name recognizable ("Sephora Insider"); subject relevant to persona's focus area (beauty expertise); preview text is real copy (not unsubscribe junk); subject is under ~50 chars (25 text chars)
+- **Rationale:** The recognizable sender and short subject length get baseline credit, but the ALL CAPS subject triggers a spam/urgency-email heuristic that conflicts with the editorial tone, the preheader leaks a logistics promotion instead of complementing the content, there's no personalization, no urgency, and the cadence is compressed at 4 sends in 17 days.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Hero content visible early without heavy scrolling; CTAs are in the right category (beauty routines, makeup); CTA copy is directional ("BUILD YOUR ZEN ROUTINE"); expert quotes function as social proof; brand voice is consistent and trusted; no friction/broken image gaps.
-- **Rationale:** The expert tips are genuinely useful and the pull-quote format creates enough curiosity to want more — but the text-link CTAs, absence of product anchoring, and no pricing signal mean a click requires editorial interest, not purchase intent. Curious readers click; deal hunters bounce.
+- **Score:** 7/10
+- **Signals counted:** Primary CTA in persona's category (beauty routines); CTA copy is specific (verb + noun: "BUILD YOUR ZEN ROUTINE"); one specific hero product collection linked (Crown Affair); social proof / expert credibility visible (founder quotes with attribution); brand voice is consistent and trusted; no friction in the render
+- **Rationale:** For a reader who opened, the content is genuinely compelling — real expert quotes, product images tied to specific rituals, and two distinct CTA destinations. The lack of any price signal or time-bound offer is the main click inhibitor for a user in browse-vs-buy mode.
 
 ---
 
 ## 8. Subject
 
 - **Subject:** `WE CALLED IN THE EXPERTS 🤝🏽`
-- **Length:** 27 characters (including emoji)
-- **Scores (1-10):** Clarity `3`, Curiosity `5`, Personalization `1`, Urgency `1`, Specificity `2`
+- **Length:** 28 chars (including emoji)
+- **Scores (1-10):** Clarity `5`, Curiosity `5`, Personalization `1`, Urgency `1`, Specificity `3`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(unable to read from rendered image — top-banner text is too small to resolve)`
-- **Length:** unknown
-- **Scores (1-10):** Complements subject `—`, Specificity `—`, Clarity `—`, Inbox-fit `—`
+- **Preview:** `(none / leaking junk)` — the first visible text in the email is a same-day delivery promotional banner, which is what inbox clients will surface as preview copy. No dedicated preheader was set for this send.
+- **Length:** ~35 chars estimated for the delivery promo fragment
+- **Scores (1-10):** Complements subject `1`, Specificity `2`, Clarity `4`, Inbox-fit `1`
 
 ---
 
 ## Technical Audit
 
-Looking at the HTML source, I'll perform the technical audit now.
-
----
-
 ## Technical Audit — Sephora "WE CALLED IN THE EXPERTS" Email
-
-**From:** shop@beauty.sephora.com  
-**Date:** 2026-05-17  
-**Source:** Truncated HTML (full body not available — link/tracking and compliance sections are limited accordingly)
 
 ---
 
 ### 1. Technical Summary
 
-The email uses a well-worn XHTML 1.0 Transitional / table-based skeleton with extensive Outlook/Apple Mail compatibility shims. Two confirmed bugs in the `<head>` — a malformed robots directive and a viewport zoom lock — are the most actionable issues in the visible source; the truncated body prevents full link and compliance verification.
+Standard XHTML 1.0 Transitional email structure with VML/Outlook namespaces and a comprehensive CSS reset. HTML source is truncated mid-document, which limits full audit coverage — the link inventory, unsubscribe footer, and image alt attributes cannot be fully verified from what was provided.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**Inconclusive — source truncated before `<body>` link markup.**
+**Cannot fully audit** — source is cut off before any `<a href>` tags appear. Flag for verification:
+- Confirm all CTAs use consistent UTM parameters (`utm_source=email&utm_medium=email&utm_campaign=...`)
+- Check that redirect/tracking wrapper URLs resolve correctly and don't produce redirect chains >2 hops
 
-Cannot confirm or deny:
-- UTM parameter presence on CTA links
-- Redirect/click-tracking wrapper (e.g. `r.sephora.com` or ESP redirect domain)
-- Tracking pixel `<img>` src and dimensions
-
-Flag for full-source re-run.
+No confirmed link issues from visible source.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Issue 1 — `maximum-scale=1` blocks pinch-zoom (WCAG 1.4.4 violation)**
-
+**Issue — `robots` meta value has a whitespace typo:**
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="robots" content="no index" />
 ```
+Correct value is `noindex` (no space). Functionally harmless in email clients (they don't crawl), but sloppy and would break if the document were ever indexed by a webmail proxy.
 
-`maximum-scale=1` prevents users from zooming on mobile. WCAG 1.4.4 (Resize Text, AA) requires text to be resizable up to 200% without loss of content or functionality. iOS 10+ ignores this for Safari, but Android WebView and many email-rendered webviews enforce it.
+**Issue — `text-size-adjust: none` applied globally:**
+```css
+div, a, tr, table, body, span, img, strong, td {
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+}
+```
+Preventing all user-initiated text scaling is an accessibility failure. WCAG 1.4.4 (Resize Text) requires text to be resizable up to 200% without loss of content. Using `none` (rather than `100%`) is the more aggressive form and breaks browser-level text scaling in webmail contexts.
 
-**Issue 2 — Missing `lang` attribute on `<html>`**
-
+**Issue — no `lang` attribute on `<html>` tag:**
 ```html
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="..." xmlns:o="...">
 ```
+`lang="en"` is absent. Screen readers and translation engines rely on this. CAN-SPAM doesn't require it, but WCAG 3.1.1 does.
 
-No `lang="en"` (or locale-appropriate value). Screen readers cannot infer the document language, causing incorrect pronunciation. Required by WCAG 3.1.1.
-
-**Issue 3 — Duplicate `.appear` rule block**
-
-In the `@media only screen and (max-width: 480px)` block, the `.appear` selector is defined twice with identical declarations:
-
-```css
-*[class=appear], .appear { display: block !important; ... }  /* first instance */
-*[class=appear], .appear { display: block!important; display: table!important; }  /* second instance */
-```
-
-The second block wins, but this is dead weight and increases payload. Minor, but confirms the stylesheet was assembled by concatenation without deduplication.
-
-**Issue 4 — `th { font-weight: normal !important; }` strips semantic weight**
-
-Overriding table header font weight is a common email reset, but `!important` makes it unrecoverable downstream. If any `<th>` is used for structural/accessible labeling, the visual flattening may confuse screen readers that rely on bold cues. Confirm whether `<th>` elements appear in the body with `role="presentation"` or scope attributes.
+**Cannot verify** — `alt` attributes on `<img>` tags are not in the visible portion of the source.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**Inconclusive — body truncated.**
-
-No merge tokens visible in `<head>`. Cannot confirm whether recipient name, Insider tier, or offer personalization tokens are present and properly escaped in the body. Flag for full-source check — unrendered tokens (e.g. `{{first_name}}`, `*|FNAME|*`) appearing in sent mail are a deliverability and trust signal risk.
+No merge tokens (`{{first_name}}`, `%%FNAME%%`, `[fname]`, etc.) are visible in the truncated source. This is consistent with a broadcast send, but verify that no unresolved tokens appear in the footer or subject line. Subject line emoji (`🤝🏽`) renders as a skin-tone modifier sequence — confirm it renders correctly across Gmail, Apple Mail, and Outlook Web.
 
 ---
 
 ### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
 
-**Inconclusive for CAN-SPAM body requirements — source truncated.**
+**Cannot verify from truncated source:**
+- Physical mailing address (required by CAN-SPAM §5(a)(5))
+- Unsubscribe link and one-click list-unsubscribe header (RFC 8058 / Google/Yahoo sender requirements)
+- `List-Unsubscribe-Post: List-Unsubscribe=One-Click` header
 
-Cannot confirm from available HTML:
-- Physical mailing address present (required, CAN-SPAM §5(a)(5))
-- One-click unsubscribe link present and functional
-- "Advertisement" or commercial disclosure labeling
+**Cannot verify from HTML alone (requires raw email headers):**
+- DKIM signature present and passing for `beauty.sephora.com`
+- SPF alignment for `shop@beauty.sephora.com`
+- DMARC policy (`p=reject` or `p=quarantine`) on `sephora.com`
 
-**Issue 5 — Malformed robots meta directive**
-
-```html
-<meta name="robots" content="no index" />
-```
-
-`no index` with a space is not a valid robots directive token. The correct value is `noindex` (one word). While robots meta tags have limited effect in email clients, this fires if the email is mirrored/archived to a public URL (a common ESP feature). An incorrectly formed directive may be ignored by crawlers, exposing archived versions to indexing.
-
-**Authentication headers** (DKIM, SPF, DMARC) are not inspectable from HTML source — require raw message headers. Not evaluated here.
+Sender domain `beauty.sephora.com` is a subdomain — confirm the DMARC record on the organizational domain (`sephora.com`) covers it via relaxed alignment.
 
 ---
 
-### 6. Email-to-Site Continuity (UTM Params, Landing Page Alignment)
+### 6. Email-to-Site Continuity (UTM / Landing Page)
 
-**Inconclusive — links not present in truncated source.**
-
-Cannot verify:
-- UTM `utm_source`, `utm_medium`, `utm_campaign` on outbound CTA hrefs
-- Consistency between subject line ("experts" framing) and landing page headline
-- Whether Sephora's tracking redirect domain matches DKIM-signed sending domain (cross-domain redirect can break click attribution)
+**Cannot audit** — no `href` values are present in the visible HTML. When the full source is available, verify:
+- `utm_source`, `utm_medium`, `utm_campaign`, and `utm_content` are present on all CTAs
+- `utm_content` differentiates creative sections (e.g., hero CTA vs. product grid vs. footer CTA) for click attribution
+- Landing pages do not redirect to a generic homepage (common with seasonal campaigns)
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Issue | Action |
-|---|---|---|
-| High | `maximum-scale=1` viewport lock | Remove `maximum-scale=1` from viewport meta |
-| High | Missing `lang` attribute | Add `lang="en"` (or locale code) to `<html>` tag |
-| Medium | Malformed `no index` robots directive | Change to `content="noindex"` |
-| Low | Duplicate `.appear` CSS block | Deduplicate in stylesheet build step |
-| Low | `th` font-weight override | Confirm no accessible `<th>` labels are visually flattened |
-| — | Full source needed | Re-run audit with complete HTML to cover links, UTM params, unsubscribe, and merge tokens |
+| Priority | Item |
+|---|---|
+| High | Audit full source for unresolved merge tokens and confirm unsubscribe footer and physical address are present |
+| High | Fix `text-size-adjust: none` → `text-size-adjust: 100%` to restore accessibility-compliant text scaling |
+| High | Verify one-click List-Unsubscribe header (`List-Unsubscribe-Post`) is present — required by Gmail/Yahoo for bulk senders since Feb 2024 |
+| Medium | Add `lang="en"` to `<html>` tag |
+| Medium | Confirm all image tags carry descriptive `alt` text |
+| Low | Fix `robots` meta: `"no index"` → `"noindex"` |
+| Low | Verify DMARC relaxed alignment covers `beauty.sephora.com` subdomain |
 ## Recent history
 
 - [[2026-05-17-extra-15-off-kohl-s-cash-better-hurry-f8dc6a41-a573-44fb-9824-]] — 8/10 (2026-05-17)
