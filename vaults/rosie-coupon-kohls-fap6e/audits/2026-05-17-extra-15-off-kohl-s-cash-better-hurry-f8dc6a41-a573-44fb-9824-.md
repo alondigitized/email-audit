@@ -3,137 +3,136 @@ slug: 2026-05-17-extra-15-off-kohl-s-cash-better-hurry-f8dc6a41-a573-44fb-9824-
 type: email
 date: 2026-05-17
 persona: rosie-coupon-kohls-fap6e
-score: "7/10"
+score: "8/10"
 sender: Kohl’s
 subject: "Extra 15% off + Kohl's Cash? Better hurry 🏃‍♀️‍➡️"
-tags: [email, score-7, sender/kohl-s]
+tags: [email, score-8, sender/kohl-s]
 ---
 # Extra 15% off + Kohl's Cash? Better hurry 🏃‍♀️‍➡️
-**Score:** 7/10 · **Type:** Email audit · **2026-05-17**
+**Score:** 8/10 · **Type:** Email audit · **2026-05-17**
 ## Executive summary
 
-- This is a textbook Kohl's kitchen-sink blast: women's fashion, kids' tops, Birkenstock footwear, Samsonite luggage, and a cleaning-brand module all packed into a single scroll, layered with three discount mechanisms (a 50% offer, a 20% extra coupon, a 15% coupon) plus a Kohl's Cash earn push. The subject — "Extra 15% off + Kohl's Cash? Better hurry" — is functionally competent, but it's almost structurally identical to the May 15 send ("Save 15% | Affordable activewear + Kohl's Cash… win-win"). Any subscriber who opened that email three days ago will feel pure déjà vu from the inbox.
-- The visual execution has no obvious render bugs, but the layout has no hierarchy. Every module — graphic tee at $17.99, Birkenstocks at $24.99, a luggage brand, a cleaning brand, three barcoded coupons — competes at equal visual weight. There is no single hero moment.
-- The Kohl's Cash earn mechanic ("TODAY ONLY") is the sharpest and most time-sensitive offer in the email. It's buried three scrolls deep. That is the core structural problem.
+- This is the seventh Kohl's email in ten days, and the formula is showing its seams. The subject line does its job — "Extra 15% off + Kohl's Cash? Better hurry" names a specific discount, a loyalty mechanic, and urgency in one breath — but the body completely fails to deliver on that promise immediately. The 15% coupon with its barcode is buried at the very bottom of a long scroll past apparel, a Samsonite luggage drop, a layered 50%/20% section, and more. A subscriber who opens specifically for the coupon has to hunt for it.
+- The deeper problem is three stacked discount levels: 50% off select items, an extra 20% TODAY ONLY, and the extra 15% coupon. No single offer owns the send. Compare this to the 5/15 activewear send — which scored a 9 precisely because it had a tight spine (one category + one discount + one mechanic) — and the incoherence here is obvious. The Samsonite insertion makes it worse; "Travel has never looked so good" has nothing to do with "Styles that will never see the back of the closet."
+- The email executes cleanly at a technical level, and real starting prices on individual items ($7.99 tees, $17.99 cargo shorts, $24.99 Birkenstocks) give the product grid some bite. But this is the fourth near-identical 15%-off blast this week, and cadence fatigue is doing real damage to open and click intent.
 
 ## What's working
 
-- **Subject efficiency**: Under 50 chars, names two concrete benefits, adds a credible urgency nudge without exclamation spam.
-- **Birkenstock callout is strong**: Name-brand sandals from $24.99 (with coupon, from $49.99–$89.99) is a compelling single-product deal that could carry a click on its own.
-- **Kohl's Cash earn is clearly framed**: "$10 Kohl's Cash for every $50 spent — TODAY ONLY" is the most motivating mechanic in the email, with a specific earn threshold and a real deadline.
-- **Clean render**: No broken images, no overlapping text, no empty placeholder blocks visible.
-- **Concrete starting-at pricing**: The coupon-applied prices ($17.99 graphic tee, $24.99 Birkenstocks) give the deals something to anchor on.
+- Subject line is efficient: specific %, loyalty mechanic, and urgency in ~44 characters.
+- Real starting prices visible on every product card — not just "up to X% off" vagueness.
+- Kohl's Cash earning language appears early, above the first product grid.
+- "TODAY ONLY" urgency badge on the extra 20% section creates a credible time-bound hook.
+- Email renders cleanly — no broken images, no layout breaks, no placeholder text.
 
 ## What's weak
 
-- **Cadence déjà vu**: Fourth structurally similar 15%-off Kohl's email in seven days (May 11, 14, 15, 17). The subject pattern is nearly identical to May 15. Repeat-openers will feel trained to skim-and-ignore.
-- **No visual hierarchy**: Five product categories, three discount mechanisms, and a loyalty earn push all share the same visual weight. The eye has no obvious landing spot.
-- **"Shop Now" everywhere**: Every single module ends with the identical CTA. None are category-specific. The generic verb reduces click intent across the board.
-- **Kohl's Cash earn is buried**: The most urgent, differentiated offer in the email — earn $10 TODAY ONLY — is three scrolls below the fold. It should lead.
-- **Cleaning/home module kills the spine**: "Dirt happens. Overpaying doesn't have to." breaks whatever summer-style narrative the email was building and feels like a leftover from a different brief.
+- The headline offer (15% coupon with barcode) is at the very bottom — the subject promises it, the body hides it.
+- Three simultaneous discount mechanisms (50% off + extra 20% TODAY ONLY + extra 15% coupon) compete and confuse rather than reinforce.
+- Samsonite luggage section is a visible vendor insertion that breaks the fashion narrative entirely.
+- No personalization of any kind — no name, no category preference, no "based on your history" hook.
+- Seventh 15%-off send in ~10 days; the cadence is fatiguing and this coupon is nearly indistinguishable from the prior three sends.
 
 ## Recommendations
 
-- 1. **Move Kohl's Cash earn to the hero module**: "Earn $10 Kohl's Cash TODAY ONLY when you spend $50" is the single strongest call-to-action urgency driver. It should sit above the product grid, not below three coupons.
-- 2. **Pick two product categories and cut the rest**: The Samsonite module and the cleaning brand dilute the send. A fashion + footwear focus (tee + Birkenstocks) would be coherent and scannable.
-- 3. **Differentiate CTA copy per module**: "Shop Birkenstocks," "Shop Graphic Tees," "Shop Luggage" — any specificity beats six identical "Shop Now" buttons.
-- 4. **Rest the 15%-off subject pattern for one send**: Four near-identical hooks in a week trains subscribers to discount the urgency. Rotate the frame, not just the category.
-- 5. **Reclaim the preheader**: The first visible copy in the render is nav links, which are almost certainly leaking into the inbox preview. Write an intentional preheader that reinforces the TODAY ONLY Kohl's Cash urgency.
-- **Subject Alt A:** `Earn $10 Kohl's Cash today — plus extra 15% off`
-- **Subject Alt B:** `Today only: Kohl's Cash + summer styles from $17.99`
-- **Preheader Alt A:** `Spend $50, earn $10 Kohl's Cash. Offer ends tonight.`
-- **Preheader Alt B:** `Birkenstocks from $24.99 • graphic tees from $17.99 • today only.`
+- 1. **Surface the 15% coupon above the fold.** If it's leading the subject line, it needs to be the first thing a reader sees — not the seventh module in a long scroll. Move the barcode block to immediately below the header.
+- 2. **Collapse to one discount mechanic.** 50% + extra 20% + extra 15% is three different offers fighting each other. Pick the sharpest hook (probably the "TODAY ONLY" extra 20%) and let the other offers breathe below it as secondary.
+- 3. **Cut or separate the Samsonite section.** It belongs in a travel or summer prep send, not a fashion narrative. Its presence signals editorial sloppiness to a savvy subscriber.
+- 4. **Add an explicit coupon expiration date in large type.** The barcode is visible but the deadline isn't prominent — the urgency created in the subject gets no payoff in the coupon block itself.
+- **Subject Alt A:** `Extra 15% off ends tonight — coupon inside`
+- **Subject Alt B:** `Today only: stack 20% extra on Kohl's Cash deals`
+- **Preheader Alt A:** `Shorts, sandals, and your barcode — scroll to the bottom. Or don't: it's at the top this time.`
+- **Preheader Alt B:** `$7.99 tees, $24.99 Birkenstocks, and $10 Kohl's Cash on every $50 spent.`
 
 ## Full review
 ## 1. Overview
 
-This is a textbook Kohl's kitchen-sink blast: women's fashion, kids' tops, Birkenstock footwear, Samsonite luggage, and a cleaning-brand module all packed into a single scroll, layered with three discount mechanisms (a 50% offer, a 20% extra coupon, a 15% coupon) plus a Kohl's Cash earn push. The subject — "Extra 15% off + Kohl's Cash? Better hurry" — is functionally competent, but it's almost structurally identical to the May 15 send ("Save 15% | Affordable activewear + Kohl's Cash… win-win"). Any subscriber who opened that email three days ago will feel pure déjà vu from the inbox.
+This is the seventh Kohl's email in ten days, and the formula is showing its seams. The subject line does its job — "Extra 15% off + Kohl's Cash? Better hurry" names a specific discount, a loyalty mechanic, and urgency in one breath — but the body completely fails to deliver on that promise immediately. The 15% coupon with its barcode is buried at the very bottom of a long scroll past apparel, a Samsonite luggage drop, a layered 50%/20% section, and more. A subscriber who opens specifically for the coupon has to hunt for it.
 
-The visual execution has no obvious render bugs, but the layout has no hierarchy. Every module — graphic tee at $17.99, Birkenstocks at $24.99, a luggage brand, a cleaning brand, three barcoded coupons — competes at equal visual weight. There is no single hero moment.
+The deeper problem is three stacked discount levels: 50% off select items, an extra 20% TODAY ONLY, and the extra 15% coupon. No single offer owns the send. Compare this to the 5/15 activewear send — which scored a 9 precisely because it had a tight spine (one category + one discount + one mechanic) — and the incoherence here is obvious. The Samsonite insertion makes it worse; "Travel has never looked so good" has nothing to do with "Styles that will never see the back of the closet."
 
-The Kohl's Cash earn mechanic ("TODAY ONLY") is the sharpest and most time-sensitive offer in the email. It's buried three scrolls deep. That is the core structural problem.
+The email executes cleanly at a technical level, and real starting prices on individual items ($7.99 tees, $17.99 cargo shorts, $24.99 Birkenstocks) give the product grid some bite. But this is the fourth near-identical 15%-off blast this week, and cadence fatigue is doing real damage to open and click intent.
 
 ---
 
 ## 2. What worked
 
-- **Subject efficiency**: Under 50 chars, names two concrete benefits, adds a credible urgency nudge without exclamation spam.
-- **Birkenstock callout is strong**: Name-brand sandals from $24.99 (with coupon, from $49.99–$89.99) is a compelling single-product deal that could carry a click on its own.
-- **Kohl's Cash earn is clearly framed**: "$10 Kohl's Cash for every $50 spent — TODAY ONLY" is the most motivating mechanic in the email, with a specific earn threshold and a real deadline.
-- **Clean render**: No broken images, no overlapping text, no empty placeholder blocks visible.
-- **Concrete starting-at pricing**: The coupon-applied prices ($17.99 graphic tee, $24.99 Birkenstocks) give the deals something to anchor on.
+- Subject line is efficient: specific %, loyalty mechanic, and urgency in ~44 characters.
+- Real starting prices visible on every product card — not just "up to X% off" vagueness.
+- Kohl's Cash earning language appears early, above the first product grid.
+- "TODAY ONLY" urgency badge on the extra 20% section creates a credible time-bound hook.
+- Email renders cleanly — no broken images, no layout breaks, no placeholder text.
 
 ---
 
 ## 3. What didn't
 
-- **Cadence déjà vu**: Fourth structurally similar 15%-off Kohl's email in seven days (May 11, 14, 15, 17). The subject pattern is nearly identical to May 15. Repeat-openers will feel trained to skim-and-ignore.
-- **No visual hierarchy**: Five product categories, three discount mechanisms, and a loyalty earn push all share the same visual weight. The eye has no obvious landing spot.
-- **"Shop Now" everywhere**: Every single module ends with the identical CTA. None are category-specific. The generic verb reduces click intent across the board.
-- **Kohl's Cash earn is buried**: The most urgent, differentiated offer in the email — earn $10 TODAY ONLY — is three scrolls below the fold. It should lead.
-- **Cleaning/home module kills the spine**: "Dirt happens. Overpaying doesn't have to." breaks whatever summer-style narrative the email was building and feels like a leftover from a different brief.
+- The headline offer (15% coupon with barcode) is at the very bottom — the subject promises it, the body hides it.
+- Three simultaneous discount mechanisms (50% off + extra 20% TODAY ONLY + extra 15% coupon) compete and confuse rather than reinforce.
+- Samsonite luggage section is a visible vendor insertion that breaks the fashion narrative entirely.
+- No personalization of any kind — no name, no category preference, no "based on your history" hook.
+- Seventh 15%-off send in ~10 days; the cadence is fatiguing and this coupon is nearly indistinguishable from the prior three sends.
 
 ---
 
 ## 4. What I'd change
 
-1. **Move Kohl's Cash earn to the hero module**: "Earn $10 Kohl's Cash TODAY ONLY when you spend $50" is the single strongest call-to-action urgency driver. It should sit above the product grid, not below three coupons.
-2. **Pick two product categories and cut the rest**: The Samsonite module and the cleaning brand dilute the send. A fashion + footwear focus (tee + Birkenstocks) would be coherent and scannable.
-3. **Differentiate CTA copy per module**: "Shop Birkenstocks," "Shop Graphic Tees," "Shop Luggage" — any specificity beats six identical "Shop Now" buttons.
-4. **Rest the 15%-off subject pattern for one send**: Four near-identical hooks in a week trains subscribers to discount the urgency. Rotate the frame, not just the category.
-5. **Reclaim the preheader**: The first visible copy in the render is nav links, which are almost certainly leaking into the inbox preview. Write an intentional preheader that reinforces the TODAY ONLY Kohl's Cash urgency.
+1. **Surface the 15% coupon above the fold.** If it's leading the subject line, it needs to be the first thing a reader sees — not the seventh module in a long scroll. Move the barcode block to immediately below the header.
+2. **Collapse to one discount mechanic.** 50% + extra 20% + extra 15% is three different offers fighting each other. Pick the sharpest hook (probably the "TODAY ONLY" extra 20%) and let the other offers breathe below it as secondary.
+3. **Cut or separate the Samsonite section.** It belongs in a travel or summer prep send, not a fashion narrative. Its presence signals editorial sloppiness to a savvy subscriber.
+4. **Add an explicit coupon expiration date in large type.** The barcode is visible but the deadline isn't prominent — the urgency created in the subject gets no payoff in the coupon block itself.
 
-- **Subject Alt A:** `Earn $10 Kohl's Cash today — plus extra 15% off`
-- **Subject Alt B:** `Today only: Kohl's Cash + summer styles from $17.99`
-- **Preheader Alt A:** `Spend $50, earn $10 Kohl's Cash. Offer ends tonight.`
-- **Preheader Alt B:** `Birkenstocks from $24.99 • graphic tees from $17.99 • today only.`
+- **Subject Alt A:** `Extra 15% off ends tonight — coupon inside`
+- **Subject Alt B:** `Today only: stack 20% extra on Kohl's Cash deals`
+- **Preheader Alt A:** `Shorts, sandals, and your barcode — scroll to the bottom. Or don't: it's at the top this time.`
+- **Preheader Alt B:** `$7.99 tees, $24.99 Birkenstocks, and $10 Kohl's Cash on every $50 spent.`
 
 ---
 
 ## 5. Business Impact Score (1-10)
 
-**7/10**
+**8/10**
 
-- Sender is a brand you recognize / are subscribed to ✓
-- One concrete offer is visible (15% off, 20% extra, 50% offer, Kohl's Cash earn) ✓
-- Primary CTA is unambiguous (multiple "Shop Now" buttons throughout) ✓
-- No render bugs ✓
-- Email reflects current campaign / season (summer styles, TODAY ONLY deadline) ✓
-- Loyalty / member benefits visible (Kohl's Cash earn mechanic with threshold) ✓
+- Subject/hero references a deal-seeker's focus area (extra %, loyalty cash)
+- Sender (Kohl's) is immediately recognizable
+- Concrete offer visible: 15% coupon with barcode
+- Primary CTA unambiguous: "Shop Now" buttons throughout
+- No render bugs: email displays cleanly
+- Content reflects current summer season (shorts, sandals, lightweight tees)
+- Loyalty/member benefit (Kohl's Cash) is visible early
 
-*(6 criteria TRUE → 1 + 6 = 7)*
+*Not scored: visual hierarchy (cluttered, no dominant offer); demographic targeting (generic multi-demo); offer honesty (three stacked discounts read as bait-and-switch-adjacent)*
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Sender display name recognizable; Subject is concrete (% off + loyalty mechanic named); Subject is relevant to deal-seeker persona; Subject is under ~50 chars; No spam signals (no ALL CAPS, no !!! stacking).
-- **Rationale:** Five clean signals in the subject line, but cadence kills a sixth — this is the fourth structurally near-identical 15%-off Kohl's send in seven days. A subscriber who opened the May 15 "activewear + Kohl's Cash" email will recognize the template and may not bother.
+- **Score:** 7/10
+- **Signals counted:** Sender display name recognizable; subject is concrete (specific % + loyalty mechanic); subject is relevant to deal-seeker persona; subject is under ~50 characters; no spam signals; time-bounded urgency ("Better hurry")
+- **Rationale:** The subject line is tight and clear — it's doing most of the work here. What drags the score down is the high-frequency cadence (7th send in 10 days) and no preview text differentiation; a loyal subscriber's inbox is saturated with near-identical Kohl's sends right now.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Hero offer visible without scrolling on mobile; Offer reduces price (coupon-applied pricing shown); Offer is time-bounded with credible deadline (TODAY ONLY on Kohl's Cash); Brand voice consistent and trusted; No friction for online shoppers.
-- **Rationale:** The Birkenstock starting-at price and the TODAY ONLY Kohl's Cash mechanic are genuine click motivators. But six identical "Shop Now" buttons with no category specificity, no social proof, and no single product hero spread intent too thin to drive a decisive click.
+- **Score:** 7/10**
+- **Signals counted:** Primary CTA present in focus area; offer reduces price (15% off); time-bounded urgency (TODAY ONLY badge visible); product-level price detail visible (starting-at pricing on each card); brand voice is consistent and trusted; email renders without friction
+- **Rationale:** The individual product pricing ($7.99 tees, $24.99 Birkenstocks) is the strongest click driver — real numbers beat percentage promises. What holds it back: the 15% coupon isn't above the fold, "Shop Now" is a generic CTA, and there's no single hero product to anchor intent.
 
 ---
 
 ## 8. Subject
 
 - **Subject:** `Extra 15% off + Kohl's Cash? Better hurry 🏃‍♀️‍➡️`
-- **Length:** 44 chars (excluding emoji)
-- **Scores (1-10):** Clarity `8`, Curiosity `5`, Personalization `2`, Urgency `7`, Specificity `7`
+- **Length:** 44 characters (excluding emoji)
+- **Scores (1-10):** Clarity `8`, Curiosity `5`, Personalization `2`, Urgency `7`, Specificity `8`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — first visible copy in the render is nav links ("FOR HOME | WOMEN | MEN | SALE | CLEARANCE"), which are almost certainly bleeding into the inbox preview text in the absence of an intentional hidden preheader.
-- **Length:** N/A
-- **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `2`, Inbox-fit `1`
+- **Preview:** `(not visible in rendered email — likely leaking nav/header junk or repeating Kohl's Cash from subject)`
+- **Length:** unknown
+- **Scores (1-10):** Complements subject `3`, Specificity `3`, Clarity `3`, Inbox-fit `2`
 
 ---
 
@@ -145,93 +144,78 @@ The Kohl's Cash earn mechanic ("TODAY ONLY") is the sharpest and most time-sensi
 
 ### 1. Technical Summary
 
-The email deploys four overlapping tracking stacks (CoherentPath, Marigold Engage, Adobe AAM, ESP open-tracking), carries an invalid custom HTML tag, and has at least two empty personalization tokens in a content image URL. Compliance header visibility is blocked at the AgentMail relay layer, preventing SPF/DKIM and one-click unsubscribe verification.
+The email is a standard table-layout HTML build with no critical rendering failures, but has 11 content images missing `alt` text, two compliance header gaps surfaced by the AgentMail relay, and a malformed closing tag in the tracking pixel block.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**22 click links unverified** — all routed through `click.s.kohls.com` (ESP redirect) and `click.chp.kohls.com` (CoherentPath). Final destination URLs and UTM chain cannot be inspected without following redirects; QA tool correctly skipped them.
+**22 click-redirect links skipped by QA probe** — all route through `click.s.kohls.com` and `click.chp.kohls.com`. No HTTP probe could confirm destination URLs or detect redirect chains to dead/wrong pages. Manual spot-check of final destinations is required before send.
 
-**Four concurrent tracking pixel stacks:**
+**Three distinct tracking pixel domains in use:**
+- `click.chp.kohls.com` (CoherentPath behavioral pixel)
+- `mi.kohls.com` (Movable Ink personalization)
+- `kohls.demdex.net` (Adobe Audience Manager)
+- `click.s.kohls.com` (ESP open pixel)
 
-| Vendor | Domain | Evidence |
-|---|---|---|
-| CoherentPath | `click.chp.kohls.com/o/f1765314…` | Open pixel, 1×1 |
-| Marigold Engage | `mi.kohls.com/p/up/88954bbb…/o.gif` | Open pixel |
-| Adobe Audience Manager | `kohls.demdex.net/event?d_sid=13245196` | AAM segment fire |
-| ESP (SFMC pattern) | `click.s.kohls.com/open.aspx?TDK2V4…` | Open pixel |
-
-No functional issue, but four simultaneous open-tracking pixels is operationally redundant and adds load time.
-
-**Invalid closing tag** — `</custom>` appears immediately after the `click.s.kohls.com` open pixel with no matching opening tag. This is invalid HTML and may cause parser errors in strict renderers:
-
-```html
-<img src="https://click.s.kohls.com/open.aspx?TDK2V4…" width="1" height="1" alt=""></custom>
-```
-
-**Empty favicon `href`:**
-```html
-<link href="" rel="shortcut icon">
-```
-Generates a spurious HTTP request to the email client's base URL.
+No issues with the pixels themselves, but the breadth increases surface area for domain-reputation events if any of the four domains are flagged mid-send.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Empty `<title>` tag** — `<title></title>` renders as "Untitled" in web-view and some preview panes.
-
-**`user-scalable=0` in viewport** — blocks pinch-to-zoom on mobile, violating WCAG 1.4.4 (Resize Text, AA):
+**Malformed HTML tag — confirmed in source:**
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<img src="https://click.s.kohls.com/open.aspx?..."> <custom>
 ```
+The `<custom>` tag is unclosed and non-standard. While most clients will ignore it, it is an HTML parse error that could disrupt downstream DOM traversal in some preprocessing tools.
 
-**11 images missing `alt` text** — QA flagged all tracking pixels and 6 content images (`2a5adc5afb647aad.png`, `f441d45d2128ae53.png`, `c2f81e9ac8daee44.png`, `415c8a18fc2950ea.png`, `69494b48a79b4240.png`, `78308d1d9adb0751.png`, `916d6fa08d185233.png`). Tracking pixels should carry `alt=""` (present on the Marigold pixel, missing on the CoherentPath and AAM pixels). Content images missing alt text fail screen readers.
+**11 content images missing `alt` text** — QA confirmed, all in the Movable Ink personalization layer (`mi.kohls.com/p/rp/*.png`). These are not decorative pixels; they appear to be rendered offer/product images. Missing `alt` means screen-reader users get nothing, and images-off desktop clients (Outlook default) render blank boxes with no fallback label.
 
-**Redundant Google Fonts loading** — same typefaces loaded twice: once via `<link>` and again via `@import` inside a `<style>` block:
-```html
-<link href="https://fonts.googleapis.com/css2?family=Roboto…">
-<!-- then inside <style> -->
-@import url("https://fonts.googleapis.com/css2?family=Roboto…");
-```
-Results in two HTTP requests per font family with no benefit.
+Affected images (sample):
+- `2a5adc5afb647aad.png` — `email_name=260517_DG_Email_Mystery`
+- `415c8a18fc2950ea.png`
+- `916d6fa08d185233.png` (also missing `mi_kc_redm_end_dte` value — see §4)
 
-**`no-referrer` meta tag** — `<meta name="referrer" content="no-referrer">` strips referrer from all clicks, which will break any server-side referral attribution not relying solely on UTM params.
+**`user-scalable=0` in viewport meta** — `maximum-scale=1, user-scalable=0` blocks pinch-zoom on mobile. This is a WCAG 1.4.4 failure and is increasingly flagged by accessibility auditors.
+
+**`<title>` tag is empty** — `<title></title>`. Some clients expose the title in preview panes or tab labels; leaving it blank is a minor missed opportunity and can trigger spam heuristics in aggressive filters.
+
+**Google Fonts loaded three ways** — `<link>` tag, `@import` in a conditional block, and `@import` in a global `<style>`. The conditional block is `<!--[if !mso]><!-->` which correctly gates the imports from Outlook, but the triple-load is redundant and adds ~150ms of render-blocking latency on slow connections.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**Two empty tokens detected** in the last Marigold content image URL:
+**Incomplete merge token in Movable Ink URL:**
 ```
 mi_kc_redm_end_dte=&mi_kc_event_pe
 ```
-Both parameters are empty — likely Kohl's Cash redemption end-date and event-period fields that failed to populate. If this image is Kohl's Cash-related, the rendering may be incorrect or a fallback image may have silently substituted.
+The `mi_kc_redm_end_dte` parameter is present but **empty** in the `916d6fa08d185233.png` image URL. If this is supposed to carry an expiry date for the Kohl's Cash redemption window, it will either render a broken image or fall back to a default — neither of which is acceptable for a time-sensitive offer email.
 
-Subscriber ID (`mi_u=604230016`) and campaign ID (`mi_ecmp=1012717_2026517`) appear consistently resolved across all Marigold pixels — no broken tokens there.
+No other unfired merge tokens (`{{`, `%%`, `[%`) detected in the truncated source.
 
 ---
 
 ### 5. Compliance
 
-**`List-Unsubscribe` header — not confirmed** (AgentMail relay did not surface it). Header is almost certainly present at the ESP level but cannot be verified from captured headers. Risk: if missing, Gmail/Yahoo bulk sender requirements (February 2024 mandate, ≥5K/day senders) are violated.
+**`List-Unsubscribe` header — not captured by relay (QA WARN).** CAN-SPAM and Gmail/Yahoo bulk sender requirements (enforced since Feb 2024) require this header. The QA system flags it as potentially present on the sending MTA but not passed through the AgentMail relay. If the header is genuinely absent from the delivered message, this is a **compliance failure** for bulk mail to Gmail and Yahoo recipients.
 
-**`List-Unsubscribe-Post` (RFC 8058) — not confirmed.** One-click unsubscribe required by the same Gmail/Yahoo mandate. Same caveat applies.
+**`List-Unsubscribe-Post` header (RFC 8058) — not captured (QA WARN).** One-click unsubscribe (required by Google/Yahoo for >5K/day senders since June 2024) depends on this header being present alongside `List-Unsubscribe`. Same relay-capture caveat applies, but absence from the final delivered header set would be a compliance gap.
 
-**`Authentication-Results` — not captured.** SPF/DKIM/DMARC pass status unknown from relay. `From` domain is `kohls.com`, sending domain is `s.kohls.com` — alignment depends on DKIM `d=` value in the actual header.
+**`Authentication-Results` not captured (QA WARN).** SPF/DKIM pass status is unknown via the relay. Sending domain is `s.kohls.com` (a subdomain, likely ESP-delegated). DMARC alignment cannot be confirmed from available data.
 
-**`<meta name="robots" content="noindex, nofollow">` — present.** Correct; suppresses indexing of any web-hosted archive.
+**`<meta name="robots" content="noindex, nofollow">` and `<meta name="referrer" content="no-referrer">` are present** — correct practice for email HTML to prevent indexing and suppress referrer leakage to linked destinations.
 
-**Physical address** — not visible in the truncated HTML. CAN-SPAM §5(a)(6) requires a valid postal address; assumed present in the non-truncated footer.
+**Physical address** — not visible in the truncated source. CAN-SPAM §5(a)(5) requires a valid postal address. Assumed present in the footer; should be verified in the full source.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-All 22 click links go through `click.s.kohls.com` or `click.chp.kohls.com` redirect chains — UTM parameters cannot be verified without following the redirect. The CoherentPath pixel encodes a `cp_tp=v3.` payload (base64) which likely carries campaign attribution, but the final landing page UTM state is unverifiable from source alone.
+**UTM parameters cannot be confirmed** — all 22 destination URLs are gated behind `click.s.kohls.com` and `click.chp.kohls.com` redirectors. The QA probe skipped them. UTM attribution (`utm_source`, `utm_medium`, `utm_campaign`) on final landing pages cannot be verified without manual click-through on each CTA.
 
-`no-referrer` meta (see §3) means any click that doesn't land via a tracked redirect loses referral context entirely on the server side.
+**`email_name=260517_DG_Email_Mystery`** appears in several Movable Ink image URLs — this is internal naming convention, not a concern, but confirms the deployment identifier is `DG_Email_Mystery` dated 2026-05-17.
 
 ---
 
@@ -239,15 +223,14 @@ All 22 click links go through `click.s.kohls.com` or `click.chp.kohls.com` redir
 
 | Priority | Issue | Action |
 |---|---|---|
-| **High** | Empty tokens `mi_kc_redm_end_dte=`, `mi_kc_event_pe` | Audit Marigold template variable binding for Kohl's Cash image block; add fallback values |
-| **High** | `List-Unsubscribe` / RFC 8058 headers unverifiable | Confirm ESP is injecting both headers; re-run header check directly against SMTP delivery, not relay |
-| **High** | SPF/DKIM unverified | Pull `Authentication-Results` from a non-relay delivery or check Postmaster Tools for `s.kohls.com` |
-| **Medium** | `</custom>` invalid tag | Remove stray closing tag adjacent to ESP open pixel |
-| **Medium** | 6 content images missing `alt` | Add descriptive `alt` text to all content images; set `alt=""` on all tracking pixels |
-| **Medium** | `user-scalable=0` | Remove `maximum-scale=1, user-scalable=0` from viewport meta |
-| **Low** | Duplicate Google Fonts loading | Remove `@import` block; keep only `<link>` tags (conditional `<!--[if !mso]>` block handles MSO fallback) |
-| **Low** | Empty favicon `href` | Remove `<link href="" rel="shortcut icon">` |
-| **Low** | Empty `<title>` | Set a descriptive title for web-view renders |
+| **High** | `mi_kc_redm_end_dte` empty in image URL | Audit Movable Ink template for the Kohl's Cash end-date token; confirm it fires correctly in a test render before deploy |
+| **High** | `List-Unsubscribe` / `List-Unsubscribe-Post` headers unconfirmed | Pull raw headers from a delivered test message (not relay-captured); confirm both are present for Gmail/Yahoo bulk compliance |
+| **High** | 11 content images missing `alt` text | Add descriptive `alt` to all Movable Ink personalized images; use empty `alt=""` only for confirmed decorative/pixel images |
+| **Medium** | Unclosed `<custom>` tag after open pixel | Remove or replace with a valid `<!-- comment -->` |
+| **Medium** | Click-redirect destinations unverified | Spot-check ≥5 CTAs by following redirects to confirm live landing pages and UTM carriage |
+| **Medium** | `user-scalable=0` in viewport | Remove `maximum-scale=1, user-scalable=0`; allow pinch-zoom for WCAG compliance |
+| **Low** | Triple Google Fonts load | Consolidate to single `<link>` tag in the non-MSO conditional block; remove redundant `@import` calls |
+| **Low** | Empty `<title>` tag | Add a non-spammy title, e.g. `Kohl's Email` |
 ## Recent history
 
 - [[2026-05-16-save-15-set-the-scene-for-summer-get-togethers-0bd2de4e-6769-4622-900c-]] — 6/10 (2026-05-16)
