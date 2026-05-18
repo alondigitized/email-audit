@@ -110,6 +110,7 @@ function toSummary(
     persona_color: data.persona
       ? personaColor(data.persona, persona?.profile ?? null)
       : null,
+    persona_kind: persona?.kind ?? null,
     industry: data.persona ? industryBySlug.get(data.persona) ?? null : null,
     open_likelihood: data.review.predictions?.open_likelihood?.score ?? null,
     click_likelihood: data.review.predictions?.click_likelihood?.score ?? null,
