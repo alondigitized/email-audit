@@ -259,6 +259,10 @@ export const auditSummarySchema = z.object({
   persona_name: z.string().nullable().optional(),
   persona_short: z.string().nullable().optional(),
   persona_color: z.string().nullable().optional(),
+  // 'brand' for customer personas, 'industry' for cross-brand critic
+  // personas. Surfaces in the audit-list filter UI so the persona
+  // dropdown can tag each option.
+  persona_kind: z.enum(["brand", "industry"]).nullable().optional(),
   // Industry tag resolved server-side via COALESCE(persona.industry,
   // persona_template.industry). Surfaces in the audit list filter UI
   // so users can narrow by category. Nullable for legacy rows that

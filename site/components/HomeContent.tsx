@@ -131,21 +131,58 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
   }, [industryScopedAudits, selectedPersona]);
 
   const availablePersonas = useMemo(() => {
-    const counts = new Map<string, { label: string; count: number }>();
+    // Track industry + kind alongside the count so the dropdown can
+    // show "{industry} · Brand|Industry" beneath each persona label.
+    // Walker is the one persona with mixed-industry audits (he ate the
+    // pre-industry seed inbox); for him the sublabel falls back to just
+    // the kind. Industry from the audit row already takes the
+    // persona.industry → template.industry COALESCE on the server.
+    const counts = new Map<
+      string,
+      {
+        label: string;
+        count: number;
+        kind: "brand" | "industry" | null;
+        industries: Set<string>;
+      }
+    >();
     for (const a of personaPool) {
       if (!a.persona) continue;
       const existing = counts.get(a.persona);
       if (existing) {
         existing.count += 1;
+        if (a.industry) existing.industries.add(a.industry);
       } else {
         counts.set(a.persona, {
           label: a.persona_name ?? a.persona,
           count: 1,
+          kind: a.persona_kind ?? null,
+          industries: new Set(a.industry ? [a.industry] : []),
         });
       }
     }
     return [...counts.entries()]
-      .map(([key, v]) => ({ key, label: v.label, count: v.count }))
+      .map(([key, v]) => {
+        const kindLabel =
+          v.kind === "industry"
+            ? "Industry"
+            : v.kind === "brand"
+            ? "Brand"
+            : null;
+        const industry =
+          v.industries.size === 1
+            ? [...v.industries][0]
+            : v.industries.size > 1
+            ? "mixed"
+            : null;
+        const parts = [industry, kindLabel].filter(Boolean) as string[];
+        return {
+          key,
+          label: v.label,
+          sublabel: parts.length > 0 ? parts.join(" · ") : undefined,
+          count: v.count,
+        };
+      })
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
   }, [personaPool]);
 

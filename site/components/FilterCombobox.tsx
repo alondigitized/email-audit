@@ -5,6 +5,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 export interface FilterOption {
   key: string;
   label: string;
+  // Optional muted sub-line beneath the label inside the dropdown list.
+  // Used to surface tags like industry + kind on persona options.
+  // The pill trigger only shows the label.
+  sublabel?: string;
   count: number;
 }
 
@@ -173,7 +177,18 @@ export function FilterCombobox({
                             : "hover:bg-gray-50 text-gray-800"
                         }`}
                       >
-                        <span className="truncate">{o.label}</span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate">{o.label}</span>
+                          {o.sublabel && (
+                            <span
+                              className={`block text-[11px] truncate ${
+                                isSelected ? "text-white/70" : "text-muted"
+                              }`}
+                            >
+                              {o.sublabel}
+                            </span>
+                          )}
+                        </span>
                         <span
                           className={`shrink-0 text-xs tabular-nums ${
                             isSelected ? "text-white/80" : "text-muted"
