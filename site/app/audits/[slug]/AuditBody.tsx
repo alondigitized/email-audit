@@ -338,14 +338,43 @@ export async function AuditBody({
   const rewrites = (rewriteRow?.rewrites ?? null) as
     | React.ComponentProps<typeof RewritesPanel>["rewrites"]
     | null;
+  // Pull persona display data unconditionally when the audit has a
+  // persona — the hero card always shows name + identity chips, and the
+  // RewritesPanel separately needs the short name for its CTA copy.
   let personaDisplayName = audit.persona ?? "the persona";
-  if (showRewrites && audit.persona) {
+  let personaIdentity: {
+    name: string;
+    short: string | null;
+    kind: "brand" | "industry";
+    age: number | null;
+    generation: string | null;
+    gender: string | null;
+    style: string | null;
+  } | null = null;
+  if (audit.persona) {
     const [pr] = await db
-      .select({ short: personasTable.short, name: personasTable.name })
+      .select({
+        short: personasTable.short,
+        name: personasTable.name,
+        profile: personasTable.profile,
+        kind: personasTable.kind,
+      })
       .from(personasTable)
       .where(drizzleEq(personasTable.slug, audit.persona))
       .limit(1);
-    personaDisplayName = pr?.short ?? pr?.name ?? audit.persona;
+    if (pr) {
+      personaDisplayName = pr.short ?? pr.name ?? audit.persona;
+      const identity = pr.profile?.identity;
+      personaIdentity = {
+        name: pr.name,
+        short: pr.short ?? null,
+        kind: pr.kind,
+        age: identity?.age ?? null,
+        generation: identity?.generation ?? null,
+        gender: identity?.gender ?? null,
+        style: identity?.style ?? null,
+      };
+    }
   }
 
   let inventoryCsvUrl: string | null = null;
@@ -418,7 +447,46 @@ export async function AuditBody({
               <span className="text-muted font-semibold whitespace-nowrap w-20 shrink-0">
                 Persona
               </span>
-              <span className="capitalize">{audit.persona}</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span className="font-semibold text-gray-900">
+                    {personaIdentity?.name ?? personaDisplayName}
+                  </span>
+                  {personaIdentity?.kind && (
+                    <span
+                      className={`inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold ${
+                        personaIdentity.kind === "industry"
+                          ? "bg-purple-50 text-purple-700"
+                          : "bg-blue-50 text-blue-700"
+                      }`}
+                    >
+                      {personaIdentity.kind === "industry"
+                        ? "Industry"
+                        : "Brand"}
+                    </span>
+                  )}
+                  {personaIdentity &&
+                    [
+                      personaIdentity.age ? `${personaIdentity.age}` : null,
+                      personaIdentity.gender,
+                      personaIdentity.generation,
+                    ]
+                      .filter(Boolean)
+                      .map((chip, i) => (
+                        <span
+                          key={i}
+                          className="text-xs text-muted whitespace-nowrap"
+                        >
+                          {i === 0 ? "" : "·"} {chip}
+                        </span>
+                      ))}
+                </div>
+                {personaIdentity?.style && (
+                  <p className="text-xs text-muted mt-0.5 break-words">
+                    {personaIdentity.style}
+                  </p>
+                )}
+              </div>
             </div>
           )}
           <div className="flex gap-3 items-center">
