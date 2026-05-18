@@ -3,213 +3,217 @@ slug: 2026-05-18-experience-services-designed-around-you-be23fee2-3ec6-4ea2-9ada
 type: email
 date: 2026-05-18
 persona: nadine-incircle-neiman-fap6e
-score: "6/10"
+score: "7/10"
 sender: Neiman Marcus
 subject: Experience services designed around you
-tags: [email, score-6, sender/neiman-marcus]
+tags: [email, score-7, sender/neiman-marcus]
 ---
 # Experience services designed around you
-**Score:** 6/10 · **Type:** Email audit · **2026-05-18**
+**Score:** 7/10 · **Type:** Email audit · **2026-05-18**
 ## Executive summary
 
-- This is Neiman Marcus's third service-education email in two days — a clean, well-shot tour of three in-store/digital services (style advising, click-and-collect, beauty sampling). The design is polished and on-brand, but the email has a fundamental mission problem: there is no offer, no urgency, and no reason to act today. It reads like an FAQ page.
-- Coming one day after the "exclusive access ends tonight" designer sale (scored 9/10), this send is a jarring downshift. A subscriber who clicked through that email expecting another compelling send gets a brochure instead. Worse, it closely echoes the May 17 "peek into our world" send (5/10) — same nurture posture, same CTA-light structure, now appearing for the second time in 36 hours.
-- The email would be fine as a post-purchase or onboarding touchpoint. Dropped cold into the middle of a promotional cadence it feels like filler. Without a hook that gives someone a reason to care right now, most recipients will scroll past.
+- This is a services-positioning email — Neiman Marcus explaining three things they offer (personal styling, click & collect, beauty sampling) under the headline "Shopping Made Personal." It's well-rendered and brand-consistent, with a clean three-section layout that beats the "peek into our world" send from 2026-05-17 on execution. But it shares that email's central weakness: there is no offer here. No discount, no deadline, no reason to act now.
+- The brand has now sent four emails in roughly two days. After a 15% welcome, a brand-nurture editorial, and a flash-sale urgency send ("exclusive access ends tonight"), this fourth message lands in the inbox asking you to "Explore Our Services" — with nothing in return for clicking. That's a hard ask at this cadence.
+- The standout section is "Your Style Soulmate" — the red shoe image is visually arresting and "Find Your Match" is the strongest CTA copy in the entire email. The Beauty and Click & Collect sections underperform next to it; the copy is flat and "Learn More" is too passive to earn the click.
 
 ## What's working
 
-- **Visual hierarchy is clean** — hero → service modules → footer flows naturally and the eye never gets lost.
-- **Photography is strong** — the red stiletto and beauty flatlay are aspirational and on-brand for NM.
-- **No render bugs** — layout, text, and images all load correctly with no overlapping or broken elements.
-- **CTAs are labeled** — each section has its own button ("Find Your Match," "Learn More"), so if someone did want to explore, the path is obvious.
-- **Subject line is under 50 characters** — 38 chars, mobile-safe, no spam signals.
+- Three-section service layout is scannable and hierarchically clean — a reader knows exactly what each module offers within two seconds
+- Red shoe product image is the visual anchor; it earns attention in a scroll
+- "Find Your Match" CTA copy is specific and action-oriented — best line in the email
+- Brand voice and visual identity are consistent top to bottom; no off-brand moments
+- No render bugs visible — images load, text is legible, layout holds
 
 ## What's weak
 
-- **No offer whatsoever** — zero price reduction, no free shipping, no member perk. "Free samples" in the beauty copy is buried in paragraph text and isn't an offer-level hook.
-- **Three "Learn More" CTAs are interchangeable** — generic, non-specific copy that conveys no value and creates no urgency.
-- **Cadence fatigue is real** — this is the fourth Neiman Marcus email in two days; subscriber patience for brand-story content is already thin.
-- **Services described are perennial, not current** — click & collect and style advising aren't seasonal or timely, so nothing anchors this send to *right now*.
-- **No personalization** — no name, no category, no nod to past behavior despite NM owning that data.
+- No offer whatsoever — zero %/$ off, no free-shipping threshold, no loyalty reward — making this a pure awareness send competing for clicks against emails that actually give something
+- Subject "Experience services designed around you" is abstract and curiosity-free; it could belong to any brand, any category
+- "Explore Our Services" and both "Learn More" CTAs are generic filler that undersell the actual value on the other side (complimentary sessions, free samples)
+- This is the fourth Neiman Marcus email in roughly 48 hours; at this cadence a brand-content-only send reads as noise, not value
+- No member framing — presenting these as exclusive subscriber or NM Insider benefits would add a reason to care
 
 ## Recommendations
 
-- 1. **Attach a hook to at least one service** — "Book a free 30-minute style session this week" gives click & collect or the style soulmate module a reason to exist in the inbox today. Without a time-bounded incentive, this is a website, not an email.
-- 2. **Rewrite the generic CTAs** — "Book My Session," "Try Click & Collect," "Claim My Samples" are all specific verb+noun CTAs that would outperform three "Learn More" buttons.
-- 3. **Cut to one hero service per send** — the three-module structure dilutes attention. Pick the one with the highest engagement potential (Style Soulmate has the most personality) and build the whole email around it.
-- 4. **Hold this email until post-purchase** — service education earns attention right after a transaction, not between promotional sends.
-- 5. **Add personalization to the subject** — even a category signal ("your style, your way") would lift open rate.
-- **Subject Alt A:** `Meet your free personal style advisor`
-- **Subject Alt B:** `Book a free session with your NM stylist`
-- **Preheader Alt A:** `Real expert advice — no purchase required.`
-- **Preheader Alt B:** `Style help, beauty samples, same-day pickup. Here's how.`
+- 1. **Name a specific benefit in the subject** — "services" tells the subscriber nothing; "free styling session" or "complimentary beauty sample" tells them everything.
+- 2. **Replace all three generic CTAs** — "Explore Our Services" → "Book a Free Style Session"; "Learn More" (Click & Collect) → "Schedule Curbside Pickup"; "Learn More" (Beauty) → "Claim Your Free Sample."
+- 3. **Add an Insider/loyalty frame** — position these services as subscriber-only perks ("your benefits as an NM Insider") to make opening this email feel rewarding, not neutral.
+- 4. **Batch with a promotional send** — a services primer works better appended to a sale email than sent standalone at day four of a cadence run.
+- 5. **Add seasonal relevance** — one line anchoring these services to summer (event dressing, resort packing) gives the email a reason to exist *now* rather than any time of year.
+- **Subject Alt A:** `Your free styling session is waiting`
+- **Subject Alt B:** `Free beauty samples + personal styling — yours now`
+- **Preheader Alt A:** `Complimentary style advice, curbside pickup, and beauty sessions — no commitment needed.`
+- **Preheader Alt B:** `Your personal shopper is ready. Plus free samples and same-day pickup.`
 
 ## Full review
 ## 1. Overview
 
-This is Neiman Marcus's third service-education email in two days — a clean, well-shot tour of three in-store/digital services (style advising, click-and-collect, beauty sampling). The design is polished and on-brand, but the email has a fundamental mission problem: there is no offer, no urgency, and no reason to act today. It reads like an FAQ page.
+This is a services-positioning email — Neiman Marcus explaining three things they offer (personal styling, click & collect, beauty sampling) under the headline "Shopping Made Personal." It's well-rendered and brand-consistent, with a clean three-section layout that beats the "peek into our world" send from 2026-05-17 on execution. But it shares that email's central weakness: there is no offer here. No discount, no deadline, no reason to act now.
 
-Coming one day after the "exclusive access ends tonight" designer sale (scored 9/10), this send is a jarring downshift. A subscriber who clicked through that email expecting another compelling send gets a brochure instead. Worse, it closely echoes the May 17 "peek into our world" send (5/10) — same nurture posture, same CTA-light structure, now appearing for the second time in 36 hours.
+The brand has now sent four emails in roughly two days. After a 15% welcome, a brand-nurture editorial, and a flash-sale urgency send ("exclusive access ends tonight"), this fourth message lands in the inbox asking you to "Explore Our Services" — with nothing in return for clicking. That's a hard ask at this cadence.
 
-The email would be fine as a post-purchase or onboarding touchpoint. Dropped cold into the middle of a promotional cadence it feels like filler. Without a hook that gives someone a reason to care right now, most recipients will scroll past.
+The standout section is "Your Style Soulmate" — the red shoe image is visually arresting and "Find Your Match" is the strongest CTA copy in the entire email. The Beauty and Click & Collect sections underperform next to it; the copy is flat and "Learn More" is too passive to earn the click.
 
 ## 2. What worked
 
-- **Visual hierarchy is clean** — hero → service modules → footer flows naturally and the eye never gets lost.
-- **Photography is strong** — the red stiletto and beauty flatlay are aspirational and on-brand for NM.
-- **No render bugs** — layout, text, and images all load correctly with no overlapping or broken elements.
-- **CTAs are labeled** — each section has its own button ("Find Your Match," "Learn More"), so if someone did want to explore, the path is obvious.
-- **Subject line is under 50 characters** — 38 chars, mobile-safe, no spam signals.
+- Three-section service layout is scannable and hierarchically clean — a reader knows exactly what each module offers within two seconds
+- Red shoe product image is the visual anchor; it earns attention in a scroll
+- "Find Your Match" CTA copy is specific and action-oriented — best line in the email
+- Brand voice and visual identity are consistent top to bottom; no off-brand moments
+- No render bugs visible — images load, text is legible, layout holds
 
 ## 3. What didn't
 
-- **No offer whatsoever** — zero price reduction, no free shipping, no member perk. "Free samples" in the beauty copy is buried in paragraph text and isn't an offer-level hook.
-- **Three "Learn More" CTAs are interchangeable** — generic, non-specific copy that conveys no value and creates no urgency.
-- **Cadence fatigue is real** — this is the fourth Neiman Marcus email in two days; subscriber patience for brand-story content is already thin.
-- **Services described are perennial, not current** — click & collect and style advising aren't seasonal or timely, so nothing anchors this send to *right now*.
-- **No personalization** — no name, no category, no nod to past behavior despite NM owning that data.
+- No offer whatsoever — zero %/$ off, no free-shipping threshold, no loyalty reward — making this a pure awareness send competing for clicks against emails that actually give something
+- Subject "Experience services designed around you" is abstract and curiosity-free; it could belong to any brand, any category
+- "Explore Our Services" and both "Learn More" CTAs are generic filler that undersell the actual value on the other side (complimentary sessions, free samples)
+- This is the fourth Neiman Marcus email in roughly 48 hours; at this cadence a brand-content-only send reads as noise, not value
+- No member framing — presenting these as exclusive subscriber or NM Insider benefits would add a reason to care
 
 ## 4. What I'd change
 
-1. **Attach a hook to at least one service** — "Book a free 30-minute style session this week" gives click & collect or the style soulmate module a reason to exist in the inbox today. Without a time-bounded incentive, this is a website, not an email.
-2. **Rewrite the generic CTAs** — "Book My Session," "Try Click & Collect," "Claim My Samples" are all specific verb+noun CTAs that would outperform three "Learn More" buttons.
-3. **Cut to one hero service per send** — the three-module structure dilutes attention. Pick the one with the highest engagement potential (Style Soulmate has the most personality) and build the whole email around it.
-4. **Hold this email until post-purchase** — service education earns attention right after a transaction, not between promotional sends.
-5. **Add personalization to the subject** — even a category signal ("your style, your way") would lift open rate.
+1. **Name a specific benefit in the subject** — "services" tells the subscriber nothing; "free styling session" or "complimentary beauty sample" tells them everything.
+2. **Replace all three generic CTAs** — "Explore Our Services" → "Book a Free Style Session"; "Learn More" (Click & Collect) → "Schedule Curbside Pickup"; "Learn More" (Beauty) → "Claim Your Free Sample."
+3. **Add an Insider/loyalty frame** — position these services as subscriber-only perks ("your benefits as an NM Insider") to make opening this email feel rewarding, not neutral.
+4. **Batch with a promotional send** — a services primer works better appended to a sale email than sent standalone at day four of a cadence run.
+5. **Add seasonal relevance** — one line anchoring these services to summer (event dressing, resort packing) gives the email a reason to exist *now* rather than any time of year.
 
-- **Subject Alt A:** `Meet your free personal style advisor`
-- **Subject Alt B:** `Book a free session with your NM stylist`
-- **Preheader Alt A:** `Real expert advice — no purchase required.`
-- **Preheader Alt B:** `Style help, beauty samples, same-day pickup. Here's how.`
-
----
+- **Subject Alt A:** `Your free styling session is waiting`
+- **Subject Alt B:** `Free beauty samples + personal styling — yours now`
+- **Preheader Alt A:** `Complimentary style advice, curbside pickup, and beauty sessions — no commitment needed.`
+- **Preheader Alt B:** `Your personal shopper is ready. Plus free samples and same-day pickup.`
 
 ## 5. Business Impact Score (1-10)
 
-**6/10**
+**7/10**
 
-- Sender is a recognized brand (Neiman Marcus)
-- Primary CTAs are unambiguous and visible
-- Visual hierarchy is clear — eye lands on service modules in order
+- Sender is a brand you recognize / are subscribed to
+- Primary CTA is unambiguous (clear button copy + visible button)
+- Visual hierarchy is clear — the eye lands on the hero first
 - No render bugs
-- Demographic signals match — aspirational luxury lifestyle imagery
-- Offer feels honest — no misleading claims (though there is no offer)
-
----
+- Demographic signals match the persona (women's aspirational luxury)
+- Offer feels honest — services described accurately, no bait-and-switch
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 4/10
-- **Signals counted:** Sender display name recognizable; subject under ~50 chars (38); no spam signals (no ALL CAPS, no exclamation stacking).
-- **Rationale:** "Experience services designed around you" is soft and non-specific — there's no concrete offer, product, or urgency in the subject. This is the fourth email in two days; cadence alone suppresses open rate, and there's no personalization or time-bound hook to overcome it.
-
----
+- **Score:** 5/10
+- **Signals counted:** Sender display name is recognizable; subject is under ~50 chars (38 chars); no spam signals (clean, no ALL CAPS or exclamations); subject is marginally relevant to a luxury shopping persona
+- **Rationale:** Neiman Marcus is recognizable enough to earn a passive open, but "Experience services designed around you" is low-curiosity abstract copy that gives inbox-scanners nothing to grab onto. The cadence (4th email in ~2 days) further erodes marginal open intent.
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 3/10**
-- **Signals counted:** Brand voice is consistent and trusted; no friction (clean render, no broken images).
-- **Rationale:** Three "Learn More" CTAs with no offer and no deadline provide almost nothing to click toward. The style advisor module is the most compelling surface but it links generically rather than to a booking flow, leaving the strongest service hook unmonetized.
-
----
+- **Score:** 6/10
+- **Signals counted:** Hero is visible without scrolling; primary CTA is in the correct category (luxury fashion/beauty); CTA copy is specific in at least one instance ("Find Your Match"); beauty samples/styling detail is visible; brand voice is consistent and trusted; no friction — clean layout, images load
+- **Rationale:** Once open, the three-section layout and strong red shoe visual pull the eye toward the Style Soulmate module. The beauty free-samples mention adds tangible value. The Click & Collect section is the weakest and least likely to drive a tap.
 
 ## 8. Subject
 
 - **Subject:** `Experience services designed around you`
 - **Length:** 38 chars
-- **Scores (1-10):** Clarity `6`, Curiosity `3`, Personalization `3`, Urgency `1`, Specificity `3`
-
----
+- **Scores (1-10):** Clarity `5`, Curiosity `2`, Personalization `2`, Urgency `1`, Specificity `2`
 
 ## 9. Preview
 
-- **Preview:** `(none visible — screenshot is body render only; inbox preview not shown)`
-- **Length:** n/a
-- **Scores (1-10):** Complements subject `n/a`, Specificity `n/a`, Clarity `n/a`, Inbox-fit `n/a`
+- **Preview:** `(cannot verify from render — inbox view not shown in screenshot)`
+- **Length:** —
+- **Scores (1-10):** Complements subject `—`, Specificity `—`, Clarity `—`, Inbox-fit `—`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — Neiman Marcus: "Experience services designed around you"
+## Technical Audit — "Experience services designed around you" (Neiman Marcus)
 
 ---
 
 ### 1. Technical Summary
 
-The email uses a standard Salesforce Marketing Cloud AMPscript stack with a table-based layout and CSS hamburger-nav. Four QA warnings were raised; none are hard failures, but two compliance gaps (`List-Unsubscribe`, `Authentication-Results`) carry real deliverability and inbox-placement risk.
+The email is a standard Salesforce Marketing Cloud (SFMC) HTML send with no critical blocking issues, but four QA warnings surface real gaps: unresolved authentication visibility, missing one-click unsubscribe headers, and an unusually URL-heavy plain-text part. Merge token wiring has a minor structural risk in the `@user` fallback chain.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-| Severity | Finding | Evidence |
-|---|---|---|
-| WARN | 34 tracked links could not be probed — all resolve through a click-redirect domain | QA: *"34 tracking link(s) skipped: Tracking/click-redirect domains"* |
-| WARN | Plain-text version is URL-dominated: 2,965 of 3,460 chars (86%) are URLs | QA: *"Plain-text is >70% URLs"* — this ratio triggers Bayesian spam classifiers on several major ISPs |
+**34 tracking links skipped by QA probe.** All click URLs route through a redirect domain (likely `e.neimanmarcus.com` or a click-tracking wrapper). This is expected behavior for SFMC, but it means:
+- Destination URL health (404s, redirect chains, HTTPS validity) was **not verified** by the automated scan.
+- Any broken landing pages are invisible in this pass.
 
-The plain-text URL density is the actionable item here. SFMC auto-generates plain-text by stripping HTML; the resulting file is nearly pure tracking links. Reducing tracked link count or providing a hand-authored plain-text version will lower the spam score.
+**Recommendation:** Run a secondary probe that follows redirects through the click-tracking layer to validate final destinations.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-| Severity | Finding | Evidence |
-|---|---|---|
-| WARN | `<html>` element has no `lang` attribute | `<html xmlns="http://www.w3.org/1999/xhtml">` — `lang="en"` absent; screen readers cannot infer language |
-| INFO | CSS checkbox-hack interactive nav (`mobileCont:checked~table`) has poor email-client support | `.mobileCont:checked~table *[class=contentInteractive]` — works only in Apple Mail / iOS Mail; silent failure elsewhere is acceptable if fallback state is correct |
-| INFO | Three commented-out `<meta name="viewport">` tags are inert dead code | Lines directly below the active viewport meta — no functional impact but signal template hygiene debt |
-| INFO | `<title>` contains a trailing space: `Neiman Marcus ` | Minor; visible in browser tabs if email is opened as a web page via "View in browser" link |
+**Commented-out viewport tags (lines in `<head>`):**
+```html
+<!--<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />-->
+<!--<meta name="viewport" content="width=320, initial-scale=0.29">-->
+<!--<meta name="viewport" content="width=1024">-->
+```
+Dead markup — no functional impact but indicates iterative editing without cleanup.
+
+**Nested `@media` block:** The stylesheet contains `@media (max-width: 480px)` nested inside another `@media (max-width: 480px)` block (the `ImgSize2x2` rule is inside the outer 480px query, then opens a new 520px query). Some older email clients will ignore the inner block entirely. The truncation in the provided source makes full confirmation impossible.
+
+**`-webkit-animation: bugfix`** iOS9 hack is present. Benign but dated — iOS9 is no longer a meaningful target.
+
+**No `alt` text confirmed** on images from the truncated source. Cannot fully verify, but the pattern of `<img>` inside layout tables without visible `alt` attributes is a common issue in SFMC templates of this generation and should be spot-checked.
+
+No issues found with character encoding (`UTF-8` declared) or `Content-Type` header.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-| Severity | Finding | Evidence |
-|---|---|---|
-| HIGH | `@user = HASHED_EMAIL_SHA256` assignment is inside an HTML comment, not an AMPscript `%%[ ]%%` block | `<!--/* SET @user = HASHED_EMAIL_SHA256 */-->` — this line never executes. If any downstream block references `@user` expecting the SHA-256 hash, it will receive an empty string |
-| WARN | The template comment block documents two required lookup calls (`NM_Subscriber_New_Consolidated`) but the "CHOOSE ONE SCENARIO BELOW" instruction implies conditional logic that must be verified against the deployed sendable DE mapping | HTML comment preamble — cannot confirm correct scenario is active from source alone |
+**`@user` variable has a commented-out assignment:**
+```html
+<!--/* SET @user = HASHED_EMAIL_SHA256 */ -->
+```
+The comment block instructs the developer to "CHOOSE ONE SCENARIO BELOW" for `@user`, but only the commented-out SHA256 path is visible in this source. If the active send unit relies on `@user` downstream (e.g., for personalized content blocks or tracking pixels), and the correct scenario was not uncommented, `@user` will be empty/null at send time.
 
-The `@user` issue is the most significant: if this hash feeds a personalization block, suppression list check, or pixel append, the empty value would silently break it.
+**`@refid` is a no-op concatenation:**
+```
+@refid = CONCAT(@base_refid,"")
+```
+This concatenates with an empty string, which is functionally identical to `@refid = @base_refid`. Not a bug, but suggests a placeholder that was never populated with a suffix segment.
+
+**`@emailid` has a double-lookup path** with a fallback comment — standard defensive SFMC pattern, no issue if both DE fields are correctly mapped.
 
 ---
 
 ### 5. Compliance
 
-| Severity | Finding | Evidence |
+| Check | Status | Evidence |
 |---|---|---|
-| WARN | `List-Unsubscribe` header absent from captured headers | QA: *"Header may not be captured by AgentMail relay"* — if genuinely missing from SMTP headers, Gmail and Yahoo will suppress the native unsubscribe button, and Yahoo's February 2024 bulk-sender policy requires it for >5k/day senders |
-| WARN | `List-Unsubscribe-Post` (RFC 8058) absent | QA: *"One-click unsubscribe may not be supported"* — required for Gmail bulk-sender compliance; without it Gmail falls back to a redirect-based flow that increases friction and complaint rate |
-| WARN | `Authentication-Results` header not found | QA: *"SPF/DKIM status unknown"* — could be an AgentMail relay artifact, but if DKIM is genuinely unsigned on `e.neimanmarcus.com`, DMARC alignment fails and major ISPs will soft-reject or junk |
+| `List-Unsubscribe` header | **WARN** | Not captured by AgentMail relay — may be present at SFMC/MTA layer but not visible to inbox providers |
+| `List-Unsubscribe-Post` (RFC 8058) | **WARN** | One-click unsubscribe not confirmed; Gmail/Apple Mail enforce this for bulk senders |
+| SPF / DKIM / DMARC | **WARN** | `Authentication-Results` header absent from relay capture — pass/fail unknown |
+| Physical address | Not verifiable from truncated source | Must be confirmed present in footer |
+| Unsubscribe link in body | Not verifiable from truncated source | Assumed present given SFMC template structure |
 
-The `List-Unsubscribe` and `List-Unsubscribe-Post` gap is likely a relay-capture issue rather than a real omission (SFMC adds these by default), but it must be confirmed against raw SMTP headers from a live send, not the relay copy.
+**The missing `List-Unsubscribe-Post` header is the most operationally significant finding.** Google and Yahoo's 2024 bulk sender requirements mandate RFC 8058 one-click unsubscribe for senders above ~5K/day. Neiman Marcus almost certainly qualifies. If the header is genuinely absent (not just invisible to the relay), this creates deliverability risk with Gmail.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-UTM parameters cannot be verified because all 34 outbound links are behind a click-redirect and were not probed. The following should be confirmed manually:
+**UTM parameter presence cannot be confirmed** because all 34 outbound links were skipped by the automated probe (click-redirect domains). Standard SFMC deployments append UTMs via URL parameters in the template or link manager — this needs manual spot-check on 2–3 final destination URLs to confirm `utm_source`, `utm_medium`, and `utm_campaign` are populated and not overwritten by the redirect layer.
 
-- All CTA links carry `utm_source`, `utm_medium`, `utm_campaign` (at minimum) so GA4 / Adobe Analytics attributes sessions correctly.
-- The `@refid` value from `CONCAT(@base_refid,"")` (empty concatenation — functionally a no-op) should be confirmed as the intended campaign identifier and appended to destination URLs if used for attribution.
-
-No landing-page destination was verifiable from the truncated source. No issues confirmed, but not clearable without probing the redirect chain.
+No issues found with domain consistency — sender domain (`e.neimanmarcus.com`) and expected landing domain (`neimanmarcus.com`) are brand-aligned.
 
 ---
 
 ### 7. Recommendations
 
-**Must fix before next send:**
-1. **Verify `@user` SHA-256 assignment** — move `SET @user = HASHED_EMAIL_SHA256` out of the HTML comment and into an active `%%[ ]%%` AMPscript block if it is consumed anywhere in the template.
-2. **Confirm `List-Unsubscribe` / `List-Unsubscribe-Post` headers** — pull raw SMTP headers from a seed-address send. If missing, enable one-click unsubscribe in the SFMC send classification. Required for Gmail/Yahoo bulk-sender compliance.
-3. **Confirm DKIM signing on `e.neimanmarcus.com`** — authenticate against a live send's headers; do not rely on the relay capture.
+**P1 — Verify `List-Unsubscribe-Post` header at the MTA layer.** Confirm SFMC is injecting this header before the AgentMail relay sees the message, or coordinate with deliverability team to confirm Gmail/Yahoo compliance status.
 
-**Should fix:**
-4. **Reduce plain-text URL density** — either author a short plain-text summary manually, or reduce tracked link count. Target <40% URL density.
-5. **Add `lang="en"` to `<html>`** — one-attribute accessibility fix.
+**P1 — Authenticate the authentication.** `Authentication-Results` not captured means SPF/DKIM pass/fail is opaque. Pull a raw header dump from a seed inbox (Gmail, Outlook) to confirm `dkim=pass` and `spf=pass` for `e.neimanmarcus.com`.
 
-**Low priority / cleanup:**
-6. Remove the three commented-out viewport meta tags and the dead `/* SET @user */` comment line to reduce template noise for future editors.
+**P2 — Run link probe through redirect layer.** Follow all 34 click-tracked URLs to their final destinations and validate HTTP 200, correct domain, and UTM parameter presence.
+
+**P2 — Audit `@user` assignment.** Confirm the correct "scenario" for `@user` (SHA256 hashed email vs. lookup) is active in the deployed template, not left in a commented-out state.
+
+**P3 — Plain-text audit.** QA flagged 86% of the plain-text part as URLs (2,965 of 3,460 chars). This is an aggressive ratio that can trigger spam filters treating the plain-text as link-stuffed. The plain-text part should be a readable prose summary with selective key links, not a URL dump.
+
+**P3 — Clean up dead markup.** Remove the three commented-out `<meta viewport>` tags and the `@user` commented scenario block before next send cycle to reduce template entropy.
 ## Recent history
 
 - [[2026-05-17-your-exclusive-access-ends-tonight-59bd5491-530b-479a-8b5d-]] — 8/10 (2026-05-17)
