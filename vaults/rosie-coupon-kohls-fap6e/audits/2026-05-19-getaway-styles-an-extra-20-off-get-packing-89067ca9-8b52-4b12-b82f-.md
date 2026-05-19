@@ -3,250 +3,262 @@ slug: 2026-05-19-getaway-styles-an-extra-20-off-get-packing-89067ca9-8b52-4b12-b
 type: email
 date: 2026-05-19
 persona: rosie-coupon-kohls-fap6e
-score: "8/10"
+score: "7/10"
 sender: Kohl’s
 subject: Getaway styles + an extra 20% off? Get packing 🧳
-tags: [email, score-8, sender/kohl-s]
+tags: [email, score-7, sender/kohl-s]
 ---
 # Getaway styles + an extra 20% off? Get packing 🧳
-**Score:** 8/10 · **Type:** Email audit · **2026-05-19**
+**Score:** 7/10 · **Type:** Email audit · **2026-05-19**
 ## Executive summary
 
-- This is Kohl's first 20% off send in the recent run of May emails — a meaningful escalation from the persistent 15% that's appeared in six consecutive sends going back to May 9. The vacation/travel theme is the freshest creative direction in weeks: the hero image (woman on beach, striped towel, flip flops) actually matches the subject line narrative, and "Vacation styles that save money on vacation" is a clever turn of phrase that earns its placement. The creative stays on theme longer than the May 16 home-entertaining send before eventually collapsing into the same kitchen-sink modules — home goods, "I want to take it all home," and the Kohl's card pitch.
-- The discount escalation will move subscribers who were waiting for something better than 15%. But the underlying email is still five modules too long, the CTAs are generic "Shop Now" throughout, and the aggressive send cadence (seven emails in ten days) is doing real damage to the open rate potential of even a legitimately improved offer.
-- The vacation framing rescues this from being another forgettable blast. It's not the 9/10 the May 15 activewear send earned, but it's a step up from the middle-of-the-pack 7s that have dominated this month.
+- This is Kohl's seventh email in ten days, and for the first time in this recent run they've bumped the discount from 15% to 20% — which is the most meaningful creative choice in the entire send. The vacation-styles narrative is timely and gives the email a spine the May 11 kitchen-sink blast lacked. Hero copy ("Vacation styles that leave money in your pocket") is direct and the imagery — beach lifestyle, sandals, flip-flops — earns the season.
+- The problem is structural and familiar: the email is still a department-store scroll. Vacation wear gives way to "outfits for maximum comfort and minimal decision making," which gives way to a full home section (outdoor, kitchen, bedding, bath), which gives way to a 40% savings badge, which gives way to the Kohl's Rewards pitch. That's five distinct pitches in one email. The 20% lead is diluted by the 40% badge appearing mid-scroll — now the reader wonders which offer is the real one and what the exclusions look like.
+- The "outfits for maximum comfort and minimal decision making" copy line is the strongest creative moment in the body. It names a real customer pain point. Everything else is category filler dressed up in summer clothes.
 
 ## What's working
 
-- **Discount escalation is visible and real** — 20% off is the first upgrade from the relentless 15% pattern, and it shows up in the hero badge immediately.
-- **Vacation narrative holds for two full modules** — the hero section and the "outfits for maximum comfort" module both stay on theme before the email loses the thread.
-- **Hero image matches the subject** — beach scene, flip flops, and striped textiles all reinforce "getaway styles" without feeling forced.
-- **Kohl's Rewards card pitch is cleanly separated** — tucked into the lower third rather than competing with the hero offer.
-- **Subject line punches above its weight** — the question mark + imperative ("Get packing") adds forward momentum and the 🧳 emoji earns its place for once.
+- **Discount escalation**: 20% off is a genuine step up from the relentless 15% of the past week — first meaningful offer differentiation in several sends.
+- **Vacation framing is timely**: Late May, lifestyle imagery, sandals, beach setting — cohesive enough to feel deliberate rather than templated.
+- **"Comfort + minimal decision making" copy**: That single line is the sharpest consumer insight in the email; it sells the category without sounding like a product description.
+- **Hero hierarchy**: The 20% off banner sits above the fold with a visible "Shop Now" — no hunting for the offer.
+- **Clean render**: No visible broken images, overlapping text, or layout breakage.
 
 ## What's weak
 
-- **Cadence fatigue is real** — this is email #7 in ten days; even a better offer gets discounted when your inbox is full of Kohl's.
-- **CTA copy is generic across all modules** — every button says "Shop Now" or "Explore the Look"; neither tells you *what* you're shopping for.
-- **No deadline visible** — the 20% off has no "ends Sunday" or "today only" badge attached, which defuses the urgency the subject line implies.
-- **"I want to take it all home" module breaks the vacation frame** — kitchen/bath products have nothing to do with getaway styles and should be a separate send.
-- **No specific product hero** — the email links to category pages, not a single standout item you'd want to click through to see.
+- **Multiple competing discounts** (20% off in hero, 40% badge mid-scroll, "Save 40% today" lower down) muddy the message — reader can't tell which items get what rate.
+- **Generic CTA copy**: "Shop Now" appears throughout with no noun attached — "Shop Vacation Styles" or "Shop Comfort Fits" would have added specificity with zero additional effort.
+- **Kitchen-sink sprawl**: Vacation wear → comfort outfits → full home section → rewards card is four different pitches; the home push especially feels grafted on.
+- **No visible deadline**: The subject implies urgency ("extra" discount) but the body never shows a hard end date, making the urgency feel hollow.
+- **Cadence is strained**: Seventh email in ten days. Even a good offer starts to feel like noise at this volume.
 
 ## Recommendations
 
-- 1. **Add a hard deadline to the 20% badge** — "Ends Wednesday" or "48 hours only" next to the 20% off would turn the urgency that the subject implies into urgency that actually converts. This is the single highest-leverage change.
-- 2. **Cut to three modules** — hero vacation fashion → footwear/accessories → coupon footer. Strip the home goods and credit card pitch into their own sends. The narrative dilution is costing clicks.
-- 3. **Rewrite the CTAs with a noun** — "Shop Getaway Styles," "Shop Vacation Looks," "Shop Flip Flops" all outperform the generic "Shop Now."
-- 4. **Surface one hero product with a price** — pick the striped flip flops in the hero image, show the sale price, link directly to the PDP. One specific item with a specific price beats a category page every time.
-- 5. **Throttle the cadence** — even if you can't change this send, the brand history suggests a pause would do more for open rates than any subject line tweak.
-- **Subject Alt A:** `Extra 20% off getaway styles — ends tonight`
-- **Subject Alt B:** `Pack light. Save big. Extra 20% off this weekend.`
-- **Preheader Alt A:** `Vacation-ready styles starting at $XX — code inside.`
-- **Preheader Alt B:** `From the beach to the plane — 20% off, 48 hours only.`
+- 1. **Narrow the focus to one category + one discount**: Lead exclusively with vacation wear at 20% off. Move the home section to its own dedicated send — it's burying the seasonal narrative.
+- 2. **Add a deadline**: "Ends Sunday" or "Today only" anywhere in the body turns the implied urgency into real urgency.
+- 3. **Make CTAs specific**: Replace every "Shop Now" with a category label — "Shop Vacation Styles," "Shop Comfort Sets," "Shop Home."
+- 4. **Resolve the competing discounts**: If 40% exists somewhere, explain it's on a specific category — otherwise the 20% hero feel undercut by it.
+- 5. **Subject line variants** — the current subject is strong but could be sharper:
+- **Subject Alt A:** `Extra 20% off vacation styles — pack light, save big`
+- **Subject Alt B:** `Your summer getaway starts here — extra 20% off`
+- **Preheader Alt A:** `Swimwear, sandals, and everything else you're packing — all 20% off this week.`
+- **Preheader Alt B:** `Ends soon: take an extra 20% off vacation must-haves before you go.`
 
 ## Full review
 ## 1. Overview
 
-This is Kohl's first 20% off send in the recent run of May emails — a meaningful escalation from the persistent 15% that's appeared in six consecutive sends going back to May 9. The vacation/travel theme is the freshest creative direction in weeks: the hero image (woman on beach, striped towel, flip flops) actually matches the subject line narrative, and "Vacation styles that save money on vacation" is a clever turn of phrase that earns its placement. The creative stays on theme longer than the May 16 home-entertaining send before eventually collapsing into the same kitchen-sink modules — home goods, "I want to take it all home," and the Kohl's card pitch.
+This is Kohl's seventh email in ten days, and for the first time in this recent run they've bumped the discount from 15% to 20% — which is the most meaningful creative choice in the entire send. The vacation-styles narrative is timely and gives the email a spine the May 11 kitchen-sink blast lacked. Hero copy ("Vacation styles that leave money in your pocket") is direct and the imagery — beach lifestyle, sandals, flip-flops — earns the season.
 
-The discount escalation will move subscribers who were waiting for something better than 15%. But the underlying email is still five modules too long, the CTAs are generic "Shop Now" throughout, and the aggressive send cadence (seven emails in ten days) is doing real damage to the open rate potential of even a legitimately improved offer.
+The problem is structural and familiar: the email is still a department-store scroll. Vacation wear gives way to "outfits for maximum comfort and minimal decision making," which gives way to a full home section (outdoor, kitchen, bedding, bath), which gives way to a 40% savings badge, which gives way to the Kohl's Rewards pitch. That's five distinct pitches in one email. The 20% lead is diluted by the 40% badge appearing mid-scroll — now the reader wonders which offer is the real one and what the exclusions look like.
 
-The vacation framing rescues this from being another forgettable blast. It's not the 9/10 the May 15 activewear send earned, but it's a step up from the middle-of-the-pack 7s that have dominated this month.
+The "outfits for maximum comfort and minimal decision making" copy line is the strongest creative moment in the body. It names a real customer pain point. Everything else is category filler dressed up in summer clothes.
 
----
+## 2. What worked
 
-## 2. What Worked
+- **Discount escalation**: 20% off is a genuine step up from the relentless 15% of the past week — first meaningful offer differentiation in several sends.
+- **Vacation framing is timely**: Late May, lifestyle imagery, sandals, beach setting — cohesive enough to feel deliberate rather than templated.
+- **"Comfort + minimal decision making" copy**: That single line is the sharpest consumer insight in the email; it sells the category without sounding like a product description.
+- **Hero hierarchy**: The 20% off banner sits above the fold with a visible "Shop Now" — no hunting for the offer.
+- **Clean render**: No visible broken images, overlapping text, or layout breakage.
 
-- **Discount escalation is visible and real** — 20% off is the first upgrade from the relentless 15% pattern, and it shows up in the hero badge immediately.
-- **Vacation narrative holds for two full modules** — the hero section and the "outfits for maximum comfort" module both stay on theme before the email loses the thread.
-- **Hero image matches the subject** — beach scene, flip flops, and striped textiles all reinforce "getaway styles" without feeling forced.
-- **Kohl's Rewards card pitch is cleanly separated** — tucked into the lower third rather than competing with the hero offer.
-- **Subject line punches above its weight** — the question mark + imperative ("Get packing") adds forward momentum and the 🧳 emoji earns its place for once.
+## 3. What didn't
 
----
+- **Multiple competing discounts** (20% off in hero, 40% badge mid-scroll, "Save 40% today" lower down) muddy the message — reader can't tell which items get what rate.
+- **Generic CTA copy**: "Shop Now" appears throughout with no noun attached — "Shop Vacation Styles" or "Shop Comfort Fits" would have added specificity with zero additional effort.
+- **Kitchen-sink sprawl**: Vacation wear → comfort outfits → full home section → rewards card is four different pitches; the home push especially feels grafted on.
+- **No visible deadline**: The subject implies urgency ("extra" discount) but the body never shows a hard end date, making the urgency feel hollow.
+- **Cadence is strained**: Seventh email in ten days. Even a good offer starts to feel like noise at this volume.
 
-## 3. What Didn't
+## 4. What I'd change
 
-- **Cadence fatigue is real** — this is email #7 in ten days; even a better offer gets discounted when your inbox is full of Kohl's.
-- **CTA copy is generic across all modules** — every button says "Shop Now" or "Explore the Look"; neither tells you *what* you're shopping for.
-- **No deadline visible** — the 20% off has no "ends Sunday" or "today only" badge attached, which defuses the urgency the subject line implies.
-- **"I want to take it all home" module breaks the vacation frame** — kitchen/bath products have nothing to do with getaway styles and should be a separate send.
-- **No specific product hero** — the email links to category pages, not a single standout item you'd want to click through to see.
-
----
-
-## 4. What I'd Change
-
-1. **Add a hard deadline to the 20% badge** — "Ends Wednesday" or "48 hours only" next to the 20% off would turn the urgency that the subject implies into urgency that actually converts. This is the single highest-leverage change.
-2. **Cut to three modules** — hero vacation fashion → footwear/accessories → coupon footer. Strip the home goods and credit card pitch into their own sends. The narrative dilution is costing clicks.
-3. **Rewrite the CTAs with a noun** — "Shop Getaway Styles," "Shop Vacation Looks," "Shop Flip Flops" all outperform the generic "Shop Now."
-4. **Surface one hero product with a price** — pick the striped flip flops in the hero image, show the sale price, link directly to the PDP. One specific item with a specific price beats a category page every time.
-5. **Throttle the cadence** — even if you can't change this send, the brand history suggests a pause would do more for open rates than any subject line tweak.
-
-- **Subject Alt A:** `Extra 20% off getaway styles — ends tonight`
-- **Subject Alt B:** `Pack light. Save big. Extra 20% off this weekend.`
-- **Preheader Alt A:** `Vacation-ready styles starting at $XX — code inside.`
-- **Preheader Alt B:** `From the beach to the plane — 20% off, 48 hours only.`
-
----
+1. **Narrow the focus to one category + one discount**: Lead exclusively with vacation wear at 20% off. Move the home section to its own dedicated send — it's burying the seasonal narrative.
+2. **Add a deadline**: "Ends Sunday" or "Today only" anywhere in the body turns the implied urgency into real urgency.
+3. **Make CTAs specific**: Replace every "Shop Now" with a category label — "Shop Vacation Styles," "Shop Comfort Sets," "Shop Home."
+4. **Resolve the competing discounts**: If 40% exists somewhere, explain it's on a specific category — otherwise the 20% hero feel undercut by it.
+5. **Subject line variants** — the current subject is strong but could be sharper:
+   - **Subject Alt A:** `Extra 20% off vacation styles — pack light, save big`
+   - **Subject Alt B:** `Your summer getaway starts here — extra 20% off`
+   - **Preheader Alt A:** `Swimwear, sandals, and everything else you're packing — all 20% off this week.`
+   - **Preheader Alt B:** `Ends soon: take an extra 20% off vacation must-haves before you go.`
 
 ## 5. Business Impact Score (1-10)
 
-**8/10**
+**7/10**
 
-- Sender recognized (Kohl's) ✓
-- Concrete offer visible (20% off, prominent badge) ✓
-- Primary CTA unambiguous (Shop Now buttons present) ✓
-- Visual hierarchy clear (hero + offer badge above the fold) ✓
-- No render bugs (clean render throughout) ✓
-- Demographic signals match (women's summer fashion, beach lifestyle models) ✓
-- Email reflects current season (May vacation/summer travel is exactly right) ✓
-- Loyalty/member benefits visible (Kohl's Rewards 7.5% in rewards, card pitch) ✓
-
-*Did not count:* persona focus area is broad enough that "vacation styles" is not a precise match; fine print on the offer is not clearly legible at render size, so "offer feels honest" gets a pass rather than a point.
-
----
+- Sender is recognizable / subscribed to (Kohl's)
+- One concrete offer visible (20% off, prominently in hero banner)
+- Primary CTA is visible (Shop Now button above fold)
+- Visual hierarchy is clear (offer leads the email)
+- No render bugs visible
+- Email reflects current campaign / season (summer vacation, late May)
+- Loyalty / member benefits visible (Kohl's Rewards card section at bottom)
 
 ## 6. Open Likelihood (persona-grounded)
 
 - **Score:** 6/10
-- **Signals counted:** Sender recognizable (Kohl's); subject is concrete (names exact discount + action verb); subject is seasonally relevant (vacation = May); subject under 50 chars (~47 excluding emoji); no spam signals.
-- **Rationale:** The subject line is genuinely one of the better ones in this run — the 20% escalation from 15% is a real hook, and the "Get packing" imperative gives it energy. But seven emails in ten days means a meaningful slice of this list has already tuned Kohl's out; cadence is the ceiling on open rate here regardless of subject quality.
-
----
+- **Signals counted:** Sender display name recognizable (Kohl's), subject is concrete (names the offer + discount %), subject is relevant to seasonal focus area, subject is under ~50 chars (~48 without emoji), no spam signals (no ALL CAPS, no excessive exclamation).
+- **Rationale:** "Extra 20% off" in the subject is the strongest open signal — it's a real escalation from the 15% pattern, and "get packing" is a playful, low-friction close. What kills open rate is cadence: seventh email in ten days means a meaningful slice of the list will archive-on-arrival without reading.
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
 - **Score:** 6/10
-- **Signals counted:** Hero offer visible without scrolling (20% badge + vacation hero at top); offer reduces price (20% off); brand voice consistent; no friction (clean render); primary CTA covers relevant category (women's summer fashion).
-- **Rationale:** The vacation framing and the 20% discount are strong enough pulls that a subscriber who opens is likely to scan the hero section seriously. What kills the click is the absence of a specific product linked from the hero and the "Shop Now" CTAs that could point anywhere — there's no low-friction path to "I want that exact thing I see in the image."
-
----
+- **Signals counted:** Hero offer visible without scrolling on mobile (20% banner at top), offer reduces price (20% off), brand voice is consistent and trusted, no friction (email renders cleanly), primary CTA broadly in lifestyle/fashion focus area.
+- **Rationale:** The vacation theme + 20% creates a real motivation to browse, and the "comfort + minimal decision making" copy is the kind of line that converts curiosity into a click. What pulls away: "Shop Now" CTA tells you nothing about where you land, and the competing 40% badge mid-scroll raises questions the email doesn't answer — uncertainty suppresses clicking.
 
 ## 8. Subject
 
 - **Subject:** `Getaway styles + an extra 20% off? Get packing 🧳`
-- **Length:** 47 characters (excluding emoji)
-- **Scores (1-10):** Clarity `8`, Curiosity `6`, Personalization `1`, Urgency `5`, Specificity `7`
-
----
+- **Length:** 48 characters (excluding emoji)
+- **Scores (1-10):** Clarity `8`, Curiosity `7`, Personalization `2`, Urgency `5`, Specificity `7`
 
 ## 9. Preview
 
-- **Preview:** `(not visible in rendered screenshot — inbox metadata not captured)`
-- **Length:** N/A
-- **Scores (1-10):** Complements subject `N/A`, Specificity `N/A`, Clarity `N/A`, Inbox-fit `N/A`
-
-*Note: The email body render does not expose the preheader text. Based on the subject alt recommendations above, a preheader naming a specific deadline or starting price would do meaningful lift here — the subject leaves that gap wide open.*
+- **Preview:** `(none / leaking junk)` — the rendered screenshot does not expose a dedicated preheader block; the first visible text after the header appears to be navigation or view-in-browser boilerplate, which would surface as junk in most inbox clients.
+- **Length:** N/A (unintended content)
+- **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `1`, Inbox-fit `1`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — Kohl's "Getaway styles + an extra 20% off" (2026-05-19)
+## Technical Audit — Kohl's "Getaway Styles + Extra 20% Off" (2026-05-19)
 
 ---
 
 ### 1. Technical Summary
 
-The email is structurally sound for a high-volume retail send but has a stray invalid HTML tag, redundant font-loading calls, and 12 images missing alt attributes. Compliance headers are unverifiable through the AgentMail relay, and no physical address was detected in the captured HTML (which may be truncated).
+The email is structurally functional but carries three redundant open-tracking pixels from separate vendors, a stray invalid HTML tag, and multiple compliance header gaps that are partially attributable to the AgentMail relay layer. Accessibility has 12 unresolved alt-text violations.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**Three concurrent open/impression pixels** are firing on render — a likely sign of multi-vendor overlap rather than a bug, but worth confirming each is intentional:
+**Three concurrent open-tracking pixels — vendor fragmentation**
 
-| Pixel | Domain | Purpose |
+| Pixel | Domain | Vendor |
 |---|---|---|
-| `63718a74-...` | `click.chp.kohls.com/o/` | CoherentPath engagement pixel |
-| `o.gif` | `mi.kohls.com/p/up/` | MessageIgnite open pixel |
-| `open.aspx` | `click.s.kohls.com/` | Salesforce MC open pixel |
-| `event?d_sid=13245196` | `kohls.demdex.net/` | Adobe Audience Manager (AAM) sync |
+| `click.chp.kohls.com/o/63718a74…` | Coherent Path (CHP) | Personalization platform |
+| `click.s.kohls.com/open.aspx?GKOC4…` | `s.kohls.com` | Salesforce Marketing Cloud |
+| `mi.kohls.com/p/up/88954bbb…/o.gif` | Movable Ink | Dynamic content |
 
-**22 click-redirect links were not probed** — all route through `click.s.kohls.com` or `click.chp.kohls.com`. Final destination URLs and their UTM parameters cannot be confirmed from this source.
+All three fire on open. This triple-counts open metrics across dashboards and inflates server-side request load per recipient. Determine the authoritative open-tracking source and suppress the others.
 
-**Stray `</custom>` closing tag** immediately after the `click.s.kohls.com/open.aspx` pixel div:
+**Adobe Audience Manager synced separately**
+
 ```html
-<img src="https://click.s.kohls.com/open.aspx?..." width="1" height="1" alt=""></custom>
+<img src="https://kohls.demdex.net/event?d_sid=13245196" width="0" height="0">
 ```
-This is invalid HTML. Most email clients will silently discard it, but it may cause parse warnings in strict renderers or linting tools.
+
+This is an AAM segment sync pixel, not an open-track. It is present without `aria-hidden="true"` or `alt=""` — see §3.
+
+**22 click-tracking links unprobed** — All destination URLs resolve through `click.s.kohls.com` redirects. Actual landing-page reachability is unverified by automated QA. Manual spot-check of CTA links recommended before send.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**`user-scalable=0` in viewport meta** — pinch-to-zoom is disabled on mobile. This is a WCAG 1.4.4 (Resize Text) violation and also blocked by Apple's App Store guidelines for apps that render web content.
+**Stray `</custom>` tag (invalid HTML)**
+
+```html
+<img src="https://click.s.kohls.com/open.aspx?GKOC4RWGD3FU7KQF46G4IHRKKY.60256…" width="1" height="1" alt=""></custom>
+```
+
+The `</custom>` closing tag is orphaned and invalid. While most email clients ignore it, some renderers may emit a parse warning or surface unexpected whitespace. Remove it.
+
+**Viewport blocks user zoom**
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 ```
 
-**12 content images missing `alt` text** — QA flagged the following (partial list):
+`user-scalable=0` / `maximum-scale=1` violates WCAG 1.4.4 (Resize Text, Level AA). Apple Mail and Gmail on iOS respect this and will block pinch-to-zoom for low-vision users.
 
-- `52819850_roots_2x` (`images.am.kohls.com/is/image/kohlsprod/`) — appears to be a product image; requires descriptive alt text
-- Six `mi.kohls.com/p/rp/*.png` rendered images — these are likely content/banner images served through MessageIgnite; all missing alt
-- Two `mi.kohls.com/p/rp/*.png` images appended with `mi_kc_redm_end_dte` and `mi_kc_event_pe` params — dynamic content placeholders; alt text needs to be populated by the ESP at send time
-
-Pixel/tracking images that are legitimately decorative should carry `alt=""` and `aria-hidden="true"` (one of the three open pixels does this correctly; the others do not).
-
-**Google Fonts double-loaded** — Roboto and Montserrat are requested via both `<link>` and `@import` inside the same `<!--[if !mso]>` block:
+**Empty `<title>` element**
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-<style>@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");</style>
+<title></title>
 ```
 
-This triggers two HTTP requests per font per render in any client that supports web fonts. No functional breakage, but doubles the external font-load overhead.
+VoiceOver on iOS Mail announces an empty document title. Set a descriptive value matching the subject line.
 
-**Empty `<title>` tag** — `<title></title>` is blank. Some email clients (notably older Android Mail) surface this as the email title in thread view.
+**12 images missing `alt` text** (confirmed by QA)
 
-**Empty favicon link** — `<link href="" rel="shortcut icon">` has a null `href`. Harmless but generates a spurious HTTP request to the email client's base URL in some environments.
+Critical missing alts include content images served from `mi.kohls.com/p/rp/` (Movable Ink dynamic images) and `images.am.kohls.com` (product imagery). The `o.gif` pixel correctly carries `alt="" aria-hidden="true"`; apply the same pattern to all tracking pixels and descriptive alt text to all content images.
+
+Notable violator:
+```
+https://images.am.kohls.com/is/image/kohlsprod/52819850_roots_2x?scl=1
+```
+This appears to be product photography and should have descriptive alt text.
+
+**`<link href="" rel="shortcut icon">`** — Empty `href` generates a redundant HEAD request to the email client's current URL. Remove the tag entirely.
+
+**Font loading in email clients**
+
+Google Fonts are loaded via both `<link>` and `@import` — duplicate requests for Roboto and Montserrat. The `<link>` tags are correctly wrapped in `<!--[if !mso]><!--> … <!--<![endif]-->` so Outlook is shielded, but the double-load is unnecessary overhead for webmail clients that do honor them.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-No unresolved merge tokens detected in the captured HTML. Subscriber ID (`mi_u=604230016`) and campaign ID (`mi_ecmp=1012842_2026519`) appear resolved at send time. The `mi_kc_redm_end_dte=` and `mi_kc_event_pe=` params on two image URLs are empty — these appear to be optional dynamic fields that were intentionally left blank rather than failed substitutions.
+No unresolved merge tokens (`{{…}}`, `%%…%%`, `[FIRST_NAME]`, etc.) are visible in the provided HTML. Recipient-level data appears to be pre-rendered server-side by Movable Ink before send, consistent with the `mi_u=604230016` user ID embedded in pixel URLs. No issues found.
 
 ---
 
-### 5. Compliance
+### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
 
-| Check | Status | Evidence |
-|---|---|---|
-| `List-Unsubscribe` header | **WARN** — not captured | AgentMail relay may strip headers; verify at MTA level |
-| `List-Unsubscribe-Post` (RFC 8058) | **WARN** — not captured | One-click unsubscribe compliance (required by Gmail/Yahoo for bulk senders) unverifiable |
-| Physical mailing address | **WARN** — not detected | CAN-SPAM §7 requires a valid postal address; may be present below the HTML truncation point — must verify |
-| `robots` meta | Pass | `noindex, nofollow` present |
-| `referrer` meta | Pass | `no-referrer` present |
-| SPF/DKIM | **Unknown** | `Authentication-Results` header absent from relay capture |
+**Physical mailing address — not detected**
 
-The `List-Unsubscribe` and `List-Unsubscribe-Post` warnings are likely relay artifacts, but Gmail and Yahoo's 2024 bulk sender requirements mandate `List-Unsubscribe-Post` be present and functional. Confirm the header is set at the Salesforce MC / ESP send layer, not just in the HTML body.
+QA did not find a physical address in the parsed HTML. CAN-SPAM §7 requires a valid postal address. The HTML is truncated in the provided source; confirm the address is present in the footer before treating this as confirmed absent. If it is missing, this is a legal violation.
+
+**List-Unsubscribe / List-Unsubscribe-Post headers — not present at relay**
+
+```
+[WARN] List-Unsubscribe header not found
+[WARN] List-Unsubscribe-Post header not found (RFC 8058)
+```
+
+These headers are set by Salesforce Marketing Cloud at send time but may be stripped by the AgentMail relay before capture. Verify raw headers on a direct send. Gmail and Yahoo require `List-Unsubscribe-Post` for bulk senders (>5K/day) to qualify for one-click unsubscribe — absence will degrade inbox placement for those providers.
+
+**Authentication-Results — not found at relay**
+
+```
+[WARN] Authentication-Results header not found
+```
+
+SPF/DKIM/DMARC pass status is unverifiable from the captured copy. Sending domain is `s.kohls.com`; confirm DKIM is signed under that subdomain and DMARC policy at `kohls.com` covers it. This is a relay capture issue, not necessarily a sending issue, but must be independently verified.
 
 ---
 
-### 6. Email-to-Site Continuity
+### 6. Email-to-Site Continuity (UTM / Landing Page)
 
-All 22 click links pass through `click.s.kohls.com` (Salesforce MC) or `click.chp.kohls.com` (CoherentPath) redirectors — UTM parameters on final landing pages cannot be verified from this source. The ESP-level redirect chain should be appending `utm_source`, `utm_medium`, and `utm_campaign` before the final `kohls.com` destination. This should be spot-checked against a decoded click URL.
+Movable Ink tracking params embedded in pixel URLs use internal campaign identifiers:
 
-The `mi_ecmp=1012842_2026519` parameter on impression pixels confirms campaign-level attribution is wired at the ESP. Whether that maps consistently to UTM params on click-through destinations is unverified.
+```
+mi_ecmp=1012842_2026519
+email_name=260519_DG_Email_Tuesday
+```
+
+These are Movable Ink internal values, not standard UTM parameters. The 22 click links are unprobed (redirect chains via `click.s.kohls.com`), so UTM presence on final destination URLs is unconfirmed. Salesforce Marketing Cloud can inject UTMs at redirect resolution — verify that `utm_source=email&utm_medium=email&utm_campaign=…` are appended to all kohls.com landing pages, especially the primary 20%-off CTA destination.
+
+The `<meta name="referrer" content="no-referrer" />` tag intentionally suppresses the HTTP `Referer` header on outbound clicks, which will cause GA4/Adobe Analytics to see referrer as `(direct)` rather than the email — this is expected for email but worth confirming the UTM-based attribution chain is the sole tracking mechanism.
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Issue | Action |
-|---|---|---|
-| **High** | `user-scalable=0` in viewport | Remove `maximum-scale=1, user-scalable=0`; replace with `width=device-width, initial-scale=1` |
-| **High** | 12 content images missing alt text | Add descriptive alt text to product/banner images; ESP dynamic fields (`mi_kc_*`) should be confirmed as intentionally blank or populated |
-| **High** | Physical address not detected | Confirm CAN-SPAM address block is present below the truncation point; if absent, add before next send |
-| **Medium** | `List-Unsubscribe-Post` unverifiable | Confirm RFC 8058 one-click header is set at the Salesforce MC account/send-classification level |
-| **Medium** | `</custom>` stray tag | Remove invalid closing tag from open-pixel div |
-| **Low** | Google Fonts double-loaded | Remove the `@import` block; keep only the `<link>` tags |
-| **Low** | Three open pixels firing | Audit whether all three (CoherentPath, MessageIgnite, Salesforce) are required; eliminate redundant pixels to reduce render-time requests |
-| **Low** | Tracking pixel `alt` attributes | Add `alt=""` and `aria-hidden="true"` to all 1×1 pixel images that lack them |
-| **Low** | Empty `<title>` and favicon link | Populate title or remove; remove the null-href favicon link |
+| Priority | Action |
+|---|---|
+| **High** | Confirm physical mailing address renders in footer (CAN-SPAM §7) |
+| **High** | Verify `List-Unsubscribe` and `List-Unsubscribe-Post` headers are present in raw send headers, not just relay-captured copy |
+| **High** | Add `alt=""` to all tracking pixels (`click.chp.kohls.com`, `demdex.net`); add descriptive alt text to all Movable Ink content images and product photography |
+| **Medium** | Remove `</custom>` stray tag adjacent to the Salesforce open pixel |
+| **Medium** | Remove `maximum-scale=1, user-scalable=0` from viewport meta — violates WCAG 1.4.4 |
+| **Medium** | Confirm UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`) are appended by Salesforce click-redirect to all kohls.com destinations |
+| **Medium** | Consolidate to one authoritative open-tracking pixel; suppress CHP or SMC depending on which dashboard is canonical |
+| **Low** | Set a descriptive `<title>` element value |
+| **Low** | Remove duplicate Google Fonts `@import` (already loaded via `<link>`) |
+| **Low** | Remove empty `<link href="" rel="shortcut icon">` |
 ## Recent history
 
 - [[2026-05-17-we-called-in-the-experts-hp2v610000019e36ba8349b3]] — 8/10 (2026-05-17)
