@@ -3,235 +3,216 @@ slug: 2026-05-19-join-incircle-unlock-benefits-as-you-shop-65064870-5474-431a-af
 type: email
 date: 2026-05-19
 persona: nadine-incircle-neiman-fap6e
-score: "4/10"
+score: "6/10"
 sender: Neiman Marcus
 subject: Join InCircle & unlock benefits as you shop​
-tags: [email, score-4, sender/neiman-marcus]
+tags: [email, score-6, sender/neiman-marcus]
 ---
 # Join InCircle & unlock benefits as you shop​
-**Score:** 4/10 · **Type:** Email audit · **2026-05-19**
+**Score:** 6/10 · **Type:** Email audit · **2026-05-19**
 ## Executive summary
 
-- This is a pure loyalty-acquisition email — InCircle program enrollment pitch aimed at non-members or lapsed members. The structure is logical: lead with a lifestyle hero, then walk down four tiers of program benefits (Points, Free Shipping, Earn Per Card, Concierge), then close with a dual CTA for existing members to sign in. It's clean and on-brand, but it's also bloodless. There's no discount, no urgency, no scarcity — just a feature list dressed up as an email. The "Get the Ultimate Insider Experience" headline is the most generic thing Neiman Marcus could have written.
-- The brand history makes this feel strategic — they've been running a welcome/loyalty sequence since May 16 ("15% off & you're in the know"), then a brand-nurture send ("peek into our world"), and now a program-enrollment push. The sequencing makes sense, but by send three in three days, open rates are likely falling and the subscriber is suffering benefit-list fatigue without a new value hook to anchor to.
-- Net judgement: competent infrastructure email, but it under-performs relative to what the Neiman Marcus brand can deliver. The Designer Sale email from May 17 (10/10) shows what a sharp NM send looks like; this one is far below that bar.
+- This is a loyalty program acquisition email — Neiman Marcus pitching InCircle enrollment to someone who hasn't joined yet (or re-engaging a lapsed member). Compared to the same-day Designer Sale send ("It's here! The Designer Sale" scored 10/10), this email is operating in a completely different gear: no urgency, no product, no discount. It's asking for a behavioral change — apply for a credit card, or at minimum enroll in InCircle — which is inherently a heavier lift.
+- The structure is competent: aspirational hero image, tagline, then a stacked benefits breakdown. But it slides into the common trap of listing features rather than selling outcomes. The Circle-tier gating is the bigger problem — most benefits are labeled "Circle 3 & Above" and Concierge requires "Circle 5 & Above." A new enrollee landing on this email sees a wall of "you'll qualify for this eventually," which is a discouraging first impression for a conversion-intent email.
+- The email is clean and on-brand with no render issues, but it reads like evergreen brochure copy dropped into an active sale week. With the 50%-off Designer Sale running simultaneously, the InCircle pitch has to compete with a much louder, higher-stakes message from the same brand the same day — and it loses that attention war before the inbox is even opened.
 
 ## What's working
 
-- **Benefit architecture is scannable** — four distinct benefit blocks with tier labels (Circle 2, Circle 3, etc.) let a reader quickly self-qualify.
-- **Lifestyle hero image works** — the model in red against a dark background is on-brand and aspirational; it communicates luxury without trying too hard.
-- **"INCIRCLE" logo mark** is prominently placed between the headline and body copy, giving the program instant visual identity.
-- **Dual sign-in CTA at bottom** is a smart move — existing members get a frictionless re-entry path without cluttering the primary "Apply Now" flow.
-- **Navigation bar + footer utilities** (Find a store, Contact us, My account) are intact and render cleanly.
+- **Hero image is strong** — the woman in red is aspirational and consistent with Neiman Marcus's luxury brand voice; the visual arrival is polished.
+- **"Apply Now" CTA is clear and prominent** — no ambiguity about the primary conversion action.
+- **Concrete benefit anchors exist** — "$100 Point Card for every 10,000 points" and "Free 2-Day Shipping" give quantifiable, tangible value rather than just vague perks.
+- **Existing-member path is included** — the "Already an InCircle Member? Sign In" section prevents frustrating people already enrolled.
+- **No render bugs** — layout is clean, images load, copy is legible throughout.
 
 ## What's weak
 
-- **Zero urgency or concrete offer** — "Apply Now" is asking for a behavioral commitment with no near-term payoff. There's no "join today and earn X bonus points," no free-shipping trial, nothing time-bounded.
-- **"Get the Ultimate Insider Experience" is filler copy** — vague, overused, and interchangeable with a dozen other luxury loyalty programs.
-- **Benefit copy is tiny and dense** — at email rendering size, the paragraph text under each benefit block is extremely small and likely unreadable on mobile without zooming.
-- **"Already an InCircle member?" section buries existing-member value** — the sign-in prompt is low-contrast and easy to miss; a current member landing here feels like they got the wrong email.
-- **No social proof or member count** — a program pitch is a natural place for "Join 2M+ InCircle members" or a brief testimonial; this has none.
+- **Circle-tier gating undermines the pitch** — "Circle 3 & Above" and "Circle 5 & Above" labels appear three of the four times a benefit is named; new members immediately clock that most perks are not for them yet.
+- **No urgency mechanism** — no deadline, no limited-time bonus points, no reason to apply today versus next month.
+- **Drops into an active sale week without acknowledging it** — the Designer Sale is live on the same day; this email ignores the most compelling reason to enroll right now ("every dollar you spend in the sale counts toward your first Point Card").
+- **Text-heavy, list-format body** — after the hero the email becomes four stacked text blocks that read like a brochure, not a conversion page.
+- **No social proof** — no member count, no testimonials, no "join X million InCircle members" to validate the program's credibility.
 
 ## Recommendations
 
-- 1. **Add a join-now incentive with urgency** — even "Earn 2X points on your first purchase when you join by [date]" transforms this from a passive feature list into an active reason to click today. Without it, the email is a brochure, not a conversion driver.
-- 2. **Rewrite the hero headline** — swap "Get the Ultimate Insider Experience" for something that names the tangible first benefit, e.g., "Free shipping starts on day one."
-- 3. **Increase benefit body copy size** — the tier descriptions are currently unreadable at scale; bump to at least 14px and shorten each to one punchy line.
-- 4. **Segment this send** — send the "Apply Now" version only to confirmed non-members; for existing members (who see the sign-in block), send a benefits-upgrade or spend-milestone email instead.
-- 5. **Add one concrete anchor number** — the "For every 10,000 points you earn, get a Point Card® worth $100" stat is the single most compelling line in the email; pull it up to the hero area, don't bury it in block 2.
-- **Subject Alt A:** `Free shipping, points, concierge — InCircle's yours`
-- **Subject Alt B:** `Your InCircle benefits are waiting — here's what you get`
-- **Preheader Alt A:** `Earn a $100 Point Card for every 10,000 points. Join free.`
-- **Preheader Alt B:** `Free 2-day shipping + exclusive access. Apply in seconds.`
+- 1. **Add a time-bounded enrollment bonus** — "Apply this week and earn 2,500 bonus points" transforms this from informational to actionable at near-zero cost and creates the urgency the email completely lacks.
+- 2. **Lead with Circle 1 benefits, not Circle 3+** — show prospects what they get on day one first; tier up to aspirational perks after hooking them with immediate value.
+- 3. **Tie the pitch to the running Designer Sale** — "Join InCircle now and every dollar you spend in the Designer Sale counts toward your first $100 Point Card" is a far more compelling hook than a standalone enrollment email.
+- 4. **Compress the body into an icon grid** — four stacked text sections can be a two-column visual grid at half the reading time; the Concierge section in particular feels buried.
+- 5. **Sharpen the hero headline** — "Get the Ultimate Insider Experience" is vague; name the single best immediate benefit in the hero line.
+- **Subject Alt A:** `Join InCircle: earn a $100 Point Card as you shop the sale`
+- **Subject Alt B:** `Your InCircle perks are waiting — here's what you unlock today`
+- **Preheader Alt A:** `Free 2-day shipping + $100 Point Cards + exclusive access — start earning now.`
+- **Preheader Alt B:** `Apply now and every purchase in the Designer Sale counts toward your first reward.`
 
 ## Full review
 ## 1. Overview
 
-This is a pure loyalty-acquisition email — InCircle program enrollment pitch aimed at non-members or lapsed members. The structure is logical: lead with a lifestyle hero, then walk down four tiers of program benefits (Points, Free Shipping, Earn Per Card, Concierge), then close with a dual CTA for existing members to sign in. It's clean and on-brand, but it's also bloodless. There's no discount, no urgency, no scarcity — just a feature list dressed up as an email. The "Get the Ultimate Insider Experience" headline is the most generic thing Neiman Marcus could have written.
+This is a loyalty program acquisition email — Neiman Marcus pitching InCircle enrollment to someone who hasn't joined yet (or re-engaging a lapsed member). Compared to the same-day Designer Sale send ("It's here! The Designer Sale" scored 10/10), this email is operating in a completely different gear: no urgency, no product, no discount. It's asking for a behavioral change — apply for a credit card, or at minimum enroll in InCircle — which is inherently a heavier lift.
 
-The brand history makes this feel strategic — they've been running a welcome/loyalty sequence since May 16 ("15% off & you're in the know"), then a brand-nurture send ("peek into our world"), and now a program-enrollment push. The sequencing makes sense, but by send three in three days, open rates are likely falling and the subscriber is suffering benefit-list fatigue without a new value hook to anchor to.
+The structure is competent: aspirational hero image, tagline, then a stacked benefits breakdown. But it slides into the common trap of listing features rather than selling outcomes. The Circle-tier gating is the bigger problem — most benefits are labeled "Circle 3 & Above" and Concierge requires "Circle 5 & Above." A new enrollee landing on this email sees a wall of "you'll qualify for this eventually," which is a discouraging first impression for a conversion-intent email.
 
-Net judgement: competent infrastructure email, but it under-performs relative to what the Neiman Marcus brand can deliver. The Designer Sale email from May 17 (10/10) shows what a sharp NM send looks like; this one is far below that bar.
+The email is clean and on-brand with no render issues, but it reads like evergreen brochure copy dropped into an active sale week. With the 50%-off Designer Sale running simultaneously, the InCircle pitch has to compete with a much louder, higher-stakes message from the same brand the same day — and it loses that attention war before the inbox is even opened.
 
 ## 2. What worked
 
-- **Benefit architecture is scannable** — four distinct benefit blocks with tier labels (Circle 2, Circle 3, etc.) let a reader quickly self-qualify.
-- **Lifestyle hero image works** — the model in red against a dark background is on-brand and aspirational; it communicates luxury without trying too hard.
-- **"INCIRCLE" logo mark** is prominently placed between the headline and body copy, giving the program instant visual identity.
-- **Dual sign-in CTA at bottom** is a smart move — existing members get a frictionless re-entry path without cluttering the primary "Apply Now" flow.
-- **Navigation bar + footer utilities** (Find a store, Contact us, My account) are intact and render cleanly.
+- **Hero image is strong** — the woman in red is aspirational and consistent with Neiman Marcus's luxury brand voice; the visual arrival is polished.
+- **"Apply Now" CTA is clear and prominent** — no ambiguity about the primary conversion action.
+- **Concrete benefit anchors exist** — "$100 Point Card for every 10,000 points" and "Free 2-Day Shipping" give quantifiable, tangible value rather than just vague perks.
+- **Existing-member path is included** — the "Already an InCircle Member? Sign In" section prevents frustrating people already enrolled.
+- **No render bugs** — layout is clean, images load, copy is legible throughout.
 
 ## 3. What didn't
 
-- **Zero urgency or concrete offer** — "Apply Now" is asking for a behavioral commitment with no near-term payoff. There's no "join today and earn X bonus points," no free-shipping trial, nothing time-bounded.
-- **"Get the Ultimate Insider Experience" is filler copy** — vague, overused, and interchangeable with a dozen other luxury loyalty programs.
-- **Benefit copy is tiny and dense** — at email rendering size, the paragraph text under each benefit block is extremely small and likely unreadable on mobile without zooming.
-- **"Already an InCircle member?" section buries existing-member value** — the sign-in prompt is low-contrast and easy to miss; a current member landing here feels like they got the wrong email.
-- **No social proof or member count** — a program pitch is a natural place for "Join 2M+ InCircle members" or a brief testimonial; this has none.
+- **Circle-tier gating undermines the pitch** — "Circle 3 & Above" and "Circle 5 & Above" labels appear three of the four times a benefit is named; new members immediately clock that most perks are not for them yet.
+- **No urgency mechanism** — no deadline, no limited-time bonus points, no reason to apply today versus next month.
+- **Drops into an active sale week without acknowledging it** — the Designer Sale is live on the same day; this email ignores the most compelling reason to enroll right now ("every dollar you spend in the sale counts toward your first Point Card").
+- **Text-heavy, list-format body** — after the hero the email becomes four stacked text blocks that read like a brochure, not a conversion page.
+- **No social proof** — no member count, no testimonials, no "join X million InCircle members" to validate the program's credibility.
 
 ## 4. What I'd change
 
-1. **Add a join-now incentive with urgency** — even "Earn 2X points on your first purchase when you join by [date]" transforms this from a passive feature list into an active reason to click today. Without it, the email is a brochure, not a conversion driver.
-2. **Rewrite the hero headline** — swap "Get the Ultimate Insider Experience" for something that names the tangible first benefit, e.g., "Free shipping starts on day one."
-3. **Increase benefit body copy size** — the tier descriptions are currently unreadable at scale; bump to at least 14px and shorten each to one punchy line.
-4. **Segment this send** — send the "Apply Now" version only to confirmed non-members; for existing members (who see the sign-in block), send a benefits-upgrade or spend-milestone email instead.
-5. **Add one concrete anchor number** — the "For every 10,000 points you earn, get a Point Card® worth $100" stat is the single most compelling line in the email; pull it up to the hero area, don't bury it in block 2.
-
-- **Subject Alt A:** `Free shipping, points, concierge — InCircle's yours`
-- **Subject Alt B:** `Your InCircle benefits are waiting — here's what you get`
-- **Preheader Alt A:** `Earn a $100 Point Card for every 10,000 points. Join free.`
-- **Preheader Alt B:** `Free 2-day shipping + exclusive access. Apply in seconds.`
-
----
+1. **Add a time-bounded enrollment bonus** — "Apply this week and earn 2,500 bonus points" transforms this from informational to actionable at near-zero cost and creates the urgency the email completely lacks.
+2. **Lead with Circle 1 benefits, not Circle 3+** — show prospects what they get on day one first; tier up to aspirational perks after hooking them with immediate value.
+3. **Tie the pitch to the running Designer Sale** — "Join InCircle now and every dollar you spend in the Designer Sale counts toward your first $100 Point Card" is a far more compelling hook than a standalone enrollment email.
+4. **Compress the body into an icon grid** — four stacked text sections can be a two-column visual grid at half the reading time; the Concierge section in particular feels buried.
+5. **Sharpen the hero headline** — "Get the Ultimate Insider Experience" is vague; name the single best immediate benefit in the hero line.
+   - **Subject Alt A:** `Join InCircle: earn a $100 Point Card as you shop the sale`
+   - **Subject Alt B:** `Your InCircle perks are waiting — here's what you unlock today`
+   - **Preheader Alt A:** `Free 2-day shipping + $100 Point Cards + exclusive access — start earning now.`
+   - **Preheader Alt B:** `Apply now and every purchase in the Designer Sale counts toward your first reward.`
 
 ## 5. Business Impact Score (1-10)
 
-**4/10**
+**6/10**
 
-- Sender is a brand I recognize / am subscribed to ✓
-- Primary CTA is unambiguous ("Apply Now" button is visible and clear) ✓
-- No render bugs (layout is clean, no overlapping text, no broken images) ✓
-- Offer feels honest (no buried bait-and-switch language) ✓
-
-Criteria NOT met: no concrete %/$ offer in the hero; no demographic targeting signals; no current season/campaign relevance; loyalty benefits aren't framed as new or urgent; visual hierarchy lands on the hero image, not on a specific offer.
-
----
+- Recognizable sender (Neiman Marcus)
+- Concrete benefits visible ($100 Point Cards, Free 2-Day Shipping)
+- Primary CTA is unambiguous ("Apply Now" button, clearly labeled)
+- No render bugs visible
+- Loyalty/member path visible (existing member "Sign In" section)
+- Offer is structurally honest (tier requirements stated inline, not buried)
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 4/10
-- **Signals counted:** Sender display name is recognizable; subject is concrete (names InCircle explicitly); no spam signals.
-- **Rationale:** "Join InCircle & unlock benefits as you shop" is legible and non-spammy, but it's also low-stakes — there's no offer, no urgency, and no personalization to compel an open. After three NM sends in three days, a real subscriber's open likelihood is sliding on cadence fatigue alone.
-
----
+- **Score:** 5/10
+- **Signals counted:** Sender display name recognizable; subject under ~50 chars (44 chars); no spam signals (no ALL CAPS, no !!!); subject broadly relevant to a luxury-loyalist persona
+- **Rationale:** "Unlock benefits as you shop" is vague — a reader can't tell from the subject what the best benefit actually is. In a week that already delivered a 50%-off Designer Sale launch and an "access ends tonight" deadline email from the same brand, this soft loyalty pitch is going to lose the attention competition at the inbox level.
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 3/10
-- **Signals counted:** No friction (renders cleanly, CTA loads directly); brand voice is consistent and trusted.
-- **Rationale:** The "Apply Now" CTA is clear but asks for a commitment with no immediate reward attached — that's a high-friction ask with low pull. Without a time-bounded incentive or a specific product to click into, there's no purchase-intent trigger, just a program overview.
-
----
+- **Score:** 6/10
+- **Signals counted:** Hero offer visible without scrolling; CTA in the luxury-shopper category; offer effectively reduces price (Point Cards = cash back, free shipping = real savings); brand voice is consistent and trusted; no friction on either CTA button
+- **Rationale:** The $100 Point Card and free 2-day shipping are genuinely attractive to a frequent Neiman Marcus shopper, and "Apply Now" is a clean, low-friction button. The friction comes one step later — clicking through reveals this requires a credit card application, not just a loyalty enrollment, which raises the commitment threshold significantly.
 
 ## 8. Subject
 
 - **Subject:** `Join InCircle & unlock benefits as you shop​`
-- **Length:** 44 characters
-- **Scores (1-10):** Clarity `7`, Curiosity `3`, Personalization `2`, Urgency `2`, Specificity `4`
-
----
+- **Length:** 44 chars
+- **Scores (1-10):** Clarity `7`, Curiosity `4`, Personalization `2`, Urgency `2`, Specificity `4`
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — no meaningful preheader text is visible; inbox would likely pull the first line of body copy ("Access exclusive rewards...") or show nothing useful.
-- **Length:** n/a
-- **Scores (1-10):** Complements subject `2`, Specificity `2`, Clarity `2`, Inbox-fit `2`
+- **Preview:** `(none / leaking junk)` — no dedicated preheader is visible; inbox clients would likely surface "Get the Ultimate Insider Experience" from the hero, which echoes the subject's vague tone rather than adding a concrete benefit
+- **Length:** ~35 chars if hero headline serves as preheader
+- **Scores (1-10):** Complements subject `3`, Specificity `2`, Clarity `5`, Inbox-fit `3`
 
 ---
 
 ## Technical Audit
 
 ## Technical Audit — "Join InCircle & unlock benefits as you shop"
+
 **From:** NeimanMarcus@e.neimanmarcus.com | **ESP:** Salesforce Marketing Cloud (AMPscript)
 
 ---
 
 ### 1. Technical Summary
 
-The email sends from a legitimate NM subdomain with standard SFMC infrastructure, but the relay strips authentication headers, three compliance headers are absent, and the AMPscript template contains a commented-out variable branch that indicates the production send used an unresolved template state.
+The email is structurally sound but carries three compliance warnings from the relay layer (missing `List-Unsubscribe` headers, unknown DKIM/SPF status) and two AMPscript variable defects that could silently break identity tracking and campaign attribution.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**Finding:** QA skipped all 36 click-tracking URLs (redirect domains) — destination URLs and UTM parameters could not be verified programmatically.
+**36 click-redirect links skipped by QA probe** — destination URLs and UTM parameters could not be verified. This is expected for `e.neimanmarcus.com` click-tracking redirects, but means no confirmation that:
+- Links resolve to live pages
+- UTM parameters are correctly formed on all 36 links
 
-- 36 links were flagged as tracking/click-redirect; none were probed
-- No broken links confirmed, but no destination validation was possible either
-- 57% overall pass rate reflects the skipped probes as unresolved, not passing
-
-**No confirmed broken links.** Destination verification requires manual spot-check of sampled redirect chains.
+**`@refid` is a no-op CONCAT:**
+```
+@refid = CONCAT(@base_refid,"")
+```
+Concatenating `@base_refid` with an empty string produces the same value as `@base_refid` alone. If this variable is injected into link query strings as a campaign suffix, the suffix is blank. Likely a template placeholder where a string literal (e.g., `"-incircle"`) was never inserted.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Nested `@media` query (invalid CSS):**
+**Nested `@media` block (invalid CSS):**
 ```css
-/* In second <style> block */
 @media only screen and (max-device-width: 480px), screen and (max-width: 480px) {
   ...
   @media only screen and (max-device-width: 520px), screen and (max-width: 520px) {
-    .ImgSize2x2 { ... }   /* ← nested @media — invalid per spec */
+    .ImgSize2x2 { ... }
+    .TxtSize2x2 { ... }
   }
 }
 ```
-Nested media queries are not valid CSS. The `.ImgSize2x2` and `.TxtSize2x2` responsive rules will be silently ignored on most email clients, likely breaking the 2×2 product grid at narrow viewports.
+Nested media queries are not valid CSS and are not supported by any email client renderer. The `.ImgSize2x2` / `.TxtSize2x2` responsive rules will never fire. Any 2×2 product grid will render at desktop dimensions on narrow viewports.
 
-**Commented-out viewport meta tags (3 of 4):**
-Three `<meta name="viewport">` variants are left in as HTML comments. Not a rendering bug, but raises template hygiene concerns — only the active tag should remain.
+**Three commented-out `<meta name="viewport">` tags** — template drift artifact, no functional impact but indicates the template was assembled from multiple sources without cleanup.
 
-**`<title>` trailing whitespace:** `<title>Neiman Marcus </title>` — minor; affects tab label in webmail clients.
+**`<title>` has a trailing space:** `<title>Neiman Marcus </title>` — minor, but visible in browser tab previews for webmail clients.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**Unresolved template branch — `@user` variable:**
-
-The template header contains:
-```
+**`@user` / SHA256 hash is disabled:**
+```amscript
 <!--/* SET @user = HASHED_EMAIL_SHA256 */-->
 ```
-This AMPscript assignment is wrapped in both an HTML comment (`<!-- -->`) and an AMPscript comment (`/* */`). The outer HTML comment prevents SFMC from evaluating it at send time, so the SHA256 branch is permanently disabled. The active path sets `@user` via a `Lookup()` call instead:
-```
-@user Lookup("NM_Subscriber_New_Consolidated", "EMAIL_ID", "EMAIL_ADDRESS", @email)
-```
-The comment says **"CHOOSE ONE SCENARIO BELOW"** — this template was not finalized before send. If any downstream personalization or pixel relies on `@user` being a hashed email (e.g., an ad-match pixel), it is receiving an `EMAIL_ID` integer instead.
+The comment wrapper `<!--/* ... */-->` means this line is never executed. If `@user` is used downstream in any link parameter (e.g., for onsite identity resolution or retargeting pixel matching), it will render as an empty string or throw an AMPscript runtime error depending on usage context.
 
-**`@refid` no-op concatenation:**
-```
-@refid = CONCAT(@base_refid,"")
-```
-Concatenating with an empty string is a placeholder pattern. If `@refid` was meant to have a suffix appended (e.g., a variant code), this send omitted it and all 36 tracked links carry a bare `@base_refid` value.
+**`@emailid` lookup is defined but depends on `@user`** — if `@user` is blank, any lookup keyed off it will silently return null.
 
 ---
 
 ### 5. Compliance
 
-| Header | Status | Impact |
-|--------|--------|--------|
-| `List-Unsubscribe` | **Missing** (not captured by relay) | Gmail and Apple Mail suppress the native unsubscribe prompt; increases spam complaint risk |
-| `List-Unsubscribe-Post` (RFC 8058) | **Missing** | One-click unsubscribe non-functional; Gmail Postmaster penalizes senders above 0.1% complaint rate who lack this |
-| `Authentication-Results` | **Missing** | SPF/DKIM/DMARC pass/fail unknown — relay is not forwarding auth results; cannot confirm alignment |
+| Check | Status | Evidence |
+|---|---|---|
+| `List-Unsubscribe` header | **WARN** | Not captured by relay; Gmail and Apple Mail require this for inbox placement and suppression of the native unsubscribe prompt |
+| `List-Unsubscribe-Post` (RFC 8058) | **WARN** | Missing; Gmail's one-click unsubscribe requirement for bulk senders (>5k/day) mandates this header since Feb 2024 |
+| SPF / DKIM / DMARC | **WARN** | `Authentication-Results` not captured by AgentMail relay — pass/fail unknown |
+| CAN-SPAM physical address | Cannot verify — truncated HTML | |
+| Unsubscribe link in body | Cannot verify — 36 links unprobed | |
 
-The `List-Unsubscribe` and `List-Unsubscribe-Post` headers are most likely present on the actual SMTP envelope but stripped by the AgentMail relay before capture. However, their absence from the audited message copy means they cannot be confirmed.
-
-CAN-SPAM physical address and unsubscribe mechanism are present in the footer HTML (standard for NM). No issue there assuming footer rendered correctly.
+The missing `List-Unsubscribe-Post` is the highest-risk item: Google's bulk sender policy requires one-click unsubscribe, and non-compliance is a deliverability signal.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-**Cannot verify** — all 36 outbound links were skipped by the HTTP probe. UTM parameter presence, campaign tagging, and landing page alignment are unconfirmed.
+All 36 links route through the `e.neimanmarcus.com` click-tracking domain and could not be probed. Cannot confirm:
+- UTM parameters are present on all CTAs
+- `@refid` (currently empty due to the no-op CONCAT) is correctly appended to destination URLs
+- InCircle landing page is live and resolves without redirect loops
 
-Manual check recommended on at minimum:
-- Primary CTA ("Join InCircle") link
-- Header nav links
-- Footer unsubscribe link
+The `@refid` defect specifically risks breaking campaign attribution in analytics for every link in this send.
 
 ---
 
 ### 7. Recommendations
 
 | Priority | Action |
-|----------|--------|
-| **High** | Resolve the `@user` variable scenario before next send — decide Lookup vs. SHA256 and remove the dead branch from the template |
-| **High** | Confirm `List-Unsubscribe` and `List-Unsubscribe-Post` are present on the SMTP envelope, not just stripped by relay; verify with a raw header dump from a seed inbox |
-| **High** | Fix nested `@media` query — move `.ImgSize2x2` / `.TxtSize2x2` rules to the outer 480px block or a separate 520px block at the same nesting level |
-| **Medium** | Probe a sample of the 36 redirect links manually to verify UTM params and destinations are correct for this campaign |
-| **Medium** | Confirm `@refid` concatenation is intentional; if a variant suffix was omitted, tracking attribution for this send is affected |
-| **Low** | Remove the 3 commented-out `<meta name="viewport">` tags and trailing whitespace from `<title>` to clean up the template |
+|---|---|
+| **High** | Fix the nested `@media` block — move `.ImgSize2x2` / `.TxtSize2x2` rules outside the 480px block as a separate top-level `@media (max-width: 520px)` rule |
+| **High** | Restore or intentionally remove `SET @user = HASHED_EMAIL_SHA256` — if identity resolution is needed, un-comment it; if not, remove the dead variable to avoid null propagation |
+| **High** | Fix `@refid = CONCAT(@base_refid,"")` — supply the intended suffix string literal |
+| **High** | Confirm `List-Unsubscribe` and `List-Unsubscribe-Post` headers are set at the SFMC send classification level (not in-HTML) — verify via raw header inspection on a seed address |
+| **Medium** | Probe all 36 click-redirect links against a seed send to confirm UTM params and live destination pages |
+| **Low** | Remove the three commented-out `<meta viewport>` tags and trim the `<title>` trailing space |
 ## Recent history
 
 - [[2026-05-18-1-000-new-arrivals-for-your-summer-getaway]] — 7/10 (2026-05-18)
