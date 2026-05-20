@@ -3,120 +3,145 @@ slug: 2026-05-20-unlock-more-rewards-with-the-adidas-app-851e2b7e-cc69-4336-85bd
 type: email
 date: 2026-05-20
 persona: axel-stripe-adidas-fap6e
-score: "8/10"
+score: "9/10"
 sender: adidas
 subject: Unlock more rewards with the adidas app
-tags: [email, score-8, sender/adidas]
+tags: [email, score-9, sender/adidas]
 ---
 # Unlock more rewards with the adidas app
-**Score:** 8/10 · **Type:** Email audit · **2026-05-20**
+**Score:** 9/10 · **Type:** Email audit · **2026-05-20**
 ## Executive summary
 
-- This is send three in adidas's adiClub onboarding sequence — following the welcome email on May 15 and the points-education email on May 17. Five days, three emails. The brief is clear — get the new member to download the app — and adidas has sensibly sweetened the pitch with a 15% voucher (no app requirement) to lower resistance. The two-part structure works structurally: app pitch → benefits → CTA, then a distinct voucher module below. The execution is clean and bug-free.
-- The biggest structural problem is priority inversion: the 15% voucher is the email's most motivating asset, but it's buried as the second act below the app download pitch. A new member scrolling quickly on mobile will likely convert on the voucher before even registering the app ask. The two offers compete rather than reinforce.
-- The subject line is also the third consecutive use of "unlock" + "rewards" in five days ("Earn adiClub points to unlock more rewards" on May 17), which is subject line fatigue territory. A subscriber's inbox treats repetitive framing as deprioritization fodder.
+- This is the third email in adidas's post-signup adiClub onboarding sequence — sent five days after the welcome and three days after the "earn points" education email. The brief is clear: get the new member to download the app. To sweeten the push, adidas buries a 15% off voucher roughly halfway down the page.
+- That's the problem in one sentence: the strongest asset in this email (a personalized voucher with a real deadline) is subordinated to an app download pitch. "Here's 15% off" is a hard offer; "download our app" is a soft ask. The sequencing is backwards, and a subscriber skimming on mobile will never reach the code.
+- The visual design is clean, the Spotify partner offer is a genuine hook, and the voucher itself is well-executed with a visible code and a clear CTA. But burying the conversion offer below the fold while leading with a utility ask is a strategic hierarchy miss that will cost this send clicks and redemptions.
 
 ## What's working
 
-- **Voucher module is well-executed** — "HERE'S 15% OFF" is large, bold, and impossible to miss once you reach it; the deadline (June 03, 2026) and terms ("full-priced items only") are disclosed visibly.
-- **App benefits are specific and copy-worthy** — "free shipping" and "early access to drops" are concrete, not vague feature claims.
-- **"GET THE APP" CTA is clean** — dark button, clear imperative copy, appropriately placed after the benefits list.
-- **Dual redemption paths for the voucher** — "enter at checkout or show in store" removes friction for both online and retail members.
-- **"RECOMMENDED FOR YOU" section adds browse value** — product recs give someone who isn't downloading the app a reason to still click through.
+- **15% off voucher is sharply presented:** dedicated section, visible promo code, hard deadline (June 3), and a standalone "REDEEM ONLINE" button.
+- **Spotify partner offer adds tangible value:** "3 months of Spotify" inside the app mockup is specific and compelling — a real benefit, not just brand copy.
+- **App download CTA is frictionless:** App Store and Google Play buttons side-by-side, no ambiguity.
+- **Clean render:** no broken images, no overlapping text, no layout issues.
+- **adiClub framing is consistent:** the voucher header "YOUR ADICLUB VOUCHER" ties the offer explicitly to the loyalty program the user just joined.
 
 ## What's weak
 
-- **15% offer is below the fold on mobile** — the hero, sub-headline, three bullet points, and "GET THE APP" CTA collectively push the voucher to a second scroll; the strongest motivator is buried.
-- **Subject line recycles "unlock" + "rewards" for the third time in five days** — a subscriber who got the May 17 send sees nearly identical framing and the urgency signal is gone.
-- **Preheader is "DOWNLOAD THE APP"** — this is the first readable text above the nav, and it repeats the subject's intent rather than adding a new hook (the 15% off) in the inbox preview pane.
-- **No personalization visible** — the May 15 welcome email set a higher standard; this email has no name, no mention of current points balance, and "RECOMMENDED FOR YOU" reads as a generic template rather than a curated selection.
+- **15% off is buried below the app pitch:** the most compelling offer appears below the fold, after the app store buttons and a four-bullet list — most mobile skimmers won't reach it.
+- **"Recommended For You" overpromises:** the section header implies personalization, but the four buttons — SHOP SHOES, SHOP ACCESSORIES, SHOP CLOTHING, SHOP NEW ARRIVALS — are generic category links with no actual product targeting.
+- **Subject echoes the May 17 send:** "Earn adiClub points to **unlock** more rewards" → "**Unlock** more rewards with the adidas app" — a returning subscriber will sense the repetition before opening.
+- **No urgency or offer in the subject:** the June 3 voucher deadline is the strongest hook in the email and it's absent from the subject line entirely.
+- **Cadence is aggressive:** three emails in five days, all hitting the same "rewards/unlock" theme, will accelerate unsubscribes from members who haven't engaged yet.
 
 ## Recommendations
 
-- 1. **Lead with the 15% voucher, not the app** — flip the structure: open with "Here's 15% off as a welcome gift" and use the app module as a secondary upsell ("Earn even more points — download the app"). The offer converts cold; the app requires more intent.
-- 2. **Retire "unlock" and "rewards" from the subject line** — this is the third use in five days; the subscriber's brain is already filtering it. Try a more specific subject line.
-- **Subject Alt A:** `Download the app. Get 50 points instantly.`
-- **Subject Alt B:** `Your 15% welcome discount — and a free 50 points`
-- 3. **Rewrite the preheader to lead with the voucher** — this is wasted inbox real estate.
-- **Preheader Alt A:** `Your 15% off code is inside — valid through June 3`
-- **Preheader Alt B:** `15% off + 50 bonus points — here's how to claim both`
-- 4. **Add the points balance to personalize** — even a single line ("You have X points — here's how to reach Level 2 faster") would make this feel like a member email rather than a blast.
-- 5. **Slow the cadence** — three emails in five days is aggressive for a new subscriber who hasn't demonstrated purchase intent yet; a 7–10 day gap after the May 17 send would have made this feel like a reward rather than a nudge.
+- 1. **Lead the subject with the voucher, not the app.** The 15% off with a real deadline is a far stronger open driver than an app download ask.
+- **Subject Alt A:** `Your 15% off expires June 3 — plus a Spotify surprise`
+- **Subject Alt B:** `adiClub member perk: 15% off + 3 months of Spotify`
+- **Preheader Alt A:** `Download the app to unlock partner offers — and your exclusive discount code is inside.`
+- **Preheader Alt B:** `New member reward: 15% off full-price items, redeemable online or in store.`
+- 2. **Move the voucher section above the app pitch.** Give the hard offer the top slot; let the app download CTA follow as the mechanism to get more benefits like this one. "You unlocked this reward — get the app to unlock more" is a stronger narrative than "get the app → here's a reward."
+- 3. **Replace the generic "Recommended For You" category buttons with two or three actual product tiles.** The current four-button grid adds scroll length without driving click intent.
+- 4. **Pull the Spotify offer out of the app mockup image and into the body as a text callout.** Right now it's visible only inside a rendered phone screen, which is easy to miss. "New: 3 months of Spotify free when you download the app" is a differentiated hook that earns its own line.
+- 5. **Rest one email in this sequence.** The May 17 and May 20 sends cover similar ground — a Thursday pause before this send would arrive at six days post-signup with higher attention and less fatigue risk.
 
 ## Full review
 ## 1. Overview
 
-This is send three in adidas's adiClub onboarding sequence — following the welcome email on May 15 and the points-education email on May 17. Five days, three emails. The brief is clear — get the new member to download the app — and adidas has sensibly sweetened the pitch with a 15% voucher (no app requirement) to lower resistance. The two-part structure works structurally: app pitch → benefits → CTA, then a distinct voucher module below. The execution is clean and bug-free.
+This is the third email in adidas's post-signup adiClub onboarding sequence — sent five days after the welcome and three days after the "earn points" education email. The brief is clear: get the new member to download the app. To sweeten the push, adidas buries a 15% off voucher roughly halfway down the page.
 
-The biggest structural problem is priority inversion: the 15% voucher is the email's most motivating asset, but it's buried as the second act below the app download pitch. A new member scrolling quickly on mobile will likely convert on the voucher before even registering the app ask. The two offers compete rather than reinforce.
+That's the problem in one sentence: the strongest asset in this email (a personalized voucher with a real deadline) is subordinated to an app download pitch. "Here's 15% off" is a hard offer; "download our app" is a soft ask. The sequencing is backwards, and a subscriber skimming on mobile will never reach the code.
 
-The subject line is also the third consecutive use of "unlock" + "rewards" in five days ("Earn adiClub points to unlock more rewards" on May 17), which is subject line fatigue territory. A subscriber's inbox treats repetitive framing as deprioritization fodder.
+The visual design is clean, the Spotify partner offer is a genuine hook, and the voucher itself is well-executed with a visible code and a clear CTA. But burying the conversion offer below the fold while leading with a utility ask is a strategic hierarchy miss that will cost this send clicks and redemptions.
+
+---
 
 ## 2. What worked
 
-- **Voucher module is well-executed** — "HERE'S 15% OFF" is large, bold, and impossible to miss once you reach it; the deadline (June 03, 2026) and terms ("full-priced items only") are disclosed visibly.
-- **App benefits are specific and copy-worthy** — "free shipping" and "early access to drops" are concrete, not vague feature claims.
-- **"GET THE APP" CTA is clean** — dark button, clear imperative copy, appropriately placed after the benefits list.
-- **Dual redemption paths for the voucher** — "enter at checkout or show in store" removes friction for both online and retail members.
-- **"RECOMMENDED FOR YOU" section adds browse value** — product recs give someone who isn't downloading the app a reason to still click through.
+- **15% off voucher is sharply presented:** dedicated section, visible promo code, hard deadline (June 3), and a standalone "REDEEM ONLINE" button.
+- **Spotify partner offer adds tangible value:** "3 months of Spotify" inside the app mockup is specific and compelling — a real benefit, not just brand copy.
+- **App download CTA is frictionless:** App Store and Google Play buttons side-by-side, no ambiguity.
+- **Clean render:** no broken images, no overlapping text, no layout issues.
+- **adiClub framing is consistent:** the voucher header "YOUR ADICLUB VOUCHER" ties the offer explicitly to the loyalty program the user just joined.
+
+---
 
 ## 3. What didn't
 
-- **15% offer is below the fold on mobile** — the hero, sub-headline, three bullet points, and "GET THE APP" CTA collectively push the voucher to a second scroll; the strongest motivator is buried.
-- **Subject line recycles "unlock" + "rewards" for the third time in five days** — a subscriber who got the May 17 send sees nearly identical framing and the urgency signal is gone.
-- **Preheader is "DOWNLOAD THE APP"** — this is the first readable text above the nav, and it repeats the subject's intent rather than adding a new hook (the 15% off) in the inbox preview pane.
-- **No personalization visible** — the May 15 welcome email set a higher standard; this email has no name, no mention of current points balance, and "RECOMMENDED FOR YOU" reads as a generic template rather than a curated selection.
+- **15% off is buried below the app pitch:** the most compelling offer appears below the fold, after the app store buttons and a four-bullet list — most mobile skimmers won't reach it.
+- **"Recommended For You" overpromises:** the section header implies personalization, but the four buttons — SHOP SHOES, SHOP ACCESSORIES, SHOP CLOTHING, SHOP NEW ARRIVALS — are generic category links with no actual product targeting.
+- **Subject echoes the May 17 send:** "Earn adiClub points to **unlock** more rewards" → "**Unlock** more rewards with the adidas app" — a returning subscriber will sense the repetition before opening.
+- **No urgency or offer in the subject:** the June 3 voucher deadline is the strongest hook in the email and it's absent from the subject line entirely.
+- **Cadence is aggressive:** three emails in five days, all hitting the same "rewards/unlock" theme, will accelerate unsubscribes from members who haven't engaged yet.
+
+---
 
 ## 4. What I'd change
 
-1. **Lead with the 15% voucher, not the app** — flip the structure: open with "Here's 15% off as a welcome gift" and use the app module as a secondary upsell ("Earn even more points — download the app"). The offer converts cold; the app requires more intent.
-2. **Retire "unlock" and "rewards" from the subject line** — this is the third use in five days; the subscriber's brain is already filtering it. Try a more specific subject line.
-   - **Subject Alt A:** `Download the app. Get 50 points instantly.`
-   - **Subject Alt B:** `Your 15% welcome discount — and a free 50 points`
-3. **Rewrite the preheader to lead with the voucher** — this is wasted inbox real estate.
-   - **Preheader Alt A:** `Your 15% off code is inside — valid through June 3`
-   - **Preheader Alt B:** `15% off + 50 bonus points — here's how to claim both`
-4. **Add the points balance to personalize** — even a single line ("You have X points — here's how to reach Level 2 faster") would make this feel like a member email rather than a blast.
-5. **Slow the cadence** — three emails in five days is aggressive for a new subscriber who hasn't demonstrated purchase intent yet; a 7–10 day gap after the May 17 send would have made this feel like a reward rather than a nudge.
+1. **Lead the subject with the voucher, not the app.** The 15% off with a real deadline is a far stronger open driver than an app download ask.
+   - **Subject Alt A:** `Your 15% off expires June 3 — plus a Spotify surprise`
+   - **Subject Alt B:** `adiClub member perk: 15% off + 3 months of Spotify`
+   - **Preheader Alt A:** `Download the app to unlock partner offers — and your exclusive discount code is inside.`
+   - **Preheader Alt B:** `New member reward: 15% off full-price items, redeemable online or in store.`
+
+2. **Move the voucher section above the app pitch.** Give the hard offer the top slot; let the app download CTA follow as the mechanism to get more benefits like this one. "You unlocked this reward — get the app to unlock more" is a stronger narrative than "get the app → here's a reward."
+
+3. **Replace the generic "Recommended For You" category buttons with two or three actual product tiles.** The current four-button grid adds scroll length without driving click intent.
+
+4. **Pull the Spotify offer out of the app mockup image and into the body as a text callout.** Right now it's visible only inside a rendered phone screen, which is easy to miss. "New: 3 months of Spotify free when you download the app" is a differentiated hook that earns its own line.
+
+5. **Rest one email in this sequence.** The May 17 and May 20 sends cover similar ground — a Thursday pause before this send would arrive at six days post-signup with higher attention and less fatigue risk.
+
+---
 
 ## 5. Business Impact Score (1-10)
 
-**8/10**
+**9/10**
 
-- Sender is a recognized, subscribed brand (adidas)
-- One concrete offer is visible (15% off with June 3 deadline)
-- Primary CTA is unambiguous ("GET THE APP," "REDEEM ONLINE")
-- Visual hierarchy is clear — headline → benefits → CTA → voucher
-- No render bugs
-- Email reflects a live, current onboarding campaign
-- Loyalty/member benefits visible (voucher module clearly labeled "YOUR ADICLUB VOUCHER")
-- Offer feels honest (full-price restriction and expiry disclosed in visible fine print)
+- Subject/hero copy references persona's focus area (rewards, loyalty)
+- Sender (adidas) is recognized and subscribed-to
+- Concrete offer visible: 15% off voucher with visible promo code
+- Primary CTAs are unambiguous: "GET THE APP" and "REDEEM ONLINE" both clear
+- Visual hierarchy is clear — app hero → headline → bullet benefits → CTA → voucher
+- No render bugs: clean layout, no broken images, no overlapping elements
+- Current campaign: June 3 expiry gives the email a live, time-bounded feel
+- Loyalty/member benefits explicitly visible: "YOUR ADICLUB VOUCHER" section
+- Offer feels honest: the "full-priced items only" exclusion is visible, not buried
 
-*Not counted:* "demographic signals match persona" (no human models; product recs are generic athletic shots, not demographic-anchored) and "subject/hero explicitly references persona's focus area" is a weak TRUE given the generic "unlock more rewards" framing.
+*Not counted:* Demographic signals — the "Recommended For You" section uses generic category links, not age/gender/style-targeted product tiles.
+
+---
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Sender display name recognizable (adidas); subject is concrete (names the app); subject is relevant to an adiClub member persona; subject is under 50 chars (39 characters); no spam signals (no ALL CAPS stacking, no excessive exclamation marks).
-- **Rationale:** The sender and subject are clean, but the cadence kill is real — this is the third send in five days with near-identical subject vocabulary ("unlock," "rewards"). No inbox urgency or personalization signal to break through on a busy morning.
+- **Score:** 7/10
+- **Signals counted:** Sender display name recognizable (adidas); Subject concrete — names both the product (adidas app) and the benefit (rewards); Subject relevant to persona's focus area (adiClub loyalty); Preview text is real copy; Subject under 50 chars (38 chars); No spam signals.
+- **Rationale:** The sender and clean subject format are strong floors, but the subject carries no offer and no urgency — it's a soft brand statement. The word "unlock" appears for the second consecutive send (May 17 used it too), so an attentive subscriber may feel déjà vu before clicking.
+
+---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
 - **Score:** 7/10
-- **Signals counted:** Primary CTA is in a relevant category for a new adiClub member; "GET THE APP" is specific (verb + noun); offer reduces price (15% off); offer is time-bounded (June 3); brand voice is consistent and trusted; no friction in the render.
-- **Rationale:** The 15% voucher is the click driver here — once you scroll to it, "REDEEM ONLINE" is a low-friction conversion. The "GET THE APP" CTA is weaker because it asks for app-install intent, not just a tap; splitting attention between two actions reduces overall conversion likelihood.
+- **Signals counted:** Primary CTA in the loyalty/app category; CTA copy is specific — verb + noun ("GET THE APP," "REDEEM ONLINE"); Offer reduces price (15% off); Offer is time-bounded with a credible deadline (June 3); Brand voice consistent and trusted; No friction — clean render, no broken-image gaps.
+- **Rationale:** The 15% voucher with a visible code and a real deadline is a genuine click driver — if a subscriber scrolls far enough to see it. The primary CTA ("GET THE APP") sits higher and is weaker, which means click rate will hinge on whether users scroll to the voucher section. On mobile, that's far from guaranteed.
+
+---
 
 ## 8. Subject
 
 - **Subject:** `Unlock more rewards with the adidas app`
-- **Length:** 39 characters
-- **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `1`, Urgency `2`, Specificity `5`
+- **Length:** 38 characters
+- **Scores (1-10):** Clarity `7`, Curiosity `3`, Personalization `1`, Urgency `2`, Specificity `5`
+
+---
 
 ## 9. Preview
 
-- **Preview:** `DOWNLOAD THE APP` (leaking nav/header element — not a crafted preheader)
-- **Length:** 16 characters
-- **Scores (1-10):** Complements subject `2`, Specificity `1`, Clarity `4`, Inbox-fit `2`
+- **Preview:** `Download the adidas app now and start unlocking exclusive adiClub rewards straight away`
+- **Length:** 85 characters
+- **Scores (1-10):** Complements subject `3`, Specificity `3`, Clarity `6`, Inbox-fit `3`
+
+The preview is a near-paraphrase of the subject — both say "adidas app + unlock rewards." It adds no new information: no offer teased, no Spotify mention, no voucher hint. Either the Spotify hook or the "15% off expires June 3" line would make far better use of this 85-character window.
 
 ---
 
@@ -128,100 +153,104 @@ The subject line is also the third consecutive use of "unlock" + "rewards" in fi
 
 ### 1. Technical Summary
 
-This email has two critical infrastructure defects — broken font assets and staging environment image URLs leaked into production — plus a cluster of mixed-content and accessibility issues that will degrade rendering across modern email clients. Compliance headers are unverifiable due to relay capture gaps.
+This email has a critical staging/production asset split — multiple images are served from `image.staging.link.adidas.com` in what appears to be a live send — and all eight custom font files return 403, causing silent fallback to system fonts across all webmail clients. Combined with five mixed-content HTTP image sources and missing one-click unsubscribe headers, the email presents meaningful deliverability and rendering risk.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**[CRITICAL] Staging CDN domain in production send**
-Multiple images are served from `image.staging.link.adidas.com` instead of `image.link.adidas.com`:
-```
-https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/b6703adb-28c5-4db1-a53c-b10891372454.gif
-https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif
-https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/6dd41d5d-9aa6-43de-9535-7b7c610fdd69.png
-```
-These appear across at least 10 `<img>` tags. If the staging CDN has access controls or TTLs shorter than inbox lifespan, images will break after initial send.
+**[FAIL] All 8 custom font URLs return 403**
 
-**[INFO] 25 tracking/click-redirect links skipped**
-QA probing skipped all click-redirect URLs — UTM parameters and destination landing pages were not verified. See section 6.
+S3 bucket `s3-eu-west-1.amazonaws.com/adidas-adl/` is returning 403 for every font file:
+- `AdihausDIN-Regular.woff2` / `.ttf`
+- `AdihausDIN-Bold.woff2` / `.ttf`
+- `adineuePRO-Regular.woff2` / `.woff`
+- `adineuePRO-Bold.woff2` / `.woff`
+
+The bucket appears to have restricted public access. `mso-font-alt:Arial` is set in the CSS so Outlook degrades gracefully, but all webmail and modern mobile clients silently fall back to system sans-serif. Note: the QA extractor appended a trailing `)` to each URL (artifact of CSS `url(...)` parsing) — the actual font paths are clean, but the 403s are real.
+
+**[WARN] 25 tracking links skipped** — click-redirect domains were not probed. No broken destination URLs can be confirmed or ruled out from this audit.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**[CRITICAL] All custom font files returning 403**
-All 8 `@font-face` sources from `s3-eu-west-1.amazonaws.com` return HTTP 403:
-```
-AdihausDIN-Regular.woff2 / .ttf
-AdihausDIN-Bold.woff2 / .ttf
-adineuePRO-Regular.woff2 / .woff
-adineuePRO-Bold.woff2 / .woff
-```
-The `mso-font-alt:Arial` fallback handles Outlook, and system-font fallback handles most web clients, so this is not a visual regression in most clients — but it means the brand fonts are silently absent. The S3 bucket policy is blocking public access.
+**[FAIL] Staging CDN in production send**
 
-**[HIGH] Mixed content — HTTP image sources**
-5 images are served over `http://` and will be blocked by Gmail, Outlook.com, and Apple Mail's mixed-content enforcement:
-```
-http://image.link.adidas.com/lib/fe6515707c62007e7715/m/5/718829a4-cff2-4903-9826-fb7a5969e0b8.png
-http://image.link.adidas.com/lib/fe6515707c62007e7715/m/5/aa39ab0d-8ecb-4ebd-bddf-b50da406bce9.png
-http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg  (alt="arrow", appears twice)
-http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/966ef092-a6d7-47fd-8703-d364ac06d9e7.png
-http://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif
-```
+Several images are served from `image.staging.link.adidas.com` while others use `image.link.adidas.com`. Staging assets should never appear in a production send:
+- `https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/1/b6703adb-28c5-4db1-a53c-b10891372454.gif` (appears twice)
+- `https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/2373748f-4913-4dfd-88b6-ca5c712d055b.gif` (appears 5× across the email)
+- `https://image.staging.link.adidas.com/lib/fe6515707c62007e7715/m/21/6dd41d5d-9aa6-43de-9535-7b7c610fdd69.png` (4 instances)
 
-**[MEDIUM] Missing alt text — 17+ image instances**
-The following images have no `alt` attribute (or empty alt), confirmed by QA:
-- `b6703adb-…gif` (2 instances)
-- `2373748f-…gif` (6 instances — appears repeatedly)
-- `718829a4-…png`, `aa39ab0d-…png`, `966ef092-…png`
-- `6dd41d5d-…png` (4 instances)
-- `37231f63-…gif`
+If the staging environment enforces access controls or gets torn down post-campaign, these images will break for anyone who opens the email after that point.
 
-Screen readers will skip these silently. On image-blocking clients, recipients get blank content with no fallback label.
+**[WARN] 5 images served over `http://` (non-HTTPS)**
+
+Gmail, Outlook.com, and Apple Mail proxy images through their own HTTPS CDNs, which will force-upgrade the protocol — but this generates extra round-trips and can fail in clients without transparent proxying:
+- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/5/718829a4-cff2-4903-9826-fb7a5969e0b8.png`
+- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/5/aa39ab0d-8ecb-4ebd-bddf-b50da406bce9.png`
+- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/b0c011a2-d468-414b-a8a2-8595b3ec7b34.jpg` (arrow icon, ×2)
+- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/3/966ef092-a6d7-47fd-8703-d364ac06d9e7.png`
+- `http://image.link.adidas.com/lib/fe6515707c62007e7715/m/1/37231f63-3f72-48f3-8047-2650e11742e8.gif`
+
+**[WARN] 13+ images missing `alt` text**
+
+Affected files include both decorative GIFs and what appear to be content images (`6dd41d5d...png`, `966ef092...png`). With images disabled (common in Outlook desktop and corporate environments), these render as empty boxes. Decorative GIFs should carry `alt=""` explicitly; content images need descriptive text.
+
+**[INFO] DOCTYPE is HTML 4.01 Transitional** — expected for email; no issue.
+
+**[INFO] `lang="en"` is present on `<html>` — no issue.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-The provided HTML truncation contains no visible unrendered merge tokens (e.g., `{{first_name}}`, `%%first_name%%`). Cannot confirm whether personalization fields were correctly resolved or simply absent from this send. No issues detectable from available source.
+No unresolved merge tokens (`{{`, `%%`, `*|`) are visible in the truncated HTML source. Cannot fully verify without the complete body, but no issues detected in the provided excerpt.
 
 ---
 
 ### 5. Compliance
 
-**[HIGH] List-Unsubscribe header absent**
-`List-Unsubscribe` was not captured by the AgentMail relay. Gmail and Yahoo require this header for bulk senders (>5k/day) under their 2024 enforcement policy. Absence risks inbox placement demotion.
+**[WARN] `List-Unsubscribe` header absent**
 
-**[HIGH] List-Unsubscribe-Post absent (RFC 8058)**
-One-click unsubscribe (`List-Unsubscribe-Post: List-Unsubscribe=One-Click`) was not found. This is now a hard requirement for Gmail bulk senders and is separate from the link-based unsubscribe in the email body.
+The QA relay did not capture a `List-Unsubscribe` header. As of February 2024, Gmail and Yahoo require this header on all bulk sends (>5,000/day). Its absence risks inbox demotion or bulk-folder classification.
 
-**[MEDIUM] Authentication-Results not captured**
-SPF and DKIM pass/fail status are unknown — the AgentMail relay did not forward `Authentication-Results` headers. Cannot confirm sender domain `us-news.adidas.com` is DKIM-signed. If it isn't, combined with missing List-Unsubscribe, this email is at elevated risk of spam folder routing.
+**[WARN] `List-Unsubscribe-Post` header absent (RFC 8058)**
 
-**[MEDIUM] Plain-text body is 84% URLs**
-QA measured 9,919 of 11,813 plain-text characters as URLs. Spam filters (SpamAssassin, Proofpoint) score heavily against URL-dense plain-text parts. The plain-text version should be a human-readable summary with links appearing only where needed.
+One-click unsubscribe is now required by Gmail/Yahoo bulk sender policy. Without this header, Gmail will not surface the one-click unsubscribe UI, increasing spam complaints.
+
+**[WARN] `Authentication-Results` header not captured**
+
+SPF and DKIM status cannot be verified through the AgentMail relay. The sending domain is `us-news.adidas.com` (subdomain of `adidas.com`). If DKIM signing is missing or misaligned, combined with the missing `List-Unsubscribe` issues, deliverability to Gmail/Yahoo is at risk.
+
+**[WARN] Plain-text body is 84% URLs (9,919 / 11,813 chars)**
+
+This is an abnormally high URL density in the plain-text alternative, which Bayesian spam filters can penalize. The plain-text part likely needs a human-readable prose version rather than a URL dump.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-All 25 click links route through a redirect domain and were not probed, so UTM parameter presence and landing page alignment cannot be confirmed from this audit. The staging CDN domain in image URLs (`image.staging.link.adidas.com`) raises the question of whether any click-redirect links also point at staging endpoints — this should be explicitly verified before the next send.
+25 tracking/click-redirect links were skipped by the QA probe, so landing page alignment and UTM parameter presence cannot be verified from this audit alone. A secondary check with an authenticated click-tracer is needed to confirm:
+- UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`) are present on all CTA links
+- Landing pages resolve and do not redirect to a 404 or wrong locale
+
+The sending domain `us-news.adidas.com` and image CDN `image.link.adidas.com` differ from the primary domain `adidas.com`, which is expected for ESPs — no issue there.
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Action |
-|---|---|
-| P0 | Replace all `image.staging.link.adidas.com` image URLs with production CDN equivalents before next send |
-| P0 | Fix S3 bucket policy on `adidas-adl` to allow public `GET` on font files, or migrate fonts to a CDN with public access |
-| P1 | Upgrade all `http://image.link.adidas.com` image `src` values to `https://` |
-| P1 | Confirm `List-Unsubscribe` and `List-Unsubscribe-Post` headers are present in the raw SMTP envelope (may be a relay capture gap, not a true absence) |
-| P1 | Add meaningful `alt` text to all content images; decorative images should use `alt=""` explicitly |
-| P2 | Rebuild plain-text alternative as a prose summary — strip bulk URL content down to one short URL per CTA |
-| P2 | Verify `Authentication-Results` (SPF/DKIM) via direct header inspection or a tool like mail-tester.com on the next send |
-| P2 | Audit all 25 click-redirect URLs to confirm they resolve to production landing pages with correct UTM params |
+| Priority | Issue | Action |
+|---|---|---|
+| **P0** | Staging image CDN in production | Replace all `image.staging.link.adidas.com` src URLs with production equivalents before any future resend |
+| **P0** | `List-Unsubscribe` / `List-Unsubscribe-Post` missing | Add headers at ESP/MTA level; required for Gmail/Yahoo bulk compliance |
+| **P1** | Font CDN returning 403 | Move font assets to a dedicated email CDN (not a public S3 bucket) or a properly permissioned CloudFront distribution |
+| **P1** | Mixed-content HTTP images | Update all `image.link.adidas.com` image sources to `https://` |
+| **P1** | Plain-text URL density 84% | Generate a real plain-text version with prose content, not a URL list |
+| **P2** | Missing `alt` text on 13+ images | Add descriptive `alt` on content images; `alt=""` on decorative GIFs |
+| **P2** | Authentication headers unverifiable | Confirm DKIM signing for `us-news.adidas.com` subdomain alignment with ESP |
+| **P3** | Verify UTM params on all 25 CTAs | Run a click-trace pass to confirm UTM coverage |
 ## Recent history
 
 - [[2026-05-17-earn-adiclub-points-to-unlock-more-rewards]] — 7/10 (2026-05-17)
