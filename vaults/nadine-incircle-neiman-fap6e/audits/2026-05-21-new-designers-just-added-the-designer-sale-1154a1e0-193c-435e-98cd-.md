@@ -3,141 +3,142 @@ slug: 2026-05-21-new-designers-just-added-the-designer-sale-1154a1e0-193c-435e-9
 type: email
 date: 2026-05-21
 persona: nadine-incircle-neiman-fap6e
-score: "8/10"
+score: "9/10"
 sender: Neiman Marcus
 subject: "New designers just added: The Designer Sale"
-tags: [email, score-8, sender/neiman-marcus]
+tags: [email, score-9, sender/neiman-marcus]
 ---
 # New designers just added: The Designer Sale
-**Score:** 8/10 · **Type:** Email audit · **2026-05-21**
+**Score:** 9/10 · **Type:** Email audit · **2026-05-21**
 ## Executive summary
 
-- This is a mid-campaign refresh email for the ongoing Neiman Marcus Designer Sale — specifically the "new designers just added" angle, which is a smart tactic to re-engage subscribers who saw the launch on 5/18 and the 5/19 Givenchy/Ferragamo send but didn't convert. The red hero is punchy: "UP TO 50% OFF" lands immediately, and the nine-brand product grid below does solid work demonstrating depth and variety. The execution is clean and on-brand.
-- The problem is context, not content. This is at least the third Designer Sale email in four days (launch 5/18, Givenchy/Ferragamo 5/19, now this), and the inbox has also seen editorial sends ("Happy Heels," Prada SS26) in between. The brand is running hot. Even a well-executed email takes a fatigue penalty when the same sale dominates the last four days of sends.
-- The 15% email sign-up widget buried in the lower third is a clear segmentation miss — this person is already a subscriber. That module should either be suppressed for known subscribers or replaced with an InCircle loyalty hook.
+- This is the fourth or fifth Designer Sale email NM has sent in roughly five days — following the launch on 5/18, an urgency push on 5/17, the "Shop Givenchy, Ferragamo & more" send on 5/19, and several interstitial editorial sends in between. The "new designers just added" angle is the right creative pivot: it gives loyal openers a reason to re-engage rather than delete on sight. The hero is punchy — red background, white type, "UP TO 50% OFF," single "SHOP SALE" button — and the designer name-grid below (Jacquemus, ALAIA, Balmain, Burberry, Givenchy, Courreges, Rag & Bone) does real persuasive work by signaling which houses are in the event.
+- The structural problem is focus dilution. Midway through the email a "CLAIM YOUR 15% OFF / SIGN UP" block appears — a list-growth module dropped inside a sale email. It competes directly with the main conversion goal and signals that NM is optimizing two things at once, which usually means neither converts as well as it could.
+- Overall this is a competent, well-rendered sale email that earns its send. The designer lineup is strong, the hierarchy is clean, and the "new additions" hook has legs. But without a hard deadline in the email and with a competing recruitment CTA splitting attention, it's leaving money on the table.
 
 ## What's working
 
-- **Red hero with 50% off claim is immediately legible** — hierarchy is strong; no work needed to understand the offer.
-- **Nine-brand grid credibly demonstrates sale depth** — Jacquemus to Polo Ralph Lauren signals breadth across price points.
-- **"Save on these designer styles before they're gone" is good copy** — creates genuine FOMO without resorting to countdown-clock gimmicks.
-- **Six category CTA buttons** (Women's Clothing, Shoes, Handbags, etc.) reduce friction for different intent profiles — this is smart segmentation within a single email.
-- **"Exclusions Apply" disclosed in small text under the hero** — honest, no bait-and-switch feel.
+- **Hero delivers the offer instantly** — red background + "UP TO 50% OFF" + single CTA button reads in under two seconds.
+- **Designer name-grid is the real draw** — Jacquemus, ALAIA, Balmain, Burberry, Givenchy, Courreges, Rag & Bone are all marquee names that justify the email on their own.
+- **"New designers just added" is a legitimate re-engagement hook** — unlike the 5/19 send's generic Givenchy/Ferragamo framing, this gives a returning opener a concrete reason to open again.
+- **Category CTA row** (Women's Clothing, Shoes, Handbags, Dresses, Men's) makes navigation fast for someone who already knows what they want.
+- **Clean render** — no broken images, no overlapping text, no layout breakage across the full email.
 
 ## What's weak
 
-- **"LIMITED TIME" with no end date is weak urgency** — no countdown, no "ends Sunday," just a vague label that seasoned NM shoppers will discount.
-- **No price anchoring anywhere in the grid** — showing original vs. sale price on even one or two products would sharpen the value signal dramatically.
-- **The 15% email sign-up block is a segmentation error for existing subscribers** — confusing at best; erodes trust at worst.
-- **No lifestyle photography** — nine product shots on white backgrounds read as catalog, not aspiration; the 5/20 Prada editorial set a much higher creative bar.
-- **Sale cadence is saturating the inbox** — this email is sound, but it's the 3rd+ Designer Sale send in four days; subscriber patience is finite.
+- **No specific end date anywhere** — "LIMITED TIME" is doing the urgency work but a "Ends Sunday" or explicit date would sharpen the close.
+- **15% email sign-up block mid-email** splits the CTA and drags list-growth into a sale send — two incompatible jobs.
+- **"SHOP SALE" is the weakest possible verb** — every sale email in the world uses it; "Shop Jacquemus Now" or "Shop New Additions" would land harder.
+- **No single hero product** — nine small thumbnails of bags and coats is a browse experience, not an emotional anchor; one large aspirational image would drive more urgency.
+- **Cadence is at its ceiling** — four-plus Designer Sale sends in five days; by now the least-engaged subscribers have tuned it out entirely.
 
 ## Recommendations
 
-- 1. **Add a specific end date to the hero and subject.** "Limited Time" is noise; "Ends Sunday" is a reason to act today. This single change would lift urgency across every metric.
-- 2. **Show a before/after price on at least the hero product.** A strikethrough retail price next to a sale price is more persuasive than "up to 50% off" in the abstract.
-- 3. **Suppress the 15% email signup module for known subscribers** — replace with an InCircle loyalty hook ("Your InCircle points go further in the sale") for members, or a stylist appointment CTA.
-- 4. **Consider consolidating remaining sale emails.** The 5/19 send audited at 9/10 because it felt targeted and purposeful. This one risks diluting that brand equity. A single "last days + new additions" combined send on the final day would preserve urgency better than daily drips.
-- 5. **Inject one hero product with a price and a direct deep-link** — the category buttons are helpful but a single "steal of the sale" lead product would sharpen the click target.
-- **Subject Alt A:** `New to the sale: Jacquemus, Givenchy & more — up to 50% off`
-- **Subject Alt B:** `The Designer Sale ends Sunday — new additions just dropped`
-- **Preheader Alt A:** `Fresh designers added. Your 50% off window is closing.`
-- **Preheader Alt B:** `Jacquemus. ALAIA. Courreges. All in the sale — for now.`
+- 1. **Add a hard deadline to the hero** — "Ends Sunday" or a date banner above the 50% OFF headline. This is the single change that would most lift conversions.
+- 2. **Cut the 15% sign-up block entirely from this email** — or demote it to the footer below the legal copy. It undercuts the sale's sense of exclusivity and splits click intent.
+- 3. **Elevate one hero product** — pick one Jacquemus bag or ALAIA dress, give it a full-width image, and link directly to that PDP. Let the designer grid live below.
+- 4. **Sharpen the CTA copy** — replace "SHOP SALE" with "Shop New Additions" or "Shop [Lead Designer]" to match the "new designers just added" subject.
+- 5. **Name drop two designers in the subject** — "Jacquemus & ALAIA just joined the Designer Sale" is 46 chars, still mobile-safe, and dramatically more specific.
+- **Subject Alt A:** `Jacquemus & ALAIA just joined the Designer Sale`
+- **Subject Alt B:** `New in: 50% off Jacquemus, Burberry & more`
+- **Preheader Alt A:** `Limited time — these new additions won't last`
+- **Preheader Alt B:** `Fresh drops from Jacquemus, ALAIA, Courreges. Ends soon.`
 
 ## Full review
----
-
 ## 1. Overview
 
-This is a mid-campaign refresh email for the ongoing Neiman Marcus Designer Sale — specifically the "new designers just added" angle, which is a smart tactic to re-engage subscribers who saw the launch on 5/18 and the 5/19 Givenchy/Ferragamo send but didn't convert. The red hero is punchy: "UP TO 50% OFF" lands immediately, and the nine-brand product grid below does solid work demonstrating depth and variety. The execution is clean and on-brand.
+This is the fourth or fifth Designer Sale email NM has sent in roughly five days — following the launch on 5/18, an urgency push on 5/17, the "Shop Givenchy, Ferragamo & more" send on 5/19, and several interstitial editorial sends in between. The "new designers just added" angle is the right creative pivot: it gives loyal openers a reason to re-engage rather than delete on sight. The hero is punchy — red background, white type, "UP TO 50% OFF," single "SHOP SALE" button — and the designer name-grid below (Jacquemus, ALAIA, Balmain, Burberry, Givenchy, Courreges, Rag & Bone) does real persuasive work by signaling which houses are in the event.
 
-The problem is context, not content. This is at least the third Designer Sale email in four days (launch 5/18, Givenchy/Ferragamo 5/19, now this), and the inbox has also seen editorial sends ("Happy Heels," Prada SS26) in between. The brand is running hot. Even a well-executed email takes a fatigue penalty when the same sale dominates the last four days of sends.
+The structural problem is focus dilution. Midway through the email a "CLAIM YOUR 15% OFF / SIGN UP" block appears — a list-growth module dropped inside a sale email. It competes directly with the main conversion goal and signals that NM is optimizing two things at once, which usually means neither converts as well as it could.
 
-The 15% email sign-up widget buried in the lower third is a clear segmentation miss — this person is already a subscriber. That module should either be suppressed for known subscribers or replaced with an InCircle loyalty hook.
+Overall this is a competent, well-rendered sale email that earns its send. The designer lineup is strong, the hierarchy is clean, and the "new additions" hook has legs. But without a hard deadline in the email and with a competing recruitment CTA splitting attention, it's leaving money on the table.
 
 ---
 
 ## 2. What worked
 
-- **Red hero with 50% off claim is immediately legible** — hierarchy is strong; no work needed to understand the offer.
-- **Nine-brand grid credibly demonstrates sale depth** — Jacquemus to Polo Ralph Lauren signals breadth across price points.
-- **"Save on these designer styles before they're gone" is good copy** — creates genuine FOMO without resorting to countdown-clock gimmicks.
-- **Six category CTA buttons** (Women's Clothing, Shoes, Handbags, etc.) reduce friction for different intent profiles — this is smart segmentation within a single email.
-- **"Exclusions Apply" disclosed in small text under the hero** — honest, no bait-and-switch feel.
+- **Hero delivers the offer instantly** — red background + "UP TO 50% OFF" + single CTA button reads in under two seconds.
+- **Designer name-grid is the real draw** — Jacquemus, ALAIA, Balmain, Burberry, Givenchy, Courreges, Rag & Bone are all marquee names that justify the email on their own.
+- **"New designers just added" is a legitimate re-engagement hook** — unlike the 5/19 send's generic Givenchy/Ferragamo framing, this gives a returning opener a concrete reason to open again.
+- **Category CTA row** (Women's Clothing, Shoes, Handbags, Dresses, Men's) makes navigation fast for someone who already knows what they want.
+- **Clean render** — no broken images, no overlapping text, no layout breakage across the full email.
 
 ---
 
 ## 3. What didn't
 
-- **"LIMITED TIME" with no end date is weak urgency** — no countdown, no "ends Sunday," just a vague label that seasoned NM shoppers will discount.
-- **No price anchoring anywhere in the grid** — showing original vs. sale price on even one or two products would sharpen the value signal dramatically.
-- **The 15% email sign-up block is a segmentation error for existing subscribers** — confusing at best; erodes trust at worst.
-- **No lifestyle photography** — nine product shots on white backgrounds read as catalog, not aspiration; the 5/20 Prada editorial set a much higher creative bar.
-- **Sale cadence is saturating the inbox** — this email is sound, but it's the 3rd+ Designer Sale send in four days; subscriber patience is finite.
+- **No specific end date anywhere** — "LIMITED TIME" is doing the urgency work but a "Ends Sunday" or explicit date would sharpen the close.
+- **15% email sign-up block mid-email** splits the CTA and drags list-growth into a sale send — two incompatible jobs.
+- **"SHOP SALE" is the weakest possible verb** — every sale email in the world uses it; "Shop Jacquemus Now" or "Shop New Additions" would land harder.
+- **No single hero product** — nine small thumbnails of bags and coats is a browse experience, not an emotional anchor; one large aspirational image would drive more urgency.
+- **Cadence is at its ceiling** — four-plus Designer Sale sends in five days; by now the least-engaged subscribers have tuned it out entirely.
 
 ---
 
 ## 4. What I'd change
 
-1. **Add a specific end date to the hero and subject.** "Limited Time" is noise; "Ends Sunday" is a reason to act today. This single change would lift urgency across every metric.
-2. **Show a before/after price on at least the hero product.** A strikethrough retail price next to a sale price is more persuasive than "up to 50% off" in the abstract.
-3. **Suppress the 15% email signup module for known subscribers** — replace with an InCircle loyalty hook ("Your InCircle points go further in the sale") for members, or a stylist appointment CTA.
-4. **Consider consolidating remaining sale emails.** The 5/19 send audited at 9/10 because it felt targeted and purposeful. This one risks diluting that brand equity. A single "last days + new additions" combined send on the final day would preserve urgency better than daily drips.
-5. **Inject one hero product with a price and a direct deep-link** — the category buttons are helpful but a single "steal of the sale" lead product would sharpen the click target.
+1. **Add a hard deadline to the hero** — "Ends Sunday" or a date banner above the 50% OFF headline. This is the single change that would most lift conversions.
+2. **Cut the 15% sign-up block entirely from this email** — or demote it to the footer below the legal copy. It undercuts the sale's sense of exclusivity and splits click intent.
+3. **Elevate one hero product** — pick one Jacquemus bag or ALAIA dress, give it a full-width image, and link directly to that PDP. Let the designer grid live below.
+4. **Sharpen the CTA copy** — replace "SHOP SALE" with "Shop New Additions" or "Shop [Lead Designer]" to match the "new designers just added" subject.
+5. **Name drop two designers in the subject** — "Jacquemus & ALAIA just joined the Designer Sale" is 46 chars, still mobile-safe, and dramatically more specific.
 
-- **Subject Alt A:** `New to the sale: Jacquemus, Givenchy & more — up to 50% off`
-- **Subject Alt B:** `The Designer Sale ends Sunday — new additions just dropped`
-- **Preheader Alt A:** `Fresh designers added. Your 50% off window is closing.`
-- **Preheader Alt B:** `Jacquemus. ALAIA. Courreges. All in the sale — for now.`
+- **Subject Alt A:** `Jacquemus & ALAIA just joined the Designer Sale`
+- **Subject Alt B:** `New in: 50% off Jacquemus, Burberry & more`
+- **Preheader Alt A:** `Limited time — these new additions won't last`
+- **Preheader Alt B:** `Fresh drops from Jacquemus, ALAIA, Courreges. Ends soon.`
 
 ---
 
 ## 5. Business Impact Score (1-10)
 
-**8/10**
+**9/10**
 
-- Recognized sender (Neiman Marcus)
-- Concrete offer visible (up to 50% off)
-- Primary CTA unambiguous ("SHOP SALE" button)
-- Visual hierarchy clear — hero lands first
-- No render bugs visible
-- Subject/hero explicitly references persona's focus area (luxury designer brands)
-- Current campaign reflected (active Designer Sale)
-- Offer feels honest ("Exclusions Apply" disclosed)
+- Subject/hero explicitly references persona's focus area (luxury designer sale)
+- Sender is Neiman Marcus — immediately recognized
+- Concrete offer visible: "UP TO 50% OFF"
+- Primary CTA is unambiguous: "SHOP SALE" button
+- Visual hierarchy is clear — red hero dominates, eye lands on offer first
+- No render bugs observed
+- Demographic signals match — Jacquemus, ALAIA, Burberry, Rag & Bone are core luxury persona brands
+- Email reflects current campaign (active Designer Sale, fifth-day extension)
+- Offer feels honest — "Exclusions Apply" is disclosed at hero level
 
-*Not counted:* demographic signals (no lifestyle models, product-on-white only); loyalty/member benefits (15% module is email signup, not InCircle).
+*(Loyalty/member benefits for existing members not surfaced — 15% offer is for new sign-ups only.)*
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
 - **Score:** 6/10
-- **Signals counted:** Recognizable sender name; concrete subject line (names the sale and the hook); relevant to luxury persona; subject under 50 chars (44); no spam signals (no ALL CAPS, no !!!).
-- **Rationale:** "New designers just added" is a legitimate refresh hook — it gives a returning subscriber a reason to re-engage. But NM has sent this same sale 3+ times in four days; cadence fatigue is the ceiling. No personalization and no explicit deadline in the subject line leave points on the table.
+- **Signals counted:** Sender display name recognizable; subject is concrete ("New designers just added: The Designer Sale"); subject is relevant to persona's focus area; subject under 50 chars (44); no spam signals in subject line.
+- **Rationale:** The "new designers just added" hook is the strongest open signal — it gives a returning subscriber a concrete reason to look again rather than archive. What holds it back: no personalization, no inbox-visible urgency with a date, and after four Designer Sale sends in five days, cadence fatigue has likely eroded the open pool meaningfully.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Hero offer visible without scrolling; CTA in focus area (designer fashion); offer reduces price (up to 50% off); brand voice consistent and trusted; no major friction (prominent SHOP SALE button); category CTA buttons add navigational specificity.
-- **Rationale:** The six segmented CTAs are the email's best click driver — they let a handbags shopper go directly to handbags without hunting. What pulls back: no price anchoring, no single hero product to focus the eye, and "LIMITED TIME" without a date is too vague to create urgency-driven clicks.
+- **Score:** 8/10
+- **Signals counted:** Hero offer visible without scrolling; primary CTA in focus area (luxury designer fashion); CTA copy has verb + noun ("SHOP SALE"); offer reduces price (50% off); designer brand names visible (Jacquemus, ALAIA, Balmain, Givenchy, Rag & Bone — specific product detail); brand voice consistent and trusted; no friction — clean render, prominent CTA.
+- **Rationale:** The designer name-grid is what pulls the click — seeing Jacquemus and ALAIA in a sale context is a rare-enough signal that it overcomes the generic "SHOP SALE" CTA. What holds it back from 9+: no single hero product to anchor desire, and the mid-email 15% sign-up block creates a momentary hesitation about what NM actually wants you to do.
 
 ---
 
 ## 8. Subject
 
 - **Subject:** `New designers just added: The Designer Sale`
-- **Length:** 44 chars
-- **Scores (1-10):** Clarity `8`, Curiosity `6`, Personalization `1`, Urgency `5`, Specificity `7`
+- **Length:** 44 characters
+- **Scores (1-10):** Clarity `9`, Curiosity `6`, Personalization `1`, Urgency `4`, Specificity `6`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — preview text is not visible in this render; no preheader copy surfaced before the navigation bar.
-- **Length:** n/a
+- **Preview:** `(none / not visible in render — preheader not rendered as visible text)`
+- **Length:** —
 - **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `1`, Inbox-fit `1`
+
+*(No preheader text is visible in the rendered email. If the email client is pulling fallback preview copy from the body, it would likely surface "Save on these designer styles before they're gone" — which is serviceable but wastes a prime placement that could echo the "new additions" hook and add a deadline.)*
 
 ---
 
@@ -149,92 +150,99 @@ The 15% email sign-up widget buried in the lower third is a clear segmentation m
 
 ### 1. Technical Summary
 
-The email is an SFMC AMPscript template with standard table-based layout. Four QA warnings surface meaningful issues: missing machine-readable unsubscribe headers, an unverifiable authentication chain, and a bloated plain-text part — all of which affect deliverability and bulk-sender compliance.
+The email template is structurally sound for a Salesforce Marketing Cloud (SFMC) send but has three actionable infrastructure issues: a commented-out identity variable that leaves the `@user` binding ambiguous, missing one-click unsubscribe headers that create RFC 8058 / Gmail compliance exposure, and an auto-generated plain-text body that is 87% URLs by character count.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**26 tracking links skipped — destinations unverifiable**
-All click-through links are wrapped in a redirect domain and were not probed. Broken or misrouted CTAs cannot be confirmed from this audit.
+**26 tracking links not probed**
+QA skipped all click-redirect URLs (likely `clicks.e.neimanmarcus.com` or similar). Destination integrity — including 404s, redirect chains, and UTM completeness — is unverified for this send.
 
-**`@refid` is a no-op concatenation**
-```ampscript
+**`@refid` construction is a no-op**
+The template comment declares:
+```
 @refid = CONCAT(@base_refid,"")
 ```
-This assigns `@refid` identically to `@base_refid` with no transformation. If `@refid` is intended to carry campaign-specific appending logic, it has silently lost that purpose. If it is purely cosmetic, the variable is vestigial and adds template noise.
+Concatenating with an empty string produces an identical value to `@base_refid` — no variant suffix is appended. If `@refid` is used as a link parameter, all 26 tracked clicks will carry the same base ID with no per-link differentiation. Verify whether a suffix (e.g., `_01`, `_hero`) was intentionally stripped or was accidentally removed during template editing.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Three dead viewport `<meta>` tags in `<head>`**
+**Commented-out viewport variants left in `<head>`**
+Three alternate `<meta name="viewport">` tags remain in the source as HTML comments, indicating unresolved iteration. While inert at render time, they create maintenance ambiguity:
 ```html
 <!--<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />-->
 <!--<meta name="viewport" content="width=320, initial-scale=0.29">-->
 <!--<meta name="viewport" content="width=1024">-->
 ```
-The live viewport tag is correct. These commented-out variants are template drift and should be removed to reduce parse noise and confusion during future edits.
 
-**`<title>` has trailing whitespace**
-```html
-<title>Neiman Marcus </title>
-```
-Minor, but appears as a space character in tab previews and some preview pane subject lines.
+**Overlapping mobile breakpoints**
+Two `@media` blocks use different thresholds for similar layout resets (`max-width: 600px` and `max-width: 480px`/`520px`). Depending on client CSS cascade order, `.ImgSize` and `.ImgSize2x2` column resets may conflict in the 480–600px range.
 
-**No `alt` text observable in truncated source**
-The source truncates before image tags are visible. If `alt` attributes are empty or absent on product images, screen readers and image-blocked clients will have no content fallback. Cannot confirm from this excerpt — flag for full-source check.
+**Interactive CSS / hamburger nav**
+CSS-checkbox hamburger nav is present (`:checked~` pattern). This is inert in most email clients but can cause unexpected layout shifts in Apple Mail and certain Android clients that partially execute `:checked` pseudo-class rules.
+
+**Alt text not verifiable**
+HTML is truncated before `<img>` tags appear. Alt attributes should be audited separately; absent alts on decorative images are acceptable, but product images require descriptive alt text for screen readers and image-blocked clients.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**`@user` scenario selection left in ambiguous state**
-The template header comment reads `CHOOSE ONE SCENARIO BELOW`, indicating two mutually exclusive lookup paths. The rendered source contains:
-```html
-<!--/* SET @user = HASHED_EMAIL_SHA256 */-->
-```
-This block is commented out in HTML — but the surrounding structure is AMPscript inside an HTML comment, which SFMC *does* execute at render time. Whether `@user` resolves to the Lookup value or the SHA256 hash depends entirely on which scenario block is active upstream. If the wrong block is live, `@user` silently misfires and any personalization or suppression logic downstream breaks without an error surface.
+**`@user` binding is ambiguous — one scenario commented out**
+The template comment declares two resolution paths for `@user`:
 
-**`@uEm` and `@cmdid` purpose not evident in visible source**
-Both are declared in the header comment block but not used in the truncated visible HTML. If these feed into hidden tracking pixels or footer personalization, their correctness cannot be confirmed here. Worth verifying in the full template that lookups are not returning null for unmatched subscribers.
+```
+@user  Lookup("NM_Subscriber_New_Consolidated", "EMAIL_ID", "EMAIL_ADDRESS", @email)
+/* SET @user = HASHED_EMAIL_SHA256 */
+```
+
+The SHA-256 hashed email scenario is commented out. It is unclear which path is active at render time. If downstream links use `@user` as a first-party identity signal (e.g., for audience matching or personalized landing pages), the active value must be confirmed. If `@user` resolves to a raw `EMAIL_ID` integer rather than a hashed email, that would be a PII exposure in link query strings.
+
+**Two separate `EMAIL_ID` lookups (`@user` and `@emailid`)**
+Both variables look up the same field via the same key. If the intent is to use them interchangeably, one lookup is redundant; if they serve different purposes, they should be named distinctly to avoid template maintenance errors.
 
 ---
 
 ### 5. Compliance
 
-**`List-Unsubscribe` header absent** *(QA: WARN)*
-Gmail and Yahoo require `List-Unsubscribe` headers for bulk senders sending >5K/day as of February 2024. Its absence will suppress the native unsubscribe button in Gmail and may increase spam classifications. This header is set at the ESP/MTA layer, not in the HTML — confirm it is present in raw SMTP headers before send.
+**`List-Unsubscribe` header absent** *(QA WARN)*
+RFC 2369 requires this header on commercial email. Gmail and Yahoo have enforced bulk-sender requirements since February 2024 — senders above 5,000/day must include `List-Unsubscribe`. Absence at the relay layer (AgentMail) may indicate the header is being stripped in transit or was never set in SFMC's send config.
 
-**`List-Unsubscribe-Post` (RFC 8058) absent** *(QA: WARN)*
-One-click machine unsubscribe (the POST variant) is required alongside `List-Unsubscribe` to satisfy Google and Yahoo bulk sender requirements. Absence means Apple Mail and Gmail cannot offer one-tap unsubscribe from the UI, increasing list-unsubscribe friction and complaint rates.
+**`List-Unsubscribe-Post` header absent** *(QA WARN)*
+RFC 8058 one-click unsubscribe (`List-Unsubscribe-Post: List-Unsubscribe=One-Click`) is required by Gmail's bulk sender policy. Missing this header removes the "Unsubscribe" button from Gmail's UI and is grounds for deliverability demotion.
 
-**SPF/DKIM/DMARC status unknown** *(QA: WARN)*
-`Authentication-Results` was not captured via the AgentMail relay. Sending domain `e.neimanmarcus.com` should publish SPF and DKIM records aligned with SFMC's sending infrastructure. Cannot confirm pass/fail from this audit — verify with a direct SMTP header inspection or tools like MXToolbox.
+**Authentication-Results header not captured** *(QA WARN)*
+SPF and DKIM pass/fail status is unknown via the AgentMail relay. Given the sending domain is `e.neimanmarcus.com` (an ESP subdomain), DKIM alignment should be verified at the domain level. No action is directly indicated by the HTML, but this must be confirmed in mail headers from a live send sample.
+
+**CAN-SPAM physical address**
+Not visible in the truncated HTML but required. Verify footer contains a valid US postal address before treating as compliant.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-**UTM parameters unverifiable — 26 tracking links skipped**
-All destination URLs are behind click-redirect wrappers and were not probed. Cannot confirm whether UTM `source`, `medium`, `campaign`, and `content` parameters are appended and consistent with the campaign calendar `@base_refid` value.
+**UTM coverage unverifiable**
+All 26 tracked links were skipped by the QA probe. Whether landing pages receive `utm_source`, `utm_medium`, `utm_campaign`, and `utm_content` parameters cannot be confirmed from this audit. Manual spot-check of 3–5 hero and product links is required.
 
-**`@refid` used as campaign tag**
-If `@refid` (confirmed above as `CONCAT(@base_refid,"")`) is the primary attribution token appended to destination URLs, attribution data will reflect `@base_refid` verbatim. Verify that `@base_refid` is populated in the sendable DE for this send; a null value produces a bare `?refid=` parameter that breaks campaign reporting.
+**`@refid` no-op risk (see §2)**
+If `@refid` is appended to destination URLs as a campaign/creative identifier and it carries no suffix, attribution reports will show all clicks against a single creative ID, masking per-module performance.
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Action |
-|----------|--------|
-| **High** | Confirm `List-Unsubscribe` and `List-Unsubscribe-Post` headers are injected at the MTA layer. Required for Google/Yahoo bulk sender compliance. |
-| **High** | Inspect raw SMTP headers for `Authentication-Results` to verify SPF/DKIM/DMARC pass before send. |
-| **High** | Resolve the `@user` scenario ambiguity — determine which AMPscript block is active and whether the SHA256 path or Lookup path is intended. Add an explicit `SET @user` at template top after scenario selection. |
-| **Medium** | Reduce plain-text part URL density (currently 87% URLs). Add meaningful plain-text content around links; the current ratio is a spam filter signal. |
-| **Medium** | Probe a sample of the 26 tracking redirect URLs to verify CTAs resolve to the correct sale landing pages with valid UTM/refid parameters. |
-| **Low** | Remove the three commented-out `<meta viewport>` tags and confirm `<title>` trailing whitespace is stripped. |
-| **Low** | Audit full HTML source for `alt` text coverage on product images before confirming accessibility compliance. |
+| Priority | Issue | Action |
+|---|---|---|
+| High | `List-Unsubscribe` + `List-Unsubscribe-Post` missing | Add both headers in SFMC send config or via ESP account settings; confirm they survive AgentMail relay |
+| High | `@user` binding ambiguity | Decide which scenario is live, remove the commented-out branch, and verify the resolved value is not a raw PII integer in link params |
+| Medium | `@refid = CONCAT(@base_refid,"")` no-op | Restore the intended suffix or document that single-ID attribution is deliberate |
+| Medium | Authentication-Results unknown | Pull raw headers from a seeded inbox (e.g., Gmail seed address) and confirm SPF `pass` + DKIM `pass` with `d=e.neimanmarcus.com` alignment |
+| Medium | Plain-text 87% URLs | Manually author a plain-text alternative; auto-generated plain text at this ratio risks spam filter scoring |
+| Low | Commented-out viewport tags | Remove dead comments from `<head>` to reduce template noise |
+| Low | Overlapping breakpoints | Consolidate 480px/520px/600px rules into a single breakpoint or document the intentional cascade |
 ## Recent history
 
 - [[2026-05-20-the-roundup-happy-heels]] — 5/10 (2026-05-20)
