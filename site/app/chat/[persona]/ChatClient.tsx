@@ -20,6 +20,10 @@ type Props = {
   personaSlug: string;
   personaName: string;
   auditCount: number;
+  // Persona-specific starter prompts shown on the empty state.
+  // Server-composed from brand label + identity focus areas so each
+  // persona's empty-state reads like questions you'd actually ask them.
+  starterPrompts: string[];
   threadId: string | null;
   threadTitle: string | null;
   initialMessages: InitialMessage[];
@@ -38,6 +42,7 @@ export function ChatClient({
   personaSlug,
   personaName,
   auditCount,
+  starterPrompts,
   threadId: initialThreadId,
   threadTitle: initialThreadTitle,
   initialMessages,
@@ -328,7 +333,7 @@ export function ChatClient({
         className="flex-1 overflow-y-auto px-5 py-5 space-y-5"
       >
         {isEmpty ? (
-          <EmptyState personaName={personaName} />
+          <EmptyState personaName={personaName} prompts={starterPrompts} />
         ) : (
           <>
             {messages.map((m) => (
@@ -416,12 +421,19 @@ function TypingIndicator({ personaName }: { personaName: string }) {
   );
 }
 
-function EmptyState({ personaName }: { personaName: string }) {
-  const prompts = [
-    `What's the worst email you've seen this year?`,
-    `What do you wish Skechers did better?`,
-    `Tell me about a time the site frustrated you.`,
-  ];
+function EmptyState({
+  personaName,
+  prompts,
+}: {
+  personaName: string;
+  // Server-composed persona-specific prompts. May be empty if generation
+  // hit an unexpected gap; fall back to a single generic line.
+  prompts: string[];
+}) {
+  const lines =
+    prompts.length > 0
+      ? prompts
+      : [`What's the worst marketing email you've seen this year?`];
   return (
     <div className="max-w-lg mx-auto py-6 text-center">
       <div className="text-base font-semibold mb-1">
@@ -429,7 +441,7 @@ function EmptyState({ personaName }: { personaName: string }) {
       </div>
       <div className="text-sm text-muted mb-4">Try asking:</div>
       <div className="flex flex-col gap-2">
-        {prompts.map((p) => (
+        {lines.map((p) => (
           <div
             key={p}
             className="text-sm text-muted italic border border-dashed border-gray-200 rounded-xl px-3 py-2"
