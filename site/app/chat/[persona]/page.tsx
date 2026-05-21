@@ -4,6 +4,7 @@ import { requireAppEnabled } from "@/lib/apps";
 import { getPersonaBySlug } from "@/lib/personas-db";
 import { listThreads, getThread, listMessages } from "@/lib/chat/threads";
 import { getAuditMemoryCount } from "@/lib/chat/retrieve";
+import { getChatStarterPrompts } from "@/lib/chat/starters";
 import { ChatClient } from "./ChatClient";
 import { ThreadList } from "./ThreadList";
 
@@ -37,9 +38,10 @@ export default async function ChatPage({
   const rawThreadId = typeof sp.thread === "string" ? sp.thread : null;
   const composeMode = sp.compose === "1";
 
-  const [threads, auditCount] = await Promise.all([
+  const [threads, auditCount, starterPrompts] = await Promise.all([
     listThreads(user.id, personaSlug),
     getAuditMemoryCount(personaSlug),
+    getChatStarterPrompts(meta),
   ]);
 
   // Resolve thread: requested or none (start a fresh conversation).
@@ -99,6 +101,7 @@ export default async function ChatPage({
           personaSlug={personaSlug}
           personaName={meta.name}
           auditCount={auditCount}
+          starterPrompts={starterPrompts}
           threadId={threadId}
           threadTitle={threadId ? (threads.find((t) => t.id === threadId)?.title ?? null) : null}
           initialMessages={initialMessages}
