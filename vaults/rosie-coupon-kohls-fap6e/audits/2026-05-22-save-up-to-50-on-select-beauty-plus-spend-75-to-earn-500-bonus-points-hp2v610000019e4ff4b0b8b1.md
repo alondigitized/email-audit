@@ -3,230 +3,222 @@ slug: 2026-05-22-save-up-to-50-on-select-beauty-plus-spend-75-to-earn-500-bonus-
 type: email
 date: 2026-05-22
 persona: rosie-coupon-kohls-fap6e
-score: "8/10"
+score: "9/10"
 sender: Sephora Sale
 subject: Save up to 50% on select beauty 💄 Plus spend $75 to earn 500 bonus points.
-tags: [email, score-8, sender/sephora-sale]
+tags: [email, score-9, sender/sephora-sale]
 ---
 # Save up to 50% on select beauty 💄 Plus spend $75 to earn 500 bonus points.
-**Score:** 8/10 · **Type:** Email audit · **2026-05-22**
+**Score:** 9/10 · **Type:** Email audit · **2026-05-22**
 ## Executive summary
 
-- This is Sephora's "Stacking Weekend" blast — a dual-mechanic offer combining 50% off select items with a 500-bonus-point reward for spending $75+. The "stacking" creative hook is the most interesting thing about this email: it frames two separate promotions as a single compounding benefit, which is genuinely clever positioning. The hero reads immediately and the visual hierarchy is clean.
-- The problem is context. Two days ago, the May 20 send was an urgency-triggered expiry reminder that addressed Rosie by name and felt personal and behavioral. This email drops the personalization entirely, widens back to a mass-blast tone, and shows up on the heels of six sends in 22 days. The transition from "Rosie, your code expires today" to an anonymous stacking-weekend promo feels like a gear-shift that breaks the relationship warmth Sephora built in the welcome sequence.
-- The subject line is doing too much — 74 characters crammed with two separate value propositions — and it will truncate badly on mobile, which is where most of Sephora's audience opens.
+- This is Sephora's "Stacking Weekend" house-file blast — a volume-driving promo built around a dual-incentive hook: 50% off select items plus 500 bonus points for a $75+ spend. The hero lands fast, the Beauty Insider loyalty angle is well-integrated, and the brand presentation is crisp. On raw mechanics, this is a competent promotional send.
+- The comparison that matters most here is the May 20 send ("10% off ends soon, Rosie") — a tight, triggered, personalized expiry-reminder with a name token and a hard deadline. That email was surgical. This one is a list-blast: no personalization, no explicit end date, and five competing content sections beneath a hero that deserved to be the whole email. The Stacking Weekend concept is strong enough to anchor a much shorter, more focused send.
+- The subject line is the most fixable problem. It tries to carry two separate offers in a single 74-character run-on, splitting inbox attention before the email even opens. Truncated on mobile, subscribers see the 50% off half but lose the points hook — or vice versa. One offer per subject, then move the second offer to the preheader.
 
 ## What's working
 
-- **Stacking Weekend framing** is a strong creative mechanic — two benefits in one visual, structured as additive rather than competing offers.
-- **Specific numbers throughout**: 50%, $75, 500 points — every value is quantified, never vague.
-- **"SHOP NOW" CTA** is visible and unambiguous; the hero-to-button flow is clean.
-- **Product grid** below the hero gives concrete browsing targets, not just a homepage dump.
-- **Beauty Insider loyalty integration** is visible — the 500 bonus points carry real value for members and are called out prominently.
+- **Hero clarity**: "50% OFF" badge and "500 BONUS POINTS" are prominent and scannable in under two seconds — the stacking mechanic reads clearly without explanation.
+- **Beauty Insider integration**: points earn is tied to a specific spend threshold ($75), making the loyalty upgrade concrete rather than abstract.
+- **Product grid**: "Save on These Must Haves" puts product context immediately behind the offer, reducing the mental gap between "there's a deal" and "here's what to buy."
+- **In-store barcode**: the scannable barcode at the footer is a smart physical/digital bridge for store shoppers — a differentiator most digital-only promo emails skip.
+- **Brand consistency**: Sephora's black-and-white design language is applied cleanly throughout with no render issues.
 
 ## What's weak
 
-- **Personalization dropped**: the May 14 and May 20 sends both addressed "Rosie" by name — this email doesn't, making it feel like a mass blast after a personalized sequence.
-- **Subject line is 74 characters** and will truncate mid-sentence on nearly every mobile client; the second offer ($75/$500 points) may never be seen in-inbox.
-- **"select beauty" qualifier** in the subject sets up frustration at click — subscribers will arrive expecting broad 50% off and discover restrictions.
-- **No explicit deadline**: "Weekend" implies urgency but there's no "Ends Sunday 11:59 PM" in the hero — a missed opportunity to convert borderline shoppers.
-- **Cadence is stretched thin**: six sends in 22 days, with this one arriving 48 hours after an urgency-pressure expiry email. Subscriber fatigue risk is real.
+- **No personalization**: the May 20 send had "Rosie" in the subject line and it was clearly a deliberate trigger. This send drops the name entirely — a step backward from a flow that was already working.
+- **Subject line is too long and split**: 74 characters carrying two separate offers. Most mobile clients will truncate before "Plus spend $75" — the second offer effectively disappears for a significant portion of the list.
+- **No explicit deadline**: "Weekend" implies urgency but no visible end date or timestamp anchors it. The May 14 welcome email had a hard expiry date; this one doesn't.
+- **Structural bloat**: the Salta Replenish partnership module mid-email interrupts the sale narrative; the store locator map adds dead weight at the bottom.
+- **Generic CTA copy**: "SHOP NOW" appears throughout with no destination specificity — it signals a homepage drop rather than the Stacking Weekend sale page.
 
 ## Recommendations
 
-- 1. **Restore the name personalization** — the drop from "Rosie, your 10% off expires today" to an anonymous send is the single biggest regression from the welcome sequence. Put the name back in the subject.
-- 2. **Cut the subject to one offer, move the second to preheader** — the dual-offer subject is truncating. Lead with the 50% hook, let the $75/$500 points live in the preheader where it complements rather than competes.
-- 3. **Add a hard deadline to the hero** — "Ends Sunday 11:59 PM PT" or "Offer valid through May 25" converts the "Weekend" implication into an action trigger.
-- 4. **Make the CTA more specific** — "Shop 50% Off Deals" or "Shop the Stacking Sale" outperforms "SHOP NOW" — verb+product noun beats verb+adverb.
-- 5. **Preview text should carry the stacking mechanic** — the subject leads with 50% off; the preheader should carry the points angle so the two benefits are each surfaced once, not doubled up.
-- **Subject Alt A:** `Rosie, up to 50% off this weekend 💄`
-- **Subject Alt B:** `Stacking Weekend: 50% off select beauty — ends Sunday`
-- **Preheader Alt A:** `Spend $75 and pocket 500 bonus points on top.`
-- **Preheader Alt B:** `Stack it: half off select picks + 500 points when you spend $75.`
+- 1. **Collapse the subject to one offer** — 50% off is the stronger hook. Move the points earn to the preheader where it complements rather than competes.
+- **Subject Alt A:** `Sephora Stacking Weekend: up to 50% off 💄`
+- **Subject Alt B:** `Your weekend deal: up to 50% off select beauty`
+- **Preheader Alt A:** `Plus earn 500 bonus points when you spend $75 — this weekend only.`
+- **Preheader Alt B:** `500 bonus points with a $75 order. Shop the sale before it ends.`
+- 2. **Re-add personalization**: "Rosie, your Stacking Weekend starts now" would have been the single highest-leverage change available. The triggered flow has the name token — use it on broadcast sends too.
+- 3. **Add an explicit expiry in the hero**: "Ends Sunday at midnight" or even just "Ends 5/25" converts "Weekend" from a vague hint into an actionable countdown. The May 14 welcome email proved Sephora's template supports this.
+- 4. **Cut or relocate the Salta Replenish module**: a subscription pitch mid-promo email breaks the sale momentum. Move it to a dedicated send or below the fold.
+- 5. **Sharpen the hero CTA**: change "SHOP NOW" to "Shop 50% Off Picks" or "Shop the Sale" — two words that tell subscribers exactly where they're landing.
 
 ## Full review
 ## 1. Overview
 
-This is Sephora's "Stacking Weekend" blast — a dual-mechanic offer combining 50% off select items with a 500-bonus-point reward for spending $75+. The "stacking" creative hook is the most interesting thing about this email: it frames two separate promotions as a single compounding benefit, which is genuinely clever positioning. The hero reads immediately and the visual hierarchy is clean.
+This is Sephora's "Stacking Weekend" house-file blast — a volume-driving promo built around a dual-incentive hook: 50% off select items plus 500 bonus points for a $75+ spend. The hero lands fast, the Beauty Insider loyalty angle is well-integrated, and the brand presentation is crisp. On raw mechanics, this is a competent promotional send.
 
-The problem is context. Two days ago, the May 20 send was an urgency-triggered expiry reminder that addressed Rosie by name and felt personal and behavioral. This email drops the personalization entirely, widens back to a mass-blast tone, and shows up on the heels of six sends in 22 days. The transition from "Rosie, your code expires today" to an anonymous stacking-weekend promo feels like a gear-shift that breaks the relationship warmth Sephora built in the welcome sequence.
+The comparison that matters most here is the May 20 send ("10% off ends soon, Rosie") — a tight, triggered, personalized expiry-reminder with a name token and a hard deadline. That email was surgical. This one is a list-blast: no personalization, no explicit end date, and five competing content sections beneath a hero that deserved to be the whole email. The Stacking Weekend concept is strong enough to anchor a much shorter, more focused send.
 
-The subject line is doing too much — 74 characters crammed with two separate value propositions — and it will truncate badly on mobile, which is where most of Sephora's audience opens.
+The subject line is the most fixable problem. It tries to carry two separate offers in a single 74-character run-on, splitting inbox attention before the email even opens. Truncated on mobile, subscribers see the 50% off half but lose the points hook — or vice versa. One offer per subject, then move the second offer to the preheader.
 
----
+## 2. What Worked
 
-## 2. What worked
+- **Hero clarity**: "50% OFF" badge and "500 BONUS POINTS" are prominent and scannable in under two seconds — the stacking mechanic reads clearly without explanation.
+- **Beauty Insider integration**: points earn is tied to a specific spend threshold ($75), making the loyalty upgrade concrete rather than abstract.
+- **Product grid**: "Save on These Must Haves" puts product context immediately behind the offer, reducing the mental gap between "there's a deal" and "here's what to buy."
+- **In-store barcode**: the scannable barcode at the footer is a smart physical/digital bridge for store shoppers — a differentiator most digital-only promo emails skip.
+- **Brand consistency**: Sephora's black-and-white design language is applied cleanly throughout with no render issues.
 
-- **Stacking Weekend framing** is a strong creative mechanic — two benefits in one visual, structured as additive rather than competing offers.
-- **Specific numbers throughout**: 50%, $75, 500 points — every value is quantified, never vague.
-- **"SHOP NOW" CTA** is visible and unambiguous; the hero-to-button flow is clean.
-- **Product grid** below the hero gives concrete browsing targets, not just a homepage dump.
-- **Beauty Insider loyalty integration** is visible — the 500 bonus points carry real value for members and are called out prominently.
+## 3. What Didn't
 
----
+- **No personalization**: the May 20 send had "Rosie" in the subject line and it was clearly a deliberate trigger. This send drops the name entirely — a step backward from a flow that was already working.
+- **Subject line is too long and split**: 74 characters carrying two separate offers. Most mobile clients will truncate before "Plus spend $75" — the second offer effectively disappears for a significant portion of the list.
+- **No explicit deadline**: "Weekend" implies urgency but no visible end date or timestamp anchors it. The May 14 welcome email had a hard expiry date; this one doesn't.
+- **Structural bloat**: the Salta Replenish partnership module mid-email interrupts the sale narrative; the store locator map adds dead weight at the bottom.
+- **Generic CTA copy**: "SHOP NOW" appears throughout with no destination specificity — it signals a homepage drop rather than the Stacking Weekend sale page.
 
-## 3. What didn't
+## 4. What I'd Change
 
-- **Personalization dropped**: the May 14 and May 20 sends both addressed "Rosie" by name — this email doesn't, making it feel like a mass blast after a personalized sequence.
-- **Subject line is 74 characters** and will truncate mid-sentence on nearly every mobile client; the second offer ($75/$500 points) may never be seen in-inbox.
-- **"select beauty" qualifier** in the subject sets up frustration at click — subscribers will arrive expecting broad 50% off and discover restrictions.
-- **No explicit deadline**: "Weekend" implies urgency but there's no "Ends Sunday 11:59 PM" in the hero — a missed opportunity to convert borderline shoppers.
-- **Cadence is stretched thin**: six sends in 22 days, with this one arriving 48 hours after an urgency-pressure expiry email. Subscriber fatigue risk is real.
+1. **Collapse the subject to one offer** — 50% off is the stronger hook. Move the points earn to the preheader where it complements rather than competes.
+   - **Subject Alt A:** `Sephora Stacking Weekend: up to 50% off 💄`
+   - **Subject Alt B:** `Your weekend deal: up to 50% off select beauty`
+   - **Preheader Alt A:** `Plus earn 500 bonus points when you spend $75 — this weekend only.`
+   - **Preheader Alt B:** `500 bonus points with a $75 order. Shop the sale before it ends.`
 
----
+2. **Re-add personalization**: "Rosie, your Stacking Weekend starts now" would have been the single highest-leverage change available. The triggered flow has the name token — use it on broadcast sends too.
 
-## 4. What I'd change
+3. **Add an explicit expiry in the hero**: "Ends Sunday at midnight" or even just "Ends 5/25" converts "Weekend" from a vague hint into an actionable countdown. The May 14 welcome email proved Sephora's template supports this.
 
-1. **Restore the name personalization** — the drop from "Rosie, your 10% off expires today" to an anonymous send is the single biggest regression from the welcome sequence. Put the name back in the subject.
-2. **Cut the subject to one offer, move the second to preheader** — the dual-offer subject is truncating. Lead with the 50% hook, let the $75/$500 points live in the preheader where it complements rather than competes.
-3. **Add a hard deadline to the hero** — "Ends Sunday 11:59 PM PT" or "Offer valid through May 25" converts the "Weekend" implication into an action trigger.
-4. **Make the CTA more specific** — "Shop 50% Off Deals" or "Shop the Stacking Sale" outperforms "SHOP NOW" — verb+product noun beats verb+adverb.
-5. **Preview text should carry the stacking mechanic** — the subject leads with 50% off; the preheader should carry the points angle so the two benefits are each surfaced once, not doubled up.
+4. **Cut or relocate the Salta Replenish module**: a subscription pitch mid-promo email breaks the sale momentum. Move it to a dedicated send or below the fold.
 
-- **Subject Alt A:** `Rosie, up to 50% off this weekend 💄`
-- **Subject Alt B:** `Stacking Weekend: 50% off select beauty — ends Sunday`
-- **Preheader Alt A:** `Spend $75 and pocket 500 bonus points on top.`
-- **Preheader Alt B:** `Stack it: half off select picks + 500 points when you spend $75.`
+5. **Sharpen the hero CTA**: change "SHOP NOW" to "Shop 50% Off Picks" or "Shop the Sale" — two words that tell subscribers exactly where they're landing.
 
 ---
 
 ## 5. Business Impact Score (1-10)
 
-**8/10**
-
-- Subject/hero explicitly references persona's focus area (beauty, savings) ✓
-- Sender is a recognized brand (Sephora) ✓
-- Concrete offer visible (50% off + $75/$500 bonus points — specific numbers) ✓
-- Primary CTA unambiguous ("SHOP NOW" button, clearly visible) ✓
-- Visual hierarchy clear — hero stacking offer reads immediately ✓
-- No render bugs (clean layout, no broken images or overlapping text) ✓
-- Email reflects current campaign (Stacking Weekend is a distinct, named event) ✓
-- Loyalty/member benefits visible (500 bonus points, Beauty Insider program) ✓
+**9/10**
+- Subject/hero explicitly references beauty focus area ✓
+- Sephora is a recognized, subscribed sender ✓
+- Concrete offer visible (50% off + 500 bonus points with specific spend threshold) ✓
+- Primary CTA unambiguous ("SHOP NOW" button present) ✓
+- No render bugs — clean layout throughout ✓
+- Demographic signals match (beauty products, brand identity) ✓
+- Current campaign (Stacking Weekend promotional event) ✓
+- Loyalty/member benefits explicitly visible (500 points, Beauty Insider callout) ✓
+- *(Not counted: visual hierarchy — 5+ competing sections dilute the hero; offer honesty — "up to" + "select" are hedging language with no visible category scope)*
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Sender display name recognizable (Sephora), subject is concrete (50%, $75, 500 points), subject is relevant to beauty persona, no spam signals (single emoji, no ALL CAPS/!!!), time-bounded urgency implied by "Weekend."
-- **Rationale:** The concreteness of the numbers keeps it above average, but the 74-character subject will truncate before the second offer on mobile, and the loss of name personalization — which was the signature of the May 14 and May 20 sends — makes this feel like a step backward in targeting. Six emails in 22 days also hurts open rate at the margin.
+- **Score:** 7/10
+- **Signals counted:** Sender display name recognizable (Sephora Sale); subject is concrete (50%, $75, 500 — all specific numbers); subject is relevant to beauty persona; no spam signals (no ALL CAPS, no excessive punctuation or exclamation stacking); "Weekend" provides time-bounded urgency; cadence is consistent with Sephora's established high-frequency pattern.
+- **Rationale:** The dual-number subject is concrete enough to hook a deal-seeker, and Sephora's sender name carries strong recognition. What holds this back: the subject runs 74 characters (mobile truncation is near-certain), and compared to the May 20 send's "10% off ends soon, Rosie" — which had both a name token and an expiry signal — this feels like a list-blast, not a trigger.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 7/10
-- **Signals counted:** Hero offer visible without scrolling, CTA is in the beauty category, offer reduces price (50% off), offer is time-bounded ("Weekend" framing), product grid provides specific items to browse, brand voice is consistent and trusted, render is clean with no friction.
-- **Rationale:** The 50% off hook is a strong enough pull once opened — a subscriber who's already bought into the Beauty Insider program will engage with the product grid. The generic "SHOP NOW" CTA and absence of any social proof or reviews are the main drag; a more specific CTA and one or two product callouts with ratings would push this to 8.
+- **Score:** 6/10
+- **Signals counted:** Hero offer visible without scrolling; primary CTA is in the beauty category; offer reduces price (50% off is unambiguous); brand voice consistent and trusted; no friction or broken-image gaps.
+- **Rationale:** The 50% off hero is immediately visible and the CTA is findable, which earns baseline click intent. But "SHOP NOW" with no destination context is the weakest possible label, and the absence of an explicit deadline means the urgency "Weekend" hints at never converts to a reason to click right now instead of later.
 
 ---
 
 ## 8. Subject
 
 - **Subject:** `Save up to 50% on select beauty 💄 Plus spend $75 to earn 500 bonus points.`
-- **Length:** 74 characters
-- **Scores (1-10):** Clarity `6`, Curiosity `4`, Personalization `2`, Urgency `5`, Specificity `8`
+- **Length:** ~74 characters (excluding emoji)
+- **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `1`, Urgency `4`, Specificity `8`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — not visible in the webview render; given the subject length, the inbox preview is likely either empty, showing "Shop Now," or defaulting to body copy. The long subject provides no room for a meaningful preheader to surface alongside it in most clients.
+- **Preview:** `(not legible in render — preheader area visible at top of email but text is not readable at screenshot resolution)`
 - **Length:** Unknown
-- **Scores (1-10):** Complements subject `2`, Specificity `1`, Clarity `1`, Inbox-fit `2`
+- **Scores (1-10):** Complements subject `N/A`, Specificity `N/A`, Clarity `N/A`, Inbox-fit `N/A`
 
 ---
 
 ## Technical Audit
 
-Looking at the provided HTML source, I'll audit the technical elements directly visible in the truncated markup.
+## Technical Audit — Sephora Sale Email (2026-05-22)
 
----
-
-## Technical Audit — Sephora "Save up to 50%" Email
-**Date:** 2026-05-22 | **Sender:** shop@beauty.sephora.com
+**From:** shop@beauty.sephora.com | **Subject:** Save up to 50% on select beauty...
 
 ---
 
 ### 1. Technical Summary
 
-Standard XHTML 1.0 Transitional table-based email shell with VML/Office namespace declarations for Outlook compatibility. Several accessibility violations are confirmed in the `<head>`; link integrity and compliance elements cannot be fully verified due to source truncation.
+The email passes structural rendering requirements but has two deliverability-critical failures: a missing plain-text fallback and unverifiable SPF/DKIM authentication. One-click unsubscribe compliance is also at risk.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**Cannot verify** — HTML source is truncated before any `<a href>` elements appear. The following cannot be confirmed from the provided extract:
-- UTM parameter coverage on CTAs
-- Redirect/click-tracking wrapper domains
-- Tracking pixel `src` URLs
+No issues found in link structure itself. Tracking pixels are present:
 
-**Action required:** Provide full HTML source or QA click-report to complete this section.
+- `https://mi.sephora.com/p/up/f6716d0a0f52104e/o.gif?mi_u=4970269939971072&mi_ecmp=20260522_BPFP_and_LWS_Starts_Today` — open pixel confirms Epsilon/MessageGears ESP; `mi_ecmp` campaign ID is present and consistent with send date.
+
+No broken or mismatched link targets were detectable from the truncated source.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Confirmed issues:**
+**[WARN] Multiple images missing `alt` text** — confirmed by QA:
 
-| # | Severity | Finding | Evidence |
-|---|----------|---------|----------|
-| A | High | Missing `lang` attribute on `<html>` element — WCAG 2.1 SC 3.1.1 Level A violation; screen readers cannot infer document language | `<html xmlns="..." xmlns:v="..." xmlns:o="...">` — no `lang="en"` |
-| B | Medium | `maximum-scale=1` in viewport meta prevents pinch-to-zoom for low-vision users | `<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />` |
-| C | Medium | `text-size-adjust: none` applied to 11 element types including `body` — overrides OS/browser font-scaling for users who rely on it | `div, a, tr, table, body, span, img, strong, td { -webkit-text-size-adjust: none; ... text-size-adjust: none; }` |
-| D | Low | `<title>` is a generic "Sephora" — does not match subject line; screen readers announce this as the document title | `<title>Sephora</title>` |
-| E | Low | `robots` meta value is `"no index"` (space-separated) — technically malformed; correct value is `"noindex"` (no space). Inconsequential for email delivery but signals a copy-paste error in the shell template | `<meta name="robots" content="no index" />` |
+| Image | Evidence |
+|---|---|
+| Tracking/beacon image | `o.gif` — no `alt` |
+| Nav header | `2021_Navs_Header_06.jpg` — no `alt` |
+| Hero image | `20260522_BPFP_and_LWS_Starts_Today_hed_09.jpg` — no `alt` |
+| Unknown blob | `AQEAAZcF2gAn...` — no `alt` |
 
-**No issues found:** Charset declaration (`utf-8`), `X-UA-Compatible IE=Edge`, and VML namespace declarations are all correctly set for broad client compatibility.
+Missing `alt` on content images (nav, hero) breaks screen-reader accessibility and degrades display in image-blocking clients (Outlook default, Apple Mail "load remote images off"). The tracking pixel omission is expected but the content images are not.
+
+**No issues found:** DOCTYPE is XHTML 1.0 Transitional (correct for broad email client support), viewport meta is present, Outlook VML namespaces declared, responsive breakpoint at 480px is defined with full class-based override set.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**Cannot verify** — source truncated before body content. Cannot confirm:
-- First-name token presence/fallback (`{{first_name | default: "Beauty Insider"}}` pattern or equivalent)
-- Loyalty tier or points-balance dynamic blocks
-- Unreplaced/raw token strings (e.g. `*|FNAME|*` visible in rendered output)
+No unrendered merge tokens (e.g., `{{first_name}}`, `*|FNAME|*`) visible in the truncated source. The open-pixel URL contains `mi_u=4970269939971072`, which appears to be a resolved subscriber ID — not an unsubstituted token.
+
+No issues found in the visible source.
 
 ---
 
-### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
+### 5. Compliance
 
-**Cannot verify from source** — footer not present in truncated HTML. Unable to confirm:
-- Physical mailing address (CAN-SPAM §5(a)(5))
-- One-click unsubscribe link and List-Unsubscribe header (RFC 8058 / Yahoo/Google sender requirements)
-- Unsubscribe link landing page returns HTTP 200 and processes within 10 business days
+**[FAIL] Plain-text fallback is 0 characters.**
+CAN-SPAM does not mandate plain text, but its complete absence means:
+- Spam filters (SpamAssassin, Barracuda) score the message higher risk
+- RFC 2822 multi-part MIME best practice (`multipart/alternative`) is violated
+- Some corporate mail gateways strip HTML-only messages entirely
 
-**Authentication headers** not included in provided data — DKIM signature, SPF alignment, and DMARC pass/fail cannot be assessed. Request raw `.eml` headers or ESP delivery report to verify.
+**[WARN] `List-Unsubscribe` header not captured by AgentMail relay.**
+If the header is absent at delivery, the email violates Google/Yahoo bulk sender requirements (enforced Feb 2024+) for senders above 5,000/day. Sephora's volume virtually guarantees they exceed this threshold. Evidence: QA header scan returned no `List-Unsubscribe` value.
+
+**[WARN] `List-Unsubscribe-Post` header missing (RFC 8058).**
+Without this, Gmail's one-click unsubscribe button in the UI cannot function, increasing spam complaints. This compounds the above.
+
+**[WARN] `Authentication-Results` header not found.**
+SPF/DKIM pass/fail status is unknown due to AgentMail relay capture gap. Cannot confirm DMARC alignment. This is a relay instrumentation gap, not necessarily a sending failure — but it should be verified against raw headers from a seed account.
 
 ---
 
-### 6. Email-to-Site Continuity (UTM Params, Landing Page Alignment)
+### 6. Email-to-Site Continuity
 
-**Cannot verify** — no CTA links visible in truncated source. Cannot assess:
-- `utm_source`, `utm_medium`, `utm_campaign` coverage
-- `utm_content` differentiation across multiple CTAs
-- Landing page sale-price accuracy matching the "up to 50% off" claim
-- Bonus-points offer (`$75 spend → 500 pts`) reflected on linked product/landing pages
+The open-pixel `mi_ecmp` value (`20260522_BPFP_and_LWS_Starts_Today`) is consistent with the send date and campaign. However, UTM parameter coverage on CTA links cannot be confirmed from the truncated HTML — the full link set was not provided for analysis.
+
+No confirmed continuity failures; UTM audit requires full source.
 
 ---
 
 ### 7. Recommendations
 
-**Fix immediately:**
-1. Add `lang="en"` to the `<html>` tag — one-character shell template change, fixes WCAG Level A violation globally across all sends.
-2. Remove `maximum-scale=1` from viewport meta — no rendering benefit; actively harms zooming users.
-3. Scope `text-size-adjust: none` to layout-only elements (tables, structural wrappers) — remove it from `body`, `a`, `span`, `strong`.
-
-**Fix in next send:**
-4. Correct `"no index"` → `"noindex"` in the shell template robots meta.
-5. Update `<title>` to match subject line or use a descriptive variant (e.g., `"Sephora — Up to 50% Off Select Beauty"`).
-
-**Requires full source / `.eml` headers to close:**
-- Link/UTM audit
-- CAN-SPAM footer verification
-- DKIM/SPF/DMARC pass confirmation
-- Merge token fallback validation
+| Priority | Action |
+|---|---|
+| **P0** | Add plain-text MIME part — even a minimal version with offer summary + unsubscribe URL eliminates the deliverability penalty and RFC violation |
+| **P0** | Verify `List-Unsubscribe` and `List-Unsubscribe-Post` headers are present in raw delivered headers via seed inbox (check Gmail "Show original") — if missing, fix at ESP configuration level, not template level |
+| **P1** | Add `alt` text to all content images (`alt=""` is acceptable for decorative/tracking images, but nav and hero require descriptive text) |
+| **P1** | Pull raw `Authentication-Results` from a seed delivery to confirm SPF/DKIM/DMARC pass — AgentMail relay is not capturing this header |
+| **P2** | Audit CTA `href` values in full source to confirm UTM params (`utm_source`, `utm_medium`, `utm_campaign`) are present and consistent with `mi_ecmp` value |
 ## Recent history
 
 - [[2026-05-22-10-off-your-25-purchase-memorial-day-sale-yes-yes]] — 8/10 (2026-05-22)
