@@ -3,225 +3,251 @@ slug: 2026-05-23-private-designer-sale-is-on-now-b57c1a47-d9ed-40de-8b3f-
 type: email
 date: 2026-05-23
 persona: nadine-incircle-neiman-fap6e
-score: "8/10"
+score: "7/10"
 sender: Neiman Marcus
 subject: Private Designer Sale is on now!
-tags: [email, score-8, sender/neiman-marcus]
+tags: [email, score-7, sender/neiman-marcus]
 ---
 # Private Designer Sale is on now!
-**Score:** 8/10 · **Type:** Email audit · **2026-05-23**
+**Score:** 7/10 · **Type:** Email audit · **2026-05-23**
 ## Executive summary
 
-- This is NM's latest beat in a multi-week Designer Sale drumbeat — by my count the sixth or seventh consecutive send in this campaign (launch ~5/17, urgency 5/18, Givenchy/Ferragamo spotlight 5/19, new designers 5/21, "going fast" 5/22, and now "Private Event" 5/23). The "Private Event" framing is genuinely the freshest creative angle this campaign has tried — pivoting from urgency to exclusivity is the right instinct — but the illusion collapses the moment you see the generic code NMSALE. Nothing about that code says private.
-- Structurally the email is clean and renders perfectly: big bold serif typography, red percentage anchor, one obvious button. But it contains zero product photography. For a luxury designer sale, that means nothing to covet, nothing to trigger desire, nothing to scroll toward. It's a coupon dressed as an event.
-- Overall: competent mechanics, smart reframe that undersells itself, and a creative that should have earned 2–3 product shots instead of relying entirely on typography.
+- This is NM's sixth-ish Designer Sale email in roughly a week, and the creative team knows it — so they've reached for the "Private Event" frame to make a broadcast feel exclusive. The execution is spare to the point of austerity: bold serif type, one black button, no product imagery at all. The offer (up to 40% off with code NMSALE) is legible in seconds, which is the email's strongest quality.
+- The problem is that "Private Event" is doing a lot of work it hasn't earned. A generic promo code (NMSALE), zero personalization, and no designer name-drops make "private" read as marketing language rather than genuine segmentation. Compare the 5/22 "Summer in full swing" send — that one scored a 9 by letting the brand roster do the selling; this one skips product entirely and bets everything on the headline mechanic.
+- The email is clean and functional, but it's a diminishing return on a campaign the audience has now seen multiple times this week. By this point in the cadence, the subscriber needs a reason to click that they haven't already been given — and this email doesn't provide one.
 
 ## What's working
 
-- **Hierarchy is tight**: "PRIVATE EVENT" → "UP TO 40% OFF" (in red) → "SHOP SALE" reads in the right order without any eye-tracking effort.
-- **Code is surfaced mid-body**: NMSALE appears clearly before the CTA, reducing checkout friction rather than burying it in fine print.
-- **Zero render risk**: No product images means no broken-image gaps — the email looks identical whether images load or not.
-- **"Private Event" angle is correct**: Reframing an ongoing sale as an exclusive access moment is the right strategic move after six nearly identical sends.
-- **Fine print is honest**: End date (6/1/26 at 10:00 PM CT) and "Exclusions Apply" are both present and visible.
+- **Visual hierarchy is instant** — PRIVATE EVENT → 40% OFF → SHOP SALE reads in a single scan with no competing elements.
+- **Promo code is front and center** — CODE | NMSALE is displayed in the hero, not buried in fine print.
+- **CTA is unambiguous** — "SHOP SALE" is a verb + noun in a high-contrast black button; no guessing required.
+- **End date is disclosed** — Fine print shows "Ends 6/1/26 at 10:00 PM CT," giving the deadline credibility.
 
 ## What's weak
 
-- **No products**: A luxury designer sale with zero product photography is a conversion-killer. Subscribers shop what they see; give them nothing to want and they have no reason to click beyond obligation.
-- **Generic code contradicts "private" positioning**: NMSALE is a broadcast code. Using it while calling this a "Private Event" is a contradiction any repeat subscriber will feel even if they can't name it.
-- **Deadline buried in fine print**: 6/1/26 is a specific, credible deadline — it should be in the hero or above the CTA, not in the mouse-type block at the bottom.
-- **Campaign fatigue is now a real headwind**: The 5/22 "Summer-ready styles are going fast!" send was already the fifth consecutive Designer Sale message. This sixth send is asking a lot of the subscriber relationship.
-- **Single undifferentiated CTA**: "SHOP SALE" dumps everyone onto the same page. No subcategory links (shoes, handbags, ready-to-wear) means no way to match intent.
+- **"Private" rings hollow** — A broadcast code (NMSALE) with no personalization undercuts the exclusivity frame; this feels like any sale email with a different headline.
+- **Zero product imagery** — No designer names, no product shots, no lifestyle visual. The 5/22 new-arrivals email proved this brand's product roster sells itself — skipping it here wastes that asset.
+- **Sixth bite of the same apple** — The Designer Sale launched ~5/17; by 5/23 the subscriber has seen multiple sends on this sale. The "Private Event" rename doesn't reset that fatigue.
+- **"Up to 40% off select styles" triple hedge** — "Up to" + "select" + "Exclusions Apply" in sequence makes the offer feel smaller than the 40% headline implies.
 
 ## Recommendations
 
-- 1. **Add 2–3 product images** — the single biggest lift available. Two desirable hero shots (a shoe, a bag, a dress) give subscribers something to want before the click. This alone would materially lift CTR.
-- 2. **Surface the deadline in the body** — "Sale ends June 1" above the CTA converts the vague "now" urgency into something concrete and credible.
-- 3. **Commit to the "private" framing or drop it** — either personalize the code (NMPRIVATE, NMVIP) or stop calling it a Private Event. The mismatch erodes trust without the subscriber being able to articulate why.
-- 4. **Add subcategory CTAs** — a secondary SHOP SHOES / SHOP HANDBAGS / SHOP DESIGNERS row catches subscribers by actual preference and lifts relevance for every segment.
-- **Subject Alt A:** `Your private access: 40% off designers, ends June 1`
-- **Subject Alt B:** `Valentino, Saint Laurent, 40% off — today only`
-- **Preheader Alt A:** `Code NMSALE at checkout — sale ends June 1 at 10 PM`
-- **Preheader Alt B:** `Select styles up to 40% off. Shop before it's gone.`
+- 1. **Lead with one designer name or product** — Drop a single aspirational hero image (e.g., a Givenchy bag at 40% off) above the CTA. The 5/21 new-arrivals send showed exactly how to do this; replicate the format.
+- 2. **Make "Private" mean something** — Swap NMSALE for a code that looks personalized (ALONPRIVATE, MEMBERPRIVATE) even if it's segment-level. The perception of exclusivity is the point.
+- 3. **Put the end date in the email body, not just the fine print** — "Sale ends June 1 — 9 days left" above the button converts the fine-print deadline into an action driver.
+- 4. **Surface specific designer names** — Even a two-line "Givenchy · Ferragamo · Valentino" callout anchors the "designer" claim.
+- **Subject Alt A:** `Private Event: 40% off Givenchy, Valentino & more`
+- **Subject Alt B:** `Your 40% off code — Designer Sale ends June 1`
+- **Preheader Alt A:** `Code NMSALE works on 500+ designer styles through June 1.`
+- **Preheader Alt B:** `Givenchy, Valentino, and more — up to 40% off, this week only.`
 
 ## Full review
 ## 1. Overview
 
-This is NM's latest beat in a multi-week Designer Sale drumbeat — by my count the sixth or seventh consecutive send in this campaign (launch ~5/17, urgency 5/18, Givenchy/Ferragamo spotlight 5/19, new designers 5/21, "going fast" 5/22, and now "Private Event" 5/23). The "Private Event" framing is genuinely the freshest creative angle this campaign has tried — pivoting from urgency to exclusivity is the right instinct — but the illusion collapses the moment you see the generic code NMSALE. Nothing about that code says private.
+This is NM's sixth-ish Designer Sale email in roughly a week, and the creative team knows it — so they've reached for the "Private Event" frame to make a broadcast feel exclusive. The execution is spare to the point of austerity: bold serif type, one black button, no product imagery at all. The offer (up to 40% off with code NMSALE) is legible in seconds, which is the email's strongest quality.
 
-Structurally the email is clean and renders perfectly: big bold serif typography, red percentage anchor, one obvious button. But it contains zero product photography. For a luxury designer sale, that means nothing to covet, nothing to trigger desire, nothing to scroll toward. It's a coupon dressed as an event.
+The problem is that "Private Event" is doing a lot of work it hasn't earned. A generic promo code (NMSALE), zero personalization, and no designer name-drops make "private" read as marketing language rather than genuine segmentation. Compare the 5/22 "Summer in full swing" send — that one scored a 9 by letting the brand roster do the selling; this one skips product entirely and bets everything on the headline mechanic.
 
-Overall: competent mechanics, smart reframe that undersells itself, and a creative that should have earned 2–3 product shots instead of relying entirely on typography.
+The email is clean and functional, but it's a diminishing return on a campaign the audience has now seen multiple times this week. By this point in the cadence, the subscriber needs a reason to click that they haven't already been given — and this email doesn't provide one.
+
+---
 
 ## 2. What worked
 
-- **Hierarchy is tight**: "PRIVATE EVENT" → "UP TO 40% OFF" (in red) → "SHOP SALE" reads in the right order without any eye-tracking effort.
-- **Code is surfaced mid-body**: NMSALE appears clearly before the CTA, reducing checkout friction rather than burying it in fine print.
-- **Zero render risk**: No product images means no broken-image gaps — the email looks identical whether images load or not.
-- **"Private Event" angle is correct**: Reframing an ongoing sale as an exclusive access moment is the right strategic move after six nearly identical sends.
-- **Fine print is honest**: End date (6/1/26 at 10:00 PM CT) and "Exclusions Apply" are both present and visible.
+- **Visual hierarchy is instant** — PRIVATE EVENT → 40% OFF → SHOP SALE reads in a single scan with no competing elements.
+- **Promo code is front and center** — CODE | NMSALE is displayed in the hero, not buried in fine print.
+- **CTA is unambiguous** — "SHOP SALE" is a verb + noun in a high-contrast black button; no guessing required.
+- **End date is disclosed** — Fine print shows "Ends 6/1/26 at 10:00 PM CT," giving the deadline credibility.
+
+---
 
 ## 3. What didn't
 
-- **No products**: A luxury designer sale with zero product photography is a conversion-killer. Subscribers shop what they see; give them nothing to want and they have no reason to click beyond obligation.
-- **Generic code contradicts "private" positioning**: NMSALE is a broadcast code. Using it while calling this a "Private Event" is a contradiction any repeat subscriber will feel even if they can't name it.
-- **Deadline buried in fine print**: 6/1/26 is a specific, credible deadline — it should be in the hero or above the CTA, not in the mouse-type block at the bottom.
-- **Campaign fatigue is now a real headwind**: The 5/22 "Summer-ready styles are going fast!" send was already the fifth consecutive Designer Sale message. This sixth send is asking a lot of the subscriber relationship.
-- **Single undifferentiated CTA**: "SHOP SALE" dumps everyone onto the same page. No subcategory links (shoes, handbags, ready-to-wear) means no way to match intent.
+- **"Private" rings hollow** — A broadcast code (NMSALE) with no personalization undercuts the exclusivity frame; this feels like any sale email with a different headline.
+- **Zero product imagery** — No designer names, no product shots, no lifestyle visual. The 5/22 new-arrivals email proved this brand's product roster sells itself — skipping it here wastes that asset.
+- **Sixth bite of the same apple** — The Designer Sale launched ~5/17; by 5/23 the subscriber has seen multiple sends on this sale. The "Private Event" rename doesn't reset that fatigue.
+- **"Up to 40% off select styles" triple hedge** — "Up to" + "select" + "Exclusions Apply" in sequence makes the offer feel smaller than the 40% headline implies.
+
+---
 
 ## 4. What I'd change
 
-1. **Add 2–3 product images** — the single biggest lift available. Two desirable hero shots (a shoe, a bag, a dress) give subscribers something to want before the click. This alone would materially lift CTR.
-2. **Surface the deadline in the body** — "Sale ends June 1" above the CTA converts the vague "now" urgency into something concrete and credible.
-3. **Commit to the "private" framing or drop it** — either personalize the code (NMPRIVATE, NMVIP) or stop calling it a Private Event. The mismatch erodes trust without the subscriber being able to articulate why.
-4. **Add subcategory CTAs** — a secondary SHOP SHOES / SHOP HANDBAGS / SHOP DESIGNERS row catches subscribers by actual preference and lifts relevance for every segment.
+1. **Lead with one designer name or product** — Drop a single aspirational hero image (e.g., a Givenchy bag at 40% off) above the CTA. The 5/21 new-arrivals send showed exactly how to do this; replicate the format.
+2. **Make "Private" mean something** — Swap NMSALE for a code that looks personalized (ALONPRIVATE, MEMBERPRIVATE) even if it's segment-level. The perception of exclusivity is the point.
+3. **Put the end date in the email body, not just the fine print** — "Sale ends June 1 — 9 days left" above the button converts the fine-print deadline into an action driver.
+4. **Surface specific designer names** — Even a two-line "Givenchy · Ferragamo · Valentino" callout anchors the "designer" claim.
 
-- **Subject Alt A:** `Your private access: 40% off designers, ends June 1`
-- **Subject Alt B:** `Valentino, Saint Laurent, 40% off — today only`
-- **Preheader Alt A:** `Code NMSALE at checkout — sale ends June 1 at 10 PM`
-- **Preheader Alt B:** `Select styles up to 40% off. Shop before it's gone.`
+- **Subject Alt A:** `Private Event: 40% off Givenchy, Valentino & more`
+- **Subject Alt B:** `Your 40% off code — Designer Sale ends June 1`
+- **Preheader Alt A:** `Code NMSALE works on 500+ designer styles through June 1.`
+- **Preheader Alt B:** `Givenchy, Valentino, and more — up to 40% off, this week only.`
+
+---
 
 ## 5. Business Impact Score (1-10)
 
-**8/10**
+**7/10**
 
-Criteria TRUE:
-- Sender is a brand you recognize / are subscribed to (Neiman Marcus)
-- One concrete offer is visible (UP TO 40% OFF, code NMSALE)
-- Primary CTA is unambiguous (SHOP SALE, black button, clear placement)
-- Visual hierarchy is clear — red 40% anchors the eye immediately
-- No render bugs (clean throughout; no broken images, no layout issues)
-- Email reflects current campaign / season (Designer Sale is active, summer context)
-- Offer feels honest (Exclusions Apply flagged prominently, fine print with deadline visible)
+- Subject/hero explicitly references persona's focus area ("THE DESIGNER SALE · PRIVATE EVENT")
+- Sender is Neiman Marcus — recognizable and subscribed
+- Concrete offer visible: UP TO 40% OFF with code NMSALE
+- Primary CTA is unambiguous: "SHOP SALE" black button
+- Visual hierarchy is clear — offer/hero lands first
+- No render bugs — clean layout, no overlaps or broken images
+- Email reflects a current, ongoing campaign (Designer Sale)
 
-NOT counted: subject doesn't reference a specific product focus (shoes not mentioned); no demographic/model imagery; no loyalty member benefits surfaced.
+*(Not counted: no models/demographic signals, no loyalty member benefits surfaced, "up to" + "select" + "Exclusions Apply" hedging prevents the offer from reading as fully honest)*
+
+---
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 7/10
-- **Signals counted:** Sender display name recognizable (Neiman Marcus), Subject concrete ("on now!" signals live access), Subject relevant to focus area (designer fashion), Subject under ~50 chars (32 chars), No spam signals (no ALL CAPS stacking, no !!!), Time-bounded urgency ("on now")
-- **Rationale:** The sender name earns the open, and the subject is clean and specific enough. Campaign fatigue (sixth consecutive Designer Sale send) and the absence of a visible preheader both cap the score — a strong preheader reinforcing the "Private Event" angle could have pushed this to 8.
+- **Score:** `6/10`
+- **Signals counted:** Sender display name recognizable (Neiman Marcus); subject is concrete enough ("Private Designer Sale is on now!"); subject is relevant to persona's focus area (luxury designer goods); subject is under 50 chars (32 chars); no spam signals (no ALL CAPS in subject, no !!! stacking).
+- **Rationale:** The sender + subject combination clears the minimum bar — a luxury shopper recognizes NM and "Designer Sale" immediately. But the 6th send on the same campaign in a week significantly erodes that goodwill; "Private Event" is the only creative hook and it's not credible enough to cut through fatigue.
+
+---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 7/10
-- **Signals counted:** Hero offer visible without scrolling, Primary CTA in focus area (designer fashion), CTA copy specific (SHOP SALE = verb + noun), Offer reduces price (40% off), Brand voice consistent and trusted (clean NM aesthetic), No friction (direct button, no broken-image gaps)
-- **Rationale:** The mechanics are frictionless — clear offer, clear button, nothing in the way. What caps it is the complete absence of product imagery; for luxury fashion, you click what you covet, and this email gives you nothing to covet before you land on the CTA.
+- **Score:** `8/10`
+- **Signals counted:** Hero offer is visible without scrolling; CTA ("SHOP SALE") is in persona's category; CTA copy is specific (verb + noun); offer reduces price (40% off); offer is time-bounded with a credible deadline visible in fine print (Ends 6/1/26); brand voice is consistent and trusted; no friction — no render gaps, no broken images.
+- **Rationale:** For a subscriber who opens, the mechanics are all there: clear discount, clear code, clear button, visible end date. The zero-product-image layout actually removes the distraction of a mismatched hero — the only thing to do is click. What pulls back is the hedged "up to" / "select styles" language that a repeat NM customer has learned to mentally discount.
+
+---
 
 ## 8. Subject
 
 - **Subject:** `Private Designer Sale is on now!`
 - **Length:** 32 chars
-- **Scores (1-10):** Clarity `8`, Curiosity `4`, Personalization `2`, Urgency `5`, Specificity `5`
+- **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `1`, Urgency `5`, Specificity `4`
+
+---
 
 ## 9. Preview
 
-- **Preview:** `(none visible in webview render)`
-- **Length:** —
-- **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `1`, Inbox-fit `1`
-
-A missing preheader is consistent with prior NM Designer Sale sends this week and remains a reliably uncaptured opportunity — a single line reinforcing the code or deadline would cost nothing and add a measurable open-rate point.
+- **Preview:** `(none visible in render — no explicit preheader set; inbox likely pulls "THE DESIGNER SALE" or fine-print boilerplate)`
+- **Length:** n/a
+- **Scores (1-10):** Complements subject `2`, Specificity `2`, Clarity `2`, Inbox-fit `1`
 
 ---
 
 ## Technical Audit
 
 ## Technical Audit — Neiman Marcus "Private Designer Sale is on now!"
+
 **From:** NeimanMarcus@e.neimanmarcus.com | **Date:** 2026-05-23
 
 ---
 
 ### 1. Technical Summary
 
-The email is a standard Salesforce Marketing Cloud AMPscript template with table-based layout and a CSS-only hamburger nav. No hard failures detected; four QA warnings indicate compliance header gaps and unverifiable authentication that carry inbox-placement and one-click-unsubscribe risk.
+The email renders on a well-structured SFMC template but carries two compliance gaps (missing List-Unsubscribe headers), an accessibility violation from a pinned viewport, internal infrastructure names exposed in HTML comments, and an ambiguous SHA-256 identity-token path that appears to be commented out rather than active.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**28 tracking links — zero probed.** All click-through URLs route through a redirect domain (Neiman Marcus ESP click-tracker); the QA runner correctly skipped HTTP probing. This means broken destinations or misconfigured UTM params on any of the 28 links cannot be confirmed or ruled out from this audit alone.
+**28 tracking links — zero HTTP verification**
+All click-redirect links were skipped by the QA probe because they route through a click-tracking domain. No broken-link confirmation is possible from the outside. Recommend an internal pre-send link-check against the live redirect service.
 
-**Plain-text part is URL-saturated.** QA flags 2,470 of 3,450 plain-text characters (71.6%) as URLs. Spam filters (SpamAssassin `MIME_HTML_MOSTLY`, Gmail heuristics) penalize this ratio. The plain-text alternative should be a human-readable summary with no more than a handful of full URLs.
+**Plain-text body is 70% URLs**
+QA finding: 2,470 of 3,450 chars in the plain-text part are URLs. Spam filters (especially Gmail's content filters) penalize multipart/alternative payloads where the plain-text part is mostly raw tracking URLs rather than human-readable copy. The plain-text part should be rewritten as a prose summary with one or two key links only.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**`maximum-scale=1` on viewport meta** (`<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">`) — blocks pinch-to-zoom. WCAG 1.4.4 (Resize Text, Level AA) requires that text can be resized without assistive technology. This attribute is an accessibility defect for low-vision users.
+**`maximum-scale=1` in active viewport — WCAG 1.4.4 failure**
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+```
+This prevents user-initiated zoom on mobile. WCAG 1.4.4 (Resize Text, AA) prohibits suppressing pinch-zoom. The `maximum-scale` attribute should be removed.
 
-**Three dead viewport meta tags left in source** — commented out but present:
+**Three commented-out viewport variants in `<head>`**
 ```html
 <!--<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />-->
 <!--<meta name="viewport" content="width=320, initial-scale=0.29">-->
 <!--<meta name="viewport" content="width=1024">-->
 ```
-No functional impact, but `user-scalable=no` in the first comment reinforces the zoom-blocking intent. Dead code should be removed to prevent accidental re-enabling.
+Dead code indicating unresolved template maintenance debt. One of the commented variants also includes `user-scalable=no`, which is the same accessibility violation as above — if any future editor uncomments the wrong line this becomes active. All three should be deleted.
 
-**CSS-only hamburger nav (`:checked` pseudo-selector).** Interactive email CSS using `input:checked ~` works in Apple Mail and some iOS clients but is ignored in Outlook (all versions), Gmail app, and Yahoo Mail. Users on those clients receive a broken nav that never opens. There is no `<noscript>` or MSO conditional fallback visible in the truncated source.
+**iOS 9 hamburger animation workaround is live**
+```css
+body { -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from { padding: 0; } to { padding: 0; } }
+```
+iOS 9 has < 0.01% market share. This fires an infinite animation on every render for no functional benefit. It should be removed.
 
-**`@-webkit-keyframes bugfix` iOS 9 workaround** is still present. iOS 9 is EOL (2017). The keyframe animation fires on every load for no functional purpose.
-
-**`<title>` has a trailing space:** `<title>Neiman Marcus </title>` — minor; has no rendering impact but is a linting defect.
+**`<title>` has a trailing space**
+```html
+<title>Neiman Marcus </title>
+```
+Minor, but some mail clients render the window/tab title; trim the whitespace.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**`@user` assignment is double-commented out and inactive:**
+**SHA-256 identity path is commented out — active path unclear**
+
+The template comment block says "CHOOSE ONE SCENARIO BELOW" and then presents:
 ```html
-<!--/* SET @user = HASHED_EMAIL_SHA256 */ -->
+<!--/* SET @user = HASHED_EMAIL_SHA256 */-->
 ```
-This is an HTML comment wrapping an AMPscript block-comment. AMPscript inside HTML comments does not execute in SFMC. The inline note "CHOOSE ONE SCENARIO BELOW" confirms this is an intentional branch, but it means the SHA-256 hashed email personalization token is **not being set** for this send scenario. Any downstream reference to `@user` in the send will resolve to an empty string or throw a lookup error depending on how it's used later in the (truncated) template.
+The SHA-256 assignment is commented out. The earlier variable block sets `@user` via a lookup to `EMAIL_ID` from `NM_Subscriber_New_Consolidated`. If `@user` is used downstream in any pixel call, audience sync, or CDP match key expecting a hashed email, it will instead receive a numeric EMAIL_ID — a mismatch that silently breaks identity resolution without throwing a render error. Confirm which scenario is intentionally active and remove the dead branch.
 
-**No visible error-handling on four `Lookup()` calls:**
-- `Lookup("NM_Subscriber_New_Consolidated", "EMAIL_ID", "EMAIL_ADDRESS", @email)`
-- `Lookup("NM_CRM_Feed", "uEm", "EMAIL_ADDRESS", @email)`
-- `Lookup("NM_CRM_Feed", "cmdid", "EMAIL_ADDRESS", @email)`
+**Internal Data Extension names exposed in HTML source**
+```
+NM_Subscriber_New_Consolidated
+NM_CRM_Feed
+```
+Both DE names appear verbatim in the HTML comment block that ships to recipients. Any subscriber who views page source can see internal SFMC object names. These should be stripped from the deployed template — move variable documentation to an internal wiki or SFMC template notes field.
 
-SFMC returns an empty string on a failed lookup by default, which is silent. If `@emailid` or `@cmdid` is used in tracking URLs and resolves empty, clicks will land with malformed or missing subscriber identifiers — breaking attribution.
+**`@uEm` and `@cmdid` lookups surface CRM schema**
+Similarly, variable names `uEm` and `cmdid` from `NM_CRM_Feed` are visible in source comments. Low exploitability, but unnecessary information disclosure.
 
 ---
 
 ### 5. Compliance
 
-| Header | Status | Risk |
-|--------|--------|------|
-| `List-Unsubscribe` | **Not detected** (QA WARN) | Gmail and Yahoo Mail require this for bulk senders (>5K/day). Missing = increased spam folder placement since Feb 2024 policy enforcement. |
-| `List-Unsubscribe-Post` (RFC 8058) | **Not detected** (QA WARN) | One-click unsubscribe (Gmail/Yahoo requirement) depends on this header pairing. Without it, users must navigate to a web page to unsubscribe, which violates current bulk-sender requirements. |
-| `Authentication-Results` (SPF/DKIM/DMARC) | **Unknown** — not captured by AgentMail relay | Cannot confirm DKIM signing on `e.neimanmarcus.com`. If DKIM is absent or misconfigured, DMARC alignment fails and deliverability degrades across all major providers. |
+**`List-Unsubscribe` header absent (RFC 2369)**
+QA finding: header not detected via AgentMail relay. Gmail and Yahoo (as of 2024 bulk sender requirements) require this header for senders above 5,000 msg/day. Its absence risks inbox placement demotion and can trigger "Report Spam" prompts instead of clean unsubscribes.
 
-The `List-Unsubscribe` gap is the highest-severity finding. Google and Yahoo's February 2024 bulk sender mandates treat missing one-click unsubscribe as a compliance failure, not just a best-practice miss.
+**`List-Unsubscribe-Post` absent (RFC 8058)**
+One-click unsubscribe via POST is required by Google and Yahoo bulk sender policies. If the sending MTA is setting these headers and they are simply not being forwarded by the AgentMail relay, the relay pipeline must be audited. If they are genuinely absent from the outbound message, this is a blocking compliance gap.
+
+**Authentication-Results not captured**
+SPF and DKIM pass/fail status is unknown — the AgentMail relay is not surfacing the `Authentication-Results` header. The sending domain `e.neimanmarcus.com` (an ESP subdomain) should have both SPF alignment and a DKIM signature from the ESP. Verify via a direct seed-inbox test (e.g., mail-tester.com or GlockApps) rather than the relay.
+
+**CAN-SPAM physical address**
+Not verifiable from the truncated source. Confirm a physical postal address appears in the footer of the rendered email (required by CAN-SPAM § 5(a)(1)(C)).
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-All 28 destination URLs are behind a redirect domain and could not be probed, so UTM parameter presence and landing page alignment cannot be verified programmatically. The following should be manually sampled before the next send:
+**UTM parameters — not verifiable from truncated source**
+The 28 tracking links all route through a click-redirect domain; destination URLs and UTM parameter presence cannot be confirmed externally. Spot-check at least the primary CTA links in a pre-send test to confirm `utm_source`, `utm_medium`, and `utm_campaign` are present and correctly populated, and that `utm_campaign` matches the campaign calendar `@base_refid` value.
 
-- Confirm each tracked link appends UTM params (`utm_source`, `utm_medium`, `utm_campaign`) — these are typically injected by the ESP click-wrapper, but silent failures are common when the redirect chain is misconfigured.
-- Verify that sale-specific landing pages return HTTP 200 (not 301→404) for the duration of the sale window.
-- If `@cmdid` is appended to any URL for CRM attribution (common pattern in NM sends) and the lookup fails as noted above, those clicks will arrive with an empty or broken `cmdid` parameter.
+**Landing page alignment**
+No issues confirmed from available data — requires live link verification.
 
 ---
 
 ### 7. Recommendations
 
-**Priority 1 — Compliance (act before next bulk send)**
-- Confirm `List-Unsubscribe` and `List-Unsubscribe-Post: List-Unsubscribe=One-Click` headers are present in the actual delivered message (check raw headers on a seed address). If the AgentMail relay is stripping them, configure the relay to pass them through.
-- Verify SPF and DKIM on `e.neimanmarcus.com` via `dig TXT e.neimanmarcus.com` and a DMARC lookup. Capture `Authentication-Results` in the relay pipeline.
-
-**Priority 2 — Personalization integrity**
-- Audit all downstream uses of `@user` in the full template. If SHA-256 email is required for any tracking or personalization, the active send scenario must set it via an un-commented AMPscript block, not through the currently disabled path.
-- Add `IIF(EMPTY(@emailid), "fallback-or-error-flag", @emailid)` guards around the four `Lookup()` calls so attribution failures are observable rather than silent.
-
-**Priority 3 — Plain-text ratio**
-- Rewrite the plain-text MIME part to be a short human-readable summary (~150–300 chars) with only 1–2 key URLs. This directly reduces spam-filter score contribution from the `MIME_HTML_MOSTLY` class of rules.
-
-**Priority 4 — Accessibility**
-- Remove `maximum-scale=1` from the viewport meta. Pinch-to-zoom must be permitted per WCAG 1.4.4.
-
-**Priority 5 — Code hygiene (low urgency)**
-- Remove the three commented-out viewport meta tags and the iOS 9 keyframe animation workaround.
-- Verify the CSS hamburger nav has an MSO conditional-comment fallback for Outlook; if not, replace with a static nav for Outlook clients.
+| Priority | Action |
+|----------|--------|
+| **P0** | Add `List-Unsubscribe` and `List-Unsubscribe-Post` headers to every outbound send — required by Gmail/Yahoo bulk sender policy |
+| **P0** | Audit why AgentMail relay is stripping these headers; run a seed-inbox test to get ground-truth Authentication-Results |
+| **P1** | Remove `maximum-scale=1` from the active viewport meta tag |
+| **P1** | Strip all AMPscript variable comments (DE names, variable names) from the deployed HTML |
+| **P1** | Resolve the `@user` SHA-256 ambiguity — delete the inactive scenario, document the active one |
+| **P2** | Rewrite the plain-text part as human-readable copy (currently 70% raw URLs) |
+| **P2** | Delete the three commented-out viewport tags and the iOS 9 animation hack |
+| **P3** | Trim the trailing space in `<title>` |
+| **P3** | Confirm UTM parameter coverage on all 28 CTAs via internal pre-send link audit |
 ## Recent history
 
 - [[2026-05-23-last-chance-your-15-offer-expires-soon-70662e99-9f36-481b-8f4b-]] — 8/10 (2026-05-23)
