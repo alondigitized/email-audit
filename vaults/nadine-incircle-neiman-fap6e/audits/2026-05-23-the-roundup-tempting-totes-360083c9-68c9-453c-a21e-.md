@@ -12,240 +12,188 @@ tags: [email, score-7, sender/neiman-marcus]
 **Score:** 7/10 · **Type:** Email audit · **2026-05-23**
 ## Executive summary
 
-- "The Roundup: Tempting Totes" is a pure editorial send — a curated bag gallery with no discount, no urgency, and no price in sight. Neiman Marcus runs this format as a content break between promotional blasts, and given that the brand has fired off five to six consecutive sale-driven emails since May 17 (Designer Sale, spend-to-save, urgency beats), the palate cleanser is defensible. But it lands on a Friday in a subscriber's inbox that has been hammered with NM promos, which makes the lack of any hook — no price, no offer, no "from $X" — feel like a missed layup.
-- The creative is clean and the product selection is tasteful: the hero tote (a quilted structured bag, appearing to be Prada) reads luxury immediately, and the four product-grid images below hit a range of silhouettes and tones. Execution is tight and render-bug-free. But "Tempting Totes" as the lone value prop asks the subscriber to lean in purely on aesthetics, and there is nothing in the visible layout that shortens the purchase cycle.
-- Bottom line: this is an awareness play, not a conversion play. It will surface-test well (good open rate on NM brand equity) but click-through will be soft because there is nothing to click *for* beyond browsing.
+- This is a pure editorial roundup — no prices, no discount, no urgency mechanic. NM curates five totes under the headline "Tempting Totes," drops two CTAs, and calls it done. As a format, it's intentional: an editorial break from the relentless Designer Sale and spend-to-save sends that have dominated the last week. That positioning only works if it's well-timed and well-differentiated.
+- The problem is timing. NM has already sent two emails today — "Private Designer Sale is on now!" and "Last chance: Your 15% offer expires soon!" — before this one arrived. A subscriber who opened both of those now gets a zero-offer bag curation with no reason to click other than browsing curiosity. The visual execution is clean and the hero bag earns its spotlight, but there's no commercial pull anywhere in the email.
+- Verdict: good format, wrong day. As a standalone send mid-week with breathing room, this could perform decently. Landing third in the same inbox on May 23rd, it will mostly get scrolled past.
 
 ## What's working
 
-- **Hero image does immediate category signaling** — the large quilted tote above the fold communicates "luxury accessories" within one glance.
-- **"Shop Totes" + "Shop Must-Have Bags" dual CTAs** are clean, verb-noun, and unambiguous — no vague "Discover" or "Learn More."
-- **Product grid is editorially balanced** — four bags cover structured, slouchy, metallic, and suede silhouettes; feels curated, not dumped.
-- **No render bugs** — images load, text is legible, layout holds cleanly.
-- **Cadence pacing** — following a string of six sale/promo sends, an editorial break is strategically appropriate.
+- Hero bag photograph is large, sharp, and immediately communicates the category — no ambiguity about what this email is for.
+- "Tempting Totes" is alliterative and punchy — more memorable than the typical NM promo subject.
+- Dual CTAs ("Shop Totes" / "Shop Must-Have Bags") give intent-matched entry points without cluttering the layout.
+- Five-bag editorial grid breaks the monotony of the past week's sale sends and has genuine browse appeal.
+- Navigation bar (WOMEN / MEN / SHOES / SALE) is a quiet but functional secondary CTA row.
 
 ## What's weak
 
-- **Zero offer, zero price** — not a single dollar sign visible anywhere in the body; a roundup with no anchor price or even a starting-from range gives the subscriber no reason to click now vs. later.
-- **Secondary CTA "Shop New Arrivals" is unfocused** — after two tote-specific CTAs, a generic "new arrivals" button bleeds momentum and dilutes the category story.
-- **Brand labels on product grid are tiny and easy to miss** — the designer names are the actual value here; they should be prominent, not footnote-sized.
-- **No loyalty or member-only framing** — NM's InCircle membership is a real differentiator; a "member-exclusive preview" frame would transform this from "browse" to "act."
+- Zero pricing or offer means there's no decision-forcing mechanism — pure impulse is the only click driver.
+- Brand/product labels under each grid bag are rendered at a size that's illegible in-email; they exist but don't function as sell copy.
+- "Shop New Arrivals" at the bottom is a generic escape hatch that dilutes the totes story.
+- Third send of the day — subscriber fatigue is real, and this email has the weakest commercial hook of the three.
+- No editorial voice explaining why these totes were chosen — no styling note, no occasion context, nothing that would make the curation feel curated.
 
 ## Recommendations
 
-- 1. **Add "from $X" or "starting at $X" anchoring** — even a single price point ("Totes from $395") gives the subscriber a reason to click now. The image signals luxury; a price signals attainability or urgency.
-- 2. **Promote the brand names out of the footer of each product cell** — "Prada · Coach · Celine" should be large enough to read on mobile without zooming; the brand roster IS the value proposition.
-- 3. **Retire or sharpen the "Shop New Arrivals" footer CTA** — replace it with a third specific CTA tied to the lowest-price tote in the grid ("Shop from $X") or remove it entirely.
-- 4. **Add InCircle framing** — "InCircle members: early access to the full edit" costs nothing to add and converts the email from a broadcast to a loyalty moment.
-- 5. **Subject Alt A:** `Prada, Celine, Coach: The tote edit`
-- **Subject Alt B:** `The only tote roundup you need this summer`
-- **Preheader Alt A:** `Six styles worth adding to your closet — and your cart.`
-- **Preheader Alt B:** `From structured to slouchy: shop the bags NM is betting on now.`
+- 1. **Add a price anchor or member price to at least the hero bag.** Even "From $X" signals value and forces a decision. Without it, the email is just a mood board.
+- 2. **Rewrite the product grid captions.** Brand name + style name at readable size, with one-line sell copy ("Bestseller," "Low stock," "New this week") under each bag. NM's May 21 "Summer in full swing" send did this well — steal that format.
+- 3. **Replace "Shop New Arrivals" with "Shop All Totes"** — reinforce the email's own theme rather than scattering intent.
+- 4. **Don't send this as a third email on the same day.** Schedule it for a send slot with 24 hours of breathing room from the last promo.
+- 5. **Add a one-line editorial rationale** in the gap between the CTAs and the product grid: "Five bags worth adding to your summer rotation — selected by our style team."
+- **Subject Alt A:** `5 totes worth adding right now`
+- **Subject Alt B:** `The bag edit: totes that always sell out`
+- **Preheader Alt A:** `From structured to slouchy — our style team's current picks`
+- **Preheader Alt B:** `New in: the totes NM is restocking all summer`
 
 ## Full review
 ## 1. Overview
 
-"The Roundup: Tempting Totes" is a pure editorial send — a curated bag gallery with no discount, no urgency, and no price in sight. Neiman Marcus runs this format as a content break between promotional blasts, and given that the brand has fired off five to six consecutive sale-driven emails since May 17 (Designer Sale, spend-to-save, urgency beats), the palate cleanser is defensible. But it lands on a Friday in a subscriber's inbox that has been hammered with NM promos, which makes the lack of any hook — no price, no offer, no "from $X" — feel like a missed layup.
+This is a pure editorial roundup — no prices, no discount, no urgency mechanic. NM curates five totes under the headline "Tempting Totes," drops two CTAs, and calls it done. As a format, it's intentional: an editorial break from the relentless Designer Sale and spend-to-save sends that have dominated the last week. That positioning only works if it's well-timed and well-differentiated.
 
-The creative is clean and the product selection is tasteful: the hero tote (a quilted structured bag, appearing to be Prada) reads luxury immediately, and the four product-grid images below hit a range of silhouettes and tones. Execution is tight and render-bug-free. But "Tempting Totes" as the lone value prop asks the subscriber to lean in purely on aesthetics, and there is nothing in the visible layout that shortens the purchase cycle.
+The problem is timing. NM has already sent two emails today — "Private Designer Sale is on now!" and "Last chance: Your 15% offer expires soon!" — before this one arrived. A subscriber who opened both of those now gets a zero-offer bag curation with no reason to click other than browsing curiosity. The visual execution is clean and the hero bag earns its spotlight, but there's no commercial pull anywhere in the email.
 
-Bottom line: this is an awareness play, not a conversion play. It will surface-test well (good open rate on NM brand equity) but click-through will be soft because there is nothing to click *for* beyond browsing.
-
----
+Verdict: good format, wrong day. As a standalone send mid-week with breathing room, this could perform decently. Landing third in the same inbox on May 23rd, it will mostly get scrolled past.
 
 ## 2. What worked
 
-- **Hero image does immediate category signaling** — the large quilted tote above the fold communicates "luxury accessories" within one glance.
-- **"Shop Totes" + "Shop Must-Have Bags" dual CTAs** are clean, verb-noun, and unambiguous — no vague "Discover" or "Learn More."
-- **Product grid is editorially balanced** — four bags cover structured, slouchy, metallic, and suede silhouettes; feels curated, not dumped.
-- **No render bugs** — images load, text is legible, layout holds cleanly.
-- **Cadence pacing** — following a string of six sale/promo sends, an editorial break is strategically appropriate.
-
----
+- Hero bag photograph is large, sharp, and immediately communicates the category — no ambiguity about what this email is for.
+- "Tempting Totes" is alliterative and punchy — more memorable than the typical NM promo subject.
+- Dual CTAs ("Shop Totes" / "Shop Must-Have Bags") give intent-matched entry points without cluttering the layout.
+- Five-bag editorial grid breaks the monotony of the past week's sale sends and has genuine browse appeal.
+- Navigation bar (WOMEN / MEN / SHOES / SALE) is a quiet but functional secondary CTA row.
 
 ## 3. What didn't
 
-- **Zero offer, zero price** — not a single dollar sign visible anywhere in the body; a roundup with no anchor price or even a starting-from range gives the subscriber no reason to click now vs. later.
-- **Secondary CTA "Shop New Arrivals" is unfocused** — after two tote-specific CTAs, a generic "new arrivals" button bleeds momentum and dilutes the category story.
-- **Brand labels on product grid are tiny and easy to miss** — the designer names are the actual value here; they should be prominent, not footnote-sized.
-- **No loyalty or member-only framing** — NM's InCircle membership is a real differentiator; a "member-exclusive preview" frame would transform this from "browse" to "act."
-
----
+- Zero pricing or offer means there's no decision-forcing mechanism — pure impulse is the only click driver.
+- Brand/product labels under each grid bag are rendered at a size that's illegible in-email; they exist but don't function as sell copy.
+- "Shop New Arrivals" at the bottom is a generic escape hatch that dilutes the totes story.
+- Third send of the day — subscriber fatigue is real, and this email has the weakest commercial hook of the three.
+- No editorial voice explaining why these totes were chosen — no styling note, no occasion context, nothing that would make the curation feel curated.
 
 ## 4. What I'd change
 
-1. **Add "from $X" or "starting at $X" anchoring** — even a single price point ("Totes from $395") gives the subscriber a reason to click now. The image signals luxury; a price signals attainability or urgency.
-2. **Promote the brand names out of the footer of each product cell** — "Prada · Coach · Celine" should be large enough to read on mobile without zooming; the brand roster IS the value proposition.
-3. **Retire or sharpen the "Shop New Arrivals" footer CTA** — replace it with a third specific CTA tied to the lowest-price tote in the grid ("Shop from $X") or remove it entirely.
-4. **Add InCircle framing** — "InCircle members: early access to the full edit" costs nothing to add and converts the email from a broadcast to a loyalty moment.
-5. **Subject Alt A:** `Prada, Celine, Coach: The tote edit`
-   **Subject Alt B:** `The only tote roundup you need this summer`
-   **Preheader Alt A:** `Six styles worth adding to your closet — and your cart.`
-   **Preheader Alt B:** `From structured to slouchy: shop the bags NM is betting on now.`
+1. **Add a price anchor or member price to at least the hero bag.** Even "From $X" signals value and forces a decision. Without it, the email is just a mood board.
+2. **Rewrite the product grid captions.** Brand name + style name at readable size, with one-line sell copy ("Bestseller," "Low stock," "New this week") under each bag. NM's May 21 "Summer in full swing" send did this well — steal that format.
+3. **Replace "Shop New Arrivals" with "Shop All Totes"** — reinforce the email's own theme rather than scattering intent.
+4. **Don't send this as a third email on the same day.** Schedule it for a send slot with 24 hours of breathing room from the last promo.
+5. **Add a one-line editorial rationale** in the gap between the CTAs and the product grid: "Five bags worth adding to your summer rotation — selected by our style team."
 
----
+- **Subject Alt A:** `5 totes worth adding right now`
+- **Subject Alt B:** `The bag edit: totes that always sell out`
+- **Preheader Alt A:** `From structured to slouchy — our style team's current picks`
+- **Preheader Alt B:** `New in: the totes NM is restocking all summer`
 
 ## 5. Business Impact Score (1-10)
 
 **7/10**
 
-- Sender is recognizable (Neiman Marcus)
-- Primary CTA is unambiguous ("Shop Totes" — verb + noun, visible button)
-- Visual hierarchy is clear — hero tote dominates, headline and CTAs follow naturally
-- No render bugs observed
-- Demographic signals match persona (women's luxury leather goods)
-- Email reflects current season (summer totes framing is timely)
-- Subject/hero copy references persona's focus area (luxury accessories)
-
-*Not counted:* No concrete offer visible; no loyalty/member benefits surfaced; no offer to evaluate for honesty.
-
----
+- Sender recognized (Neiman Marcus)
+- Subject/hero explicitly references a specific category (totes/handbags)
+- Primary CTA is unambiguous ("Shop Totes")
+- Visual hierarchy is clear — hero bag dominates, headline and CTAs follow naturally
+- No render bugs observed — clean layout, no broken images or overlapping text
+- Demographic signals align — luxury handbag editorial matches the NM subscriber profile
+- *(Not counted: no concrete price/offer; no loyalty/InCircle benefits visible; no seasonal callout in the body; "offer feels honest" criterion doesn't fire when no offer exists)*
 
 ## 6. Open Likelihood (persona-grounded)
 
 - **Score:** 6/10
-- **Signals counted:** Sender display name recognizable; subject is concrete (specific product category); subject is relevant to luxury-fashion persona; subject is under 50 chars (28 chars); no spam signals.
-- **Rationale:** NM's brand equity carries the open — "Tempting Totes" is a clean, calm subject line that won't get filtered or ignored. But after six promotional emails in a week, subscriber fatigue is real, and there's no urgency signal or personalization hint to elevate this above passive browsing.
-
----
+- **Signals counted:** Sender display name recognizable; subject is concrete (specific product category); subject relevant to a luxury fashion persona; subject is 29 chars (well under mobile threshold); no spam signals (no ALL CAPS, no !!!).
+- **Rationale:** "Tempting Totes" is a clean, category-specific subject that a handbag buyer would notice. But landing as the third NM email in one inbox day is brutal — subscriber fatigue alone will suppress opens, and there's no urgency or offer in the subject to override that friction.
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 5/10**
-- **Signals counted:** Hero tote visible without scrolling; primary CTA ("Shop Totes") is in the right category; CTA copy is specific (verb + noun); brand voice is consistent and trusted; no layout friction / broken images.
-- **Rationale:** The CTA is clean and the product is visually desirable, but with no price, no offer, and no specific product detail (sizing, availability), there is no urgency mechanism to convert a browser into a clicker. The "Shop New Arrivals" footer CTA further dilutes focus.
-
----
+- **Score:** 6/10
+- **Signals counted:** Hero offer visible without scrolling; primary CTA is in the right category; CTA copy is specific ("Shop Totes" = verb + noun); one clear hero product linked; brand voice is consistent with trusted NM aesthetic; no friction (clean render, no broken images).
+- **Rationale:** A subscriber actively shopping for a tote would find this email immediately useful — the grid is clean and the CTAs are direct. Everyone else has no reason to click: no price, no deadline, no social proof, no editorial hook to manufacture desire.
 
 ## 8. Subject
 
 - **Subject:** `The Roundup: Tempting Totes`
-- **Length:** 28 characters
-- **Scores (1-10):** Clarity `8`, Curiosity `5`, Personalization `1`, Urgency `1`, Specificity `7`
-
----
+- **Length:** 29 chars
+- **Scores (1-10):** Clarity `8`, Curiosity `6`, Personalization `1`, Urgency `1`, Specificity `7`
 
 ## 9. Preview
 
-- **Preview:** `(none visible in render — preheader text not surfaced in screenshot)`
-- **Length:** N/A
-- **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `1`, Inbox-fit `1`
+- **Preview:** `(cannot determine — not visible in webview render)`
+- **Length:** n/a
+- **Scores (1-10):** Complements subject `n/a`, Specificity `n/a`, Clarity `n/a`, Inbox-fit `n/a`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — Neiman Marcus "The Roundup: Tempting Totes"
+## Technical Audit — Neiman Marcus "Tempting Totes"
 
 ---
 
 ### 1. Technical Summary
 
-The email is a Salesforce Marketing Cloud (SFMC) deployment with broadly standard email HTML structure, but has three material technical issues: internal data architecture exposed in HTML source comments, a plain-text part that is almost entirely URLs, and missing List-Unsubscribe headers that now affect deliverability at Gmail and Yahoo.
+Salesforce Marketing Cloud (SFMC) AMPscript-driven email with table-based layout and mobile CSS. QA surfaced two compliance header gaps that could trigger Gmail/Yahoo bulk-sender enforcement, and the plain-text alternative is structurally malformed with a 73% URL density.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**Plain-text MIME part is URL-saturated**
-QA reports 3,345 of 3,866 chars (86%) in the plain-text part are URLs. This means the plain-text version carries virtually no readable content — it is a link dump. Major spam filters (SpamAssassin, Google Postmaster) treat high plain-text URL density as a negative signal.
+**35 tracking links unprobed** — All outbound links route through a click-redirect domain. QA skipped HTTP probing on these, so broken or misconfigured redirects cannot be ruled out. No direct evidence of failures, but redirect chain health is unverified this run.
 
-**35 tracking links not probed**
-All 35 click-tracking links resolve through a redirect domain and were skipped by the HTTP probe. Destination URL alignment (UTM params, landing page) cannot be confirmed from automated checks alone. Manual spot-check of 3–5 links is required.
+**Plain-text 73% URLs (3,345 / 3,866 chars)** — The plain-text alternative is nearly entirely raw URLs. Spam filters (SpamAssassin `URI_ONLY`, Postmaster Tools) flag this pattern. A valid plain-text part should be human-readable prose with inline URLs, not a URL dump.
+
+**`@refid = CONCAT(@base_refid, "")` in AMPscript header comment** — The empty-string concat produces `@refid` identical to `@base_refid` with no suffix appended. If a suffix was intended (e.g., a variant code), it is silently missing from all 35 tracked links.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Three commented-out `<meta name="viewport">` tags in `<head>`**
-```html
-<!--<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />-->
-<!--<meta name="viewport" content="width=320, initial-scale=0.29">-->
-<!--<meta name="viewport" content="width=1024">-->
-```
-Dead code from iterative editing. Not a deliverability risk but signals template hygiene drift.
+**Hamburger nav via CSS checkbox hack** — The interactive mobile nav uses `:checked~` sibling selectors on a hidden `<input type="checkbox">`. This pattern is unsupported in Gmail (web and Android app), Samsung Mail, and older Outlook mobile builds. Those clients will likely render a broken nav state.
 
-**`<title>` has a trailing space**
-```html
-<title>Neiman Marcus </title>
-```
-Minor; some preview pane renderers surface the `<title>` value.
+**No `role="presentation"` on layout tables** — The truncated source shows no `role="presentation"` on the outer structural tables. Screen readers (NVDA + Outlook, VoiceOver + Apple Mail) will announce table structure as data tables, producing noisy output for visually impaired recipients.
 
-**Hamburger nav uses the CSS checkbox hack**
-```css
-.navbar-checkbox:checked~*[class].menu { visibility: visible !important; ... }
-```
-This pattern is functional but relies on `:checked` pseudo-class interaction, which is blocked in Gmail web client. The `*[class].hamburger` / `*[class].close` toggle will not work in Gmail. This is a known limitation; confirm whether Gmail rendering has been tested in Litmus/Email on Acid.
+**Multiple commented-out `<meta name="viewport">` tags** — Three prior viewport configurations remain in `<head>` as HTML comments, including a `width=320` targeting a 2012 breakpoint. No rendering impact, but signals live production code is being modified by comment-toggling rather than clean edits.
 
-**No `alt` text visible in the truncated source**
-Cannot fully audit image accessibility from the provided excerpt. Recommend confirming all `<img>` tags carry non-empty `alt` attributes, particularly product images.
+**`<title>` has trailing whitespace** — `<title>Neiman Marcus </title>` — harmless but appears in the browser tab and some webmail previews.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**Internal data schema exposed in HTML comments**
-The opening HTML comment block is not AMPscript — it is plain HTML comment documentation left in production output, visible to any recipient who views source:
+**"CHOOSE ONE SCENARIO BELOW" gate is a manual step** — The AMPscript header comment explicitly instructs the sender to select between initialization paths. This is a human-error surface in production sends: wrong scenario = wrong identity resolution for `@user`.
 
-```html
-<!--REQUIRED variables: @email (EMAIL_ADDRESS from sendable DE)
-  @user Lookup("NM_Subscriber_New_Consolidated", "EMAIL_ID", "EMAIL_ADDRESS", @email))
-  @uEm = Lookup("NM_CRM_Feed", "uEm", "EMAIL_ADDRESS", @email))
-  @cmdid Lookup("NM_CRM_Feed", "cmdid", "EMAIL_ADDRESS", @email))
-  ...-->
-<!--/* SET @user = HASHED_EMAIL_SHA256 */-->
-```
+**`@user = HASHED_EMAIL_SHA256` is commented out** — The line `/* SET @user = HASHED_SHA256 */` is disabled inside an HTML comment. If the active scenario does not set `@user` some other way, any downstream use of `@user` (identity stitching, suppression matching) silently evaluates to empty string. The full AMPscript block is truncated so the active scenario cannot be confirmed.
 
-This discloses: internal data extension names (`NM_Subscriber_New_Consolidated`, `NM_CRM_Feed`), field names (`uEm`, `cmdid`, `EMAIL_ID`), and the SHA-256 hashed email tracking strategy. Information disclosure risk — these comments should be stripped before send.
-
-**No-op CONCAT in `@refid`**
-```
-@refid = CONCAT(@base_refid,"")
-```
-The empty-string concat is a dead operation. This is a template artifact suggesting a suffix was once appended here. No functional impact but indicates the template has drifted from its original design.
-
-**No visible un-rendered merge tokens**
-No raw `%%variable%%` or `{{token}}` strings are present in the rendered HTML — AMPscript processed correctly at send time.
+**Silent lookup failures for `@uEm` and `@cmdid`** — Both are `Lookup()` calls against `NM_CRM_Feed`. SFMC `Lookup()` returns empty string on a miss with no runtime error. If either field is absent in the feed, personalized parameters passed to landing pages will be blank without any alert to the sender.
 
 ---
 
 ### 5. Compliance
 
-**List-Unsubscribe header absent** *(QA: WARN)*
-The `List-Unsubscribe` header was not detected. As of February 2024, Google and Yahoo mandate `List-Unsubscribe` (plus `List-Unsubscribe-Post` for one-click) for bulk senders (>5,000/day). Missing this header will suppress the native unsubscribe button in Gmail UI and increases spam complaint rate.
+**`List-Unsubscribe` header not found** — QA notes this may be filtered by the AgentMail relay, but the header's absence is confirmed in the captured data. Gmail and Yahoo Mail have required this for bulk senders since February 2024; missing it can trigger spam folder routing or auto-bulk classification.
 
-**List-Unsubscribe-Post (RFC 8058) absent** *(QA: WARN)*
-One-click machine unsubscribe is not implemented. Required for Gmail and Yahoo bulk sender compliance. SFMC supports this via SendSafely / Sender Authentication Package — it should be enabled at the account or sending profile level.
+**`List-Unsubscribe-Post` header not found (RFC 8058)** — One-click unsubscribe (machine-readable `mailto:` or `https:` POST target) is absent. Gmail enforces this for senders over 5,000/day. Without it, Gmail's "Unsubscribe" button in the UI either falls back to a click-through page or is suppressed entirely.
 
-**Authentication-Results unavailable** *(QA: WARN)*
-SPF and DKIM pass/fail status cannot be confirmed via the AgentMail relay. The sending domain `e.neimanmarcus.com` should have SPF, DKIM, and DMARC (`p=reject` or `p=quarantine`) configured. Cannot verify from this audit — check via MXToolbox or Google Postmaster Tools for the sending domain.
-
-**CAN-SPAM physical address**
-Not verifiable from the truncated source. Confirm a valid postal address is present in the footer.
+**`Authentication-Results` header not found** — SPF, DKIM, and DMARC pass/fail status cannot be confirmed from the captured message. The QA relay may strip this header, but if it is genuinely absent, DMARC alignment for `e.neimanmarcus.com` is unverifiable for this send.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-Cannot fully audit — all 35 links use click-tracking redirects that were skipped by the HTTP probe. Items to verify manually:
+Redirect probing was skipped for all 35 tracked links, so UTM parameter presence on landing pages cannot be confirmed. Known risk factors:
 
-- UTM params (`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`) should be appended to all destination URLs after redirect resolution.
-- The `@refid` / `@base_refid` campaign ID should appear in link UTM parameters or as a query param for attribution.
-- `@uEm` (likely hashed email) and `@cmdid` (customer/member ID) being passed as URL params to `neimanmarcus.com` should be confirmed against the site's privacy disclosure — passing identifiers into URLs that may be logged by third-party analytics is a data handling consideration.
+- `@refid` evaluates identically to `@base_refid` (empty CONCAT suffix) — if `refid` is the primary tracking parameter threaded into redirect URLs, all 35 links share an undifferentiated refid with no variant encoding.
+- `@uEm` (likely hashed email for on-site identity stitching) depends on a `NM_CRM_Feed` lookup that can silently fail — missing `uEm` would break server-side identity resolution on landing pages for unmatched subscribers.
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Issue | Action |
-|---|---|---|
-| **High** | Internal schema in HTML comments | Strip all `<!--REQUIRED variables ... -->` and `<!--/* SET ... */-->` comment blocks before production send |
-| **High** | List-Unsubscribe headers missing | Enable `List-Unsubscribe` + `List-Unsubscribe-Post` at SFMC Sender Authentication Package level |
-| **High** | SPF/DKIM/DMARC unverifiable | Audit `e.neimanmarcus.com` sending domain authentication; confirm DMARC policy is enforcing |
-| **Medium** | Plain-text URL saturation (86%) | Replace plain-text MIME part with a readable text summary + key links, not a URL list |
-| **Medium** | 35 tracking links unverified | Spot-check 3–5 redirected links for correct UTM params and landing page alignment |
-| **Low** | Dead `<meta viewport>` comments | Remove the three commented-out viewport tags from `<head>` |
-| **Low** | No-op CONCAT on `@refid` | Clarify if a suffix is still needed; if not, simplify to `SET @refid = @base_refid` |
+| Priority | Action |
+|---|---|
+| High | Confirm `List-Unsubscribe` and `List-Unsubscribe-Post` headers are set in SFMC Send Definition and survive the relay. Verify against raw headers in Gmail/Yahoo — not just AgentMail capture. |
+| High | Rebuild the plain-text alternative as prose + select URLs. Current 73% URL density is a spam signal. |
+| Medium | Automate the AMPscript scenario selection or replace the comment-gate with a single canonical variable block. Remove the manual "CHOOSE ONE SCENARIO" instruction from the production template. |
+| Medium | Audit all `Lookup()` calls for `@uEm`, `@cmdid`, and `@user` — wrap in `IIF(Empty(...), ...)` guards and log misses to a monitoring DE. |
+| Medium | Add `role="presentation"` and `aria-hidden="true"` to all structural layout tables. |
+| Low | Replace the CSS checkbox hamburger nav with a Litmus-tested fallback (static link list) for Gmail/Samsung Mail that doesn't support `:checked~` selectors. |
+| Low | Clean up the commented-out viewport meta tags and the trailing space in `<title>`. |
 ## Recent history
 
 - [[2026-05-23-private-designer-sale-is-on-now-b57c1a47-d9ed-40de-8b3f-]] — 9/10 (2026-05-23)
