@@ -3,192 +3,190 @@ slug: 2026-05-23-last-chance-your-15-offer-expires-soon-70662e99-9f36-481b-8f4b-
 type: email
 date: 2026-05-23
 persona: nadine-incircle-neiman-fap6e
-score: "7/10"
+score: "8/10"
 sender: Neiman Marcus
 subject: "Last chance: Your 15% offer expires soon!​"
-tags: [email, score-7, sender/neiman-marcus]
+tags: [email, score-8, sender/neiman-marcus]
 ---
 # Last chance: Your 15% offer expires soon!​
-**Score:** 7/10 · **Type:** Email audit · **2026-05-23**
+**Score:** 8/10 · **Type:** Email audit · **2026-05-23**
 ## Executive summary
 
-- This is a triggered "last chance" reminder for a 15% welcome discount — the promo code prefix NMWELC gives it away as an onboarding-sequence email, not a broadcast. The structure is classic Neiman Marcus: minimal nav, bold serif urgency headline, visible code, single CTA. For a welcome drip it's clean and competent.
-- What undercuts it is the vagueness of the deadline. "Expires soon" with no date or countdown is urgency theater — it tells the subscriber they should care without telling them why right now. At a retailer where a single item can run $500+, 15% is real money; that offer deserves a harder deadline to earn its "last chance" framing. Pair that with a hero product image (warm golden fur accessory) that reads autumn/winter in late May, and the email feels slightly out of sync with the moment.
-- The "LOOK FORWARD TO" section is the sleeper win here — it reframes the email list as a membership with tangible benefits. But it's buried below the CTA, where most subscribers won't scroll. This content should either lead the email or live in a dedicated welcome send.
+- This is a welcome-code expiry nudge — the promo code visible in the email ("NMWELC…") reads as a new-subscriber welcome offer that's about to expire, and the "Going, Going, Gone…" headline sells that drama cleanly. The structure is correct for this job: big urgency headline, the code in a scannable block, one CTA. Stripped-down is the right call.
+- Where it fails is at the click-through level. There is no product in this email. The amber hero image is an artistic close-up — warm and on-brand, but unidentifiable. A subscriber about to lose their 15% code wants to know what to spend it on. Give them two shoes, a bag, and a jacket; instead they get a button pointing at a homepage. The "LOOK FORWARD TO" section below the CTA makes the problem worse — it's onboarding copy pitching newsletter benefits, which directly competes with the urgency above.
+- Looking at brand history, NM already sent two emails on 5/22 ("Starts now: Up to $500 off your next order" and "Summer-ready styles are going fast!"), and this comes the very next morning. The code expiry is the only thing that keeps this from feeling like pure cadence fatigue — it has a legit reason to exist, but the envelope is running thin.
 
 ## What's working
 
-- "Going, Going, Gone..." is energetic, mirrors the subject's urgency without repeating it word-for-word, and lands the eye on the offer fast
-- 15% off with a fully visible, copy-paste-able promo code removes all friction — no hunting for the discount
-- Visual hierarchy is clean: headline → offer block → code → CTA, zero clutter
-- "LOOK FORWARD TO" section adds real subscriber-value framing (personalization, designer alerts, early access) — positions the list as more than a coupon channel
-- No render bugs; layout holds together on what appears to be a mobile-scaled render
+- **"Going, Going, Gone…" as the hero line** — earns attention, mirrors subject urgency without repeating it verbatim.
+- **Promo code is legible and isolated** — displayed in its own distinct block; easy to screenshot or copy before clicking.
+- **Subject line personalization** — "Your 15% offer" signals individual targeting, not a generic blast.
+- **Clean render** — no broken images, no lorem ipsum, no layout breakage.
 
 ## What's weak
 
-- "Expires soon" is functionally meaningless — no date, no countdown, no real urgency signal despite the "last chance" language
-- Hero product (warm golden fur-look accessory) is an autumn/winter visual in late May; it fights the season and weakens the "find your next favorite" hook
-- "START SHOPPING" CTA is a generic dead-end — no category, no product anchor, no reason to click vs. just saving the code for later
-- No featured product name, price, or link — the image has no purchase thread attached to it
-- No loyalty or member pricing callout, even though NM runs a loyalty program that would meaningfully lift the offer's perceived value
+- **Zero products shown** — if the discount expires soon, show me something I want to spend it on; the blurry amber hero creates no purchase intent.
+- **"Expires soon" is not a deadline** — no specific date or time is visible anywhere; credible deadlines drive action, vague ones don't.
+- **"LOOK FORWARD TO" section undercuts urgency** — onboarding newsletter pitch below a last-chance message is the wrong message in the wrong slot.
+- **Dense asterisk fine print** — the "*" on "ENJOY 15% OFF*" leads to a wall of exclusion language at the bottom; the offer feels more restricted than the headline implies.
 
 ## Recommendations
 
-- 1. **Add a hard expiration date.** "Offer ends May 25" or "3 days left" makes the urgency real. This is the single highest-lift change available — it transforms "expires soon" from noise into a decision trigger.
-- 2. **Swap the hero product image for something seasonally resonant.** A summer dress, a sandal, a lightweight bag in a warm-weather palette. Late May shoppers are thinking vacation, not fall fur.
-- 3. **Make the CTA category-specific or split it.** "Shop Women's" / "Shop Shoes" / "Shop the Sale" — even a two-button layout by category outperforms one generic entry point. New subscribers especially need a directional nudge.
-- 4. **Move "LOOK FORWARD TO" higher, or give it its own send.** Right now it competes with the offer and loses. As the only section that builds relationship over transaction, it should either lead or be isolated.
-- 5. **Surface a hero product at the discounted price.** One named item ("Valentino sandal — now from $X with your 15%") converts browser intent into cart intent.
-- **Subject Alt A:** `Last chance: 15% off ends Sunday`
-- **Subject Alt B:** `Your welcome offer expires in 3 days`
-- **Preheader Alt A:** `Use NMWELC-470Z-RGG55NW at checkout — summer styles included`
-- **Preheader Alt B:** `New arrivals, designer picks, and your discount — all in one place`
+- 1. **Inject two or three product images between the CTA and the footer** — show bestsellers or top-category picks with prices. A subscriber clicking to a blank homepage with a code in hand will abandon far more often than one who's already mentally spending 15% off a specific item.
+- 2. **Replace "expires soon" with a hard timestamp** — "Offer ends Sunday, May 25 at 11:59 PM" is infinitely more actionable than "soon."
+- 3. **Cut the "LOOK FORWARD TO" section entirely** — this is a transactional expiry reminder, not a welcome series email. If the welcome flow is the source of this code, the onboarding nudge should be a separate sequence.
+- 4. **Scope the discount to a category** — "15% off your next pair of shoes" or "15% off handbags" beats a generic site-wide offer because it gives the subscriber a decision frame.
+- **Subject Alt A:** `Your 15% code expires tonight — pick something`
+- **Subject Alt B:** `Going, going… your NM welcome offer ends soon`
+- **Preheader Alt A:** `New arrivals, shoes, handbags — 15% off before the code disappears.`
+- **Preheader Alt B:** `Offer ends Sunday. Here's what to spend it on.`
 
 ## Full review
 ## 1. Overview
 
-This is a triggered "last chance" reminder for a 15% welcome discount — the promo code prefix NMWELC gives it away as an onboarding-sequence email, not a broadcast. The structure is classic Neiman Marcus: minimal nav, bold serif urgency headline, visible code, single CTA. For a welcome drip it's clean and competent.
+This is a welcome-code expiry nudge — the promo code visible in the email ("NMWELC…") reads as a new-subscriber welcome offer that's about to expire, and the "Going, Going, Gone…" headline sells that drama cleanly. The structure is correct for this job: big urgency headline, the code in a scannable block, one CTA. Stripped-down is the right call.
 
-What undercuts it is the vagueness of the deadline. "Expires soon" with no date or countdown is urgency theater — it tells the subscriber they should care without telling them why right now. At a retailer where a single item can run $500+, 15% is real money; that offer deserves a harder deadline to earn its "last chance" framing. Pair that with a hero product image (warm golden fur accessory) that reads autumn/winter in late May, and the email feels slightly out of sync with the moment.
+Where it fails is at the click-through level. There is no product in this email. The amber hero image is an artistic close-up — warm and on-brand, but unidentifiable. A subscriber about to lose their 15% code wants to know what to spend it on. Give them two shoes, a bag, and a jacket; instead they get a button pointing at a homepage. The "LOOK FORWARD TO" section below the CTA makes the problem worse — it's onboarding copy pitching newsletter benefits, which directly competes with the urgency above.
 
-The "LOOK FORWARD TO" section is the sleeper win here — it reframes the email list as a membership with tangible benefits. But it's buried below the CTA, where most subscribers won't scroll. This content should either lead the email or live in a dedicated welcome send.
+Looking at brand history, NM already sent two emails on 5/22 ("Starts now: Up to $500 off your next order" and "Summer-ready styles are going fast!"), and this comes the very next morning. The code expiry is the only thing that keeps this from feeling like pure cadence fatigue — it has a legit reason to exist, but the envelope is running thin.
 
 ---
 
 ## 2. What worked
 
-- "Going, Going, Gone..." is energetic, mirrors the subject's urgency without repeating it word-for-word, and lands the eye on the offer fast
-- 15% off with a fully visible, copy-paste-able promo code removes all friction — no hunting for the discount
-- Visual hierarchy is clean: headline → offer block → code → CTA, zero clutter
-- "LOOK FORWARD TO" section adds real subscriber-value framing (personalization, designer alerts, early access) — positions the list as more than a coupon channel
-- No render bugs; layout holds together on what appears to be a mobile-scaled render
+- **"Going, Going, Gone…" as the hero line** — earns attention, mirrors subject urgency without repeating it verbatim.
+- **Promo code is legible and isolated** — displayed in its own distinct block; easy to screenshot or copy before clicking.
+- **Subject line personalization** — "Your 15% offer" signals individual targeting, not a generic blast.
+- **Clean render** — no broken images, no lorem ipsum, no layout breakage.
 
 ---
 
 ## 3. What didn't
 
-- "Expires soon" is functionally meaningless — no date, no countdown, no real urgency signal despite the "last chance" language
-- Hero product (warm golden fur-look accessory) is an autumn/winter visual in late May; it fights the season and weakens the "find your next favorite" hook
-- "START SHOPPING" CTA is a generic dead-end — no category, no product anchor, no reason to click vs. just saving the code for later
-- No featured product name, price, or link — the image has no purchase thread attached to it
-- No loyalty or member pricing callout, even though NM runs a loyalty program that would meaningfully lift the offer's perceived value
+- **Zero products shown** — if the discount expires soon, show me something I want to spend it on; the blurry amber hero creates no purchase intent.
+- **"Expires soon" is not a deadline** — no specific date or time is visible anywhere; credible deadlines drive action, vague ones don't.
+- **"LOOK FORWARD TO" section undercuts urgency** — onboarding newsletter pitch below a last-chance message is the wrong message in the wrong slot.
+- **Dense asterisk fine print** — the "*" on "ENJOY 15% OFF*" leads to a wall of exclusion language at the bottom; the offer feels more restricted than the headline implies.
 
 ---
 
 ## 4. What I'd change
 
-1. **Add a hard expiration date.** "Offer ends May 25" or "3 days left" makes the urgency real. This is the single highest-lift change available — it transforms "expires soon" from noise into a decision trigger.
+1. **Inject two or three product images between the CTA and the footer** — show bestsellers or top-category picks with prices. A subscriber clicking to a blank homepage with a code in hand will abandon far more often than one who's already mentally spending 15% off a specific item.
+2. **Replace "expires soon" with a hard timestamp** — "Offer ends Sunday, May 25 at 11:59 PM" is infinitely more actionable than "soon."
+3. **Cut the "LOOK FORWARD TO" section entirely** — this is a transactional expiry reminder, not a welcome series email. If the welcome flow is the source of this code, the onboarding nudge should be a separate sequence.
+4. **Scope the discount to a category** — "15% off your next pair of shoes" or "15% off handbags" beats a generic site-wide offer because it gives the subscriber a decision frame.
 
-2. **Swap the hero product image for something seasonally resonant.** A summer dress, a sandal, a lightweight bag in a warm-weather palette. Late May shoppers are thinking vacation, not fall fur.
-
-3. **Make the CTA category-specific or split it.** "Shop Women's" / "Shop Shoes" / "Shop the Sale" — even a two-button layout by category outperforms one generic entry point. New subscribers especially need a directional nudge.
-
-4. **Move "LOOK FORWARD TO" higher, or give it its own send.** Right now it competes with the offer and loses. As the only section that builds relationship over transaction, it should either lead or be isolated.
-
-5. **Surface a hero product at the discounted price.** One named item ("Valentino sandal — now from $X with your 15%") converts browser intent into cart intent.
-
-- **Subject Alt A:** `Last chance: 15% off ends Sunday`
-- **Subject Alt B:** `Your welcome offer expires in 3 days`
-- **Preheader Alt A:** `Use NMWELC-470Z-RGG55NW at checkout — summer styles included`
-- **Preheader Alt B:** `New arrivals, designer picks, and your discount — all in one place`
+   - **Subject Alt A:** `Your 15% code expires tonight — pick something`
+   - **Subject Alt B:** `Going, going… your NM welcome offer ends soon`
+   - **Preheader Alt A:** `New arrivals, shoes, handbags — 15% off before the code disappears.`
+   - **Preheader Alt B:** `Offer ends Sunday. Here's what to spend it on.`
 
 ---
 
 ## 5. Business Impact Score (1-10)
 
-**7/10**
+**8/10**
 
-TRUE criteria:
-- Sender is a recognized brand (Neiman Marcus)
-- One concrete offer visible (15% off with full promo code displayed)
-- Primary CTA is unambiguous (START SHOPPING button, clearly styled)
-- Visual hierarchy is clear (headline → offer → code → CTA, no competing blocks)
-- No render bugs visible
-- Demographic signals match persona (luxury accessory, premium brand voice)
-- Offer feels honest (straightforward 15% off, code visible, no obvious bait-and-switch)
+Rubric criteria TRUE:
+- Subject/hero explicitly references persona's focus area (luxury deal visible in hero)
+- Sender is recognized (Neiman Marcus)
+- Concrete offer visible (15% OFF with promo code block)
+- Primary CTA unambiguous ("START SHOPPING" — clear blue button)
+- Visual hierarchy clear (headline → offer → CTA flows top to bottom)
+- No render bugs
+- Email reflects current campaign/season (urgency timing fits NM's summer push cadence)
 
 ---
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 7/10
-- **Signals counted:** Sender display name recognizable; subject is concrete (specific % + urgency verb); subject relevant to luxury fashion persona; subject under 50 chars (41 chars); no spam signals (no ALL CAPS, no !!! stacking); light personalization via "Your"; time-bounded urgency present
-- **Rationale:** The subject line is tight and does most things right — short, clear, 15% is a real number. What holds it back is NM's aggressive cadence this week (six-plus sends in four days including the Designer Sale drumbeat), which amplifies the risk this gets treated as noise before it gets opened.
+   - **Score:** 7/10
+   - **Signals counted:** Sender display name recognizable; subject is concrete (names 15% explicitly); subject is relevant to persona's focus area; subject is under 50 chars (41 chars); no spam signals (no ALL CAPS, no stacked !!!); personalization hint ("Your 15% offer").
+   - **Rationale:** The subject line is genuinely tight and personal — "Your 15%" is the kind of copy that earns an open even from a fatigued subscriber. What drags it down is pure cadence: NM already sent two emails on 5/22 ("Up to $500 off" and "Summer-ready styles going fast"), so a third in under 24 hours with another urgency hook is pushing inbox fatigue hard.
 
 ---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 5/10
-- **Signals counted:** Hero offer visible without scrolling; offer reduces price (15% off a luxury retailer where $500+ carts are common); time-bounded urgency (vague but present); brand voice consistent and trusted; no layout friction
-- **Rationale:** The 15% off is genuinely motivating — on a $600 bag that's $90 back — but "START SHOPPING" with no product anchor gives the click no specific destination. Without a named item, a hero price, or a category entry point, the subscriber is just as likely to save the code and close as they are to click through.
+   - **Score:** 6/10
+   - **Signals counted:** Hero offer visible without scrolling; primary CTA is in focus area (NM luxury shopping); CTA copy is a verb + noun ("START SHOPPING"); offer reduces price (15% OFF); brand voice consistent and trusted; no friction (clean render, no broken gaps).
+   - **Rationale:** The 15% code is compelling enough to act on — but "act on" means opening a new tab and hunting for a product with a code in the clipboard, not a one-click buy. No specific products, no credible deadline in the body, no social proof means the conversion from click to cart will be poor.
 
 ---
 
 ## 8. Subject
 
-- **Subject:** `Last chance: Your 15% offer expires soon!`
-- **Length:** 41 chars
-- **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `5`, Urgency `7`, Specificity `6`
+   - **Subject:** `Last chance: Your 15% offer expires soon!`
+   - **Length:** 41 chars
+   - **Scores (1-10):** Clarity `8`, Curiosity `3`, Personalization `5`, Urgency `7`, Specificity `6`
 
 ---
 
 ## 9. Preview
 
-- **Preview:** `(not determinable from render — no visible preheader text in screenshot; inbox would likely pull first body copy: "Going, Going, Gone…")`
-- **Length:** n/a
-- **Scores (1-10):** Complements subject `6`, Specificity `3`, Clarity `6`, Inbox-fit `5`
-
-If "Going, Going, Gone…" is indeed what inbox clients surface as preview, it actually complements the subject reasonably well — it echoes urgency without repeating the discount number verbatim. But a crafted preheader like "Use your code before it disappears — summer styles waiting" would sharpen the pairing considerably.
+   - **Preview:** `Going, Going, Gone…` (inferred from visible email hero headline — no separate preheader confirmed in screenshot)
+   - **Length:** ~20 chars
+   - **Scores (1-10):** Complements subject `8`, Specificity `2`, Clarity `5`, Inbox-fit `6`
 
 ---
 
 ## Technical Audit
 
-## Technical Audit — Neiman Marcus "Last chance: Your 15% offer expires soon"
+## Technical Audit — Neiman Marcus "15% Offer Expires Soon"
+
+**From:** NeimanMarcus@e.neimanmarcus.com
+**Audit date:** 2026-05-22
 
 ---
 
 ### 1. Technical Summary
 
-The email is a standard Salesforce Marketing Cloud (SFMC) send with table-based layout and responsive hamburger nav. No broken markup or fatal rendering issues are present in the visible source, but the AgentMail relay is suppressing three compliance-critical headers, and 36 tracked links cannot be verified for destination or UTM correctness.
+The send infrastructure is Salesforce Marketing Cloud (AMPscript templates, `e.neimanmarcus.com` click-redirect domain). Three header-level warnings prevent full deliverability verification, and a commented-out AMPscript block leaks internal data extension names in the HTML source.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**36 click-redirect links skipped** — all links route through a click-tracking domain (likely `click.e.neimanmarcus.com` or similar). Destinations and UTM parameters are unverifiable without following the redirects.
+**36 tracking links skipped by QA probe.** All outbound links route through a click-redirect domain (consistent with SFMC's `e.neimanmarcus.com` infrastructure). HTTP probing was skipped for all 36, meaning:
+- Destination URLs and their UTM parameters are unverified.
+- Broken redirect chains cannot be ruled out.
+- No evidence of a non-tracked fallback link anywhere in the truncated source.
 
-**Risk:** If any redirect is misconfigured or the tracking domain expires, all links in the email silently break with no fallback URL visible to the recipient.
-
-**No issues found** with link syntax in the visible markup.
+No raw destination URLs are visible in the truncated HTML, so dead-link status is unknown.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-- Commented-out `<meta viewport>` variants (`width=320`, `width=1024`, `user-scalable=no`) are dead code left in the `<head>`. No functional impact, but adds payload and signals stale template hygiene.
-- `<title>Neiman Marcus </title>` has a trailing space — minor, but visible in some browser tab / preview pane fallbacks.
-- The hamburger nav uses a CSS checkbox hack (`mobileCont:checked`, `.navbar-checkbox`) with no `<label>` association visible in the truncated source. If the checkbox input lacks a paired `<label for="">`, the control is inaccessible on screen readers and some mobile clients.
-- Media query breakpoints are split across two `<style>` blocks (600px and 480px/520px). Some clients (Gmail mobile, older Android) only parse the first `<style>` block, meaning the 480px/520px product-grid rules may not apply on those clients.
-- `@-webkit-keyframes bugfix` animation loop on `body` (iOS 9 hamburger workaround) is still present. iOS 9 is EOL; this is harmless but unnecessary dead weight.
+| Issue | Evidence | Severity |
+|---|---|---|
+| `<html>` tag missing `lang` attribute | `<html xmlns="...">` — no `lang="en"` | Medium — screen readers default to OS language |
+| `<title>` has trailing whitespace | `<title>Neiman Marcus </title>` | Low |
+| Infinite CSS animation on `<body>` | `body { -webkit-animation: bugfix infinite 1s; }` | Low — runs indefinitely, unnecessary CPU on older clients |
+| Three commented-out `<meta viewport>` tags | Lines 7–9 of `<head>` | Low — dead markup, but signals unresolved viewport strategy |
+| Nested `@media` block in second `<style>` tag | `@media (max-width: 480px)` wrapping `@media (max-width: 520px)` | Medium — nested media queries are invalid CSS; the inner 520px block will be ignored in most clients |
+
+DOCTYPE is XHTML 1.0 Transitional — standard for email, no issue.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**High risk — AMPscript variables not resolved in preview/relay capture:**
+**Data extension name and variable schema exposed in HTML comment:**
 
-The comment block at the top documents required variables:
+```html
+<!--REQUIRED variables:
+  @email (EMAIL_ADDRESS from sendable DE)
+  @base_refid (from Campaign Calendar)
+  ...
+  Lookup("NM_Subscriber_New_Consolidated", "EMAIL_ID", "EMAIL_ADDRESS", @email)
+-->
 ```
-@user = Lookup("NM_Subscriber_New_Consolidated", "EMAIL_ID", "EMAIL_ADDRESS", @email)
-@emailid = Lookup("NM_Subscriber_New_Consolidated", ...)
-@refid = CONCAT(@base_refid, "")
-```
 
-The commented line `/* SET @user = HASHED_EMAIL_SHA256 */` indicates the SHA-256 hashed email path is disabled. If `@user` is passed as a raw email address rather than a hash to any downstream pixel or URL parameter, that is a PII exposure risk in server logs and referrer chains.
-
-The audit cannot confirm resolution without live SFMC send context, but the dual-path comment (`CHOOSE ONE SCENARIO BELOW`) suggests the template has scenario-switching logic that must be manually verified before each send.
+- `NM_Subscriber_New_Consolidated` — internal DE name is visible to any recipient who views source.
+- The hashed-email assignment is commented out rather than active: `<!--/* SET @user = HASHED_EMAIL_SHA256 */-->`. If downstream pixel/personalization logic depends on `@user` being a SHA-256 hash, it will receive an unset or fallback value instead.
+- No un-rendered raw merge tokens (e.g., `%%variable%%` or `@variable` literals) visible in the rendered output — variable substitution appears to have executed correctly for the fields present.
 
 ---
 
@@ -196,43 +194,31 @@ The audit cannot confirm resolution without live SFMC send context, but the dual
 
 | Check | Status | Evidence |
 |---|---|---|
-| `List-Unsubscribe` header | **WARN** | Not captured by AgentMail relay |
-| `List-Unsubscribe-Post` (RFC 8058 one-click) | **WARN** | Not captured |
-| `Authentication-Results` (SPF/DKIM) | **WARN** | Not captured — status unknown |
-| Physical mailing address in footer | Cannot confirm (source truncated) | CAN-SPAM §5(a)(5) requires it |
-| Unsubscribe mechanism in body | Cannot confirm (source truncated) | CAN-SPAM §5(a)(3) requires it |
+| `List-Unsubscribe` header | **WARN — not detected** | QA: "Header may not be captured by AgentMail relay" |
+| `List-Unsubscribe-Post` (RFC 8058) | **WARN — not detected** | One-click machine unsubscribe (required by Gmail/Yahoo 2024 bulk sender rules for >5k/day) unverifiable |
+| SPF / DKIM / DMARC | **WARN — unknown** | `Authentication-Results` header absent from relay capture; pass/fail status cannot be confirmed |
 
-The missing `List-Unsubscribe` and `List-Unsubscribe-Post` headers are the most operationally urgent finding. Gmail and Apple Mail surface one-click unsubscribe UI directly from these headers. Their absence means:
-- Recipients must hunt for the footer unsubscribe link
-- Gmail's "unsubscribe" prompt may route complaints to the spam button instead, degrading sender reputation
+The `List-Unsubscribe` gap is the highest-priority compliance item. Gmail and Yahoo enforce one-click unsubscribe (RFC 8058 `List-Unsubscribe-Post`) for bulk senders. If the header is genuinely absent (vs. stripped by the AgentMail relay), this is a deliverability risk at scale.
 
-**Most likely cause:** AgentMail relay is stripping headers added by SFMC's MTA. Verify that SFMC is emitting `List-Unsubscribe` and that the relay is configured to pass it through rather than rewrite or drop it.
-
-The missing `Authentication-Results` header means SPF/DKIM pass/fail status from the receiving MTA is not captured. Sending domain is `e.neimanmarcus.com` — DKIM alignment should be confirmed directly against DNS records (`selector._domainkey.e.neimanmarcus.com`).
+The missing `Authentication-Results` is likely a relay artifact, but should be confirmed against raw SMTP headers from the MTA.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-All 36 links are click-redirect URLs — UTM parameter presence and correctness cannot be confirmed without resolving the redirects. Items to verify manually:
-
-- Do all CTAs carry `utm_source=email&utm_medium=email&utm_campaign=<campaign_id>`?
-- Does `@refid` (derived from `@base_refid`) populate a `refid=` query param for SFMC attribution, and is it resolved correctly for every subscriber segment?
-- Does the 15% offer landing page enforce the same expiration date communicated in the subject line? Mismatched expiry between email copy and site-side coupon logic is a common continuity failure.
+Cannot be verified. All 36 outbound links are behind SFMC click-redirect and were skipped by the HTTP probe. UTM parameter presence, correct campaign/source/medium tagging, and landing page alignment are unknown. Recommend a manual spot-check of at least the primary CTA redirect chain.
 
 ---
 
 ### 7. Recommendations
 
-| Priority | Action |
-|---|---|
-| **High** | Confirm AgentMail relay passes `List-Unsubscribe` and `List-Unsubscribe-Post` headers from SFMC through to the captured message. If the relay strips them, add an explicit passthrough rule. |
-| **High** | Verify `@user` / `@emailid` AMPscript scenario selection before send — confirm the SHA-256 hash path is active if `@user` is appended to any URL or pixel. |
-| **High** | Spot-check 3–5 click-redirect links by following them to confirm UTM params are present, destinations are live, and the 15% offer is active on the landing page. |
-| **Medium** | Run a DKIM/SPF check against `e.neimanmarcus.com` directly (e.g., `dig TXT e.neimanmarcus.com`) to compensate for the missing `Authentication-Results` header. |
-| **Medium** | Move the 480px/520px `<style>` block into the primary 600px `<style>` block so clients that only parse one block receive all responsive rules. |
-| **Low** | Remove commented-out `<meta viewport>` variants, the iOS 9 `@-webkit-keyframes bugfix`, and the trailing space in `<title>`. Template cleanup reduces payload and removes misleading dead code. |
-| **Low** | Audit the hamburger nav checkbox input for a paired `<label for="">` to ensure keyboard/screen reader accessibility. |
+1. **Verify `List-Unsubscribe` and `List-Unsubscribe-Post` headers** in raw SMTP headers (not the AgentMail-relayed copy). If absent from the SFMC send config, add them — this is a Gmail/Yahoo bulk sender requirement.
+2. **Remove or redact the AMPscript comment block** before send. The `NM_Subscriber_New_Consolidated` DE name should not be in subscriber-visible HTML.
+3. **Activate or remove the `@user = HASHED_EMAIL_SHA256` line.** If it drives any downstream pixel or identity resolution, the commented-out state means it silently fails.
+4. **Fix the nested `@media` query** in the second `<style>` block — move the `max-width: 520px` rule to a separate top-level `@media` block.
+5. **Add `lang="en"` to `<html>`.** One-attribute fix; meaningful for screen reader users.
+6. **Spot-check 3–5 CTA redirect chains manually** to confirm UTM parameters survive the SFMC click-redirect and land on the correct pages.
+7. **Confirm `Authentication-Results`** against MTA logs to rule out SPF/DKIM failure being masked by the relay.
 ## Recent history
 
 - [[2026-05-22-starts-now-up-to-500-off-your-next-order]] — 8/10 (2026-05-22)
