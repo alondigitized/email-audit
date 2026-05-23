@@ -3,120 +3,136 @@ slug: 2026-05-23-memorial-day-savings-for-the-long-weekend-ahead-35712105-0346-4
 type: email
 date: 2026-05-23
 persona: rosie-coupon-kohls-fap6e
-score: "8/10"
+score: "7/10"
 sender: Kohl’s
 subject: Memorial Day savings for the long weekend ahead ➡️
-tags: [email, score-8, sender/kohl-s]
+tags: [email, score-7, sender/kohl-s]
 ---
 # Memorial Day savings for the long weekend ahead ➡️
-**Score:** 8/10 · **Type:** Email audit · **2026-05-23**
+**Score:** 7/10 · **Type:** Email audit · **2026-05-23**
 ## Executive summary
 
-- Day three of Kohl's Memorial Day barrage, and the subject line is paradoxically *less* specific than the two sends before it. "Memorial Day savings for the long weekend ahead ➡️" buries the "$10 off $25" hook that anchored both the May 21 and May 22 subjects — a subscriber who opened either of those days gets no new information in the inbox scan and has no fresh reason to open. Inside the render, the email is structurally clean: a Memorial Day hero, six category discount blocks stacking from 20% up to 50%, and a 70% clearance section at the bottom. Images load, layout is intact, Kohl's Cash appears in both the hero and the footer.
-- The most interesting moment in the entire email is the 70% off clearance section — and it's buried four full scrolls down, after three "50% off" blocks that blur together. That's the sharpest offer Kohl's has put in any of this week's sends; it should be in the subject line, not in the basement.
-- Structurally adequate, creatively flat for a send that has to fight two near-identical predecessors from earlier this week. The email does its job — it just doesn't earn the open.
+- This is Kohl's third consecutive Memorial Day email — sent Saturday, Friday, and now the day of the long weekend — and the creative fatigue is palpable. The hero is a near-identical "MEMORIAL DAY Sale" banner to the prior two sends, the stacked badge treatment ($10 off, Kohl's Cash, percentage discounts) is unchanged, and the kitchen-sink category parade runs home → kitchen → apparel → kids → beauty → clearance, exactly as before. The only meaningful difference is the subject line, which is actually a step backward: yesterday's lead with "$10 off your $25 purchase" — a concrete hook — while today's retreats to the vague "Memorial Day savings for the long weekend ahead."
+- The body does have real value on display: 50% off across home and kids, 70% clearance, and the $10-off-$25 threshold that's been the anchor of this campaign. The render is clean, the hierarchy is readable, and the Kohl's Cash callout at the footer lands well for loyalty members. But there is no new story being told. A subscriber who opened Thursday and Friday already knows every element of this email.
+- Bottom line: competent execution of a deal-stack that was already fully told two days ago. The offer is real, the brand is trusted, but the send feels like a third knock on the same door.
 
 ## What's working
 
-- **Hero captures the offer in two seconds**: "MEMORIAL DAY Sale" in large type, flanked by the "$10 off your $25" pill (red) and "$5 Kohl's Cash" pill (green) — both visible before any scroll.
-- **Discount gradient tells a logical story**: 20–30% categories → 50% deeper cuts → 70% clearance creates an escalation arc if the reader stays with it.
-- **One price anchor adds credibility**: The men's block is the only one that shows an actual price ("$17.99 was $25.00") — it makes the 20% claim feel real rather than abstract.
-- **No render bugs visible**: All images load, no broken assets, no text overlap anywhere in the scroll.
-- **Kohl's Cash restated in footer**: Double-reinforcing the loyalty earn keeps the mechanic top of mind for members.
+- **Offer depth is real** — 50% off in multiple categories and 70% off clearance are genuinely good numbers that justify clicking.
+- **Memorial Day hero lands immediately** — the banner reads fast and frames the weekend context without ambiguity.
+- **Kohl's Cash callout at the footer** — loyalty mechanic is surfaced, which rewards returning shoppers.
+- **Clean render** — no broken images, no layout breakage, readable on the thumbnail-sized preview.
+- **Category breadth is well-organized** — home, kids, beauty, clearance each get a distinct module with a clear "Shop Now" entry point.
 
 ## What's weak
 
-- **Subject is a step backward from the last two days**: Yesterday's subject named the offer explicitly; today's "savings for the long weekend ahead" is vague — a subscriber who deleted the last two has no new reason to open this one.
-- **"Shop Now" fatigue — seven identical buttons**: Every block uses the same CTA copy with zero category differentiation; there is no "Shop Clearance," "Shop Men's Deals," or "Shop 70% Off" anywhere in the render.
-- **70% clearance buried at the bottom**: The strongest proof point in the email requires the most scrolling and gets the least visual real estate.
-- **No product specificity beyond one price**: Eight category blocks and only the men's section shows actual pricing — the rest are pure badge percent with no price, product name, or item count to anchor the discount.
-- **Third-day cadence dilution visible in the creative itself**: The layout, offer stack, and block structure are indistinguishable from May 22's send; there is no new hook or category angle that signals a reason to re-engage.
+- **Subject line is weaker than yesterday's** — dropping the explicit "$10 off $25" in favor of "savings" removes the one hook that made the prior sends click-worthy.
+- **Zero new narrative** — same hero, same offer stack, same module order as May 21 and 22; nothing signals "this is the last chance before the weekend is over."
+- **CTAs are all generic "Shop Now"** — no specificity (e.g., "Shop Bedding," "Shop Kids Deals") to route high-intent shoppers faster.
+- **No urgency deadline stated** — "long weekend ahead" implies a cutoff but never says "ends Monday" or "midnight tonight."
+- **Cadence is now fatiguing** — three near-identical sends in three days; a subscriber who hasn't opened the first two is unlikely to open the third.
 
 ## Recommendations
 
-- 1. **Lead the subject with 70% clearance or name the dollar offer**: "Up to 70% off this Memorial Day" or "Memorial Day: $10 off your $25 — ends Monday" both outperform the vague "savings" framing. The number does the persuasion work; the word "savings" does not.
-- 2. **Differentiate every CTA**: Replace "Shop Now" across all blocks with category-specific copy — "Shop Clearance 70% Off," "Shop Men's," "Shop Bedding 50% Off." Each block should answer *why click this one, not another.*
-- 3. **Promote the clearance section**: Either lead with it in the hero ("MEMORIAL DAY CLEARANCE: 70% OFF") or give it a dedicated banner above the fold. Burying the highest-value offer wastes the strongest conversion signal.
-- 4. **Add price anchors in at least two more blocks**: The women's 30% and clearance 70% blocks should both show "was / now" pricing like the men's block does — one data point isn't enough to make the discount feel tangible.
-- 5. **Add a deadline to create real urgency**: "Long weekend ahead" is soft. "Ends Monday 11:59pm" is a reason to act today instead of planning to come back later and then forgetting.
-- **Subject Alt A:** `Up to 70% off Memorial Day — $10 off your $25 too`
-- **Subject Alt B:** `Final hours: Memorial Day sale ends Monday — $10 off $25 inside`
-- **Preheader Alt A:** `Plus $5 Kohl's Cash on almost everything, even sale items.`
-- **Preheader Alt B:** `Men's, women's, home & clearance — all running through Monday.`
+- 1. **Add an explicit deadline to the hero and CTA** — "Ends Monday" or "Last day: Monday 5/26" transforms "long weekend" from a vague hint into a hard reason to act now. This is the single biggest lift available.
+- 2. **Restore the specific dollar amount to the subject** — the May 22 subject outperformed today's because "$10 off $25" is a concrete bar to clear. Vague "savings" competes poorly in a crowded inbox on the holiday itself.
+- 3. **Differentiate one module as new or time-sensitive** — even a "Doorbusters ending tonight" label on one section would signal this isn't just a repeat send.
+- 4. **Make at least one CTA category-specific** — e.g., "Shop Bedding Deals" or "Shop 70% Off Clearance" so high-intent shoppers don't have to hunt.
+- 5. **Cut the module count** — this email has 8+ sections; consolidating to 4-5 strongest deals would sharpen the read and reduce decision paralysis.
+- **Subject Alt A:** `Ends Monday: $10 off $25 + 50% off sitewide`
+- **Subject Alt B:** `Last day of Memorial Day Sale — 50–70% off`
+- **Preheader Alt A:** `Plus Kohl's Cash on every purchase. Shop before midnight Monday.`
+- **Preheader Alt B:** `70% off clearance, 50% off home — deals close after the weekend.`
 
 ## Full review
 ## 1. Overview
 
-Day three of Kohl's Memorial Day barrage, and the subject line is paradoxically *less* specific than the two sends before it. "Memorial Day savings for the long weekend ahead ➡️" buries the "$10 off $25" hook that anchored both the May 21 and May 22 subjects — a subscriber who opened either of those days gets no new information in the inbox scan and has no fresh reason to open. Inside the render, the email is structurally clean: a Memorial Day hero, six category discount blocks stacking from 20% up to 50%, and a 70% clearance section at the bottom. Images load, layout is intact, Kohl's Cash appears in both the hero and the footer.
+This is Kohl's third consecutive Memorial Day email — sent Saturday, Friday, and now the day of the long weekend — and the creative fatigue is palpable. The hero is a near-identical "MEMORIAL DAY Sale" banner to the prior two sends, the stacked badge treatment ($10 off, Kohl's Cash, percentage discounts) is unchanged, and the kitchen-sink category parade runs home → kitchen → apparel → kids → beauty → clearance, exactly as before. The only meaningful difference is the subject line, which is actually a step backward: yesterday's lead with "$10 off your $25 purchase" — a concrete hook — while today's retreats to the vague "Memorial Day savings for the long weekend ahead."
 
-The most interesting moment in the entire email is the 70% off clearance section — and it's buried four full scrolls down, after three "50% off" blocks that blur together. That's the sharpest offer Kohl's has put in any of this week's sends; it should be in the subject line, not in the basement.
+The body does have real value on display: 50% off across home and kids, 70% clearance, and the $10-off-$25 threshold that's been the anchor of this campaign. The render is clean, the hierarchy is readable, and the Kohl's Cash callout at the footer lands well for loyalty members. But there is no new story being told. A subscriber who opened Thursday and Friday already knows every element of this email.
 
-Structurally adequate, creatively flat for a send that has to fight two near-identical predecessors from earlier this week. The email does its job — it just doesn't earn the open.
+Bottom line: competent execution of a deal-stack that was already fully told two days ago. The offer is real, the brand is trusted, but the send feels like a third knock on the same door.
+
+---
 
 ## 2. What worked
 
-- **Hero captures the offer in two seconds**: "MEMORIAL DAY Sale" in large type, flanked by the "$10 off your $25" pill (red) and "$5 Kohl's Cash" pill (green) — both visible before any scroll.
-- **Discount gradient tells a logical story**: 20–30% categories → 50% deeper cuts → 70% clearance creates an escalation arc if the reader stays with it.
-- **One price anchor adds credibility**: The men's block is the only one that shows an actual price ("$17.99 was $25.00") — it makes the 20% claim feel real rather than abstract.
-- **No render bugs visible**: All images load, no broken assets, no text overlap anywhere in the scroll.
-- **Kohl's Cash restated in footer**: Double-reinforcing the loyalty earn keeps the mechanic top of mind for members.
+- **Offer depth is real** — 50% off in multiple categories and 70% off clearance are genuinely good numbers that justify clicking.
+- **Memorial Day hero lands immediately** — the banner reads fast and frames the weekend context without ambiguity.
+- **Kohl's Cash callout at the footer** — loyalty mechanic is surfaced, which rewards returning shoppers.
+- **Clean render** — no broken images, no layout breakage, readable on the thumbnail-sized preview.
+- **Category breadth is well-organized** — home, kids, beauty, clearance each get a distinct module with a clear "Shop Now" entry point.
+
+---
 
 ## 3. What didn't
 
-- **Subject is a step backward from the last two days**: Yesterday's subject named the offer explicitly; today's "savings for the long weekend ahead" is vague — a subscriber who deleted the last two has no new reason to open this one.
-- **"Shop Now" fatigue — seven identical buttons**: Every block uses the same CTA copy with zero category differentiation; there is no "Shop Clearance," "Shop Men's Deals," or "Shop 70% Off" anywhere in the render.
-- **70% clearance buried at the bottom**: The strongest proof point in the email requires the most scrolling and gets the least visual real estate.
-- **No product specificity beyond one price**: Eight category blocks and only the men's section shows actual pricing — the rest are pure badge percent with no price, product name, or item count to anchor the discount.
-- **Third-day cadence dilution visible in the creative itself**: The layout, offer stack, and block structure are indistinguishable from May 22's send; there is no new hook or category angle that signals a reason to re-engage.
+- **Subject line is weaker than yesterday's** — dropping the explicit "$10 off $25" in favor of "savings" removes the one hook that made the prior sends click-worthy.
+- **Zero new narrative** — same hero, same offer stack, same module order as May 21 and 22; nothing signals "this is the last chance before the weekend is over."
+- **CTAs are all generic "Shop Now"** — no specificity (e.g., "Shop Bedding," "Shop Kids Deals") to route high-intent shoppers faster.
+- **No urgency deadline stated** — "long weekend ahead" implies a cutoff but never says "ends Monday" or "midnight tonight."
+- **Cadence is now fatiguing** — three near-identical sends in three days; a subscriber who hasn't opened the first two is unlikely to open the third.
+
+---
 
 ## 4. What I'd change
 
-1. **Lead the subject with 70% clearance or name the dollar offer**: "Up to 70% off this Memorial Day" or "Memorial Day: $10 off your $25 — ends Monday" both outperform the vague "savings" framing. The number does the persuasion work; the word "savings" does not.
-2. **Differentiate every CTA**: Replace "Shop Now" across all blocks with category-specific copy — "Shop Clearance 70% Off," "Shop Men's," "Shop Bedding 50% Off." Each block should answer *why click this one, not another.*
-3. **Promote the clearance section**: Either lead with it in the hero ("MEMORIAL DAY CLEARANCE: 70% OFF") or give it a dedicated banner above the fold. Burying the highest-value offer wastes the strongest conversion signal.
-4. **Add price anchors in at least two more blocks**: The women's 30% and clearance 70% blocks should both show "was / now" pricing like the men's block does — one data point isn't enough to make the discount feel tangible.
-5. **Add a deadline to create real urgency**: "Long weekend ahead" is soft. "Ends Monday 11:59pm" is a reason to act today instead of planning to come back later and then forgetting.
+1. **Add an explicit deadline to the hero and CTA** — "Ends Monday" or "Last day: Monday 5/26" transforms "long weekend" from a vague hint into a hard reason to act now. This is the single biggest lift available.
+2. **Restore the specific dollar amount to the subject** — the May 22 subject outperformed today's because "$10 off $25" is a concrete bar to clear. Vague "savings" competes poorly in a crowded inbox on the holiday itself.
+3. **Differentiate one module as new or time-sensitive** — even a "Doorbusters ending tonight" label on one section would signal this isn't just a repeat send.
+4. **Make at least one CTA category-specific** — e.g., "Shop Bedding Deals" or "Shop 70% Off Clearance" so high-intent shoppers don't have to hunt.
+5. **Cut the module count** — this email has 8+ sections; consolidating to 4-5 strongest deals would sharpen the read and reduce decision paralysis.
 
-- **Subject Alt A:** `Up to 70% off Memorial Day — $10 off your $25 too`
-- **Subject Alt B:** `Final hours: Memorial Day sale ends Monday — $10 off $25 inside`
-- **Preheader Alt A:** `Plus $5 Kohl's Cash on almost everything, even sale items.`
-- **Preheader Alt B:** `Men's, women's, home & clearance — all running through Monday.`
+- **Subject Alt A:** `Ends Monday: $10 off $25 + 50% off sitewide`
+- **Subject Alt B:** `Last day of Memorial Day Sale — 50–70% off`
+- **Preheader Alt A:** `Plus Kohl's Cash on every purchase. Shop before midnight Monday.`
+- **Preheader Alt B:** `70% off clearance, 50% off home — deals close after the weekend.`
+
+---
 
 ## 5. Business Impact Score (1-10)
 
-**8/10**
+**7/10**
 
-- Kohl's is a recognized, opted-in sender
-- Concrete dollar offer ($10 off $25) is immediately visible in the hero
-- Primary CTAs are unambiguous — "Shop Now" buttons are clearly styled and present throughout
-- Visual hierarchy is clean — hero offer lands first before any category content
-- No render bugs — all images load, no layout breakage visible in the scroll
-- Email reflects the current campaign and season (Memorial Day long weekend timing)
-- Loyalty mechanic ($5 Kohl's Cash) visible in both the hero pill and the footer restatement
+- Sender is a brand you recognize / are subscribed to
+- One concrete offer is visible (50% off, 70% clearance, $10 off $25 all present)
+- Primary CTA is unambiguous ("Shop Now" buttons visible throughout)
+- Visual hierarchy is clear — hero lands first, offer reads immediately
+- No render bugs
+- Email reflects current campaign / season (Memorial Day, long weekend)
+- Loyalty / member benefits visible (Kohl's Cash footer callout)
 
-*Not counted:* Persona's focus area not explicitly called out (generic mass-retail blast, not Walker-targeted); demographic signals are women-forward in layout order for a male consumer persona; offer stacking complexity (three simultaneous mechanics: $10 off, 15%, Kohl's Cash) suggests fine-print conditions not fully visible in the render.
+*Not counted:* Subject does not explicitly name a focus area; demographic signals are too broad to match a specific persona; the $10-off fine print carries exclusions that are hinted at in small text.
+
+---
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** 6/10
-- **Signals counted:** Sender display name recognizable (Kohl's); subject is relevant to a deal-oriented persona; subject is under 50 characters (~48 text chars); no spam signals (single directional emoji, no ALL-CAPS or stacked exclamations); soft time-bounded urgency ("long weekend ahead")
-- **Rationale:** The sender alone earns the first glance, but "Memorial Day savings for the long weekend ahead" is notably softer than the May 22 subject "Memorial Day Sale ✅ $10 off your $25 purchase ✅ Kohl's Cash ✅" — a subscriber who opened either previous day sees no new offer and no new reason to click. Third-day cadence is the primary open suppressor here, and the subject does nothing to fight it.
+- **Score:** 5/10
+- **Signals counted:** Sender display name is recognizable; subject is relevant to season (Memorial Day); subject is under ~50 chars; no spam signals (no ALL CAPS, no !!!); time-bounded urgency implied by "long weekend ahead."
+- **Rationale:** The subject's retreat from a specific dollar amount to generic "savings" is the main drag — yesterday's lead with "$10 off $25" was a far stronger inbox hook. Three nearly identical Memorial Day sends in three days means cadence fatigue is now actively working against opens.
+
+---
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** 7/10
-- **Signals counted:** Hero offer visible without scrolling on mobile; CTAs present across deal-relevant categories (men's, clearance, home); multiple offers reduce price materially (50% and 70% off are strong); offer is time-bounded by the Memorial Day long weekend; brand voice is consistent and Kohl's is a trusted sender; no visible friction — images render, no "view in browser" gate
-- **Rationale:** The 50% and 70% clearance blocks are compelling enough to drive a click once you're inside the email — those are real discounts, not percentage-point nudges. What limits it is the complete absence of product-level specificity in all but one block; a wall of "Shop Now" buttons with no price anchors or named products makes it hard to commit to a click on any specific section.
+- **Score:** 6/10
+- **Signals counted:** Hero offer visible without scrolling; offer reduces price (50% and 70% are genuine reductions); time-bounded urgency (Memorial Day weekend); brand voice consistent and trusted; no friction or broken-image gaps; Kohl's Cash loyalty mechanic visible.
+- **Rationale:** The discounts are real enough to earn a click once the email is open, but the all-generic "Shop Now" CTAs and the absence of a single hero product or specific category link mean the click is purely discount-driven, not pull-through from compelling creative.
+
+---
 
 ## 8. Subject
 
 - **Subject:** `Memorial Day savings for the long weekend ahead ➡️`
-- **Length:** 48 characters + emoji
-- **Scores (1-10):** Clarity `6`, Curiosity `3`, Personalization `2`, Urgency `5`, Specificity `3`
+- **Length:** 50 chars (including emoji)
+- **Scores (1-10):** Clarity `7`, Curiosity `3`, Personalization `1`, Urgency `4`, Specificity `3`
+
+---
 
 ## 9. Preview
 
-- **Preview:** `(not visible in render — no preheader text observable in screenshot)`
+- **Preview:** `(not verifiable from rendered body screenshot — inbox preview text was not captured in the render)`
 - **Length:** N/A
 - **Scores (1-10):** Complements subject `N/A`, Specificity `N/A`, Clarity `N/A`, Inbox-fit `N/A`
 
@@ -124,86 +140,109 @@ Structurally adequate, creatively flat for a send that has to fight two near-ide
 
 ## Technical Audit
 
-## Technical Audit — Kohl's "Memorial Day Savings" Email
-
-**From:** Kohls@s.kohls.com | **Date:** 2026-05-23
+## Technical Audit — Kohl's Memorial Day Email (2026-05-23)
 
 ---
 
 ### 1. Technical Summary
 
-The email uses a standard HTML 4.01 Transitional table layout with functional responsive breakpoints. Primary technical risks are compliance header gaps surfaced by the AgentMail relay and pervasive missing `alt` text on tracking and content images.
+Standard retail ESP send with well-structured MSO conditional logic and mobile media queries. Primary issues are relay-layer header gaps obscuring authentication and compliance signals, plus pervasive missing alt text on tracking pixels and product images.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-- **22 click-redirect links skipped** by HTTP probe — all route through `click.s.kohls.com` and `click.chp.kohls.com`. Link health is unverified; any broken redirect in the chain would silently 404.
-- **Three separate tracking pixels** fire on load:
-  - `click.chp.kohls.com/o/cd85224e…` (Coherent Path behavioral pixel)
-  - `mi.kohls.com/p/up/88954bbbbcab3c0e/o.gif` (Message Industries open tracker)
-  - `kohls.demdex.net/event?d_sid=13245196` (Adobe Audience Manager)
-- **Malformed HTML near open-tracker tag:** `</custom>` appears as a closing tag after the `click.s.kohls.com/open.aspx` pixel `<img>` — this is an invalid element and may confuse strict parsers (Gmail, certain security gateways).
+**22 click-redirect links not probed** — all route through `click.chp.kohls.com` and `click.s.kohls.com`. Resolution/redirect chain could not be verified by automated QA. No broken links confirmed, but destination integrity is unverified.
+
+**Three concurrent open-tracking pixels** present in a single message:
+- `https://click.chp.kohls.com/o/cd85224e-…` (CoherentPath)
+- `https://mi.kohls.com/p/up/88954bbbbcab3c0e/o.gif?mi_u=604230016` (Movable Ink)
+- `https://click.s.kohls.com/open.aspx?753VQ2PO33RELNS2GSFWF7WKWQ.60257` (Salesforce Marketing Cloud)
+
+Triple-pixel stacking inflates open metrics and creates compounding privacy exposure. No functional bug, but the redundancy is a data hygiene issue.
+
+**Malformed closing tag** on the third open-pixel container:
 
 ```html
-<!-- evidence -->
-<img src="https://click.s.kohls.com/open.aspx?753VQ2PO33RELNS2GSFWF7WKWQ..." width="1" height="1" alt=""></custom>
+<img src="https://click.s.kohls.com/open.aspx?..." width="1" height="1" alt="">
+<custom>   ← invalid/unclosed tag
 ```
+
+`</custom>` is not a valid HTML element and will produce a parse warning in strict renderers.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-- **`<title>` tag is empty.** Screen readers and some preview panes use this; leaving it blank degrades accessibility and can affect spam scoring.
-- **11 images missing `alt` text**, confirmed by QA. This includes all 6 `mi.kohls.com/p/rp/` content images — meaning users with images off see nothing in place of likely product/offer visuals. The tracking pixels (open GIF, Demdex event) also lack `alt=""` (should be explicitly empty, not absent).
-- **`user-scalable=0` in viewport meta** — disables pinch-zoom on mobile, an accessibility violation (WCAG 1.4.4).
-- **`<meta name="referrer" content="no-referrer">`** — suppresses referrer on outbound clicks, which will break any analytics that rely on HTTP referrer rather than UTM params for attribution.
-- **Google Fonts loaded three times** (two `<link>` tags + one `@import` block for the same two families). Redundant — adds ~200ms latency on first load in webmail clients that render `<head>`.
+**11 images missing `alt` text** — all flagged by QA. Three are intentional tracking pixels (acceptable with empty `alt=""`), but 8 are content/product images from `mi.kohls.com/p/rp/`:
+
+```
+2a5adc5afb647aad.png  f441d45d2128ae53.png  c2f81e9ac8daee44.png
+415c8a18fc2950ea.png  69494b48a79b4240.png  78308d1d9adb0751.png
+916d6fa08d185233.png
+```
+
+These render as blank in image-blocked clients (Apple Mail default, Gmail images-off) and fail WCAG 2.1 SC 1.1.1. Tracking/pixel images should use `alt=""` explicitly; content images require descriptive alt text.
+
+**`<title>` element is empty** — `<title></title>` — some screen readers announce this to users. Should contain the subject line or brand name.
+
+**`user-scalable=0` in viewport meta** — `maximum-scale=1, user-scalable=0` prevents pinch-zoom on mobile, a known accessibility barrier (WCAG 1.4.4). Common in email templates but worth flagging.
+
+**Google Fonts loaded via both `<link>` and `@import`** — Roboto and Montserrat are each loaded twice (once via `<link>`, once via `@import url()`). Duplicate requests add ~200–400ms render latency on slow connections with no benefit.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-- **No unresolved merge tokens visible** in the truncated source. The `mi_u=604230016` and `mi_ecmp=1013105_2026523` query params on tracking URLs appear correctly resolved.
-- **`mi_kc_redm_end_dte=` is blank** in one image URL (`916d6fa08d185233.png`), suggesting an unfilled dynamic field — likely a Kohl's Cash redemption end date. Not a fatal render error but indicates an upstream data gap.
+**Movable Ink personalization parameters present** — `mi_u=604230016` and `mi_ecmp=1013105_2026523` appear across pixel and rendering URLs. These resolve at send time; no unrendered `{{token}}` placeholders visible in the truncated source.
+
+**`email_name` parameter partially truncated** in several Movable Ink URLs:
 
 ```
-mi_kc_redm_end_dte=&mi_kc_event_pe...   ← empty token
+?...&email_name=260523_DG_Email_Saturda   ← cut off
 ```
+
+This suggests a URL length limit or a truncation bug at render time. The `email_name` field is used for MI campaign analytics; truncated values degrade reporting fidelity.
 
 ---
 
 ### 5. Compliance
 
-| Check | Status | Evidence |
-|---|---|---|
-| List-Unsubscribe header | **WARN** | Not captured by AgentMail relay — unknown if present at SMTP layer |
-| List-Unsubscribe-Post (RFC 8058) | **WARN** | One-click unsubscribe unverifiable |
-| Physical mailing address | **WARN** | Not detected in truncated HTML; CAN-SPAM §5(a)(5) requires it in body |
-| robots noindex | Pass | `<meta name="robots" content="noindex, nofollow">` present |
-| SPF/DKIM | **WARN** | `Authentication-Results` header not captured by relay — deliverability status unknown |
+**`List-Unsubscribe` header not detected** — QA confirms header absent at relay layer. Gmail and Apple Mail use this header for native unsubscribe UI; its absence increases spam classification risk and removes one-click unsubscribe capability required by Gmail/Yahoo bulk sender rules (effective 2024) for senders exceeding 5K/day.
 
-The compliance warnings are relay-capture artifacts — Kohl's at this volume almost certainly has List-Unsubscribe and a physical address — but the QA pipeline should be updated to verify these at the raw SMTP/header level before flagging as clean.
+**`List-Unsubscribe-Post` (RFC 8058) not detected** — one-click machine-readable unsubscribe not supported. Required for Gmail bulk sender compliance.
+
+**No physical mailing address detected in truncated source** — CAN-SPAM §5(a)(5) requires a valid physical postal address. Not confirmed absent (source is truncated), but not found in the visible portion. Must be present in footer.
+
+**`robots` meta present** — `<meta name="robots" content="noindex, nofollow">` — correct practice for email HTML. No issue.
+
+**`referrer` meta set to `no-referrer`** — correct; prevents leaking tracking parameters to external landing pages via the `Referer` header.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-- All 22 outbound links pass through `click.s.kohls.com` redirects, which should append UTM params server-side before landing. **Cannot confirm UTM values** (e.g., `utm_campaign`, `utm_medium`) without following the redirect chain — the HTTP probe skipped these.
-- The `no-referrer` meta tag (noted above) means any landing page analytics relying on `document.referrer` will show `(direct)` instead of the email source. If Kohl's landing pages use UTM params exclusively this is fine; if they also check referrer as a fallback, attribution will be lossy.
-- `mi_ecmp=1013105_2026523` is consistent across tracking pixels, suggesting a single campaign code — correct behavior.
+All 22 click links route through `click.chp.kohls.com` or `click.s.kohls.com` redirect chains, preventing direct UTM parameter inspection. The `mi_ecmp=1013105_2026523` value in Movable Ink URLs is a campaign identifier but does not map to standard UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`).
+
+**Cannot confirm** whether destination landing pages receive UTM parameters — this requires probing the redirect chain, which was skipped. If Kohls.com analytics rely on UTM, the redirect chain must pass them through; click-wrap redirectors often strip or fail to forward them.
+
+**Adobe Audience Manager pixel present** — `https://kohls.demdex.net/event?d_sid=13245196` fires at open, syncing the subscriber to AAM segment 13245196. Expected for a retailer at this scale; no issue unless segment targeting and email creative diverge.
 
 ---
 
 ### 7. Recommendations
 
-1. **Fix `</custom>` malformed tag** — remove or replace with a valid element; invalid HTML near tracking pixels can trigger spam filters.
-2. **Add `alt=""` to all 11 flagged images** — content images need descriptive alt text; tracking pixels need explicitly empty `alt=""`.
-3. **Remove `user-scalable=0`** from viewport meta — accessibility violation with no modern deliverability benefit.
-4. **Deduplicate Google Fonts requests** — load each family once via `<link>`; drop the redundant `@import` block.
-5. **Populate `<title>`** — minimal value but low cost; use brand name or campaign name.
-6. **Investigate `mi_kc_redm_end_dte=` blank token** — confirm whether Kohl's Cash redemption date is intentionally suppressed or a data pipeline miss.
-7. **Update QA pipeline** to capture raw SMTP headers (List-Unsubscribe, Authentication-Results) and scan full HTML body for physical address — current relay-level capture produces false compliance warnings.
+| Priority | Issue | Action |
+|---|---|---|
+| High | `List-Unsubscribe` / `List-Unsubscribe-Post` headers missing | Confirm headers are set at ESP level (SFMC send classification); verify AgentMail relay is forwarding them — they may exist upstream but be stripped |
+| High | Physical address not confirmed in visible HTML | Verify footer of full source contains CAN-SPAM-compliant address |
+| High | Gmail bulk sender compliance | Both one-click unsubscribe headers required; DKIM authentication unverifiable via relay — confirm SPF/DKIM/DMARC pass on raw received headers |
+| Medium | 8 content images missing `alt` text | Add descriptive alt text to all product/CTA images; tracking pixels should use explicit `alt=""` |
+| Medium | `email_name` parameter truncated in Movable Ink URLs | Investigate URL length cap at ESP or MI template layer; fix to preserve full campaign name for analytics |
+| Medium | Duplicate Google Fonts loading | Remove either the `<link>` tags or the `@import` blocks — not both; keep `<link>` for better preload behavior |
+| Low | Invalid `</custom>` tag after SFMC open pixel | Remove stray tag to avoid parser warnings |
+| Low | Empty `<title>` element | Populate with subject line or "Kohl's Memorial Day Savings" |
+| Low | Triple open-pixel stacking | Audit which pixel is authoritative; remove redundant vendors to reduce tracking noise and load |
 ## Recent history
 
 - [[2026-05-22-save-up-to-50-on-select-beauty-plus-spend-75-to-earn-500-bonus-points-hp2v610000019e4ff4b0b8b1]] — 9/10 (2026-05-22)
