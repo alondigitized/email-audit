@@ -271,10 +271,17 @@ export async function synthesizeMp3({ text, voice, rate }) {
 }
 
 function collectStderr(child) {
+  // execFile leaves stderr in string-decoding mode by default, while
+  // spawn leaves it in Buffer mode — accumulate as strings so we work
+  // for both. Previous Buffer.concat blew up with ERR_INVALID_ARG_TYPE
+  // when Piper emitted a stderr warning, and because this runs inside a
+  // 'close' event handler the throw was uncaught and killed the daemon.
   return new Promise((res) => {
     const parts = [];
-    child.stderr.on('data', (b) => parts.push(b));
-    child.on('close', () => res(Buffer.concat(parts).toString('utf8')));
+    child.stderr.on('data', (b) => {
+      parts.push(typeof b === 'string' ? b : b.toString('utf8'));
+    });
+    child.on('close', () => res(parts.join('')));
   });
 }
 
