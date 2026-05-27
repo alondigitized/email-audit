@@ -20,21 +20,33 @@ The two scripts coexist. Walker still runs the full Skechers journey
 daily via `ai.openclaw.walker.site-review`; this sweep also audits
 his homepage as part of the cross-persona pass.
 
-## Schedule
+## Schedule + weekly bucketing
 
 - LaunchAgent: `ai.openclaw.homepage-sweep`
-- Daily at 11:00 UTC (off-peak; 50 personas × ~50s ≈ 45 min).
+- Daily at 03:00 local.
+- Each daily run only audits ~1/7 of the roster — every persona is
+  hashed (SHA-1 first byte mod 7) into a stable day-of-week bucket
+  via `personaBucket(slug)`. A 137-persona roster fires ~20/day instead
+  of 137/day, dropping the homepage daemon's token cost ~7×. Every
+  persona still gets audited weekly, on the same weekday each week.
 
 ## Usage
 
 ```bash
-# Full sweep (all active personas)
+# Daily sweep — only today's weekday bucket runs (default)
 node site-monitor/homepage/sweep.mjs
 
-# One persona — useful for debugging selectors or prompt
+# Full sweep — audit every active persona this run (manual backfill)
+node site-monitor/homepage/sweep.mjs --all
+
+# Run a specific weekday's bucket (0=Sun..6=Sat); for catching up a
+# missed day or auditing a specific cohort
+node site-monitor/homepage/sweep.mjs --day 3
+
+# One persona — bypasses bucketing entirely
 node site-monitor/homepage/sweep.mjs --persona walker
 
-# Smoke test — first 3 personas, no DB / no R2 writes
+# Smoke test — first 3 personas of today's bucket, no DB / no R2 writes
 node site-monitor/homepage/sweep.mjs --limit 3 --dry-run
 ```
 

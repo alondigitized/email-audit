@@ -28,6 +28,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -90,6 +91,17 @@ const arg = (n, d) => {
 const PERSONA_FILTER = arg('--persona', null);
 const LIMIT = Number(arg('--limit', '0')) || null;
 const DRY_RUN = flag('--dry-run');
+// Weekly bucketing — every persona is deterministically assigned to one
+// of 7 day-of-week buckets via slug hash. Each daily sweep run only
+// audits today's bucket, so a 130-persona roster turns into ~19/day
+// instead of 130/day. Massive token/$ reduction for the homepage daemon.
+//
+//   --all       audit every persona this run (backfill / one-off)
+//   --day N     override today's bucket (0=Sun..6=Sat) for testing or
+//               manual catch-up of a missed bucket
+const RUN_ALL = flag('--all');
+const DAY_OVERRIDE = arg('--day', null);
+const WEEKLY_BUCKETS = 7;
 
 const NAV_TIMEOUT_MS = 30_000;
 const PAGE_SETTLE_MS = 3_500;
@@ -106,6 +118,20 @@ function log(msg, extra = null) {
 
 function todayUtcSlug() {
   return new Date().toISOString().slice(0, 10);
+}
+
+// Stable persona → bucket mapping. SHA-1 first byte mod 7 — uniform
+// distribution, deterministic across runs, no DB column needed. A
+// persona always lands on the same weekday for its lifetime.
+function personaBucket(slug) {
+  const h = crypto.createHash('sha1').update(slug).digest();
+  return h[0] % WEEKLY_BUCKETS;
+}
+
+// UTC day-of-week (0=Sun..6=Sat). Sweep fires once per local day at
+// 03:00 PT; using UTC keeps the bucket mapping stable across DST shifts.
+function todayBucket() {
+  return new Date().getUTCDay();
 }
 
 function brandSlugify(domain) {
@@ -512,11 +538,29 @@ async function auditPersonaHomepage(browser, persona, real) {
 }
 
 async function main() {
-  log(`sweep start`, { dryRun: DRY_RUN, personaFilter: PERSONA_FILTER, limit: LIMIT });
+  // Resolve today's bucket once. --persona / --all / --day override the
+  // weekly slice; --persona implies single-shot so weekly filtering off.
+  const bucketTarget =
+    DAY_OVERRIDE !== null ? Number(DAY_OVERRIDE) : todayBucket();
+  const useWeeklyFilter = !RUN_ALL && !PERSONA_FILTER;
+  log(`sweep start`, {
+    dryRun: DRY_RUN,
+    personaFilter: PERSONA_FILTER,
+    limit: LIMIT,
+    weeklyFilter: useWeeklyFilter,
+    bucket: useWeeklyFilter ? bucketTarget : 'all',
+  });
   let personas = await listActivePersonasWithSite();
+  const total = personas.length;
   if (PERSONA_FILTER) personas = personas.filter((p) => p.slug === PERSONA_FILTER);
+  if (useWeeklyFilter) {
+    personas = personas.filter((p) => personaBucket(p.slug) === bucketTarget);
+  }
   if (LIMIT) personas = personas.slice(0, LIMIT);
-  log(`personas to audit: ${personas.length}`);
+  log(
+    `personas to audit: ${personas.length}` +
+      (useWeeklyFilter ? ` (bucket ${bucketTarget}/${WEEKLY_BUCKETS - 1} of ${total} total)` : '')
+  );
 
   const { browser, real } = await openBrowser();
   const results = [];
