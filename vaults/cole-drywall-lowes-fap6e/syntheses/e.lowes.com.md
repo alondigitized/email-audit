@@ -2,99 +2,73 @@
 kind: synthesis
 persona: cole-drywall-lowes-fap6e
 brand: e.lowes.com
-reactions: 15
-through: 2026-05-17T13:50:52.000Z
+reactions: 42
+through: 2026-06-15T20:08:44.000Z
 created_at: 2026-05-18T18:19:10.971Z
-updated_at: 2026-05-18T18:19:10.971Z
+updated_at: 2026-06-19T18:21:04.063Z
 ---
 
-# It seems like the technical audit for Lowe's "Save big on your outdoor reset" email is quite thorough, but there are a f
+# ### Technical Audit — Lowe's "Save big on your outdoor reset" Email
 
-### Key Findings
+#### Summary:
+The email is sent via Listrak ESP (`e.lowes.com`, `sli.lowes.com`) with standard click-tracking and impression pixels. The technical audit highlights several issues related to accessibility, overlapping responsive breakpoints, missing `alt` attributes, and incomplete compliance header capture.
 
-1. **Missing `alt` Attributes:**
-   - 8 images lack `alt` attributes, which can impact accessibility and SEO.
-   - Tracking pixels should use `alt=""`.
+### Detailed Findings:
 
-2. **Overlapping Responsive Breakpoints:**
-   - Two media queries overlap between `(min-width: 375px) and (max-width: 600px)` and `(max-width: 480px)`. This can cause CSS conflicts, though it's not a hard failure.
+1. **Technical Summary:**
+   - Email is sent via Listrak ESP.
+   - Standard click-tracking and impression pixels are used.
+   - No broken merge tokens detected in visible source but 8 content/tracking images lack `alt` attributes.
+   - Compliance headers (e.g., `List-Unsubscribe`) not captured by the relay.
 
-3. **Web Fonts:**
-   - Web fonts are loaded via WOFF only without WOFF2 support or `format('woff2')` hinting.
-   - Adding WOFF2 support would be beneficial for performance and compatibility with modern clients.
+2. **Link & Tracking Issues:**
+   - **21 tracking links skipped:** All routed through Listrak click-redirect domains (`e.lowes.com`). This is expected ESP behavior, but final destination URLs and UTM parameters cannot be verified without following redirects.
+   - **Impression/open pixels confirmed firing:**
+     - Open pixel URL: `https://mi.lowes.com/p/cp/e756885def464aa2/o.gif?mi_u=410146703`
+       - Subscriber ID is populated.
+     - Engagement tracking pixels (Listrak):
+       - Multiple `sli.lowes.com/imp` URLs with subscriber and campaign fields.
+
+3. **Rendering & Accessibility:**
+   - **Missing `alt` attributes on 8 images:** 
+     - Hero image URL: `image.e.lowes.com/…/c301e24e-201b-46f9-8172-27b5acdcbf99.jpg`
+     - Content image URL: `image.e.lowes.com/…/ad569dc5-361d-4d7d-8bc0-1ae6ec389f05.png`
+     - Open pixel URL: `mi.lowes.com/p/cp/e756885def464aa2/o.gif`
+     - Impression pixels (×5): `sli.lowes.com/imp?s=1090834…` through `s=1090838`
+   - **Tracking and pixel images should have `alt=""`:**
+     - Tracking/pixel images (`o.gif`, `imp` endpoints) should carry `alt=""`.
+     - Content images require descriptive alt text.
+   - **Overlapping responsive breakpoints:**
+     - Two media queries target overlapping ranges:
+       - `(min-width: 375px) and (max-width: 600px)`
+       - `(max-width: 480px)`
+     - Rules in the 375–480px range will apply from both blocks. Cascade order determines which `.container`, `.drop`, and `.photo` overrides win.
+   - **Web fonts (Fellix, DIN Next) loaded via WOFF only:**
+     - No WOFF2 variant or `format('woff2')` hint.
+     - Fallback stack behavior depends on full `font-family` declarations.
+
+4. **Personalization & Merge Tokens:**
+   - No unfired merge tokens (`{{`, `*|`, `%%`) visible in the available HTML source.
+   - Subscriber-specific fields in tracking pixels are all resolved (e.g., `mi_u=410146703`, `lctg=410146703`, `e=cole-drywall-lowes-fap6e@etell.app`).
+
+5. **Compliance:**
+   - **`List-Unsubscribe` header not captured:** QA flagged this as missing, but it is likely present on the originating Listrak delivery.
+   - **`List-Unsubscribe-Post` (RFC 8058) not captured:** Same relay limitation applies.
+
+### Recommendations:
+
+1. **Add `alt` Attributes:**
+   - Ensure all images have appropriate `alt` attributes:
+     - Tracking/pixel images should use `alt=""`.
+     - Content images should have descriptive alt text.
+   
+2. **Optimize Web Fonts:**
+   - Add WOFF2 variants and `format('woff2')` hints to improve performance for clients that support it.
+
+3. **Resolve Overlapping Breakpoints:**
+   - Verify and adjust the CSS rules in overlapping breakpoint ranges (375–480px) to ensure consistent rendering across devices.
 
 4. **Compliance Headers:**
-   - The `List-Unsubscribe` and `List-Unsubscribe-Post` headers are not captured by the relay, but it's likely they are present in the original delivery.
+   - Ensure `List-Unsubscribe` and `List-Unsubscribe-Post` headers are correctly set up and captured by ESP delivery logs for verification purposes.
 
-### Recommendations
-
-1. **Add Missing `alt` Attributes:**
-   - Ensure all images have descriptive `alt` attributes.
-   - Tracking pixels should use `alt=""`.
-
-2. **Optimize Responsive Breakpoints:**
-   - Verify and adjust CSS rules to avoid overlapping breakpoints, ensuring consistent styling across devices.
-
-3. **Web Font Optimization:**
-   - Add WOFF2 support for web fonts by including the `format('woff2')` hint in your font-family declarations.
-   - Example:
-     ```css
-     @font-face {
-       font-family: 'Fellix';
-       src: url('/fonts/fellix.woff2') format('woff2'),
-            url('/fonts/fellix.woff') format('woff');
-       font-weight: normal;
-       font-style: normal;
-     }
-     ```
-
-4. **Verify Compliance Headers:**
-   - Confirm the presence of `List-Unsubscribe` and `List-Unsubscribe-Post` headers in the original delivery.
-   - Ensure these headers are correctly formatted and include unsubscribe mechanisms.
-
-### Detailed Recommendations
-
-#### 1. Missing `alt` Attributes
-Ensure that all images have appropriate `alt` attributes:
-```html
-<img src="https://image.e.lowes.com/…/c301e24e-201b-46f9-8172-27b5acdcbf99.jpg" alt="Covered backyard patio with string lights">
-```
-For tracking pixels:
-```html
-<img src="https://mi.lowes.com/p/cp/e756885def464aa2/o.gif?mi_u=410146703" alt="">
-```
-
-#### 2. Overlapping Breakpoints
-Adjust CSS to avoid overlapping rules:
-```css
-/* Example for resolving overlap */
-@media (min-width: 375px) and (max-width: 480px) {
-  .container { width: 100%; }
-}
-
-@media (min-width: 481px) and (max-width: 600px) {
-  .container { width: calc(100% - 20px); }
-}
-```
-
-#### 3. Web Font Optimization
-Ensure web fonts are loaded with WOFF2 support:
-```css
-@font-face {
-  font-family: 'Fellix';
-  src: url('/fonts/fellix.woff2') format('woff2'),
-       url('/fonts/fellix.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-```
-
-#### 4. Compliance Headers
-Verify the presence of `List-Unsubscribe` and `List-Unsubscribe-Post` headers in the original delivery:
-```html
-<!-- Example header -->
-<List-Unsubscribe>mailto:unsubscribe@example.com</List-Unsubscribe>
-<List-Unsubscribe-Post>InboxAction; Label="Unsubscribe"; DN="1"</List-Unsubscribe-Post>
-```
-
-By addressing these areas, Lowe's can improve the accessibility, performance, and compliance of their email campaigns.
+By addressing these technical issues, the email will be more accessible, performant, and compliant with best practices, leading to better engagement and user experience.
