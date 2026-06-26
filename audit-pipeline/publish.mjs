@@ -67,16 +67,16 @@ export async function upsertAuditRow({ slug, data }) {
   const mediaKeys = extractMediaKeys(parsed);
 
   const sql = db();
-  // Resolve the persona's tenant_id so the audit row carries it. Tenant-
-  // scoped reads (lib/audits.ts) filter on tenant_id; missing it would
-  // hide the row from its own tenant. Falls back to NULL for dev/test
-  // setups where the persona row hasn't been backfilled yet.
-  const tenantRow = await sql`SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1`;
-  const tenantId = tenantRow[0]?.tenant_id ?? null;
+  // Resolve the persona's tenant_id inline via a scalar subquery so the
+  // audit row carries it without a separate read round trip. Tenant-scoped
+  // reads (lib/audits.ts) filter on tenant_id; missing it would hide the
+  // row from its own tenant. The subquery yields NULL for dev/test setups
+  // where the persona row hasn't been backfilled yet — same as before.
   await sql`
     INSERT INTO audit (slug, persona, type, timestamp, score, data, media_keys, tenant_id, updated_at)
     VALUES (${slug}, ${persona}, ${type}, ${timestamp}, ${score},
-            ${JSON.stringify(parsed)}::jsonb, ${JSON.stringify(mediaKeys)}::jsonb, ${tenantId}, NOW())
+            ${JSON.stringify(parsed)}::jsonb, ${JSON.stringify(mediaKeys)}::jsonb,
+            (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1), NOW())
     ON CONFLICT (slug) DO UPDATE SET
       persona = EXCLUDED.persona,
       type = EXCLUDED.type,
@@ -92,19 +92,21 @@ export async function upsertAuditRow({ slug, data }) {
   // ago, score 7/10" without having to scan the audit table. Best-effort:
   // persona might not exist yet (extremely rare race), and the whole
   // status column is JSONB so shape changes can evolve without migration.
+  // Single merge UPDATE — `||` shallow-merges the patch over existing keys
+  // (right side wins), matching the old { ...current, ...next } read-modify-
+  // write without the extra SELECT. Affects 0 rows if the persona is absent.
   try {
-    const statusRow = await sql`SELECT last_status FROM persona WHERE slug = ${persona} LIMIT 1`;
-    if (statusRow.length > 0) {
-      const current = statusRow[0].last_status || {};
-      const next = {
-        ...current,
-        last_audit_at: new Date().toISOString(),
-        last_audit_slug: slug,
-        last_audit_score: parsed.review?.score ?? null,
-        last_journey_status: 'ok',
-      };
-      await sql`UPDATE persona SET last_status = ${next}::jsonb WHERE slug = ${persona}`;
-    }
+    const statusPatch = {
+      last_audit_at: new Date().toISOString(),
+      last_audit_slug: slug,
+      last_audit_score: parsed.review?.score ?? null,
+      last_journey_status: 'ok',
+    };
+    await sql`
+      UPDATE persona
+      SET last_status = COALESCE(last_status, '{}'::jsonb) || ${JSON.stringify(statusPatch)}::jsonb
+      WHERE slug = ${persona}
+    `;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.warn(`upsertAuditRow: persona.last_status writeback failed for ${slug}: ${msg.slice(0, 200)}`);
@@ -166,9 +168,11 @@ export async function upsertExperienceAndReaction({
   }
 
   const sql = db();
-  const tenantRow = await sql`SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1`;
-  const tenantId = tenantRow[0]?.tenant_id ?? null;
 
+  // tenant_id is resolved inline via a scalar subquery on persona.slug in
+  // each write below — no separate read round trip. Yields NULL when the
+  // persona row isn't backfilled yet, matching the prior behaviour.
+  //
   // Upsert experience by slug-derived key. The reaction holds the slug
   // (URL-friendly identifier); the experience is a 1-1 partner of the
   // reaction during this transition. Once a reaction starts re-reacting
@@ -177,15 +181,19 @@ export async function upsertExperienceAndReaction({
   //
   // Strategy: UPDATE the existing reaction's experience if one exists,
   // else INSERT a new experience and link via reaction.experience_id.
-  const existing = await sql`SELECT experience_id FROM reaction WHERE slug = ${slug} LIMIT 1`;
+  // The decision SELECT also returns the reaction id so the success path
+  // needs no trailing lookup; the INSERT path uses RETURNING instead.
+  const existing = await sql`SELECT id, experience_id FROM reaction WHERE slug = ${slug} LIMIT 1`;
 
   let experienceId;
+  let reactionId;
   if (existing.length > 0) {
     experienceId = existing[0].experience_id;
+    reactionId = existing[0].id;
     await sql`
       UPDATE experience SET
         persona_slug = ${persona},
-        tenant_id = ${tenantId},
+        tenant_id = (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1),
         type = ${type},
         brand_domain = ${brandDomain},
         message_id = ${messageId},
@@ -203,7 +211,7 @@ export async function upsertExperienceAndReaction({
     await sql`
       UPDATE reaction SET
         persona_slug = ${persona},
-        tenant_id = ${tenantId},
+        tenant_id = (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1),
         score = ${score},
         review_data = ${JSON.stringify(parsed.review ?? {})}::jsonb,
         updated_at = NOW()
@@ -215,7 +223,8 @@ export async function upsertExperienceAndReaction({
         (persona_slug, tenant_id, type, brand_domain, message_id, raw_key, received_at,
          email_data, qa_findings, assets, performance, inventory, auto_confirm)
       VALUES
-        (${persona}, ${tenantId}, ${type}, ${brandDomain}, ${messageId}, ${rawKey}, ${timestamp},
+        (${persona}, (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1),
+         ${type}, ${brandDomain}, ${messageId}, ${rawKey}, ${timestamp},
          ${JSON.stringify(parsed.email ?? {})}::jsonb,
          ${JSON.stringify(parsed.qa ?? null)}::jsonb,
          ${JSON.stringify(parsed.assets ?? {})}::jsonb,
@@ -225,17 +234,19 @@ export async function upsertExperienceAndReaction({
       RETURNING id
     `;
     experienceId = expRows[0].id;
-    await sql`
+    const rxRows = await sql`
       INSERT INTO reaction
         (experience_id, persona_slug, slug, score, review_data, tenant_id)
       VALUES
         (${experienceId}, ${persona}, ${slug}, ${score},
-         ${JSON.stringify(parsed.review ?? {})}::jsonb, ${tenantId})
+         ${JSON.stringify(parsed.review ?? {})}::jsonb,
+         (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1))
+      RETURNING id
     `;
+    reactionId = rxRows[0]?.id ?? null;
   }
 
-  const rRow = await sql`SELECT id FROM reaction WHERE slug = ${slug} LIMIT 1`;
-  return { reactionId: rRow[0]?.id ?? null, experienceId };
+  return { reactionId: reactionId ?? null, experienceId };
 }
 
 /**
