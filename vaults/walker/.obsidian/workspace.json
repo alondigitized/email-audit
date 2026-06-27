@@ -11,14 +11,10 @@
             "id": "e3e6d7abd38c3dec",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "audits/2026-04-10-adiclub-days-are-coming.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2026-04-10-adiclub-days-are-coming"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -185,6 +181,7 @@
   },
   "active": "e3e6d7abd38c3dec",
   "lastOpenFiles": [
+    "audits/2026-04-10-adiclub-days-are-coming.md",
     "audits/2026-06-25-10-off-trendy-floral-styles.md",
     "audits/2026-06-25-member-deals-ahead-don-t-miss-out.md",
     "audits/2026-06-25-last-day-to-save-up-to-20-first-day-of-summer.md",
@@ -210,7 +207,6 @@
     "audits/2026-06-25-helloooo-10-off.md",
     "audits/2026-06-25-long-days-longer-runs.md",
     "audits/2026-06-25-stability-without-the-bulk.md",
-    "audits/2026-06-25-hold-up-up-to-50-off-clearance.md",
     "syntheses",
     "reflections"
   ]
