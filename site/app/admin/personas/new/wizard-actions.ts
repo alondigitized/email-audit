@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/dal";
@@ -103,6 +103,7 @@ export async function createDraftAndRedirect(fd: FormData) {
   // admin's tenant sees this draft. No userPersonas grant needed.
   void inserted;
 
+  updateTag("personas"); // bust the cross-request persona cache immediately
   revalidatePath("/admin/personas");
   redirect(`/admin/personas/new/${slug}/identity`);
 }
@@ -252,6 +253,7 @@ export async function finalizeAndRedirect(fd: FormData) {
   const { rowId, next } = await applyPatch(slug, (p) => ({ ...p, status: "active" }));
   await db.update(personas).set({ profile: next }).where(eq(personas.id, rowId));
 
+  updateTag("personas"); // bust the cross-request persona cache immediately
   revalidatePath("/admin/personas");
   revalidatePath(`/admin/personas/${slug}`);
   redirect(`/admin/personas/${slug}`);
@@ -274,6 +276,7 @@ export async function abandonDraftAndRedirect(fd: FormData) {
   if (row.length > 0 && row[0].profile?.status === "draft") {
     await db.delete(personas).where(eq(personas.id, row[0].id));
   }
+  updateTag("personas"); // bust the cross-request persona cache immediately
   revalidatePath("/admin/personas");
   redirect("/admin/personas");
 }

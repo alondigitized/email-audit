@@ -1,4 +1,5 @@
-import { inArray, desc, eq, and, sql as drizzleSql } from "drizzle-orm";
+import { unstable_cache } from "next/cache";
+import { desc, eq, sql as drizzleSql } from "drizzle-orm";
 import {
   db,
   experiences,
@@ -90,24 +91,36 @@ function joinedRowToAuditData(row: {
 //   - persona.industry (set on industry-kind personas directly)
 //   - persona_template.industry (fallback for brand-kind personas)
 // via COALESCE so each persona has a single industry tag for filter UI.
+// Cross-request cached as a serializable [slug, industry][] list (the data
+// cache can't store a Map). Derived purely from the personas/templates tables,
+// so it shares the "personas" tag and is busted by admin persona mutations;
+// the 10-min revalidate is the backstop.
+const getIndustryEntriesCached = unstable_cache(
+  async (): Promise<[string, string][]> => {
+    const rows = await db
+      .select({
+        slug: personas.slug,
+        industry: personas.industry,
+        templateIndustry: personaTemplates.industry,
+      })
+      .from(personas)
+      .leftJoin(
+        personaTemplates,
+        eq(personaTemplates.slug, personas.templateSlug)
+      );
+    const entries: [string, string][] = [];
+    for (const r of rows) {
+      const ind = r.industry ?? r.templateIndustry ?? null;
+      if (ind) entries.push([r.slug, ind]);
+    }
+    return entries;
+  },
+  ["industry-by-slug-v1"],
+  { tags: ["personas"], revalidate: 600 }
+);
+
 async function loadIndustryBySlug(): Promise<Map<string, string>> {
-  const rows = await db
-    .select({
-      slug: personas.slug,
-      industry: personas.industry,
-      templateIndustry: personaTemplates.industry,
-    })
-    .from(personas)
-    .leftJoin(
-      personaTemplates,
-      eq(personaTemplates.slug, personas.templateSlug)
-    );
-  const out = new Map<string, string>();
-  for (const r of rows) {
-    const ind = r.industry ?? r.templateIndustry ?? null;
-    if (ind) out.set(r.slug, ind);
-  }
-  return out;
+  return new Map(await getIndustryEntriesCached());
 }
 
 // Hard cap on the audit-index payload. The neon serverless HTTP driver
@@ -129,50 +142,81 @@ const AUDIT_INDEX_ROW_LIMIT = 2000;
 // AuditData reconstruction is intentionally skipped here — that path
 // is only needed by the detail page (getAuditBySlugForUser) which
 // reads one row at a time.
+// One persona's audit-index rows, newest first. Cached across requests and
+// tagged per-persona (`audit-index:<slug>`) so a daemon can bust exactly the
+// persona it just published for (see site/app/api/revalidate + audit-pipeline/
+// revalidate.mjs); the 10-min revalidate is the backstop. Reads are cached
+// UN-filtered by user — a persona slug belongs to one owning tenant, and the
+// per-user ACL is applied by getAuditIndexForUser choosing which slugs to
+// merge, so nothing user-specific enters the cache key. Same JSONB sub-path
+// projection as before, plus received_at (ISO-normalized) for the merge sort.
+function getAuditRowsForPersona(personaSlug: string) {
+  return unstable_cache(
+    async () => {
+      const rows = await db
+        .select({
+          slug: reactions.slug,
+          type: experiences.type,
+          persona: reactions.personaSlug,
+          subject: drizzleSql<string | null>`${experiences.emailData}->>'subject'`,
+          fromDisplayName: drizzleSql<
+            string | null
+          >`${experiences.emailData}->>'from_display_name'`,
+          timestampIso: drizzleSql<
+            string | null
+          >`${experiences.emailData}->>'timestamp_iso'`,
+          score: drizzleSql<
+            string | null
+          >`${reactions.reviewData}->>'score'`,
+          qaSummary: drizzleSql<
+            unknown
+          >`${experiences.qaFindings}->'summary'`,
+          renderImageKey: drizzleSql<
+            string | null
+          >`${experiences.assets}->>'render_image_key'`,
+          renderImage: drizzleSql<
+            string | null
+          >`${experiences.assets}->>'render_image'`,
+          openLikelihood: drizzleSql<
+            number | null
+          >`(${reactions.reviewData}->'predictions'->'open_likelihood'->>'score')::int`,
+          clickLikelihood: drizzleSql<
+            number | null
+          >`(${reactions.reviewData}->'predictions'->'click_likelihood'->>'score')::int`,
+          receivedAt: experiences.receivedAt,
+        })
+        .from(reactions)
+        .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
+        .where(eq(reactions.personaSlug, personaSlug))
+        .orderBy(desc(experiences.receivedAt))
+        .limit(AUDIT_INDEX_ROW_LIMIT);
+      return rows.map((r) => ({
+        ...r,
+        receivedAt: r.receivedAt ? new Date(r.receivedAt).toISOString() : null,
+      }));
+    },
+    ["audit-index-rows-v1", personaSlug],
+    { tags: [`audit-index:${personaSlug}`], revalidate: 600 }
+  )();
+}
+
 export async function getAuditIndexForUser(
   personaSlugs: string[]
 ): Promise<AuditSummary[]> {
   if (personaSlugs.length === 0) return [];
-  const [rows, allPersonas, industryBySlug] = await Promise.all([
-    db
-      .select({
-        slug: reactions.slug,
-        type: experiences.type,
-        persona: reactions.personaSlug,
-        subject: drizzleSql<string | null>`${experiences.emailData}->>'subject'`,
-        fromDisplayName: drizzleSql<
-          string | null
-        >`${experiences.emailData}->>'from_display_name'`,
-        timestampIso: drizzleSql<
-          string | null
-        >`${experiences.emailData}->>'timestamp_iso'`,
-        score: drizzleSql<
-          string | null
-        >`${reactions.reviewData}->>'score'`,
-        qaSummary: drizzleSql<
-          unknown
-        >`${experiences.qaFindings}->'summary'`,
-        renderImageKey: drizzleSql<
-          string | null
-        >`${experiences.assets}->>'render_image_key'`,
-        renderImage: drizzleSql<
-          string | null
-        >`${experiences.assets}->>'render_image'`,
-        openLikelihood: drizzleSql<
-          number | null
-        >`(${reactions.reviewData}->'predictions'->'open_likelihood'->>'score')::int`,
-        clickLikelihood: drizzleSql<
-          number | null
-        >`(${reactions.reviewData}->'predictions'->'click_likelihood'->>'score')::int`,
-      })
-      .from(reactions)
-      .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
-      .where(inArray(reactions.personaSlug, personaSlugs))
-      .orderBy(desc(experiences.receivedAt))
-      .limit(AUDIT_INDEX_ROW_LIMIT),
+  const [perPersonaRows, allPersonas, industryBySlug] = await Promise.all([
+    Promise.all(personaSlugs.map((slug) => getAuditRowsForPersona(slug))),
     getAllPersonas(),
     loadIndustryBySlug(),
   ]);
+  // Merge the user's personas newest-first and apply the same global cap the
+  // single-query path used — identical top-N-by-received_at semantics, just
+  // assembled in memory from per-persona cached slices.
+  const ts = (x: string | null) => (x ? Date.parse(x) : 0);
+  const rows = perPersonaRows
+    .flat()
+    .sort((a, b) => ts(b.receivedAt) - ts(a.receivedAt))
+    .slice(0, AUDIT_INDEX_ROW_LIMIT);
   const personaBySlug = new Map(allPersonas.map((p) => [p.slug, p]));
   const out: AuditSummary[] = [];
   for (const r of rows) {
@@ -215,30 +259,50 @@ export async function getAuditIndexForUser(
   return out;
 }
 
+// Global fetch of one audit by slug (reaction.slug is unique, so a slug maps
+// to exactly one persona). Cached and tagged `audit:<slug>` for per-slug
+// daemon invalidation; 10-min revalidate backstop. Returns the row's owning
+// persona alongside the data so the caller can authorize in memory — the user
+// ACL never enters the cache key.
+function getAuditBySlugCached(slug: string) {
+  return unstable_cache(
+    async (): Promise<{ data: AuditData | null; persona: string | null }> => {
+      const rows = await db
+        .select({
+          slug: reactions.slug,
+          type: experiences.type,
+          reactionPersona: reactions.personaSlug,
+          reviewData: reactions.reviewData,
+          emailData: experiences.emailData,
+          qaFindings: experiences.qaFindings,
+          assets: experiences.assets,
+          performance: experiences.performance,
+          inventory: experiences.inventory,
+          autoConfirm: experiences.autoConfirm,
+        })
+        .from(reactions)
+        .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
+        .where(eq(reactions.slug, slug))
+        .limit(1);
+      if (rows.length === 0) return { data: null, persona: null };
+      return {
+        data: joinedRowToAuditData(rows[0]),
+        persona: rows[0].reactionPersona,
+      };
+    },
+    ["audit-by-slug-v1", slug],
+    { tags: [`audit:${slug}`], revalidate: 600 }
+  )();
+}
+
 export async function getAuditBySlugForUser(
   slug: string,
   personaSlugs: string[]
 ): Promise<AuditData | null> {
   if (personaSlugs.length === 0) return null;
-  const rows = await db
-    .select({
-      slug: reactions.slug,
-      type: experiences.type,
-      reactionPersona: reactions.personaSlug,
-      reviewData: reactions.reviewData,
-      emailData: experiences.emailData,
-      qaFindings: experiences.qaFindings,
-      assets: experiences.assets,
-      performance: experiences.performance,
-      inventory: experiences.inventory,
-      autoConfirm: experiences.autoConfirm,
-    })
-    .from(reactions)
-    .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
-    .where(
-      and(eq(reactions.slug, slug), inArray(reactions.personaSlug, personaSlugs))
-    )
-    .limit(1);
-  if (rows.length === 0) return null;
-  return joinedRowToAuditData(rows[0]);
+  const { data, persona } = await getAuditBySlugCached(slug);
+  // Authorize in memory: same guard the old `IN (personaSlugs)` clause gave —
+  // the audit is only visible if its owning persona is in the user's set.
+  if (!data || !persona || !personaSlugs.includes(persona)) return null;
+  return data;
 }

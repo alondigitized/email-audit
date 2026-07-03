@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { eq, asc, inArray } from "drizzle-orm";
 import { db, personas, users, tenantPersonaGrants } from "./db/client";
 import type { PersonaLastStatus } from "./db/schema";
@@ -128,7 +129,9 @@ export async function getAllPersonas(opts?: {
   return filtered;
 }
 
-const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
+// Raw, un-filtered pull of every persona. No request-scoped state (no
+// cookies/headers), so it is safe to cache across requests.
+async function fetchAllPersonasRaw(): Promise<PersonaRecord[]> {
   const rows = await db
     .select({
       id: personas.id,
@@ -154,7 +157,26 @@ const getAllPersonasInternal = cache(async (): Promise<PersonaRecord[]> => {
     kind: r.kind,
     industry: r.industry ?? null,
   }));
-});
+}
+
+// Cross-request cache. The persona set changes rarely (admin edits, new
+// onboarding) — orders of magnitude less often than it is read (every
+// homepage / chat / admin load, plus twice inside the audits index). The
+// daemon's per-audit `last_status` writeback is NOT surfaced on any cached
+// path (the admin persona page reads live), so audit traffic doesn't need to
+// bust this. Invalidation: admin persona mutations bust the `personas` tag
+// for instant refresh; the 10-min revalidate is the backstop. Returns only
+// JSON-serializable data (zod-parsed profiles are plain objects), as the
+// data cache requires. React cache() on top dedups within one render.
+const getAllPersonasCached = unstable_cache(
+  fetchAllPersonasRaw,
+  ["all-personas-v1"],
+  { tags: ["personas"], revalidate: 600 }
+);
+
+const getAllPersonasInternal = cache(
+  (): Promise<PersonaRecord[]> => getAllPersonasCached()
+);
 
 // Single persona by slug. Returns null if the slug doesn't exist OR if
 // `tenantId` is provided and doesn't match. Admin call sites omit tenantId

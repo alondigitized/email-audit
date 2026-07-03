@@ -6,6 +6,7 @@
 
 import { neon } from '@neondatabase/serverless';
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
+import { pingRevalidate } from './revalidate.mjs';
 
 function db() {
   const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
@@ -245,6 +246,12 @@ export async function upsertExperienceAndReaction({
     `;
     reactionId = rxRows[0]?.id ?? null;
   }
+
+  // Best-effort: bust the site's per-persona audit-index cache and this
+  // slug's detail cache so the new/updated audit shows up immediately.
+  // No-op unless a live daemon set REVALIDATE_SITE_ON_PUBLISH. Fire-and-
+  // forget — never awaited, so it can't slow or fail the write path.
+  pingRevalidate([`audit-index:${persona}`, `audit:${slug}`]);
 
   return { reactionId: reactionId ?? null, experienceId };
 }

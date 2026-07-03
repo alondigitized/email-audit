@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { eq, sql as dsql } from "drizzle-orm";
 import { z } from "zod";
@@ -160,6 +160,7 @@ export async function createPersonaAction(
     industry: kind === "industry" ? industry : null,
   });
 
+  updateTag("personas"); // bust the cross-request persona cache immediately
   revalidatePath("/admin/personas");
   revalidatePath("/admin");
   return { ok: true, slug };
@@ -234,6 +235,7 @@ export async function upsertPersonaAction(
     console.warn(`[url-validation] ${slug} skipped:`, err)
   );
 
+  updateTag("personas"); // bust the cross-request persona cache immediately
   revalidatePath("/admin/personas");
   revalidatePath(`/admin/personas/${slug}`);
   revalidatePath("/admin");
@@ -265,6 +267,7 @@ export async function deletePersonaAction(
   }
 
   await db.delete(personas).where(eq(personas.slug, slug));
+  updateTag("personas"); // bust the cross-request persona cache immediately
   revalidatePath("/admin/personas");
   revalidatePath("/admin");
   return { ok: true };
@@ -524,6 +527,7 @@ export async function promotePersonaToTemplateAction(
       .where(eq(personas.slug, slug));
   }
 
+  updateTag("personas"); // bust the cross-request persona cache immediately
   revalidatePath("/admin/personas");
   revalidatePath(`/admin/personas/${slug}`);
   revalidatePath("/admin/templates");
