@@ -2,96 +2,69 @@
 kind: synthesis
 persona: jules-cuff-apparel-fap6e
 brand: email.oldnavy.com
-reactions: 22
-through: 2026-05-30T10:56:09.000Z
+reactions: 91
+through: 2026-07-24T19:21:18.000Z
 created_at: 2026-05-30T18:21:03.121Z
-updated_at: 2026-05-30T18:21:03.121Z
+updated_at: 2026-07-31T18:21:28.483Z
 ---
 
-# ### Review of Old Navy Email Campaign
+# ## Technical Audit — Old Navy "6 tees & $5 tanks + 50% off everything
 
-#### Summary
-The email campaign from Old Navy has several strengths but also notable weaknesses. The primary issues are the excessive send frequency, lack of personalization for loyalty members, and an overly broad offer that dilutes focus.
+---
 
-#### Detailed Analysis
+### 1. Technical Summary
 
-**1. Overview**
-- **Strengths:**
-  - Clear hero message with urgency ("2 DAYS ONLY!").
-  - Immediate price anchors ($6 tees, $5 tanks).
-  - Clean demographic fit (female adult model in casual summer wear).
-  - Effective clearance callout.
+- **Broken Link:** One broken link on the Movable Ink content/open pixel.
+- **Compliance Gaps:** Unsubscribe headers and physical address are missing, which could not be confirmed due to relay header stripping.
+- **Plain Text Part:** The plain text version is essentially non-functional — 90% of its content consists of URLs.
+
+---
+
+### 2. Detailed Findings
+
+#### Broken Links
+**Movable Ink Content/Open Pixel:**
+The Movable Ink content/open pixel (`https://click.email.oldnavy.com/c?e=1684375422&l=2039873-335409`) redirects to an invalid URL type, which breaks tracking and analytics.
+
+#### Compliance Gaps
+**Unsubscribe Headers:**
+The `List-Unsubscribe` and `List-Unsubscribe-Post` headers are missing. These headers are required for Google and Yahoo bulk sender compliance.
+
+**Physical Address:**
+The physical address is absent from the visible source. This could be a CAN-SPAM violation if confirmed to be missing in the full HTML version.
+
+#### Plain Text Part
+The plain text part of the email is 90% URLs, which triggers Spamassassin rules and degrades deliverability scoring.
+
+---
+
+### 3. Recommendations
+
+| Priority | Issue | Action |
+|---|---|---|
+| P0 | Broken `cp.oldnavy.com` pixel redirect | Report to Salesforce Personalization team; the origin is returning a relative `Location` header. Verify beacon fires in Interaction Studio reporting. |
+| P1 | `List-Unsubscribe` / `List-Unsubscribe-Post` missing | Confirm against raw SMTP headers (not relay-captured). If absent, add both to ESP send config. Required for Google/Yahoo bulk sender compliance. |
+| P1 | Physical address absent from visible source | Confirm footer is present in full HTML. If omitted, add before next send — CAN-SPAM violation. |
+| P2 | Tracking pixel `alt` attribute missing | Add `alt=""` to `cp.oldnavy.com` `<img>` tag. |
+| P2 | Plain-text version is 88% URLs | Generate a proper plain-text counterpart. High URL ratio in plain-text triggers Spamassassin rules and degrades deliverability scoring. |
+| P3 | Duplicate `.MspaceTop` / `.MspaceBot` CSS rules | De-duplicate to avoid silent specificity bugs in future edits. |
+
+---
+
+### 4. Additional Recommendations
+
+- **Content Optimization:**
+  - Reduce the number of emails sent within a short period.
+  - Focus on one clear hero offer per email instead of stacking multiple offers.
   
-- **Weaknesses:**
-  - Overly frequent sends within a short period (four emails in two days).
-  - Lack of personalization for loyalty members.
-  - Broad and cluttered offer stack, leading to dilution of focus.
+- **Personalization and Loyalty Tie-In:**
+  - Include a callout for Old Navy rewards members to use their Super Cash.
+  - Add a family/kids lane to cater to parents buying for children.
 
-**2. What Worked**
-- Price anchors are immediate and clear ("$6" and "$5").
-- Urgency is visible above the fold with "2 DAYS ONLY!" badge in the hero section.
-- Clear demographic signals (female adult model).
-- Effective clearance callout ("SHOP CLEARANCE IN YOUR SIZE").
+---
 
-**3. What Didn't Work**
-- Second email today, fourth in two days — urgency has been spent down to zero.
-- Offer stack is too wide and unfocused ($6 tees, $5 tanks, 50% off everything, dresses, clearance).
-- No loyalty or rewards callout visible.
-- "(yes, really!)" signals a credibility problem created by the send cadence.
+### Conclusion
 
-**4. Recommendations**
+This email has several technical issues that need immediate attention, particularly the broken tracking pixel and missing compliance headers. Additionally, there are opportunities to improve the content's focus and personalization to enhance user engagement and reduce fatigue from frequent sends. Addressing these issues will help maintain deliverability and ensure a better user experience.
 
-1. **Reduce Send Frequency:**
-   - Limit to one email per day max.
-   
-2. **Add Family/Kids Lane:**
-   - Include a single line like "Stock up for the whole crew" with a kids tee link.
-   
-3. **Surface Rewards Tie-In:**
-   - Add "Use your Super Cash on top of 50% off".
-   
-4. **Focus on One Hero Offer Per Email:**
-   - Simplify to $6 tees OR 50% off everything.
-
-**Subject and Preheader Alternatives**
-
-- **Subject Alt A:** `50% off + $6 tees — 2 days left to stock up`
-- **Preheader Alt A:** `Including kids. Including clearance. Use your Super Cash on top.`
-
-- **Subject Alt B:** `Whole store, half off. $6 tees too. 2 days only.`
-- **Preheader Alt B:** `$6 tees, $5 tanks, and half off everything else — ends Sunday.`
-
-**Business Impact Score: 7/10**
-
-- The email does hit the key focus areas (tees, tanks).
-- Sender is recognized and trusted.
-- Clear visual hierarchy with no render bugs.
-
-**Open Likelihood (Persona-Grounded): 4/10**
-- Recognizable sender.
-- Concrete offer relevant to persona's focus area.
-- Overly long subject line (57 characters) and lack of personalization drag down the score significantly due to send frequency.
-
-**Click-Through Likelihood (Persona-Grounded): 7/10**
-- Clear hero message visible above fold.
-- Primary CTA in persona’s category.
-- Time-bounded urgency with "2 DAYS ONLY!".
-- Brand voice is consistent and trusted.
-- No render bugs or friction.
-
-### Technical Audit
-
-**Technical Summary:**
-
-- One confirmed broken link on the Movable Ink content/open pixel.
-- Compliance gaps (unsubscribe headers, physical address) could not be confirmed due to relay header stripping.
-- Plain-text part is essentially non-functional (90% URL ratio).
-
-**Recommendations:**
-1. **Fix Broken Pixel Redirect:** Report to Salesforce Personalization team; verify beacon fires in Interaction Studio reporting.
-2. **Add Unsubscribe Headers:** Confirm against raw SMTP headers and add if absent for Google/Yahoo bulk sender compliance.
-3. **Include Physical Address:** Confirm footer presence in full HTML and add before next send (CAN-SPAM violation).
-4. **Tracking Pixel `alt` Attribute Missing:** Add `alt=""` to tracking pixel `<img>` tag.
-5. **Generate Proper Plain Text Version:** Reduce URL ratio to avoid Spamassassin rules and improve deliverability scoring.
-
-By addressing these issues, Old Navy can significantly enhance the effectiveness of their email campaigns and ensure better engagement with their subscribers.
+---
