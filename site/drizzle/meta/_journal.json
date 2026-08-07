@@ -197,6 +197,20 @@
       "when": 1778448885766,
       "tag": "0027_fine_vargas",
       "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1786144422740,
+      "tag": "0028_left_speed",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1786145500416,
+      "tag": "0029_broad_nick_fury",
+      "breakpoints": true
     }
   ]
 }

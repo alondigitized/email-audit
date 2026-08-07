@@ -880,3 +880,238 @@ export const auditShareTokens = pgTable(
     auditIdx: index("audit_share_token_audit_idx").on(t.auditSlug),
   })
 );
+
+// ─── QA defect intake ────────────────────────────────────────────────────
+//
+// Backs the QA secret-shopper squad: personas sweep skechers.com and file
+// candidate defects, which a human triages in /admin/defect-queue before
+// anything is filed into Skechers' "See Something? SAY Something!"
+// Smartsheet intake form.
+//
+// The column vocabulary below is NOT ours — it mirrors that form's
+// dropdowns exactly (captured 2026-08-07). A defect whose area/location/
+// device/browser/urgency doesn't match these strings cannot be filed, so
+// the sweep is constrained to emit them verbatim. If the form changes,
+// change these first and let the type errors find the callers.
+//
+// Submission is deliberately manual for v1: the form is reCAPTCHA-
+// protected, and the human approval step is the whole point. The queue
+// hands you a copy-ready payload; you file it.
+
+export const DEFECT_LOCATIONS = [
+  "Desktop Site",
+  "Mobile Site",
+  "Mobile App",
+] as const;
+
+export const DEFECT_AREAS = [
+  "Off-site",
+  "Site search",
+  "Homepage",
+  "PLP",
+  "PDP",
+  "Cart",
+  "Checkout",
+  "MyAccount / Order History",
+  "Loyalty Dashboard",
+  "Social (off-site)",
+] as const;
+
+export const DEFECT_DEVICES = [
+  "iPhone",
+  "Android Phone",
+  "Other smartphone",
+  "Mac Laptop",
+  "Mac Desktop",
+  "Windows PC",
+  "Chromebook",
+  "Other",
+] as const;
+
+// Yes, the live form really does offer an OS in the Browser dropdown.
+// Kept verbatim so submissions match the sheet's existing values.
+export const DEFECT_BROWSERS = ["Chrome", "Mac OS Sonoma"] as const;
+
+export const DEFECT_URGENCIES = ["High", "Medium", "Low"] as const;
+
+// Which lens found it. Maps 1:1 to the QA persona squad.
+export const DEFECT_CATEGORIES = [
+  "functional",
+  "copy",
+  "seo",
+  "accessibility",
+  "performance",
+] as const;
+
+// Controlled defect-type vocabulary. This exists specifically to make
+// deduplication work: the first cut let the model emit a free-text
+// "signature", which varied between runs ("multiple-h1" vs "h1-duplicate")
+// and so produced a different fingerprint for the same finding every sweep.
+// Forcing a choice from a fixed list makes the fingerprint stable.
+//
+// 'other' is the escape hatch; defects landing there dedupe only on
+// persona+area+url, which is coarse but never silently duplicates.
+export const DEFECT_TYPES = [
+  // functional
+  "zero_results",
+  "http_error",
+  "broken_link",
+  "dead_control",
+  "console_error",
+  "filter_wrong_results",
+  "image_not_loading",
+  // copy
+  "typo",
+  "grammar",
+  "placeholder_text",
+  "truncated_text",
+  "promo_price_mismatch",
+  "inconsistent_naming",
+  "stale_promo",
+  // seo
+  "missing_title",
+  "title_length",
+  "missing_meta_description",
+  "missing_canonical",
+  "wrong_canonical",
+  "missing_h1",
+  "duplicate_h1",
+  "missing_structured_data",
+  "invalid_structured_data",
+  "missing_alt",
+  "noindex_unexpected",
+  "broken_hreflang",
+  // accessibility / performance
+  "axe_violation",
+  "contrast",
+  "keyboard_trap",
+  "focus_order",
+  "missing_form_label",
+  "slow_lcp",
+  "layout_shift",
+  // fallback
+  "other",
+] as const;
+
+export type DefectType = (typeof DEFECT_TYPES)[number];
+
+export type DefectLocation = (typeof DEFECT_LOCATIONS)[number];
+export type DefectArea = (typeof DEFECT_AREAS)[number];
+export type DefectDevice = (typeof DEFECT_DEVICES)[number];
+export type DefectBrowser = (typeof DEFECT_BROWSERS)[number];
+export type DefectUrgency = (typeof DEFECT_URGENCIES)[number];
+export type DefectCategory = (typeof DEFECT_CATEGORIES)[number];
+
+// One evidence item. The intake form REQUIRES at least one screenshot,
+// so a defect with an empty array can never reach 'approved'.
+export type DefectEvidence = {
+  r2Key: string;
+  localPath?: string;
+  caption?: string;
+  takenAt?: string;
+};
+
+// Result of the independent re-test. A candidate that can't be reproduced
+// is auto-refuted and never consumes human review time — this is the main
+// defence against filing flaky/transient findings.
+// Verdict from the adversarial adjudicator — a second opinion that runs
+// after the deterministic re-test and before any human sees the finding.
+// It answers a different question than verification does: not "is this
+// still happening?" but "is this actually worth filing, and have we filed
+// it already?".
+export type DefectAdjudication = {
+  reviewedAt: string;
+  verdict: "file" | "reject" | "duplicate";
+  reason: string;
+  duplicateOf?: string;
+  urgencySuggested?: "High" | "Medium" | "Low";
+};
+
+export type DefectVerification = {
+  attemptedAt: string;
+  runs: number;
+  reproduced: number;
+  // 'unverifiable' = the verifier had no re-check strategy for this claim.
+  // It is NOT a refutation, and it still reaches human review, flagged.
+  verdict: "reproduced" | "not_reproduced" | "inconclusive" | "unverifiable";
+  notes?: string;
+};
+
+export const defectStatusEnum = pgEnum("defect_status", [
+  "candidate", // sweep found it; not yet re-tested
+  "verified", // survived the refutation pass — ready for human review
+  "refuted", // could not reproduce; auto-killed, never shown for triage
+  "approved", // human approved for filing
+  "rejected", // human rejected
+  "submitted", // filed into Smartsheet (manually in v1)
+  "suppressed", // known issue / won't fix / duplicate
+]);
+
+export const defects = pgTable(
+  "defect",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tenantId: uuid("tenant_id").references(() => tenants.id, {
+      onDelete: "restrict",
+    }),
+    // Which QA persona's lens surfaced this.
+    personaSlug: text("persona_slug").notNull(),
+    // The sweep this came out of. Null if filed by hand.
+    experienceId: uuid("experience_id").references(() => experiences.id, {
+      onDelete: "set null",
+    }),
+
+    // --- Smartsheet form field mirror (values from the *_ constants above) ---
+    location: text("location").notNull(),
+    url: text("url").notNull(),
+    area: text("area").notNull(),
+    // Maps to the form's "Describe the issue".
+    description: text("description").notNull(),
+    device: text("device"),
+    browser: text("browser"),
+    urgency: text("urgency").notNull(),
+    // Address the item is filed under — Skechers replies here for details.
+    reporterEmail: text("reporter_email"),
+
+    // --- evidence (form requires >= 1 screenshot) ---
+    evidence: jsonb("evidence").$type<DefectEvidence[]>().default([]).notNull(),
+
+    // --- triage / credibility ---
+    category: text("category").notNull(),
+    // From DEFECT_TYPES. Drives the dedupe fingerprint, so it must come from
+    // the fixed list rather than free text.
+    defectType: text("defect_type"),
+    // Set by the adjudicator when it rejects a finding, so a human can see
+    // why something never reached the queue.
+    adjudication: jsonb("adjudication").$type<DefectAdjudication>(),
+    // Expected-vs-observed is what separates a defect from an opinion.
+    expected: text("expected"),
+    observed: text("observed"),
+    reproSteps: jsonb("repro_steps").$type<string[]>().default([]).notNull(),
+    urgencyRationale: text("urgency_rationale"),
+    confidence: numeric("confidence"),
+    // Stable fingerprint so the same issue never re-files sweep after
+    // sweep. Suppressing one row suppresses the whole class.
+    dedupeKey: text("dedupe_key"),
+
+    verification: jsonb("verification").$type<DefectVerification>(),
+    verifiedAt: timestamp("verified_at", { mode: "date" }),
+
+    status: defectStatusEnum("status").notNull().default("candidate"),
+    reviewedBy: text("reviewed_by"),
+    reviewedAt: timestamp("reviewed_at", { mode: "date" }),
+    reviewNote: text("review_note"),
+    submittedAt: timestamp("submitted_at", { mode: "date" }),
+    // Whatever identifies the filed row once it's in Smartsheet.
+    submissionRef: text("submission_ref"),
+
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    statusIdx: index("defect_status_created_idx").on(t.status, t.createdAt),
+    dedupeIdx: index("defect_dedupe_idx").on(t.dedupeKey),
+    personaIdx: index("defect_persona_idx").on(t.personaSlug),
+    tenantIdx: index("defect_tenant_idx").on(t.tenantId),
+  })
+);
