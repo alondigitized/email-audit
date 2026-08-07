@@ -70,8 +70,26 @@ AgentMail inbox (walker@agentmail.to, martha.stroll@agentmail.to, ...)
 | `INBOX_ID` | Inbox to poll | `walker@agentmail.to` |
 | `POLL_INTERVAL_MS` | Polling interval in ms | `180000` (3 min) |
 | `CLAUDE_MODEL` | Model for reviews | `sonnet` |
-| `CLAUDE_EFFORT` | Claude effort level | `high` |
+| `CLAUDE_EFFORT` | Claude effort level | `high` (set to `medium` in `.env`) |
 | `GH_TOKEN` | GitHub PAT for git push | — |
+| `QA_LINK_MAX_PROBE` | Max links probed per email, after materiality ranking | `12` |
+| `QA_LINK_BUDGET_S` | Wall-clock budget for link probing | `70` |
+| `QA_DOMAIN_DELAY` | Seconds between requests to the same host | `2.0` |
+| `QA_PROBE_WORKERS` | Parallel probe workers (same-host still serialized) | `4` |
+
+### Link probing is materiality-ranked
+
+`qa_checks.py` probes only the links a reader would plausibly click, ranked by
+CTA anchor text, button styling, repetition and document position. Footer/utility
+and social links are deprioritized; an unsubscribe link always keeps one slot
+because a broken unsubscribe is a compliance problem.
+
+This replaced probing up to 50 regex-scraped URLs (image srcs, CSS urls, pixels)
+through a single worker at 4s/request — arithmetically ~225s against the caller's
+120s timeout, so **QA timed out on every email and the entire report was
+discarded**, which also meant the technical review ran without any QA findings.
+Probing is now time-boxed: exceeding `QA_LINK_BUDGET_S` reports the remainder as
+`info` (neither pass nor fail) instead of losing the report.
 
 ## Artifacts
 

@@ -52,11 +52,35 @@ DOUBLED_DOMAIN_RE = re.compile(r'https?://([^/]+)/(?:https?://)?(?:www\.)?(\1)',
 DOUBLED_DOMAIN_PATH_RE = re.compile(r'https?://([^/]+\.([^/]+\.[^/]+))/.*?www\.\2', re.I)
 
 
-# Per-domain rate limiter: 4s between requests to the same host
+# Per-domain rate limiter: N seconds between requests to the same host.
 _domain_locks = defaultdict(threading.Lock)
 _domain_last = defaultdict(float)
-_DOMAIN_DELAY = 4.0
 _MAX_RETRIES = 3
+
+
+def _env_num(name, default, cast=float):
+    try:
+        return cast(os.environ[name])
+    except (KeyError, ValueError, TypeError):
+        return default
+
+
+# Link probing is materiality-ranked and time-boxed. Previously this probed up
+# to 50 URLs scraped by regex from the raw HTML (image srcs, CSS urls, pixels,
+# footer boilerplate) through a single worker at 4s/request against the same
+# host — arithmetically ~225s against the caller's 120s timeout, so qa_checks
+# ALWAYS timed out and the whole report was discarded. We now probe only the
+# links a reader would plausibly click, with a hard internal deadline so a slow
+# host degrades coverage instead of destroying the report.
+_DOMAIN_DELAY = _env_num('QA_DOMAIN_DELAY', 2.0)
+# Max distinct destinations to probe, after materiality ranking.
+_MAX_PROBE = _env_num('QA_LINK_MAX_PROBE', 12, int)
+# Wall-clock budget for the whole probing phase. Must stay well under the
+# caller's timeout (index.mjs runQaChecks: 120s) so we always return a report.
+_LINK_BUDGET_S = _env_num('QA_LINK_BUDGET_S', 70.0)
+# Parallel workers. Same-host requests are still serialized by _domain_locks,
+# so this only buys parallelism across distinct hosts.
+_PROBE_WORKERS = _env_num('QA_PROBE_WORKERS', 4, int)
 
 
 def _throttle(url):
@@ -130,7 +154,132 @@ def probe_url(url, timeout=10):
     return (status, redirects, err)
 
 
-def check_links(artifacts_dir, url_context=None):
+# Anchor text that signals a primary conversion action.
+CTA_TEXT_RE = re.compile(
+    r'\b(shop|buy|order|get|save|claim|redeem|start|join|book|reserve|explore|'
+    r'discover|browse|find|see|view all|learn more|sign ?up|subscribe|download|'
+    r'apply|register|activate|continue|checkout|add to (?:cart|bag)|'
+    r'try|upgrade|renew|donate|rsvp|track|schedule)\b',
+    re.I
+)
+
+# Anchor text that signals footer/utility boilerplate a reader rarely clicks.
+BOILERPLATE_TEXT_RE = re.compile(
+    r'\b(unsubscribe|opt.?out|privacy|terms|policy|preferences|manage|profile|'
+    r'view (?:this|it|in|as|online|email)|web ?version|browser|contact us|'
+    r'customer (?:service|care|support)|help|faq|store locator|find a store|'
+    r'careers|accessibility|do not sell|cookie|copyright|all rights reserved|'
+    r'update your|why am i|add us to|safe ?sender)\b',
+    re.I
+)
+
+SOCIAL_HOST_RE = re.compile(
+    r'(?:^|\.)(facebook|instagram|twitter|tiktok|youtube|pinterest|linkedin|'
+    r'snapchat|threads|x)\.(?:com|co)\b',
+    re.I
+)
+
+UNSUB_RE = re.compile(r'\b(unsubscribe|opt.?out|email preferences)\b', re.I)
+
+# Anchor attributes that suggest a styled button rather than an inline text link.
+BUTTON_ATTR_RE = re.compile(r'btn|button|cta|call-to-action', re.I)
+BUTTON_STYLE_RE = re.compile(
+    r'background(?:-color)?\s*:|display\s*:\s*(?:inline-)?block|border-radius\s*:', re.I
+)
+
+
+def is_button_like(attrs):
+    """True if an <a> tag's own attributes suggest button styling."""
+    blob = ' '.join(str(attrs.get(k, '')) for k in ('class', 'id', 'role'))
+    if BUTTON_ATTR_RE.search(blob):
+        return True
+    style = str(attrs.get('style', ''))
+    return bool(style and BUTTON_STYLE_RE.search(style))
+
+
+def score_link(occurrences, total_links):
+    """Rank a distinct destination by how likely a reader is to click it.
+
+    `occurrences` is the list of {text, button_like, order} records pointing at
+    this destination. Marketing emails repeat their primary CTA across the logo,
+    hero image, button and a text link, so repetition is a strong signal — as is
+    button styling and action verbs. Footer utility links are demoted, not
+    dropped: a broken unsubscribe still matters, it just shouldn't crowd out the
+    offer the email was actually sent to promote.
+    """
+    texts = [o['text'] for o in occurrences if o['text']]
+    joined = ' '.join(texts)
+    score = 0.0
+
+    if joined and CTA_TEXT_RE.search(joined):
+        score += 4.0
+    if any(o['button_like'] for o in occurrences):
+        score += 3.0
+
+    # Repeats: the hero destination usually appears 3-6 times.
+    score += min(3.0, len(occurrences) - 1)
+
+    # Position: earlier links are above the fold.
+    first = min(o['order'] for o in occurrences)
+    if total_links and first < max(1, total_links * 0.3):
+        score += 2.0
+
+    # Demote boilerplate — only when every anchor text for this destination
+    # looks like boilerplate, so a CTA sharing a URL with a footer link survives.
+    if texts and all(BOILERPLATE_TEXT_RE.search(t) for t in texts):
+        score -= 6.0
+    if not texts:
+        # Anchor with no text and no image alt — can't judge intent.
+        score -= 1.0
+
+    return score
+
+
+def select_material_links(links, max_probe):
+    """Pick the destinations worth spending probe budget on.
+
+    Returns (selected_urls, skipped_count). Always reserves one slot for an
+    unsubscribe link when present — a broken unsubscribe is a compliance
+    problem even though nobody clicks it on purpose.
+    """
+    by_url = defaultdict(list)
+    for i, link in enumerate(links):
+        by_url[link['href']].append({
+            'text': link['text'],
+            'button_like': link['button_like'],
+            'order': i,
+        })
+
+    total = len(links)
+    scored = []
+    for url, occurrences in by_url.items():
+        host = urlparse(url).hostname or ''
+        score = score_link(occurrences, total)
+        if SOCIAL_HOST_RE.search(host):
+            score -= 6.0
+        first = min(o['order'] for o in occurrences)
+        scored.append((score, -first, url, occurrences))
+
+    # Highest score first; earlier document position breaks ties.
+    scored.sort(key=lambda t: (t[0], t[1]), reverse=True)
+
+    selected = [url for _, _, url, _ in scored[:max_probe]]
+
+    # Guarantee an unsubscribe link gets probed even though it scores low.
+    if len(scored) > max_probe:
+        unsub = next(
+            (url for _, _, url, occ in scored
+             if url not in selected
+             and any(UNSUB_RE.search(o['text'] or '') for o in occ)),
+            None,
+        )
+        if unsub:
+            selected = selected[:max_probe - 1] + [unsub]
+
+    return selected, max(0, len(by_url) - len(selected))
+
+
+def check_links(artifacts_dir, url_context=None, links=None):
     checks = []
     url_context = url_context or {}
     urls_path = os.path.join(artifacts_dir, 'urls.txt')
@@ -183,15 +332,32 @@ def check_links(artifacts_dir, url_context=None):
         host = urlparse(u).hostname or ''
         return host in TRACKING_DOMAINS or host.startswith('click.')
 
+    # Build the probe candidate set from real <a> hrefs when the HTML parsed.
+    # urls.txt is a regex scrape of the raw HTML+text, so it also contains image
+    # srcs, CSS urls and pixels — things no reader can click. Fall back to it
+    # only for text-only emails or when parsing failed.
+    if links:
+        candidates = [
+            l['href'] for l in links
+            if re.match(r'^https?://', l['href'])
+            and not TRACKING_PIXEL_PATTERNS.search(l['href'])
+        ]
+        anchor_derived = True
+    else:
+        candidates = non_pixel_urls
+        anchor_derived = False
+
     # Separate tracking-domain URLs from probeable URLs
     probeable_urls = []
     tracking_skipped_count = 0
-    for u in non_pixel_urls:
+    seen_probeable = set()
+    for u in candidates:
         if not re.match(r'^https?://', u):
             continue
         if is_tracking_domain(u):
             tracking_skipped_count += 1
-        else:
+        elif u not in seen_probeable:
+            seen_probeable.add(u)
             probeable_urls.append(u)
 
     if tracking_skipped_count:
@@ -199,15 +365,44 @@ def check_links(artifacts_dir, url_context=None):
                                  f'{tracking_skipped_count} tracking link(s) skipped',
                                  'Tracking/click-redirect domains — skipped HTTP probe'))
 
-    # HTTP checks — single worker with per-domain throttle to avoid 429s
+    # Rank by materiality and probe only the top slice. Probing every link in a
+    # 50-link promo email costs more time than the caller allows and tells the
+    # reviewer nothing about the offer the email is actually selling.
+    if anchor_derived:
+        anchor_links = [l for l in links if l['href'] in seen_probeable]
+        probeable_urls, deprioritized = select_material_links(anchor_links, _MAX_PROBE)
+    else:
+        # Text-only fallback: no anchor context to rank by, so just cap.
+        deprioritized = max(0, len(probeable_urls) - _MAX_PROBE)
+        probeable_urls = probeable_urls[:_MAX_PROBE]
+
+    if deprioritized:
+        checks.append(make_check(
+            'link_probe_scoped', 'info',
+            f'{len(probeable_urls)} material link(s) probed, {deprioritized} skipped',
+            'Probing is ranked by click likelihood (CTA text, button styling, '
+            'repetition, position). Footer/utility and social links are '
+            'deprioritized; an unsubscribe link is always included.'))
+
+    # HTTP checks — parallel across hosts, per-domain throttle to avoid 429s,
+    # and a hard wall-clock deadline so a slow host degrades coverage instead of
+    # blowing the caller's timeout and discarding the entire report.
+    deadline = time.monotonic() + _LINK_BUDGET_S
+    timed_out = []
+
     def probe(url):
+        if time.monotonic() >= deadline:
+            return (url, None, 0, None)
         status, redirects, err = probe_url(url)
         return (url, status, redirects, err)
 
-    with ThreadPoolExecutor(max_workers=1) as pool:
+    with ThreadPoolExecutor(max_workers=max(1, _PROBE_WORKERS)) as pool:
         futures = {pool.submit(probe, u): u for u in probeable_urls}
         for fut in as_completed(futures):
             url, status, redirects, err = fut.result()
+            if status is None and err is None:
+                timed_out.append(url)
+                continue
             tracking = False  # tracking domains already filtered out above
             if err and 'too many redirects' in err:
                 checks.append(make_check('link_redirect_loop', 'warn' if tracking else 'fail',
@@ -234,10 +429,18 @@ def check_links(artifacts_dir, url_context=None):
                 checks.append(make_check('link_many_redirects', 'warn',
                                          f'{redirects} redirects', _detail_with_ctx('Excessive redirect chain', url), url=url))
 
+    if timed_out:
+        checks.append(make_check(
+            'link_probe_timeout', 'info',
+            f'{len(timed_out)} link(s) unprobed (time budget)',
+            f'Probing stopped after {_LINK_BUDGET_S:.0f}s; these links were not '
+            f'checked and are neither pass nor fail: ' + ', '.join(u[:80] for u in timed_out[:5])))
+
     # If no issues found, add a pass
-    if not checks:
+    probed_count = len(probeable_urls) - len(timed_out)
+    if not any(c['status'] != 'info' for c in checks):
         checks.append(make_check('links_ok', 'pass', 'All links valid',
-                                 f'{len(non_pixel_urls)} URLs checked, no issues'))
+                                 f'{probed_count} material link(s) checked, no issues'))
 
     return checks
 
@@ -252,6 +455,7 @@ class EmailHTMLParser(HTMLParser):
         super().__init__()
         self.images = []          # list of {src, alt, ...}
         self.url_context = {}     # href → descriptive context string
+        self.links = []           # ordered [{href, text, button_like}], repeats kept
         self._in_a = None         # current <a> attrs dict
         self._a_text = []         # text nodes inside current <a>
         self._a_imgs = []         # <img> tags inside current <a>
@@ -288,6 +492,14 @@ class EmailHTMLParser(HTMLParser):
                     text = f'[image: {fname}]' if fname else '[image]'
             if href and text:
                 self.url_context[href] = text[:80]
+            if href:
+                # Keep every occurrence (not deduped like url_context) — how
+                # often a destination repeats is a materiality signal.
+                self.links.append({
+                    'href': href,
+                    'text': text[:80],
+                    'button_like': is_button_like(self._in_a) or bool(self._a_imgs),
+                })
             self._in_a = None
             self._a_text = []
             self._a_imgs = []
@@ -527,6 +739,8 @@ CATEGORY_MAP = {
     'img_http': 'info',
     'img_missing_alt': 'info',
     'link_tracking_skipped': 'info',
+    'link_probe_scoped': 'info',
+    'link_probe_timeout': 'info',
     'link_tracking_expired': 'info',
     'link_inconclusive': 'info',
     # Pass-through (old pass markers)
@@ -548,7 +762,8 @@ def run_all(artifacts_dir):
 
     # Gather all checks from all functions
     all_checks = []
-    all_checks.extend(check_links(artifacts_dir, url_context=parser.url_context))
+    all_checks.extend(check_links(artifacts_dir, url_context=parser.url_context,
+                                  links=parser.links))
     all_checks.extend(check_rendering(artifacts_dir, parsed_images=parser.images))
     all_checks.extend(check_personalization(artifacts_dir))
     all_checks.extend(check_compliance(artifacts_dir))
