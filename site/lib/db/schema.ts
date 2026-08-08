@@ -258,6 +258,11 @@ export const personaTemplates = pgTable("persona_template", {
   short: text("short").notNull(),
   industry: text("industry").notNull(),
   kind: personaKindEnum("kind").notNull().default("brand"),
+  // The brand this persona observes, when it observes exactly one (wizard
+  // personas like ruby-glow-sephora; the Skechers site/inventory/QA family).
+  // NULL for multi-brand inboxes (walker, rae-l) and industry personas —
+  // their experiences resolve per-row by domain/URL instead.
+  brandSlug: text("brand_slug"),
   profile: jsonb("profile").$type<PersonaProfile>(),
   lastStatus: jsonb("last_status").$type<PersonaLastStatus>(),
   isActive: boolean("is_active").default(true).notNull(),
@@ -285,6 +290,11 @@ export const personas = pgTable("persona", {
     onDelete: "set null",
   }),
   kind: personaKindEnum("kind").notNull().default("brand"),
+  // The brand this persona observes, when it observes exactly one (wizard
+  // personas like ruby-glow-sephora; the Skechers site/inventory/QA family).
+  // NULL for multi-brand inboxes (walker, rae-l) and industry personas —
+  // their experiences resolve per-row by domain/URL instead.
+  brandSlug: text("brand_slug"),
   // Set when kind='industry'. The industry tag this persona lenses across.
   // Producer fan-out matches: every email that lands for a brand persona
   // whose template.industry == this column triggers a parallel audit on
@@ -641,6 +651,12 @@ export const experiences = pgTable(
     // Sender domain extracted at ingest time. Cheap filter for
     // brand-scoped queries; nullable for site-journey audits.
     brandDomain: text("brand_domain"),
+    // Resolved brand entity. Unlike brand_domain (email-only, raw host),
+    // this is stamped on EVERY experience type — email via sender apex,
+    // site/inventory/qa via the journey URL's apex — which is what makes
+    // cross-channel brand views possible. Text slug (not FK) so producers
+    // can stamp it without a read round-trip; brands.slug is unique.
+    brandSlug: text("brand_slug"),
     // Message-Id header, when present. Allows dedup across daemon
     // restarts and (eventually) across Cloudflare Worker retries.
     // Nullable — legacy AgentMail audits don't have a stable id.
@@ -679,6 +695,7 @@ export const experiences = pgTable(
     typeTsIdx: index("experience_type_ts_idx").on(t.type, t.receivedAt),
     tenantTsIdx: index("experience_tenant_ts_idx").on(t.tenantId, t.receivedAt),
     brandIdx: index("experience_brand_idx").on(t.brandDomain),
+    brandSlugIdx: index("experience_brand_slug_idx").on(t.brandSlug, t.receivedAt),
     // Dedup natural key when message_id is present — partial unique
     // declared in the migration's raw SQL since drizzle-kit doesn't
     // emit partial uniques cleanly.
@@ -1150,3 +1167,32 @@ export const defects = pgTable(
     tenantIdx: index("defect_tenant_idx").on(t.tenantId),
   })
 );
+
+// ─── Brand entity ────────────────────────────────────────────────────────
+//
+// Before this table, "Skechers" was not an entity anywhere in the system —
+// just an implicit string scattered across sender domains
+// (emails.skechers.com, msgs.skechers.com), persona slugs and journey URLs.
+// Cross-channel questions ("what do we know about this brand across email,
+// site, inventory and QA?") were unanswerable because nothing joined.
+//
+// A brand is keyed by slug and owns a set of domains. Resolution collapses
+// any observed host to its apex (emails.skechers.com → skechers.com) and
+// matches it against `domains`. Producers resolve at write time via
+// audit-pipeline/brands.mjs; the backfill stamped historical rows.
+//
+// This is deliberately a graph-SHAPED model in Postgres, not a graph
+// database: ~220 brands and 2-3 hop traversals don't justify graph infra,
+// but the entity/edge discipline is what the opportunity view stands on.
+export const brands = pgTable("brand", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  slug: text("slug").unique().notNull(),
+  name: text("name").notNull(),
+  // Apex domains this brand is known by, e.g. ["skechers.com"]. Sender
+  // subdomains collapse to apex before matching, so one entry usually
+  // covers every sending/hosting host the brand uses.
+  domains: jsonb("domains").$type<string[]>().default([]).notNull(),
+  // Optional industry tag; aligns with persona_template.industry vocabulary.
+  industry: text("industry"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});

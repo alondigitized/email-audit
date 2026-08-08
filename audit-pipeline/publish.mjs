@@ -6,6 +6,7 @@
 
 import { neon } from '@neondatabase/serverless';
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
+import { resolveBrandSlug } from './brands.mjs';
 import { pingRevalidate } from './revalidate.mjs';
 
 function db() {
@@ -170,6 +171,19 @@ export async function upsertExperienceAndReaction({
 
   const sql = db();
 
+  // Resolve the brand entity at write time so cross-channel brand views
+  // include this row immediately: email via sender apex, site/inventory/qa
+  // via the journey URL. resolveBrandSlug never mints brands — an unknown
+  // sender stays NULL rather than a typo becoming an entity.
+  let brandSlug = null;
+  try {
+    brandSlug =
+      (await resolveBrandSlug(brandDomain)) ??
+      (await resolveBrandSlug(parsed.assets?.webview_url));
+  } catch (err) {
+    console.warn(`brand resolution failed for ${slug}: ${String(err).slice(0, 120)}`);
+  }
+
   // tenant_id is resolved inline via a scalar subquery on persona.slug in
   // each write below — no separate read round trip. Yields NULL when the
   // persona row isn't backfilled yet, matching the prior behaviour.
@@ -197,6 +211,7 @@ export async function upsertExperienceAndReaction({
         tenant_id = (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1),
         type = ${type},
         brand_domain = ${brandDomain},
+        brand_slug = COALESCE(${brandSlug}, experience.brand_slug),
         message_id = ${messageId},
         raw_key = ${rawKey},
         received_at = ${timestamp},
@@ -221,11 +236,11 @@ export async function upsertExperienceAndReaction({
   } else {
     const expRows = await sql`
       INSERT INTO experience
-        (persona_slug, tenant_id, type, brand_domain, message_id, raw_key, received_at,
+        (persona_slug, tenant_id, type, brand_domain, brand_slug, message_id, raw_key, received_at,
          email_data, qa_findings, assets, performance, inventory, auto_confirm)
       VALUES
         (${persona}, (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1),
-         ${type}, ${brandDomain}, ${messageId}, ${rawKey}, ${timestamp},
+         ${type}, ${brandDomain}, ${brandSlug}, ${messageId}, ${rawKey}, ${timestamp},
          ${JSON.stringify(parsed.email ?? {})}::jsonb,
          ${JSON.stringify(parsed.qa ?? null)}::jsonb,
          ${JSON.stringify(parsed.assets ?? {})}::jsonb,

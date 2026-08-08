@@ -225,6 +225,13 @@
       "when": 1786151270094,
       "tag": "0031_small_tinkerer",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1786205868688,
+      "tag": "0032_cultured_salo",
+      "breakpoints": true
     }
   ]
 }
