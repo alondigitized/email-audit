@@ -191,6 +191,25 @@ export async function performAction(page, action, interactables) {
     bodyLen: await page.evaluate(() => document.body.innerText.length).catch(() => 0),
   };
 
+  // Watch for ANY DOM change during the action window.
+  //
+  // url/title/bodyLen alone is far too coarse: selecting a size or a colour
+  // legitimately changes none of them, so every such click looked like a dead
+  // control and the lens dutifully reported "the size selector is
+  // unresponsive". A MutationObserver sees the state change that actually
+  // happened, which is the difference between a real dead control and normal
+  // in-page behaviour.
+  await page.evaluate(() => {
+    window.__qaMutations = 0;
+    window.__qaObserver?.disconnect();
+    window.__qaObserver = new MutationObserver((muts) => {
+      window.__qaMutations += muts.length;
+    });
+    window.__qaObserver.observe(document.body, {
+      subtree: true, childList: true, attributes: true, characterData: true,
+    });
+  }).catch(() => {});
+
   const target = typeof action.ref === 'number' ? interactables[action.ref] : null;
   if (action.kind !== 'scroll' && !target) {
     return { ok: false, reason: 'no such element ref', before, after: before };
@@ -256,17 +275,32 @@ export async function performAction(page, action, interactables) {
     bodyLen: await page.evaluate(() => document.body.innerText.length).catch(() => 0),
   };
 
-  const changed =
+  const mutations = await page
+    .evaluate(() => {
+      const n = window.__qaMutations ?? 0;
+      window.__qaObserver?.disconnect();
+      return n;
+    })
+    .catch(() => 0);
+
+  const navigated =
     before.url !== after.url ||
     before.title !== after.title ||
     Math.abs(before.bodyLen - after.bodyLen) > 120;
+  // A handful of mutations is ambient (lazy images, carousels ticking over).
+  // A real interaction moves considerably more than that.
+  const domChanged = mutations > 12;
+  const changed = navigated || domChanged;
 
   return {
     ok: true,
     changed,
-    // A control that produced no observable change is the signal Quinn exists
-    // to find. Surfaced, not judged — the lens decides if it's a defect.
-    deadControl: action.kind === 'click' && !changed,
+    navigated,
+    mutations,
+    // Only a click that produced NO navigation and essentially no DOM activity
+    // is a dead-control candidate. Even then it is surfaced, not judged — the
+    // lens decides, and the verifier will not confirm it.
+    deadControl: action.kind === 'click' && !navigated && mutations <= 2,
     target: target ? { label: target.label, href: target.href, path: target.path } : null,
     before,
     after,

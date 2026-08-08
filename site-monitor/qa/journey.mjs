@@ -61,6 +61,7 @@ const argOf = (f) => {
   return i === -1 ? null : process.argv[i + 1];
 };
 const ONLY = argOf('--persona');
+const ALLOW_STEALTH = process.argv.includes('--allow-stealth');
 
 const CLAUDE_BIN = process.env.CLAUDE_BIN || '/Users/alontsang/.local/bin/claude';
 const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'sonnet';
@@ -285,6 +286,11 @@ function buildFindingsPrompt(persona, goal, steps, actionLog, catalog) {
     ).join('\n') || '(none)',
     '',
     '=== HOW TO REPORT ===',
+    'Selecting a size, colour or width updates the page IN PLACE — it does not',
+    'navigate. A step that reports DOM changes did work correctly. Only a step',
+    'that explicitly says "NO navigation and NO DOM change at all" is a',
+    'dead-control candidate, and even then say so cautiously.',
+    '',
     'HTTP 429 (Too Many Requests) is rate limiting caused by OUR automated',
     'traffic, not a defect a shopper would hit. Never report a 429 as a site',
     'fault, and never cite one as evidence for another finding.',
@@ -375,13 +381,37 @@ function scoreFor(rows) {
 
 // ── run ───────────────────────────────────────────────────────────────────
 
+/**
+ * Real Chrome over CDP, or refuse to run.
+ *
+ * Stealth Chromium gets silently degraded by Kasada on protected paths: an
+ * entire run reported "Add to Cart is unresponsive" and "the size selector is
+ * dead" as High-urgency defects. Re-tested in real Chrome, that same PDP
+ * returns 200 with Add to Cart present and enabled — the controls were fine,
+ * we were being blocked.
+ *
+ * Falling back silently means a whole run can look like findings when it is
+ * really bot detection, so --allow-stealth has to be asked for explicitly and
+ * the findings from such a run should be treated as suspect.
+ */
 async function openBrowser() {
+  const cdpUrl = process.env.CDP_URL || 'http://127.0.0.1:9222';
   try {
-    const b = await playwrightChromium.connectOverCDP(process.env.CDP_URL || 'http://127.0.0.1:9222', { timeout: 5000 });
-    log('connected to real Chrome over CDP');
+    const b = await playwrightChromium.connectOverCDP(cdpUrl, { timeout: 8000 });
+    log('connected to real Chrome over CDP', { cdpUrl });
     return { browser: b, viaCdp: true };
-  } catch {
-    log('CDP unavailable; stealth chromium');
+  } catch (err) {
+    if (!ALLOW_STEALTH) {
+      log('FATAL: real Chrome not reachable over CDP', { cdpUrl });
+      log('Start it with:');
+      log('  open -na "Google Chrome" --args --remote-debugging-port=9222 \\');
+      log('    --user-data-dir=/tmp/chrome-qa-profile --no-first-run');
+      log('Stealth Chromium is blocked on protected paths (cart, checkout) and');
+      log('reports that blocking as site defects. Pass --allow-stealth to override.');
+      throw new Error('real Chrome required — see log above');
+    }
+    log('WARNING: falling back to stealth chromium — protected paths may be blocked');
+    log('WARNING: treat any dead-control or empty-page finding from this run as suspect');
     stealthChromium.use(StealthPlugin());
     return { browser: await stealthChromium.launch({ headless: true }), viaCdp: false };
   }
@@ -445,9 +475,13 @@ for (const [slug, persona] of personas) {
 
       const res = await performAction(page, action, interactables);
       const outcome = res.ok
-        ? (res.changed
+        ? (res.navigated
             ? `navigated to ${res.after.url}`
-            : 'the page did not change — the control did nothing')
+            : res.mutations > 12
+              ? `stayed on the page; the control updated it in place (${res.mutations} DOM changes) — normal behaviour, NOT a defect`
+              : res.mutations > 2
+                ? `stayed on the page with only minor DOM activity (${res.mutations} changes) — inconclusive, do not report`
+                : 'clicked successfully but produced NO navigation and NO DOM change at all')
         : res.automationFailed
           ? `OUR TOOLING could not drive this element (${res.reason}). This is a limitation of our automation, NOT a site defect — ignore it when reporting.`
           : res.reason;
