@@ -113,7 +113,7 @@ export async function getTenantId(slug) {
  * enters the hash. The URL is reduced to its path with trailing ids
  * collapsed, so the same fault on many product pages folds into one class.
  */
-export function dedupeKey({ personaSlug, area, url, defectType }) {
+export function dedupeKey({ personaSlug, area, url, defectType, location }) {
   let urlPath = '';
   try {
     urlPath = new URL(url).pathname.replace(/\/\d[\w-]*$/, '/:id').replace(/\/$/, '') || '/';
@@ -121,7 +121,15 @@ export function dedupeKey({ personaSlug, area, url, defectType }) {
     urlPath = String(url || '');
   }
   const basis = [personaSlug, area, urlPath, defectType || 'other'].join('|');
-  return createHash('sha1').update(basis).digest('hex').slice(0, 20);
+  // Location joins the fingerprint ONLY off-desktop, so every pre-existing
+  // desktop key stays byte-identical (changing the basis wholesale would
+  // orphan the stored keys and re-file every known finding as new). A mobile
+  // rendering of the same page is a different surface: the same defect_type
+  // on the same URL can be real on mobile and absent on desktop.
+  const loc = location && location !== 'Desktop Site'
+    ? '|' + location.toLowerCase().replace(/\s+/g, '-')
+    : '';
+  return createHash('sha1').update(basis + loc).digest('hex').slice(0, 20);
 }
 
 /**

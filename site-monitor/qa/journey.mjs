@@ -27,7 +27,7 @@ import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
-import { chromium as playwrightChromium } from 'playwright';
+import { chromium as playwrightChromium, devices } from 'playwright';
 import { chromium as stealthChromium } from 'playwright-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import AxeBuilder from '@axe-core/playwright';
@@ -62,6 +62,16 @@ const argOf = (f) => {
 };
 const ONLY = argOf('--persona');
 const ALLOW_STEALTH = process.argv.includes('--allow-stealth');
+// 'desktop' (default) or 'mobile'. Mobile runs an iPhone-emulated context in
+// the same real Chrome — the Mobile Site is a different rendering surface and
+// 40% of the intake program's own findings, so it gets its own Location.
+const LOCATION = argOf('--location') === 'mobile' ? 'mobile' : 'desktop';
+// Named cookie jar from site-monitor/cookies/{name}.json — enables logged-in
+// journeys (MyAccount / Loyalty Dashboard areas).
+const COOKIES = argOf('--cookies');
+// One-off goal override, e.g. a member-account review. Applies to every
+// persona selected, so pair with --persona.
+const GOAL_OVERRIDE = argOf('--goal');
 
 const CLAUDE_BIN = process.env.CLAUDE_BIN || '/Users/alontsang/.local/bin/claude';
 const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'sonnet';
@@ -291,6 +301,12 @@ function buildFindingsPrompt(persona, goal, steps, actionLog, catalog) {
     'that explicitly says "NO navigation and NO DOM change at all" is a',
     'dead-control candidate, and even then say so cautiously.',
     '',
+    COOKIES
+      ? 'You are supposed to be LOGGED IN via a saved session. If the site shows\n' +
+        'you as logged out, OUR saved session has expired — that is our problem,\n' +
+        'not a Skechers defect. Never report being logged out as a finding.'
+      : '',
+    '',
     'HTTP 429 (Too Many Requests) is rate limiting caused by OUR automated',
     'traffic, not a defect a shopper would hit. Never report a 429 as a site',
     'fault, and never cite one as evidence for another finding.',
@@ -422,20 +438,42 @@ const personas = Object.entries(defs).filter(
 );
 if (!personas.length) { console.error('no personas matched'); process.exit(1); }
 
-const runSlug = `${new Date().toISOString().slice(0, 10)}-qa-journey`;
+const runSlug = `${new Date().toISOString().slice(0, 10)}-qa-journey${LOCATION === 'mobile' ? '-mobile' : ''}${COOKIES ? '-member' : ''}`;
 const tenantId = DRY ? null : await getTenantId(SHARED.tenant);
 let grand = { inserted: 0, skippedDuplicate: 0, invalid: 0, proposed: 0 };
 
-for (const [slug, persona] of personas) {
+for (const [slug, personaBase] of personas) {
+  const persona = GOAL_OVERRIDE ? { ...personaBase, goal: GOAL_OVERRIDE } : personaBase;
   const artifactDir = path.join(ARTIFACT_ROOT, runSlug, slug);
   fs.mkdirSync(artifactDir, { recursive: true });
   log('journey start', { persona: slug, goal: persona.goal?.slice(0, 70) });
 
   const { browser, viaCdp } = await openBrowser();
-  const context = viaCdp
-    ? (browser.contexts()[0] ?? (await browser.newContext()))
-    : await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  // Mobile emulation and cookie injection both need a context we own; the
+  // shared default context keeps desktop runs on the user's warm profile.
+  const needOwnContext = LOCATION === 'mobile' || !!COOKIES;
+  const context = needOwnContext
+    ? await browser.newContext(
+        LOCATION === 'mobile'
+          ? { ...devices['iPhone 13'] }
+          : { viewport: { width: 1440, height: 900 } }
+      )
+    : viaCdp
+      ? (browser.contexts()[0] ?? (await browser.newContext()))
+      : await browser.newContext({ viewport: { width: 1440, height: 900 } });
   await installPopupBlocker(context);
+
+  if (COOKIES) {
+    const jar = path.join(__dirname, '..', 'cookies', `${COOKIES}.json`);
+    try {
+      const cookies = JSON.parse(fs.readFileSync(jar, 'utf8'));
+      await context.addCookies(cookies);
+      log('cookies loaded', { jar: COOKIES, count: cookies.length });
+    } catch (err) {
+      log('FATAL: cookie jar unusable', { jar, error: String(err).slice(0, 120) });
+      throw new Error('cookie jar unusable — refresh with save-cookies.mjs');
+    }
+  }
   const page = await context.newPage();
 
   const consoleErrors = [], networkErrors = [];
@@ -612,7 +650,9 @@ for (const [slug, persona] of personas) {
     const area = DEFECT_AREAS.includes(src.area) ? src.area : 'Off-site';
     rows.push({
       personaSlug: slug, category: persona.category,
-      location: SHARED.location, device: SHARED.device, browser: SHARED.browser,
+      location: LOCATION === 'mobile' ? 'Mobile Site' : SHARED.location,
+      device: LOCATION === 'mobile' ? 'iPhone' : SHARED.device,
+      browser: SHARED.browser,
       reporterEmail: persona.fromAddress,
       area, url: src.url,
       description: String(p.description ?? '').slice(0, 2000),
@@ -625,7 +665,10 @@ for (const [slug, persona] of personas) {
       confidence: typeof p.confidence === 'number' ? p.confidence : null,
       defectType,
       evidence,
-      dedupeKey: dedupeKey({ personaSlug: slug, area, url: src.url, defectType }),
+      dedupeKey: dedupeKey({
+        personaSlug: slug, area, url: src.url, defectType,
+        location: LOCATION === 'mobile' ? 'Mobile Site' : 'Desktop Site',
+      }),
     });
   }
 
@@ -658,7 +701,7 @@ for (const [slug, persona] of personas) {
   // audits, and reactions.slug is what the share-token feature keys on — so
   // a QA journey becomes shareable with no extra plumbing.
   let experienceId = null;
-  const auditSlug = `${new Date().toISOString().slice(0, 10)}-qa-journey-${slug}`;
+  const auditSlug = `${runSlug}-${slug}`;
   try {
     const narrative = buildNarrative(persona, steps, actionLog, rows);
     const pub = await upsertExperienceAndReaction({
@@ -669,7 +712,7 @@ for (const [slug, persona] of personas) {
         type: 'qa',
         persona: slug,
         email: {
-          subject: `QA journey · ${persona.displayName} · ${steps.length} steps, ${rows.length} finding(s)`,
+          subject: `QA journey${LOCATION === 'mobile' ? ' (mobile)' : ''}${COOKIES ? ' (member)' : ''} · ${persona.displayName} · ${steps.length} steps, ${rows.length} finding(s)`,
           preheader: persona.goal?.slice(0, 140) ?? null,
           from: persona.fromAddress,
           from_display_name: persona.displayName,

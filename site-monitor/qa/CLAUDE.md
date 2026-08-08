@@ -199,6 +199,48 @@ node site-monitor/qa/seed-fixture-defects.mjs --clean
 
 Then review at `/admin/defect-queue`.
 
+## Contest coverage modes
+
+To maximise unique findings for the Skechers "See Something? SAY Something!"
+program, journeys run across surfaces, each mapping to a Location the intake
+form recognises:
+
+| Mode | Flag | Location | Why |
+|---|---|---|---|
+| Desktop | (default) | Desktop Site | Baseline |
+| Mobile | `--location mobile` | Mobile Site | iPhone-emulated; **40% of the program's own findings** |
+| Member | `--cookies walker-skechers` | (MyAccount / Loyalty) | Logged-in areas with near-zero competition |
+| Custom goal | `--goal "..."` | — | Point any persona at a specific task |
+
+The dedupe key is **location-aware**: a defect on Mobile Site is distinct
+from the same defect_type on the same URL on Desktop, so the mobile pass
+genuinely adds findings rather than colliding. Desktop keys are byte-identical
+to before (the location suffix is only added off-desktop), so no historical
+finding re-files.
+
+### Daily automation
+
+`qa/daily.mjs` runs a rotating slice (one persona desktop + a different
+persona mobile) then verify + adjudicate, so a fresh deduped queue is ready
+each morning. Over 4 days every persona is covered on both surfaces without
+ever hammering one IP with the full squad at once.
+
+Install as a LaunchAgent (the wrapper brings up real Chrome on a persistent
+profile — which is also where a logged-in session lives):
+
+```
+# qa/daily-wrapper.sh is the entry point; schedule it ~6am local.
+```
+
+### Email-CTA landing audit — NOT production ready
+
+`qa/email-cta-audit.mjs` targets the program's Off-site area by auditing where
+email CTAs actually land. It works technically (real Chrome, loads landings),
+but Skechers serves the live site under its ESP tracking host
+(`click.emails.skechers.com`) keeping URL path `/` for every CTA — so landings
+can't be told apart or deduped by URL. Needs content-based landing identity
+before it can run without false positives. Held out of the daily automation.
+
 ## Scope (v1)
 
 Public surfaces only — Homepage, Site search, PLP, PDP. `Cart`, `Checkout`,
