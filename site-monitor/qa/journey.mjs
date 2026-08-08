@@ -33,6 +33,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import AxeBuilder from '@axe-core/playwright';
 
 import { putMedia, mediaConfigured } from '../../audit-pipeline/media.mjs';
+import { upsertExperienceAndReaction } from '../../audit-pipeline/publish.mjs';
 import {
   insertCandidateDefects,
   getTenantId,
@@ -214,8 +215,21 @@ async function captureHere(page, artifactDir, stepNum, area, consoleErrors, netw
   };
 }
 
-function buildElementCatalog(steps) {
+function buildElementCatalog(steps, actedOn = []) {
   const cat = [];
+  // Controls the shopper actually operated. Only those where our automation
+  // succeeded — an element we failed to drive proves nothing about the site.
+  for (const a of actedOn) {
+    if (a.automationFailed) continue;
+    cat.push({
+      kind: a.kind,
+      selector: a.href ? `a[href="${String(a.href).replace(/"/g, '\\"')}"]` : undefined,
+      location: `step ${a.step} (${a.area}) — control labelled "${a.label}"`,
+      note: a.changed === false
+        ? 'clicked successfully but the page did not change'
+        : 'operated during the journey',
+    });
+  }
   for (const s of steps) {
     for (const img of s.head?.imgsMissingAltDetail ?? []) {
       cat.push({
@@ -305,6 +319,56 @@ function buildFindingsPrompt(persona, goal, steps, actionLog, catalog) {
   ].join('\n');
 }
 
+/**
+ * The persona's account of its own shopping trip, in markdown. This is what
+ * renders on the audit page and gets shared — so it has to read as a walk,
+ * not a database dump.
+ */
+function buildNarrative(persona, steps, actionLog, rows) {
+  const lines = [
+    `**${persona.displayName}** — ${persona.lens}`,
+    '',
+    `**Goal:** ${persona.goal ?? '(none set)'}`,
+    '',
+    `Walked ${steps.length} step(s) across ${new Set(steps.map((s) => s.area)).size} area(s): ` +
+      `${[...new Set(steps.map((s) => s.area))].join(', ')}.`,
+    '',
+    '## The walk',
+    '',
+    ...actionLog.map((a) => a.split('\n').map((l, i) => (i ? '  ' + l.trim() : '- ' + l.trim())).join('\n')),
+    '',
+    '## What I found',
+    '',
+  ];
+  if (!rows.length) {
+    lines.push('Nothing worth a Skechers engineer\'s time on this journey.');
+  } else {
+    for (const r of rows) {
+      lines.push(`### ${r.urgency} · ${r.defectType} · ${r.area}`);
+      lines.push('');
+      lines.push(r.description);
+      if (r.businessImpact) lines.push('', `**Business impact:** ${r.businessImpact}`);
+      if (r.affectedElements?.length) {
+        lines.push('', `**Affected elements (${r.affectedElements.length}):**`);
+        r.affectedElements.slice(0, 8).forEach((e, i) =>
+          lines.push(`${i + 1}. \`${e.selector ?? e.src ?? '?'}\`${e.location ? ` — ${e.location}` : ''}`)
+        );
+      }
+      lines.push('', `<${r.url}>`, '');
+    }
+  }
+  return lines.join('\n');
+}
+
+/** 10 = clean walk; each finding costs more the more urgent it is. */
+function scoreFor(rows) {
+  const cost = rows.reduce(
+    (a, r) => a + (r.urgency === 'High' ? 3 : r.urgency === 'Medium' ? 1.5 : 0.5),
+    0
+  );
+  return `${Math.max(1, Math.round(10 - cost))}/10`;
+}
+
 // ── run ───────────────────────────────────────────────────────────────────
 
 async function openBrowser() {
@@ -346,6 +410,7 @@ for (const [slug, persona] of personas) {
   page.on('response', (r) => { if (r.status() >= 400) networkErrors.push(`${r.status()} ${r.url().slice(0, 130)}`); });
 
   const steps = [], actionLog = [], history = [];
+  const actedOn = [];
   const repeats = new Map();
   try {
     await page.goto(SHARED.start_url, { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -388,6 +453,24 @@ for (const [slug, persona] of personas) {
         `${action.text ? ` text="${action.text}"` : ''} — expected: ${action.why ?? ''}\n` +
         `  result: ${outcome}`;
       actionLog.push(desc);
+      // Interaction findings (dead control, broken filter) need to name the
+      // control that misbehaved. The catalog only held images and axe nodes,
+      // so Quinn's dead-control finding was rejected by the validator for
+      // citing no elements — it had nothing it *could* cite.
+      const t = interactables[action.ref];
+      if (t && action.kind === 'click') {
+        actedOn.push({
+          kind: res.ok && !res.changed ? 'control-no-effect' : 'control',
+          label: t.label,
+          href: t.href,
+          step,
+          area,
+          url: state.url,
+          changed: res.ok ? !!res.changed : null,
+          automationFailed: !!res.automationFailed,
+        });
+      }
+
       const sig = `${action.kind}:${interactables[action.ref]?.label ?? action.text ?? 'scroll'}`;
       history.push(
         `${action.kind} "${interactables[action.ref]?.label ?? action.text ?? 'scroll'}" -> ${res.ok ? (res.changed ? res.after.url : 'no change') : 'could not operate'}`
@@ -414,7 +497,7 @@ for (const [slug, persona] of personas) {
 
   if (!steps.length) { log('no steps captured; skipping lens', { persona: slug }); continue; }
 
-  const catalog = buildElementCatalog(steps);
+  const catalog = buildElementCatalog(steps, actedOn);
   let proposed = [];
   try {
     proposed = parseJson(
@@ -517,7 +600,71 @@ for (const [slug, persona] of personas) {
     continue;
   }
 
-  const res = await insertCandidateDefects(rows, { tenantId });
+  // Upload the step screenshots so the published audit can show the walk.
+  if (!DRY && mediaConfigured()) {
+    for (const st of steps) {
+      if (!st.screenshotPath) continue;
+      const key = `qa/${runSlug}/${slug}/${path.basename(st.screenshotPath)}`;
+      try {
+        await putMedia({ filePath: st.screenshotPath, key });
+        st.r2Key = key;
+      } catch (err) {
+        log('step upload failed', { step: st.step, error: String(err).slice(0, 110) });
+      }
+    }
+  }
+
+  // ── publish the journey as an experience + reaction ─────────────────────
+  // Findings shouldn't live only in the admin queue: publishing the walk as a
+  // type='qa' audit puts it in the same homepage listing as email and site
+  // audits, and reactions.slug is what the share-token feature keys on — so
+  // a QA journey becomes shareable with no extra plumbing.
+  let experienceId = null;
+  const auditSlug = `${new Date().toISOString().slice(0, 10)}-qa-journey-${slug}`;
+  try {
+    const narrative = buildNarrative(persona, steps, actionLog, rows);
+    const pub = await upsertExperienceAndReaction({
+      slug: auditSlug,
+      data: {
+        schema_version: 1,
+        slug: auditSlug,
+        type: 'qa',
+        persona: slug,
+        email: {
+          subject: `QA journey · ${persona.displayName} · ${steps.length} steps, ${rows.length} finding(s)`,
+          preheader: persona.goal?.slice(0, 140) ?? null,
+          from: persona.fromAddress,
+          from_display_name: persona.displayName,
+          timestamp_iso: new Date().toISOString(),
+          date_formatted: new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
+        },
+        review: { score: scoreFor(rows), raw_markdown: narrative, sections: {} },
+        qa: null,
+        assets: {
+          render_image: null,
+          render_image_key: steps[0]?.r2Key ?? null,
+          pdf: null,
+          webview_url: steps[0]?.url ?? SHARED.start_url,
+        },
+        qa_journey: {
+          goal: persona.goal ?? '',
+          defect_count: rows.length,
+          steps: steps.map((st) => ({
+            step: st.step,
+            area: st.area,
+            url: st.url,
+            screenshot_key: st.r2Key ?? null,
+          })),
+        },
+      },
+    });
+    experienceId = pub?.experienceId ?? null;
+    log('published audit', { slug: auditSlug, experienceId: !!experienceId });
+  } catch (err) {
+    log('audit publish failed (non-fatal)', { error: String(err).slice(0, 220) });
+  }
+
+  const res = await insertCandidateDefects(rows, { tenantId, experienceId });
   grand.inserted += res.inserted;
   grand.skippedDuplicate += res.skippedDuplicate;
   grand.invalid += res.skippedInvalid.length;

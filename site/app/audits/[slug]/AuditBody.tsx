@@ -95,7 +95,7 @@ function ReviewPane({
 }: {
   markdown: string | null;
   sections?: ReviewSections | null;
-  channel?: "email" | "site" | "inventory" | null;
+  channel?: "email" | "site" | "inventory" | "qa" | null;
   isSiteJourney: boolean;
   hasImage: boolean;
   heroUrl: string | null;

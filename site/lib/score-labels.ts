@@ -7,6 +7,7 @@
 // Email      → "Open"     / "Click"      (compact: "O"  / "Cl")
 // Site/Web   → "Engage"   / "Conversion" (compact: "E"  / "Cv")
 // Inventory  → "Discover" / "Pick"       (compact: "D"  / "P")
+// QA         → "Findable" / "Usable"     (compact: "F"  / "U")
 //
 // "Engage" replaces "Visit" because the persona is already on the
 // homepage — the question is whether they scroll or interact, not
@@ -24,7 +25,16 @@
 // Business impact / overall is the same across all channels — it's the
 // 1-10 number that already lives in `review.score`.
 
-export type AuditChannel = "email" | "site" | "inventory" | undefined | null;
+// QA is a secret-shopper journey hunting defects, so its funnel asks whether
+// the shopper could FIND what they came for and then USE the page to act on
+// it — the two things a defect actually breaks.
+export type AuditChannel =
+  | "email"
+  | "site"
+  | "inventory"
+  | "qa"
+  | undefined
+  | null;
 
 export type ScoreLabels = {
   // Pretty label for the 1-10 score badge ("Business impact" everywhere).
@@ -37,6 +47,15 @@ export type ScoreLabels = {
 };
 
 export function scoreLabels(channel: AuditChannel): ScoreLabels {
+  if (channel === "qa") {
+    return {
+      business: "Business impact",
+      firstStep: "Findable",
+      firstStepShort: "F",
+      secondStep: "Usable",
+      secondStepShort: "U",
+    };
+  }
   if (channel === "inventory") {
     return {
       business: "Business impact",

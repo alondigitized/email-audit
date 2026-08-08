@@ -18,6 +18,7 @@ import {
   qaCheckSchema,
   qaReportSchema,
   qaSummarySchema,
+  qaJourneySchema,
   reviewAudioSchema,
   reviewSectionsSchema,
   inventoryAuditSchema,
@@ -43,6 +44,7 @@ export {
   qaCheckSchema,
   qaReportSchema,
   qaSummarySchema,
+  qaJourneySchema,
   reviewAudioSchema,
   reviewSectionsSchema,
   inventoryAuditSchema,
@@ -57,6 +59,7 @@ export {
 };
 
 export type AuditType = z.infer<typeof auditTypeSchema>;
+export type QaJourney = z.infer<typeof qaJourneySchema>;
 export type JourneyStep = z.infer<typeof journeyStepSchema>;
 export type PerfStep = z.infer<typeof perfStepSchema>;
 export type ReviewSections = z.infer<typeof reviewSectionsSchema>;

@@ -115,6 +115,24 @@ The proof pass now:
 - crops the shot to the ringed region, and says so in the caption when it
   could not locate anything rather than passing a page shot off as proof.
 
+## Findings are published, not just queued
+
+Each journey also publishes a **`type='qa'` experience + reaction**, so it
+lands in the same homepage audit listing as email and site audits. Because the
+share-token feature keys on `reaction.slug`, a QA journey is shareable through
+the existing Share button with no extra plumbing.
+
+- `review.raw_markdown` carries the persona's account of the walk (every step,
+  what it did, what happened) followed by each finding with its business impact
+  and named elements.
+- `qa_journey` on the audit payload carries the structured step list.
+- Score is 10 minus a cost per finding (High 3, Medium 1.5, Low 0.5), so a
+  clean walk scores 10.
+- `defect.experience_id` links each queued defect back to its journey.
+
+The admin queue and the published audit serve different jobs: the queue is
+where you decide what to file with Skechers; the audit is what you share.
+
 ## Credibility controls
 
 - **Evidence is mandatory.** The intake form requires a screenshot;

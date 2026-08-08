@@ -204,12 +204,32 @@ export const inventoryAuditSchema = z.object({
 // or refactoring a type. Promoting inventory from "type=site with the
 // inventory column populated" to a first-class type means refactors of
 // email/site IA can't silently leave inventory behind.
-export const auditTypeSchema = z.enum(['email', 'site', 'inventory']);
+// 'qa' = a secret-shopper journey from site-monitor/qa/. Like inventory, it
+// gets first-class type status rather than living as "a site audit with a
+// defects column", so listing, sharing and scoring can't silently drop it.
+export const auditTypeSchema = z.enum(['email', 'site', 'inventory', 'qa']);
+
+// The shopper's actual walk: which pages, in what order, what they did and
+// what happened. Rendering this is what makes a QA audit shareable evidence
+// rather than a bare list of defects.
+export const qaJourneySchema = z.object({
+  goal: z.string().optional(),
+  steps: z.array(z.object({
+    step: z.number(),
+    area: z.string(),
+    url: z.string(),
+    action: z.string().optional(),
+    result: z.string().optional(),
+    screenshot_key: z.string().nullable().optional(),
+  })).optional(),
+  defect_count: z.number().optional(),
+}).passthrough();
 
 export const auditDataSchema = z.object({
   schema_version: z.number(),
   slug: z.string(),
   type: auditTypeSchema.optional(),
+  qa_journey: qaJourneySchema.nullable().optional(),
   persona: z.string().nullable().optional(),
   email: z.object({
     subject: z.string(),

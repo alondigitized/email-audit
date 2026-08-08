@@ -202,12 +202,23 @@ export async function performAction(page, action, interactables) {
   try {
     if (action.kind === 'scroll') {
       await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.9));
+    } else if (
+      action.kind === 'click' &&
+      target.href &&
+      /^https?:|^\//.test(target.href) &&
+      !target.href.startsWith('#')
+    ) {
+      // Top-nav entries are mega-menu triggers: hovering opens the menu, which
+      // re-renders the nav and strips our data-qa-ref tags, so the locator
+      // goes stale and every click times out (six consecutive failures in one
+      // run). For a plain link, going to its href is what clicking it achieves
+      // anyway, and it doesn't depend on the element surviving a re-render.
+      const dest = new URL(target.href, page.url()).href;
+      await page.goto(dest, { waitUntil: 'domcontentloaded', timeout: 45000 });
     } else {
       const el = page.locator(`[data-qa-ref="${target.ref}"]`).first();
-      // Mega-menu entries and lazily-revealed controls are often not
-      // actionable until scrolled to and hovered.
+      // Lazily-revealed controls often aren't actionable until scrolled to.
       await el.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
-      await el.hover({ timeout: 4000 }).catch(() => {});
       if (action.kind === 'type') {
         await el.fill(String(action.text ?? '').slice(0, 80), { timeout: 8000 });
         await el.press('Enter');
