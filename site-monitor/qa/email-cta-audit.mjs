@@ -2,11 +2,15 @@
 /**
  * Email-CTA landing audit — the "Off-site" weapon.
  *
- * STATUS: NOT PRODUCTION-READY. Skechers serves the live site under its ESP
- * tracking host (click.emails.skechers.com), keeping URL path "/" for every
- * CTA, so landings can't be told apart or deduped by URL — needs content-
- * based landing identity (which PLP/product actually rendered). Do NOT wire
- * into the daily automation until that's built; it would false-positive.
+ * STATUS: HELD OUT of daily automation. Landing identity is content-based
+ * (canonical/og:url, then title+h1) which is correct WHEN a landing resolves.
+ * But Skechers routes CTAs through multiple ESP trackers and at least one
+ * (Attentive -> cloud.emails.skechers.com) stalls our CDP context on a
+ * ~650-char interstitial that never reaches the site in 12s+. A real human
+ * browser likely completes it, so we cannot attribute the stall to Skechers
+ * vs our own automation — reporting it would risk a false "your email links
+ * are broken" finding. Needs a warmed cookie session + real-user timing
+ * before it can run unsupervised. Run manually and eyeball until then.
  *
  * We hold the brand's actual email sends (50+/month for Skechers). Every CTA
  * in those emails is a journey the brand PAID to trigger: if the landing page
@@ -184,6 +188,8 @@ for (const [i, cta] of ctas.entries()) {
 
   const landing = await page.evaluate(() => ({
     finalUrl: location.href,
+    canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? null,
+    ogUrl: document.querySelector('meta[property="og:url"]')?.getAttribute('content') ?? null,
     title: document.title.slice(0, 100),
     h1s: Array.from(document.querySelectorAll('h1')).map((h) => h.innerText.trim().slice(0, 100)),
     promoText: Array.from(document.querySelectorAll('[class*="promo"], [class*="banner"], [class*="sale"], h1, h2'))
@@ -193,22 +199,32 @@ for (const [i, cta] of ctas.entries()) {
     bodyText: document.body.innerText.replace(/\n{3,}/g, '\n').slice(0, 2500),
   })).catch(() => ({}));
 
-  // Same landing already audited via a different tracking wrapper? Skip it.
-  let landingKey = '';
-  try {
-    const lu = new URL(landing.finalUrl ?? cta.href);
-    landingKey = lu.origin + lu.pathname;
-  } catch { landingKey = cta.href; }
+  // Same landing already audited via a different tracking wrapper? Identity
+  // must come from CONTENT, not the address bar: Skechers serves the site
+  // under its ESP tracking host with path "/" for every CTA, so URL identity
+  // collapsed 15 distinct landings into one. Canonical/og:url is what the
+  // page says it is; title+h1 is the fallback fingerprint.
+  const canonicalish = landing.canonical || landing.ogUrl;
+  let landingKey;
+  if (canonicalish) {
+    try {
+      const cu = new URL(canonicalish);
+      landingKey = cu.origin.replace(/^https?:\/\/(www\.)?/, 'https://') + cu.pathname;
+    } catch { landingKey = canonicalish; }
+  } else {
+    landingKey = `content:${(landing.title ?? '').slice(0, 60)}|${(landing.h1s ?? []).join(',').slice(0, 80)}`;
+  }
   const duplicate = seenLandings.has(landingKey);
   seenLandings.add(landingKey);
+  const landingIdentity = canonicalish ?? landingKey;
 
   visits.push({
-    ...cta, status, duplicate, settled,
+    ...cta, status, duplicate, settled, landingIdentity,
     redirects: redirects.length,
     screenshotPath: fs.existsSync(shot) ? shot : null,
     landing,
   });
-  log(`  visited ${i + 1}`, { status, dup: duplicate, label: cta.label.slice(0, 36), landed: landingKey.slice(0, 60) });
+  log(`  visited ${i + 1}`, { status, dup: duplicate, label: cta.label.slice(0, 36), identity: String(landingKey).slice(0, 70) });
 }
 await page.close().catch(() => {});
 
@@ -239,7 +255,7 @@ const prompt = [
     v.error
       ? `RESULT: navigation error — ${v.error}`
       : [
-          `landed: HTTP ${v.status}, ${v.redirects} redirects -> ${v.landing?.finalUrl ?? '?'}`,
+          `landed: HTTP ${v.status} -> page identifies as: ${v.landingIdentity ?? v.landing?.finalUrl ?? '?'}`,
           `title: ${v.landing?.title ?? ''}`,
           `h1s: ${JSON.stringify(v.landing?.h1s ?? [])}`,
           `promo text on page: ${JSON.stringify((v.landing?.promoText ?? []).slice(0, 6))}`,
@@ -312,7 +328,10 @@ for (const p of proposed) {
     reproSteps: Array.isArray(p.repro_steps) ? p.repro_steps.slice(0, 10) : [],
     confidence: typeof p.confidence === 'number' ? p.confidence : null,
     defectType, evidence,
-    dedupeKey: dedupeKey({ personaSlug: PERSONA, area: 'Off-site', url: v.href, defectType }),
+    // Dedupe on the landing's content identity, not the tracking href —
+    // otherwise every campaign's wrapper for the same broken landing files
+    // its own duplicate.
+    dedupeKey: dedupeKey({ personaSlug: PERSONA, area: 'Off-site', url: v.landingIdentity ?? v.href, defectType }),
   });
 }
 
