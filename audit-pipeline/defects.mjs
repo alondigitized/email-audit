@@ -125,6 +125,36 @@ export function dedupeKey({ personaSlug, area, url, defectType }) {
 }
 
 /**
+ * Fingerprint the broken *component*, independent of the page it was seen on.
+ *
+ * Global nav, the offer drawer and the country-selector modal render on every
+ * page, so a URL-scoped dedupe key files the same bug once per page — the
+ * first full sweep produced 12 rows for 4 real issues. Matching on this
+ * collapses them into one finding that records its page spread instead, which
+ * is both less noise and a stronger report ("site-wide, seen on 4 pages").
+ *
+ * Built from element identity where we have it (srcs/selectors are stable
+ * across pages for a shared component) and falls back to a coarse normalised
+ * description otherwise.
+ */
+export function componentKey({ defectType, affectedElements, description }) {
+  const ids = (affectedElements ?? [])
+    .map((e) => e?.src || e?.selector || '')
+    .filter(Boolean)
+    .sort();
+  const basis = ids.length
+    ? ids.join(',')
+    : String(description || '')
+        .toLowerCase()
+        .replace(/[^a-z ]+/g, '')
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 10)
+        .join(' ');
+  return createHash('sha1').update(`${defectType || 'other'}|${basis}`).digest('hex').slice(0, 20);
+}
+
+/**
  * Reject anything the intake form would refuse, before it ever reaches a
  * human reviewer. Returns an array of problems; empty means filable.
  *
@@ -191,6 +221,32 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
         defectType: d.defectType,
       });
 
+    const compKey = componentKey({
+      defectType: d.defectType,
+      affectedElements: d.affectedElements,
+      description: d.description,
+    });
+
+    // Same component already reported, possibly from a different page or by a
+    // different lens? Record the extra page instead of filing a second row.
+    const sameComponent = await sql`
+      SELECT id, url, also_seen_on FROM defect
+      WHERE component_key = ${compKey}
+        AND status IN ('submitted', 'rejected', 'suppressed', 'candidate', 'verified', 'approved')
+      LIMIT 1`;
+    if (sameComponent.length) {
+      const row = sameComponent[0];
+      if (row.url !== d.url && !(row.also_seen_on ?? []).includes(d.url)) {
+        await sql`
+          UPDATE defect
+          SET also_seen_on = ${JSON.stringify([...(row.also_seen_on ?? []), d.url])}::jsonb,
+              updated_at = NOW()
+          WHERE id = ${row.id}`;
+      }
+      out.skippedDuplicate += 1;
+      continue;
+    }
+
     const seen = await sql`
       SELECT 1 FROM defect
       WHERE dedupe_key = ${key}
@@ -207,7 +263,7 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
         location, url, area, description, device, browser, urgency,
         reporter_email, evidence, category, defect_type, expected, observed,
         business_impact, affected_elements,
-        repro_steps, urgency_rationale, confidence, dedupe_key, status
+        repro_steps, urgency_rationale, confidence, dedupe_key, component_key, status
       ) VALUES (
         ${tenantId ?? null}, ${d.personaSlug}, ${experienceId ?? null},
         ${d.location}, ${d.url}, ${d.area}, ${d.description},
@@ -219,7 +275,7 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
         ${JSON.stringify(d.affectedElements ?? [])}::jsonb,
         ${JSON.stringify(d.reproSteps ?? [])}::jsonb,
         ${d.urgencyRationale ?? null}, ${d.confidence ?? null},
-        ${key}, 'candidate'
+        ${key}, ${compKey}, 'candidate'
       )`;
     out.inserted += 1;
   }

@@ -1118,6 +1118,15 @@ export const defects = pgTable(
     // Stable fingerprint so the same issue never re-files sweep after
     // sweep. Suppressing one row suppresses the whole class.
     dedupeKey: text("dedupe_key"),
+    // Fingerprint of the underlying broken *component*, independent of which
+    // page it was seen on. Global nav, the offer drawer and the country
+    // selector appear on every page, so a URL-scoped key files the same bug
+    // once per page — 12 rows for 4 real issues in the first full sweep.
+    // Matching on this collapses them into one finding instead.
+    componentKey: text("component_key"),
+    // Other URLs the same component defect was observed on. "Site-wide, seen
+    // on 4 pages" is a stronger report than four separate ones.
+    alsoSeenOn: jsonb("also_seen_on").$type<string[]>().default([]).notNull(),
 
     verification: jsonb("verification").$type<DefectVerification>(),
     verifiedAt: timestamp("verified_at", { mode: "date" }),
@@ -1136,6 +1145,7 @@ export const defects = pgTable(
   (t) => ({
     statusIdx: index("defect_status_created_idx").on(t.status, t.createdAt),
     dedupeIdx: index("defect_dedupe_idx").on(t.dedupeKey),
+    componentIdx: index("defect_component_idx").on(t.componentKey),
     personaIdx: index("defect_persona_idx").on(t.personaSlug),
     tenantIdx: index("defect_tenant_idx").on(t.tenantId),
   })

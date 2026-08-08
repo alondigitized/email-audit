@@ -77,7 +77,7 @@ function parseJson(raw) {
   try { return JSON.parse(t.slice(s, e + 1)); } catch { return null; }
 }
 
-function buildPrompt(d, priors) {
+function buildPrompt(d, priors, declined = []) {
   return [
     'You are the quality gate for a QA program that files site defects to a real',
     'retailer. The receiving team is four people who have logged about fifteen',
@@ -111,10 +111,18 @@ function buildPrompt(d, priors) {
     `Repro steps: ${JSON.stringify(d.repro_steps ?? [])}`,
     `Independent re-test: ${JSON.stringify(d.verification ?? {})}`,
     '',
-    '=== ALREADY OPEN OR ALREADY FILED FOR THIS PAGE ===',
+    '=== ALREADY OPEN OR ALREADY FILED (this page, or same defect type anywhere) ===',
     priors.length
-      ? priors.map((p) => `- [${p.status}] (${p.defect_type}) ${p.description}`).join('\n')
+      ? priors.map((p) => `- [${p.status}] (${p.defect_type}) on ${p.url}\n  ${p.description}`).join('\n')
       : '(none)',
+    '',
+    '=== PREVIOUSLY DECLINED (do NOT mark duplicate of these — they are not live reports) ===',
+    declined.length
+      ? declined.map((p) => `- (${p.defect_type}) ${p.description}`).join('\n')
+      : '(none)',
+    '',
+    'A "duplicate" verdict must point at a LIVE report in the list above it.',
+    'If nothing live covers this finding, it is not a duplicate — file it.',
     '',
     '=== REJECT IF ===',
     '- It is a subjective or stylistic preference, or a deliberate design choice',
@@ -125,6 +133,9 @@ function buildPrompt(d, priors) {
     '- It is unfalsifiable or vague.',
     '- It describes the same underlying problem as something already listed above,',
     '  even if the defect_type or wording differs → verdict "duplicate".',
+    '- It is the SAME site-wide component (global nav, offer drawer, country',
+    '  selector, footer) already reported on another page. One report for a',
+    '  shared component beats one per page → verdict "duplicate".',
     '',
     '=== DO NOT REJECT MERELY BECAUSE ===',
     '- The impact is small. Down-rank the urgency instead and file it.',
@@ -160,18 +171,36 @@ if (!rows.length) process.exit(0);
 let filed = 0, rejected = 0, dupes = 0;
 
 for (const d of rows) {
-  // Prior art for this page: anything already accepted or already dealt with.
-  // Deliberately includes rejected/suppressed so the agent can spot that we
-  // already decided this class isn't worth filing.
+  // Prior art. Scoped to the same page at first, which missed the biggest
+  // source of noise: global nav, the offer drawer and the country-selector
+  // modal render on EVERY page, so the same defect arrives once per page from
+  // different lenses. Now we show anything of the same defect_type from any
+  // URL, plus anything else on this page, so the agent can call a cross-page
+  // repeat what it is — one site-wide issue, not four.
+  // Only LIVE reports can be duplicated against. Including suppressed/rejected
+  // rows here destroyed findings: every member of a group marked itself a
+  // duplicate of an already-suppressed sibling, and whole defect types
+  // (axe_violation, missing_alt, the 'Deuschland' typo) collapsed to zero
+  // survivors. A duplicate must point at something a human will actually see.
   const priors = await sql`
-    SELECT description, status, defect_type FROM defect
-    WHERE url = ${d.url} AND id <> ${d.id}
-      AND status IN ('approved', 'submitted', 'rejected', 'suppressed', 'verified')
-    ORDER BY created_at DESC LIMIT 15`;
+    SELECT description, status, defect_type, url FROM defect
+    WHERE id <> ${d.id}
+      AND status IN ('approved', 'submitted', 'verified')
+      AND adjudication IS NOT NULL
+      AND (url = ${d.url} OR defect_type = ${d.defect_type})
+    ORDER BY created_at ASC LIMIT 25`;
+
+  // Shown separately so the agent can reject something we already declined,
+  // without ever treating it as the canonical report to duplicate against.
+  const declined = await sql`
+    SELECT description, defect_type FROM defect
+    WHERE id <> ${d.id} AND status IN ('rejected')
+      AND defect_type = ${d.defect_type}
+    ORDER BY created_at DESC LIMIT 5`;
 
   let res;
   try {
-    res = parseJson(await runClaude(buildPrompt(d, priors)));
+    res = parseJson(await runClaude(buildPrompt(d, priors, declined)));
   } catch (err) {
     log('  adjudicator failed (leaving for human)', { id: d.id, error: String(err).slice(0, 140) });
     continue;

@@ -426,9 +426,22 @@ async function resolveRoutes(page) {
       try {
         await page.goto(plp, { waitUntil: 'domcontentloaded', timeout: 60000 });
         await page.waitForTimeout(3000);
+        // Skechers PDPs are /{product-slug}/{styleNumber}_{colorCode}.html —
+        // e.g. /skechers-aero-burst/246210_NVAQ.html. An earlier version
+        // looked for /style/ or /product/, which never matches, so PDP was
+        // silently skipped on every run and the most commercially important
+        // page type went unaudited.
         url = await page.evaluate(() => {
-          const a = document.querySelector('a[href*="/style/"], a[href*="/product/"]');
-          return a ? new URL(a.getAttribute('href'), location.origin).href : null;
+          const re = /^\/[a-z0-9-]+\/\d+_[A-Za-z0-9]+\.html$/;
+          for (const a of document.querySelectorAll('a[href$=".html"]')) {
+            const href = a.getAttribute('href');
+            if (!href) continue;
+            try {
+              const u = new URL(href, location.origin);
+              if (re.test(u.pathname)) return u.href;
+            } catch { /* skip malformed */ }
+          }
+          return null;
         });
       } catch { url = null; }
       if (!url) { log('could not resolve a PDP; skipping', { from: plp }); continue; }

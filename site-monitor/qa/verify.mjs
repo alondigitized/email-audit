@@ -140,13 +140,18 @@ async function reproduces(page, d) {
       // no longer holds (promo rotated, typo fixed).
       const body = await page.evaluate(() => document.body.innerText).catch(() => '');
       const quoted = (d.observed || d.description || '').match(/"([^"]{6,80})"/);
-      if (!quoted) return { hit: false, note: 'no quoted string to re-check' };
+      // No quoted string means we have no way to check it — that is not the
+      // same as the claim being false, so don't refute it. Same reasoning as
+      // the SEO branch: silently dropping unverifiable findings hollows out
+      // the sweep without anyone noticing.
+      if (!quoted) return { unverifiable: true, note: 'no quoted string to re-check' };
       const present = body.toLowerCase().includes(quoted[1].toLowerCase());
       return { hit: present, note: present ? `still shows "${quoted[1].slice(0, 40)}"` : 'quoted text no longer on page' };
     }
 
     default:
-      return { hit: false, note: `no re-test strategy for category ${d.category}` };
+      // e.g. performance claims — no deterministic re-check implemented yet.
+      return { unverifiable: true, note: `no re-test strategy for category ${d.category}` };
   }
 }
 

@@ -92,9 +92,22 @@ signal we're filtering.
      same defect differently each run. `defect_type` comes from a fixed list
      (`DEFECT_TYPES`) precisely so the fingerprint is stable. Verified: a
      second sweep of the same page now reports `skippedDuplicate`.
-  2. *Semantic, in the adjudicator.* Catches what the fingerprint can't —
-     two different `defect_type`s describing one underlying problem. The
-     agent sees prior art for the same URL and can return `duplicate`.
+  2. *Component-level.* Global nav, the offer drawer and the country-selector
+     modal render on every page, so a URL-scoped key files the same bug once
+     per page — the first full sweep produced 12 rows for 4 real issues.
+     `component_key` fingerprints the component itself (element srcs /
+     selectors, ignoring URL) and extra pages accumulate in `also_seen_on`,
+     so the surviving report reads "site-wide, also on N pages".
+  3. *Semantic, in the adjudicator.* Catches what neither key can — the same
+     nav described with different selectors, or a text typo with no elements.
+     It sees prior art of the same defect_type across **all** URLs.
+
+  **A duplicate must point at a LIVE report.** An earlier version let rows
+  duplicate against already-suppressed siblings, and entire defect types
+  (axe_violation, missing_alt, the 'Deuschland' typo) collapsed to zero
+  survivors. Prior art for duplicate detection is now restricted to
+  verified/approved/submitted; previously-declined items are shown separately
+  and can only justify a *reject*, never a *duplicate*.
 
   Suppressing one row suppresses the whole class forever, so the same issue
   never re-files sweep after sweep.
@@ -150,7 +163,9 @@ queue has earned trust.
   which is how credibility becomes measurable rather than asserted. The
   `adjudication` column already records every machine rejection with a
   reason, so the data to build it is accumulating.
-- The adjudicator only compares prior art **for the same URL**. A defect that
-  recurs across many PDPs will be caught by the deterministic key (paths
-  collapse trailing ids) but a cross-page semantic dupe on *different* paths
-  is not yet detected.
+- Quinn (functional) finds little, by design: the sweep only *observes* pages,
+  it never clicks, filters or adds to cart, so there is almost nothing for a
+  functional lens to catch beyond errors present at load. Making Quinn useful
+  means driving real interactions, like site-review.mjs does.
+- PDP coverage only started working once the product-URL pattern was fixed
+  (`/{slug}/{style}_{color}.html`); earlier sweeps silently skipped it.

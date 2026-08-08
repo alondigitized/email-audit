@@ -218,6 +218,13 @@
       "when": 1786147894065,
       "tag": "0030_small_dazzler",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1786151270094,
+      "tag": "0031_small_tinkerer",
+      "breakpoints": true
     }
   ]
 }
