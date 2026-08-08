@@ -1196,3 +1196,85 @@ export const brands = pgTable("brand", {
   industry: text("industry"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
+
+// ─── Opportunity layer ───────────────────────────────────────────────────
+//
+// An opportunity is NOT a finding. A defect says "the offer drawer images
+// have no alt text"; an opportunity says "Skechers' promo module is
+// invisible to assistive tech and search across the funnel — one component
+// fix recovers X". Opportunities are clusters of evidence aggregated across
+// channels and time, with a value thesis — the unit you put in front of a
+// brand, not the unit a sweep produces.
+//
+// Lifecycle mirrors the defect queue's proven human-in-the-loop shape, one
+// level up: synthesis proposes at 'hypothesis'; a human validates, presents,
+// and records the outcome. Machine writes never skip 'hypothesis'.
+export const opportunityStatusEnum = pgEnum("opportunity_status", [
+  "hypothesis", // synthesized, unreviewed
+  "validated", // human agrees the evidence supports the thesis
+  "presented", // shown to the brand
+  "accepted", // brand acted on it
+  "dismissed", // not real / not worth it — kept for precision tracking
+]);
+
+export type OpportunityMetrics = {
+  // Free-shape supporting numbers, e.g. { brand_avg_score: 6.3,
+  // peer_avg_score: 7.6, emails_sampled: 495 }. Displayed verbatim.
+  [key: string]: number | string;
+};
+
+export const opportunities = pgTable(
+  "opportunity",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    brandSlug: text("brand_slug").notNull(),
+    title: text("title").notNull(),
+    // The claim: what is wrong/missing and what fixing it unlocks.
+    thesis: text("thesis").notNull(),
+    // Who is affected and what it costs — same discipline as
+    // defect.business_impact, at brand scale.
+    impact: text("impact"),
+    // Which signal family it came from: email | site | inventory | qa |
+    // cross-channel | competitive. Free text by design; the mix will evolve.
+    category: text("category"),
+    confidence: numeric("confidence"),
+    metrics: jsonb("metrics").$type<OpportunityMetrics>(),
+    status: opportunityStatusEnum("status").notNull().default("hypothesis"),
+    createdBy: text("created_by").notNull().default("synthesis"),
+    reviewedBy: text("reviewed_by"),
+    reviewedAt: timestamp("reviewed_at", { mode: "date" }),
+    reviewNote: text("review_note"),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    brandIdx: index("opportunity_brand_idx").on(t.brandSlug, t.status),
+  })
+);
+
+// Evidence trail: every opportunity must point at the observations that
+// support it — experiences (any channel), defects, or a named statistic.
+// This is what makes an opportunity defensible in front of a brand instead
+// of an assertion.
+export const opportunityEvidence = pgTable(
+  "opportunity_evidence",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    opportunityId: uuid("opportunity_id")
+      .notNull()
+      .references(() => opportunities.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(), // 'experience' | 'defect' | 'stat'
+    experienceId: uuid("experience_id").references(() => experiences.id, {
+      onDelete: "set null",
+    }),
+    defectId: uuid("defect_id").references(() => defects.id, {
+      onDelete: "set null",
+    }),
+    // Why this item supports the thesis (or, for kind='stat', the stat).
+    note: text("note"),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => ({
+    oppIdx: index("opportunity_evidence_opp_idx").on(t.opportunityId),
+  })
+);
