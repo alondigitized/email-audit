@@ -37,8 +37,22 @@ Defined in `personas.json`, seeded into the `persona` table (tenant
 
 ## Pipeline
 
+`journey.mjs` is the primary runner. `sweep.mjs` is the older fixed-route
+version, kept for comparison — it visits a hardcoded list of URLs, which is
+not how a secret shopper behaves and gave the functional lens nothing to find.
+
 ```
-sweep.mjs        Playwright visits each route once, captures evidence
+journey.mjs      Persona starts on the homepage with a shopping GOAL and
+                 navigates by choosing from the interactive elements actually
+                 rendered. No predefined routes, no hardcoded selectors — the
+                 pages reached and the Area each maps to are discovered.
+                 Every step records what observably changed, so dead controls
+                 and empty results become reportable.
+                 Then a PROOF PASS re-opens each page, rings the offending
+                 elements in red and crops the screenshot to them.
+                   -> defect rows at status='candidate'
+
+sweep.mjs        [legacy] Playwright visits each route once, captures evidence
                  (screenshot, console/network errors, axe, SEO head, text),
                  then each persona's lens turns evidence into candidates.
                  Deterministic dedupe runs at insert.
@@ -74,6 +88,32 @@ flagged. The human is the gate before Skechers either way.
 
 Partial reproduction (`inconclusive`) **is** refuted — that's the flaky
 signal we're filtering.
+
+## Navigation and proof
+
+**Agentic, not scripted.** Elements are enumerated from the live DOM and
+stamped with `data-qa-ref`, so an action always targets an element we actually
+found. Rebuilding a CSS path and re-querying it did not survive contact with
+the real site: every click timed out, and the lens misread that as a dead
+control and proposed a High-urgency "the main nav is broken" report. Automation
+failures are now labelled as ours and the lens is told never to report them.
+
+**Transactional actions are blocked by the runner**, not by prompt wording —
+order placement, account creation and signup are filtered out of the action
+list entirely (`navigator.mjs`, `isTransactional`). Overlay dismissal
+deliberately never clicks "Continue", which on Skechers submits the
+email-capture form.
+
+**Proof screenshots must show the problem.** A viewport shot of the page a
+defect lives on is not proof — the offer drawer sits below the fold, so the
+"evidence" for four missing-alt banners was a picture of the hero carousel.
+The proof pass now:
+- blocks third-party popup vendors at the network layer (the Attentive
+  email modal renders in its own iframe, so clicking its X never worked);
+- expands collapsed regions generically via `aria-expanded`;
+- rings each offending element in red with a number;
+- crops the shot to the ringed region, and says so in the caption when it
+  could not locate anything rather than passing a page shot off as proof.
 
 ## Credibility controls
 
