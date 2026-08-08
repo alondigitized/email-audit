@@ -1002,6 +1002,22 @@ export type DefectBrowser = (typeof DEFECT_BROWSERS)[number];
 export type DefectUrgency = (typeof DEFECT_URGENCIES)[number];
 export type DefectCategory = (typeof DEFECT_CATEGORIES)[number];
 
+// A specific offending element. "6 of 193 images are missing alt" is a
+// statistic; nobody can fix it without knowing WHICH six. Every element-level
+// finding must name its elements or it isn't a bug report.
+export type DefectElement = {
+  // CSS selector or best-effort locator an engineer can paste into devtools.
+  selector?: string;
+  // The offending markup, truncated.
+  snippet?: string;
+  // For images/links: the resource involved.
+  src?: string;
+  // Where on the page a human would look for it.
+  location?: string;
+  // Anything category-specific worth carrying (axe rule id, status code…).
+  note?: string;
+};
+
 // One evidence item. The intake form REQUIRES at least one screenshot,
 // so a defect with an empty array can never reach 'approved'.
 export type DefectEvidence = {
@@ -1087,6 +1103,15 @@ export const defects = pgTable(
     // Expected-vs-observed is what separates a defect from an opinion.
     expected: text("expected"),
     observed: text("observed"),
+    // Why this costs the business something — revenue, discoverability,
+    // accessibility/legal exposure, or trust. Without it a report is a
+    // technical observation and gets deprioritised on arrival.
+    businessImpact: text("business_impact"),
+    // The specific offending elements. See DefectElement.
+    affectedElements: jsonb("affected_elements")
+      .$type<DefectElement[]>()
+      .default([])
+      .notNull(),
     reproSteps: jsonb("repro_steps").$type<string[]>().default([]).notNull(),
     urgencyRationale: text("urgency_rationale"),
     confidence: numeric("confidence"),

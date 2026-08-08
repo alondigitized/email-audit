@@ -66,6 +66,23 @@ export const DEFECT_CATEGORIES = [
   'performance',
 ];
 
+// Defect types that describe specific DOM nodes. For these, a count is not a
+// bug report — the offending elements must be named or nobody can fix it.
+export const ELEMENT_LEVEL_TYPES = [
+  'missing_alt',
+  'axe_violation',
+  'contrast',
+  'missing_form_label',
+  'broken_link',
+  'dead_control',
+  'image_not_loading',
+  'duplicate_h1',
+  'typo',
+  'grammar',
+  'placeholder_text',
+  'truncated_text',
+];
+
 function db() {
   const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
   if (!url) throw new Error('DATABASE_URL_UNPOOLED or DATABASE_URL required');
@@ -132,6 +149,16 @@ export function validateDefect(d) {
   if (d.defectType && !DEFECT_TYPES.includes(d.defectType)) {
     errs.push(`defectType: ${d.defectType}`);
   }
+  if (!d.businessImpact || String(d.businessImpact).trim().length < 20) {
+    errs.push('businessImpact missing — a finding without a stated cost gets deprioritised on arrival');
+  }
+  // Element-level defect types describe specific nodes. Reporting one as a
+  // bare count ("6 of 193 images") is not actionable, so require the
+  // offending elements to be named.
+  if (ELEMENT_LEVEL_TYPES.includes(d.defectType) &&
+      (!Array.isArray(d.affectedElements) || d.affectedElements.length === 0)) {
+    errs.push(`${d.defectType} must name the specific offending elements`);
+  }
   return errs;
 }
 
@@ -179,6 +206,7 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
         tenant_id, persona_slug, experience_id,
         location, url, area, description, device, browser, urgency,
         reporter_email, evidence, category, defect_type, expected, observed,
+        business_impact, affected_elements,
         repro_steps, urgency_rationale, confidence, dedupe_key, status
       ) VALUES (
         ${tenantId ?? null}, ${d.personaSlug}, ${experienceId ?? null},
@@ -187,6 +215,8 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
         ${d.reporterEmail ?? null}, ${JSON.stringify(d.evidence)}::jsonb,
         ${d.category}, ${d.defectType ?? 'other'}, ${d.expected ?? null},
         ${d.observed ?? null},
+        ${d.businessImpact ?? null},
+        ${JSON.stringify(d.affectedElements ?? [])}::jsonb,
         ${JSON.stringify(d.reproSteps ?? [])}::jsonb,
         ${d.urgencyRationale ?? null}, ${d.confidence ?? null},
         ${key}, 'candidate'

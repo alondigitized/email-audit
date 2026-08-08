@@ -5,6 +5,7 @@ import type {
   DefectEvidence,
   DefectVerification,
   DefectAdjudication,
+  DefectElement,
 } from "@/lib/db/schema";
 import { signGetUrl, r2IsConfigured } from "@/lib/storage/r2";
 import {
@@ -60,6 +61,7 @@ function DefectCard({ d }: { d: Row }) {
   const repro = (d.reproSteps ?? []) as string[];
   const v = d.verification as DefectVerification | null;
   const adj = d.adjudication as DefectAdjudication | null;
+  const els = (d.affectedElements ?? []) as DefectElement[];
 
   return (
     <li className="bg-white border border-gray-200 rounded-2xl p-5">
@@ -101,6 +103,31 @@ function DefectCard({ d }: { d: Row }) {
       </div>
 
       <p className="text-sm mb-3">{d.description}</p>
+
+      {d.businessImpact && (
+        <div className="text-xs mb-3 border-l-2 border-amber-300 pl-2">
+          <span className="text-muted">Business impact — </span>
+          {d.businessImpact}
+        </div>
+      )}
+
+      {els.length > 0 && (
+        <details className="text-xs mb-3" open={els.length <= 6}>
+          <summary className="cursor-pointer text-muted">
+            Affected elements ({els.length})
+          </summary>
+          <ol className="list-decimal ml-4 mt-1 space-y-1">
+            {els.map((e, i) => (
+              <li key={i} className="font-mono text-[11px] break-all">
+                {e.selector && <span className="text-sky-800">{e.selector}</span>}
+                {e.src && <span className="text-muted"> · {e.src}</span>}
+                {e.location && <span className="text-muted"> · {e.location}</span>}
+                {e.note && <span className="text-muted"> · {e.note}</span>}
+              </li>
+            ))}
+          </ol>
+        </details>
+      )}
 
       {(d.expected || d.observed) && (
         <dl className="text-xs mb-3 space-y-1">
@@ -231,15 +258,20 @@ function DefectCard({ d }: { d: Row }) {
       {d.status === "approved" && (
         <div className="border-t border-gray-100 pt-3 mt-1">
           <SubmissionPayload
-            payload={{
-              Location: d.location,
-              URL: d.url,
-              "Area of Site": d.area,
-              "Describe the issue": d.description,
-              Device: d.device ?? "",
-              Browser: d.browser ?? "",
-              Urgency: d.urgency,
-              "Your email address": d.reporterEmail ?? "",
+            fields={{
+              location: d.location,
+              url: d.url,
+              area: d.area,
+              device: d.device ?? "",
+              browser: d.browser ?? "",
+              urgency: d.urgency,
+              reporterEmail: d.reporterEmail ?? "",
+              description: d.description,
+              businessImpact: d.businessImpact,
+              expected: d.expected,
+              observed: d.observed,
+              reproSteps: repro,
+              elements: els,
             }}
           />
           <form action={markSubmittedAction} className="flex gap-2 items-center flex-wrap mt-3">

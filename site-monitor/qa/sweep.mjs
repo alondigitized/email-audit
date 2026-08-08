@@ -135,7 +135,12 @@ async function captureRoute(page, route, artifactDir) {
         impact: v.impact,
         help: v.help,
         nodes: v.nodes.length,
-        sample: v.nodes[0]?.html?.slice(0, 160) ?? '',
+        // Every offending node's selector + markup, not just one sample —
+        // a report that says "4 nodes" without naming them isn't actionable.
+        targets: v.nodes.slice(0, 12).map((n) => ({
+          selector: Array.isArray(n.target) ? n.target.join(' ') : String(n.target ?? ''),
+          snippet: (n.html ?? '').slice(0, 200),
+        })),
       }));
   } catch (err) {
     log('axe failed (non-fatal)', { error: String(err).slice(0, 160) });
@@ -162,6 +167,36 @@ async function captureRoute(page, route, artifactDir) {
         structuredDataTypes: ld,
         imgsMissingAlt: Array.from(document.querySelectorAll('img')).filter((i) => !i.hasAttribute('alt')).length,
         imgTotal: document.querySelectorAll('img').length,
+        // The actual offending images, so a finding can name them. A count
+        // alone ("6 of 193") is not something an engineer can act on.
+        imgsMissingAltDetail: Array.from(document.querySelectorAll('img'))
+          .filter((i) => !i.hasAttribute('alt'))
+          .slice(0, 15)
+          .map((i) => {
+            // Build a paste-into-devtools selector.
+            let sel = 'img';
+            if (i.id) sel = `img#${i.id}`;
+            else if (i.className && typeof i.className === 'string') {
+              const c = i.className.trim().split(/\s+/).slice(0, 2).join('.');
+              if (c) sel = `img.${c}`;
+            }
+            // Where a human would look for it on the page.
+            const sect = i.closest('section,header,footer,nav,[class*="carousel"],[class*="hero"],[class*="grid"]');
+            const landmark =
+              sect?.getAttribute('aria-label') ||
+              sect?.id ||
+              (typeof sect?.className === 'string' ? sect.className.trim().split(/\s+/)[0] : '') ||
+              sect?.tagName?.toLowerCase() ||
+              '';
+            const link = i.closest('a');
+            return {
+              src: (i.getAttribute('src') || i.getAttribute('data-src') || '').slice(0, 400),
+              selector: sel,
+              location: landmark ? `inside <${sect.tagName.toLowerCase()}> ${landmark}` : 'no containing landmark',
+              linkedTo: link ? (link.getAttribute('href') || '').slice(0, 120) : null,
+              dimensions: `${i.getAttribute('width') || i.naturalWidth || '?'}x${i.getAttribute('height') || i.naturalHeight || '?'}`,
+            };
+          }),
       };
     })
     .catch(() => ({}));
@@ -207,6 +242,43 @@ async function captureRoute(page, route, artifactDir) {
 
 // ── the lens ──────────────────────────────────────────────────────────────
 
+/**
+ * Flatten every concrete element we captured into one indexed catalog.
+ *
+ * The lens references these by index rather than retyping them. Asking a model
+ * to echo a URL back verbatim does not work — it abbreviates
+ * ("https://.../Offer%20Drawer/202"), which made four distinct images look
+ * identical and stripped exactly the detail an engineer needs. Indices are
+ * cheap to emit and we resolve them from the capture, so the stored element
+ * data is always byte-exact.
+ */
+function buildElementCatalog(capture) {
+  const cat = [];
+  for (const img of capture.head?.imgsMissingAltDetail ?? []) {
+    cat.push({
+      kind: 'img-missing-alt',
+      selector: img.selector,
+      src: img.src,
+      location: img.location,
+      note: [img.linkedTo ? `links to ${img.linkedTo}` : null, img.dimensions ? `${img.dimensions}` : null]
+        .filter(Boolean)
+        .join(', ') || undefined,
+    });
+  }
+  for (const v of capture.axeViolations ?? []) {
+    for (const t of v.targets ?? []) {
+      cat.push({
+        kind: `axe:${v.id}`,
+        selector: t.selector,
+        snippet: t.snippet,
+        location: v.help,
+        note: `${v.impact} impact`,
+      });
+    }
+  }
+  return cat.slice(0, 40);
+}
+
 function buildPrompt(persona, capture) {
   return [
     `You are ${persona.displayName}, a retail secret shopper doing quality assurance on skechers.com.`,
@@ -239,6 +311,11 @@ function buildPrompt(persona, capture) {
     `=== AXE VIOLATIONS, serious/critical only (${capture.axeViolations.length}) ===`,
     JSON.stringify(capture.axeViolations, null, 1),
     '',
+    '=== ELEMENT CATALOG (reference these by index) ===',
+    (buildElementCatalog(capture).map((e, i) =>
+      `[${i}] ${e.kind} | ${e.selector ?? ''}${e.src ? ' | src=' + e.src : ''}${e.location ? ' | ' + e.location : ''}${e.note ? ' | ' + e.note : ''}`
+    ).join('\n')) || '(no discrete elements captured)',
+    '',
     '=== VISIBLE TEXT ===',
     capture.visibleText,
     '',
@@ -251,9 +328,25 @@ function buildPrompt(persona, capture) {
     '',
     `Urgency rubric: ${JSON.stringify(SHARED._urgency_rubric)}`,
     '',
+    'A count is not a bug report. "6 of 193 images are missing alt" cannot be',
+    'acted on — name WHICH ones via affected_element_refs, using the indices in',
+    'the ELEMENT CATALOG. Do NOT retype selectors or URLs: reference the index',
+    'and we attach the exact values. Use affected_elements only for something',
+    'real that the catalog does not contain (e.g. a typo in body copy).',
+    'If you cannot point at specific elements, do not report the finding.',
+    '',
+    'Every finding also needs a concrete business impact: what does this cost',
+    'in revenue, discoverability, accessibility/legal exposure, or customer',
+    'trust? Be specific to this page and this defect. Do not write generic',
+    'filler like "improves user experience" — if you cannot name a real',
+    'consequence, the finding is not worth filing.',
+    '',
     'Respond with ONLY a JSON array (no prose, no code fence). Each element:',
     '{',
     '  "description": "one specific, self-contained sentence a Skechers engineer could act on",',
+    '  "business_impact": "concrete consequence — who is affected and what it costs",',
+    '  "affected_element_refs": [0, 3, 7],   // indices into the ELEMENT CATALOG above',
+    '  "affected_elements": [ { "selector": "...", "location": "..." } ],  // ONLY for elements not in the catalog',
     '  "expected": "what should happen",',
     '  "observed": "what actually happened, citing the evidence above",',
     `  "urgency": one of ${JSON.stringify(DEFECT_URGENCIES)},`,
@@ -416,6 +509,9 @@ for (const [slug, persona] of personas) {
       }];
     }
 
+    // Same catalog the prompt showed, so refs resolve to identical data.
+    const catalog = buildElementCatalog(capture);
+
     const rows = proposed.map((p) => ({
       personaSlug: slug,
       category: persona.category,
@@ -426,6 +522,22 @@ for (const [slug, persona] of personas) {
       area: DEFECT_AREAS.includes(capture.area) ? capture.area : 'Off-site',
       url: capture.url,
       description: String(p.description ?? '').slice(0, 2000),
+      businessImpact: p.business_impact ?? null,
+      affectedElements: [
+        // Catalog refs resolve to byte-exact captured data.
+        ...(Array.isArray(p.affected_element_refs) ? p.affected_element_refs : [])
+          .map((i) => catalog[Number(i)])
+          .filter(Boolean)
+          .slice(0, 20),
+        // Free-form entries only for things the catalog couldn't hold.
+        ...(Array.isArray(p.affected_elements) ? p.affected_elements : []).slice(0, 20).map((e) => ({
+            selector: e?.selector ? String(e.selector).slice(0, 200) : undefined,
+            snippet: e?.snippet ? String(e.snippet).slice(0, 300) : undefined,
+            src: e?.src ? String(e.src).slice(0, 300) : undefined,
+            location: e?.location ? String(e.location).slice(0, 200) : undefined,
+            note: e?.note ? String(e.note).slice(0, 200) : undefined,
+        })),
+      ],
       expected: p.expected ?? null,
       observed: p.observed ?? null,
       urgency: DEFECT_URGENCIES.includes(p.urgency) ? p.urgency : 'Low',
