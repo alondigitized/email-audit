@@ -58,6 +58,7 @@ export default async function AdminPage() {
               ["/admin/tenants", "Tenants"],
               ["/admin/waitlist", "Waitlist"],
               ["/admin/laptop-queue", "Laptop queue"],
+              ["/admin/defect-queue", "Defect queue"],
               ["/admin/subscriptions", "Subscriptions"],
               ["/admin/email-health", "Email health"],
               ["/admin/brand-blocklist", "Brand blocklist"],
