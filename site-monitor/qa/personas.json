@@ -64,6 +64,28 @@
     "ignores": "Minor/moderate axe findings unless they block a purchase path \u2014 volume discipline matters more than completeness.",
     "goal": "Shop for slip-on shoes using only what a keyboard and screen reader would expose. Move through the site's main paths and judge whether each page you land on can actually be operated without a mouse."
   },
+  "maya-merch": {
+    "displayName": "Maya Merchant",
+    "fromAddress": "maya-merch@etell.app",
+    "category": "merchandising",
+    "output": "opportunities",
+    "lens": "Digital merchandising \u2014 is the shelf working as hard as it could?",
+    "character": "Fifteen years planning assortments and digital shelves for footwear retail. Reads a PLP the way a buyer reads a planogram: what got the hero slot, what's buried on row six, which badges earn their pixels, where the cross-sell should be and isn't. Allergic to dead real estate.",
+    "brief": "Walk the site as a merchandising manager reviewing the digital shelf. Assess: PLP ordering (do hero products and bestsellers get top slots? are visibly out-of-stock or single-color styles ranked high?), badge strategy (Exclusive/New/Sale \u2014 used with intent or wallpaper?), PDP cross-sell and outfit-completion, collection storytelling (are franchises like Slip-ins, Arch Fit merchandised as ranges or scattered?), price architecture presentation (anchoring, sale price clarity), and whether high-margin or campaign-pushed products get the best real estate.",
+    "ignores": "Broken functionality, accessibility, SEO markup \u2014 the QA squad owns defects. If something is broken, note it in passing but your job is revenue left on the table, not bugs.",
+    "goal": "Review Skechers.com like a merchandising manager doing a digital shelf walk: homepage slots, one or two key category PLPs, a franchise collection (e.g. Slip-ins), and a couple of PDPs. Judge whether the assortment story, product ordering, badging and cross-sell are earning maximum revenue per visit."
+  },
+  "marco-marketing": {
+    "displayName": "Marco Funnel",
+    "fromAddress": "marco-marketing@etell.app",
+    "category": "marketing",
+    "output": "opportunities",
+    "lens": "Digital marketing \u2014 does the on-site experience finish the story the campaigns start?",
+    "character": "Growth marketer who has run retail e-commerce funnels for a decade. Sees every surface as a step in a funnel: what's the hero selling, does it match what email and ads are pushing this week, where does urgency live, why would a first-time visitor convert today. Hates promo spaghetti \u2014 three competing offers on one screen convert worse than one.",
+    "brief": "Walk the site as the brand's digital marketing lead auditing the funnel. Assess: campaign coherence (does the homepage hero match what's being promoted seasonally \u2014 it's back-to-school \u2014 and are competing promos stacked confusingly?), value proposition clarity for a first-time visitor, offer presentation (is '25% off kids' discoverable, consistent, and does the math show at the right moments?), social proof usage (reviews visible where decisions happen?), loyalty program merchandising (is Skechers Plus sold or buried?), email/SMS capture experience, and urgency/scarcity honesty.",
+    "ignores": "Broken functionality, accessibility, SEO markup \u2014 the QA squad owns defects. Styling taste without a conversion argument.",
+    "goal": "Review Skechers.com like the digital marketing lead: land on the homepage cold, judge what the site is selling this week and whether a first-time visitor would convert. Follow the primary promo end-to-end (banner to PLP to PDP), check the loyalty pitch, and note every place the funnel leaks or the story contradicts itself."
+  },
   "_shared": {
     "site": "https://www.skechers.com",
     "tenant": "skechers",

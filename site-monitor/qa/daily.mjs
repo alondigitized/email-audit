@@ -58,6 +58,15 @@ const plan = [
   { persona: PERSONAS[(slot + 1) % PERSONAS.length], surface: SURFACES[1] },
 ];
 
+// Opportunity walks (merchandiser / marketer) join once a week each, on
+// different days. Their output feeds the /brands board, not the defect
+// queue, and the title-similarity guard in insertOpportunities keeps
+// repeat walks from flooding it — but weekly is still the right cadence:
+// merchandising and campaigns change week to week, not day to day.
+const wd = ((dayIndex % 7) + 7) % 7;
+if (wd === 2) plan.push({ persona: 'maya-merch', surface: SURFACES[0] });
+if (wd === 5) plan.push({ persona: 'marco-marketing', surface: SURFACES[0] });
+
 log('daily plan', { dayIndex, apply: APPLY, runs: plan.map((p) => `${p.persona}/${p.surface.label}`) });
 
 function run(script, args, timeoutMs = 1800000) {

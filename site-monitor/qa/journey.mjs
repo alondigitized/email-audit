@@ -50,6 +50,8 @@ import {
   installPopupBlocker,
 } from './navigator.mjs';
 import { captureProof, clearHighlights, selectorsFor } from './evidence.mjs';
+import { insertOpportunities } from '../../audit-pipeline/opportunities.mjs';
+import { resolveBrandSlug } from '../../audit-pipeline/brands.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
@@ -395,6 +397,52 @@ function scoreFor(rows) {
   return `${Math.max(1, Math.round(10 - cost))}/10`;
 }
 
+/**
+ * Lens prompt for opportunity-output personas (merchandiser, marketer).
+ * They hunt revenue left on the table, not defects — so the output is
+ * opportunity theses for the brand board, not defect rows for the queue.
+ */
+function buildOpportunityPrompt(persona, goal, steps, actionLog) {
+  return [
+    `You are ${persona.displayName}. ${persona.character}`,
+    `Lens: ${persona.lens}`,
+    `Brief: ${persona.brief}`,
+    `Not yours: ${persona.ignores}`,
+    '',
+    `You just walked Skechers.com with this goal: ${goal}`,
+    '',
+    '=== WHAT YOU DID, STEP BY STEP ===',
+    actionLog.join('\n'),
+    '',
+    '=== PAGES YOU SAW ===',
+    steps.map((st) => [
+      `--- step ${st.step}: ${st.area} — ${st.url}`,
+      `title: ${st.head?.title ?? ''}`,
+      `h1s: ${JSON.stringify(st.head?.h1s ?? [])}`,
+      `text: ${(st.visibleText ?? '').slice(0, 1500)}`,
+    ].join('\n')).join('\n\n'),
+    '',
+    '=== HOW TO REPORT ===',
+    'Propose 2-5 OPPORTUNITIES: improvements a merchandising/marketing leader',
+    'would actually fund. Each must rest on something you specifically saw on',
+    'this walk (cite the step), state a concrete business impact, and be',
+    'actionable within a quarter. Fewer, stronger. No generic best-practice',
+    'filler ("add urgency") unless you saw the specific gap.',
+    '',
+    'Respond with ONLY a JSON array:',
+    '{',
+    '  "title": "short, specific",',
+    '  "thesis": "what you observed and what changing it unlocks",',
+    '  "impact": "who is affected and what it is plausibly worth",',
+    `  "category": "${persona.category}",`,
+    '  "confidence": 0.0-1.0,',
+    '  "step": <journey step where you saw it>,',
+    '  "stats": ["specific observations from the walk supporting this"]',
+    '}',
+    'Return [] if the walk genuinely surfaced nothing worth funding.',
+  ].join('\n');
+}
+
 // ── run ───────────────────────────────────────────────────────────────────
 
 /**
@@ -574,6 +622,97 @@ for (const [slug, personaBase] of personas) {
   if (!steps.length) { log('no steps captured; skipping lens', { persona: slug }); continue; }
 
   const catalog = buildElementCatalog(steps, actedOn);
+
+  if (persona.output === 'opportunities') {
+    let opps = [];
+    try {
+      opps = parseJson(
+        await runClaude(buildOpportunityPrompt(persona, persona.goal, steps, actionLog), steps[0].screenshotPath, 300000),
+        true
+      );
+    } catch (err) {
+      log('opportunity lens failed', { persona: slug, error: String(err).slice(0, 160) });
+      continue;
+    }
+    log('opportunity findings', { persona: slug, steps: steps.length, proposed: opps.length });
+
+    // Upload step screenshots + publish the walk as a shareable audit first,
+    // so evidence rows can point at a real experience.
+    if (!DRY && mediaConfigured()) {
+      for (const st of steps) {
+        if (!st.screenshotPath) continue;
+        const key = `qa/${runSlug}/${slug}/${path.basename(st.screenshotPath)}`;
+        try { await putMedia({ filePath: st.screenshotPath, key }); st.r2Key = key; }
+        catch (err) { log('step upload failed', { step: st.step, error: String(err).slice(0, 100) }); }
+      }
+    }
+    let expId = null;
+    const auditSlug = `${runSlug}-${slug}`;
+    if (!DRY) {
+      try {
+        const narrative = [
+          `**${persona.displayName}** — ${persona.lens}`,
+          '', `**Goal:** ${persona.goal}`, '',
+          '## The walk', '',
+          ...actionLog.map((a) => '- ' + a.split('\n')[0]),
+          '', '## Opportunities', '',
+          ...(opps.length
+            ? opps.flatMap((o) => [`### ${o.title}`, '', String(o.thesis ?? ''), '',
+                o.impact ? `**Impact:** ${o.impact}` : '', ''])
+            : ['Nothing worth funding surfaced on this walk.']),
+        ].filter((l) => l !== null).join('\n');
+        const pub = await upsertExperienceAndReaction({
+          slug: auditSlug,
+          data: {
+            schema_version: 1, slug: auditSlug, type: 'qa', persona: slug,
+            email: {
+              subject: `${persona.category === 'merchandising' ? 'Merch walk' : 'Marketing walk'} · ${persona.displayName} · ${opps.length} opportunit${opps.length === 1 ? 'y' : 'ies'}`,
+              preheader: persona.goal?.slice(0, 140) ?? null,
+              from: persona.fromAddress, from_display_name: persona.displayName,
+              timestamp_iso: new Date().toISOString(),
+              date_formatted: new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
+            },
+            // Schema requires a string score. Opportunity walks aren't
+            // defect-scored; a clean walk with funded ideas reads as strong.
+            review: { score: `${Math.max(1, 10 - opps.length)}/10`, raw_markdown: narrative, sections: {} },
+            qa: null,
+            assets: { render_image: null, render_image_key: steps[0]?.r2Key ?? null, pdf: null, webview_url: steps[0]?.url ?? SHARED.start_url },
+            qa_journey: {
+              goal: persona.goal ?? '', defect_count: 0,
+              steps: steps.map((st) => ({ step: st.step, area: st.area, url: st.url, screenshot_key: st.r2Key ?? null })),
+            },
+          },
+        });
+        expId = pub?.experienceId ?? null;
+        log('published audit', { slug: auditSlug, experienceId: !!expId });
+      } catch (err) {
+        log('audit publish failed (non-fatal)', { error: String(err).slice(0, 200) });
+      }
+    }
+
+    const brandSlug = (await resolveBrandSlug(steps[0]?.url ?? SHARED.start_url).catch(() => null)) ?? 'skechers';
+    const rows = opps.map((o) => ({
+      brandSlug,
+      title: o.title, thesis: o.thesis, impact: o.impact,
+      category: persona.category,
+      confidence: typeof o.confidence === 'number' ? o.confidence : null,
+      metrics: {},
+      createdBy: slug,
+      evidence: [
+        ...(expId ? [{ experienceId: expId, note: `journey ${auditSlug}, step ${o.step ?? '?'}` }] : []),
+        ...((o.stats ?? []).slice(0, 8).map((st) => ({ note: String(st) }))),
+      ],
+    }));
+
+    if (DRY) {
+      rows.forEach((r) => log('  would propose', { title: r.title.slice(0, 70), conf: r.confidence }));
+    } else {
+      const res = await insertOpportunities(rows);
+      log('opportunities filed', { ...res, board: `/brands/${brandSlug}` });
+    }
+    continue; // opportunity personas never enter the defect pipeline
+  }
+
   let proposed = [];
   try {
     proposed = parseJson(
@@ -755,3 +894,7 @@ for (const [slug, personaBase] of personas) {
 
 log('journeys complete', grand);
 log('next: node site-monitor/qa/verify.mjs --apply && node site-monitor/qa/adjudicate.mjs --apply');
+// The CDP connection keeps the event loop alive after all work is done — a
+// finished journey hung for 23 further minutes until the orchestrator's
+// timeout killed it. All writes are awaited above; exit explicitly.
+process.exit(0);
