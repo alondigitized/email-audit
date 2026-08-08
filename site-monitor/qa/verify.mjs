@@ -67,7 +67,13 @@ async function reproduces(page, d) {
   const errors = [];
   page.removeAllListeners('response');
   page.on('response', (r) => {
-    if (r.status() >= 400) errors.push(`${r.status()} ${r.url().slice(0, 120)}`);
+    // 429 is rate limiting, and we are the ones hammering the site — a
+    // sweep plus a two-run re-test from one IP trips it easily. Counting it
+    // as defect evidence produced a High-urgency "the cart page is broken"
+    // finding that we had caused ourselves. Never treat it as a site fault.
+    if (r.status() >= 400 && r.status() !== 429) {
+      errors.push(`${r.status()} ${r.url().slice(0, 120)}`);
+    }
   });
 
   let status = null;
@@ -79,6 +85,12 @@ async function reproduces(page, d) {
   }
   await page.waitForTimeout(3500);
 
+  if (status === 429) {
+    return {
+      unverifiable: true,
+      note: 'page returned 429 (rate limited) on re-test — most likely our own traffic, not a site fault',
+    };
+  }
   if (status && status >= 400) {
     return { hit: true, note: `page returned ${status} on re-test` };
   }
@@ -130,6 +142,17 @@ async function reproduces(page, d) {
       const txt = `${d.description} ${d.observed ?? ''}`.toLowerCase();
       if (txt.includes('zero result') || txt.includes('no result')) {
         return { hit: zeroResults, note: zeroResults ? 'still a zero-results page' : 'results present on re-test' };
+      }
+      // A dead-control claim is about one specific control. We do not re-drive
+      // controls here, so we cannot confirm or deny it — and confirming it via
+      // "some unrelated request 4xx'd" is not verification, it is coincidence.
+      // Two dead_control findings were marked verified purely because a 429
+      // fired on the same page load.
+      if (/dead|unresponsive|no visible|nothing happen|did not (change|respond)/i.test(txt)) {
+        return {
+          unverifiable: true,
+          note: 'dead-control claims are not re-driven by the verifier — needs human judgement',
+        };
       }
       if (errors.length) return { hit: true, note: `${errors.length} 4xx/5xx on re-test: ${errors[0]}` };
       return { hit: false, note: 'no failing request or empty state on re-test' };
