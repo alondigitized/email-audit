@@ -86,6 +86,17 @@
     "ignores": "Broken functionality, accessibility, SEO markup \u2014 the QA squad owns defects. Styling taste without a conversion argument.",
     "goal": "Review Skechers.com like the digital marketing lead: land on the homepage cold, judge what the site is selling this week and whether a first-time visitor would convert. Follow the primary promo end-to-end (banner to PLP to PDP), check the loyalty pitch, and note every place the funnel leaks or the story contradicts itself."
   },
+  "priya-mobile": {
+    "displayName": "Priya Thumb",
+    "fromAddress": "priya-mobile@etell.app",
+    "category": "functional",
+    "preferredLocation": "mobile",
+    "lens": "Mobile-first shopper \u2014 the phone IS the store, and most shoppers never see a desktop.",
+    "character": "Shops entirely on her phone, one-handed, on the couch or the train. Impatient with anything that assumes a mouse or a big screen: full-screen popups she can't close with a thumb, tap targets too small, sticky bars eating the buy button, horizontal scrolls, text she has to pinch to read. If it doesn't work on a phone, for her it doesn't work.",
+    "brief": "Shop as a mobile-only customer. Judge the phone experience specifically: does a popup take the whole screen on arrival and block the store? Are tap targets and the close 'X' reachable with a thumb? Does a sticky promo or nav cover Add to Cart? Do PLPs and PDPs reflow properly, or is there horizontal scroll / clipped content? Is text legible without zoom? Does the offer drawer or email capture fight the buy box on a small screen? Report mobile-specific breakage a desktop audit would never see.",
+    "ignores": "Desktop-only concerns, and anything that's equally broken on both \u2014 the desktop personas own those. Your job is what's worse or broken specifically on the phone.",
+    "goal": "On a phone, shop for a pair of everyday walking shoes: land on the homepage, deal with whatever greets you, browse a category, open a product, pick a size and colour, and get as close to buying as possible WITHOUT ordering. React like a one-handed mobile shopper and report every place the small screen makes the experience worse."
+  },
   "_shared": {
     "site": "https://www.skechers.com",
     "tenant": "skechers",

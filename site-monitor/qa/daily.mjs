@@ -56,6 +56,10 @@ const slot = ((dayIndex % PERSONAS.length) + PERSONAS.length) % PERSONAS.length;
 const plan = [
   { persona: PERSONAS[slot], surface: SURFACES[0] },
   { persona: PERSONAS[(slot + 1) % PERSONAS.length], surface: SURFACES[1] },
+  // Dedicated mobile-first shopper every night. preferredLocation makes
+  // journey.mjs run her on a phone; the desktop rotation above still covers
+  // the emulated-mobile surface for the functional/copy/etc lenses.
+  { persona: 'priya-mobile', surface: SURFACES[0] },
 ];
 
 // Opportunity walks (merchandiser / marketer) join once a week each, on

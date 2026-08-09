@@ -184,6 +184,32 @@ export async function inferArea(page) {
  * dead control, and that is a real functional defect we could never see by
  * loading URLs from a list.
  */
+// Human input dynamics. Real shoppers don't teleport the cursor or scroll in
+// one jump — and bot-detection profiles exactly that. Jittered mouse travel,
+// burst scrolling and typing cadence make the nightly session behave like a
+// person, which both reduces the bot flag and reproduces the sequence-level
+// friction (popup fatigue, color->size stranding) that only shows up when you
+// actually move through the page.
+let __seed = 424242;
+function __rnd() { __seed = (__seed * 1103515245 + 12345) & 0x7fffffff; return __seed / 0x7fffffff; }
+function __jit(base, spread) { return Math.round(base + (__rnd() - 0.5) * spread); }
+
+async function humanClickAt(page, x, y) {
+  // approach from an offset, then settle on the target, then click
+  await page.mouse.move(__jit(x, 140), __jit(y, 140), { steps: 3 }).catch(() => {});
+  await page.mouse.move(x, y, { steps: 6 + Math.floor(__rnd() * 6) }).catch(() => {});
+  await page.waitForTimeout(__jit(200, 160));
+  await page.mouse.click(x, y).catch(() => {});
+}
+
+async function humanScroll(page, px = 700) {
+  const bursts = 3 + Math.floor(__rnd() * 3);
+  for (let i = 0; i < bursts; i++) {
+    await page.mouse.wheel(0, Math.round(px / bursts)).catch(() => {});
+    await page.waitForTimeout(__jit(320, 220));
+  }
+}
+
 export async function performAction(page, action, interactables) {
   const before = {
     url: page.url(),
@@ -220,7 +246,7 @@ export async function performAction(page, action, interactables) {
 
   try {
     if (action.kind === 'scroll') {
-      await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.9));
+      await humanScroll(page, Math.round((page.viewportSize()?.height ?? 800) * 0.85));
     } else if (
       action.kind === 'click' &&
       target.href &&
@@ -238,18 +264,26 @@ export async function performAction(page, action, interactables) {
       const el = page.locator(`[data-qa-ref="${target.ref}"]`).first();
       // Lazily-revealed controls often aren't actionable until scrolled to.
       await el.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
+      const box = await el.boundingBox().catch(() => null);
       if (action.kind === 'type') {
-        await el.fill(String(action.text ?? '').slice(0, 80), { timeout: 8000 });
-        await el.press('Enter');
-      } else {
-        try {
-          await el.click({ timeout: 8000 });
-        } catch {
-          // Some nav entries are anchors whose click target is a child span,
-          // or are covered by an overlay. A DOM-level click still exercises
-          // the site's own handler, which is what we're testing.
-          await el.evaluate((n) => n.click());
+        await el.click({ timeout: 6000 }).catch(() => {});
+        // Type at a human cadence rather than fill(), so search-as-you-type
+        // and validation behave the way they do for a real shopper.
+        for (const ch of String(action.text ?? '').slice(0, 80)) {
+          await page.keyboard.type(ch, { delay: __jit(90, 70) });
         }
+        await page.keyboard.press('Enter');
+      } else if (box) {
+        // Move the cursor to the element like a hand would, then click there —
+        // human dynamics that reduce bot-flagging and mimic real engagement.
+        await humanClickAt(page, box.x + box.width / 2, box.y + box.height / 2);
+      } else {
+        await el.hover({ timeout: 4000 }).catch(() => {});
+        // Some nav entries are anchors whose click target is a child span, or
+        // are covered by an overlay. A DOM-level click still exercises the
+        // site's own handler, which is what we're testing.
+        try { await el.click({ timeout: 8000 }); }
+        catch { await el.evaluate((n) => n.click()); }
       }
     }
   } catch (err) {

@@ -67,7 +67,7 @@ const ALLOW_STEALTH = process.argv.includes('--allow-stealth');
 // 'desktop' (default) or 'mobile'. Mobile runs an iPhone-emulated context in
 // the same real Chrome — the Mobile Site is a different rendering surface and
 // 40% of the intake program's own findings, so it gets its own Location.
-const LOCATION = argOf('--location') === 'mobile' ? 'mobile' : 'desktop';
+const LOCATION_FLAG = argOf('--location') === 'mobile' ? 'mobile' : (argOf('--location') === 'desktop' ? 'desktop' : null);
 // Named cookie jar from site-monitor/cookies/{name}.json — enables logged-in
 // journeys (MyAccount / Loyalty Dashboard areas).
 const COOKIES = argOf('--cookies');
@@ -265,7 +265,7 @@ function buildElementCatalog(steps, actedOn = []) {
 
 // ── the lens, applied to the whole journey ────────────────────────────────
 
-function buildFindingsPrompt(persona, goal, steps, actionLog, catalog) {
+function buildFindingsPrompt(persona, goal, steps, actionLog, catalog, location) {
   return [
     `You are ${persona.displayName}. Lens: ${persona.lens}`,
     `Brief: ${persona.brief}`,
@@ -303,6 +303,12 @@ function buildFindingsPrompt(persona, goal, steps, actionLog, catalog) {
     'that explicitly says "NO navigation and NO DOM change at all" is a',
     'dead-control candidate, and even then say so cautiously.',
     '',
+    location === 'mobile'
+      ? 'You are shopping on a PHONE (iPhone viewport, touch). Judge the mobile\n' +
+        'experience: full-screen popups, thumb-reachable close buttons, tap-target\n' +
+        'size, sticky bars over the buy box, horizontal scroll, legibility. A\n' +
+        'desktop-shaped complaint is not yours here.'
+      : '',
     COOKIES
       ? 'You are supposed to be LOGGED IN via a saved session. If the site shows\n' +
         'you as logged out, OUR saved session has expired — that is our problem,\n' +
@@ -325,6 +331,18 @@ function buildFindingsPrompt(persona, goal, steps, actionLog, catalog) {
     'You experienced this journey — report what actually obstructed or misled',
     'you, not a generic audit. If a control did nothing when you clicked it, or',
     'a search returned nothing useful, that is exactly what to report.',
+    '',
+    'HIGH-VALUE: sequence-dependent problems that only appear as you move through',
+    'the site, which a single-page check can never find. Look across the steps',
+    'for: selecting a colour/variant silently stranding you on far fewer sizes',
+    '(compare the size options before vs after a swatch click); a promo/price',
+    'promised on one page absent or contradicted on the next; a popup or sticky',
+    'bar that reappears or covers the buy box as you scroll. Cite the specific',
+    'steps (before AND after) so the change is provable from the screenshots.',
+    '',
+    'Reason over the SCREENSHOTS (the rendered frames), not just the text: a',
+    'button present in the DOM but covered by an overlay, content clipped or',
+    'requiring horizontal scroll, tiny tap targets — these live in the pixels.',
     '',
     'A count is not a bug report. Name specific elements via',
     'affected_element_refs (indices above). Do NOT retype selectors or URLs.',
@@ -486,12 +504,16 @@ const personas = Object.entries(defs).filter(
 );
 if (!personas.length) { console.error('no personas matched'); process.exit(1); }
 
-const runSlug = `${new Date().toISOString().slice(0, 10)}-qa-journey${LOCATION === 'mobile' ? '-mobile' : ''}${COOKIES ? '-member' : ''}`;
+const RUN_DATE = new Date().toISOString().slice(0, 10);
 const tenantId = DRY ? null : await getTenantId(SHARED.tenant);
 let grand = { inserted: 0, skippedDuplicate: 0, invalid: 0, proposed: 0 };
 
 for (const [slug, personaBase] of personas) {
   const persona = GOAL_OVERRIDE ? { ...personaBase, goal: GOAL_OVERRIDE } : personaBase;
+  // A mobile-first persona (preferredLocation) runs on a phone unless the CLI
+  // explicitly overrides. This is how "mobile Priya" stays mobile every night.
+  const LOCATION = LOCATION_FLAG ?? (persona.preferredLocation === 'mobile' ? 'mobile' : 'desktop');
+  const runSlug = `${RUN_DATE}-qa-journey${LOCATION === 'mobile' ? '-mobile' : ''}${COOKIES ? '-member' : ''}`;
   const artifactDir = path.join(ARTIFACT_ROOT, runSlug, slug);
   fs.mkdirSync(artifactDir, { recursive: true });
   log('journey start', { persona: slug, goal: persona.goal?.slice(0, 70) });
@@ -717,7 +739,7 @@ for (const [slug, personaBase] of personas) {
   try {
     proposed = parseJson(
       await runClaude(
-        buildFindingsPrompt(persona, persona.goal, steps, actionLog, catalog),
+        buildFindingsPrompt(persona, persona.goal, steps, actionLog, catalog, LOCATION),
         steps[0].screenshotPath,
         300000
       ),

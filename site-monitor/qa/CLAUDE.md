@@ -89,6 +89,34 @@ flagged. The human is the gate before Skechers either way.
 Partial reproduction (`inconclusive`) **is** refuted — that's the flaky
 signal we're filtering.
 
+## Human, session-based navigation (render-first)
+
+Journeys are run as a **continuous human shopping session**, not a URL scan or a
+mechanical script — this is what a 105-interaction manual walk showed actually
+surfaces value:
+
+- **Human input dynamics** (`navigator.mjs`): jittered mouse travel to each
+  element before clicking, burst scrolling instead of one jump, per-character
+  typing cadence. This reduces bot-flagging AND reproduces the sequence-level
+  friction (popup fatigue, sticky bars over the buy box) a teleporting cursor
+  never feels.
+- **Sequence + render-first findings**: the lens is told to hunt problems that
+  only appear ACROSS steps and only in the pixels — a colour swatch silently
+  stranding the shopper on far fewer sizes (compare size options before/after
+  the click), a promo promised on one page and contradicted on the next, a
+  button present in the DOM but covered by an overlay. Cite before-AND-after
+  steps so the screenshots prove it.
+
+## Mobile-first persona
+
+`priya-mobile` (Priya Thumb) shops one-handed on a phone. `preferredLocation:
+'mobile'` in personas.json makes `journey.mjs` run her in an iPhone-emulated
+context automatically — no `--location` flag needed — and she joins the nightly
+rotation every night (Mobile Site is 40% of the intake program's own findings).
+Her lens is mobile-specific breakage a desktop audit can't see: full-screen
+popups, thumb-reach, tap-target size, sticky bars over Add to Cart, horizontal
+scroll, legibility.
+
 ## Navigation and proof
 
 **Agentic, not scripted.** Elements are enumerated from the live DOM and
