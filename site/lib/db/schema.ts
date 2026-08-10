@@ -1114,6 +1114,17 @@ export const defects = pgTable(
     // From DEFECT_TYPES. Drives the dedupe fingerprint, so it must come from
     // the fixed list rather than free text.
     defectType: text("defect_type"),
+    // Credibility split (the core lesson of the human walks). 'observational'
+    // findings live in the rendered state (price, copy, layout, popup, alt) and
+    // are trustworthy regardless of who's clicking. 'interaction' findings
+    // require an action to SUCCEED (add-to-cart, a control responding), and are
+    // untrustworthy from a bot-flagged session — a blocked bot looks identical
+    // to a broken site. NULL = legacy/unknown.
+    evidenceClass: text("evidence_class"),
+    // 'clean' | 'bot_flagged'. Stamped from the run: when the session was
+    // challenged by Kasada (x-kpsdk tokens / generic "problem on our end"),
+    // interaction findings from it must never auto-advance to filing.
+    provenance: text("provenance"),
     // Set by the adjudicator when it rejects a finding, so a human can see
     // why something never reached the queue.
     adjudication: jsonb("adjudication").$type<DefectAdjudication>(),

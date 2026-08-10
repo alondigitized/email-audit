@@ -83,6 +83,27 @@ export const ELEMENT_LEVEL_TYPES = [
   'truncated_text',
 ];
 
+// Credibility classification — the core lesson of the human walks.
+//
+// INTERACTION defect types require an action to SUCCEED to be real (a control
+// responds, a page loads, a cart accepts). From a bot-flagged session these
+// are untrustworthy: a blocked bot ("problem on our end", a click that does
+// nothing) is indistinguishable from a broken site. Manual walks disproved
+// every one of these that the machine reported.
+//
+// Everything else is OBSERVATIONAL — it lives in the rendered state (price
+// shown, copy, layout, alt, structured data) and is true regardless of who is
+// looking. Observational findings can auto-advance; interaction findings from
+// a bot-flagged run must be held for a human.
+export const INTERACTION_TYPES = [
+  'zero_results', 'http_error', 'broken_link', 'dead_control',
+  'filter_wrong_results', 'image_not_loading',
+];
+
+export function evidenceClassFor(defectType) {
+  return INTERACTION_TYPES.includes(defectType) ? 'interaction' : 'observational';
+}
+
 function db() {
   const url = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
   if (!url) throw new Error('DATABASE_URL_UNPOOLED or DATABASE_URL required');
@@ -219,6 +240,15 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
       out.skippedInvalid.push({ defect: d, errors });
       continue;
     }
+    // Credibility gate: an interaction finding from a bot-flagged session is
+    // untrustworthy (a blocked bot mimics a broken site). Quarantine it rather
+    // than file it — this is what stops "Don't See Your Size is dead" and
+    // "Add to Cart broken" reaching the queue when they're really bot blocks.
+    const evClass = d.evidenceClass ?? evidenceClassFor(d.defectType);
+    if (evClass === 'interaction' && d.provenance === 'bot_flagged') {
+      out.quarantined = (out.quarantined ?? 0) + 1;
+      continue;
+    }
 
     const key =
       d.dedupeKey ||
@@ -271,7 +301,8 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
         location, url, area, description, device, browser, urgency,
         reporter_email, evidence, category, defect_type, expected, observed,
         business_impact, affected_elements,
-        repro_steps, urgency_rationale, confidence, dedupe_key, component_key, status
+        repro_steps, urgency_rationale, confidence, dedupe_key, component_key,
+        evidence_class, provenance, status
       ) VALUES (
         ${tenantId ?? null}, ${d.personaSlug}, ${experienceId ?? null},
         ${d.location}, ${d.url}, ${d.area}, ${d.description},
@@ -283,7 +314,9 @@ export async function insertCandidateDefects(rows, { tenantId, experienceId } = 
         ${JSON.stringify(d.affectedElements ?? [])}::jsonb,
         ${JSON.stringify(d.reproSteps ?? [])}::jsonb,
         ${d.urgencyRationale ?? null}, ${d.confidence ?? null},
-        ${key}, ${compKey}, 'candidate'
+        ${key}, ${compKey},
+        ${d.evidenceClass ?? evidenceClassFor(d.defectType)}, ${d.provenance ?? 'clean'},
+        'candidate'
       )`;
     out.inserted += 1;
   }

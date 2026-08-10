@@ -638,6 +638,13 @@ for (const [slug, personaBase] of personas) {
     log('journey error', { persona: slug, error: String(err).slice(0, 200) });
   }
 
+  // Bot-flag provenance: stealth is always suspect; real Chrome is suspect if
+  // Kasada challenged us (x-kpsdk tokens appear in the URL under challenge).
+  const kasadaSeen = steps.some((st) => /x-kpsdk|kpsdk/i.test(st.url || '')) ||
+    actionLog.some((a) => /x-kpsdk|problem on our end|too many requests|429/i.test(a));
+  const provenance = (!viaCdp || kasadaSeen) ? 'bot_flagged' : 'clean';
+  if (provenance === 'bot_flagged') log('session bot-flagged — interaction findings will quarantine', { stealth: !viaCdp, kasada: kasadaSeen });
+
   await page.close().catch(() => {});
   if (!viaCdp) await browser.close().catch(() => {});
 
