@@ -476,6 +476,38 @@ function buildOpportunityPrompt(persona, goal, steps, actionLog) {
  * really bot detection, so --allow-stealth has to be asked for explicitly and
  * the findings from such a run should be treated as suspect.
  */
+/**
+ * A MINIMIZED Chrome window silently poisons every screenshot we take.
+ *
+ * Chrome stops producing compositor frames for an occluded/minimized window.
+ * Playwright's page.screenshot() (fromSurface: true) then blocks until it
+ * times out, and the CDP fallback (fromSurface: false) is worse than useless —
+ * it returns the LAST frame the compositor produced, so every "proof" in a run
+ * comes back byte-identical, showing whatever page happened to be open when
+ * the window was minimized. Observed live: 21 screenshots across 21 different
+ * URLs, all 314,861 bytes, all showing a stale search-results page.
+ *
+ * That is a credibility bug, not a cosmetic one: it attaches confident-looking
+ * evidence of the wrong page to a real defect report. Restore the window
+ * before capturing anything.
+ */
+async function ensureRenderable(page, context) {
+  try {
+    const cdp = await context.newCDPSession(page);
+    const { windowId, bounds } = await cdp.send('Browser.getWindowForTarget');
+    if (bounds?.windowState === 'minimized') {
+      log('WARNING: Chrome window was minimized — restoring so screenshots are live frames');
+      await cdp.send('Browser.setWindowBounds', { windowId, bounds: { windowState: 'normal' } });
+      await page.waitForTimeout(1200);
+    }
+    await page.bringToFront().catch(() => {});
+    await cdp.detach().catch(() => {});
+  } catch {
+    // Non-CDP (stealth) browsers have no window to restore — headless always
+    // renders, so there is nothing to guard against here.
+  }
+}
+
 async function openBrowser() {
   const cdpUrl = process.env.CDP_URL || 'http://127.0.0.1:9222';
   try {
@@ -545,6 +577,7 @@ for (const [slug, personaBase] of personas) {
     }
   }
   const page = await context.newPage();
+  await ensureRenderable(page, context);
 
   const consoleErrors = [], networkErrors = [];
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text().slice(0, 240)); });
@@ -770,6 +803,7 @@ for (const [slug, personaBase] of personas) {
     : await proofBrowser.browser.newContext({ viewport: { width: 1440, height: 900 } });
   await installPopupBlocker(proofCtx);
   const proofPage = await proofCtx.newPage();
+  await ensureRenderable(proofPage, proofCtx);
 
   const rows = [];
   for (const [pi, p] of proposed.entries()) {
