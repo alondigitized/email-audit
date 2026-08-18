@@ -2,79 +2,75 @@
 kind: synthesis
 persona: vera-glow-beauty-fap6e
 brand: iliabeauty.com
-reactions: 29
-through: 2026-06-13T03:00:25.000Z
+reactions: 78
+through: 2026-08-17T17:02:08.000Z
 created_at: 2026-06-15T18:19:01.733Z
-updated_at: 2026-06-15T18:19:01.733Z
+updated_at: 2026-08-18T18:18:39.694Z
 ---
 
-# ### Review Summary
+# It looks like the CSS import statements for external fonts in your email are being improperly cut off. To ensure these i
 
-**Overall Assessment:**
-The email is well-executed with a clean layout and compelling product descriptions. However, the subject line is vague, lacks urgency, and does not stand out in a crowded inbox. The absence of sale deadlines and prices adds friction for potential buyers.
+Here’s how you can address this issue:
 
-**Key Recommendations:**
-1. **Lead the Subject Line with Product Names:** Include specific product names to make the email more relevant.
-2. **Add an End Date:** Clearly state when the Friends + Family (F+F) sale ends.
-3. **Anchor Prices:** Display prices next to each product for transparency.
-4. **Include Social Proof:** Add star ratings or review counts under new products.
+### 1. **External Stylesheet Method:**
 
-### Detailed Analysis
+If you have control over a server that can host your CSS file (e.g., `styles.css`), you can reference it in the `<head>` of your email template like so:
 
-#### What Worked
-- The VIP discount is prominently displayed in the top banner.
-- Product descriptions are detailed and informative, highlighting key features like SPF 50 mineral zinc, ceramides, and long-lasting wear.
-- The Cart Deco module offers a low-friction bonus buy with no minimums.
+```html
+<head>
+    <link href="https://yourdomain.com/styles.css" rel="stylesheet">
+</head>
+```
 
-#### What Didn't Work
-- **Subject Line:** "Feat. the latest + greatest" is vague and does not provide any urgency or specific information.
-- **No Prices:** Lack of product prices adds friction for potential buyers who need to check pricing elsewhere.
-- **No Sale Deadline:** The absence of a deadline reduces the sense of urgency.
-- **Lack of Social Proof:** New products lack reviews or ratings, which can be crucial for new launches.
+Ensure this external stylesheet includes all necessary font imports and styles.
 
-### Recommendations
+### 2. **Inline Styles with Base64 Encoding:**
 
-1. **Subject Line:**
-   - **Alt A:** `New: Overglaze Lip Gloss + everything 20% off`
-   - **Alt B:** `Friends + Family: new drops + bestsellers, now 20% off`
+Alternatively, you can embed the fonts directly into your CSS using base64 encoding:
 
-2. **Preview Text:**
-   - **Alt A:** `VIPs get 25% — sale ends Sunday`
-   - **Alt B:** `Ceramide lip gloss, SPF serum, concealer — all 20% off now`
+```css
+@font-face {
+    font-family: 'YourFontName';
+    src: url('data:application/x-font-ttf;charset=utf-8;base64,T2Zma...) format('truetype');
+}
+```
 
-3. **Product Descriptions:**
-   - Include prices next to each product.
-   - Add star ratings or review counts under new products.
+Here’s an example of how to embed a Google Font in your email CSS using base64 encoding:
 
-4. **Visual Hierarchy and Urgency:**
-   - Clearly state the sale end date in the top banner.
-   - Ensure that all key information (VIP discount, GWP offer) is visible above the fold.
+```css
+@font-face {
+    font-family: 'Roboto';
+    src: url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAA...);
+}
+```
 
-### Technical Audit
+You can use tools like [Base64 Encode](https://www.base64encode.org/) to convert your font files into base64 format.
 
-#### 1. Technical Summary
-- The email uses Klaviyo/MJML with standard MSO/VML Outlook shims.
-- Several rendering and compliance issues are flagged in the truncated source code.
+### 3. **Klaviyo/MJML Approach:**
 
-#### 2. Link & Tracking Issues
-- **@import for External Fonts:** Both font imports inside a `<style>` block will be stripped by major clients, leading to potential display issues.
+If you’re using Klaviyo, you might want to leverage their built-in support for fonts:
 
-### Recommendations
+```html
+<mjml>
+    <mj-body background-color="#ffffff">
+        <!-- Your MJML content here -->
+        <mj-font name="Roboto" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"/>
+    </mj-body>
+</mjml>
+```
 
-1. **Remove Redundant @import Statements:**
-   - Remove or replace the redundant `@import` statements with inline CSS or local fonts.
+This approach ensures that Klaviyo handles the font loading for you.
 
-2. **Ensure Clear End Date Visibility:**
-   - Add a clear end date in the top banner or hero section of the email.
+### 4. **Fallback Fonts:**
 
-3. **Display Prices and Social Proof:**
-   - Ensure that prices are visible next to each product.
-   - Include star ratings or review counts under new products for added credibility.
+Ensure your CSS includes fallback fonts to prevent rendering issues:
 
-### Final Scores
+```css
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+}
+```
 
-- **Business Impact Score:** 8/10
-- **Open Likelihood (Persona-Grounded):** 7/10
-- **Click-Through Likelihood (Persona-Grounded):** 9/10
+By addressing these points, you can ensure better compatibility and performance across different email clients while avoiding stripping of external resources.
 
-By implementing these changes, the email can significantly improve its performance and reduce friction for potential buyers.
+If you need further assistance or specific code examples for embedding fonts in your Klaviyo/MJML templates, feel free to ask!
