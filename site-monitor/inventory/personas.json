@@ -7,7 +7,7 @@
     "auditWebviewUrl": "https://www.skechers.com/women/shoes/",
     "categoriesFile": "categories-womens.json",
     "auditSlugSuffix": "skechers-womens-inventory",
-    "subjectPrefix": "Inventory Audit · Skechers Women's Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Women's Shoes"
   },
   "ian-inventory": {
     "displayName": "Ian Inventory",
@@ -17,7 +17,7 @@
     "auditWebviewUrl": "https://www.skechers.com/men/shoes/",
     "categoriesFile": "categories-mens.json",
     "auditSlugSuffix": "skechers-mens-inventory",
-    "subjectPrefix": "Inventory Audit · Skechers Men's Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Men's Shoes"
   },
   "ida-inventory": {
     "displayName": "Ida Inventory",
@@ -27,7 +27,7 @@
     "auditWebviewUrl": "https://www.skechers.com/kids/girls/",
     "categoriesFile": "categories-girls.json",
     "auditSlugSuffix": "skechers-girls-inventory",
-    "subjectPrefix": "Inventory Audit · Skechers Girls' Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Girls' Shoes"
   },
   "ike-inventory": {
     "displayName": "Ike Inventory",
@@ -37,6 +37,16 @@
     "auditWebviewUrl": "https://www.skechers.com/kids/boys/",
     "categoriesFile": "categories-boys.json",
     "auditSlugSuffix": "skechers-boys-inventory",
-    "subjectPrefix": "Inventory Audit · Skechers Boys' Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Boys' Shoes"
+  },
+  "iris-inventory": {
+    "displayName": "Iris Inventory",
+    "fromAddress": "iris-inventory@etell.app",
+    "scope": "Skechers sale rack (bargain hunter)",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/sale/",
+    "categoriesFile": "categories-sale.json",
+    "auditSlugSuffix": "skechers-sale-inventory",
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Sale Rack"
   }
 }

@@ -133,6 +133,7 @@ export async function unapproveDefectAction(fd: FormData): Promise<void> {
 
 /** Counts per status, for the queue header. */
 export async function defectCounts(): Promise<Record<string, number>> {
+  await requireAdmin();
   const rows = await db
     .select({ status: defects.status, n: raw<number>`count(*)::int` })
     .from(defects)

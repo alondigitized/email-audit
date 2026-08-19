@@ -110,7 +110,10 @@ export function InventoryVariantDetail({
             <div className="flex items-start justify-between gap-3 mb-2">
               <div className="min-w-0">
                 <div className="text-[11px] uppercase tracking-wide text-muted">
-                  {r.plp}
+                  {r.plp}{" "}
+                  <span className="normal-case font-semibold text-gray-700">
+                    · position #{r.styleRank}
+                  </span>
                 </div>
                 <a
                   href={r.styleUrl}
@@ -163,6 +166,7 @@ export function InventoryVariantDetail({
           <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
             <tr>
               <th className="px-3 py-2 font-medium">Category</th>
+              <th className="px-3 py-2 font-medium text-right">Pos.</th>
               <th className="px-3 py-2 font-medium">Style</th>
               <th className="px-3 py-2 font-medium">Color</th>
               <th className="px-3 py-2 font-medium">Width</th>
@@ -176,6 +180,12 @@ export function InventoryVariantDetail({
               <tr key={i} className="border-t border-gray-100 align-top">
                 <td className="px-3 py-2 text-muted whitespace-nowrap">
                   {r.plp}
+                </td>
+                <td
+                  className="px-3 py-2 text-right font-semibold tabular-nums whitespace-nowrap"
+                  title={`Merchandised position #${r.styleRank} in ${r.plp}`}
+                >
+                  #{r.styleRank}
                 </td>
                 <td className="px-3 py-2">
                   <a

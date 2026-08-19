@@ -115,6 +115,18 @@ function buildUserPrompt({ scope, totals, plps }) {
     lines.push(
       `- ${p.category}: ${p.styles.length} styles, ${v} variants, ${cPct}% avg coverage.${widthStr} Most-missing sizes: ${top3Missing || 'n/a'}`
     );
+    // Per-style position within the merchandised order. Position is
+    // leverage: a stocked-out style at position #1 of a category is a
+    // wasted top slot, which matters far more than the same gap at #12.
+    for (const s of p.styles) {
+      let sCov = 0;
+      let sDen = 0;
+      for (const x of s.variants) {
+        if (x.total_count > 0) { sCov += x.available_count / x.total_count; sDen++; }
+      }
+      const sPct = sDen > 0 ? ((sCov / sDen) * 100).toFixed(0) : '—';
+      lines.push(`    · position #${s.rank} in ${p.category}: ${s.name} — ${sPct}% size coverage`);
+    }
   }
   lines.push(
     '',
@@ -124,6 +136,9 @@ function buildUserPrompt({ scope, totals, plps }) {
     "  ### What to restock   (5-8 bullets, each: category · size(s) · width · why)",
     '',
     'Use specific category names, specific sizes, specific widths. Numbers help.',
+    'When you name a style, state its merchandised position in its category',
+    '(e.g. "position #2 in Sale — Top of Rack") — a gap high on the page wastes',
+    'prime real estate and outranks the same gap further down.',
     'No score, no /10, no rating sentence anywhere.',
     'No restatement of grand totals — those are above the matrix already.'
   );

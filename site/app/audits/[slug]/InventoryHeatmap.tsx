@@ -259,7 +259,7 @@ export function InventoryVariantMatrix({
                   s.available ? "available" : "unavailable"
                 );
               }
-              const label = `${row.plp} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
+              const label = `${row.plp} #${row.styleRank} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
               return (
                 <tr key={i}>
                   <td
@@ -270,8 +270,11 @@ export function InventoryVariantMatrix({
                       const sku = parseStyleSku(row.variant.pdp_url);
                       return (
                         <>
+                          <span className="font-semibold tabular-nums">
+                            #{row.styleRank}
+                          </span>{" "}
                           <span className="font-mono text-muted">
-                            {sku ?? `#${row.styleRank}`}
+                            {sku ?? ""}
                           </span>{" "}
                           <span className="font-medium">{row.color}</span>
                           {row.width ? (
