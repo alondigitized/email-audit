@@ -167,31 +167,28 @@ export async function embedAndStoreAudit({ audit, personaSlug, reactionId = null
   try {
     const text = buildIndexedText(audit, personaSlug);
     const vec = await embedWithRetry(text);
-    await upsertAuditEmbedding({
-      auditSlug: audit.slug,
-      persona: personaSlug,
-      indexedText: text,
-      embedding: vec,
-    });
-    // V3 mirror: write reaction_embedding when caller supplied a
-    // reaction id (i.e. XR-C dual-write window). Best-effort — failures
-    // here don't undo the audit_embedding write above.
+    // reaction_embedding is the PRIMARY store (chat retrieval reads it).
+    // It was the "mirror" during the XR-C dual-write window; roles flipped
+    // when legacy writes were gated off (2026-08-19) — audit_embedding has
+    // no readers and each row is paid for twice on Neon.
     if (reactionId) {
-      try {
-        const { upsertReactionEmbedding } = await import('./publish.mjs');
-        await upsertReactionEmbedding({
-          reactionId,
-          persona: personaSlug,
-          indexedText: text,
-          embedding: vec,
-        });
-      } catch (err) {
-        console.warn(
-          `embedAndStoreAudit: reaction_embedding mirror failed for ${audit.slug}: ${
-            err instanceof Error ? err.message : String(err)
-          }`,
-        );
-      }
+      const { upsertReactionEmbedding } = await import('./publish.mjs');
+      await upsertReactionEmbedding({
+        reactionId,
+        persona: personaSlug,
+        indexedText: text,
+        embedding: vec,
+      });
+    }
+    // Legacy audit_embedding write — also the fallback when a caller has no
+    // reactionId, so an embedding always lands somewhere backfillable.
+    if (process.env.LEGACY_AUDIT_WRITES === '1' || !reactionId) {
+      await upsertAuditEmbedding({
+        auditSlug: audit.slug,
+        persona: personaSlug,
+        indexedText: text,
+        embedding: vec,
+      });
     }
     return { embedded: true };
   } catch (err) {

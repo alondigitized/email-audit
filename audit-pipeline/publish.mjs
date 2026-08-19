@@ -69,26 +69,32 @@ export async function upsertAuditRow({ slug, data }) {
   const mediaKeys = extractMediaKeys(parsed);
 
   const sql = db();
-  // Resolve the persona's tenant_id inline via a scalar subquery so the
-  // audit row carries it without a separate read round trip. Tenant-scoped
-  // reads (lib/audits.ts) filter on tenant_id; missing it would hide the
-  // row from its own tenant. The subquery yields NULL for dev/test setups
-  // where the persona row hasn't been backfilled yet — same as before.
-  await sql`
-    INSERT INTO audit (slug, persona, type, timestamp, score, data, media_keys, tenant_id, updated_at)
-    VALUES (${slug}, ${persona}, ${type}, ${timestamp}, ${score},
-            ${JSON.stringify(parsed)}::jsonb, ${JSON.stringify(mediaKeys)}::jsonb,
-            (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1), NOW())
-    ON CONFLICT (slug) DO UPDATE SET
-      persona = EXCLUDED.persona,
-      type = EXCLUDED.type,
-      timestamp = EXCLUDED.timestamp,
-      score = EXCLUDED.score,
-      data = EXCLUDED.data,
-      media_keys = EXCLUDED.media_keys,
-      tenant_id = EXCLUDED.tenant_id,
-      updated_at = NOW()
-  `;
+  // LEGACY write, off by default since 2026-08-19. The site reads audits
+  // exclusively from the v3 experience/reaction split (lib/audits.ts, chat
+  // reads reaction_embedding) — the audit table has no readers left, and
+  // every row written here is paid for twice on Neon (written-data/WAL +
+  // storage + PITR history). Set LEGACY_AUDIT_WRITES=1 to re-enable if
+  // something legacy resurfaces. The persona.last_status writeback BELOW
+  // stays unconditional — the admin personas page depends on it.
+  if (process.env.LEGACY_AUDIT_WRITES === '1') {
+    // Resolve the persona's tenant_id inline via a scalar subquery so the
+    // audit row carries it without a separate read round trip.
+    await sql`
+      INSERT INTO audit (slug, persona, type, timestamp, score, data, media_keys, tenant_id, updated_at)
+      VALUES (${slug}, ${persona}, ${type}, ${timestamp}, ${score},
+              ${JSON.stringify(parsed)}::jsonb, ${JSON.stringify(mediaKeys)}::jsonb,
+              (SELECT tenant_id FROM persona WHERE slug = ${persona} LIMIT 1), NOW())
+      ON CONFLICT (slug) DO UPDATE SET
+        persona = EXCLUDED.persona,
+        type = EXCLUDED.type,
+        timestamp = EXCLUDED.timestamp,
+        score = EXCLUDED.score,
+        data = EXCLUDED.data,
+        media_keys = EXCLUDED.media_keys,
+        tenant_id = EXCLUDED.tenant_id,
+        updated_at = NOW()
+    `;
+  }
 
   // Writeback last-audit status so the admin UI shows "last audit 2 days
   // ago, score 7/10" without having to scan the audit table. Best-effort:
@@ -327,14 +333,16 @@ export async function listActivePersonasWithSite() {
 export async function upsertAutoConfirm({ slug, autoConfirm }) {
   const sql = db();
   const blob = JSON.stringify(autoConfirm ?? null);
-  // Update the legacy audit.data->auto_confirm so re-renders out of the
-  // legacy table see the same shape, then the experience column for v3.
-  await sql`
-    UPDATE audit
-    SET data = jsonb_set(data, '{auto_confirm}', ${blob}::jsonb, true),
-        updated_at = NOW()
-    WHERE slug = ${slug}
-  `;
+  // Legacy audit.data->auto_confirm mirror — gated with the other legacy
+  // writes (see upsertAuditRow). v3 experience column below is the live one.
+  if (process.env.LEGACY_AUDIT_WRITES === '1') {
+    await sql`
+      UPDATE audit
+      SET data = jsonb_set(data, '{auto_confirm}', ${blob}::jsonb, true),
+          updated_at = NOW()
+      WHERE slug = ${slug}
+    `;
+  }
   await sql`
     UPDATE experience e
     SET auto_confirm = ${blob}::jsonb,
