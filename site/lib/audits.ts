@@ -150,10 +150,27 @@ const AUDIT_INDEX_ROW_LIMIT = 2000;
 // per-user ACL is applied by getAuditIndexForUser choosing which slugs to
 // merge, so nothing user-specific enters the cache key. Same JSONB sub-path
 // projection as before, plus received_at (ISO-normalized) for the merge sort.
+// Retry once on transient Neon failures. The serverless driver surfaces
+// compute restarts / dropped conns as FATAL 08P01 ("server conn crashed?",
+// "partial pkt in login phase") — a second attempt lands on a healthy
+// conn. Deliberately does NOT retry 53200 (out of memory): that one is
+// load-shaped and recurs; the fix for it is the bounded fan-out below.
+async function withNeonRetry<T>(run: () => Promise<T>): Promise<T> {
+  try {
+    return await run();
+  } catch (err) {
+    const cause = (err as { cause?: { code?: string } })?.cause;
+    const code = cause?.code ?? (err as { code?: string })?.code;
+    if (code !== "08P01") throw err;
+    await new Promise((r) => setTimeout(r, 250));
+    return run();
+  }
+}
+
 function getAuditRowsForPersona(personaSlug: string) {
   return unstable_cache(
     async () => {
-      const rows = await db
+      const rows = await withNeonRetry(() => db
         .select({
           slug: reactions.slug,
           type: experiences.type,
@@ -189,7 +206,7 @@ function getAuditRowsForPersona(personaSlug: string) {
         .innerJoin(experiences, eq(experiences.id, reactions.experienceId))
         .where(eq(reactions.personaSlug, personaSlug))
         .orderBy(desc(experiences.receivedAt))
-        .limit(AUDIT_INDEX_ROW_LIMIT);
+        .limit(AUDIT_INDEX_ROW_LIMIT));
       return rows.map((r) => ({
         ...r,
         receivedAt: r.receivedAt ? new Date(r.receivedAt).toISOString() : null,
@@ -204,8 +221,26 @@ export async function getAuditIndexForUser(
   personaSlugs: string[]
 ): Promise<AuditSummary[]> {
   if (personaSlugs.length === 0) return [];
+  // Bounded fan-out. Firing one limit-2000 JSONB-projection query per
+  // persona ALL at once (a tenant can own dozens) stampedes Neon's
+  // compute — observed as 53200 "out of memory" in ExecutorState and
+  // 08P01 conn crashes on the homepage (error digest 3069729569). Six
+  // at a time keeps a cold-cache homepage fast while staying inside the
+  // compute's memory budget; cache hits skip the pool entirely.
+  const fetchAllPersonaRows = async () => {
+    const out: Awaited<ReturnType<typeof getAuditRowsForPersona>>[] = [];
+    const POOL = 6;
+    for (let i = 0; i < personaSlugs.length; i += POOL) {
+      out.push(
+        ...(await Promise.all(
+          personaSlugs.slice(i, i + POOL).map((slug) => getAuditRowsForPersona(slug))
+        ))
+      );
+    }
+    return out;
+  };
   const [perPersonaRows, allPersonas, industryBySlug] = await Promise.all([
-    Promise.all(personaSlugs.map((slug) => getAuditRowsForPersona(slug))),
+    fetchAllPersonaRows(),
     getAllPersonas(),
     loadIndustryBySlug(),
   ]);
