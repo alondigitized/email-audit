@@ -627,15 +627,21 @@ async function main() {
     return;
   }
 
+  let reactionId = null;
   if (dbConfigured()) {
     await upsertAuditRow({ slug, data: auditData });
-    await upsertExperienceAndReaction({ slug, data: auditData });
+    // Keep the reaction id: without it the embed step can only write the
+    // legacy audit_embedding table, which chat retrieval does NOT read —
+    // inventory audits were invisible to persona chat because this id was
+    // dropped here.
+    const r = await upsertExperienceAndReaction({ slug, data: auditData });
+    reactionId = r.reactionId;
     log('audit row + experience + reaction upserted');
   } else {
     log('DB not configured — skipping upsert');
   }
 
-  await writeVaultNote({ auditData, personaSlug: PERSONA_SLUG, repoRoot: REPO_ROOT });
+  await writeVaultNote({ auditData, personaSlug: PERSONA_SLUG, repoRoot: REPO_ROOT, reactionId });
   log('vault note written');
   log('run complete');
 }
