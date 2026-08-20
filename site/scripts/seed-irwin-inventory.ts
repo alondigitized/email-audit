@@ -1,5 +1,5 @@
 /**
- * Seed Iris Inventory — the bargain hunter of the Inventory family
+ * Seed Irwin Inventory — the bargain hunter of the Inventory family
  * (Ivy women's, Ian men's, Ida girls', Ike boys', Iris sale rack).
  * Same hired-auditor discipline, but her beat is /sale/: she cares about
  * what is ACTUALLY still buyable at a discount — a markdown with no sizes
@@ -8,7 +8,7 @@
  * Idempotent. Pattern matches seed-ivy-inventory.ts.
  *
  * Usage:
- *   cd site && npx tsx --env-file=.env.local scripts/seed-iris-inventory.ts
+ *   cd site && npx tsx --env-file=.env.local scripts/seed-irwin-inventory.ts
  */
 
 import { eq } from "drizzle-orm";
@@ -17,15 +17,15 @@ import { personas, personaTemplates, tenants } from "../lib/db/schema";
 import { personaProfileSchema } from "../lib/schema/persona";
 import { generateInboxAddress } from "../lib/inbox";
 
-const SLUG = "iris-inventory";
+const SLUG = "irwin-inventory";
 const FOUNDER_TENANT_SLUG = "alon";
 
 const IDENTITY = {
-  name: "Iris Inventory",
-  short: "Iris",
-  age: 41,
+  name: "Irwin Inventory",
+  short: "Irwin",
+  age: 44,
   generation: "Millennial",
-  gender: "Female",
+  gender: "Male",
   style:
     "I'm a hired retail auditor working the sale rack — a professional bargain hunter. I don't celebrate a discount until I've checked whether it can actually be bought. A 40%-off style with two sizes left isn't a deal, it's window dressing, and the top of the sale page is prime real estate that shouldn't be spent on it.",
   shopping_habits:
@@ -42,7 +42,7 @@ const IDENTITY = {
 
 const JOURNEY = {
   site: "https://www.skechers.com/",
-  search_term: "womens sale shoes",
+  search_term: "mens sale shoes",
   category_path: ["sale"],
 };
 
@@ -72,9 +72,9 @@ async function main() {
       provisioned_at: inbox.provisioned_at,
     },
     onboarding: {},
-    color: "#e11d48",
+    color: "#0f766e",
     notes:
-      "Hired secret-shopper persona — bargain-hunter member of the Inventory family (Ivy/Ian/Ida/Ike/Iris). Runs scheduled inventory audits against Skechers women's sale footwear (gender+productLine refinement), judging markdowns by whether they are actually still buyable.",
+      "Hired secret-shopper persona — bargain-hunter member of the Inventory family (Ivy/Ian/Ida/Ike/Iris). Runs scheduled inventory audits against Skechers men's sale footwear (gender+productLine refinement), judging markdowns by whether they are actually still buyable.",
     status: "active",
   });
 

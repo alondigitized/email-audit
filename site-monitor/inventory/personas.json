@@ -42,11 +42,41 @@
   "iris-inventory": {
     "displayName": "Iris Inventory",
     "fromAddress": "iris-inventory@etell.app",
-    "scope": "Skechers sale rack (bargain hunter)",
+    "scope": "Skechers women's sale footwear (bargain hunter)",
     "site": "skechers.com",
-    "auditWebviewUrl": "https://www.skechers.com/sale/",
+    "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=W%7CU&prefv2=FOOTWEAR",
     "categoriesFile": "categories-sale.json",
-    "auditSlugSuffix": "skechers-sale-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Sale Rack"
+    "auditSlugSuffix": "skechers-womens-sale-inventory",
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Women's Sale Footwear"
+  },
+  "irwin-inventory": {
+    "displayName": "Irwin Inventory",
+    "fromAddress": "irwin-inventory@etell.app",
+    "scope": "Skechers men's sale footwear (bargain hunter)",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=M%7CU&prefv2=FOOTWEAR",
+    "categoriesFile": "categories-sale-mens.json",
+    "auditSlugSuffix": "skechers-mens-sale-inventory",
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Men's Sale Footwear"
+  },
+  "izzy-inventory": {
+    "displayName": "Izzy Inventory",
+    "fromAddress": "izzy-inventory@etell.app",
+    "scope": "Skechers girls' sale footwear (bargain hunter)",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=G&prefv2=FOOTWEAR",
+    "categoriesFile": "categories-sale-girls.json",
+    "auditSlugSuffix": "skechers-girls-sale-inventory",
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Girls' Sale Footwear"
+  },
+  "iggy-inventory": {
+    "displayName": "Iggy Inventory",
+    "fromAddress": "iggy-inventory@etell.app",
+    "scope": "Skechers boys' sale footwear (bargain hunter)",
+    "site": "skechers.com",
+    "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=B&prefv2=FOOTWEAR",
+    "categoriesFile": "categories-sale-boys.json",
+    "auditSlugSuffix": "skechers-boys-sale-inventory",
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Boys' Sale Footwear"
   }
 }
