@@ -390,6 +390,7 @@ export async function AuditBody({
     }
     const keys = new Set<string>();
     for (const plp of audit.inventory.plps) {
+      if (plp.plp_screenshot_key) keys.add(plp.plp_screenshot_key);
       for (const style of plp.styles) {
         for (const v of style.variants) {
           if (v.pdp_screenshot_key) keys.add(v.pdp_screenshot_key);

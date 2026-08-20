@@ -424,6 +424,43 @@ async function readSizes(page) {
   return raw;
 }
 
+// Full-page capture of the PLP itself — the day's assortment as evidence.
+// The heatmap says "this is what coverage looked like"; this screenshot is
+// the primary source a human can check it against. JPEG: assortment pages
+// run 5-9k px tall and PNG would be several MB per category.
+async function capturePlpAssortment(page, slug, plpSlug) {
+  const fname = `${plpSlug}-plp-assortment.jpg`;
+  const localDir = path.join(ARTIFACTS_BASE, slug);
+  fs.mkdirSync(localDir, { recursive: true });
+  const localPath = path.join(localDir, fname);
+  try {
+    // Walk the full grid first so lazy-loaded tile images hydrate before
+    // the capture — otherwise the bottom half of the evidence is gray boxes.
+    await page.evaluate(async () => {
+      const step = 900;
+      for (let y = 0; y < document.body.scrollHeight && y < 14000; y += step) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 250));
+      }
+      window.scrollTo(0, 0);
+    });
+    await delay(800);
+    await page.screenshot({ path: localPath, fullPage: true, type: 'jpeg', quality: 70 });
+  } catch (err) {
+    log('PLP assortment screenshot failed', { fname, err: String(err).slice(0, 160) });
+    return null;
+  }
+  if (DRY_RUN || !mediaConfigured()) return null;
+  const key = `audits/${slug}/${fname}`;
+  try {
+    await putMedia({ filePath: localPath, key, contentType: 'image/jpeg' });
+    return key;
+  } catch (err) {
+    log('R2 upload failed', { key, err: String(err).slice(0, 160) });
+    return null;
+  }
+}
+
 async function capturePdpProof(page, slug, plpSlug, rank, colorIdx) {
   const fname = `${plpSlug}-rank${String(rank).padStart(2, '0')}-color${colorIdx}.png`;
   const localDir = path.join(ARTIFACTS_BASE, slug);
@@ -591,6 +628,9 @@ async function main() {
   for (const plp of plps) {
     try {
       const { styles, layout } = await scrapePlpTopStyles(page, plp);
+      // Capture the assortment NOW — the page is still on the PLP; the PDP
+      // loop below navigates away.
+      const plpScreenshotKey = await capturePlpAssortment(page, slug, plpSlugify(plp.name));
       const enriched = [];
       for (const style of styles) {
         try {
@@ -604,7 +644,7 @@ async function main() {
       // page_layout: 'grid' = ranks are true grid order; 'carousel' = the
       // page is a CMS landing built of merchandised carousels — positions
       // are carousel order and may include off-gender featured tiles.
-      results.push({ category: plp.name, url: plp.url, page_layout: layout, styles: enriched });
+      results.push({ category: plp.name, url: plp.url, page_layout: layout, plp_screenshot_key: plpScreenshotKey, styles: enriched });
     } catch (err) {
       log('PLP failed', { plp: plp.name, err: String(err).slice(0, 200) });
       results.push({ category: plp.name, url: plp.url, styles: [], error: String(err).slice(0, 200) });

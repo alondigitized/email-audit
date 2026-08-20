@@ -108,6 +108,46 @@ export function InventoryVariantDetail({
         )}
       </div>
 
+      {/* Assortment evidence: full-page PLP captures taken during the
+          audit — the primary source the heatmap can be checked against. */}
+      {(() => {
+        const shots = inventory.plps
+          .filter((p) => !p.error && p.plp_screenshot_key)
+          .map((p) => ({
+            category: p.category,
+            url: p.url,
+            key: p.plp_screenshot_key as string,
+            signed: signedScreenshotUrls[p.plp_screenshot_key as string] ?? null,
+            styles: p.styles.length,
+          }))
+          .filter((p) => p.signed);
+        if (shots.length === 0) return null;
+        return (
+          <div className="mb-6">
+            <h4 className="text-xs uppercase tracking-wide text-muted mb-2">
+              Assortment evidence — PLP captures from this audit
+            </h4>
+            <ul className="flex flex-wrap gap-2">
+              {shots.map((p) => (
+                <li key={p.key}>
+                  <a
+                    href={p.signed!}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-xs font-medium text-sky-700 hover:border-sky-300"
+                    title={`Full-page capture of ${p.url} at audit time (${p.styles} styles audited)`}
+                  >
+                    <span aria-hidden>📸</span>
+                    {p.category}
+                    <span className="text-muted font-normal">full assortment</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })()}
+
       <div className="mb-6">
         <InventoryVariantMatrix inventory={inventory} />
       </div>

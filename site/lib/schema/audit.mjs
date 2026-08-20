@@ -176,6 +176,9 @@ export const inventoryPlpSchema = z.object({
   // CMS landing page built of merchandised carousels. Optional (pre-08-20
   // audits don't carry it).
   page_layout: z.string().optional(),
+  // Full-page capture of the PLP at audit time — the day's assortment as
+  // checkable evidence. R2 key; null when capture/upload failed or dry-run.
+  plp_screenshot_key: z.string().nullable().optional(),
   styles: z.array(inventoryStyleSchema),
   error: z.string().nullable().optional(),
 });
