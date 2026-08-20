@@ -14,6 +14,14 @@
 // Weights are approximations of US retail sell-through by size (mens peak
 // ~10, womens ~8, apparel peaks M/L). They don't need to be exact to be
 // useful — they need to rank a size-10 hole above a size-16 hole.
+//
+// BRAND FACT (per Alon, 2026-08-20): Skechers sandals come in WHOLE sizes
+// only. The math here is safe by construction — coverage only counts sizes
+// a product actually lists, so a whole-size sandal run scores complete and
+// half sizes never appear as "missing" for it. Each whole size on a sandal
+// simply absorbs its neighbors' demand; normalization handles the rest.
+// The narrative prompt carries the same fact so the model never suggests
+// stocking half sizes on sandals.
 
 // Persona slug → size profile. Lets the UI weight LEGACY audits that were
 // published before size_profile landed in the inventory blob.
