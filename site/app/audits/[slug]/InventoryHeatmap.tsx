@@ -87,16 +87,26 @@ function sortSizes(sizes: string[]): string[] {
   });
 }
 
-// Coverage → discrete bucket → Tailwind class. Five buckets is enough to
-// see voids without overwhelming the palette; named tones (rose / amber /
-// emerald) ramp the same direction the rest of the audit page uses.
-function coverageClass(pct: number, hasData: boolean): string {
-  if (!hasData) return "bg-gray-100";
-  if (pct >= 0.8) return "bg-emerald-500";
-  if (pct >= 0.6) return "bg-emerald-300";
-  if (pct >= 0.4) return "bg-amber-300";
-  if (pct >= 0.2) return "bg-rose-300";
-  return "bg-rose-500";
+// Coverage → 10% buckets → color. Ten steps needs a real ramp, not
+// Tailwind's named shades: rose (bad) through amber into emerald (good),
+// same direction the rest of the audit page uses. Index = floor(pct*10).
+const COVERAGE_RAMP = [
+  "#be123c", // 0–10%   rose-700
+  "#e11d48", // 10–20%  rose-600
+  "#f43f5e", // 20–30%  rose-500
+  "#fb7185", // 30–40%  rose-400
+  "#fda4af", // 40–50%  rose-300
+  "#fcd34d", // 50–60%  amber-300
+  "#fbbf24", // 60–70%  amber-400
+  "#bef264", // 70–80%  lime-300
+  "#6ee7b7", // 80–90%  emerald-300
+  "#10b981", // 90–100% emerald-500
+];
+
+function coverageColor(pct: number, hasData: boolean): string {
+  if (!hasData) return "#f3f4f6"; // gray-100
+  const idx = Math.min(9, Math.max(0, Math.floor(pct * 10)));
+  return COVERAGE_RAMP[idx];
 }
 
 function binaryClass(state: "available" | "unavailable" | "missing"): string {
@@ -286,7 +296,8 @@ export function InventoryCoverageMatrix({
                             <td
                               key={sz}
                               title={label}
-                              className={`w-7 h-6 rounded-[3px] ${coverageClass(pct, has)}`}
+                              className="w-7 h-6 rounded-[3px]"
+                              style={{ backgroundColor: coverageColor(pct, has) }}
                             />
                           );
                         })}
@@ -462,22 +473,29 @@ function DemandHeader({ axis, profile, cellW }: { axis: string[]; profile: strin
 }
 
 function Legend() {
-  const buckets: { label: string; cls: string }[] = [
-    { label: "0–20%", cls: "bg-rose-500" },
-    { label: "20–40%", cls: "bg-rose-300" },
-    { label: "40–60%", cls: "bg-amber-300" },
-    { label: "60–80%", cls: "bg-emerald-300" },
-    { label: "80–100%", cls: "bg-emerald-500" },
-    { label: "n/a", cls: "bg-gray-100" },
-  ];
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-muted">
-      {buckets.map((b) => (
-        <span key={b.label} className="inline-flex items-center gap-1">
-          <span className={`inline-block w-3 h-3 rounded-[2px] ${b.cls}`} />
-          {b.label}
+    <div className="mt-2 flex flex-wrap items-center gap-4 text-[11px] text-muted">
+      <span className="inline-flex items-center gap-1.5">
+        0%
+        <span className="inline-flex overflow-hidden rounded-[3px]">
+          {COVERAGE_RAMP.map((c, i) => (
+            <span
+              key={c}
+              className="inline-block w-4 h-3"
+              style={{ backgroundColor: c }}
+              title={`${i * 10}–${(i + 1) * 10}%`}
+            />
+          ))}
         </span>
-      ))}
+        100%
+      </span>
+      <span className="inline-flex items-center gap-1">
+        <span
+          className="inline-block w-3 h-3 rounded-[2px]"
+          style={{ backgroundColor: "#f3f4f6" }}
+        />
+        n/a
+      </span>
     </div>
   );
 }
