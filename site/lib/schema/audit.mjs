@@ -172,6 +172,10 @@ export const inventoryStyleSchema = z.object({
 export const inventoryPlpSchema = z.object({
   category: z.string(),
   url: z.string(),
+  // 'grid' | 'carousel' — whether ranks came from a true product grid or a
+  // CMS landing page built of merchandised carousels. Optional (pre-08-20
+  // audits don't carry it).
+  page_layout: z.string().optional(),
   styles: z.array(inventoryStyleSchema),
   error: z.string().nullable().optional(),
 });

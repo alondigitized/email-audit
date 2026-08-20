@@ -1,17 +1,62 @@
 [
-  { "name": "Wide Fit", "url": "https://www.skechers.com/women/shoes/wide-fit/" },
-  { "name": "Hands Free Slip-ins", "url": "https://www.skechers.com/women/shoes/hands-free-slip-ins/" },
-  { "name": "Sandals", "url": "https://www.skechers.com/women/shoes/sandals/" },
-  { "name": "Casual Sneakers", "url": "https://www.skechers.com/women/shoes/casual-sneakers/" },
-  { "name": "Athletic Sneakers", "url": "https://www.skechers.com/women/shoes/athletic-sneakers/" },
-  { "name": "Work & Safety", "url": "https://www.skechers.com/women/shoes/work-and-safety/" },
-  { "name": "Flats", "url": "https://www.skechers.com/women/shoes/flats/" },
-  { "name": "Wedges", "url": "https://www.skechers.com/women/shoes/wedges/" },
-  { "name": "Canvas Shoes", "url": "https://www.skechers.com/women/shoes/canvas-shoes/" },
-  { "name": "Boots", "url": "https://www.skechers.com/women/shoes/boots/" },
-  { "name": "Slippers", "url": "https://www.skechers.com/women/shoes/slippers/" },
-  { "name": "Waterproof", "url": "https://www.skechers.com/women/shoes/waterproof/" },
-  { "name": "Boat Shoes", "url": "https://www.skechers.com/women/shoes/boat-shoes/" },
-  { "name": "Lace Up", "url": "https://www.skechers.com/women/shoes/lace-up/" },
-  { "name": "Slip-Ons", "url": "https://www.skechers.com/women/shoes/slip-ons/" }
+  {
+    "name": "Wide Fit",
+    "url": "https://www.skechers.com/women/shoes/wide-fit/"
+  },
+  {
+    "name": "Hands Free Slip-ins",
+    "url": "https://www.skechers.com/women/shoes/hands-free-slip-ins/"
+  },
+  {
+    "name": "Sandals",
+    "url": "https://www.skechers.com/women/shoes/sandals/"
+  },
+  {
+    "name": "Casual Sneakers",
+    "url": "https://www.skechers.com/women/shoes/casual-sneakers/"
+  },
+  {
+    "name": "Athletic Sneakers",
+    "url": "https://www.skechers.com/women/shoes/athletic-sneakers/"
+  },
+  {
+    "name": "Work & Safety",
+    "url": "https://www.skechers.com/women/shoes/work-safety/"
+  },
+  {
+    "name": "Flats",
+    "url": "https://www.skechers.com/women/shoes/flats/"
+  },
+  {
+    "name": "Wedges",
+    "url": "https://www.skechers.com/women/shoes/wedges/"
+  },
+  {
+    "name": "Canvas Shoes",
+    "url": "https://www.skechers.com/women/shoes/canvas-shoes/"
+  },
+  {
+    "name": "Boots",
+    "url": "https://www.skechers.com/women/shoes/boots/"
+  },
+  {
+    "name": "Slippers",
+    "url": "https://www.skechers.com/women/shoes/slippers/"
+  },
+  {
+    "name": "Waterproof",
+    "url": "https://www.skechers.com/women/shoes/waterproof/"
+  },
+  {
+    "name": "Boat Shoes",
+    "url": "https://www.skechers.com/women/shoes/boat-shoes/"
+  },
+  {
+    "name": "Lace Up",
+    "url": "https://www.skechers.com/women/shoes/lace-up/"
+  },
+  {
+    "name": "Slip-Ons",
+    "url": "https://www.skechers.com/women/shoes/slip-ons/"
+  }
 ]

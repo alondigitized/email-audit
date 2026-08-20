@@ -157,6 +157,22 @@ async function openBrowser() {
   }
 }
 
+function collectTiles(page) {
+  return page.evaluate((SEL) => {
+    const out = [];
+    for (const a of document.querySelectorAll(SEL)) {
+      if (a.closest('[class*=recently],[class*=recommend],[class*=einstein],[class*=you-may],[class*=similar]')) continue;
+      out.push({
+        href: a.getAttribute('href') || '',
+        name: (a.textContent || '').trim().replace(/\s+/g, ' '),
+        inGrid: !!a.closest('.product-grid, .js-product-tile-container') &&
+          !a.closest('[class*=splide],[class*=carousel]'),
+      });
+    }
+    return out;
+  }, SEL_PRODUCT_TILES);
+}
+
 async function scrapePlpTopStyles(page, plp) {
   log(`PLP load ${plp.url}`);
   await page.goto(plp.url, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT_MS });
@@ -171,23 +187,51 @@ async function scrapePlpTopStyles(page, plp) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await delay(400);
 
-  const tiles = await page.locator(SEL_PRODUCT_TILES).all();
-  log(`PLP ${plp.name} — found ${tiles.length} product tiles`);
+  // DOM order != merchandised order when the page mixes modules. Two cases
+  // discovered live on /women/shoes/work-and-safety/ (a CMS landing page
+  // with NO classic grid, only merchandised carousels — a boys' promo tile
+  // was recorded as "position #1" of a women's category for three straight
+  // weekly audits):
+  //   1. Session carousels (Recently Viewed / recommendations) are noise —
+  //      always excluded; their contents depend on OUR browsing history.
+  //   2. When a real product grid exists, rank ONLY grid tiles. When the
+  //      page is carousel-only, carousel order IS the merchandised order —
+  //      keep it, but record the layout so the narrative can say so.
+  let tileInfo = await collectTiles(page);
+  if (tileInfo.length === 0) {
+    // CMS landing pages hydrate their carousels noticeably slower than
+    // grid PLPs render. One patient retry before declaring the page empty.
+    await delay(8000);
+    for (let i = 0; i < 5; i++) { await page.evaluate(() => window.scrollBy(0, 700)); await delay(700); }
+    tileInfo = await collectTiles(page);
+  }
+  if (tileInfo.length === 0) {
+    const dbg = await page.evaluate(() => ({ url: location.href.slice(0, 90), title: document.title.slice(0, 50), body: (document.body?.innerText || '').length, anyTile: document.querySelectorAll('[class*=product-tile]').length })).catch((e) => ({ err: String(e).slice(0, 80) }));
+    log('ZERO TILES debug', dbg);
+  }
+  const gridTiles = tileInfo.filter((t) => t.inGrid);
+  const layout = gridTiles.length > 0 ? 'grid' : 'carousel';
+  if (tileInfo.length === 0) {
+    // Not a scrape failure to hide: the page has no auditable product grid
+    // (e.g. a CMS landing built ONLY of Einstein personalized-recommendation
+    // carousels — /women/shoes/work-and-safety/ was exactly this, and three
+    // weekly audits ranked its personalized tiles as merchandised positions).
+    throw new Error('no auditable product grid — page contains only personalized recommendation modules');
+  }
+  const ranked = layout === 'grid' ? gridTiles : tileInfo;
+  log(`PLP ${plp.name} — ${tileInfo.length} tiles (${gridTiles.length} in grid) layout=${layout}`);
 
   const styles = [];
   const seenHrefs = new Set();
-  for (let i = 0; i < tiles.length && styles.length < MAX_STYLES; i++) {
-    const tile = tiles[i];
-    let href = null;
-    try { href = await tile.getAttribute('href'); } catch {}
+  for (let i = 0; i < ranked.length && styles.length < MAX_STYLES; i++) {
+    const href = ranked[i].href;
     if (!href) continue;
     const absUrl = href.startsWith('http') ? href : `https://www.skechers.com${href}`;
     // Strip color-variant query params so we get one row per style.
     const norm = absUrl.split(/[?#]/)[0];
     if (seenHrefs.has(norm)) continue;
     seenHrefs.add(norm);
-    let name = '';
-    try { name = (await tile.textContent())?.trim() ?? ''; } catch {}
+    let name = ranked[i].name;
     // Tile anchors sometimes wrap an image-only span; fall back to slug.
     if (!name) {
       const slug = norm.split('/').filter(Boolean).pop() ?? '';
@@ -195,7 +239,7 @@ async function scrapePlpTopStyles(page, plp) {
     }
     styles.push({ rank: styles.length + 1, name: name.slice(0, 120), url: absUrl });
   }
-  return styles;
+  return { styles, layout };
 }
 
 async function scrapePdp(page, style, slug, plpSlug) {
@@ -546,7 +590,7 @@ async function main() {
   try {
   for (const plp of plps) {
     try {
-      const styles = await scrapePlpTopStyles(page, plp);
+      const { styles, layout } = await scrapePlpTopStyles(page, plp);
       const enriched = [];
       for (const style of styles) {
         try {
@@ -557,7 +601,10 @@ async function main() {
           enriched.push({ ...style, variants: [] });
         }
       }
-      results.push({ category: plp.name, url: plp.url, styles: enriched });
+      // page_layout: 'grid' = ranks are true grid order; 'carousel' = the
+      // page is a CMS landing built of merchandised carousels — positions
+      // are carousel order and may include off-gender featured tiles.
+      results.push({ category: plp.name, url: plp.url, page_layout: layout, styles: enriched });
     } catch (err) {
       log('PLP failed', { plp: plp.name, err: String(err).slice(0, 200) });
       results.push({ category: plp.name, url: plp.url, styles: [], error: String(err).slice(0, 200) });
