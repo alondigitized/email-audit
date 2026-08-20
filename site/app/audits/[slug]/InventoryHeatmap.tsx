@@ -22,16 +22,53 @@ export function parseStyleSku(pdpUrl: string | null | undefined): string | null 
   }
 }
 
-// Sort sizes numerically by their leading float — handles "5", "5.0", "5.5",
-// "10.5", "13" correctly. Non-numeric labels (e.g. "Medium" — shouldn't be
-// here after the size/width split, but defensive) sort to the end.
+// ── Size systems ─────────────────────────────────────────────────────────
+//
+// A mixed audit (Iris's sale rack: men's shoes + women's shoes + apparel)
+// carries THREE incompatible size vocabularies. A single unioned axis
+// renders shoe-size columns on apparel rows and XS–3XL columns on shoe
+// rows — sizes that don't exist for those products — so the matrices are
+// built per system and rendered as separate grids.
+//
+// Also fixes a latent sort bug: parseFloat("3XL") === 3, so apparel 2XL/3XL
+// previously sorted in among the numeric shoe sizes.
+export type SizeSystem = "numeric" | "alpha" | "unified";
+
+export function sizeSystemOf(size: string): SizeSystem {
+  const s = size.trim();
+  if (/^\d+X/i.test(s)) return "alpha"; // 2XL / 3XL before the numeric test
+  if (/^\d+(\.\d+)?$/.test(s)) return "numeric";
+  if (/M\s*\d/i.test(s) && /W\s*\d/i.test(s)) return "unified"; // "M 4 / W 5.5"
+  return "alpha"; // XS / S / M / L / XL / XXL …
+}
+
+const SYSTEM_LABEL: Record<SizeSystem, string> = {
+  numeric: "Shoe sizes",
+  alpha: "Apparel sizes",
+  unified: "Unisex sizes (M / W)",
+};
+
+// Canonical apparel ordering — localeCompare puts 3XL before XS.
+const ALPHA_ORDER = [
+  "XXS", "XS", "S", "M", "L", "XL", "XXL", "2XL", "XXXL", "3XL", "4XL",
+];
+
 function sortSizes(sizes: string[]): string[] {
   return [...sizes].sort((a, b) => {
+    const sysA = sizeSystemOf(a);
+    const sysB = sizeSystemOf(b);
+    if (sysA !== sysB) return sysA.localeCompare(sysB);
+    if (sysA === "alpha") {
+      const ia = ALPHA_ORDER.indexOf(a.trim().toUpperCase());
+      const ib = ALPHA_ORDER.indexOf(b.trim().toUpperCase());
+      if (ia !== -1 && ib !== -1) return ia - ib;
+      if (ia !== -1) return -1;
+      if (ib !== -1) return 1;
+      return a.localeCompare(b);
+    }
     const fa = parseFloat(a);
     const fb = parseFloat(b);
     if (isFinite(fa) && isFinite(fb)) return fa - fb;
-    if (isFinite(fa)) return -1;
-    if (isFinite(fb)) return 1;
     return a.localeCompare(b);
   });
 }
@@ -111,19 +148,30 @@ function buildDetailRows(inventory: InventoryAudit): DetailRow[] {
   return out;
 }
 
-// Canonical size axis used by both heatmap views — extracted so callers
-// can render the category and variant matrices independently.
-function sizeAxisOf(inventory: InventoryAudit): string[] {
-  const seen = new Set<string>();
+// Canonical size axes used by both heatmap views, ONE PER SIZE SYSTEM.
+// Returned in a stable order (numeric shoes first, then apparel, then
+// unified) so mixed audits render predictably; single-system audits
+// (ivy/ian/ida/ike) yield exactly one axis and render as before.
+function sizeAxesOf(
+  inventory: InventoryAudit
+): { system: SizeSystem; axis: string[] }[] {
+  const bySystem = new Map<SizeSystem, Set<string>>();
   for (const plp of inventory.plps) {
     if (plp.error) continue;
     for (const style of plp.styles) {
       for (const v of style.variants) {
-        for (const s of v.sizes) seen.add(s.size);
+        for (const s of v.sizes) {
+          const sys = sizeSystemOf(s.size);
+          if (!bySystem.has(sys)) bySystem.set(sys, new Set());
+          bySystem.get(sys)!.add(s.size);
+        }
       }
     }
   }
-  return sortSizes([...seen]);
+  const order: SizeSystem[] = ["numeric", "alpha", "unified"];
+  return order
+    .filter((sys) => bySystem.has(sys))
+    .map((sys) => ({ system: sys, axis: sortSizes([...bySystem.get(sys)!]) }));
 }
 
 // Category × size visual replacement for the markdown "Inventory summary"
@@ -139,9 +187,8 @@ export function InventoryCoverageMatrix({
   // the surrounding header copy.
   totals?: boolean;
 }) {
-  const sizeAxis = sizeAxisOf(inventory);
-  if (sizeAxis.length === 0) return null;
-  const { plps, cells } = buildAggregate(inventory, sizeAxis);
+  const axes = sizeAxesOf(inventory);
+  if (axes.length === 0) return null;
   const t = inventory.totals;
   const pct = (t.avg_size_coverage * 100).toFixed(0);
 
@@ -165,50 +212,69 @@ export function InventoryCoverageMatrix({
         stock. Vertical bands = sizes that are dead across the catalog;
         horizontal bands = categories that are thin everywhere.
       </p>
-      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-        <table className="text-[10px] border-separate border-spacing-0.5">
-          <thead>
-            <tr>
-              <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
-              {sizeAxis.map((s) => (
-                <th
-                  key={s}
-                  className="text-center font-normal text-muted whitespace-nowrap w-7"
-                >
-                  {s}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {plps.map((plp) => {
-              const sizeMap = cells.get(plp)!;
-              return (
-                <tr key={plp}>
-                  <td className="text-right pr-2 font-medium text-gray-800 whitespace-nowrap text-xs">
-                    {plp}
-                  </td>
-                  {sizeAxis.map((sz) => {
-                    const c = sizeMap.get(sz)!;
-                    const has = c.total > 0;
-                    const pct = has ? c.available / c.total : 0;
-                    const label = has
-                      ? `${plp} · ${sz}: ${c.available}/${c.total} (${(pct * 100).toFixed(0)}%)`
-                      : `${plp} · ${sz}: not offered`;
+      {axes.map(({ system, axis }) => {
+        const { plps, cells } = buildAggregate(inventory, axis);
+        // Only categories that actually sell in this size system — a
+        // category with zero data here would render an all-gray row of
+        // sizes its products never carried.
+        const activePlps = plps.filter((plp) =>
+          [...cells.get(plp)!.values()].some((c) => c.total > 0)
+        );
+        if (activePlps.length === 0) return null;
+        return (
+          <div key={system} className="mb-3">
+            {axes.length > 1 && (
+              <div className="text-[11px] uppercase tracking-wide text-muted mb-1">
+                {SYSTEM_LABEL[system]}
+              </div>
+            )}
+            <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+              <table className="text-[10px] border-separate border-spacing-0.5">
+                <thead>
+                  <tr>
+                    <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
+                    {axis.map((s) => (
+                      <th
+                        key={s}
+                        className="text-center font-normal text-muted whitespace-nowrap w-7"
+                      >
+                        {s}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {activePlps.map((plp) => {
+                    const sizeMap = cells.get(plp)!;
                     return (
-                      <td
-                        key={sz}
-                        title={label}
-                        className={`w-7 h-6 rounded-[3px] ${coverageClass(pct, has)}`}
-                      />
+                      <tr key={plp}>
+                        <td className="text-right pr-2 font-medium text-gray-800 whitespace-nowrap text-xs">
+                          {plp}
+                        </td>
+                        {axis.map((sz) => {
+                          const c = sizeMap.get(sz)!;
+                          const has = c.total > 0;
+                          const pct = has ? c.available / c.total : 0;
+                          const label = has
+                            ? `${plp} · ${sz}: ${c.available}/${c.total} (${(pct * 100).toFixed(0)}%)`
+                            : `${plp} · ${sz}: not offered`;
+                          return (
+                            <td
+                              key={sz}
+                              title={label}
+                              className={`w-7 h-6 rounded-[3px] ${coverageClass(pct, has)}`}
+                            />
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })}
       <Legend />
     </section>
   );
@@ -222,8 +288,8 @@ export function InventoryVariantMatrix({
 }: {
   inventory: InventoryAudit;
 }) {
-  const sizeAxis = sizeAxisOf(inventory);
-  if (sizeAxis.length === 0) return null;
+  const axes = sizeAxesOf(inventory);
+  if (axes.length === 0) return null;
   const detail = buildDetailRows(inventory);
 
   return (
@@ -235,72 +301,94 @@ export function InventoryVariantMatrix({
         One row per (style, color, width). Green = in stock, rose = out of
         stock, gray = size not offered for this variant.
       </p>
-      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-        <table className="text-[10px] border-separate border-spacing-0.5">
-          <thead>
-            <tr>
-              <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
-              {sizeAxis.map((s) => (
-                <th
-                  key={s}
-                  className="text-center font-normal text-muted whitespace-nowrap w-5"
-                >
-                  {s}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {detail.map((row, i) => {
-              const sizeStateMap = new Map<string, "available" | "unavailable">();
-              for (const s of row.variant.sizes) {
-                sizeStateMap.set(
-                  s.size,
-                  s.available ? "available" : "unavailable"
-                );
-              }
-              const label = `${row.plp} #${row.styleRank} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
-              return (
-                <tr key={i}>
-                  <td
-                    className="text-right pr-2 text-[10px] text-gray-700 whitespace-nowrap max-w-[260px] overflow-hidden text-ellipsis"
-                    title={label}
-                  >
-                    {(() => {
-                      const sku = parseStyleSku(row.variant.pdp_url);
-                      return (
-                        <>
-                          <span className="font-semibold tabular-nums">
-                            #{row.styleRank}
-                          </span>{" "}
-                          <span className="font-mono text-muted">
-                            {sku ?? ""}
-                          </span>{" "}
-                          <span className="font-medium">{row.color}</span>
-                          {row.width ? (
-                            <span className="text-muted"> {row.width}</span>
-                          ) : null}
-                        </>
+      {axes.map(({ system, axis }) => {
+        // A variant renders only under the size system its own size run
+        // belongs to — a women's sandal must not carry men's 14–16 columns,
+        // and apparel must not carry shoe-size columns at all.
+        const rows = detail.filter((row) =>
+          row.variant.sizes.length > 0 &&
+          sizeSystemOf(row.variant.sizes[0].size) === system
+        );
+        if (rows.length === 0) return null;
+        return (
+          <div key={system} className="mb-3">
+            {axes.length > 1 && (
+              <div className="text-[11px] uppercase tracking-wide text-muted mb-1">
+                {SYSTEM_LABEL[system]}
+              </div>
+            )}
+            <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+              <table className="text-[10px] border-separate border-spacing-0.5">
+                <thead>
+                  <tr>
+                    <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
+                    {axis.map((s) => (
+                      <th
+                        key={s}
+                        className="text-center font-normal text-muted whitespace-nowrap w-5"
+                      >
+                        {s}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row, i) => {
+                    const sizeStateMap = new Map<
+                      string,
+                      "available" | "unavailable"
+                    >();
+                    for (const s of row.variant.sizes) {
+                      sizeStateMap.set(
+                        s.size,
+                        s.available ? "available" : "unavailable"
                       );
-                    })()}
-                  </td>
-                  {sizeAxis.map((sz) => {
-                    const state = sizeStateMap.get(sz) ?? "missing";
-                    const cellLabel = `${label} · ${sz}: ${state}`;
+                    }
+                    const label = `${row.plp} #${row.styleRank} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
                     return (
-                      <td
-                        key={sz}
-                        title={cellLabel}
-                        className={`w-5 h-3.5 rounded-[2px] ${binaryClass(state)}`}
-                      />
+                      <tr key={i}>
+                        <td
+                          className="text-right pr-2 text-[10px] text-gray-700 whitespace-nowrap max-w-[260px] overflow-hidden text-ellipsis"
+                          title={label}
+                        >
+                          {(() => {
+                            const sku = parseStyleSku(row.variant.pdp_url);
+                            return (
+                              <>
+                                <span className="font-semibold tabular-nums">
+                                  #{row.styleRank}
+                                </span>{" "}
+                                <span className="font-mono text-muted">
+                                  {sku ?? ""}
+                                </span>{" "}
+                                <span className="font-medium">{row.color}</span>
+                                {row.width ? (
+                                  <span className="text-muted"> {row.width}</span>
+                                ) : null}
+                              </>
+                            );
+                          })()}
+                        </td>
+                        {axis.map((sz) => {
+                          const state = sizeStateMap.get(sz) ?? "missing";
+                          const cellLabel = `${label} · ${sz}: ${state}`;
+                          return (
+                            <td
+                              key={sz}
+                              title={cellLabel}
+                              className={`w-5 h-3.5 rounded-[2px] ${binaryClass(state)}`}
+                            />
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })}
     </section>
   );
 }
@@ -309,8 +397,7 @@ export function InventoryVariantMatrix({
 // caller that still composes it; new code should reach for the two
 // extracted exports directly so callers control spacing.
 export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
-  const sizeAxis = sizeAxisOf(inventory);
-  if (sizeAxis.length === 0) return null;
+  if (sizeAxesOf(inventory).length === 0) return null;
   return (
     <div className="mb-6 space-y-6">
       <InventoryCoverageMatrix inventory={inventory} />
