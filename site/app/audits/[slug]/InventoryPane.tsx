@@ -1,3 +1,4 @@
+import React from "react";
 import type { InventoryAudit } from "@/lib/schema/audit";
 import {
   InventoryCoverageMatrix,
@@ -12,6 +13,10 @@ type Inventory = InventoryAudit;
 type Row = {
   plp: string;
   styleRank: number;
+  // 1-based index of this variant's COLOR within its style (widths share
+  // their color's number) -> position label "styleRank.colorIdx", e.g. 1.2.
+  colorIdx: number;
+  posLabel: string;
   styleName: string;
   styleUrl: string;
   color: string;
@@ -36,6 +41,12 @@ function flattenRows(
   for (const plp of inventory.plps) {
     if (plp.error) continue;
     for (const style of plp.styles) {
+      // Distinct colors in first-seen order; (color, width) variants of the
+      // same color share one color index.
+      const colorOrder = new Map<string, number>();
+      for (const v of style.variants) {
+        if (!colorOrder.has(v.color)) colorOrder.set(v.color, colorOrder.size + 1);
+      }
       for (const v of style.variants) {
         // Per-variant profile: a kids product on an adult PLP (it happens —
         // style 402150L at #1 of women's Work & Safety) is judged on the
@@ -45,9 +56,12 @@ function flattenRows(
           v.sizes.filter((s) => !s.available).map((s) => s.size),
           vProfile
         ) as string[];
+        const colorIdx = colorOrder.get(v.color) ?? 1;
         rows.push({
           plp: plp.category,
           styleRank: style.rank,
+          colorIdx,
+          posLabel: `${style.rank}.${colorIdx}`,
           styleName: style.name,
           styleUrl: style.url,
           color: v.color,
@@ -156,9 +170,16 @@ export function InventoryVariantDetail({
         Every variant — click a row for the PDP screenshot
       </h4>
 
-      {/* Mobile: stacked cards */}
-      <ul className="sm:hidden flex flex-col gap-3">
-        {rows.map((r, i) => (
+      {/* Mobile: stacked cards, grouped by category so ranks read as one
+          merchandised sequence per category instead of looping #12 -> #1. */}
+      <div className="sm:hidden flex flex-col gap-3">
+        {[...new Set(rows.map((r) => r.plp))].map((plp) => (
+          <div key={plp}>
+            <h5 className="text-[11px] uppercase tracking-wide text-muted font-semibold mt-2 mb-2">
+              {plp}
+            </h5>
+            <ul className="flex flex-col gap-3">
+              {rows.filter((r) => r.plp === plp).map((r, i) => (
           <li
             key={i}
             className="bg-white border border-gray-200 rounded-2xl p-4"
@@ -166,9 +187,9 @@ export function InventoryVariantDetail({
             <div className="flex items-start justify-between gap-3 mb-2">
               <div className="min-w-0">
                 <div className="text-[11px] uppercase tracking-wide text-muted">
-                  {r.plp}{" "}
-                  <span className="normal-case font-semibold text-gray-700">
-                    · position #{r.styleRank}
+                  <span className="normal-case font-semibold text-gray-700"
+                    title={`Style position ${r.styleRank}, colorway ${r.colorIdx}`}>
+                    position {r.posLabel}
                   </span>
                 </div>
                 <a
@@ -181,7 +202,7 @@ export function InventoryVariantDetail({
                 </a>
                 <div className="text-xs text-muted mt-0.5">
                   <span className="font-mono">
-                    {parseStyleSku(r.pdpUrl) ?? `#${r.styleRank}`}
+                    {parseStyleSku(r.pdpUrl) ?? r.posLabel}
                   </span>{" "}
                   · {r.color}
                   {r.width ? ` · ${r.width}` : ""}
@@ -228,15 +249,17 @@ export function InventoryVariantDetail({
               </a>
             )}
           </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </ul>
+      </div>
 
       {/* Desktop: table */}
       <div className="hidden sm:block bg-white border border-gray-200 rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
             <tr>
-              <th className="px-3 py-2 font-medium">Category</th>
               <th className="px-3 py-2 font-medium text-right">Pos.</th>
               <th className="px-3 py-2 font-medium">Style</th>
               <th className="px-3 py-2 font-medium">Color</th>
@@ -248,15 +271,23 @@ export function InventoryVariantDetail({
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={i} className="border-t border-gray-100 align-top">
-                <td className="px-3 py-2 text-muted whitespace-nowrap">
-                  {r.plp}
-                </td>
+              <React.Fragment key={i}>
+                {(i === 0 || rows[i - 1].plp !== r.plp) && (
+                  <tr className="bg-gray-50 border-t border-gray-200">
+                    <td
+                      colSpan={7}
+                      className="px-3 py-1.5 text-[11px] uppercase tracking-wide font-semibold text-gray-600"
+                    >
+                      {r.plp}
+                    </td>
+                  </tr>
+                )}
+              <tr className="border-t border-gray-100 align-top">
                 <td
                   className="px-3 py-2 text-right font-semibold tabular-nums whitespace-nowrap"
-                  title={`Merchandised position #${r.styleRank} in ${r.plp}`}
+                  title={`Style position ${r.styleRank} in ${r.plp}, colorway ${r.colorIdx}`}
                 >
-                  #{r.styleRank}
+                  {r.posLabel}
                 </td>
                 <td className="px-3 py-2">
                   <a
@@ -326,6 +357,7 @@ export function InventoryVariantDetail({
                   )}
                 </td>
               </tr>
+              </React.Fragment>
             ))}
           </tbody>
         </table>

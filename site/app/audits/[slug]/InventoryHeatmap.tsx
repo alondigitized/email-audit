@@ -1,3 +1,4 @@
+import React from "react";
 import type { InventoryAudit } from "@/lib/schema/audit";
 import { sizeDemandWeight, isCoreSize, weightedCoverage } from "@/lib/schema/size-demand.mjs";
 
@@ -146,6 +147,8 @@ function buildAggregate(
 type DetailRow = {
   plp: string;
   styleRank: number;
+  colorIdx: number;
+  posLabel: string;
   styleName: string;
   color: string;
   width: string | null;
@@ -157,10 +160,20 @@ function buildDetailRows(inventory: InventoryAudit): DetailRow[] {
   for (const plp of inventory.plps) {
     if (plp.error) continue;
     for (const style of plp.styles) {
+      // Distinct colors in first-seen order; width variants share their
+      // color's index -> position label "styleRank.colorIdx" (1.2 = style
+      // #1, second colorway).
+      const colorOrder = new Map<string, number>();
       for (const v of style.variants) {
+        if (!colorOrder.has(v.color)) colorOrder.set(v.color, colorOrder.size + 1);
+      }
+      for (const v of style.variants) {
+        const colorIdx = colorOrder.get(v.color) ?? 1;
         out.push({
           plp: plp.category,
           styleRank: style.rank,
+          colorIdx,
+          posLabel: `${style.rank}.${colorIdx}`,
           styleName: style.name,
           color: v.color,
           width: v.width ?? null,
@@ -370,9 +383,20 @@ export function InventoryVariantMatrix({
                         s.available ? "available" : "unavailable"
                       );
                     }
-                    const label = `${row.plp} #${row.styleRank} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
+                    const label = `${row.plp} ${row.posLabel} · ${row.styleName} · ${row.color}${row.width ? " · " + row.width : ""}`;
                     return (
-                      <tr key={i}>
+                      <React.Fragment key={i}>
+                      {(i === 0 || rows[i - 1].plp !== row.plp) && (
+                        <tr>
+                          <td
+                            colSpan={axis.length + 1}
+                            className="pt-2 pb-1 text-[10px] uppercase tracking-wide font-semibold text-gray-500 text-left"
+                          >
+                            {row.plp}
+                          </td>
+                        </tr>
+                      )}
+                      <tr>
                         <td
                           className="text-right pr-2 text-[10px] text-gray-700 whitespace-nowrap max-w-[260px] overflow-hidden text-ellipsis"
                           title={label}
@@ -381,8 +405,11 @@ export function InventoryVariantMatrix({
                             const sku = parseStyleSku(row.variant.pdp_url);
                             return (
                               <>
-                                <span className="font-semibold tabular-nums">
-                                  #{row.styleRank}
+                                <span
+                                  className="font-semibold tabular-nums"
+                                  title={`Style position ${row.styleRank}, colorway ${row.colorIdx}`}
+                                >
+                                  {row.posLabel}
                                 </span>{" "}
                                 <span className="font-mono text-muted">
                                   {sku ?? ""}
@@ -407,6 +434,7 @@ export function InventoryVariantMatrix({
                           );
                         })}
                       </tr>
+                      </React.Fragment>
                     );
                   })}
                 </tbody>
