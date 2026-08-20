@@ -5,7 +5,7 @@ import {
   parseStyleSku,
   demandProfileOf,
 } from "./InventoryHeatmap";
-import { weightedCoverage, sortByDemand, isCoreSize } from "@/lib/schema/size-demand.mjs";
+import { weightedCoverage, sortByDemand, isCoreSize, resolveProfile } from "@/lib/schema/size-demand.mjs";
 
 type Inventory = InventoryAudit;
 
@@ -37,9 +37,13 @@ function flattenRows(
     if (plp.error) continue;
     for (const style of plp.styles) {
       for (const v of style.variants) {
+        // Per-variant profile: a kids product on an adult PLP (it happens —
+        // style 402150L at #1 of women's Work & Safety) is judged on the
+        // kids curve, not as an all-tail adult run.
+        const vProfile = resolveProfile(v.sizes, profile) as string;
         const missing = sortByDemand(
           v.sizes.filter((s) => !s.available).map((s) => s.size),
-          profile
+          vProfile
         ) as string[];
         rows.push({
           plp: plp.category,
@@ -54,7 +58,7 @@ function flattenRows(
           // Demand-weighted: % of MARKET demand buyable — a full tail
           // can't mask a hollow core here.
           weightedPct: weightedCoverage(v.sizes, profile) as number,
-          coreMissing: missing.filter((sz) => isCoreSize(sz, profile)),
+          coreMissing: missing.filter((sz) => isCoreSize(sz, vProfile)),
           missingSizes: missing,
           pdpUrl: v.pdp_url ?? null,
           screenshotKey: v.pdp_screenshot_key ?? null,

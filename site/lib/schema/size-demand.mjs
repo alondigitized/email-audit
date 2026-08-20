@@ -89,14 +89,38 @@ export function isCoreSize(size, profile) {
 }
 
 /**
+ * Resolve the effective profile for ONE variant from its own size run.
+ * Gender-scoped PLPs are not gender-pure: a Little Kid style (style code
+ * suffix L, sizes 1-3.5) was found at position #1 of the women's Work &
+ * Safety PLP, and unisex John Deere styles run 5.0-16.0 on men's pages.
+ * Weighting a kids run on the womens curve calls its PEAK sizes a deep
+ * tail — so when the run is unmistakably kids (max numeric size <= 7 on
+ * an adult profile), switch that variant to the kids curve.
+ */
+export function resolveProfile(sizes, profile) {
+  if (profile !== 'mens' && profile !== 'womens') return profile;
+  const nums = (sizes ?? [])
+    .map((s) => parseFloat(typeof s === 'string' ? s : s?.size))
+    .filter((n) => isFinite(n));
+  if (nums.length === 0) return profile;
+  const max = Math.max(...nums);
+  const min = Math.min(...nums);
+  if (max <= 7 && min <= 3.5) return profile === 'mens' ? 'boys' : 'girls';
+  return profile;
+}
+
+/**
  * Demand-weighted coverage for one variant's size list
  * ([{size, available}]) → 0..1. Weighted fraction of demand that is
  * actually buyable: losing size 10 costs ~9× losing size 13.
+ * Applies resolveProfile per variant, so an off-profile kids product on
+ * an adult PLP is judged on the kids curve rather than as all-tail.
  */
 export function weightedCoverage(sizes, profile) {
+  const eff = resolveProfile(sizes, profile);
   let num = 0, den = 0;
   for (const s of sizes ?? []) {
-    const w = sizeDemandWeight(s.size, profile);
+    const w = sizeDemandWeight(s.size, eff);
     den += w;
     if (s.available) num += w;
   }
