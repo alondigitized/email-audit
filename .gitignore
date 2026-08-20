@@ -36,3 +36,4 @@ audit-pipeline/published-audits.json
 
 # Foundation P8: daemon runtime state should not live in git.
 email-monitor/state.json
+.vault-push/

@@ -1010,15 +1010,36 @@ async function publishSite({ slug, persona, artifactDir, messageId = null, rawKe
     log('engagement schedule failed (non-fatal)', { slug, error: err.message });
   }
 
-  // Phase 3: git push the vault markdown. Site no longer needs to redeploy
-  // because audit content is in Postgres — Vercel only rebuilds when actual
-  // code changes. Vault notes stay in git as the persona-brain audit trail.
+  // Phase 3: git push the vault markdown — to the `vault-notes` BRANCH, via
+  // a dedicated worktree, never to main.
+  //
+  // Why: this daemon produced 62 vault commits on main in one day, and every
+  // push to main creates deployment attempts on BOTH connected Vercel
+  // projects; even attempts the ignoreCommand cancels count against the
+  // daily deployment quota. On 2026-08-20 that rate-limited the production
+  // project for 24h and blocked real code deploys. vercel.json now sets
+  // git.deploymentEnabled['vault-notes']=false, so pushes to that branch
+  // create NO deployments at all.
+  //
+  // The worktree (.vault-push/, gitignored) also means the daemon no longer
+  // runs `git pull --rebase` inside the main working checkout — it can't
+  // race a human's (or agent's) in-progress work anymore.
   const ghToken = process.env.GH_TOKEN || '';
   if (!ghToken) {
     log('GH_TOKEN not set — skipping vault push', { slug });
     return;
   }
-  const pushCmd = `cd "${repoRoot}" && git pull --rebase origin main 2>/dev/null; git add vaults && git diff --cached --quiet && echo NO_CHANGES || (git commit -m "vault: update note for ${slug}" && git push origin main)`;
+  const pushCmd = [
+    `cd "${repoRoot}"`,
+    // one-time, idempotent: materialize the worktree on the vault-notes branch
+    `[ -d .vault-push/.git ] || git worktree add .vault-push vault-notes 2>/dev/null || (git fetch origin vault-notes && git worktree add .vault-push vault-notes)`,
+    `cd .vault-push`,
+    `git pull --rebase origin vault-notes 2>/dev/null || true`,
+    // vaults/ in the main checkout is the source of truth; mirror it in
+    `rsync -a --delete "${repoRoot}/vaults/" vaults/`,
+    `git add vaults`,
+    `git diff --cached --quiet && echo NO_CHANGES || (git commit -m "vault: update note for ${slug}" && git push origin vault-notes)`,
+  ].join(' && ');
   await execFileAsync('/bin/zsh', ['-lc', pushCmd], {
     maxBuffer: 1024 * 1024 * 50,
     env: { ...process.env, GH_TOKEN: ghToken },
