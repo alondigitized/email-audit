@@ -48,6 +48,8 @@ function log(m, e) {
 async function openBrowser() {
   try {
     const b = await playwrightChromium.connectOverCDP(process.env.CDP_URL || 'http://127.0.0.1:9222', { timeout: 5000 });
+    const { reapStrayPages } = await import('../../audit-pipeline/browser-hygiene.mjs');
+    await reapStrayPages(b);
     return { browser: b, viaCdp: true };
   } catch {
     stealthChromium.use(StealthPlugin());
@@ -187,6 +189,7 @@ const context = viaCdp ? (browser.contexts()[0] ?? (await browser.newContext()))
 const page = await context.newPage();
 
 let verified = 0, refuted = 0;
+try {
 for (const d of candidates) {
   let hits = 0;
   let unverifiable = 0;
@@ -238,8 +241,13 @@ for (const d of candidates) {
   }
 }
 
-await page.close().catch(() => {});
-if (!viaCdp) await browser.close().catch(() => {});
+} finally {
+  // Never leak the tab into the shared CDP Chrome — even when a re-test
+  // throws. verify.mjs previously hung 30 min on the 08-10 nightly run;
+  // a hang that gets killed must not also leave a renderer behind.
+  const { releaseBrowser } = await import('../../audit-pipeline/browser-hygiene.mjs');
+  await releaseBrowser({ browser, page, viaCdp });
+}
 
 log('verification complete', { verified, refuted, applied: APPLY });
 if (!APPLY) log('DRY RUN — pass --apply to write verdicts.');

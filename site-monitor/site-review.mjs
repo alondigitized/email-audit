@@ -28,6 +28,7 @@ chromium.use(StealthPlugin());
 import dotenv from 'dotenv';
 import { writeVaultNote } from '../audit-pipeline/vault-writer.mjs';
 import { putMedia, auditMediaKey, mediaConfigured } from '../audit-pipeline/media.mjs';
+import { reapStrayPages, releaseBrowser } from '../audit-pipeline/browser-hygiene.mjs';
 import { auditDataSchema } from '../site/lib/schema/audit.mjs';
 import {
   upsertAuditRow,
@@ -249,6 +250,8 @@ async function runJourney(persona, credentials, artifactDir) {
   try {
     const cdpUrl = `http://localhost:${CHROME_DEBUG_PORT}`;
     browser = await playwrightChromium.connectOverCDP(cdpUrl);
+    // Reap tabs orphaned by previous crashed runs on the shared Chrome.
+    await reapStrayPages(browser);
     // Use Chrome's default context (carries real fingerprint + cookies)
     context = browser.contexts()[0] || await browser.newContext({ ...device, bypassCSP: true });
     usingRealChrome = true;
@@ -260,6 +263,10 @@ async function runJourney(persona, credentials, artifactDir) {
   }
 
   const page = await context.newPage();
+  // Everything below runs inside try/finally: on the shared CDP Chrome a
+  // disconnect without page.close() leaves this tab (and its renderer
+  // process) alive forever — the memory leak compounds nightly.
+  try {
 
   // Set mobile viewport even when using Chrome's default context
   await page.setViewportSize({ width: device.viewport.width, height: device.viewport.height });
@@ -551,7 +558,9 @@ async function runJourney(persona, credentials, artifactDir) {
     await delay(1500 + Math.random() * 3000);
   }
 
-  await browser.close();
+  } finally {
+    await releaseBrowser({ browser, page, viaCdp: usingRealChrome });
+  }
 
   // Save collected data
   fs.writeFileSync(path.join(artifactDir, 'console-errors.json'), JSON.stringify(consoleErrors, null, 2));

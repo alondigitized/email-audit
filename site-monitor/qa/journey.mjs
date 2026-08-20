@@ -50,6 +50,7 @@ import {
   installPopupBlocker,
 } from './navigator.mjs';
 import { captureProof, clearHighlights, selectorsFor } from './evidence.mjs';
+import { reapStrayPages, releaseBrowser } from '../../audit-pipeline/browser-hygiene.mjs';
 import { insertOpportunities } from '../../audit-pipeline/opportunities.mjs';
 import { resolveBrandSlug } from '../../audit-pipeline/brands.mjs';
 
@@ -513,6 +514,9 @@ async function openBrowser() {
   try {
     const b = await playwrightChromium.connectOverCDP(cdpUrl, { timeout: 8000 });
     log('connected to real Chrome over CDP', { cdpUrl });
+    // The QA Chrome is dedicated to automation — reap tabs orphaned by a
+    // previous crashed run so they can't accumulate renderer processes.
+    await reapStrayPages(b);
     return { browser: b, viaCdp: true };
   } catch (err) {
     if (!ALLOW_STEALTH) {
@@ -578,6 +582,11 @@ for (const [slug, personaBase] of personas) {
   }
   const page = await context.newPage();
   await ensureRenderable(page, context);
+
+  // try/finally: an error anywhere in the journey must not leak this tab
+  // (or a mobile/cookie context) into the persistent CDP Chrome — leaked
+  // renderers are how the Mac mini runs out of memory.
+  try {
 
   const consoleErrors = [], networkErrors = [];
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text().slice(0, 240)); });
@@ -678,8 +687,13 @@ for (const [slug, personaBase] of personas) {
   const provenance = (!viaCdp || kasadaSeen) ? 'bot_flagged' : 'clean';
   if (provenance === 'bot_flagged') log('session bot-flagged — interaction findings will quarantine', { stealth: !viaCdp, kasada: kasadaSeen });
 
-  await page.close().catch(() => {});
-  if (!viaCdp) await browser.close().catch(() => {});
+  } finally {
+    await releaseBrowser({
+      browser, page,
+      contexts: [needOwnContext ? context : null],
+      viaCdp,
+    });
+  }
 
   if (!steps.length) { log('no steps captured; skipping lens', { persona: slug }); continue; }
 
@@ -804,6 +818,8 @@ for (const [slug, personaBase] of personas) {
   await installPopupBlocker(proofCtx);
   const proofPage = await proofCtx.newPage();
   await ensureRenderable(proofPage, proofCtx);
+  const proofOwnCtx = proofBrowser.viaCdp ? null : proofCtx;
+  try {
 
   const rows = [];
   for (const [pi, p] of proposed.entries()) {
@@ -874,8 +890,12 @@ for (const [slug, personaBase] of personas) {
     });
   }
 
-  await proofPage.close().catch(() => {});
-  if (!proofBrowser.viaCdp) await proofBrowser.browser.close().catch(() => {});
+  } finally {
+    await releaseBrowser({
+      browser: proofBrowser.browser, page: proofPage,
+      contexts: [proofOwnCtx], viaCdp: proofBrowser.viaCdp,
+    });
+  }
 
   if (DRY) {
     rows.forEach((r) => log('  would file', { urgency: r.urgency, type: r.defectType, desc: r.description.slice(0, 80) }));

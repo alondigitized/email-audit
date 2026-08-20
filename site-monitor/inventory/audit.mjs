@@ -32,6 +32,7 @@ import { chromium } from 'playwright-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
 import { putMedia, mediaConfigured } from '../../audit-pipeline/media.mjs';
+import { reapStrayPages, releaseBrowser } from '../../audit-pipeline/browser-hygiene.mjs';
 import { upsertAuditRow, upsertExperienceAndReaction, dbConfigured } from '../../audit-pipeline/publish.mjs';
 import { writeVaultNote } from '../../audit-pipeline/vault-writer.mjs';
 import { generateNarrative } from './narrative.mjs';
@@ -141,14 +142,17 @@ async function openBrowser() {
   try {
     const browser = await playwrightChromium.connectOverCDP(`http://localhost:${cdpPort}`);
     log('connected to real Chrome via CDP');
-    const context = browser.contexts()[0] || (await browser.newContext({ ...devices['iPhone 14'], bypassCSP: true }));
-    return { browser, context, real: true };
+    // Reap tabs orphaned by a previous crashed run BEFORE opening our own.
+    await reapStrayPages(browser);
+    const existing = browser.contexts()[0] || null;
+    const context = existing || (await browser.newContext({ ...devices['iPhone 14'], bypassCSP: true }));
+    return { browser, context, real: true, createdContext: existing ? null : context };
   } catch (err) {
     log('CDP connect failed; falling back to stealth chromium', { err: String(err).slice(0, 160) });
     if (!HEADLESS_FALLBACK) throw err;
     const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ ...devices['iPhone 14'], bypassCSP: true });
-    return { browser, context, real: false };
+    return { browser, context, real: false, createdContext: context };
   }
 }
 
@@ -522,13 +526,14 @@ async function main() {
   const allPlps = JSON.parse(fs.readFileSync(CATEGORIES_PATH, 'utf8'));
   const plps = MAX_PLPS ? allPlps.slice(0, MAX_PLPS) : allPlps;
 
-  const { browser, context, real } = await openBrowser();
+  const { browser, context, real, createdContext } = await openBrowser();
   const page = await context.newPage();
   if (!real) {
     await page.setViewportSize({ width: devices['iPhone 14'].viewport.width, height: devices['iPhone 14'].viewport.height });
   }
 
   const results = [];
+  try {
   for (const plp of plps) {
     try {
       const styles = await scrapePlpTopStyles(page, plp);
@@ -549,7 +554,13 @@ async function main() {
     }
   }
 
-  await browser.close().catch(() => {});
+  } finally {
+    // Close OUR page (and context if we created one) before disconnecting —
+    // on the shared CDP Chrome a disconnect alone leaves the tab alive, and
+    // leaked Skechers tabs each hold a renderer process until the Mac mini
+    // runs out of memory. finally: an error mid-scrape must not leak either.
+    await releaseBrowser({ browser, page, contexts: [createdContext], viaCdp: real });
+  }
 
   const totals = summarize(results);
   log('run summary', totals);

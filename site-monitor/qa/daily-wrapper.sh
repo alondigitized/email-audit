@@ -21,6 +21,26 @@ PROFILE="$HOME/.openclaw-walker/workspace/site-monitor/.chrome-qa-profile"
 LOG="$HOME/.openclaw-walker/workspace/site-monitor/logs/qa-daily.log"
 mkdir -p "$PROFILE" "$(dirname "$LOG")"
 
+# ── Memory guard ──────────────────────────────────────────────────────────
+# The QA Chrome deliberately stays up between nights (the logged-in session
+# lives in its profile), but a Chrome that runs for weeks accumulates
+# renderer/GPU memory even when the runners clean up their tabs. The
+# session cookies live in $PROFILE on disk, NOT in the process — so a
+# restart is free. Restart before the run when either:
+#   - the Chrome process tree exceeds ~3 GB RSS, or
+#   - more than 8 page targets have piled up (leaked tabs from crashed runs)
+if curl -s -m 3 http://127.0.0.1:9222/json/version >/dev/null 2>&1; then
+  TABS=$(curl -s -m 3 http://127.0.0.1:9222/json/list 2>/dev/null \
+    | /usr/bin/python3 -c 'import sys,json;print(len([t for t in json.load(sys.stdin) if t.get("type")=="page"]))' 2>/dev/null || echo 0)
+  RSS_MB=$(ps axo rss,command | grep "[c]hrome-qa-profile" | awk '{s+=$1} END {printf "%d", s/1024}')
+  RSS_MB=${RSS_MB:-0}
+  if [ "${TABS:-0}" -gt 8 ] || [ "$RSS_MB" -gt 3072 ]; then
+    echo "[$(date -u +%FT%TZ)] memory guard: restarting QA Chrome (tabs=$TABS rss=${RSS_MB}MB)" >> "$LOG"
+    pkill -f "chrome-qa-profile" 2>/dev/null || true
+    sleep 5
+  fi
+fi
+
 # Bring Chrome up on the debugging port if it isn't already. Wait up to ~60s —
 # a cold Chrome launch under launchd was not ready inside the old 30s window,
 # so journeys refused to run (correctly) and the night produced nothing.

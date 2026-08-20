@@ -226,7 +226,10 @@ for (const [i, cta] of ctas.entries()) {
   });
   log(`  visited ${i + 1}`, { status, dup: duplicate, label: cta.label.slice(0, 36), identity: String(landingKey).slice(0, 70) });
 }
-await page.close().catch(() => {});
+{
+  const { releaseBrowser } = await import('../../audit-pipeline/browser-hygiene.mjs');
+  await releaseBrowser({ browser, page, viaCdp: true });
+}
 
 // ── 3. the lens: does the landing honor the email? ────────────────────────
 
