@@ -7,7 +7,8 @@
     "auditWebviewUrl": "https://www.skechers.com/women/shoes/",
     "categoriesFile": "categories-womens.json",
     "auditSlugSuffix": "skechers-womens-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Women's Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Women's Shoes",
+    "sizeProfile": "womens"
   },
   "ian-inventory": {
     "displayName": "Ian Inventory",
@@ -17,7 +18,8 @@
     "auditWebviewUrl": "https://www.skechers.com/men/shoes/",
     "categoriesFile": "categories-mens.json",
     "auditSlugSuffix": "skechers-mens-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Men's Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Men's Shoes",
+    "sizeProfile": "mens"
   },
   "ida-inventory": {
     "displayName": "Ida Inventory",
@@ -27,7 +29,8 @@
     "auditWebviewUrl": "https://www.skechers.com/kids/girls/",
     "categoriesFile": "categories-girls.json",
     "auditSlugSuffix": "skechers-girls-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Girls' Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Girls' Shoes",
+    "sizeProfile": "girls"
   },
   "ike-inventory": {
     "displayName": "Ike Inventory",
@@ -37,7 +40,8 @@
     "auditWebviewUrl": "https://www.skechers.com/kids/boys/",
     "categoriesFile": "categories-boys.json",
     "auditSlugSuffix": "skechers-boys-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Boys' Shoes"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Boys' Shoes",
+    "sizeProfile": "boys"
   },
   "iris-inventory": {
     "displayName": "Iris Inventory",
@@ -47,7 +51,8 @@
     "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=W%7CU&prefv2=FOOTWEAR",
     "categoriesFile": "categories-sale.json",
     "auditSlugSuffix": "skechers-womens-sale-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Women's Sale Footwear"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Women's Sale Footwear",
+    "sizeProfile": "womens"
   },
   "irwin-inventory": {
     "displayName": "Irwin Inventory",
@@ -57,7 +62,8 @@
     "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=M%7CU&prefv2=FOOTWEAR",
     "categoriesFile": "categories-sale-mens.json",
     "auditSlugSuffix": "skechers-mens-sale-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Men's Sale Footwear"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Men's Sale Footwear",
+    "sizeProfile": "mens"
   },
   "izzy-inventory": {
     "displayName": "Izzy Inventory",
@@ -67,7 +73,8 @@
     "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=G&prefv2=FOOTWEAR",
     "categoriesFile": "categories-sale-girls.json",
     "auditSlugSuffix": "skechers-girls-sale-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Girls' Sale Footwear"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Girls' Sale Footwear",
+    "sizeProfile": "girls"
   },
   "iggy-inventory": {
     "displayName": "Iggy Inventory",
@@ -77,6 +84,7 @@
     "auditWebviewUrl": "https://www.skechers.com/sale/?prefn1=gender&prefn2=productLine&prefv1=B&prefv2=FOOTWEAR",
     "categoriesFile": "categories-sale-boys.json",
     "auditSlugSuffix": "skechers-boys-sale-inventory",
-    "subjectPrefix": "Inventory Audit \u00b7 Skechers Boys' Sale Footwear"
+    "subjectPrefix": "Inventory Audit \u00b7 Skechers Boys' Sale Footwear",
+    "sizeProfile": "boys"
   }
 }

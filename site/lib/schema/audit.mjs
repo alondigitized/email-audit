@@ -184,11 +184,19 @@ export const inventoryTotalsSchema = z.object({
   variants: z.number(),
   // 0–1 fraction; UI multiplies by 100 for display.
   avg_size_coverage: z.number(),
+  // Demand-weighted coverage (bell curve over sizes — mens peak ~10,
+  // womens ~8, apparel M/L). Optional: audits published before 2026-08-20
+  // don't carry it; the UI recomputes from the size lists when absent.
+  weighted_size_coverage: z.number().optional(),
+  size_profile: z.string().optional(),
 });
 
 export const inventoryAuditSchema = z.object({
   site: z.string(),
   scope: z.string(),
+  // 'mens' | 'womens' | 'girls' | 'boys' — drives demand weighting in the
+  // heatmap. Optional; UI falls back to inferring from the persona slug.
+  size_profile: z.string().optional(),
   plps: z.array(inventoryPlpSchema),
   totals: inventoryTotalsSchema,
   // R2 key for the per-(PLP, style, color, width, size) detail spreadsheet

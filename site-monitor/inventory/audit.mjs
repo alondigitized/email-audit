@@ -36,6 +36,7 @@ import { reapStrayPages, releaseBrowser } from '../../audit-pipeline/browser-hyg
 import { upsertAuditRow, upsertExperienceAndReaction, dbConfigured } from '../../audit-pipeline/publish.mjs';
 import { writeVaultNote } from '../../audit-pipeline/vault-writer.mjs';
 import { generateNarrative } from './narrative.mjs';
+import { weightedCoverage } from '../../site/lib/schema/size-demand.mjs';
 
 chromium.use(StealthPlugin());
 
@@ -489,7 +490,10 @@ async function uploadCsv(slug, csv) {
   }
 }
 
+const SIZE_PROFILE = PERSONA.sizeProfile ?? 'unknown';
+
 function summarize(plps) {
+  let weightedSum = 0;
   let styles = 0;
   let variants = 0;
   let coverageSum = 0;
@@ -506,6 +510,10 @@ function summarize(plps) {
         if (v.total_count > 0) {
           coverageSum += v.available_count / v.total_count;
           coverageDenom++;
+          // Demand-weighted: a missing gut size (mens 9-11, womens 7-9)
+          // costs far more than a missing tail size. This is the number
+          // the score and the narrative rank by.
+          weightedSum += weightedCoverage(v.sizes, SIZE_PROFILE);
         }
       }
     }
@@ -516,6 +524,8 @@ function summarize(plps) {
     styles,
     variants,
     avg_size_coverage: coverageDenom > 0 ? coverageSum / coverageDenom : 0,
+    weighted_size_coverage: coverageDenom > 0 ? weightedSum / coverageDenom : 0,
+    size_profile: SIZE_PROFILE,
   };
 }
 
@@ -573,6 +583,7 @@ async function main() {
       totals,
       scope: PERSONA.scope,
       displayName: PERSONA.displayName,
+      sizeProfile: SIZE_PROFILE,
     });
   } catch (err) {
     log('narrative generation failed', { err: String(err).slice(0, 200) });
@@ -589,7 +600,10 @@ async function main() {
   const summaryTable = buildSummaryTable(results, totals);
   narrative = `${summaryTable}\n${narrative}`;
 
-  const score = `${Math.round(totals.avg_size_coverage * 10)}/10`;
+  // Score on DEMAND-WEIGHTED coverage: full tails must not mask a
+  // hollowed-out core. Falls back to raw when the profile is unknown
+  // (weighted degrades to raw in that case anyway).
+  const score = `${Math.round(totals.weighted_size_coverage * 10)}/10`;
   const now = new Date();
   const auditData = {
     schema_version: 1,
@@ -621,6 +635,7 @@ async function main() {
     inventory: {
       site: PERSONA.site,
       scope: PERSONA.scope.replace(/^Skechers\s+/i, ''),
+      size_profile: SIZE_PROFILE,
       plps: results,
       totals,
       csv_key: csvKey,

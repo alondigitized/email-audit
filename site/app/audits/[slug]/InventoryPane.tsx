@@ -3,7 +3,9 @@ import {
   InventoryCoverageMatrix,
   InventoryVariantMatrix,
   parseStyleSku,
+  demandProfileOf,
 } from "./InventoryHeatmap";
+import { weightedCoverage, sortByDemand, isCoreSize } from "@/lib/schema/size-demand.mjs";
 
 type Inventory = InventoryAudit;
 
@@ -17,6 +19,8 @@ type Row = {
   available: number;
   total: number;
   pct: number;
+  weightedPct: number;
+  coreMissing: string[];
   missingSizes: string[];
   pdpUrl: string | null;
   screenshotKey: string | null;
@@ -27,12 +31,16 @@ function flattenRows(
   inventory: Inventory,
   signedScreenshotUrls: Record<string, string>
 ): Row[] {
+  const profile = demandProfileOf(inventory);
   const rows: Row[] = [];
   for (const plp of inventory.plps) {
     if (plp.error) continue;
     for (const style of plp.styles) {
       for (const v of style.variants) {
-        const missing = v.sizes.filter((s) => !s.available).map((s) => s.size);
+        const missing = sortByDemand(
+          v.sizes.filter((s) => !s.available).map((s) => s.size),
+          profile
+        ) as string[];
         rows.push({
           plp: plp.category,
           styleRank: style.rank,
@@ -43,6 +51,10 @@ function flattenRows(
           available: v.available_count,
           total: v.total_count,
           pct: v.total_count > 0 ? v.available_count / v.total_count : 0,
+          // Demand-weighted: % of MARKET demand buyable — a full tail
+          // can't mask a hollow core here.
+          weightedPct: weightedCoverage(v.sizes, profile) as number,
+          coreMissing: missing.filter((sz) => isCoreSize(sz, profile)),
           missingSizes: missing,
           pdpUrl: v.pdp_url ?? null,
           screenshotKey: v.pdp_screenshot_key ?? null,
@@ -132,17 +144,32 @@ export function InventoryVariantDetail({
                 </div>
               </div>
               <span
-                className={`shrink-0 inline-flex items-baseline gap-1 px-2 py-1 rounded-lg text-xs font-semibold tabular-nums border ${pctClass(r.pct)}`}
+                className={`shrink-0 inline-flex items-baseline gap-1 px-2 py-1 rounded-lg text-xs font-semibold tabular-nums border ${pctClass(r.weightedPct)}`}
+                title={`Demand-weighted coverage ${(r.weightedPct * 100).toFixed(0)}% (raw ${(r.pct * 100).toFixed(0)}%) — gut sizes count more than tail sizes`}
               >
                 {r.available}/{r.total}
                 <span className="text-[10px] font-normal opacity-80">
-                  {(r.pct * 100).toFixed(0)}%
+                  {(r.weightedPct * 100).toFixed(0)}% wtd
                 </span>
               </span>
             </div>
             {r.missingSizes.length > 0 && (
-              <div className="text-[11px] text-rose-700 mb-2 break-words">
-                missing: {r.missingSizes.join(", ")}
+              <div className="text-[11px] mb-2 break-words">
+                <span className="text-rose-700">missing: </span>
+                {r.missingSizes.map((sz, j) => (
+                  <span key={sz}>
+                    {j > 0 && ", "}
+                    <span
+                      className={
+                        r.coreMissing.includes(sz)
+                          ? "font-bold text-rose-700"
+                          : "text-rose-400"
+                      }
+                    >
+                      {sz}
+                    </span>
+                  </span>
+                ))}
               </div>
             )}
             {r.screenshotUrl && (
@@ -206,18 +233,39 @@ export function InventoryVariantDetail({
                 </td>
                 <td className="px-3 py-2 text-right">
                   <span
-                    className={`inline-flex items-baseline gap-1 px-2 py-0.5 rounded-md text-xs font-semibold tabular-nums border ${pctClass(r.pct)}`}
+                    className={`inline-flex items-baseline gap-1 px-2 py-0.5 rounded-md text-xs font-semibold tabular-nums border ${pctClass(r.weightedPct)}`}
+                    title={`Demand-weighted ${(r.weightedPct * 100).toFixed(0)}% · raw ${(r.pct * 100).toFixed(0)}% — colored by weighted: a full tail can't mask a hollow core`}
                   >
                     {r.available}/{r.total}
                     <span className="text-[10px] font-normal opacity-80">
-                      {(r.pct * 100).toFixed(0)}%
+                      {(r.weightedPct * 100).toFixed(0)}% wtd
                     </span>
                   </span>
                 </td>
-                <td className="px-3 py-2 text-xs text-rose-700 break-words max-w-[260px]">
-                  {r.missingSizes.length === 0
-                    ? "—"
-                    : r.missingSizes.join(", ")}
+                <td className="px-3 py-2 text-xs break-words max-w-[260px]">
+                  {r.missingSizes.length === 0 ? (
+                    "—"
+                  ) : (
+                    r.missingSizes.map((sz, j) => (
+                      <span key={sz}>
+                        {j > 0 && ", "}
+                        <span
+                          className={
+                            r.coreMissing.includes(sz)
+                              ? "font-bold text-rose-700"
+                              : "text-rose-400"
+                          }
+                          title={
+                            r.coreMissing.includes(sz)
+                              ? "Core (high-demand) size"
+                              : "Tail size"
+                          }
+                        >
+                          {sz}
+                        </span>
+                      </span>
+                    ))
+                  )}
                 </td>
                 <td className="px-3 py-2">
                   {r.screenshotUrl ? (

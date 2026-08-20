@@ -9,6 +9,8 @@
 // counts, tallies, calls out patterns, names the worst offenders. The
 // prompt below is what enforces that.
 
+import { sizeDemandWeight, isCoreSize } from '../../site/lib/schema/size-demand.mjs';
+
 const DEFAULT_BASE = 'http://localhost:11434/v1';
 const DEFAULT_MODEL = 'llama3.1:8b';
 
@@ -69,13 +71,14 @@ multiple categories, call that out as a single horizontal item
 allocation issue, not stock-out").`;
 }
 
-function buildUserPrompt({ scope, totals, plps }) {
+function buildUserPrompt({ scope, totals, plps, sizeProfile }) {
   const pct = (totals.avg_size_coverage * 100).toFixed(1);
   const lines = [
     `Inventory audit results — ${scope}.`,
     ``,
     `Totals: ${totals.plps_audited} categories audited, ${totals.styles} styles examined, ${totals.variants} (style, color, width) variants.`,
-    `Average size coverage across variants: ${pct}%.`,
+    `Average size coverage across variants: ${pct}% raw; ${((totals.weighted_size_coverage ?? totals.avg_size_coverage) * 100).toFixed(1)}% demand-weighted.`,
+    `Sizes tagged [CORE] are the high-demand gut of the bell curve — a hole there loses real sales; tail sizes are minor.`,
     `Failed categories: ${totals.plps_failed}.`,
     ``,
     `Per-category breakdown:`,
@@ -106,10 +109,13 @@ function buildUserPrompt({ scope, totals, plps }) {
       }
     }
     const cPct = denom > 0 ? ((cov / denom) * 100).toFixed(0) : '—';
+    // Rank missing sizes by DEMAND x frequency, not frequency alone — a
+    // gut size gone in 2 variants outranks a tail size gone in 5.
+    const profile = sizeProfile ?? 'unknown';
     const top3Missing = [...missingSizes.entries()]
-      .sort((a, b) => b[1] - a[1])
+      .sort((a, b) => b[1] * sizeDemandWeight(b[0], profile) - a[1] * sizeDemandWeight(a[0], profile))
       .slice(0, 3)
-      .map(([sz, n]) => `${sz} (gone in ${n} variants)`)
+      .map(([sz, n]) => `${sz}${isCoreSize(sz, profile) ? ' [CORE]' : ''} (gone in ${n} variants)`)
       .join(', ');
     const widthStr = widthsSeen.size > 0 ? ` widths: ${[...widthsSeen].join('/')}.` : '';
     lines.push(
@@ -136,6 +142,10 @@ function buildUserPrompt({ scope, totals, plps }) {
     "  ### What to restock   (5-8 bullets, each: category · size(s) · width · why)",
     '',
     'Use specific category names, specific sizes, specific widths. Numbers help.',
+    'Judge severity by DEMAND, not count: a [CORE] size missing (mens 9-11,',
+    'womens 7-9, apparel M/L) is a headline; a tail size missing (mens 14-16,',
+    'womens 11-12, 3XL) is a footnote. Lead Worst offenders and What to',
+    'restock with [CORE] gaps.',
     'When you name a style, state its merchandised position in its category',
     '(e.g. "position #2 in Sale — Top of Rack") — a gap high on the page wastes',
     'prime real estate and outranks the same gap further down.',

@@ -1,4 +1,5 @@
 import type { InventoryAudit } from "@/lib/schema/audit";
+import { sizeDemandWeight, isCoreSize, weightedCoverage } from "@/lib/schema/size-demand.mjs";
 
 type Variant = InventoryAudit["plps"][number]["styles"][number]["variants"][number];
 
@@ -40,6 +41,19 @@ export function sizeSystemOf(size: string): SizeSystem {
   if (/^\d+(\.\d+)?$/.test(s)) return "numeric";
   if (/M\s*\d/i.test(s) && /W\s*\d/i.test(s)) return "unified"; // "M 4 / W 5.5"
   return "alpha"; // XS / S / M / L / XL / XXL …
+}
+
+// Demand profile for weighting. New audits carry size_profile; legacy rows
+// are inferred from the scope string ("women's shoes", "boys' sale ...").
+export function demandProfileOf(inventory: InventoryAudit): string {
+  const sp = (inventory as { size_profile?: string }).size_profile;
+  if (sp) return sp;
+  const scope = (inventory.scope ?? "").toLowerCase();
+  if (/women/.test(scope)) return "womens";
+  if (/\bmen/.test(scope)) return "mens";
+  if (/girl/.test(scope)) return "girls";
+  if (/boy/.test(scope)) return "boys";
+  return "unknown";
 }
 
 const SYSTEM_LABEL: Record<SizeSystem, string> = {
@@ -189,6 +203,7 @@ export function InventoryCoverageMatrix({
 }) {
   const axes = sizeAxesOf(inventory);
   if (axes.length === 0) return null;
+  const profile = demandProfileOf(inventory);
   const t = inventory.totals;
   const pct = (t.avg_size_coverage * 100).toFixed(0);
 
@@ -231,25 +246,34 @@ export function InventoryCoverageMatrix({
             <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
               <table className="text-[10px] border-separate border-spacing-0.5">
                 <thead>
-                  <tr>
-                    <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
-                    {axis.map((s) => (
-                      <th
-                        key={s}
-                        className="text-center font-normal text-muted whitespace-nowrap w-7"
-                      >
-                        {s}
-                      </th>
-                    ))}
-                  </tr>
+                  <DemandHeader axis={axis} profile={profile} cellW="w-7" />
                 </thead>
                 <tbody>
                   {activePlps.map((plp) => {
                     const sizeMap = cells.get(plp)!;
+                    // Demand-weighted coverage for the category: what
+                    // fraction of the MARKET's demand is actually buyable.
+                    let wNum = 0, wDen = 0;
+                    for (const sz of axis) {
+                      const c = sizeMap.get(sz)!;
+                      if (c.total === 0) continue;
+                      const w = sizeDemandWeight(sz, profile) as number;
+                      wDen += w;
+                      wNum += w * (c.available / c.total);
+                    }
+                    const wPct = wDen > 0 ? Math.round((wNum / wDen) * 100) : null;
                     return (
                       <tr key={plp}>
                         <td className="text-right pr-2 font-medium text-gray-800 whitespace-nowrap text-xs">
                           {plp}
+                          {wPct !== null && (
+                            <span
+                              className="ml-1 font-semibold tabular-nums text-sky-700"
+                              title="Demand-weighted coverage — % of market demand that is in stock"
+                            >
+                              {wPct}%
+                            </span>
+                          )}
                         </td>
                         {axis.map((sz) => {
                           const c = sizeMap.get(sz)!;
@@ -290,6 +314,7 @@ export function InventoryVariantMatrix({
 }) {
   const axes = sizeAxesOf(inventory);
   if (axes.length === 0) return null;
+  const profile = demandProfileOf(inventory);
   const detail = buildDetailRows(inventory);
 
   return (
@@ -320,17 +345,7 @@ export function InventoryVariantMatrix({
             <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
               <table className="text-[10px] border-separate border-spacing-0.5">
                 <thead>
-                  <tr>
-                    <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
-                    {axis.map((s) => (
-                      <th
-                        key={s}
-                        className="text-center font-normal text-muted whitespace-nowrap w-5"
-                      >
-                        {s}
-                      </th>
-                    ))}
-                  </tr>
+                  <DemandHeader axis={axis} profile={profile} cellW="w-5" />
                 </thead>
                 <tbody>
                   {rows.map((row, i) => {
@@ -403,6 +418,46 @@ export function InventoryHeatmap({ inventory }: { inventory: InventoryAudit }) {
       <InventoryCoverageMatrix inventory={inventory} />
       <InventoryVariantMatrix inventory={inventory} />
     </div>
+  );
+}
+
+// Header block for one size axis: a demand-curve bar row (taller bar =
+// more of the market wears that size) above the size labels, with the
+// core "gut" sizes bolded. Makes the bell curve visible so a red cell
+// under a tall bar reads as the emergency it is.
+function DemandHeader({ axis, profile, cellW }: { axis: string[]; profile: string; cellW: string }) {
+  return (
+    <>
+      <tr>
+        <th className="text-right pr-2 align-bottom font-normal text-[9px] text-muted whitespace-nowrap">
+          demand
+        </th>
+        {axis.map((s) => {
+          const w = sizeDemandWeight(s, profile) as number;
+          return (
+            <th key={s} className={`${cellW} align-bottom`} title={`${s}: ~${Math.round(w * 100)}% of peak demand`}>
+              <div
+                className={`mx-auto w-2/3 rounded-t-[2px] ${w >= 0.7 ? "bg-sky-500" : "bg-sky-200"}`}
+                style={{ height: `${Math.max(2, Math.round(w * 18))}px` }}
+              />
+            </th>
+          );
+        })}
+      </tr>
+      <tr>
+        <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
+        {axis.map((s) => (
+          <th
+            key={s}
+            className={`text-center whitespace-nowrap ${cellW} ${
+              isCoreSize(s, profile) ? "font-bold text-gray-900" : "font-normal text-muted"
+            }`}
+          >
+            {s}
+          </th>
+        ))}
+      </tr>
+    </>
   );
 }
 
