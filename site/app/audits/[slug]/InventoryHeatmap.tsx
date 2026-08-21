@@ -57,7 +57,7 @@ export function demandProfileOf(inventory: InventoryAudit): string {
   return "unknown";
 }
 
-const SYSTEM_LABEL: Record<SizeSystem, string> = {
+export const SYSTEM_LABEL: Record<SizeSystem, string> = {
   numeric: "Shoe sizes",
   alpha: "Apparel sizes",
   unified: "Unisex sizes (M / W)",
@@ -110,7 +110,7 @@ function coverageColor(pct: number, hasData: boolean): string {
   return COVERAGE_RAMP[idx];
 }
 
-function binaryClass(state: "available" | "unavailable" | "missing"): string {
+export function binaryClass(state: "available" | "unavailable" | "missing"): string {
   if (state === "available") return "bg-emerald-500";
   if (state === "unavailable") return "bg-rose-500";
   return "bg-gray-200";
@@ -189,7 +189,7 @@ function buildDetailRows(inventory: InventoryAudit): DetailRow[] {
 // Returned in a stable order (numeric shoes first, then apparel, then
 // unified) so mixed audits render predictably; single-system audits
 // (ivy/ian/ida/ike) yield exactly one axis and render as before.
-function sizeAxesOf(
+export function sizeAxesOf(
   inventory: InventoryAudit
 ): { system: SizeSystem; axis: string[] }[] {
   const bySystem = new Map<SizeSystem, Set<string>>();

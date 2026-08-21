@@ -2,11 +2,14 @@ import React from "react";
 import type { InventoryAudit } from "@/lib/schema/audit";
 import {
   InventoryCoverageMatrix,
-  InventoryVariantMatrix,
   parseStyleSku,
   demandProfileOf,
+  sizeAxesOf,
+  sizeSystemOf,
+  SYSTEM_LABEL,
+  binaryClass,
 } from "./InventoryHeatmap";
-import { weightedCoverage, sortByDemand, isCoreSize, resolveProfile } from "@/lib/schema/size-demand.mjs";
+import { weightedCoverage, sortByDemand, isCoreSize, resolveProfile, sizeDemandWeight } from "@/lib/schema/size-demand.mjs";
 
 type Inventory = InventoryAudit;
 
@@ -27,6 +30,8 @@ type Row = {
   weightedPct: number;
   coreMissing: string[];
   missingSizes: string[];
+  sizes: { size: string; available: boolean }[];
+  vProfile: string;
   pdpUrl: string | null;
   screenshotKey: string | null;
   screenshotUrl: string | null;
@@ -74,6 +79,8 @@ function flattenRows(
           weightedPct: weightedCoverage(v.sizes, profile) as number,
           coreMissing: missing.filter((sz) => isCoreSize(sz, vProfile)),
           missingSizes: missing,
+          sizes: v.sizes.map((sz) => ({ size: sz.size, available: sz.available })),
+          vProfile,
           pdpUrl: v.pdp_url ?? null,
           screenshotKey: v.pdp_screenshot_key ?? null,
           screenshotUrl: v.pdp_screenshot_key
@@ -162,12 +169,9 @@ export function InventoryVariantDetail({
         );
       })()}
 
-      <div className="mb-6">
-        <InventoryVariantMatrix inventory={inventory} />
-      </div>
-
       <h4 className="text-xs uppercase tracking-wide text-muted mb-3 mt-2">
-        Every variant — click a row for the PDP screenshot
+        Every variant — per-size stock in the row; “proof” opens the PDP
+        capture with the size grid ringed
       </h4>
 
       {/* Mobile: stacked cards, grouped by category so ranks read as one
@@ -255,113 +259,134 @@ export function InventoryVariantDetail({
         ))}
       </div>
 
-      {/* Desktop: table */}
-      <div className="hidden sm:block bg-white border border-gray-200 rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
-            <tr>
-              <th className="px-3 py-2 font-medium text-right">Pos.</th>
-              <th className="px-3 py-2 font-medium">Style</th>
-              <th className="px-3 py-2 font-medium">Color</th>
-              <th className="px-3 py-2 font-medium">Width</th>
-              <th className="px-3 py-2 font-medium text-right">Avail / Total</th>
-              <th className="px-3 py-2 font-medium">Missing</th>
-              <th className="px-3 py-2 font-medium">Proof</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <React.Fragment key={i}>
-                {(i === 0 || rows[i - 1].plp !== r.plp) && (
-                  <tr className="bg-gray-50 border-t border-gray-200">
-                    <td
-                      colSpan={7}
-                      className="px-3 py-1.5 text-[11px] uppercase tracking-wide font-semibold text-gray-600"
-                    >
-                      {r.plp}
-                    </td>
+      {/* Desktop: one merged table per size system — position, style and
+          the per-size stock cells in the SAME row (previously a separate
+          variant matrix duplicated every row above this table). */}
+      {sizeAxesOf(inventory).map(({ system, axis }) => {
+        const sysRows = rows.filter(
+          (r) => r.sizes.length > 0 && sizeSystemOf(r.sizes[0].size) === system
+        );
+        if (sysRows.length === 0) return null;
+        const axes = sizeAxesOf(inventory);
+        const lead = 4; // Pos, Style, Color, Width
+        return (
+          <div key={system} className="hidden sm:block mb-4">
+            {axes.length > 1 && (
+              <div className="text-[11px] uppercase tracking-wide text-muted mb-1">
+                {SYSTEM_LABEL[system as keyof typeof SYSTEM_LABEL]}
+              </div>
+            )}
+            <div className="bg-white border border-gray-200 rounded-2xl overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-muted">
+                  <tr>
+                    <th colSpan={lead} />
+                    {axis.map((sz) => {
+                      const w = sizeDemandWeight(sz, demandProfileOf(inventory)) as number;
+                      return (
+                        <th key={sz} className="align-bottom pb-0.5" title={`${sz}: ~${Math.round(w * 100)}% of peak demand`}>
+                          <div
+                            className={`mx-auto w-2/3 rounded-t-[2px] ${w >= 0.7 ? "bg-sky-500" : "bg-sky-200"}`}
+                            style={{ height: `${Math.max(2, Math.round(w * 14))}px` }}
+                          />
+                        </th>
+                      );
+                    })}
+                    <th colSpan={2} />
                   </tr>
-                )}
-              <tr className="border-t border-gray-100 align-top">
-                <td
-                  className="px-3 py-2 text-right font-semibold tabular-nums whitespace-nowrap"
-                  title={`Style position ${r.styleRank} in ${r.plp}, colorway ${r.colorIdx}`}
-                >
-                  {r.posLabel}
-                </td>
-                <td className="px-3 py-2">
-                  <a
-                    href={r.styleUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sky-700 underline"
-                  >
-                    {r.styleName}
-                  </a>
-                  <div className="text-[11px] text-muted font-mono">
-                    {parseStyleSku(r.pdpUrl) ?? `#${r.styleRank}`}
-                  </div>
-                </td>
-                <td className="px-3 py-2 whitespace-nowrap">{r.color}</td>
-                <td className="px-3 py-2 text-muted whitespace-nowrap">
-                  {r.width ?? "—"}
-                </td>
-                <td className="px-3 py-2 text-right">
-                  <span
-                    className={`inline-flex items-baseline gap-1 px-2 py-0.5 rounded-md text-xs font-semibold tabular-nums border ${pctClass(r.weightedPct)}`}
-                    title={`Demand-weighted ${(r.weightedPct * 100).toFixed(0)}% · raw ${(r.pct * 100).toFixed(0)}% — colored by weighted: a full tail can't mask a hollow core`}
-                  >
-                    {r.available}/{r.total}
-                    <span className="text-[10px] font-normal opacity-80">
-                      {(r.weightedPct * 100).toFixed(0)}% wtd
-                    </span>
-                  </span>
-                </td>
-                <td className="px-3 py-2 text-xs break-words max-w-[260px]">
-                  {r.missingSizes.length === 0 ? (
-                    "—"
-                  ) : (
-                    r.missingSizes.map((sz, j) => (
-                      <span key={sz}>
-                        {j > 0 && ", "}
-                        <span
-                          className={
-                            r.coreMissing.includes(sz)
-                              ? "font-bold text-rose-700"
-                              : "text-rose-400"
-                          }
-                          title={
-                            r.coreMissing.includes(sz)
-                              ? "Core (high-demand) size"
-                              : "Tail size"
-                          }
-                        >
-                          {sz}
-                        </span>
-                      </span>
-                    ))
-                  )}
-                </td>
-                <td className="px-3 py-2">
-                  {r.screenshotUrl ? (
-                    <a
-                      href={r.screenshotUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs text-sky-700 underline"
-                    >
-                      view
-                    </a>
-                  ) : (
-                    <span className="text-xs text-muted">—</span>
-                  )}
-                </td>
-              </tr>
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  <tr>
+                    <th className="px-3 py-2 font-medium text-right">Pos.</th>
+                    <th className="px-3 py-2 font-medium">Style</th>
+                    <th className="px-3 py-2 font-medium">Color</th>
+                    <th className="px-3 py-2 font-medium">Width</th>
+                    {axis.map((sz) => (
+                      <th
+                        key={sz}
+                        className={`px-0.5 py-2 text-center whitespace-nowrap text-[10px] ${
+                          isCoreSize(sz, demandProfileOf(inventory)) ? "font-bold text-gray-900" : "font-normal"
+                        }`}
+                      >
+                        {sz}
+                      </th>
+                    ))}
+                    <th className="px-3 py-2 font-medium text-right">Avail</th>
+                    <th className="px-3 py-2 font-medium">Proof</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sysRows.map((r, i) => {
+                    const stateOf = new Map(r.sizes.map((x) => [x.size, x.available]));
+                    return (
+                      <React.Fragment key={i}>
+                        {(i === 0 || sysRows[i - 1].plp !== r.plp) && (
+                          <tr className="bg-gray-50 border-t border-gray-200">
+                            <td
+                              colSpan={lead + axis.length + 2}
+                              className="px-3 py-1.5 text-[11px] uppercase tracking-wide font-semibold text-gray-600"
+                            >
+                              {r.plp}
+                            </td>
+                          </tr>
+                        )}
+                        <tr className="border-t border-gray-100 align-middle">
+                          <td
+                            className="px-3 py-2 text-right font-semibold tabular-nums whitespace-nowrap"
+                            title={`Style position ${r.styleRank} in ${r.plp}, colorway ${r.colorIdx}`}
+                          >
+                            {r.posLabel}
+                          </td>
+                          <td className="px-3 py-2">
+                            <a href={r.styleUrl} target="_blank" rel="noreferrer" className="text-sky-700 underline">
+                              {r.styleName}
+                            </a>
+                            <div className="text-[11px] text-muted font-mono">
+                              {parseStyleSku(r.pdpUrl) ?? r.posLabel}
+                            </div>
+                          </td>
+                          <td className="px-3 py-2 whitespace-nowrap">{r.color}</td>
+                          <td className="px-3 py-2 text-muted whitespace-nowrap">{r.width ?? "—"}</td>
+                          {axis.map((sz) => {
+                            const st = stateOf.has(sz)
+                              ? stateOf.get(sz)
+                                ? "available"
+                                : "unavailable"
+                              : "missing";
+                            return (
+                              <td key={sz} className="px-0.5 py-2 text-center" title={`${r.posLabel} ${r.color} · ${sz}: ${st === "missing" ? "not offered" : st === "available" ? "in stock" : "OUT of stock"}`}>
+                                <span className={`inline-block w-4 h-4 rounded-[3px] ${binaryClass(st as "available" | "unavailable" | "missing")}`} />
+                              </td>
+                            );
+                          })}
+                          <td className="px-3 py-2 text-right">
+                            <span
+                              className={`inline-flex items-baseline gap-1 px-2 py-0.5 rounded-md text-xs font-semibold tabular-nums border ${pctClass(r.weightedPct)}`}
+                              title={`Demand-weighted ${(r.weightedPct * 100).toFixed(0)}% · raw ${(r.pct * 100).toFixed(0)}% — colored by weighted: a full tail can't mask a hollow core`}
+                            >
+                              {r.available}/{r.total}
+                              <span className="text-[10px] font-normal opacity-80">
+                                {(r.weightedPct * 100).toFixed(0)}%
+                              </span>
+                            </span>
+                          </td>
+                          <td className="px-3 py-2">
+                            {r.screenshotUrl ? (
+                              <a href={r.screenshotUrl} target="_blank" rel="noreferrer" className="text-xs text-sky-700 underline">
+                                view
+                              </a>
+                            ) : (
+                              <span className="text-xs text-muted">—</span>
+                            )}
+                          </td>
+                        </tr>
+                      </React.Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
