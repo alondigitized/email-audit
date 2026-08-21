@@ -269,7 +269,7 @@ export function InventoryCoverageMatrix({
             <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
               <table className="text-[10px] border-separate border-spacing-0.5">
                 <thead>
-                  <DemandHeader axis={axis} profile={profile} cellW="w-7" />
+                  <DemandHeader axis={axis} profile={profile} cellW="w-5 sm:w-7" />
                 </thead>
                 <tbody>
                   {activePlps.map((plp) => {
@@ -287,7 +287,7 @@ export function InventoryCoverageMatrix({
                     const wPct = wDen > 0 ? Math.round((wNum / wDen) * 100) : null;
                     return (
                       <tr key={plp}>
-                        <td className="text-right pr-2 font-medium text-gray-800 whitespace-nowrap text-xs">
+                        <td className="sticky left-0 z-10 bg-white text-right pr-2 font-medium text-gray-800 whitespace-nowrap text-xs">
                           {plp}
                           {wPct !== null && (
                             <span
@@ -309,7 +309,7 @@ export function InventoryCoverageMatrix({
                             <td
                               key={sz}
                               title={label}
-                              className="w-7 h-6 rounded-[3px]"
+                              className="w-5 h-5 sm:w-7 sm:h-6 rounded-[3px]"
                               style={{ backgroundColor: coverageColor(pct, has) }}
                             />
                           );
@@ -468,7 +468,7 @@ function DemandHeader({ axis, profile, cellW }: { axis: string[]; profile: strin
   return (
     <>
       <tr>
-        <th className="text-right pr-2 align-bottom font-normal text-[9px] text-muted whitespace-nowrap">
+        <th className="sticky left-0 z-10 bg-white text-right pr-2 align-bottom font-normal text-[9px] text-muted whitespace-nowrap">
           demand
         </th>
         {axis.map((s) => {
@@ -484,7 +484,7 @@ function DemandHeader({ axis, profile, cellW }: { axis: string[]; profile: strin
         })}
       </tr>
       <tr>
-        <th className="text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
+        <th className="sticky left-0 z-10 bg-white text-right pr-2 font-normal text-muted whitespace-nowrap"></th>
         {axis.map((s) => (
           <th
             key={s}
