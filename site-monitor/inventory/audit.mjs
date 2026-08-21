@@ -467,7 +467,47 @@ async function capturePdpProof(page, slug, plpSlug, rank, colorIdx) {
   fs.mkdirSync(localDir, { recursive: true });
   const localPath = path.join(localDir, fname);
   try {
-    await page.screenshot({ path: localPath, fullPage: false });
+    // The screenshot IS the evidence for this variant's size availability —
+    // it must SHOW the size grid. A blind viewport capture at whatever
+    // scroll position the swatch click left behind often framed only the
+    // hero image. Scroll the size selector to the center of the viewport,
+    // ring it red so the reader's eye lands on the claim being proven, and
+    // fall back to a full-page capture if the grid can't be located.
+    const gridVisible = await page.evaluate((sel) => {
+      document.querySelectorAll('.__inv_ring').forEach((e) => e.remove());
+      const first = document.querySelector(sel);
+      if (!first) return false;
+      // Ring the whole size block (all buttons), not just the first one.
+      const btns = [...document.querySelectorAll(sel)];
+      const container = first.closest('[class*=product-attributes], [class*=size-selector], fieldset') ?? first.parentElement;
+      (container ?? first).scrollIntoView({ block: 'center' });
+      // Templates ship a hidden zero-rect duplicate button at (0,0); one of
+      // those in the box union drags the ring offscreen. Visible boxes only.
+      const boxes = btns.map((b) => b.getBoundingClientRect())
+        .filter((r) => r.width > 2 && r.height > 2);
+      if (boxes.length === 0) return false;
+      const top = Math.min(...boxes.map((b) => b.top));
+      const left = Math.min(...boxes.map((b) => b.left));
+      const right = Math.max(...boxes.map((b) => b.right));
+      const bottom = Math.max(...boxes.map((b) => b.bottom));
+      if (!(right > left && bottom > top)) return false;
+      const d = document.createElement('div');
+      d.className = '__inv_ring';
+      Object.assign(d.style, {
+        position: 'fixed', left: `${left - 8}px`, top: `${top - 8}px`,
+        width: `${right - left + 16}px`, height: `${bottom - top + 16}px`,
+        border: '3px solid #e11d48', borderRadius: '6px',
+        zIndex: 2147483647, pointerEvents: 'none',
+      });
+      document.body.appendChild(d);
+      return true;
+    }, SEL_SIZE_BUTTONS).catch(() => false);
+    await delay(700); // let the scroll settle before framing the shot
+    await page.screenshot({ path: localPath, fullPage: !gridVisible });
+    await page.evaluate(() =>
+      document.querySelectorAll('.__inv_ring').forEach((e) => e.remove())
+    ).catch(() => {});
+    if (!gridVisible) log('size grid not located — captured full page as fallback', { fname });
   } catch (err) {
     log('screenshot failed', { fname, err: String(err).slice(0, 160) });
     return null;
