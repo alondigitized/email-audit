@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { eq, and } from "drizzle-orm";
 import { db, emailMessages, personas } from "@/lib/db/client";
+import { tryConfirmSubscription } from "@/lib/subscriptions/confirm";
 import { z } from "zod";
 
 // Inbound email landing endpoint. Cloudflare Email Worker POSTs every
@@ -136,6 +137,30 @@ export async function POST(req: NextRequest) {
     textBody: text ?? null,
     rawKey: rawKey ?? null,
     receivedAt: receivedAt ? new Date(receivedAt) : new Date(),
+  });
+
+  // Fire-and-forget Klaviyo double-opt-in confirm. Klaviyo's confirmation
+  // emails carry a token-bearing link that just needs a GET to flip the
+  // subscription from pending → active; a server-side fetch is enough.
+  // after() runs post-response so the Worker's webhook isn't blocked.
+  // Detection is conservative — non-confirm emails fall through silently.
+  after(async () => {
+    try {
+      const r = await tryConfirmSubscription({
+        fromAddress: from.toLowerCase(),
+        fromDomain,
+        toAddress: to.toLowerCase(),
+        subject: subject ?? null,
+        html: html ?? null,
+      });
+      if (r.confirmed) {
+        console.log(`[confirm] ✓ to=${to} from=${from} url=${r.url.slice(0, 100)}`);
+      } else if (r.reason !== "not a confirm email") {
+        console.log(`[confirm] skip to=${to} from=${from} reason=${r.reason}`);
+      }
+    } catch (err) {
+      console.warn(`[confirm] error to=${to}:`, err);
+    }
   });
 
   return NextResponse.json({ ok: true });
