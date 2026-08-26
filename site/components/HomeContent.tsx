@@ -33,7 +33,15 @@ const PARAM_PERSONA = "p";
 const PARAM_BRAND = "b";
 const PARAM_DAY = "d";
 
-export function HomeContent({ audits }: { audits: AuditSummary[] }) {
+export function HomeContent({
+  audits,
+  chartMode = "industry",
+  ownBrand,
+}: {
+  audits: AuditSummary[];
+  chartMode?: "industry" | "brand";
+  ownBrand?: { key: string; label: string };
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -282,6 +290,8 @@ export function HomeContent({ audits }: { audits: AuditSummary[] }) {
             ? DATE_RANGE_PRESETS.find((p) => p.key === selectedRange)?.days
             : undefined
         }
+        mode={chartMode}
+        ownBrand={ownBrand}
       />
       <AuditList
         audits={visibleAudits}

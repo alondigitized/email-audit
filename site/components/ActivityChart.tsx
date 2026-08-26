@@ -18,21 +18,156 @@ import {
   INDUSTRY_COLOR,
   INDUSTRY_ORDER,
   type Industry,
+  brandKeyOf,
   industryOf,
 } from "@/lib/industry";
 
 const DEFAULT_DAYS = 14;
+const MAX_BRAND_BUCKETS = 5;
+const OTHER_BUCKET = "Other";
+
+// Brand-mode coloring. The tenant's own brand always gets a fixed
+// "ownership" emerald so a customer glancing at their dashboard sees
+// "my green vs their colors" instantly. Competitors take the rest of
+// the palette in stable order.
+const OWN_BRAND_COLOR = "#10b981";
+const COMPETITOR_PALETTE = [
+  "#4269d0",
+  "#efb118",
+  "#ff725c",
+  "#a463f2",
+  "#9c6b4e",
+];
+const OTHER_COLOR = "#9498a0";
 
 type DayBucket = {
   date: string;
   label: string;
-  [industry: string]: string | number;
+  [bucket: string]: string | number;
 };
 
 // Pick the industries that actually appear in the window so the legend
 // doesn't show empty buckets. Order is canonical (INDUSTRY_ORDER) so
 // color-to-industry stays stable across renders even when a bucket
 // drops in/out as filters change.
+// Brand mode bucket: the tenant's own brand (always present in the
+// legend even when there are zero audits this window, so the legend
+// doesn't disappear when a tenant filters down to a competitor) plus
+// up to MAX_BRAND_BUCKETS competitor brands by frequency, plus
+// "Other". Order in the returned array drives stacking order in the
+// chart and color assignment.
+type BrandBucket = {
+  key: string;
+  label: string;
+  color: string;
+  isOwn: boolean;
+};
+
+function pickBrands(
+  audits: AuditSummary[],
+  days: number,
+  channel: string | null,
+  ownBrand: { key: string; label: string }
+): BrandBucket[] {
+  const today = startOfLocalDay(new Date());
+  const start = new Date(today);
+  start.setDate(start.getDate() - (days - 1));
+
+  // Tally each canonical brand key in window. Keep the prettiest display
+  // name we see for each key so the legend reads "Skechers" not "skechers".
+  const counts = new Map<string, number>();
+  const labels = new Map<string, string>();
+  for (const a of audits) {
+    if (channel && (a.type ?? "email") !== channel) continue;
+    if (!a.timestamp_iso) continue;
+    const ts = new Date(a.timestamp_iso);
+    if (Number.isNaN(ts.getTime())) continue;
+    if (ts < start) continue;
+    const raw = (a.from_display_name ?? "").trim();
+    if (!raw) continue;
+    const key = brandKeyOf(raw);
+    if (!key) continue;
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+    // Prefer human-cased labels over URL-form ones — pick the shortest
+    // candidate that isn't all-caps.
+    const prev = labels.get(key);
+    if (
+      !prev ||
+      (raw.length < prev.length && raw.toUpperCase() !== raw) ||
+      (prev.toUpperCase() === prev && raw.toUpperCase() !== raw)
+    ) {
+      labels.set(key, raw);
+    }
+  }
+
+  const competitors = [...counts.entries()]
+    .filter(([k]) => k !== ownBrand.key)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, MAX_BRAND_BUCKETS)
+    .map(([k]) => k);
+
+  const buckets: BrandBucket[] = [
+    {
+      key: ownBrand.key,
+      label: ownBrand.label,
+      color: OWN_BRAND_COLOR,
+      isOwn: true,
+    },
+    ...competitors.map((k, i) => ({
+      key: k,
+      label: labels.get(k) ?? k,
+      color: COMPETITOR_PALETTE[i % COMPETITOR_PALETTE.length],
+      isOwn: false,
+    })),
+    { key: OTHER_BUCKET, label: OTHER_BUCKET, color: OTHER_COLOR, isOwn: false },
+  ];
+  return buckets;
+}
+
+function buildBrandData(
+  audits: AuditSummary[],
+  buckets: BrandBucket[],
+  days: number,
+  channel: string | null
+): DayBucket[] {
+  const known = new Set(buckets.map((b) => b.key));
+  const today = startOfLocalDay(new Date());
+  const start = new Date(today);
+  start.setDate(start.getDate() - (days - 1));
+
+  const indexByKey = new Map<string, number>();
+  const out: DayBucket[] = [];
+  for (let i = 0; i < days; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const key = localDateKey(d);
+    const row: DayBucket = {
+      date: key,
+      label: d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+    };
+    for (const b of buckets) row[b.key] = 0;
+    indexByKey.set(key, out.length);
+    out.push(row);
+  }
+
+  for (const a of audits) {
+    if (channel && (a.type ?? "email") !== channel) continue;
+    if (!a.timestamp_iso) continue;
+    const ts = new Date(a.timestamp_iso);
+    if (Number.isNaN(ts.getTime())) continue;
+    const idx = indexByKey.get(localDateKey(ts));
+    if (idx === undefined) continue;
+    const k = brandKeyOf(a.from_display_name);
+    const bucket = known.has(k) ? k : OTHER_BUCKET;
+    out[idx][bucket] = (out[idx][bucket] as number) + 1;
+  }
+
+  return out;
+}
+
 function pickIndustries(
   audits: AuditSummary[],
   days: number,
@@ -109,6 +244,16 @@ interface Props {
   // Channel filter — null/undefined means all surfaces (email + site).
   // 'email' or 'site' restricts to that channel.
   channel?: string | null;
+  // "industry" stacks by macro industry bucket (founder tenant view, where
+  // the persona corpus spans many sectors). "brand" stacks by individual
+  // brand with the tenant's own brand pinned to a fixed emerald — better
+  // for customer tenants whose visibility is "self + 2-3 competitors", all
+  // in the same industry. Defaults to "industry".
+  mode?: "industry" | "brand";
+  // Required for `mode="brand"`. `key` must be the canonical form (see
+  // brandKeyOf in lib/industry.ts) so it matches what `from_display_name`
+  // canonicalizes to in the audit rows.
+  ownBrand?: { key: string; label: string };
 }
 
 // Label density: ~10-14 visible ticks across the axis regardless of
@@ -127,9 +272,11 @@ function windowLabel(days: number): string {
   return `last ${days} days`;
 }
 
-function dayTotal(d: DayBucket, industries: Industry[]): number {
+type ChartBucket = { key: string; label: string; color: string };
+
+function dayTotal(d: DayBucket, buckets: ChartBucket[]): number {
   let sum = 0;
-  for (const ind of industries) sum += d[ind] as number;
+  for (const b of buckets) sum += d[b.key] as number;
   return sum;
 }
 
@@ -139,6 +286,8 @@ export function ActivityChart({
   onSelectDate,
   days = DEFAULT_DAYS,
   channel = null,
+  mode = "industry",
+  ownBrand,
 }: Props) {
   // Recharts' ResponsiveContainer measures its parent in a layout effect.
   // During SSR the parent has no dimensions, which emits a width(-1)/height(-1)
@@ -147,16 +296,35 @@ export function ActivityChart({
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const industries = pickIndustries(audits, days, channel);
-  const data = buildData(audits, industries, days, channel);
-  const total = data.reduce((s, d) => s + dayTotal(d, industries), 0);
+  // Brand mode requires ownBrand; if a caller forgets it, fall back to
+  // industry mode rather than crashing.
+  const effectiveMode = mode === "brand" && ownBrand ? "brand" : "industry";
+
+  const buckets: ChartBucket[] =
+    effectiveMode === "brand" && ownBrand
+      ? pickBrands(audits, days, channel, ownBrand)
+      : pickIndustries(audits, days, channel).map((ind) => ({
+          key: ind,
+          label: ind,
+          color: INDUSTRY_COLOR[ind],
+        }));
+  const data =
+    effectiveMode === "brand" && ownBrand
+      ? buildBrandData(audits, buckets as BrandBucket[], days, channel)
+      : buildData(
+          audits,
+          buckets.map((b) => b.key) as Industry[],
+          days,
+          channel
+        );
+  const total = data.reduce((s, d) => s + dayTotal(d, buckets), 0);
   const peak = data.reduce(
-    (m, d) => Math.max(m, dayTotal(d, industries)),
+    (m, d) => Math.max(m, dayTotal(d, buckets)),
     0
   );
-  const totalsByIndustry = industries.reduce(
-    (acc, ind) => {
-      acc[ind] = data.reduce((sum, d) => sum + (d[ind] as number), 0);
+  const totalsByBucket = buckets.reduce(
+    (acc, b) => {
+      acc[b.key] = data.reduce((sum, d) => sum + (d[b.key] as number), 0);
       return acc;
     },
     {} as Record<string, number>
@@ -233,24 +401,26 @@ export function ActivityChart({
               wrapperStyle={{ fontSize: 12, paddingTop: 4 }}
               iconType="square"
               formatter={(value: string) => {
-                const n = totalsByIndustry[value] ?? 0;
-                return `${value} (${n})`;
+                const bucket = buckets.find((b) => b.key === value);
+                const label = bucket?.label ?? value;
+                const n = totalsByBucket[value] ?? 0;
+                return `${label} (${n})`;
               }}
             />
-            {industries.map((ind, i) => (
+            {buckets.map((b, i) => (
               <Bar
-                key={ind}
-                dataKey={ind}
+                key={b.key}
+                dataKey={b.key}
                 stackId="a"
-                fill={INDUSTRY_COLOR[ind]}
+                fill={b.color}
                 cursor="pointer"
                 onClick={handleBarClick}
-                radius={i === industries.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
+                radius={i === buckets.length - 1 ? [3, 3, 0, 0] : [0, 0, 0, 0]}
               >
                 {data.map((d) => (
                   <Cell
                     key={d.date}
-                    fill={fillForBar(d.date, INDUSTRY_COLOR[ind])}
+                    fill={fillForBar(d.date, b.color)}
                   />
                 ))}
               </Bar>
