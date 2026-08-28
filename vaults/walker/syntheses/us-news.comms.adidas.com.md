@@ -2,65 +2,59 @@
 kind: synthesis
 persona: walker
 brand: us-news.comms.adidas.com
-reactions: 77
-through: 2026-06-13T05:07:24.000Z
+reactions: 127
+through: 2026-08-27T14:06:43.000Z
 created_at: 2026-05-02T18:18:49.139Z
-updated_at: 2026-06-17T18:20:54.938Z
+updated_at: 2026-08-28T18:18:24.474Z
 ---
 
-# ### 3. Rendering & Accessibility (Continued)
+# It appears that there are several critical issues and recommendations outlined in the technical audit for the adidas "Me
 
-**[FAIL] Broken redirect — malformed href**
-QA extracted a relative-path href `/g/bf4c0485-2527-41ac-b292-227d0bac76fd?txn=5dd5c280-2b89-11f1-bce3-9a305ea1f7ea` which is not a valid absolute URL. The underlying destination wraps through `https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3...`. The redirect chain will fail for any subscriber whose client does not resolve relative hrefs — this CTA is silently broken for a portion of recipients.
+### Technical Summary
+- **Broken redirect link**: A relative path href is not resolving correctly.
+- **Missing plain-text body**: The email lacks a plain text version, which poses CAN-SPAM compliance risks.
+- **Non-HTTPS images**: Multiple image sources are using HTTP instead of HTTPS, causing them to be blocked by major email clients.
+- **Unverified authentication headers**: DKIM/SPF status is unconfirmed due to relay configuration.
 
-**[WARN] 25 tracking links not probed**
-All click-redirect domains were skipped during HTTP validation. Destination URLs and redirect chain integrity are unconfirmed.
+### Recommendations
 
-**[INFO] `<meta name="referrer" content="no-referrer">`**
-This header suppresses the HTTP referrer on all link clicks, which will cause referrer-based analytics attribution to report `(direct)` for all traffic sourced from this email, independent of UTM parameters.
+#### Link & Tracking Issues
+1. **Broken Redirect Fix**:
+   - Validate the offer ID `bf4c0485-2527-41ac-b292-227d0bac76fd` in the offer management platform.
+   - Ensure that the redirect path type matches (`/o/` vs `/g/`) and correct any malformed hrefs to ensure they are absolute URLs.
 
----
+2. **Probing Tracking Links**:
+   - Verify all destination URLs and redirect chain integrity for the 25 unprobed tracking links.
 
-### 4. Rendering & Accessibility (Continued)
+3. **Referrer Header Suppression**:
+   - Remove or scope the `<meta name="referrer" content="no-referrer">` tag unless intentionally suppressing referrer data.
+   - Ensure that UTM parameters are consistent across all destination URLs to maintain proper attribution.
 
-**[FAIL] Missing alt text for images**
-Multiple product and background images lack `alt` attributes. This is a critical accessibility issue as screen readers will not describe these elements to visually impaired users.
+#### Rendering & Accessibility
+1. **Missing Plain-Text Body**:
+   - Add a plain-text MIME alternative with at least the subject line, key offer text, and unsubscribe URL.
 
-**[WARN] Non-HTTPS image sources**
-Several images are served over HTTP, which can lead to mixed content warnings in some email clients and block the images entirely due to security policies:
-- Example: `<img src="http://image.link.adidas.com/..." />`
+2. **Non-HTTPS Images**:
+   - Update image sources from HTTP to HTTPS (e.g., `https://image.link.adidas.com/...`).
 
-**[INFO] Malformed charset meta tag**
-The `<meta>` tag for character set is malformed:
-```html
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-```
-It should be corrected to:
-```html
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-```
+3. **Authentication Headers**:
+   - Pull delivery headers from the ESP for this send and confirm that DKIM/SPF are aligned with `adidas.com`.
 
-**[INFO] Duplicate `@font-face` blocks**
-Multiple identical or near-identical `@font-face` definitions are present, which can cause rendering issues and increase load times. Consolidate these into a single block.
+### Additional Recommendations
+1. **Hero Image Improvement**:
+   - Replace the small product image with a more engaging, human-centered visual of an athlete in action.
 
----
+2. **CTA Visibility**:
+   - Add a visible CTA button below the product copy for the Supernova Rise 3 Adaptive section.
 
-### 5. Recommendations
+3. **Product Focus**:
+   - Remove or de-emphasize the Handball Spezial module to maintain focus on the adaptive product launch.
+   
+4. **Promo Code Contextualization**:
+   - Tie the promo code more closely to the featured product by restating it adjacent to the CTA and specifying its applicability.
 
-| Priority | Issue | Action |
-|---|---|---|
-| P0 | Broken redirect link | Validate the malformed href `/g/bf4c0485-2527-41ac-b292-227d0bac76fd?txn=5dd5c280-2b89-11f1-bce3-9a305ea1f7ea` and ensure it resolves correctly. |
-| P0 | Missing plain-text body | Add a plain-text MIME alternative with at minimum subject line, key offer text, and unsubscribe URL. |
-| P1 | Non-HTTPS image sources | Update all `<img>` tags to use HTTPS URLs (e.g., `https://image.link.adidas.com/...`). |
-| P1 | Missing alt text for images | Add descriptive `alt` attributes to all images, especially those linked directly from the email body. |
-| P2 | Referrer suppression meta tag | Remove or scope `<meta name="referrer" content="no-referrer">` unless deliberately suppressing referrer for privacy reasons. Ensure UTM parameters are present and consistent across links. |
-| P3 | Malformed charset meta tag | Correct the `Content-Type` meta tag to use `UTF-8`. |
-| P3 | Duplicate font definitions | Consolidate duplicate `@font-face` blocks into a single, unified block with all necessary fallbacks. |
+5. **Body Copy Expansion**:
+   - Expand the body copy to include specific features or benefits of the Supernova Rise 3 Adaptive.
 
----
-
-### 6. Conclusion
-
-The email for "Meet the Supernova Rise 3 Adaptive" has several technical and design issues that need to be addressed immediately to improve its performance and user experience. The primary focus should be on fixing broken links, ensuring proper image rendering, and improving accessibility. Additionally, enhancing the product narrative and visual representation will significantly boost engagement and conversion rates.
-
-By implementing these recommendations, adidas can ensure a more effective email campaign that aligns with their brand values and resonates with their target audience.
+### Conclusion
+By addressing these technical issues and implementing the design recommendations, the email campaign can significantly improve both its technical reliability and user engagement, thereby enhancing the overall effectiveness of the product launch.

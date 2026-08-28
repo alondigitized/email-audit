@@ -2,43 +2,96 @@
 kind: synthesis
 persona: bree-stuffed-buildabear-fap6e
 brand: ebuildabear.com
-reactions: 29
-through: 2026-06-11T12:06:57.000Z
+reactions: 78
+through: 2026-08-24T12:05:36.000Z
 created_at: 2026-06-13T18:20:23.336Z
-updated_at: 2026-06-13T18:20:23.336Z
+updated_at: 2026-08-28T18:20:06.881Z
 ---
 
-# It looks like the technical audit for the Build-A-Bear "Summer Collection" email has been cut off at the end. I'll summa
+# It looks like the technical audit for Build-A-Bear's "Summer Collection" email has identified several critical issues th
 
-### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
+### Summary of Issues
 
-- **Unsubscribe link and physical mailing address**: Not present in the visible HTML. Both are required under CAN-SPAM §5. The source is truncated — verify they exist in the footer before send.
-- **Preheader implementation**: Correctly double-suppressed (inline style + CSS rule). Text reads *"We've STUFFED This Email with Summer Fun!"* — will not leak into body.
-- **Authentication**: Cannot confirm from HTML alone. Verify `ebuildabear.com` publishes SPF, DKIM, and DMARC records to ensure proper authentication.
-
-### 6. Recommendations for Improvement
-
-1. **Fix Critical Issues**:
-   - Correct the typo in the X-UA-Compatible meta tag: `<meta http-equiv="X-UA-Compatible" content="IE=edge">`
-   - Fix the malformed VML XML block by removing redundant closing tags.
+1. **Broken X-UA-Compatible Meta Tag:**
+   - The meta tag is missing an attribute, causing it to be ignored by browsers.
    
-2. **Validate CSS and HTML**:
-   - Ensure all CSS shorthand properties are correctly defined (e.g., `border` should be `border-width`, `border-style`, etc.)
-   - Use standard property casing in CSS rules.
+2. **Malformed VML XML (Outlook Conditional Block):**
+   - Invalid XML structure in Outlook-specific conditional block can break image rendering.
 
-3. **Improve Personalization**:
-   - Include merge tokens for personalized content, such as subscriber names or recent purchase history.
+3. **Invalid CSS Shorthand:**
+   - Missing `style` value in the shorthand for border property results in no border being rendered.
 
-4. **Ensure Compliance**:
-   - Add unsubscribe links and physical mailing addresses to the footer.
-   - Verify SPF, DKIM, and DMARC records are correctly set up for `ebuildabear.com`.
+4. **Non-standard CSS Property Casing:**
+   - Incorrectly capitalized properties (`Margin`, `Padding`) may be ignored by some parsers.
 
-5. **Optimize Content Strategy**:
-   - Lead with a Memorial Day offer or weekend event promotion.
-   - Differentiate CTAs across sections to provide more context and personalization.
+5. **Redundant Duplicate Rule:**
+   - Redundant rules in `.gmailfix` class are harmless but indicate template editing artifacts.
 
-### Summary
+6. **Mobile-only Definitions:**
+   - CSS definitions for mobile classes should also cover desktop styles to ensure consistent rendering.
 
-The Build-A-Bear "Summer Collection" email has several technical issues that need addressing for optimal rendering across different clients, especially in Outlook. Additionally, the content strategy could be improved by leveraging current events (like Memorial Day) and providing clear calls-to-action with personalized elements. Ensuring compliance with CAN-SPAM requirements is also crucial to avoid legal issues.
+7. **Trailing Whitespace:**
+   - Minor issue with trailing whitespace in the `<title>` tag.
 
-By fixing these technical and strategic issues, the email will have a better chance of engaging subscribers and driving conversions during the holiday weekend.
+### Recommendations
+
+1. **Fix X-UA-Compatible Meta Tag:**
+   ```html
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   ```
+
+2. **Correct VML XML Structure:**
+   Ensure that all opening and closing tags are correctly nested and properly formatted within the Outlook conditional block.
+
+3. **Valid CSS Shorthand for Border Property:**
+   ```css
+   #table-container { border: 10px solid; border-radius: 20px !important; }
+   ```
+
+4. **Correct CSS Property Casing:**
+   ```css
+   p { margin: 0px !important; padding: 0px !important; }
+   ```
+
+5. **Remove Redundant Rules:**
+   Ensure that duplicate rules are removed to avoid confusion and potential rendering issues.
+
+6. **Ensure Full CSS Coverage:**
+   Define `.shop-now-button` for both mobile and desktop media queries or ensure it is defined in the main CSS block if only used on mobile devices.
+
+7. **Trim Trailing Whitespace:**
+   ```html
+   <title>Build-A-Bear</title>
+   ```
+
+### Additional Recommendations
+
+1. **Verification of CAN-SPAM Compliance:**
+   - Ensure that unsubscribe links and physical mailing addresses are included in the footer.
+   
+2. **Authentication Verification:**
+   - Verify SPF, DKIM, and DMARC records for `ebuildabear.com` to ensure proper email authentication.
+
+3. **Link & Tracking Issues:**
+   - Re-run the audit with full source code to verify UTM parameters and redirect chain integrity.
+
+4. **Subject Line Improvement:**
+   - Consider alternative subject lines that include a concrete offer or urgency, such as:
+     - `Memorial Day weekend: 20% off summer plush`
+     - `Meet your new beach buddy — new summer collection is here`
+
+5. **Preheader Implementation:**
+   - Ensure the preheader text complements the subject line and provides additional context.
+
+### Final Score Adjustments
+
+- **Business Impact Score (1-10):** 8/10
+  - The email has strong visual appeal but lacks a concrete offer or urgency, which can significantly impact conversion rates.
+  
+- **Open Likelihood (persona-grounded):** 5/10
+  - Recognizable sender and relevant subject line help, but the lack of an offer and aggressive cadence are significant negatives.
+
+- **Click-Through Likelihood (persona-grounded):** 6/10
+  - Multiple entry points and trusted brand voice help, but generic CTAs and no concrete offers hinder conversion.
+
+By addressing these technical issues and improving the email's content and structure, Build-A-Bear can significantly enhance its deliverability and engagement rates.
