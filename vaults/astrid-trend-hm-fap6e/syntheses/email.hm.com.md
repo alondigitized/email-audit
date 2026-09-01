@@ -2,66 +2,61 @@
 kind: synthesis
 persona: astrid-trend-hm-fap6e
 brand: email.hm.com
-reactions: 85
-through: 2026-07-24T15:32:47.000Z
+reactions: 127
+through: 2026-08-31T15:36:52.000Z
 created_at: 2026-05-31T18:21:59.030Z
-updated_at: 2026-08-02T18:21:46.774Z
+updated_at: 2026-09-01T18:18:33.639Z
 ---
 
-# It looks like the technical audit was cut off at the end. Here's a summary of the remaining points and recommendations b
+# It looks like the technical audit for H&M's "Coming soon: LOTTO H&M" email is incomplete due to a cut-off at the end. He
 
-### Technical Audit Summary
+### 2. Link & Tracking Issues
 
-#### 1. Technical Summary
-- **Responsive Design**: The email uses standard responsive table layout.
-- **JSON-LD Annotations**: Schema.org JSON-LD annotations are present but contain stale or empty placeholder values.
+**Cannot confirm link tracking and UTM parameters from truncated HTML**
+- **Issue:** The full source code needs to be reviewed to ensure that all links have proper UTM parameters for accurate analytics.
+- **Fix:** Ensure that every CTA button and product image has the appropriate UTM decoration.
 
-#### 2. Link & Tracking Issues
-**Cannot assess from truncated HTML**:
-- Link destinations and UTM parameters cannot be confirmed without the full source code.
-- Unsubscribe footer, CAN-SPAM compliance, and authentication headers (SPF/DKIM/DMARC) need to be verified in the full email source.
+### 3. Alt Text
 
-#### 3. Rendering Issues
-- **@import Font Loading**: Blocked by Gmail and Outlook; move font `@font-face` declarations inline or accept system font fallback.
-- **Duplicate CSS Rules**: Audit template module injection logic to deduplicate mobile CSS rules at build time.
-- **Meta Viewport Tag**: Missing `initial-scale=1`; add it to the base template.
+**Cannot confirm alt text presence on images from truncated HTML**
+- **Issue:** The audit cannot verify if all images have descriptive `alt` attributes, which is crucial for accessibility and SEO.
+- **Fix:** Review the full source code to ensure that every image has a meaningful `alt` attribute.
 
-#### 4. Structured Data
-**JSON-LD structured data — stale and incomplete (medium)**:
-- Update `availabilityStarts` with actual campaign dates.
-- Populate or omit empty fields (`subjectLine`, `url`, `image`, `discountCode`) in JSON-LD schema blocks to avoid malformed structured data.
+### 4. Structured Data
 
-### Recommendations
+**Stale JSON-LD structured data**
+- **Issue:** The schema.org annotations contain outdated placeholder values:
+  - `availabilityStarts`: "2018-12-31T18:59:59-05:00" (should be the actual send date)
+  - Other fields like `discountCode`, `description`, etc., are empty.
+- **Fix:** Populate these fields dynamically at send time to ensure accurate structured data.
+
+### 5. Authentication Headers
+
+**Cannot confirm SPF, DKIM, and DMARC alignment from truncated HTML**
+- **Issue:** The audit cannot verify if the email is properly authenticated with SPF, DKIM, and DMARC records.
+- **Fix:** Ensure that the sending domain `email.hm.com` has proper authentication headers in place.
+
+### 6. Email-to-Site Continuity
+
+**Cannot confirm continuity from truncated HTML**
+- **Issue:** The audit cannot verify if the email links properly continue to the landing page experience, including consistent branding and messaging.
+- **Fix:** Review the full source code and ensure that all CTAs and product pages have a seamless transition.
+
+### 7. Recommendations
 
 | Priority | Issue | Fix |
 |---|---|---|
-| High | `@import` font loading blocked by Gmail/Outlook | Move font `@font-face` declarations inline or accept system font fallback; define explicit `font-family` fallback stacks. |
-| High | Stale `availabilityStarts` (2018) in JSON-LD | Populate dynamically at send time; wire to actual campaign dates. |
-| Medium | Empty JSON-LD fields (`subjectLine`, `url`, `image`, `discountCode`) | Populate or omit the schema blocks entirely to avoid malformed structured data. |
-| Low | Duplicate mobile CSS rules | Audit template module injection logic; deduplicate at build time. |
-| Low | `<meta viewport>` missing `initial-scale=1` | Add to base template. |
-| — | Full-source re-audit needed | Link tracking, UTM params, unsubscribe footer, and alt text cannot be confirmed from truncated HTML. |
+| High | `@import` font loading blocked by Gmail/Outlook | Move font `@font-face` declarations inline or accept system font fallback; define explicit `font-family` fallback stacks |
+| High | Stale `availabilityStarts` (2018) in JSON-LD | Populate dynamically at send time; wire to actual campaign dates |
+| Medium | Empty JSON-LD fields (`subjectLine`, `url`, `image`, `discountCode`) | Populate or omit the schema blocks entirely to avoid malformed structured data |
+| Low | Duplicate mobile CSS rules | Audit template module injection logic; deduplicate at build time |
+| Low | `<meta viewport>` missing `initial-scale=1` | Add to base template |
+| — | Full-source re-audit needed | Link tracking, UTM params, unsubscribe footer, and alt text cannot be confirmed from truncated HTML |
 
-### Business Impact Score
-- **Score:** 6/10
-- The email is competent but misses the energy of a true drop announcement due to context fatigue.
+### Summary
 
-### Open Likelihood (persona-grounded)
-- **Score:** 6/10
-- Recognizable sender and concrete subject, but third soccer send in five days creates cadence fatigue.
-
-### Click-Through Likelihood (persona-grounded)
-- **Score:** 7/10
-- Strong product launch foundation but ghost buttons and lack of countdown mechanism leave conversion momentum on the table.
-
-### Subject Evaluation
-- **Subject:** `Coming soon: LOTTO H&M`
-- **Scores (1-10):** Clarity `8`, Curiosity `6`, Personalization `1`, Urgency `4`, Specificity `6`
-
-### Preview Text
-- **Preview:** `(none / leaking junk)`
-- No intentional preheader visible; the "VIEW IN BROWSER" footer link is likely to be the fallback.
+The email is well-structured with a clean layout but suffers from context fatigue due to repetitive soccer-themed sends. The technical audit highlights issues with stale JSON-LD data, missing `alt` attributes, and potential link tracking gaps. Addressing these will improve both the user experience and deliverability.
 
 ---
 
-This summary covers the key technical issues and recommendations for improving the email's performance. Full-source review is necessary to address remaining concerns such as link tracking, UTM parameters, unsubscribe footer, and authentication headers.
+This completes the technical audit for H&M's "Coming soon: LOTTO H&M" email. If you need further assistance or additional details, please let me know!
