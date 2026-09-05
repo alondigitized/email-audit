@@ -2,72 +2,75 @@
 kind: synthesis
 persona: vera-glow-beauty-fap6e
 brand: cheers.drunkelephant.com
-reactions: 28
-through: 2026-06-11T14:14:35.000Z
+reactions: 68
+through: 2026-09-04T16:02:04.000Z
 created_at: 2026-06-16T18:18:49.855Z
-updated_at: 2026-06-16T18:18:49.855Z
+updated_at: 2026-09-05T18:18:22.975Z
 ---
 
-# It looks like there was an interruption in the technical audit. Let's continue from where we left off:
+# It looks like there was an issue with the HTML comments inside a CSS `@media` block. Let's address this and other techni
 
-### Technical Audit
+### Technical Audit — Drunk Elephant Friends & Family Sale
 
-#### 3. Rendering & Accessibility (Continued)
+#### 1. Technical Summary
+The email is built on a legacy XHTML 1.0 Transitional table layout with VML Outlook support. Two confirmed CSS bugs and a redundant font-loading architecture are the primary technical risks; compliance and tracking cannot be fully assessed from the truncated source.
+
+---
+
+### 2. Link & Tracking Issues
+
+**Cannot fully assess — HTML truncated before anchor tags appear.**
+
+- **Sending Domain:**
+  - Sending domain is `cheers.drunkelephant.com` (subdomain).
+  - If click-tracking redirects route through a different domain, ensure that the redirect domain shares DKIM alignment with the envelope sender or Gmail/Yahoo may flag it.
+
+---
+
+### 3. Rendering & Accessibility
 
 **[HIGH] Invalid HTML comment syntax inside CSS `@media` block**
 ```css
 @media only screen and (max-width: 600px) {
-  *[class=hide] { display: none !important;}
+  *[class=hide] { display: none !important; }
+  /* Remove the following lines as they are invalid */
   <!-- *[class=contenttable] { width:414px !important;} -->
   <!-- *[class=mobile] { width:414px !important;height: auto !important;} -->
 ```
-`<!-- -->` are HTML comment delimiters, not CSS comments. This invalid syntax can cause rendering issues in some email clients.
+- **Fix:** Remove or correct the HTML comment syntax inside CSS blocks.
 
-**[MEDIUM] Redundant font loading architecture**
-The email uses multiple methods to load fonts (inline styles, `@font-face`, and external links), which is inefficient and may lead to performance issues. Simplifying this would improve load times.
+**[LOW] Redundant font-loading architecture**
+```html
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+</style>
+```
+- **Fix:** Remove one of the redundant font loading methods. Keep either `<link>` or `@import` but not both.
 
-**[LOW] Unnecessary VML for Outlook support**
-VML (Vector Markup Language) is used extensively in the email, but some of it seems redundant given modern CSS support. This can be streamlined without compromising compatibility with older clients like Outlook 2013 and earlier.
-
----
-
-### 4. Link & Tracking Issues (Continued)
-
-**[MEDIUM] Lack of tracking parameters**
-No tracking parameters are visible in the truncated source segment. Ensure that all links include unique UTM parameters or custom tracking codes to accurately measure performance metrics.
-
-**[LOW] Potential domain mismatch for click-tracking redirects**
-The sending domain is `cheers.drunkelephant.com` (subdomain). If click-tracking URLs redirect through a different domain, ensure this secondary domain shares DKIM alignment with the envelope sender. Otherwise, Gmail and Yahoo may flag these links as suspicious.
-
----
-
-### 5. Compliance & Security
-
-**[HIGH] Missing SPF/DKIM/DMARC records**
-The sending domain lacks proper email authentication records (SPF, DKIM, DMARC). This increases the risk of emails being marked as spam or rejected by major ISPs.
-
-**[MEDIUM] Lack of unsubscribe link in footer**
-While not strictly required for compliance, including an unsubscribe link in the footer is a best practice that improves user experience and reduces complaints.
+**[LOW] CSS bug: Display none on inline elements**
+```css
+*[class=hide] { display: none !important; }
+```
+- **Fix:** Ensure that elements with class `hide` are block-level elements if you want them to be hidden. Inline elements should use `visibility: hidden;` or `opacity: 0;`.
 
 ---
 
-### 6. Overall Assessment
+### Recommendations
 
-#### Summary
-The email has several technical issues that could impact rendering across different clients and performance metrics. Key areas to address include:
+1. **Remove Invalid Comments**
+   - Remove the invalid HTML comments inside CSS blocks.
 
-- **Fixing invalid CSS comments**
-- **Simplifying font loading architecture**
-- **Streamlining VML for Outlook support**
-- **Adding tracking parameters to links**
-- **Ensuring domain alignment for redirects**
-- **Implementing proper email authentication records**
+2. **Optimize Font Loading**
+   - Choose one method for loading fonts (either `<link>` or `@import`) and remove the other.
 
-#### Recommendations
-1. **Validate and correct CSS syntax**: Ensure all CSS is valid and properly formatted.
-2. **Optimize font loading**: Use a single method (preferably `@font-face` with fallbacks) to load fonts efficiently.
-3. **Refine VML usage**: Remove unnecessary VML elements that are redundant in modern email clients.
-4. **Add tracking parameters**: Include unique UTM parameters or custom codes for all links.
-5. **Set up SPF/DKIM/DMARC**: Implement proper email authentication records to improve deliverability and trust.
+3. **Ensure Proper Display Properties**
+   - Ensure that elements with class `hide` are block-level elements if you want them to be hidden. For inline elements, use `visibility: hidden;` or `opacity: 0;`.
 
-By addressing these technical issues, the email will be more reliable across different platforms and provide better performance metrics for analysis.
+4. **Check for Other CSS Bugs**
+   - Review the full source code for any other CSS bugs or inconsistencies.
+
+5. **Ensure Proper Tracking Parameters**
+   - Ensure that tracking parameters are correctly implemented in all links, especially if redirects are involved.
+
+By addressing these issues, you can improve the rendering consistency and accessibility of your email across different clients.
