@@ -2,96 +2,71 @@
 kind: synthesis
 persona: vera-glow-beauty-fap6e
 brand: beauty.sephora.com
-reactions: 119
-through: 2026-08-20T14:03:31.000Z
+reactions: 155
+through: 2026-09-09T13:03:35.000Z
 created_at: 2026-08-01T18:21:50.950Z
-updated_at: 2026-08-21T18:18:50.775Z
+updated_at: 2026-09-10T18:21:41.426Z
 ---
 
-# It looks like the technical audit for Sephora's "Ends Today" email has been cut off, and there are several important poi
+# It looks like the technical audit for Sephora's "Ends Today" email is incomplete due to a truncated HTML source, which m
 
-### 6. Email-to-Site Continuity
-**Cannot assess** — no `<a href>` tags are present in the truncated source.
+### 1. Technical Summary
+The email uses a standard XHTML 1.0 Transitional table-based layout with extensive CSS media queries for responsive design.
 
-- **Recommendation:** Ensure all links (`<a href>`) lead to valid, secure URLs (HTTPS) and include tracking parameters for analytics.
-- **Flag:** Full-source review is necessary to confirm proper link structure and functionality.
+### 2. Link & Tracking Issues
+- **Cannot fully assess** — The HTML source is truncated before any `<a href>` tags appear, so the following cannot be confirmed or denied:
+  - Click-tracking domain presence
+  - Redirect chain depth
+  - UTM parameter consistency
 
-### 7. Responsive Design
-**Responsive design elements are present but need refinement:**
+Flag for full-source re-run.
 
-- **Viewport Meta Tag Issue:** The `maximum-scale=1` attribute in the viewport meta tag should be removed to allow users to zoom in on mobile devices.
+### 3. Rendering & Accessibility Issues
+- **`maximum-scale=1` on viewport meta — Confirmed Issue**
   ```html
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   ```
+  This blocks pinch-to-zoom on iOS/Android and fails WCAG 1.4.4. Remove `maximum-scale=1`.
 
-- **Text Size Adjustment:** Remove or modify `-webkit-text-size-adjust: none; -ms-text-size-adjust: none; text-size-adjust: none;` rules to allow users with low-vision settings to adjust font sizes.
+- **`text-size-adjust: none` applied to nearly all elements — Confirmed Issue**
   ```css
   div, a, tr, table, body, span, img, strong, td {
-    /* Remove or modify these properties */
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    text-size-adjust: none;
   }
   ```
+  This suppresses OS-level font scaling for users with low-vision settings. Overrides user accessibility preferences across the entire email body.
 
-### 8. Personalization & Merge Tokens
-**Cannot assess** — no body content visible in the truncated source.
+- **`robots` meta value has a space — Minor**
+  ```html
+  <meta name="robots" content="no index" />
+  ```
+  Should be `noindex` (no space). Technically invalid; most crawlers handle it, but it's a spec deviation.
 
-- **Recommendation:** Review the full HTML source to ensure that merge tokens (e.g., `{{first_name}}`, `*|FNAME|*`) are correctly placed and not exposed.
-- **Flag:** Full-source review is necessary to check for unfired/exposed merge tokens.
+- **Duplicate `.appear` class definition — Minor**
+  The `.appear` ruleset is declared twice identically within the `@media only screen and (max-width: 480px)` block, adding dead weight to the CSS payload.
 
-### 9. Compliance & Legal Requirements
-**Cannot confirm the following elements from truncated source:**
+### 4. Personalization & Merge Tokens
+**Cannot assess** — No body content visible in the truncated source. Full-source review needed to check for unfired/exposed tokens in body copy.
 
-- **Unsubscribe Link:** Ensure there is a clear, functional unsubscribe link at the footer of the email.
-- **Physical Address (CAN-SPAM §5):** Verify that the physical address of the sender is included in the email body or footer.
-- **List-Unsubscribe Header:** Check if the `List-Unsubscribe` header is properly set to allow recipients to easily opt-out.
-
-### 10. Link Tracking & Analytics
-**Cannot confirm link tracking from truncated source:**
-
-- **Recommendation:** Ensure all links include proper UTM parameters and click-tracking domains (e.g., `https://click.example.com/?utm_source=email&utm_medium=html&utm_campaign=endstoday`).
-
-### Summary of Recommendations
-
-1. **Remove `maximum-scale=1` in viewport meta tag** to allow users to zoom on mobile devices.
-2. **Modify or remove `-webkit-text-size-adjust: none; -ms-text-size-adjust: none; text-size-adjust: none;` rules** to respect user accessibility settings.
-3. **Review full HTML source for merge tokens and ensure they are correctly placed and not exposed.**
-4. **Ensure compliance with CAN-SPAM §5 by including a physical address in the email body or footer.**
-5. **Verify that all links include proper UTM parameters and click-tracking domains.**
-
-By addressing these technical issues, Sephora can improve the user experience, ensure better accessibility, and maintain compliance with email marketing best practices.
-
-### Business Impact Score (1-10)
-**Revised Score:** 8/10
-
-- **Positive Points:**
-  - Recognizable sender.
-  - Concrete offer visible.
-  - Clear visual hierarchy.
-  - No render bugs in the provided source.
+### 5. Compliance
+- **Sender domain:** `shop@beauty.sephora.com` — Subdomain sender is expected for ESP delivery; DKIM/SPF/DMARC authentication cannot be verified from HTML alone (requires raw email headers).
   
-- **Areas for Improvement:**
-  - Technical issues need to be addressed (viewport meta, text size adjustment).
-  - Full-source review is needed to confirm merge tokens and compliance elements.
+- **Unsubscribe link, physical address (CAN-SPAM §5), and List-Unsubscribe header** — Cannot confirm. These are body/footer elements not yet visible in the truncated source.
 
-### Open Likelihood (Persona-Grounded)
-**Revised Score:** 6/10
+### 6. Email-to-Site Continuity
+**Cannot assess** — No `<a href>` tags are present in the truncated HTML to evaluate email-to-site continuity.
 
-- **Signals counted:**
-  - Sender recognizable.
-  - Subject concrete.
-  - Subject relevant to persona.
-  - Time-bounded urgency credible ("ENDS TODAY").
-  
-- **Rationale:**
-  - The email has strong signals, but technical issues and repeated sends may reduce open likelihood.
+---
 
-### Click-Through Likelihood (Persona-Grounded)
-**Revised Score:** 8/10
+### Recommendations
 
-- **Signals counted:**
-  - Hero offer visible without scrolling.
-  - CTA in the relevant category.
-  - Offer reduces price (50% off).
-  - Time-bounded with credible deadline.
+1. **Remove `maximum-scale=1` from viewport meta tag** to ensure pinch-to-zoom functionality is available on mobile devices.
+2. **Remove or modify CSS rules that set `text-size-adjust: none`** to respect user accessibility settings.
+3. **Correct the `robots` meta value** to remove the space between "no" and "index".
+4. **Review full HTML source for merge tokens and tracking links** to ensure personalization and click-tracking are functioning correctly.
+5. **Verify compliance elements (unsubscribe, physical address, List-Unsubscribe header)** in the full email body.
 
-- **Rationale:**
-  - The points balance and end-of-sale deadline are strong motivators, but technical issues may impact user experience slightly.
+By addressing these technical issues, you can improve the accessibility and user experience of the email while ensuring it adheres to best practices for deliverability and compliance.
