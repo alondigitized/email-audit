@@ -23,7 +23,7 @@ DIR="$HOME/.openclaw-walker/workspace/email-monitor"
 LOG="$DIR/logs/monitor.log"
 WLOG="$DIR/logs/auth-watch.log"
 STAMP="$DIR/logs/.auth-alert-stamp"
-IMSG_TO="alondigitized@gmail.com"
+IMSG_RECIPIENTS=("alondigitized@gmail.com" "alan.tsang@gmail.com")
 
 log() { echo "[$(date -u +%FT%TZ)] $*" >> "$WLOG"; }
 
@@ -37,8 +37,10 @@ alert() {
   touch "$STAMP"
   log "ALERT: $msg"
   osascript -e "display notification \"$msg\" with title \"etell email-monitor\" sound name \"Basso\"" 2>/dev/null
-  osascript -e "tell application \"Messages\" to send \"⚠️ etell: $msg\" to buddy \"$IMSG_TO\" of (service 1 whose service type is iMessage)" 2>/dev/null \
-    || log "iMessage send failed (Messages not signed in?)"
+  for to in "${IMSG_RECIPIENTS[@]}"; do
+    osascript -e "tell application \"Messages\" to send \"⚠️ etell: $msg\" to buddy \"$to\" of (service 1 whose service type is iMessage)" 2>/dev/null \
+      || log "iMessage send failed to $to (Messages not signed in?)"
+  done
 }
 
 [ -f "$LOG" ] || { log "monitor.log missing"; exit 0; }
