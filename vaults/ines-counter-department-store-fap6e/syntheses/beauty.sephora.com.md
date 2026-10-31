@@ -2,81 +2,78 @@
 kind: synthesis
 persona: ines-counter-department-store-fap6e
 brand: beauty.sephora.com
-reactions: 53
-through: 2026-08-10T13:15:04.000Z
+reactions: 130
+through: 2026-10-30T14:13:08.000Z
 created_at: 2026-08-11T18:20:59.204Z
-updated_at: 2026-08-11T18:20:59.204Z
+updated_at: 2026-10-31T18:22:01.662Z
 ---
 
-# ### Technical Audit Summary for Sephora "LAST DAY 10% off" Email
+# ### Technical Audit — Sephora "LAST DAY 10% off" Email
 
-#### Overview:
-The email is built using XHTML 1.0 Transitional standards, but the provided HTML is truncated at the CSS block, making it impossible to fully verify link and tracking issues, personalization tokens, and compliance elements like unsubscribe mechanisms and CAN-SPAM requirements.
+---
 
-#### Issues Identified:
+### 1. Technical Summary
 
-**Rendering & Accessibility:**
-1. **User Zoom Disabled (WCAG 2.1 SC 1.4.4 Violation)**
-   ```html
-   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-   ```
-   - **Issue:** The `maximum-scale=1` attribute blocks pinch-to-zoom on mobile devices.
-   - **Solution:** Remove or replace with `user-scalable=yes`.
+The email uses a standard XHTML 1.0 Transitional broadcast template. The provided HTML is truncated at the CSS block, preventing full link, compliance, and tracking verification. Findings below are limited to what is observable in the `<head>` excerpt.
 
-2. **Aggressive Text-Size Adjustment Suppression**
-   ```css
-   div, a, tr, table, body, span, img, strong, td {
-     -webkit-text-size-adjust: none;
-     -ms-text-size-adjust: none;
-     -moz-text-size-adjust: none;
-     text-size-adjust: none;
-   }
-   ```
-   - **Issue:** This CSS rule disables OS-level text scaling for users who rely on it.
-   - **Solution:** Scope this to specific elements with fixed font sizes, not globally.
+---
 
-3. **Malformed Robots Meta Value**
-   ```html
-   <meta name="robots" content="no index" />
-   ```
-   - **Issue:** The value should be `noindex` without a space.
-   - **Severity:** Low in email context but indicates template hygiene issues.
+### 2. Link & Tracking Issues
 
-#### Link & Tracking Issues:
-- **Cannot fully verify** — the HTML is truncated before any `<a>` tags or tracking pixels appear. A complete audit requires the full source code.
+**Cannot fully verify** — the HTML is truncated before any `<a>` tags or tracking pixels appear. A complete audit requires the full source.
 
-#### Personalization & Merge Tokens:
-- **Cannot verify** — no body content or merge token syntax is present in the truncated excerpt. Full source required to audit for unresolved tokens and personalization issues.
+---
 
-#### Compliance (CAN-SPAM, Unsubscribe, Authentication):
-- **Cannot verify from HTML** — the excerpt ends inside the `<style>` block before any body content.
-  - Physical mailing address (required by CAN-SPAM §7(a)(3))
-  - One-click unsubscribe link / `List-Unsubscribe` header
-  - Functional unsubscribe mechanism with ≤10-day processing window
+### 3. Rendering & Accessibility
 
-#### Sending Domain Observation:
-- **From:** shop@beauty.sephora.com
-  - The sending domain should be verified for SPF, DKIM, and DMARC records to ensure proper email authentication.
+**Issue 1 — User zoom disabled (WCAG 2.1 SC 1.4.4 violation)**
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+```
+`maximum-scale=1` blocks pinch-to-zoom for low-vision users on mobile. Should be removed or replaced with `user-scalable=yes`.
 
-### Recommendations:
+**Issue 2 — Aggressive text-size-adjust suppression**
+```css
+div, a, tr, table, body, span, img, strong, td {
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+}
+```
+Applied globally across nearly every element. This disables OS-level text scaling for users who rely on it. Should be scoped only to elements with intentionally fixed font sizes (e.g., a specific pixel-locked header `td`), not `body` and `div` broadly.
 
-1. **Remove or Adjust Viewport Meta Tag:**
-   ```html
-   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-   ```
+**Issue 3 — Malformed robots meta value**
+```html
+<meta name="robots" content="no index" />
+```
+The value is `no index` (with a space) rather than the correct `noindex`. Most parsers will ignore this entirely. Low severity in email context, but indicates template hygiene issue.
 
-2. **Scoping Text-Size Adjustment Rules:**
-   Apply `-webkit-text-size-adjust` and similar rules only to specific elements where fixed font sizes are required.
+---
 
-3. **Correct Robots Meta Tag Value:**
-   ```html
-   <meta name="robots" content="noindex">
-   ```
+### 4. Personalization & Merge Tokens
 
-4. **Full Source Code Audit Required:**
-   To fully verify links, tracking pixels, personalization tokens, and compliance requirements, the complete HTML source code is necessary.
+**Cannot verify** — no body content or merge token syntax is present in the truncated excerpt. Full source required to audit for unresolved `{{tokens}}`, `%%VARIABLE%%`, or similar patterns.
 
-5. **Ensure Proper Email Authentication:**
-   Verify SPF, DKIM, and DMARC records for the sending domain to prevent email spoofing and ensure deliverability.
+---
 
-By addressing these issues, Sephora can improve the accessibility, user experience, and technical compliance of their emails, ensuring they meet best practices and standards for effective email marketing.
+### 5. Compliance (CAN-SPAM, Unsubscribe, Authentication)
+
+**Cannot verify from HTML** — the excerpt ends inside the `<style>` block before any body content. The following cannot be confirmed without the full source:
+- Physical mailing address (CAN-SPAM §7(a)(3))
+- One-click unsubscribe link / `List-Unsubscribe` header
+- Functional unsubscribe mechanism with ≤10-day processing window
+
+**Sending domain observation** — `From: shop@beauty.sephora.com` uses a subdomain that may need to be verified for proper SPF, DKIM, and DMARC alignment to ensure deliverability and authentication.
+
+---
+
+### 6. Recommendations
+
+1. **Remove `maximum-scale=1` from viewport meta tag** to allow pinch-to-zoom for low-vision users.
+2. **Restrict `-text-size-adjust: none` to specific elements** rather than applying it globally.
+3. **Correct the `robots` meta tag value** to `noindex` without the space.
+4. **Provide full HTML source** for a comprehensive audit of links, tracking, personalization, and compliance.
+5. **Verify sending domain authentication** to ensure proper SPF, DKIM, and DMARC alignment.
+
+By addressing these issues, Sephora can improve the accessibility, compliance, and overall user experience of their email campaigns.
