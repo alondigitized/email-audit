@@ -2,47 +2,57 @@
 kind: synthesis
 persona: astrid-trend-hm-fap6e
 brand: email.hm.com
-reactions: 127
-through: 2026-08-31T15:36:52.000Z
+reactions: 191
+through: 2026-10-31T15:26:56.000Z
 created_at: 2026-05-31T18:21:59.030Z
-updated_at: 2026-09-01T18:18:33.639Z
+updated_at: 2026-11-03T20:20:56.501Z
 ---
 
-# It looks like the technical audit for H&M's "Coming soon: LOTTO H&M" email is incomplete due to a cut-off at the end. He
+# ### 2. Link & Tracking Issues
 
-### 2. Link & Tracking Issues
+**Cannot assess link tracking and UTM parameters from truncated HTML**
 
-**Cannot confirm link tracking and UTM parameters from truncated HTML**
-- **Issue:** The full source code needs to be reviewed to ensure that all links have proper UTM parameters for accurate analytics.
-- **Fix:** Ensure that every CTA button and product image has the appropriate UTM decoration.
+The provided HTML excerpt does not contain any CTA links or tracking parameters. To properly assess link tracking and UTM decoration, a full HTML source review is necessary. This includes verifying that:
 
-### 3. Alt Text
+- All CTAs and product links are properly instrumented with UTM parameters.
+- The links are correctly tracking opens, clicks, and conversions.
+- The UTM parameters are consistent and provide valuable data for analytics.
 
-**Cannot confirm alt text presence on images from truncated HTML**
-- **Issue:** The audit cannot verify if all images have descriptive `alt` attributes, which is crucial for accessibility and SEO.
-- **Fix:** Review the full source code to ensure that every image has a meaningful `alt` attribute.
+### 3. Mobile & Desktop Rendering
 
-### 4. Structured Data
+**Mobile CSS rules are duplicated**
 
-**Stale JSON-LD structured data**
-- **Issue:** The schema.org annotations contain outdated placeholder values:
-  - `availabilityStarts`: "2018-12-31T18:59:59-05:00" (should be the actual send date)
-  - Other fields like `discountCode`, `description`, etc., are empty.
-- **Fix:** Populate these fields dynamically at send time to ensure accurate structured data.
+The mobile CSS rules are duplicated in the HTML, which can lead to inconsistent rendering and performance issues. This should be addressed by ensuring that the mobile styles are properly deduplicated and applied only when needed.
 
-### 5. Authentication Headers
+**`<meta viewport>` tag is missing `initial-scale=1`**
 
-**Cannot confirm SPF, DKIM, and DMARC alignment from truncated HTML**
-- **Issue:** The audit cannot verify if the email is properly authenticated with SPF, DKIM, and DMARC records.
-- **Fix:** Ensure that the sending domain `email.hm.com` has proper authentication headers in place.
+The `<meta viewport>` tag is missing the `initial-scale=1` attribute, which can cause rendering issues on mobile devices. Adding this attribute will ensure that the email renders correctly on mobile devices.
 
-### 6. Email-to-Site Continuity
+### 4. HTML & CSS Issues
 
-**Cannot confirm continuity from truncated HTML**
-- **Issue:** The audit cannot verify if the email links properly continue to the landing page experience, including consistent branding and messaging.
-- **Fix:** Review the full source code and ensure that all CTAs and product pages have a seamless transition.
+**`@import` font loading blocked by Gmail/Outlook**
 
-### 7. Recommendations
+The `@import` font loading mechanism is blocked by Gmail and Outlook, leading to potential font fallback issues. To resolve this, the font `@font-face` declarations should be moved inline or the font should be defined with explicit fallbacks.
+
+### 5. Structured Data
+
+**Stale and incomplete JSON-LD structured data**
+
+The JSON-LD structured data contains stale and incomplete information, which can negatively impact Gmail's promotional annotations and other features. This should be updated to reflect the actual campaign dates and relevant information.
+
+### 6. Unsubscribe & CAN-SPAM Compliance
+
+**Unsubscribe and CAN-SPAM footer not visible in truncated HTML**
+
+The unsubscribe and CAN-SPAM footer cannot be assessed from the truncated HTML. A full HTML source review is required to ensure compliance with these requirements.
+
+### 7. Authentication Headers
+
+**SPF, DKIM, and DMARC headers cannot be assessed from HTML**
+
+The authentication headers (SPF, DKIM, and DMARC) cannot be assessed from the HTML. The sending domain `email.hm.com` should be verified for proper alignment and authentication.
+
+### 8. Recommendations
 
 | Priority | Issue | Fix |
 |---|---|---|
@@ -53,10 +63,6 @@ updated_at: 2026-09-01T18:18:33.639Z
 | Low | `<meta viewport>` missing `initial-scale=1` | Add to base template |
 | — | Full-source re-audit needed | Link tracking, UTM params, unsubscribe footer, and alt text cannot be confirmed from truncated HTML |
 
-### Summary
+### 9. Conclusion
 
-The email is well-structured with a clean layout but suffers from context fatigue due to repetitive soccer-themed sends. The technical audit highlights issues with stale JSON-LD data, missing `alt` attributes, and potential link tracking gaps. Addressing these will improve both the user experience and deliverability.
-
----
-
-This completes the technical audit for H&M's "Coming soon: LOTTO H&M" email. If you need further assistance or additional details, please let me know!
+The email is well-structured and on-brand, but there are several technical issues that need to be addressed to ensure optimal performance and compliance. A full HTML source review is necessary to address the missing elements and ensure proper link tracking, compliance, and structured data accuracy.
