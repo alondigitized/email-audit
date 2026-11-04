@@ -3,148 +3,172 @@ slug: 2026-11-02-the-gifts-he-ll-actually-wear-kjdyyuh8rqsttu-te1a11a-g
 type: email
 date: 2026-11-02
 persona: esme-radical-everlane-fap6e
-score: "3/10"
+score: "7/10"
 sender: Everlane
 subject: The Gifts He’ll Actually Wear
-tags: [email, score-3, sender/everlane]
+tags: [email, score-7, sender/everlane]
 ---
 # The Gifts He’ll Actually Wear
-**Score:** 3/10 · **Type:** Email audit · **2026-11-02**
+**Score:** 7/10 · **Type:** Email audit · **2026-11-02**
 ## Executive summary
 
-- This render is mostly broken. Every image slot (logo, hero, product grids, gift guide banner) shows a broken-image icon with alt text and a large empty box. The logo, the "Better Gifts For Him" hero and the "Shop Now" tile are all blank, so the recipient sees no product and no brand mark. What's left is a text skeleton: one line of copy, two "Gifts Under" headings, one burgundy "SHOP NOW" button and a footer.
-- The strategy underneath is sound. "Gifts He'll Actually Wear" is a clear gifting angle with a price-tier structure ($100 and $50) and a "certified materials" quality claim. None of that lands when the visuals are missing. This is a gift email with no gifts visible, and the only salvageable element is the single button. Judgement: as rendered, it's a failed send.
+- This is a clean, on-brand gift-guide send with no offer. The hero is a charcoal cable-knit crewneck with "Better Gifts For Him" over it and a maroon SHOP NOW bar. Below it are two navy-toned flat-lay blocks, labeled "Gifts Under $100" and "Gifts Under $50", each with its own SHOP NOW button. It's well photographed and easy to scan. Nothing in it gives a reason to click today.
+- The only concrete hooks are two price ceilings, which are a browsing filter and not a deal. Nothing says "save," there's no deadline, and no single product has a name or price. Compare 11/1's "Final Hours for Extra 25% Off", which at least had a countdown. This is the "Better Gifts For Her" playbook from 10/30, mirrored for men: same mood, same restraint, same lack of commerce.
+- Judgment: it looks good and sells nothing. The subject is the strongest part, and the body doesn't deliver on its promise to show what he'll actually wear.
 
 ## What's working
 
-- The copy "Premium sweaters and cold-weather layers that show you care without trying too hard" is on-voice and seasonal.
-- The price-tier headings "Gifts Under $100" and "Gifts Under $50" give shoppers an easy way to browse by budget.
-- The burgundy "SHOP NOW" button is clear and high-contrast against the white background.
-- The footer is clean and well organized, with Shop Women/Men/New Arrivals/Best-Sellers, find a store, text signup, help center and legal text.
+- The hero is a strong seasonal image. The cable knit with "Better Gifts For Him" reads instantly as a holiday gift email.
+- The hierarchy is clean: hero, then two stacked blocks, then a gift guide bar, with no layout breakage.
+- "Gifts Under $100" and "Gifts Under $50" give a budget-based way in, and the ribbon-wrapped polo makes the "gift" idea literal.
+- The maroon buttons are consistent and high-contrast against the pale photos.
+- The subject is short and has a clear point of view.
 
 ## What's weak
 
-- Every image fails to render: the logo, hero, both product grids, the second "Shop Now" tile and the gift guide banner. The page is large empty boxes with alt text.
-- With no logo, nothing identifies the brand except the sender name.
-- No product, price or visual offer is visible. "Under $100" and "Under $50" are headings with nothing under them.
-- Only one real button is visible. The "Shop Now" and "Shop The Gift Guide" slots are broken images, so their clickability is unclear.
-- The alt text is raw and unstyled: "Image | Better Gifts For Him", "Image | Best-sellers that are better for his wardrobe and your wallet. | Certified materials made to last." Nothing has styled fallback text.
+- There is no offer. The email has no percent off, no free shipping and no bundle, so there's no price reason to act now.
+- Every button says "SHOP NOW", five times counting the gift guide bar. None names a product or category.
+- No product is named or priced. The folded polo and the two tees are undefined, so nothing links to a specific item.
+- There's no deadline, such as a shipping cutoff or a holiday date, so nothing creates urgency.
+- Some small gray footer text is faint and hard to read.
+- This is the latest of roughly two sends a day since 10/30, so it will feel like more of the same.
 
 ## Recommendations
 
-- 1. Fix image delivery (hosting or loading) so the hero and product grids render. Everything else depends on this. Run a render test across clients before sending.
-- 2. Add a live-text hero headline and a styled "bgcolor" fallback behind each image block, so the message survives when images are blocked.
-- 3. Put the first CTA above the fold and name the product: "Shop Men's Sweaters" instead of a bare "Shop Now".
-- 4. Show 3–4 products with prices under each price-tier heading, so "Under $50" has something to point at.
-- 5. Style the alt text (font, size, colour) so a blocked-image view still reads as designed.
-- **Subject Alt A:** `Gifts for him, all under $100`
-- **Subject Alt B:** `Sweaters he'll actually wear`
-- **Preheader Alt A:** `Best-sellers under $100, made with certified materials.`
-- **Preheader Alt B:** `Layers for every guy on your list, starting under $50.`
+- 1. Put one product with a name and price in the hero, for example "The Cashmere Crew, $148", and link the hero image straight to it. Specifics beat mood.
+- 2. Add a real hook: a shipping-by-date cutoff, a gift-wrap or free-returns note, or a time-bounded bundle.
+- 3. Replace the generic buttons with "Shop Gifts Under $100" and "Shop Gifts Under $50", and drop the repeated "Gifts Under…" caption.
+- 4. Show 3–4 priced products under each budget tier instead of one flat-lay each.
+- 5. Add a social-proof line, such as "Most-gifted" or a rating, near the first block.
+- 6. Space out sends. Back-to-back near-identical promos train people to skip.
+- **Subject Alt A:** `Gifts for Him, Under $50`
+- **Subject Alt B:** `Order by 12/15 for Holiday Delivery`
+- **Preheader Alt A:** `Cashmere, merino and layers he'll wear on repeat. Most under $100.`
+- **Preheader Alt B:** `Gift-ready picks from $28, with free returns through January.`
 
 ## Full review
 ## 1. Overview
 
-This render is mostly broken. Every image slot (logo, hero, product grids, gift guide banner) shows a broken-image icon with alt text and a large empty box. The logo, the "Better Gifts For Him" hero and the "Shop Now" tile are all blank, so the recipient sees no product and no brand mark. What's left is a text skeleton: one line of copy, two "Gifts Under" headings, one burgundy "SHOP NOW" button and a footer.
+This is a clean, on-brand gift-guide send with no offer. The hero is a charcoal cable-knit crewneck with "Better Gifts For Him" over it and a maroon SHOP NOW bar. Below it are two navy-toned flat-lay blocks, labeled "Gifts Under $100" and "Gifts Under $50", each with its own SHOP NOW button. It's well photographed and easy to scan. Nothing in it gives a reason to click today.
 
-The strategy underneath is sound. "Gifts He'll Actually Wear" is a clear gifting angle with a price-tier structure ($100 and $50) and a "certified materials" quality claim. None of that lands when the visuals are missing. This is a gift email with no gifts visible, and the only salvageable element is the single button. Judgement: as rendered, it's a failed send.
+The only concrete hooks are two price ceilings, which are a browsing filter and not a deal. Nothing says "save," there's no deadline, and no single product has a name or price. Compare 11/1's "Final Hours for Extra 25% Off", which at least had a countdown. This is the "Better Gifts For Her" playbook from 10/30, mirrored for men: same mood, same restraint, same lack of commerce.
+
+Judgment: it looks good and sells nothing. The subject is the strongest part, and the body doesn't deliver on its promise to show what he'll actually wear.
 
 ## 2. What worked
 
-- The copy "Premium sweaters and cold-weather layers that show you care without trying too hard" is on-voice and seasonal.
-- The price-tier headings "Gifts Under $100" and "Gifts Under $50" give shoppers an easy way to browse by budget.
-- The burgundy "SHOP NOW" button is clear and high-contrast against the white background.
-- The footer is clean and well organized, with Shop Women/Men/New Arrivals/Best-Sellers, find a store, text signup, help center and legal text.
+- The hero is a strong seasonal image. The cable knit with "Better Gifts For Him" reads instantly as a holiday gift email.
+- The hierarchy is clean: hero, then two stacked blocks, then a gift guide bar, with no layout breakage.
+- "Gifts Under $100" and "Gifts Under $50" give a budget-based way in, and the ribbon-wrapped polo makes the "gift" idea literal.
+- The maroon buttons are consistent and high-contrast against the pale photos.
+- The subject is short and has a clear point of view.
 
 ## 3. What didn't
 
-- Every image fails to render: the logo, hero, both product grids, the second "Shop Now" tile and the gift guide banner. The page is large empty boxes with alt text.
-- With no logo, nothing identifies the brand except the sender name.
-- No product, price or visual offer is visible. "Under $100" and "Under $50" are headings with nothing under them.
-- Only one real button is visible. The "Shop Now" and "Shop The Gift Guide" slots are broken images, so their clickability is unclear.
-- The alt text is raw and unstyled: "Image | Better Gifts For Him", "Image | Best-sellers that are better for his wardrobe and your wallet. | Certified materials made to last." Nothing has styled fallback text.
+- There is no offer. The email has no percent off, no free shipping and no bundle, so there's no price reason to act now.
+- Every button says "SHOP NOW", five times counting the gift guide bar. None names a product or category.
+- No product is named or priced. The folded polo and the two tees are undefined, so nothing links to a specific item.
+- There's no deadline, such as a shipping cutoff or a holiday date, so nothing creates urgency.
+- Some small gray footer text is faint and hard to read.
+- This is the latest of roughly two sends a day since 10/30, so it will feel like more of the same.
 
 ## 4. What I'd change
 
-1. Fix image delivery (hosting or loading) so the hero and product grids render. Everything else depends on this. Run a render test across clients before sending.
-2. Add a live-text hero headline and a styled "bgcolor" fallback behind each image block, so the message survives when images are blocked.
-3. Put the first CTA above the fold and name the product: "Shop Men's Sweaters" instead of a bare "Shop Now".
-4. Show 3–4 products with prices under each price-tier heading, so "Under $50" has something to point at.
-5. Style the alt text (font, size, colour) so a blocked-image view still reads as designed.
+1. Put one product with a name and price in the hero, for example "The Cashmere Crew, $148", and link the hero image straight to it. Specifics beat mood.
+2. Add a real hook: a shipping-by-date cutoff, a gift-wrap or free-returns note, or a time-bounded bundle.
+3. Replace the generic buttons with "Shop Gifts Under $100" and "Shop Gifts Under $50", and drop the repeated "Gifts Under…" caption.
+4. Show 3–4 priced products under each budget tier instead of one flat-lay each.
+5. Add a social-proof line, such as "Most-gifted" or a rating, near the first block.
+6. Space out sends. Back-to-back near-identical promos train people to skip.
 
-- **Subject Alt A:** `Gifts for him, all under $100`
-- **Subject Alt B:** `Sweaters he'll actually wear`
-- **Preheader Alt A:** `Best-sellers under $100, made with certified materials.`
-- **Preheader Alt B:** `Layers for every guy on your list, starting under $50.`
+- **Subject Alt A:** `Gifts for Him, Under $50`
+- **Subject Alt B:** `Order by 12/15 for Holiday Delivery`
+- **Preheader Alt A:** `Cashmere, merino and layers he'll wear on repeat. Most under $100.`
+- **Preheader Alt B:** `Gift-ready picks from $28, with free returns through January.`
 
 ## 5. Business Impact Score (1-10)
 
-**3/10**
-- Sender is a recognizable brand.
-- One CTA button is clearly visible.
-- The email reflects the current season (holiday gifting, cold-weather layers).
+**7/10**
+- Sender is a recognized, subscribed brand.
+- The primary CTA is unambiguous, with a visible button.
+- Visual hierarchy is clear, with the eye landing on the hero first.
+- No render bugs.
+- Email reflects the current holiday season.
+- Offer feels honest, with no buried fine print.
+
+Score: 1 + 6 = 7.
 
 ## 6. Open Likelihood (persona-grounded)
 
-- **Score:** `5/10`
-- **Signals counted:** Sender display name is recognizable; subject is relevant to a gifting focus; subject is under ~50 chars; no spam signals (no caps or exclamation marks); time-bounded seasonal context (holiday gifting). I could not see the preview text, so I did not credit preview-related signals.
-- **Rationale:** "Everlane" is a trusted sender and the subject is short and clean. It is not specific, though: there is no offer, number or urgency.
+- **Score:** `4/10`
+- **Signals counted:** Sender display name is recognizable; subject is under ~50 chars; no spam signals.
+- **Rationale:** The sender and the short, clean subject carry it. The subject has no offer or deadline, no preview copy is visible, and the cadence is heavy.
 
 ## 7. Click-Through Likelihood (persona-grounded)
 
-- **Score:** `2/10`
-- **Signals counted:** Primary CTA copy is a verb plus a noun ("SHOP NOW"), which is weak but counts; brand voice is consistent in the visible copy.
-- **Rationale:** With no hero, products or offer visible, there is little to click for. The button is clear but unsupported, and the broken-image gaps add friction.
+- **Score:** `4/10`
+- **Signals counted:** Hero is visible without scrolling; brand voice is consistent and trusted; no friction or broken images.
+- **Rationale:** The hero is attractive and the layout is easy, which pulls toward a click. Generic "SHOP NOW" buttons, no price reduction, no deadline and no named product pull away from it.
 
 ## 8. Subject
 
 - **Subject:** `The Gifts He’ll Actually Wear`
-- **Length:** 30
-- **Scores (1-10):** Clarity `7`, Curiosity `5`, Personalization `3`, Urgency `2`, Specificity `4`
+- **Length:** 29
+- **Scores (1-10):** Clarity `7`, Curiosity `5`, Personalization `4`, Urgency `1`, Specificity `3`
 
 ## 9. Preview
 
-- **Preview:** `(none / leaking junk)` — the preheader isn't visible in the render, so I can't verify it.
+- **Preview:** `(none / leaking junk)`
 - **Length:** 0
-- **Scores (1-10):** Complements subject `3`, Specificity `2`, Clarity `2`, Inbox-fit `3`
+- **Scores (1-10):** Complements subject `1`, Specificity `1`, Clarity `1`, Inbox-fit `2`
 
 ---
 
 ## Technical Audit
 
-## 1. Technical Summary
-The HTML is a Klaviyo/MJML-style template. All 12 probed links failed with DNS resolution errors on the tracking host `trk.send.everlane.com`, which drives the 17% pass rate. Because the failure is uniform and at the DNS layer, it is unconfirmed whether the domain is broken or the probe environment can't resolve it.
+**1. Technical Summary**
+This is a Klaviyo-built email with click and open tracking on `trk.send.everlane.com`. The QA run flagged two redirect failures and a missing alt on the tracking pixel. The compliance and authentication checks couldn't be evaluated from the captured data. The 38% pass rate is mostly skipped probes, not confirmed failures.
 
-## 2. Link & Tracking Issues
-- **All 12 probed links failed.** The error is `urlopen error [Errno 8] nodename nor servname provided, or not known`, which is a DNS failure, not an HTTP status. Failing URLs follow `https://trk.send.everlane.com/l/01M6EJDDEXCNNSADC6B9E9GP6A_{0..9,13,22}`. They cover the logo (`_0`), hero image (`_1`), the "Shop Now" CTAs (`_2`, `_4`, `_6`), "Shop The Gift Guide" (`_7`), "Shop Women"/"Shop Men" (`_8`, `_9`), "Sign Up for Texts" (`_13`) and **Unsubscribe** (`_22`).
-- **Severity is unconfirmed.** Every link on a single host failing identically points to either a real DNS problem or probe-side resolution. A real outage would mean no link in the email works, including unsubscribe. Re-probe from a second resolver (for example `dig trk.send.everlane.com` and `curl -I`) before treating this as a sender defect.
-- **Redirect destinations are not verified.** Every link is wrapped, so the final landing URLs are not visible in the source or QA data.
-- 11 of 23 or so links (`_0` through `_22`) were not probed, mostly footer and social links. Their health is unknown.
+**2. Link & Tracking Issues**
+- **[FAIL] Relative redirect target, logo link.**
+  - Link: "Everlane Logo", `https://trk.send.everlane.com/l/01M6EJDDEXCNNSADC6B9E9GP6A_0`.
+  - The prober got `unknown url type: '/pages/womens?_kx=…&bxid=…&cm_flow_i…'`, so the redirect resolved to a path with no scheme or host.
+- **[FAIL] Relative redirect target, SMS signup.**
+  - Link: "Icon | Sign Up for Texts", `…_13`.
+  - It failed the same way, with `/pages/sms-signup?_kx=…`.
+- **Cause is unconfirmed.** A relative `Location` header is legal under RFC 7231, and many clients handle it. The failure may be a probe limitation, or the tracker may be emitting a path-only destination. Either way, the final destinations of these two links are unverified.
+- **Two links were never checked.** `…_9` and `…_22` were not probed because the 70s time budget ran out. They are neither pass nor fail.
+- **11 of 12 material links were skipped.** Most of the 38% pass rate reflects skipped probes, not broken links.
 
-## 3. Rendering & Accessibility
-- **Empty `<title>`.** The source has `<title> </title>`. This is minor, but it matters for web-view and clipping contexts.
-- **Missing alt text on the tracking pixel.** The QA flag points to `https://trk.send.everlane.com/o/01M6EJDDEXCNNSADC6B9E9GP6A`, which is the open-tracking beacon (`/o/` path). This is low severity. `alt=""` is the correct value for a decorative pixel, so confirm it is empty rather than absent.
-- **Non-descriptive link text.** There are three identical "Shop Now" links (`_2`, `_4`, `_6`) pointing to different destinations. Screen-reader users get no context from the link text alone.
-- **Redundant alt prefixes.** Alt text begins with "Image |" and "Icon |" (for example `Image | Better Gifts For Him`, `Icon | Sign Up for Texts`), so screen readers announce "Image" twice.
-- **Possible small mobile heading.** The `h4` rule drops to `font-size: 10px` at `max-width: 480px`. This is only a problem if `h4` is used for readable copy, which the truncated source doesn't show.
-- No other rendering defects are confirmed. The MSO conditionals, `viewport` meta and `max-width:100%` image rules look standard. The source is truncated, so the body markup could not be audited.
+**3. Rendering & Accessibility**
+- **Missing alt text on the tracking pixel.** The image is `https://trk.send.everlane.com/o/01M6EJDDEXCNNSADC6B9E9GP6A`. It is an open-tracking pixel, so give it `alt=""` to keep screen readers from reading out the URL.
+- **Empty `<title>`.** The source has `<title> </title>`, which is whitespace only.
+- **No `lang` attribute on `<html>`.** The tag has only the `xmlns` declarations, no `lang`.
+- **Not evaluable.** The HTML was truncated, so I can't audit alt text on the content images or the rest of the markup.
 
-## 4. Personalization & Merge Tokens
-No issues found. No unrendered tokens (`{{ }}`, `*|…|*`, `%%…%%`) appear in the visible source or the QA data. The truncated body leaves this only partly verified.
+**4. Personalization & Merge Tokens**
+No issues found. No unrendered merge tokens (`{{ }}`, `*|…|*`) appear in the visible source or the QA data. The truncated HTML limits this check.
 
-## 5. Compliance (CAN-SPAM, unsubscribe, authentication headers)
-- **Unsubscribe link:** a body link exists (`…_22`, text "Unsubscribe"). It currently fails to resolve in the probe (see §2).
-- **`List-Unsubscribe` and `List-Unsubscribe-Post` (RFC 8058) not found.** The QA tool itself says the AgentMail relay may strip them. This is **not confirmed as a sender defect**. Check the raw message headers from a direct inbox, since Gmail and Yahoo bulk-sender rules require one-click unsubscribe.
-- **`Authentication-Results` missing.** SPF, DKIM and DMARC status is unknown, and this is also attributed to the relay. Verify with a direct seed test.
-- **Physical postal address:** not visible in the truncated source, so it can't be confirmed.
+**5. Compliance**
+- **`List-Unsubscribe` header not found.** This is a WARN. The harness notes that the AgentMail relay may strip it, so its presence in production is unconfirmed.
+- **`List-Unsubscribe-Post` header not found.** This is also a WARN. RFC 8058 one-click support can't be confirmed, and Gmail and Yahoo bulk-sender rules expect it.
+- **`Authentication-Results` not found.** SPF, DKIM and DMARC status is unknown, and the relay is the likely cause.
+- **Unsubscribe link.** The harness always probes it, but no result for it appears in the findings. I can't confirm it works or that a physical address is present, because the footer was truncated.
 
-## 6. Email-to-Site Continuity (UTM params, landing page alignment)
-Not assessable. Every link is wrapped by `trk.send.everlane.com`, and the probe never resolved a redirect. UTM parameters and landing-page alignment for the "Better Gifts For Him" and "Shop The Gift Guide" CTAs can't be confirmed.
+**6. Email-to-Site Continuity**
+- **UTM parameters can't be verified.** All links are wrapped in `trk.send.everlane.com/l/…` redirects. The only destination params visible are Klaviyo's `_kx`, `bxid` and `cm_fl…`, and they are cut off. No `utm_*` values appear in the available data.
+- **Landing-page alignment can't be assessed.** Two destinations failed to resolve and two were never probed.
+- **Gift-themed subject.** The subject is "The Gifts He'll Actually Wear", but the logo link resolves to `/pages/womens…`. Whether other CTAs reach a men's or gifts landing page is unverified.
 
-## 7. Recommendations
-1. **Re-run the link probe** from a different network or resolver, and manually resolve `trk.send.everlane.com`. If it fails everywhere, this is a critical issue because every link, including unsubscribe, is dead. If it resolves, discount the 17% pass rate as a probe artifact.
-2. **Capture raw headers** (`List-Unsubscribe`, `List-Unsubscribe-Post`, `Authentication-Results`) from a direct seed inbox. Don't rely on the AgentMail relay for these checks.
-3. **Follow redirects** on the wrapped links to record final URLs and UTM parameters, and check the unsubscribe flow.
-4. **Make link text unique**, for example "Shop Best-Sellers" instead of three "Shop Now" links, and remove the "Image |" and "Icon |" alt prefixes.
-5. **Set `alt=""`** on the `/o/` tracking pixel and add a non-empty `<title>`.
-6. **Confirm the physical address** in the footer and review the full, untruncated HTML for merge tokens and the mobile `h4` size.
+**7. Recommendations**
+1. Re-test `…_0` and `…_13` with a prober that resolves relative `Location` headers against the tracker host. If the tracker really emits path-only redirects, have Everlane or Klaviyo fix the link-tracking domain config.
+2. Re-run with a larger time budget, or target the unprobed links `…_9` and `…_22` and the unsubscribe link directly.
+3. Capture raw headers from the original SMTP message, not the relay copy. Confirm `List-Unsubscribe`, `List-Unsubscribe-Post: List-Unsubscribe=One-Click` and the SPF/DKIM/DMARC results.
+4. Add `alt=""` to the open pixel, fill in `<title>`, and add `lang="en"` to `<html>`.
+5. Capture the full redirect chain for each CTA to verify `utm_*` parameters survive to the landing page.
+## Recent history
+
+- [[2026-08-19-don-t-miss-your-exclusive-access]] — 5/10 (2026-08-19)
+- [[2026-08-18-way-high-denim-now-way-lower-price]] — 5/10 (2026-08-18)
+- [[2026-08-17-forget-sale-try-better-prices]] — 5/10 (2026-08-17)
+
