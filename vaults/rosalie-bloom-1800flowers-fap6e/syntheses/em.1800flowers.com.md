@@ -2,108 +2,109 @@
 kind: synthesis
 persona: rosalie-bloom-1800flowers-fap6e
 brand: em.1800flowers.com
-reactions: 54
-through: 2026-08-11T05:06:47.000Z
+reactions: 116
+through: 2026-11-06T05:33:37.000Z
 created_at: 2026-08-11T18:19:20.305Z
-updated_at: 2026-08-11T18:19:20.305Z
+updated_at: 2026-11-06T20:19:16.242Z
 ---
 
-# ### Summary of Technical Audit for 1-800-FLOWERS.COM (June 5, 2026)
+# ### Technical Audit Summary
 
-The email from 1-800-FLOWERS.COM has several technical issues that need to be addressed to improve rendering consistency and accessibility across various clients. Here's a detailed breakdown:
+The email from 1-800-FLOWERS.COM on June 5, 2026, has several technical issues that need to be addressed to ensure proper rendering and accessibility across different email clients. The main issues include rendering inconsistencies, accessibility concerns, and potential personalization errors. Below is a detailed breakdown of the findings and recommendations.
 
 ---
 
 ### 1. Technical Summary
 
-**Email Structure:**
-- **Standard XHTML:** The email uses XHTML 1.0 Transitional, which is widely supported.
-- **VML Namespace Support:** VML namespace is included for Outlook compatibility.
-
-**Dark Mode Meta Tags:**
-- Dark mode meta tags are present but may not be fully utilized due to other CSS issues.
+- **Email Standard:** XHTML 1.0 Transitional with VML support for Outlook.
+- **Dark Mode Support:** Dark mode meta tags are correctly declared.
+- **Rendering Issues:** Several CSS and font-loading issues create rendering risk across major clients.
 
 ---
 
 ### 2. Link & Tracking Issues
 
-**Evaluation Limitations:**
-- The HTML source is truncated, preventing a full evaluation of link and tracking mechanisms.
-- **Action:** Verify all `href` values pass through click-tracking redirects (e.g., `em.1800flowers.com`) and ensure no raw HTTP links are present.
+**Cannot fully evaluate** — HTML source is truncated before body links appear. 
+
+- **Action:** Verify all `href` values pass through a click-tracking redirect (e.g., `em.1800flowers.com` domain) and that the redirect chain does not exceed 2 hops.
+- **Action:** Confirm no raw `http://` (non-TLS) destination links are present.
 
 ---
 
 ### 3. Rendering & Accessibility
 
-**Non-standard Mobile Breakpoint:**
-- The mobile breakpoint is set at `418px`, which targets only iPhone SE and similar small screens.
-- **Action:** Adjust the breakpoint to a standard value like `480px` or `600px`.
+**Non-standard mobile breakpoint — Medium risk**
+- **Issue:** `@media only screen and (max-width: 418px)` targets only iPhone SE / small screens. Standard practice is `480px` or `600px`.
+- **Action:** Raise the breakpoint to `480px` and remove hardcoded `414px` width values.
 
-**Duplicate Media Queries:**
-- Two media queries apply identical behavior for images (`min-width: 768px` and `min-width: 640px`).
-- **Action:** Remove the redundant `@media only screen and (min-width: 768px)` rule.
+**Duplicate, redundant media queries**
+- **Issue:** Two separate rules apply identical behavior:
+  ```css
+  @media only screen and (min-width: 768px) { img {max-width:640px} }
+  @media only screen and (min-width: 640px) { img {max-width:640px} }
+  ```
+- **Action:** Remove the `768px` rule as it is fully superseded by the `640px` rule.
 
-**Missing `lang` Attribute:**
-- The `<html>` tag lacks a `lang="en"` attribute, which is crucial for screen readers.
-- **Action:** Add `lang="en"` to ensure proper pronunciation rules are selected by screen readers.
+**Missing `lang` attribute on `<html>` tag**
+- **Issue:** The opening `<html>` element uses `xmlns` attributes but no `lang="en"`.
+- **Action:** Add `lang="en"` to the `<html>` tag for screen reader compliance.
 
-**Aggressive Text Size Reset:**
-- The CSS rule `* {-webkit-text-size-adjust:none}` disables automatic text scaling on WebKit clients.
-- **Action:** Change this to `100%` or remove it entirely to allow for better readability and accessibility.
+**Aggressive text-size reset**
+- **Issue:** `* {-webkit-text-size-adjust:none}` disables automatic text scaling on WebKit clients.
+- **Action:** Change to `* {-webkit-text-size-adjust:100%}` to ensure text remains readable.
 
-**Global `mso-line-height-rule`:**
-- Applying `mso-line-height-rule:exactly` globally can cause issues with dynamically-sized content in Outlook.
-- **Action:** Apply this rule only to elements where explicit line heights are set.
+**`mso-line-height-rule:exactly` on wildcard selector**
+- **Issue:** `* {mso-line-height-rule:exactly}` applies to every element.
+- **Action:** Apply this rule only to elements with explicit `line-height` settings.
 
-**Web Font Fallback Inconsistency:**
-- Some Playfair Display weights lack the necessary fallback font declaration (`mso-font-alt:'Times New Roman'`) for Outlook.
-- **Action:** Ensure all weights have a consistent and appropriate fallback font declared.
+**Web font fallback inconsistency**
+- **Issue:** Playfair Display weights 400, 600 italic, and 400 italic declare `mso-font-alt:'Times New Roman'`. Weights 900 normal and 900 italic lack this declaration.
+- **Action:** Add `mso-font-alt:'Times New Roman'` for weights 900 normal and 900 italic.
 
-**Font Format Inconsistency:**
-- The 900-weight normal variant of Playfair Display uses `.woff` instead of `.woff2`.
-- **Action:** Switch to `.woff2` for better performance and broader support.
+**`.woff` format for Playfair Display 900**
+- **Issue:** All other weights load `.woff2`, but weight 900 normal loads `.woff`.
+- **Action:** Replace `.woff` with `.woff2` for weight 900 normal.
+
+**External font loading blocked by Gmail and Outlook**
+- **Issue:** All `@font-face` rules pull from `fonts.gstatic.com`.
+- **Action:** Ensure every text element that uses Playfair Display or Lato has an explicit `font-family` stack ending in a web-safe font.
 
 ---
 
 ### 4. Personalization & Merge Tokens
 
-**Subject Line Credit Value:**
-- The `$13.80` value in the subject line is ambiguous; it could be a hardcoded promotional amount or a personalized merge token.
-- **Action:** Seed-test with an account that has no credit balance to ensure the subject line renders safely.
+**Subject line credit value — ambiguous**
+- **Issue:** Subject line `"Send something special (+ $13.80 credit)"` may be a hardcoded promotional amount or a personalized merge token.
+- **Action:** Seed-test with a zero-credit account to verify the subject line and body render gracefully.
 
 ---
 
 ### 5. Compliance
 
-**Footer Elements:**
-- Physical mailing address, unsubscribe link, and commercial message identification are required by CAN-SPAM §5(a).
-- **Action:** Verify these elements are present in the footer of the email.
+**Cannot fully evaluate** — footer not visible in truncated source.
+- **Action:** Verify the footer includes:
+  - Physical mailing address (CAN-SPAM §5(a)(5))
+  - One-click unsubscribe link (CAN-SPAM §5(a)(3))
+  - "This is a commercial message" identification
 
-**Authentication Headers:**
-- Authentication headers (SPF, DKIM, DMARC) need to be verified for proper alignment.
-- **Action:** Check MX Toolbox or mail header of a delivered copy to ensure proper authentication.
+**Sender Domain Authentication:**
+- **Action:** Check authentication headers (SPF, DKIM, DMARC) on `em.1800flowers.com`.
 
 ---
 
 ### 6. Email-to-Site Continuity
 
-**CTA Links:**
-- Ensure all CTA links carry consistent UTM parameters and land on authenticated pages when necessary.
-- **Action:** Verify that the `$13.80 credit` CTA lands on an authenticated page if applicable.
+**Cannot evaluate** — no destination URLs visible in the truncated HTML.
+- **Action:** Verify all CTA links carry consistent UTM parameters and ensure the `$13.80 credit` CTA lands on an authenticated account page.
 
 ---
 
-### Recommendations
+### 7. Recommendations
 
 | Priority | Issue | Action |
 |---|---|---|
-| High | Missing `lang="en"` on `<html>` | Add attribute; screen reader compliance |
-| High | `-webkit-text-size-adjust:none` | Change to `100%` on `body`, remove from `*` wildcard |
-| Medium | Mobile breakpoint at 418px | Raise to `480px`; remove hardcoded `414px` width values |
-| Medium | Verify `$13.80` subject-line token renders safely | Seed-test with zero-credit account |
-| Medium | Playfair 900 missing `mso-font-alt` and uses `.woff` | Add fallback; switch to `.woff2` |
-| Low | Duplicate `min-width` media queries | Remove the `768px` rule |
-
----
-
-By addressing these issues, 1-800-FLOWERS.COM can improve their email's rendering consistency, accessibility, and compliance across various clients.
+| **High** | Missing `lang="en"` on `<html>` | Add `lang="en"` to `<html>` for screen reader compliance. |
+| **High** | `-webkit-text-size-adjust:none` | Change to `100%` on `body`, remove from `*` wildcard. |
+| **Medium** | Mobile breakpoint at 418px | Raise to `480px`; remove hardcoded `414px` width values. |
+| **Medium** | Verify `$13.80` subject-line token renders safely | Seed-test with zero-credit account. |
+| **Medium** | Playfair 900 missing `mso-font-alt` and

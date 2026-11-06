@@ -2,58 +2,68 @@
 kind: synthesis
 persona: rae-l
 brand: iliabeauty.com
-reactions: 78
-through: 2026-08-13T22:45:25.000Z
+reactions: 136
+through: 2026-11-04T23:03:23.000Z
 created_at: 2026-06-07T18:20:59.395Z
-updated_at: 2026-08-14T18:18:36.332Z
+updated_at: 2026-11-06T20:21:46.559Z
 ---
 
-# ### Summary of Feedback
+# ### Summary and Recommendations
 
-The email from ILIA Beauty titled "20% off makeup + skincare + SPF" is well-intentioned but falls short in several key areas:
+**Overview:**
+ILIA's ninth email in six days is a straightforward promotional email with a clear subject line ("20% off makeup + skincare + SPF"). However, the body does not match the subject line's promise, leading to a mismatch between expectation and delivery. The email lacks urgency, has a generic CTA, and suffers from cadence fatigue.
 
-1. **Subject Line vs. Body Mismatch**: The subject line promises a 20% discount, but the body focuses more on brand positioning and product benefits rather than the promotional offer.
-   
-2. **Offer Placement**: The 20% discount is buried in a small promo bar at the top of the email, which doesn't match subscribers' expectations set by the subject line.
-
-3. **Urgency Lacking**: There's no visible deadline or sense of urgency to encourage immediate action.
-
-4. **CTA Genericness**: The "SHOP NOW" CTA is generic and could be more specific to each product category.
-
-5. **Cadence Fatigue**: With nine emails in six days, subscribers are likely experiencing fatigue, which can lead to higher unsubscribe rates.
+**Key Takeaways:**
+- The subject line is clear and straightforward.
+- The hero photography and "Made for All Types" framing are on-brand and visually appealing.
+- The offer is buried in the promo bar, making it hard for subscribers to find.
+- There is no visible deadline, which reduces urgency.
+- The "SHOP NOW" CTA is generic and could be more specific.
 
 ### Recommendations
 
-1. **Lead with the Offer**:
-   - **Hero Headline**: "20% off everything — makeup, skincare, SPF"
-   - **Promo Code/CTA Below Hero**: Ensure the promo code or CTA is immediately visible below the hero headline.
-   
-2. **Add a Deadline**:
-   - **Hero Section**: Include a clear deadline such as "Ends midnight Sunday" or "Ends tonight."
-   
-3. **Specific CTAs**:
-   - Use more specific CTAs like "Shop Lip Tints," "Shop SPF," and "Shop Skincare 15% Off."
+1. **Lead the Body with the Offer:**
+   - **Hero Headline:** "20% off everything — makeup, skincare, SPF"
+   - **Promo Code/CTA:** Immediately below the hero headline.
+   - **Brand Positioning:** Move to secondary real estate.
 
-4. **Move Cart Deco Closer to Top**:
-   - Place the "Cart Deco" section higher in the email if it targets near-converters.
+2. **Add a Hard Deadline:**
+   - **Hero or Below Hero:** "Ends midnight Sunday" or "Ends tonight."
 
-5. **Engaged Segment Targeting**:
-   - Consider sending this email only to an engaged segment to reduce fatigue and improve deliverability.
+3. **Make CTAs Specific:**
+   - **Shop Lip Tints**
+   - **Shop SPF**
+   - **Shop Skincare 20% Off**
 
-### Alternative Subject Lines
+4. **Move "Cart Deco" Up:**
+   - Place the "Cart Deco" section higher in the email to target near-converters.
 
-1. **Subject Alt A**: `Friends + Family ends tonight — 20% off`
-2. **Subject Alt B**: `Last call: 20% off makeup, skincare + SPF`
+5. **Send to Engaged-Only Segment:**
+   - At send nine, consider sending to an engaged-only segment to protect deliverability.
 
-### Preheader Alternatives
+### Revised Email Elements
 
-1. **Preheader Alt A**: `Your discount expires soon. Shop makeup, skincare, and SPF before it's gone.`
-2. **Preheader Alt B**: `Made for all skin types — shop the latest collection with a 20% discount.`
+**Subject Line:**
+- **Alt A:** `Friends + Family ends tonight — 20% off`
+- **Alt B:** `Last call: 20% off makeup, skincare + SPF`
+
+**Preheader Text:**
+- **Alt A:** `Your discount expires soon. Shop makeup, skincare, and SPF before it's gone.`
+- **Alt B:** `Made for all skin types — 20% off makeup, skincare, and SPF`
 
 ### Technical Audit Summary
 
-- Ensure proper font rendering by using `<link>` tags instead of `@import`.
-- Set an empty `<title>` tag to improve accessibility.
-- Conduct a full-source re-audit to verify links, CAN-SPAM compliance, and landing page alignment.
+**Font Issues:**
+- Replace `@import` with `<link>` tags for better client support.
+- Set `<title>` to the email subject or a descriptive label for accessibility.
 
-By implementing these changes, the email can better align with subscriber expectations and drive higher engagement.
+**Rendering Issues:**
+- Ensure hover states provide visual feedback.
+- Correct MSO comment syntax if generated manually.
+
+**Full-Source Re-Audit:**
+- Verify links, UTMs, CAN-SPAM footer, and merge tokens.
+
+### Final Thoughts
+
+By making these changes, ILIA can improve the alignment between the subject line and the email body, enhance urgency, and provide more specific CTAs. This will likely increase open rates, click-through rates, and overall engagement.

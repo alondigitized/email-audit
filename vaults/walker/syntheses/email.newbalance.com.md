@@ -2,51 +2,52 @@
 kind: synthesis
 persona: walker
 brand: email.newbalance.com
-reactions: 61
-through: 2026-08-17T07:59:38.000Z
+reactions: 122
+through: 2026-11-05T05:28:30.000Z
 created_at: 2026-05-19T18:21:55.050Z
-updated_at: 2026-08-17T18:20:57.683Z
+updated_at: 2026-11-06T20:20:34.355Z
 ---
 
-# ## Summary and Recommendations
+# ## 4. What I'd change
 
-### Overview:
-The email from New Balance promoting up to 25% off select shoes and up to 30% off clothing and accessories has a clear offer, clean layout, and visible deadline. However, it fails to resonate with the recipient due to brand loyalty issues and lack of relevance in terms of product focus and personalization.
+1. **Lead with the comfort story, not the discount percent**:
+   - **Current**: "Up to 25% off select shoes / up to 30% off clothing and accessories"
+   - **Proposed**: "Built for all-day comfort — now up to 25% off select shoes / up to 30% off clothing and accessories"
 
-### Key Insights:
-- **Brand Loyalty:** The recipient is a Skechers Plus member, making New Balance irrelevant.
-- **Product Focus:** The email lacks comfort-focused products that cater to older customers looking for slip-ins and walking shoes.
-- **Personalization:** No loyalty or demographic signals are provided, treating the customer like a generic subscriber.
+2. **Surface the slip-resistant or walking category prominently**:
+   - **Current**: The WW550v1 Slip Resistant is buried in a small card at the bottom.
+   - **Proposed**: Promote the WW550v1 Slip Resistant in the hero section or as a primary category in the main grid. Include a clear call-out for "Slip-Resistant Shoes" or "Walking Shoes" to highlight the relevance for older customers.
 
-### Recommendations:
+3. **Show a real deadline with more urgency**:
+   - **Current**: "Now through May 16th"
+   - **Proposed**: "Limited time offer — ends this Sunday, May 14th" or include a countdown timer.
 
-1. **Lead with Comfort Story:**
-   - Change the hero banner headline from "Up to 25% off select shoes" to something more specific like "Built for all-day comfort — now up to 25% off."
-   - Include copy that highlights key features such as slip-resistant soles, wide widths, and comfort technology.
+4. **Add a loyalty or member call-out**:
+   - **Current**: No mention of loyalty or member status.
+   - **Proposed**: Add a "New Balance Rewards Members: Get an extra 10% off" call-out. If you don't have a loyalty program, consider a "Sign up for New Balance Rewards" CTA.
 
-2. **Prominent Comfort-Focused Products:**
-   - Surface the WW550v1 Slip Resistant shoe prominently in the hero banner or at least in a larger card within the "More to explore" section.
-   - Include high-quality images and detailed descriptions of shoes that cater to older customers.
+5. **Include demographic signals**:
+   - **Current**: No people shown, just product shots.
+   - **Proposed**: Add lifestyle images of older adults wearing the shoes, or include testimonials from older customers.
 
-3. **Increase Urgency with Deadline:**
-   - Use a countdown timer for the promotion deadline (e.g., "Offer ends this Sunday!").
-   - Highlight the limited time offer more prominently in the email body.
+6. **Highlight comfort features in the product grid**:
+   - **Current**: Generic product shots with no specific comfort features.
+   - **Proposed**: Include clear labels for comfort features like "Slip-Resistant," "Wide Width," and "Soft Footbed."
 
-4. **Personalization and Member Benefits:**
-   - Include a loyalty call-out if the recipient is a New Balance member.
-   - Personalize the content to reflect the customer's preferences, such as showing products they have previously viewed or purchased.
+7. **Improve the "More to explore" section**:
+   - **Current**: Filler content like dark athletic shoes and socks.
+   - **Proposed**: Curate a selection of comfort-focused products that align with the target demographic. Include categories like "Comfort Shoes," "Walking Shoes," and "Slip-Ons."
 
-5. **Improve Product Grid Layout:**
-   - Ensure that product images are large enough and clearly visible.
-   - Provide more detailed descriptions and benefits for each product in the grid.
+8. **Add a dedicated section for men's comfort shoes**:
+   - **Current**: Generic Men / Women / Kids grid.
+   - **Proposed**: Create a dedicated "Men's Comfort Shoes" section with clear calls-to-action and product thumbnails.
 
-### Technical Fixes:
-- **Un-substituted Placeholder URL:** Replace `XXXXX` with the actual image URL before sending.
-- **Mixed Content Issue:** Change all asset URLs to use HTTPS instead of HTTP.
-- **Invalid Font Declarations:** Remove or correct the `@font-face` declarations that are missing `src:` properties.
+9. **Include a free shipping banner with clear CTA**:
+   - **Current**: "Free shipping on orders $75+" at the top.
+   - **Proposed**: Add a prominent "Free Shipping on Orders $75+" banner with a clear "Shop Now" button.
 
-### Full Audit:
-- Conduct a full link audit to ensure all product links, CTAs, and tracking pixels are correctly substituted with actual values.
-- Verify CAN-SPAM compliance, unsubscribe functionality, and sender domain authentication (SPF, DKIM, DMARC).
+10. **Optimize for mobile viewing**:
+    - **Current**: Clean layout but could be improved.
+    - **Proposed**: Ensure all sections are mobile-friendly and that the CTA button is large and easily clickable.
 
-By implementing these changes, the email will be more relevant and engaging for older customers who prioritize comfort and support in their footwear choices.
+By implementing these changes, the email will better resonate with older customers like yourself, highlighting the specific features and benefits that matter most to this demographic.
