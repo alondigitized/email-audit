@@ -2,72 +2,87 @@
 kind: synthesis
 persona: axel-stripe-adidas-fap6e
 brand: us-news.comms.adidas.com
-reactions: 48
-through: 2026-08-22T20:08:36.000Z
+reactions: 102
+through: 2026-11-08T01:11:59.000Z
 created_at: 2026-08-23T18:18:29.414Z
-updated_at: 2026-08-23T18:18:29.414Z
+updated_at: 2026-11-08T20:21:35.772Z
 ---
 
-# It looks like there are several technical issues and areas for improvement identified in the email audit of `adidas by S
+# ### Technical Audit — adidas by Stella McCartney SS26
 
-### Key Findings
+#### 1. Technical Summary
+- **Broken Experience Failures:** Four confirmed broken-experience failures (one 403 destination URL and one malformed tracking wrapper).
+- **Deliverability Risks:** Plain-text fallback is absent, and authentication headers were not captured.
+- **Overall Assessment:** The email has significant technical issues that could impact user experience and deliverability.
 
-1. **Broken Links:**
-   - A gift card help link returns 403 (HTTP Forbidden).
-   - The tracking wrapper URL is malformed, causing it to be non-functional.
-   
-2. **Rendering Issues:**
-   - Four instances of an HTTP image asset are blocked in clients that enforce HTTPS-only resources.
-   - An additional HTTP tracking pixel is blocked due to mixed-content blocking.
+#### 2. Link & Tracking Issues
+- **[FAIL] Doubled-domain tracking wrap — gift card help link**
+  - **Issue:** The click-wrapper URL encodes an already-absolute HTTPS URL as the path segment, producing an invalid double-domain structure.
+  - **Solution:** Correct the ESP template to ensure URLs are correctly encoded and resolved.
 
-3. **Accessibility and Alt Text:**
-   - Two images lack `alt` text, which impacts accessibility for screen readers.
+- **[FAIL] Destination URL returns 403**
+  - **Issue:** The destination URL returns HTTP 403, indicating the page either requires authentication, is geo-blocked, or has been removed.
+  - **Solution:** Verify and correct the destination URL to ensure it returns a valid response.
 
-4. **Compliance Issues:**
-   - Missing `List-Unsubscribe` and `List-Unsubscribe-Post` headers.
-   - Absence of a plain-text MIME part (required by CAN-SPAM).
-   - Authentication results header not captured, making it impossible to verify SPF, DKIM, and DMARC status.
+- **[FAIL] Malformed URL fragment on personalization block**
+  - **Issue:** The URL fragment is malformed due to incorrect prefixing with the host rather than resolving against the canonical base.
+  - **Solution:** Ensure the personalization block URLs are correctly resolved and prefixed.
 
-### Recommendations
+- **[WARN] 25 click-tracked links not probed**
+  - **Issue:** All links routed through `click.comms.adidas.com` were skipped during HTTP probing.
+  - **Solution:** Manually verify the health of these links to ensure they are functioning correctly.
 
-1. **Fix Broken Links:**
-   - Investigate the 403 error for the gift card help link and ensure that the destination URL is accessible.
-   - Correct the malformed tracking wrapper URL by ensuring proper encoding of absolute URLs.
+#### 3. Rendering & Accessibility
+- **[WARN] Four instances of the same HTTP image asset**
+  - **Issue:** The "arrow" image is sourced over plain HTTP, which is blocked in clients with mixed-content blocking.
+  - **Solution:** Serve the image over HTTPS to ensure it renders in all clients.
 
-2. **Improve Image Rendering:**
-   - Replace all HTTP image assets with HTTPS versions to avoid blocking in clients that enforce secure connections.
-   - Add `alt` text for images missing it, especially the dynamic/personalization block and tracking pixel.
+- **[WARN] Additional HTTP tracking pixel**
+  - **Issue:** The open-tracking pixel is served over HTTP, which is blocked in clients with mixed-content blocking.
+  - **Solution:** Serve the tracking pixel over HTTPS to ensure it tracks opens correctly.
 
-3. **Ensure Compliance:**
-   - Add the `List-Unsubscribe` header to comply with Google/Yahoo requirements.
-   - Include a plain-text MIME part as required by CAN-SPAM guidelines.
-   - Verify that authentication headers (SPF, DKIM, DMARC) are correctly set up and captured.
+- **[WARN] Two images missing `alt` text**
+  - **Issue:** Two images lack `alt` text, which is an accessibility gap.
+  - **Solution:** Add `alt` text to the images to improve accessibility and ensure screen readers can read them.
 
-4. **Enhance Accessibility:**
-   - Ensure all images have descriptive `alt` text to improve accessibility for users relying on screen readers.
+- **HTML doctype:** `HTML 4.01 Transitional` — outdated but functionally acceptable for email.
+- **Font declarations:** `@font-face` blocks correctly fall back to system fonts via `local('Arial')`.
 
-5. **UTM Parameter Verification:**
-   - Verify UTM parameters by probing the actual destination URLs or ensuring that click-through links maintain parameter integrity through redirects.
+#### 4. Personalization & Merge Tokens
+- **Issue:** No unresolved merge tokens detected in the truncated source.
+- **Solution:** Ensure all merge tokens are correctly resolved in the full source.
 
-### Detailed Action Plan
+#### 5. Compliance
+- **[WARN] `List-Unsubscribe` header absent**
+  - **Issue:** The header is missing, violating Google/Yahoo bulk sender requirements.
+  - **Solution:** Add the `List-Unsubscribe` header to comply with bulk sender policies.
 
-1. **Link Fixes:**
-   - Revisit and correct the gift card help link to ensure it returns a valid HTTP status.
-   - Update the tracking wrapper URL encoding to avoid double-domain issues.
+- **[WARN] `List-Unsubscribe-Post` header absent (RFC 8058)**
+  - **Issue:** The header is missing, required for one-click unsubscribe functionality.
+  - **Solution:** Add the `List-Unsubscribe-Post` header to enable one-click unsubscribe.
 
-2. **Image Updates:**
-   - Replace all instances of `http://image.link.adidas.com` with their HTTPS counterparts (`https://image.link.adidas.com`).
-   - Add appropriate `alt` text for images missing it, e.g., `<img src="..." alt="Description of the image">`.
+- **[FAIL] Plain-text MIME part: 0 characters**
+  - **Issue:** No `text/plain` alternative is present, violating CAN-SPAM requirements and impacting deliverability.
+  - **Solution:** Add a `text/plain` alternative to improve deliverability and meet CAN-SPAM requirements.
 
-3. **Compliance Adjustments:**
-   - Update email templates to include `List-Unsubscribe` and `List-Unsubscribe-Post` headers.
-   - Ensure a plain-text MIME part is included in emails sent out.
+- **[WARN] `Authentication-Results` header not captured**
+  - **Issue:** SPF, DKIM, and DMARC pass/fail status unknown.
+  - **Solution:** Verify SPF, DKIM, and DMARC status at the SMTP layer to ensure proper authentication.
 
-4. **Accessibility Enhancements:**
-   - Review all images for missing `alt` text and add it as needed.
-   - Test the email with screen readers to ensure full accessibility compliance.
+#### 6. Email-to-Site Continuity
+- **Issue:** UTM parameters could not be verified due to the use of `click.comms.adidas.com` for all product/CTA links.
+- **Solution:** Manually verify UTM parameters to ensure continuity and proper tracking.
 
-5. **UTM Verification:**
-   - Manually verify UTM parameters by probing actual destination URLs or ensuring that click-through links maintain parameter integrity through redirects.
+#### 7. Recommendations
+| Priority | Action |
+|---|---|
+| **P0** | Fix the doubled-domain tracking wrap and ensure all URLs are correctly resolved and accessible. |
+| **P1** | Serve all images and tracking pixels over HTTPS to ensure they render and track correctly. |
+| **P1** | Add `alt` text to all images to improve accessibility. |
+| **P1** | Add `List-Unsubscribe` and `List-Unsubscribe-Post` headers to comply with bulk sender requirements. |
+| **P1** | Add a `text/plain` alternative to meet CAN-SPAM requirements and improve deliverability. |
+| **P2** | Manually verify the health of all click-tracked links to ensure they are functioning correctly. |
+| **P2** | Verify and correct the destination URL for the gift card help link to ensure it returns a valid response. |
+| **P2** | Verify SPF, DKIM, and DMARC status at the SMTP layer to ensure proper authentication. |
 
-By addressing these issues, adidas can improve the reliability, security, and user experience of their email campaigns, thereby enhancing deliverability and engagement rates.
+By addressing these issues, adidas can improve the technical reliability and user experience of their email campaigns, ensuring better deliverability and engagement.

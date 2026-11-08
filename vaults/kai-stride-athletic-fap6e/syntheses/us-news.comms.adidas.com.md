@@ -2,51 +2,49 @@
 kind: synthesis
 persona: kai-stride-athletic-fap6e
 brand: us-news.comms.adidas.com
-reactions: 48
-through: 2026-08-21T08:00:27.000Z
+reactions: 103
+through: 2026-11-08T01:11:59.000Z
 created_at: 2026-08-22T18:19:57.117Z
-updated_at: 2026-08-22T18:19:57.117Z
+updated_at: 2026-11-08T20:19:35.362Z
 ---
 
-# Based on the technical audit and analysis, here are the key takeaways and recommendations for improving both the deliver
+# ### 6. Email-to-Site Continuity
 
-### Key Takeaways
+**[WARN] UTM Parameters Unverifiable**
+All 25 product and CTA links route through `click.comms.adidas.com`, making it impossible to verify the presence and correctness of UTM parameters. This is a significant issue as it hinders the ability to track and analyze user behavior effectively.
 
-1. **Broken Links**: There are significant issues with tracking links, including malformed URLs and 403 errors.
-2. **Mixed Content Issues**: Several images and a tracking pixel are served over plain HTTP, which can be blocked in modern email clients.
-3. **Missing Alt Text**: Two images lack `alt` text, impacting accessibility and screen reader usability.
-4. **Plain-Text Fallback Missing**: The email lacks a plain-text alternative, violating CAN-SPAM requirements and reducing deliverability scores.
-5. **Compliance Headers Absent**: Important unsubscribe headers (`List-Unsubscribe`, `List-Unsubscribe-Post`) are missing, potentially leading to policy violations.
+### Summary and Recommendations
 
-### Recommendations
+#### Technical Summary
+- **Broken Links:** Two gift card help links are broken due to malformed tracking wrappers and a 403 error.
+- **Missing Plain-Text Fallback:** No plain-text MIME part is present, which is a best practice and a CAN-SPAM requirement.
+- **HTTP Assets:** Multiple instances of HTTP images and tracking pixels that should be served over HTTPS.
+- **Open-Tracking Pixel:** An open-tracking pixel is served over HTTP, which can be blocked by clients with mixed-content blocking.
 
-#### 1. Fix Broken Links
-- **Doubled-Domain Tracking Wrap**:
-  - Correct the template encoding issue so that tracking URLs do not double-wrap domain names.
-  
-- **403 Destination URL**:
-  - Investigate why the destination URL returns a 403 error and either fix or remove the link.
+#### Recommendations
+1. **Fix Broken Links:**
+   - Correct the malformed tracking wrapper for the gift card help link.
+   - Investigate why the destination URL returns a 403 error and resolve it.
 
-#### 2. Address Mixed Content
-- Ensure all images and tracking pixels are served over HTTPS to avoid blocking in secure email clients like Apple Mail, Outlook 365, and Gmail.
-  
-#### 3. Add Alt Text
-- Provide `alt` text for images that lack it, especially for content images and tracking pixels.
+2. **Implement Plain-Text Fallback:**
+   - Add a plain-text MIME part to the email to improve deliverability and provide a fallback for clients that do not render HTML.
 
-#### 4. Implement Plain-Text Fallback
-- Add a plain-text MIME part to the email to comply with CAN-SPAM requirements and improve deliverability scores.
+3. **Secure HTTP Assets:**
+   - Serve all images and tracking pixels over HTTPS to ensure they are not blocked by email clients.
 
-#### 5. Include Compliance Headers
-- Ensure that `List-Unsubscribe` and `List-Unsubscribe-Post` headers are present in the SMTP envelope.
-  
-### Additional Considerations
+4. **Secure Open-Tracking Pixel:**
+   - Ensure all tracking pixels are served over HTTPS to avoid mixed-content blocking issues.
 
-1. **Link Probing**: Verify all CTAs and links routed through `click.comms.adidas.com` to ensure destination health.
+5. **Verify UTM Parameters:**
+   - Directly probe the destination URLs to verify the presence and correctness of UTM parameters.
 
-2. **Authentication Headers**: Capture and verify SPF, DKIM, and DMARC pass/fail status for proper email authentication.
+6. **Compliance Headers:**
+   - Ensure that the `List-Unsubscribe` and `List-Unsubscribe-Post` headers are present in the SMTP envelope to comply with Google and Yahoo policies.
 
-3. **Personalization Tokens**: Double-check the personalization image URL (`dv.adidas.com/o/c6835498...`) to ensure it is correctly resolved and not causing issues due to template variables.
+7. **Personalization and Merge Tokens:**
+   - Double-check the personalization tokens to ensure they are correctly resolved and not causing any issues.
 
-### Summary
+8. **Authentication Headers:**
+   - Verify the presence of `Authentication-Results` headers to ensure SPF, DKIM, and DMARC pass/fail status is correctly captured.
 
-By addressing these technical issues, adidas can improve both the deliverability and user experience of their email campaigns. Ensuring proper link functionality, mixed content handling, accessibility, compliance with CAN-SPAM requirements, and robust authentication practices will help maintain high-quality standards for future communications.
+By addressing these technical issues, adidas can improve the user experience, enhance deliverability, and ensure compliance with email best practices and regulations.
