@@ -2,59 +2,75 @@
 kind: synthesis
 persona: walker
 brand: us-news.comms.adidas.com
-reactions: 127
-through: 2026-08-27T14:06:43.000Z
+reactions: 182
+through: 2026-11-09T11:05:43.000Z
 created_at: 2026-05-02T18:18:49.139Z
-updated_at: 2026-08-28T18:18:24.474Z
+updated_at: 2026-11-09T20:19:09.203Z
 ---
 
-# It appears that there are several critical issues and recommendations outlined in the technical audit for the adidas "Me
+# ### 3. Rendering & Accessibility
 
-### Technical Summary
-- **Broken redirect link**: A relative path href is not resolving correctly.
-- **Missing plain-text body**: The email lacks a plain text version, which poses CAN-SPAM compliance risks.
-- **Non-HTTPS images**: Multiple image sources are using HTTP instead of HTTPS, causing them to be blocked by major email clients.
-- **Unverified authentication headers**: DKIM/SPF status is unconfirmed due to relay configuration.
+**[FAIL] Broken redirect — malformed href**
+QA extracted a relative-path href `/g/bf4c0485-2527-41ac-b292-227d0bac76fd?txn=5dd5c280-2b89-11f1-bce3-9a305ea1f7ea` which is not a valid absolute URL. The underlying destination wraps through `https://dv.adidas.com/o/bf4c0485-2527-41ac-b292-227d0bac76fd?cp_tp=v3...`. The redirect chain will fail for any subscriber whose client does not resolve relative hrefs — this CTA is silently broken for a portion of recipients.
 
-### Recommendations
+**[WARN] 25 tracking links not probed**
+All click-redirect domains were skipped during HTTP validation. Destination URLs and redirect chain integrity are unconfirmed.
 
-#### Link & Tracking Issues
-1. **Broken Redirect Fix**:
-   - Validate the offer ID `bf4c0485-2527-41ac-b292-227d0bac76fd` in the offer management platform.
-   - Ensure that the redirect path type matches (`/o/` vs `/g/`) and correct any malformed hrefs to ensure they are absolute URLs.
+**[INFO] `<meta name="referrer" content="no-referrer">`**
+This header suppresses the HTTP referrer on all link clicks, which will cause referrer-based analytics attribution to report `(direct)` for all traffic sourced from this email, independent of UTM parameters.
 
-2. **Probing Tracking Links**:
-   - Verify all destination URLs and redirect chain integrity for the 25 unprobed tracking links.
+**[FAIL] Missing plain-text body**
+The email lacks a plain-text MIME alternative, which is a CAN-SPAM requirement. This omission poses a compliance risk and may affect deliverability.
 
-3. **Referrer Header Suppression**:
-   - Remove or scope the `<meta name="referrer" content="no-referrer">` tag unless intentionally suppressing referrer data.
-   - Ensure that UTM parameters are consistent across all destination URLs to maintain proper attribution.
+**[FAIL] Non-HTTPS images**
+The email contains 6 HTTP images, which will be blocked by major email clients. The images should be updated to HTTPS to ensure proper rendering.
 
-#### Rendering & Accessibility
-1. **Missing Plain-Text Body**:
-   - Add a plain-text MIME alternative with at least the subject line, key offer text, and unsubscribe URL.
+**[FAIL] Malformed charset meta**
+The character set meta tag is malformed. Change to `<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />`.
 
-2. **Non-HTTPS Images**:
-   - Update image sources from HTTP to HTTPS (e.g., `https://image.link.adidas.com/...`).
+**[FAIL] Duplicate `@font-face` blocks**
+There are multiple `@font-face` blocks defined, which should be consolidated into a single block with the union of fallbacks.
 
-3. **Authentication Headers**:
-   - Pull delivery headers from the ESP for this send and confirm that DKIM/SPF are aligned with `adidas.com`.
+**[WARN] Missing alt text on linked offer image**
+The linked offer image lacks descriptive `alt` text, which is necessary for accessibility and usability when images are blocked.
 
-### Additional Recommendations
-1. **Hero Image Improvement**:
-   - Replace the small product image with a more engaging, human-centered visual of an athlete in action.
+**[INFO] DKIM/SPF alignment**
+Pull delivery headers from ESP for this send and confirm `dkim=pass` and `spf=pass` aligned to `adidas.com`.
 
-2. **CTA Visibility**:
-   - Add a visible CTA button below the product copy for the Supernova Rise 3 Adaptive section.
+---
 
-3. **Product Focus**:
-   - Remove or de-emphasize the Handball Spezial module to maintain focus on the adaptive product launch.
-   
-4. **Promo Code Contextualization**:
-   - Tie the promo code more closely to the featured product by restating it adjacent to the CTA and specifying its applicability.
+### 4. Recommendations
 
-5. **Body Copy Expansion**:
-   - Expand the body copy to include specific features or benefits of the Supernova Rise 3 Adaptive.
+| Priority | Issue | Action |
+|---|---|---|
+| P0 | Broken `dv.adidas.com` offer link | Validate offer ID `bf4c0485-2527-41ac-b292-227d0bac76fd` in the offer management platform; confirm redirect path type matches (`/o/` vs `/g/`) |
+| P0 | Missing plain-text body | Add a plain-text MIME alternative with at minimum subject line, key offer text, and unsubscribe URL |
+| P1 | 6× HTTP arrow images | Update `src` to `https://image.link.adidas.com/...` (same host, protocol change only) |
+| P1 | HTTP tracking pixel | Update open-pixel `src` to HTTPS |
+| P1 | Missing alt text on linked offer image | Add descriptive `alt` (e.g., `alt="Shop FIFA World Cup 26 collection"`) so CTA is reachable when image is blocked |
+| P2 | `no-referrer` meta tag | Remove unless deliberately suppressing referrer for privacy; UTM params should carry all needed attribution |
+| P2 | DKIM/SPF alignment | Pull delivery headers from ESP for this send and confirm `dkim=pass` and `spf=pass` aligned to `adidas.com` |
+| P3 | Malformed charset meta | Change to `<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />` |
+| P3 | Duplicate `@font-face` blocks | Consolidate into a single block with the union of fallbacks |
 
-### Conclusion
-By addressing these technical issues and implementing the design recommendations, the email campaign can significantly improve both its technical reliability and user engagement, thereby enhancing the overall effectiveness of the product launch.
+---
+
+### 5. Conclusion
+
+The email has several technical issues that need immediate attention to ensure proper rendering, accessibility, and compliance. The broken redirect link and missing plain-text body are critical issues that should be addressed first. Additionally, updating the image sources to HTTPS and adding necessary alt text will improve the email's performance across different email clients and assistive technologies. Finally, verifying DKIM and SPF alignment will help ensure the email is delivered to the inbox.
+
+---
+
+### Footer
+
+**List-Unsubscribe Header:**
+```
+List-Unsubscribe: <mailto:unsubscribe@us-news.comms.adidas.com?subject=Unsubscribe>, <https://www.adidas.com/unsubscribe>
+```
+
+**List-Unsubscribe-Post Header (RFC 8058):**
+```
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+```
+
+These headers are compliant with Gmail and Yahoo bulk sender guidelines and ensure that recipients can easily unsubscribe from the mailing list.
