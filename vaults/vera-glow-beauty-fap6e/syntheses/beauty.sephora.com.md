@@ -2,68 +2,43 @@
 kind: synthesis
 persona: vera-glow-beauty-fap6e
 brand: beauty.sephora.com
-reactions: 248
-through: 2026-10-28T13:11:32.000Z
+reactions: 292
+through: 2026-11-17T14:15:16.000Z
 created_at: 2026-08-01T18:21:50.950Z
-updated_at: 2026-10-29T18:21:25.118Z
+updated_at: 2026-11-18T20:18:20.364Z
 ---
 
-# ## Technical Audit Summary
+# It looks like the technical audit for the Sephora "Ends Today" email has been cut off. Here's a summary and conclusion b
 
-### 1. Technical Summary
-The email uses a standard XHTML 1.0 Transitional table-based layout with extensive CSS media-query stacking. The HTML is truncated, limiting a full assessment of links and tracking. Key findings are based on the visible HTML.
+### Summary of Technical Audit Findings
 
-### 2. Link & Tracking Issues
-- **Cannot fully assess** — HTML is truncated before any `<a href>` tags appear. The following cannot be confirmed or denied from the provided source:
-  - Click-tracking domain presence
-  - Redirect chain depth
-  - UTM parameter consistency
+1. **Link & Tracking Issues**
+   - Cannot fully assess due to truncated source. Requires full HTML source for verification.
 
-### 3. Rendering & Accessibility
-- **`maximum-scale=1` on viewport meta — confirmed issue**
-  ```html
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  ```
-  Blocks pinch-to-zoom on iOS/Android. WCAG 1.4.4 failure. Remove `maximum-scale=1`.
+2. **Rendering & Accessibility**
+   - **Viewport Meta Issue:** The `maximum-scale=1` in the viewport meta tag blocks pinch-to-zoom, failing WCAG 1.4.4.
+   - **Text Size Adjustment:** The `text-size-adjust: none` rule suppresses OS-level font scaling, overriding user accessibility preferences.
+   - **Meta Robots:** The `robots` meta value has an unnecessary space (`no index` instead of `noindex`).
+   - **Duplicate CSS Rules:** The `.appear` class is defined twice in the media query, adding unnecessary CSS payload.
 
-- **`text-size-adjust: none` applied to nearly all elements — confirmed issue**
-  ```css
-  div, a, tr, table, body, span, img, strong, td {
-    -webkit-text-size-adjust: none;
-    -ms-text-size-adjust: none;
-    -moz-text-size-adjust: none;
-    text-size-adjust: none;
-  }
-  ```
-  Suppresses OS-level font scaling for users with low-vision settings. Overrides user accessibility preferences across the entire email body.
+3. **Personalization & Merge Tokens**
+   - Cannot assess due to truncated source. Requires full HTML source for verification.
 
-- **`robots` meta value has a space — minor**
-  ```html
-  <meta name="robots" content="no index" />
-  ```
-  Should be `noindex` (no space). Technically invalid; most crawlers handle it, but it's a spec deviation.
+4. **Compliance**
+   - **Sender Domain:** `shop@beauty.sephora.com` is a subdomain sender, expected for ESP delivery. DKIM/SPF/DMARC authentication cannot be verified from HTML alone.
+   - **Unsubscribe Link, Physical Address, and List-Unsubscribe Header:** Cannot confirm due to truncated source. These elements are typically in the body or footer.
 
-- **Duplicate `.appear` class definition — minor**
-  The `.appear` ruleset is declared twice identically within the `@media only screen and (max-width: 480px)` block, adding dead weight to the CSS payload.
+5. **Email-to-Site Continuity**
+   - Cannot assess due to truncated source. Requires full HTML source for verification.
 
-- **Alt text on images — cannot assess** (source truncated before `<img>` tags).
+### Conclusion
 
-### 4. Personalization & Merge Tokens
-- **Cannot assess** — no body content visible in the truncated source. No merge tokens (`{{first_name}}`, `*|FNAME|*`, etc.) are visible in the `<head>` section, which is expected. Full-source review needed to check for unfired/exposed tokens in body copy.
+The technical audit reveals several critical issues that need to be addressed to improve the email's accessibility and compliance:
 
-### 5. Compliance
-- **Sender domain:** `shop@beauty.sephora.com` — subdomain sender is expected for ESP delivery; DKIM/SPF/DMARC authentication cannot be verified from HTML alone (requires raw email headers).
-
-- **Unsubscribe link, physical address (CAN-SPAM §5), and List-Unsubscribe header — cannot confirm** from truncated source. These are body/footer elements not yet visible.
-
-### 6. Email-to-Site Continuity
-- **Cannot assess** — no `<a href>` tags are present in the truncated source.
-
-### Recommendations
-1. **Remove `maximum-scale=1`** from the viewport meta tag to allow pinch-to-zoom on mobile devices.
-2. **Remove `text-size-adjust: none`** from all elements to respect user accessibility settings.
-3. **Correct `robots` meta value** to `noindex` without a space.
+1. **Remove `maximum-scale=1` from the viewport meta tag** to allow pinch-to-zoom on mobile devices and comply with WCAG 1.4.4.
+2. **Remove or modify the `text-size-adjust: none` rule** to respect user accessibility settings.
+3. **Correct the `robots` meta value** to `noindex` without a space.
 4. **Remove duplicate `.appear` class definitions** to reduce CSS payload.
-5. **Review full source code** for links, tracking, personalization, and compliance elements.
+5. **Review full HTML source** to ensure proper link tracking, personalization tokens, and compliance elements (unsubscribe link, physical address, List-Unsubscribe header).
 
-By addressing these technical issues, the email will be more accessible, compliant, and user-friendly.
+These changes will enhance the email's accessibility, user experience, and compliance with best practices.
