@@ -2,10 +2,10 @@
 kind: synthesis
 persona: ines-counter-department-store-fap6e
 brand: e.neimanmarcus.com
-reactions: 322
-through: 2026-10-28T21:15:04.000Z
+reactions: 367
+through: 2026-11-18T22:11:40.000Z
 created_at: 2026-05-25T18:21:08.211Z
-updated_at: 2026-10-29T18:18:34.899Z
+updated_at: 2026-11-19T20:19:47.630Z
 ---
 
 # ### Technical Audit — "Join InCircle & unlock benefits as you shop
@@ -22,63 +22,39 @@ The email is structurally sound but carries three compliance warnings from the r
 
 ### 2. Link & Tracking Issues
 
-**36 click-redirect links skipped by QA probe** — destination URLs and UTM parameters not reviewed.
+**36 click-redirect links skipped by QA probe** — destination URLs and UTM parameters are not visible.
 
 ---
 
-### 3. AMPscript & Personalization
+### 3. AMPscript & Data Issues
 
-**AMPscript Variables:**
-- **`_subscriberkey` and `@SubscriberKey` mismatch:** The email uses both `_subscriberkey` and `@SubscriberKey` variables, which can lead to inconsistencies and potential tracking issues. It's best to standardize on a single variable for subscriber identity.
-- **Missing `List-Unsubscribe` Header:** The email is missing the `List-Unsubscribe` header, which is a best practice for unsubscribe management and compliance.
+**AMPscript Variable Defects:**
 
----
-
-### 4. HTML & CSS Issues
-
-**Consolidated Viewport Tags:**
-- **Commented-out Viewport Tags:** The email template contains three commented-out `<meta viewport>` lines. These should be removed to reduce template debt and eliminate the risk of re-enabling `user-scalable=no`, which can cause rendering issues on mobile devices.
-
-```html
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> -->
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
-```
-
----
-
-### 5. Data Extension & Personalization
+- **Identity Tracking:** The email uses `%%MemberID%%` and `%%jobid%%` but does not include `%%_subscriberkey%%`. This omission can cause issues with identity resolution and campaign tracking in Salesforce Marketing Cloud.
+- **Campaign Attribution:** The email relies on `%%jobid%%` for tracking but does not use `%%_JobSubscriberID%%` or `%%_JobCustomerKey%%` for more granular campaign attribution.
 
 **Consolidated Data Extensions:**
-- **Merge Fields:** The email uses multiple data extensions (`NM_Subscriber_New_Consolidated` and `NM_CRM_Feed`) for personalization. Consolidating these fields into a single sendable data extension can reduce per-recipient AMPscript execution overhead and simplify the template.
+
+- **DE Consolidation:** The email references multiple data extensions (`NM_Subscriber_New_Consolidated` and `NM_CRM_Feed`) that could be merged into a single sendable data extension to reduce per-recipient AMPscript execution overhead.
 
 ---
 
-### 6. Compliance & Best Practices
+### 4. Viewport Tags
 
-**Compliance Warnings:**
-- **Missing `List-Unsubscribe` Header:** Ensure the email includes a `List-Unsubscribe` header for better unsubscribe management and compliance.
-- **Unknown DKIM/SPF Status:** Verify and set up DKIM and SPF records to ensure proper email authentication and deliverability.
+**Commented-out Viewport Tags:**
 
----
-
-### 7. Recommendations
-
-1. **Standardize AMPscript Variables:**
-   - Ensure consistent use of a single subscriber key variable (e.g., `_subscriberkey`).
-
-2. **Remove Commented-out Viewport Tags:**
-   - Remove the commented-out `<meta viewport>` tags to reduce template debt and avoid potential rendering issues.
-
-3. **Consolidate Data Extensions:**
-   - Merge fields from `NM_Subscriber_New_Consolidated` and `NM_CRM_Feed` into a single sendable data extension to simplify personalization and reduce AMPscript overhead.
-
-4. **Add `List-Unsubscribe` Header:**
-   - Include the `List-Unsubscribe` header to improve unsubscribe management and compliance.
-
-5. **Verify DKIM/SPF Records:**
-   - Ensure that DKIM and SPF records are set up and verified for proper email authentication and deliverability.
+- The email template contains three commented-out `<meta viewport>` lines, which should be pruned to reduce template debt and eliminate the risk of re-enabling `user-scalable=no`.
 
 ---
 
-By addressing these technical issues, the email can be optimized for better performance, compliance, and user experience.
+### 5. Recommendations
+
+**P1** | Add `List-Unsubscribe` header | Add the `List-Unsubscribe` header to the email to comply with CAN-SPAM Act requirements and improve unsubscribe rates.
+
+**P2** | Verify DKIM/SPF status | Confirm that the sending domain has valid DKIM and SPF records to ensure proper email authentication and delivery.
+
+**P3** | Consolidate DE lookups | Merge `NM_Subscriber_New_Consolidated` and `NM_CRM_Feed` fields into the sendable DE to reduce per-recipient AMPscript execution overhead.
+
+**P3** | Prune commented-out viewport tags | Remove the three commented-out `<meta viewport>` lines to reduce template debt and eliminate the risk of re-enabling `user-scalable=no`.
+
+**P3** | Update AMPscript variables | Ensure that `%%_subscriberkey%%`, `%%_JobSubscriberID%%`, and `%%_JobCustomerKey%%` are used for identity tracking and campaign attribution to avoid silent failures in tracking and analytics.
