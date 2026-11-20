@@ -2,61 +2,88 @@
 kind: synthesis
 persona: ines-counter-department-store-fap6e
 brand: s.kohls.com
-reactions: 235
-through: 2026-10-27T07:08:38.000Z
+reactions: 279
+through: 2026-11-20T08:20:59.000Z
 created_at: 2026-07-30T18:20:06.657Z
-updated_at: 2026-10-27T18:21:49.580Z
+updated_at: 2026-11-20T20:21:22.398Z
 ---
 
-# It looks like the audit for the Kohl's Memorial Day Sale email is nearing completion, but the last part got cut off. Let
+# It looks like the email audit for Kohl's Memorial Day Sale is quite detailed and thorough. Let's summarize and address t
 
-### 1. Overview
+### Summary of Key Issues:
 
-Eight emails in fourteen days — and I have been keeping count out loud, in every one of these audits. This morning's send lands with a dollar amount that is good math but a subject line that is not optimized for click-through rates. The email uses a well-structured HTML4 layout but has several technical and accessibility issues that need addressing. The main concerns include missing compliance headers, malformed HTML tags, and accessibility violations. Additionally, there are issues with tracking pixels and missing alt text on images, which can affect screen readers and overall user experience.
+1. **Subject Line:**
+   - The subject line is clear but lacks urgency and personalization.
+   - The phrase "Shop Now" is generic and does not specify a category or product.
 
-### 2. Summary of Key Takeaways
+2. **Technical Issues:**
+   - Missing compliance headers (`List-Unsubscribe`, `List-Unsubscribe-Post`).
+   - Malformed HTML tags (stray `</custom>`).
+   - Missing `alt` text on dynamic content images.
+   - `user-scalable=0` in viewport meta (WCAG violation).
+   - Empty `<title>` tag.
+   - Duplicate Google Fonts load.
 
-#### Technical Summary
-- **HTML Structure:** Well-structured HTML4 transitional table layout with responsive media queries.
-- **Compliance Headers:** Missing `List-Unsubscribe` and `List-Unsubscribe-Post` headers, which are required for bulk senders.
-- **Tracking Links:** Multiple tracking pixel vendors and open-tracking calls on render.
-- **Malformed Tag:** Stray `</custom>` closing tag in the open tracker image.
+3. **Email-to-Site Continuity:**
+   - All links pass through `click.s.kohls.com`, but the actual destination URLs and UTM parameters are unverifiable.
+   - `mi_kc_redm_end_dte` param is empty, which may be intentional but should be confirmed.
 
-#### Rendering & Accessibility
-- **Alt Text:** Missing `alt` text on dynamic content images and tracking pixels.
-- **Accessibility:** `user-scalable=0` in viewport meta, which disables pinch-to-zoom and violates WCAG 1.4.4.
-- **Title Tag:** Empty `<title>` tag, which affects screen reader announcements.
-- **Google Fonts:** Duplicate load via `<link>` and `@import`.
+### Recommendations:
 
-#### Personalization & Merge Tokens
-- No unrendered merge token syntax detected in the truncated source.
-- Dynamic content images use query params for subscriber-level personalization.
+1. **Subject Line:**
+   - **Urgency:** Add a sense of urgency, e.g., "Limited Time Offer!"
+   - **Personalization:** Use personalization tokens like `{{first_name}}`.
+   - **Specificity:** Specify a category or product, e.g., "Shop Now: Men's Fashion".
 
-#### Compliance
-- **List-Unsubscribe Headers:** Unverified; required for Gmail/Yahoo bulk delivery.
-- **Physical Address:** Unverified; required by CAN-SPAM §5(a)(5).
-- **Robots Meta Tag:** Correctly set to `noindex, nofollow`.
-- **Referrer Meta Tag:** Correctly set to `no-referrer`.
+2. **Technical Issues:**
+   - **Compliance Headers:** Ensure `List-Unsubscribe` and `List-Unsubscribe-Post` headers are present.
+   - **Alt Text:** Add descriptive `alt` text to dynamic content images.
+   - **Viewport Meta:** Change `user-scalable=0` to `user-scalable=yes`.
+   - **Title Tag:** Add a descriptive title tag.
+   - **Google Fonts:** Remove duplicate `<link>` or `@import` blocks.
 
-#### Email-to-Site Continuity
-- All outbound links pass through `click.s.kohls.com`.
-- `no-referrer` meta tag strips HTTP `Referer` headers, leading to potential attribution issues.
-- `mi_kc_redm_end_dte` param is empty in at least one pixel URL, which may be intentional.
+3. **Email-to-Site Continuity:**
+   - **UTM Parameters:** Ensure UTM parameters are present on destination URLs.
+   - **Empty Param:** Confirm `mi_kc_redm_end_dte` is intentionally empty.
 
-### Recommendations
+### Detailed Recommendations:
 
-| Priority | Issue | Action |
-|---|---|---|
-| High | `List-Unsubscribe` / `List-Unsubscribe-Post` headers unverified | Confirm headers are present in raw SMTP envelope; required for Gmail/Yahoo bulk delivery |
-| High | Physical address in footer | Verify full (non-truncated) source contains CAN-SPAM-compliant postal address |
-| Medium | Stray `</custom>` tag | Remove from open-tracker `<img>` line |
-| Medium | Duplicate Google Fonts load | Remove `@import` block; keep `<link>` tags only (or vice versa) |
-| Medium | Missing alt text on dynamic content images | Add descriptive `alt` to `mi.kohls.com/p/rp/*.png` content images; `alt=""` is acceptable only for pure tracking pixels |
-| Medium | `mi_kc_redm_end_dte` empty param | Confirm this is intentional and not a failed merge substitution |
-| Low | `user-scalable=0` | Change to `user-scalable=yes` for WCAG 1.4.4 compliance |
-| Low | Empty `<title>` | Add a descriptive title for browser/web-view rendering |
-| Low | SPF/DKIM status unknown | Inspect raw headers via AgentMail relay or mail client to confirm `Authentication-Results` pass for `s.kohls.com` |
+1. **Subject Line:**
+   - **Example:** "Limited Time Offer! {{first_name}}, Shop Now: Men's Fashion $10 off $25"
 
-### Conclusion
+2. **Technical Issues:**
+   - **Compliance Headers:**
+     ```html
+     <List-Unsubscribe>
+     <List-Unsubscribe-Post>
+     ```
+   - **Alt Text:**
+     ```html
+     <img src="https://mi.kohls.com/p/rp/2a5adc5afb647aad.png?..." alt="Description of Image">
+     ```
+   - **Viewport Meta:**
+     ```html
+     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+     ```
+   - **Title Tag:**
+     ```html
+     <title>Kohl's Memorial Day Sale - $10 off $25</title>
+     ```
+   - **Google Fonts:**
+     ```html
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+     ```
 
-The Kohl's Memorial Day Sale email has several technical and accessibility issues that need to be addressed to ensure compliance and a better user experience. The main priorities are to verify compliance headers, add missing alt text, and fix accessibility violations. Addressing these issues will improve deliverability, user engagement, and overall email performance.
+3. **Email-to-Site Continuity:**
+   - **UTM Parameters:**
+     Ensure UTM parameters are present on destination URLs, e.g., `https://www.kohls.com/?utm_source=email&utm_campaign=memorial-day-sale`
+   - **Empty Param:**
+     Confirm `mi_kc_redm_end_dte` is intentionally empty or fix the merge field.
+
+### Final Summary:
+
+- **Subject Line:** Improve clarity, urgency, and personalization.
+- **Technical Fixes:** Ensure compliance headers, alt text, viewport meta, title tag, and Google Fonts are correctly implemented.
+- **Email-to-Site Continuity:** Verify UTM parameters and confirm empty merge fields.
+
+By addressing these points, Kohl's can improve the deliverability, accessibility, and user experience of their Memorial Day Sale email.
