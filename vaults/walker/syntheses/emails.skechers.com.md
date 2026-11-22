@@ -2,71 +2,82 @@
 kind: synthesis
 persona: walker
 brand: emails.skechers.com
-reactions: 293
-through: 2026-09-10T14:06:17.000Z
+reactions: 338
+through: 2026-11-21T16:20:46.000Z
 created_at: 2026-05-01T18:19:23.162Z
-updated_at: 2026-09-11T18:18:36.959Z
+updated_at: 2026-11-22T20:20:30.903Z
 ---
 
-# ### 5. Compliance
+# ### 5. Compliance (continued)
 
-**[WARN] Authentication-Results header not available**
-The SPF/DKIM pass/fail status could not be verified via the AgentMail relay. This should be confirmed against the actual delivered message headers (`Authentication-Results: mx.google.com` or equivalent) before deployment sign-off.
+**[WARN] Authentication-Results header not available** — SPF/DKIM pass/fail status could not be verified via the AgentMail relay. This should be confirmed against the actual delivered message headers (`Authentication-Results: mx.google.com` or equivalent) before deployment sign-off.
 
-**[INFO]** CAN-SPAM structural elements (physical address, unsubscribe link) were not flagged as missing by automated checks — assume compliance unless explicitly stated otherwise in the audit report.
+**[INFO]** CAN-SPAM structural elements (physical address, unsubscribe link) were not flagged as missing by automated checks — assume compliance unless otherwise indicated. However, it is essential to verify these elements manually in the actual delivered email.
 
 ---
 
 ### 6. Recommendations
 
 1. **Fix iGoDigital recommendation links:**
-   - Ensure all URLs are properly URL-encoded and free of non-ASCII characters.
-   - Replace `item=pr…` with the full parameter value to avoid truncation issues.
+   - Ensure that the `item=pr…` parameter is fully URL-encoded and does not contain non-ASCII characters.
+   - Test the links in a live environment to confirm they work as expected.
 
-2. **Resolve HTTP image sources:**
-   - Migrate all images from `http://image.emails.skechers.com/...` to their HTTPS equivalents (`https://image.emails.skechers.com/...`).
-   - Verify that this change does not break any existing links or assets.
+2. **Resolve HTTP image issues:**
+   - Switch all HTTP image sources to HTTPS to ensure secure content loading and avoid blocking by modern email clients.
+   - Verify that the `http://image.emails.skechers.com` domain is updated to `https://image.emails.skechers.com`.
 
-3. **Add plain-text alternative part:**
-   - Ensure the email has a valid `text/plain` MIME part with fallback content.
-   - This should include all key CTAs, offers, and information in text-only format.
+3. **Add plain-text alternative:**
+   - Ensure that the email includes a functional `text/plain` part. This is crucial for deliverability and accessibility.
 
-4. **Implement proper tracking pixel attributes:**
-   - Add an empty `alt=""` attribute to any image-based tracking pixels (`<img src="..." alt="">`).
-   - Ensure the open pixel is served over HTTPS if possible.
+4. **Improve tracking pixel security:**
+   - Update the tracking pixel to use HTTPS.
+   - Add an `alt` attribute to the tracking pixel to ensure it renders correctly in case of issues.
 
-5. **Ensure consistent personalization tokens:**
-   - Define a fallback greeting message such as "Hi there," or "Hi Skechers Plus member" for cases where `first_name` is empty.
-   - Verify that subscriber identifiers like `mi_u=8107697324` are dynamically substituted per recipient.
+5. **Address missing `alt` text:**
+   - Add `alt=""` attributes to all images that lack them, especially the recommendation images and tracking pixels.
 
-6. **Verify CAN-SPAM compliance:**
-   - Double-check the physical address and unsubscribe link to ensure they meet CAN-SPAM requirements.
-   - Ensure all links in the email (including tracking URLs) are functional and lead to valid destinations.
+6. **Correct meta tags:**
+   - Ensure that `<meta>` tags include the `http-equiv` attribute to ensure proper functionality.
+
+7. **Handle empty merge tokens:**
+   - Define a fallback value for the greeting slot to avoid rendering as `"Hi ,"`.
+
+8. **Verify subscriber-specific parameters:**
+   - Ensure that the `mi_u=810766165` parameter is dynamically substituted for each recipient.
+
+9. **Confirm authentication status:**
+   - Verify SPF and DKIM pass/fail status via the actual delivered message headers before deployment.
 
 ---
 
 ### 7. Conclusion
 
-This profile-completion triggered email has several technical issues that need addressing before deployment:
-
-1. **Broken recommendation links** due to ASCII encoding errors.
-2. **Missing plain-text alternative part**, which is critical for deliverability and accessibility.
-3. **Pervasive HTTP image sources**, leading to potential blocking in modern clients.
-4. **Empty greeting slot**, requiring a fallback message.
-
-Addressing these technical issues will improve the email's performance, ensure proper rendering across all clients, and enhance user experience by providing clear calls-to-action and personalized content.
+The email has several technical issues that need to be addressed to ensure proper rendering, accessibility, and deliverability. The primary issues involve broken recommendation links, missing plain-text content, and insecure image sources. Addressing these issues will improve the overall performance and user experience of the email.
 
 ---
 
 ### 8. Evidence
 
 **Overall purpose:** Drive Skechers Plus members to complete their loyalty profile in exchange for points rewards.
-- **Hero / primary value proposition:** "Help us get to know you (and earn points too)" — positions profile data as a mutual exchange with clear incentives.
-- **Membership / benefits section:** The points-per-action breakdown is transparent and motivates users to complete their profiles.
-- **Product discoverability / recommendation modules:** Three shoe thumbnails labeled "Styles we think you'll love..." appear mid-email but are logically premature and add no value in this context.
-- **Utility / secondary modules:** App download block (750 bonus points) is visually strong but strategically misplaced. Category nav, utility bar (Afterpay, Klarna, Curbside Pickup, Find a Store), and social links crowd the footer.
-- **Bugs / friction / clarity issues:** No visible broken images or overlapping text, except for the recommendation links and HTTP image sources.
+
+**Hero / primary value proposition:** "Help us get to know you (and earn points too)" — positions profile data as a mutual exchange. Three clearly itemized incentives (+25 birthday, +50 footwear preferences, +25 full name) make the reward structure transparent.
+
+**Membership / benefits section:** The points-per-action breakdown effectively functions as a mini benefits module. The explanatory note ("Visit the my account page to update your profile and earn points for every question you answer") is helpful but slightly redundant given the visual list above it.
+
+**Product discoverability / recommendation modules:** Three shoe thumbnails labeled "Styles we think you'll love..." appear mid-email. Images are small and the module is logically premature given the email's stated goal of collecting preference data. Adds scroll length without adding value.
+
+**Utility / secondary modules:** App download block (750 bonus points) is visually strong but strategically misplaced. Category nav, utility bar (Afterpay, Klarna, Curbside Pickup, Find a Store), and social links crowd the footer. Each element is individually fine; collectively they make the email feel unfocused.
+
+**Bugs / friction / clarity issues:** No visible broken images, overlapping text, or empty fields. All CTA buttons and app store badges render cleanly. Rendering appears intact.
+
+**Technical issues:**
+- Broken iGoDigital recommendation links due to ASCII encoding errors.
+- Missing plain-text alternative part.
+- HTTP image sources causing potential blocking by modern email clients.
+- Empty greeting merge token.
+- Tracking pixel over HTTP without `alt` attribute.
+- Missing `alt` text on images.
 
 ---
 
-By addressing these technical and structural issues, the email will be more effective in driving user engagement and completing profiles.
+By addressing these technical issues, the email will be more robust and effective in driving the desired user action.
